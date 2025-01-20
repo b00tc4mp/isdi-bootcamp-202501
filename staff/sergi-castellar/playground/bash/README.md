@@ -2,51 +2,15 @@
 ![markdown logo](https://imgs.search.brave.com/NwK7X1gAPso42sydkea8S4XOwzcIjb4wktpUR74PrcE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pY29u/cy52ZXJ5aWNvbi5j/b20vcG5nLzEyOC9i/dXNpbmVzcy92c2Nv/ZGUtcHJvZ3JhbS1p/dGVtLWljb24vbWFy/a2Rvd24tNC5wbmc)
 
 ---
-# COMANDOS BÁSICOS DE GIT
-
-
-## touch
-crear archivo en la ruta seleccionada
-```sh
-touch /users/sergi-castellar/playground/nuevo-archivo.txt
-```
-
-## status
-ver los cambios que se han realizado
-```sh
-status
-```
-
-## branch
-muestra las ramas existentes
-```sh
-branch
-```
-o crea una nueva
-```sh
-branch nueva-rama
-```
-
-## checkout
-cambia a una rama
-```sh
-checkout nueva-rama
-```
-o crea una y cambia a ella
-```sh
-checkout -b nueva-rama
-```
-
----
 # COMANDOS DE BASH
 ## pwd (print working directory)
-show current directory
+Muestra el directorio actual
 ```sh
 pwd /users/sergi-castellar/
 ```
 
 ## ls (list)
-inspect the current files in your working directory
+inspecciona los archivos de tu directorio de trabajo actual
 ```sh
 ls
 ```
@@ -69,37 +33,22 @@ eliminar archivo de la ruta seleccionada
 rm /users/sergi-castellar/playground/nuevo-archivo.txt
 ```
 
-
----
-# CICLOS
-## add
-Añadir cambios al área de preparación (staging area) de Git. Este paso es necesario antes de realizar un commit.
+## cp
+Sirve para copiar un archivo a otra ubicación. Se pone el nombre del archivo seguido de la carpeta donde queremos copiarlo.
 ```sh
-git add .
+cp example1.txt example
 ```
 
-## commit
-Guarda los cambios del área de preparación (staging area) en el historial de commits del repositorio local. Cada commit es como una "instantánea" del estado del proyecto en un momento dado.
+## mv
+Sirve para mover y renombrar un archivo. En este caso estariamos moviendo el archivo a la carpeta indicada:
 ```sh
-git commit -m "mensaje de subida"
+mv example1.txt example
+```
+Y en este caso estaríamos renomnbrando el archivo:
+```sh
+mv example1.txt example.txt
 ```
 
-## push
-Envia los cambios de tu repositorio local a un repositorio remoto (como GitHub, GitLab, etc.). Este comando es lo que sube los commits al servidor remoto
-```sh
-git push origin nombre-rama
-```
-Si la primera vez usamos -u con el push, le dejaremos claro a que rama subir los push a partir de ahora sin necesidad de especificarlo
-```sh
-git push -u origin nombre-rama
-```
-Y para las proximas veces, sera necesario usar únicamente:
-```sh
-git push
-```
-
----
-# OTROS
 ## clear
 Limpia la consola
 ```sh
