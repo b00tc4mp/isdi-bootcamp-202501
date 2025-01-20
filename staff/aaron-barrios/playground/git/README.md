@@ -1,0 +1,67 @@
+# GIT BASH COMMAND CHEAT SHEET 
+![markdown logo](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAwFBMVEX////zTykxJRwrHhQfDQBbU0wuIhgtIBdJPzfzSB0dCQAqHBG9urj+8/KyrqzzQAYaAABXTkj4+PfyQhAUAAA7MSlpY18oGAd+eXb/+Pb4no33kn/3jHfzQQrzSyOMiIX1a0/0YEANAAAjEgDj4uHOzMr808v5r6Ls6+pSSUP4opOloZ7b2dj7ysD95eD4mIUAAAD2hW+alpOFgHxwamX939rFwsD6vrPzVTH2gGn1c1ltZ2L7z8fyLQD5qZr1blJBhHFDAAAKCElEQVR4nO2cC3eaSBSAERARVBBBTDZqKpJiNbY1Jn0k2/3//2p5CMyTp5rs2fvt2XN6IhW+zJ2ZO3eGCgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwf2e/37/bvYO176+Dy97jx/3cmNz/uOxNOPhTyTZNW5q+XPAmd/NFp9NZzL9e8B48lqauiCGKbj5d7CbfJ52E+d3F7sHjYIsZ9vJCN7lLBTudyV8XugePYCUirNYXuQkieH3FrYwaeodL3OM7Knh1xamOGkrjC9yCEAwVr9oXNz3UUBHPf4c7UvDKraiWGFopTW/AELyu4kZCDXsO+flBdGI2Db//+5wheNVAnWH9UJ9Sn3tKhK42/P63/uKdFQcmaqiNyM+7SRv3mhoKDzzFqwWqrCDdUCO7m+UoLQ2Fh8k7Kw5WmaKyoppwrYltDfmK1wrUkecleaknb6kP04SgieH3L6c/vHugrp9U07ZNdcZI2dKEoIHh3WT+YRQFK1ivA9aMF6TjUH3DKJPJFd+7L3J5cpsaJhO9Uap4/cUUxjpbeNQ1TDMZ4+MEKgtLlRoa5qna5M/pRw+GMZkbdFO+p6I1TmO0riG6mshaMSpDDT//7H+cQB24SEKn1DHEk+1MMebm18dQDHYH1USSnXDlOEMoLnaQqwnjD/bx7zMFqrUbHGbH6XT6enza+pzihN+dEsS1qGDjmB62qoqS8hyvcKFBLXjzSSNmSK826itao64ia97pgVxPcx0CMS5XbG0dx4vX+GtbEYsorATQgmErYqXgv6g4rRuo69lK1olnVAi8ONCeXPLZu/EXmGIhRYasBe/i0w16ySPjkjqtaB008rkZJIZdifhxa0Pmin7xC7tmbzCuqa4YbLRyv9RQJKOxrSErRCnDZ5Zh5UBdi3rx06GGlkz+uKUhswWpKP3BvqqaYuBUE0wMdyteGxaPNDrHkCMYPvwzetkb57JKgdolu6DCeFZFkfS4fh8sHRv/CyfDlRvhYX/JzeHMFlzBTh8P00d2daqK4sDGHsqzbddxVybarj17pavd2TLZZ7L8mY1+mhgmJcRwaYx8l5rXFTmlRXYfTDA+Y5e+8RRLAxUrfnrqdp1YTPNajNSlng6tep8MT78vZMwqz0v5LRgxxxUfG64XX9BhVEZSqxcpU9SoSsVIPodhsWD47Pelc2IFRbT2KWO5I+Juknu9ZzEsCtEEYxhdN0xzVK5iUaBaTh6kZPE6l/fIbdBzGJYLpoZ/p+H61mDVv0bGGZmoC+6yzxSd6IlnMCwLUcTQyAadBn3xBZmobTIW3bwnEtv17Q2rCKaG83zQqd8XkUdVRHLIHGcpKLkL2tqwQoiihvnU8WaEq4w+XcDhBuo2n78UlTTM5wT9eF7DSi2IGuaKz/ubm+c/1QsbiGGPMsyXEeT+UkvDioKoIZEADH9RX8EJVGRLXnFJw3wZcV7DqoKYIZkA/KZbkXnuBn0ie4d/lo+lov56RsMfzJVQqSHZiozLWaen0NnCneGfHfNkwCXqSK0MP7FH/FLDzt/YcuMr1YiLDuNu6V4foxHRh9UG5zPc0yWXioZ97Hse6Fg3nhn3Q7M2RfTzD7Ye4u4Rhbc2hs9VeyFpuLgv+01NHhn389G1uaIdE0drsEH3eSVycdfGcNi0DcsNjQfWDcdYZUk3bWezcWwN+6lNBGm7fnjftB+WRumceT9/JeIovR6xyJeoR21l+NZwLO3MsSa6paeLW/YNn0pqSKJCTiNt58MvjebDMEx/I18ypCKh/w/nfsKxpJZoUmcR2uY0tw1ymriRkBmR2q3p3w959wtbkdxwwFqQPovQOi+95RRdSgxzxRsqde/j5UeCgcMtBboeOcpUNizaXftaSZEy7EzuH0ORPb2lWCwYDjce7RY9o24fmYfVqxkWHVqsFKi0YWcxMUKohXD/vkQwzd30vPykSK4pzqgxpoahaBbds4oiw5BNUR9MHuvkpc+6om2bmmbatth9euG+bMA1xEp3ZuH56NvySaOqYVmIZoJR6m0FO//lxd8xj8pUMESnHo8xRiF8rVprKzMsC9FBurepmJWPvHINd2gFXRGRIGDEQ2mgppWoloKrLKjoea+2YYDNrZI4CqKCfuAfNt/qK06S4BsahWlemeAuW0LQJ2EbGFr4vKPInrpRHc30JHIBFvO1qHmy0wr7TwXJelkfRA74KJvX2fIwGoSdcF0Wrgd8AwZhSm7VhVluLE0WsxIKWhFNYPiL5rIWFEbIyKDouufJ4UAajqQrW9kcl9uRT+0Z7V62yw02fUrObDvwT9dtqR3UrBMwH4CriG0C73mDTdk0wfiV575SdCDDttXZCB30/W+a7BFb+T3d076dCv+By0uPTPZLYLwEbo6t1+/YcVoWogJjV5421WWvmz+cz0nTs0rOEzs9Cq/gvAPGTuAq7XJXEKxgGKGb3XQkLDW0XPKwRvqrUjjPwAxUbKXEOalQ2gcj+FFKOOq7iobCWmF9Z8/zXnkpEkuxwlmM8j4YMSpb/qZIp+2nckNh3bXJjurZ6qEghWMkcIvS3dEqISpEs0WFo0IxXlJN9W2JCba7+jJeaV6YxfeUnuTK5ko97IrnH0YCNyk59VUpRCOCDXd4x1HcuBF26pjJBt+dCgaH17HqOGp3NvIrJIN0oPbRnZYh/XGlEE048AY/AvrdmHNCTxpzpPhJbVJUbsEQa1NQwkDRZ+Vf1gJ60uhnijVLFjiWmo584exuhktD2XN1XerRx4aw/PMC0IFq/Hq4ubkZfu60aUGhm8ao5sdLw8Ho8HSchl1I1DU8d6H3F88MrbgwFp9+zhkli+p9UNimswW5j20F6912jHbRnnNhQ+aqf0Hn3HVCVLDS3QlO1Qg9Lkvvgp+dShW4WiEqjDROE54IkITgIm80E1QoT9UTzJM28izNCQsxZC/wzkypYq0+GJKtyDlFIzRHu8x79yQlFbhafTAiW1oo1OvKMeihbplTOz0zha1YM0QFpA1FfUNnxmvkFZ+rdMOYAsW6ISpgiyfJPI6yFwqtcG7cTrElwsov/qrzwd22qR2iAlFV0WVTVMfdafjfxnFND1vmedcYZ05wJo0mgkKAHYGOj3NLepy04T8X9ctPhgjMQK3fB2O21VbAnnrhfy+JgKHYoA8mzCooKub0mi0YQU0ajUI0YbniVI4yP9Yb6ReHWPU3DNEEf6O53CWiosvu8roRegIL1FaCIf7MMT1kczSz80xlOrp2gKYgim0Fhejdyu1srESbo7Ise+H/mmmbzuuSv0d6BbJtmxZ9EMeydv5gNNput6PRwF83/wd0zsVt8u+1Tf45k+AH5PHemBs/v5Rf+B9m//DccBoEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgHPxL9YE4iAlHPWYAAAAAElFTkSuQmCC)
+
+## git branch + name
+
+```
+Create target branch
+```
+
+## git branch - M + name
+
+```
+Change target branch name
+```
+
+## git branch
+
+```
+Show all branches
+```
+
+## git switch + name
+
+```
+swap to target branch
+```
+
+## git checkout - b + name
+
+```
+create and switch to target branch
+```
+
+## q
+
+```
+exit branch without saving changes 
+```
+
+## git add + route
+
+```
+add route to local changes 
+```
+
+## git commit -m + "message #(issue number)"
+
+```
+save changes localy at target issue
+```
+
+## git push 
+
+```
+upload changes to the cloud 
+```
+
+## git log
+```
+shows commit register
+```
+
+## git status
+
+```
+show commit status, if you have changes to upload
+```
