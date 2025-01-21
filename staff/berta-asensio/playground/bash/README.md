@@ -2,14 +2,18 @@
 
 Para utilizar el terminal de mi ordenador.
 
-## pwd
+## pwd (path to working directory)
 Para saber la carpeta donde se guarda.
 
 ## mk dir
 Para crear una carpeta.
 
-## ls
-Para ver dónde está la carpeta en questión.
+## ls (list)
+Para ver qué contiene la carpeta
+```bash
+$ ls
+README.md staff
+```
 
 ## clear
 Para limpiar la pantalla.
