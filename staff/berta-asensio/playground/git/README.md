@@ -26,21 +26,9 @@ Partiendo de la rama principal (**main**) creamos otra rama (**develop**) para t
 #### git switch "**develop**"
 Cambiamos de la rama principal a la creada (**develop**) para trabajar en ella.
 
-## FGHGHF
-
-### 1r paso: **git add**
-Utilizado para añadir un cambio.
-
-### 2ndo paso: **git commit**
-Para guardar el cambio efectuado.
-`git commit -m "add mu folder #4".`
-
-### 3r paso: **push**
-git push -u origin develop.
-*-u* significa ??
 
 ## git init
 
 ## git log
-
+muestra un registro de todos los commits hechos.
 
