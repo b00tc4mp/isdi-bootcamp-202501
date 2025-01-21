@@ -8,11 +8,10 @@ Link documentació: https://linuxstans.com/bash-cheat-sheet/
 
 **tabulador** -> autocompleta adreces i arxius.
 
-## pwd (print working directory)
+## pwd (path to working directory)
 
 ```sh
 pwd
-
 kativ@LAPTOP-6HBHEV5F MINGW64 ~/workspace/isdi-bootcamp-202501/staff/eugeni-castells/playground/bash
 ```
 
@@ -26,14 +25,6 @@ README.md  staff/
 ```
 
 Llistar què hi ha dins de la carpeta.
-
-## mkdir (make directory)
-
-```sh
-mkdir
-```
-
-Crear carpeta (make directory)
 
 ## clear
 
