@@ -6,7 +6,7 @@ pwd
 /Users/ramos13/workspace
 ````
 
-## Show where we are 
+## Show the content of the files in the path you are.
 ```sh
 ls (list)
 README.md
