@@ -107,3 +107,11 @@ console.log(filteredNums); //Output: [3,4]
 ```
 
 The .filter() method returns an new array with all the items that fulfill the condition. In other words, if the item returns true when evaluated for the given condition, goes into the new array.
+
+MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+
+### .sort()
+
+```js
+
+```
