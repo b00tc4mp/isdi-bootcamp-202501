@@ -1,8 +1,8 @@
-![fotoinicio](https://www.markdownguide.org/)
+![fotoinicio](https://imgs.search.brave.com/oAHOHC54pXMnfXyF4kFzvPJJVRow8bkoRFRdss2Mr9k/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bG9nby53aW5lL2Ev/bG9nby9CYXNoXyhV/bml4X3NoZWxsKS9C/YXNoXyhVbml4X3No/ZWxsKS1Mb2dvLndp/bmUuc3Zn)
 
 # Bash cheat sheet
 
-## pwd (print working directory)
+## pwd (path to working directory)
 Show current directory
 ```sh
 pwd
@@ -19,19 +19,6 @@ README.md staff
 Changes the actuall directory
 ```sh
 cd staff/anna-melian/playground
-```
-## git branch
-Show the branches and in which one were you
-```sh
-git branch
-main
-*develop*
-feature/playground
-```
-## git switch
-Change you to an other branch
-```sh
-git swith develop
 ```
 ## mkdir
 Create a folder
