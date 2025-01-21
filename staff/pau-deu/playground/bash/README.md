@@ -27,10 +27,6 @@ cd staff/pau-deu/playground
 ## cat (view content within a file)
 
 ```sh
-cat 
+cat + nombre archivo
 ```
 
-## git clone (for clone)
-```sh
-git clone 
-```
