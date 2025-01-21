@@ -53,7 +53,8 @@ Create and change to the new branch.
 git checkout -b
 ```
 ## git branch
-Shows the number of branches and which one you are on.
+
+List branches and shows current branch.
 ```sh
 git branch
 ```
