@@ -1,3 +1,4 @@
+![ it image](https://imgs.search.brave.com/RHmezOt5jW8asHG7tBhZY1qB15OBz_rYyszNnQUuvV4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9l/L2UwL0dpdC1sb2dv/LnN2Zw)
 # Git cheat sheet
 
 ## git clone 
@@ -26,7 +27,7 @@ git add
 
 ```
 ## git commit -m "message" 
-...
+A change consolidation.
 ```sh
 git commit -m "message"
 ```
