@@ -2,8 +2,11 @@
 
 Sistema de control de versiones para ver el progreso de mi código.
 
-## git clone
+## git clone (clone a repository)
 Para copiar nuestro url de Githhub con nuestro forqueador.
+```bash
+$ git clone https://github....
+```
 
 ## git status
 Para saber en que punto estamos cuando nos perdemos.
@@ -12,7 +15,7 @@ Para saber en que punto estamos cuando nos perdemos.
 Esto es como hacer un branch y switch a la vez.
 `git checkout -b feature/playground`
 
-## git branch
+## git branch 
 Comando para listar las ramas que tenemos en un repositorio de git.
 
 ### Ejemplo de hoy: Creamos una rama nueva (**develop**) y utilizamos switch para trabajar en ésta nueva rama:
