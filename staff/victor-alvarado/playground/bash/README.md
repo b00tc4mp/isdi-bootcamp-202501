@@ -10,7 +10,9 @@ show current directory
  ```
  ## ls (list)
  ```sh
- ls Readme.md staff
+ ls  muestra el contenido de archivos en la ruta que te encuentras.
+
+
  ```
 
  ## cd 
