@@ -1,82 +1,77 @@
-# Bash cheat sheet (documentación)
+# Comandos esenciales de Bash
 
-## Se adjunta una imagen
-![Logo Markdown](image.jpg)
-![markdown adjuntar logo](https://automatismosmundo.com/wp-content/uploads/2020/08/Foto-Portada-Markdown820x315.jpg)
+1. Navegación: pwd, ls, cd (ruta), cd...
+2. Archivos y carpetas: touch (archivo), mkdir (carpeta), mv (origen)(destino), cp (origen)(destino), rm (archivo), rm -r (carpeta)
+3. Ver contenido: cat (archivo), less (archivo), grep "texto" (archivo)
+4. Permisos: chmod (permisos)(archivo), chown (usuario):(grupo) (archivo)
+5. Otros: find . -name"<
 
-## Heading	- encabezados
-# H1 - título principal
-## H2 - sección 
-### H3 - subsección
+## pwd ()
+Si  estás perdido en el sistema de archivos este comando te dice donde estás
 
-## Bold - escribir en negrita
-**Este texto está en negrita**
+## ls (listar archivos y carpetas)
+- ls: muestra archivos y carpetas
+- ls -l: muestra detalles como permisos, tamaño y fecha
+- ls -la: incluye archivos ocultos (los que empiezan por .)
 
-## Italic - escribir en cursiva
-*texto en cursiva*
+## cd (cambiar directorio)
+cd Documentos
 
-## Blockquote - sirve para citar
-> "La simplicidad es la máxima sofisticación." - Leonardo da Vinci
+## volver al directorio anterior
+cd ..
 
-## Ordered List - lista ordenada
-1. primer item
-2. segundo item
-3. tercer item
+## ir al directorio raíz
+cd/
 
-## Unordered List - lista desordenada
-- primer item
-- segundo item
-- tercer item
+## crear un archivo vacío
+touch (archivo.txt)
 
-## Code - indica que estás definiendo un bloque de código
-\```javascript ...se escribe el código entre las etiquetas de bloque para que se resalte correctamente\```
+## crear una carpeta
+mkdir mi_carpeta
 
-## Horizontal Rule - crea una línea horizontal como separador de contenido	---
+## mover archivo.txt a la carpeta Documentos
+mv archivo.txt Documentos/
 
-## Link	[Markdown](https://www.markdownguide.org/cheat-sheet/)
+## renombrar archivo.txt a nuevo_nombre.txt
+mv archivo.txt nuevo_nombre.txt
 
-## Table - tabla
-| Función | Descripción |
-| ----------- | ----------- |
-| Encabezado | Título de la tabla |
-| Párrafo | Texto de la tabla |
+## copiar archivos o carpetas
+cp archivo.txt Documentos/
 
-## Fenced Code Block - incluir bloques de códigos formateados	
-```
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
-```
-## Footnote - agregar notas al pie de texto
-Markdown es un lenguaje de marcado simple. [^note]
-[^note]: Es ampliamente utilizado para escribir documentación, blogs, y más.
+## copiar una carpeta entera
+cp -r mi_carpeta/ copia_carpeta
 
-## Heading ID - permite asignar un identificador ID
-	### Mi encabezado genial {#mi-id}
+## eliminar archivos  
+rm archivo.txt
 
-## Definition List - sirve para escribir definiciones	
-término
-: definición
+## eliminar carpeta
+rm -r mi_carpeta
 
-## Strikethrough - texto tachado
-Este texto es normal ~~Pero este está tachado~~
+## mostrar contenido de un narchivo
+cat archivo.txt
 
-## Task List - lista de tareas
-- [x] Tarea completada
-- [ ] Tarea por hacer
-- [ ] Tarea por hacer
+## ver contenido con paginación 
+less archivo_largo.txt
 
-## Emoji
-Se puede usar el formato :joy:
-También se puede pegar simplemente copiar y pegar un emoji, como 😊 o 🚀
+## buscar texto dentro de un archivo
+grep "hola" archivo.txt
 
-## Highlight - se utiliza para resaltar texto 
-Necesito resaltar estas ==palabras muy importantes==.
+## cambiar permisos
+chmod 700 archivo.txt
 
-## Subscript - subíndice para escribir fórmulas
-H~2~O
+## cambiar propietario
+chown (usuario):(grupo) (archivo)
+sudo chown marta:marta archivo.txt
 
-## Superscript - superíndice para escribir en formato elevado
-X^2^
+## buscar archivo o carpeta
+find . -name "archivo.txt"
+
+## ver procesos activos
+ps aux
+
+## detener un proceso
+kill (PID)
+kill 12345
+
+## limpiar terminal
+clear
