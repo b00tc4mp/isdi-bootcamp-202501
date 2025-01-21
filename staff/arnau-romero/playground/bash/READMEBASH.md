@@ -58,6 +58,14 @@ cp users/arnau-romero/playground/
 ```
 Esto copiaria los archivos del directorio playground.
 
+otra funcion:
+
+Copiar archivos.
+```sh
+cp arnau.txt arnau
+```
+Esto copiaria el elemento arnau.txt dentro de la carpeta arnau.
+
 ## kill
 
 Acabar con un processo que se esta realizando.
@@ -69,12 +77,6 @@ Muestra el contenido de un archivo.
 ```sh
 cat [arnau.txt]
 ```
-## cp
-Copiar archivos.
-```sh
-cp arnau.txt arnau
-```
-Esto copiaria el elemento arnau.txt dentro de la carpeta arnau.
 ## mv
 Mueve un archivo a otra ruta o renombrar-lo.
 
