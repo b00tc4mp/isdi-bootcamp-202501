@@ -1,5 +1,5 @@
 # Bash Cheat Sheet 
-![Markdown logo](https://imgs.search.brave.com/_uQuP0mZWluDTaK_-tUfY-loTjADgbRfcjEK_hLOpmY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMtMDAuaWNvbmR1/Y2suY29tL2Fzc2V0/cy4wMC9iYXNoLWlj/b24tMTAyNHg0MzEt/enJuYmR1OTYucG5n)
+![Bash logo](https://imgs.search.brave.com/_uQuP0mZWluDTaK_-tUfY-loTjADgbRfcjEK_hLOpmY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMtMDAuaWNvbmR1/Y2suY29tL2Fzc2V0/cy4wMC9iYXNoLWlj/b24tMTAyNHg0MzEt/enJuYmR1OTYucG5n)
 
 ## pwd (print working directory)
 
