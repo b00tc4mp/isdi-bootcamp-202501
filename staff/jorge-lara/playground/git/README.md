@@ -32,7 +32,7 @@ git branch [name]
 git checkout
 ```
 
-## git add [directory]
+## git add [file or directory]
 Add a file to the next commit
 ```sh
 git add staff/jorge-lara/playground/bash
