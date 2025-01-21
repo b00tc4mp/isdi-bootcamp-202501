@@ -93,7 +93,7 @@ Per veure l'historial dels commits del repositori. Per sortir, ctrl + q. El --on
 git commit -m "message #1"
 ```
 
-Fas el commit. Els canvis actuals estan llestos per pujar-ho al repo. Al missatge hi ha d'haver el número d'issue amb el signe #. En aquest cas, es tracta de l'issue número 1.
+Fas el commit. Els canvis actuals estan llestos per pujar-ho al repo. Al missatge hi ha d'haver el número d'issue amb el signe #. En aquest cas, es tracta de l'issue número 1..
 
 ## git push
 
