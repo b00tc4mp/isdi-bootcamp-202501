@@ -75,9 +75,19 @@ Date:   Mon Jan 20 15:40:49 2025 +0100
     add playground with gitkeep file #7
 ```
 
-Per veure l'historial dels commits del repositori. Per sortir, ctrl + q.
+```sh
+git log --oneline
+2c01731 (HEAD -> feature/playground, origin/feature/playground) bash Readme image change #7
+d665001 add Readme.md with Git commands WIP #7
+d4b4320 add Readme.md with bash commands WIP #7
+3343c50 add playground with gitkeep file #7
+fdfbd3c (origin/develop, develop) add my folder #7
+3c4188a (origin/main, origin/HEAD, main) Initial commit
+```
 
-## git commit -m
+Per veure l'historial dels commits del repositori. Per sortir, ctrl + q. El --oneline t'ho posa de manera resumida.
+
+## git commit -m "message"
 
 ```sh
 git commit -m "message #1"
