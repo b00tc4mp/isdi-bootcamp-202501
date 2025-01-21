@@ -26,10 +26,10 @@ Crea un nuevo directorio y se cambia a él.
 ```sh
 crea un nuevo directorio y se cambia a él.
 ```
-## git status u
+## git status
 Para ver el estado de cambios en la carpeta.
 ```sh
-git status u
+git status
 ```
 ## git push <repo name> <branch name>
 Subir archivos al git.
