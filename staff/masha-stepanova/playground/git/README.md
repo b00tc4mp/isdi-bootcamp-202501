@@ -14,6 +14,13 @@ inicialize git in a project
 git init
 ```
 
+## .gitkeep
+creates an empty file
+
+```sh 
+/User/masha/newfolder/.gitkeep
+```
+
 ## git status -u
 shows on which branch and folder you are currently
 
