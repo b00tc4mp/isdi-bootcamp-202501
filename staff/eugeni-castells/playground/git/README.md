@@ -108,3 +108,20 @@ git push --set-upstream origin <branchName>
 ```
 
 Puja una branca nova del local al github. Amb --set-upstream (o -u), li dius que només cal especificar la branca una vegada.
+
+## git reset "commit hash"
+
+```sh
+git reset "commit hash"
+```
+
+Elimina el commit amb el hash corresponent.
+
+## git checkout file
+
+```sh
+$ git checkout README.md
+Updated 0 paths from the index
+```
+
+Ens recupera l'arxiu de la ruta corresponent. Revisa tots els commits i el recupera si existeix.
