@@ -51,7 +51,7 @@ git push origin nombre-rama
 ```
 Si la primera vez usamos -u con el push, le dejaremos claro a que rama subir los push a partir de ahora sin necesidad de especificarlo
 ```sh
-git push -u origin nombre-rama
+git push --set-upstream origin nombre-rama
 ```
 Y para las proximas veces, sera necesario usar únicamente:
 ```sh
