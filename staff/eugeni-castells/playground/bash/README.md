@@ -40,7 +40,7 @@ Netejar consola.
 cat
 ```
 
-Llegir un arxiu a bash.
+Llegir un arxiu a bash. També serveix per a concatenar arxius i crear-ne un de nou o bé modificar-ne el contingut.
 
 ## mkdir -p "name"
 
