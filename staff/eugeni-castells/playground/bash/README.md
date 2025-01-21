@@ -117,4 +117,10 @@ Canvia la ruta a una carpeta superior.
 rmdir directory-name
 ```
 
-Elimina la carpeta corresponent.
+Elimina la carpeta corresponent si està buida.
+
+```sh
+rmdir -rf directory-name
+```
+
+Força l'eliminació de la carpeta. Utilitzar amb compte, perquè elimina sense preguntar.
