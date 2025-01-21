@@ -34,7 +34,5 @@ git commit -m "message"
 ````
 ## Cambia de una rama a otra
 ```sh
-git switch (main)
+git switch || git checkout (main)
 ```
-
-git checkout 
