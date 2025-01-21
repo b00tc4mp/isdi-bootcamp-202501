@@ -4,7 +4,7 @@
 ---
 # COMANDOS DE BASH
 ## pwd (print working directory)
-Muestra el directorio actual
+Muestra el directorio actual.
 ```sh
 pwd /users/sergi-castellar/
 ```
