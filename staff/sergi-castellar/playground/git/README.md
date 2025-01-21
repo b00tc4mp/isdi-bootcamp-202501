@@ -4,7 +4,11 @@
 ---
 # COMANDOS BÁSICOS DE GIT
 
-
+## init
+Se utiliza para inicializar un nuevo repositorio Git en un directorio. Convierte un directorio en un repositorio Git vacío. Solo necesitas usarlo una vez al empezar un proyecto o al clonar un proyecto existente.
+```sh
+git init
+```
 
 ## status
 ver los cambios que se han realizado
@@ -25,11 +29,21 @@ git branch nueva-rama
 ## checkout
 cambia a una rama
 ```sh
-git checkout nueva-rama
+git checkout distinta-rama
 ```
-o crea una y cambia a ella
+o crea una nueva y cambia a ella
 ```sh
 git checkout -b nueva-rama
+```
+
+## switch
+Es una forma más simple y clara de cambiar entre ramas en un repositorio. Se usa como una alternativa más fácil y específica a git checkout para cambiar de rama.
+```sh
+git switch distinta-rama
+```
+o crea una nueva y cambia a ella
+```sh
+git checkout -c nueva-rama
 ```
 
 ## add
