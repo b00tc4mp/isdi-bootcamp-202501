@@ -21,11 +21,11 @@ git status
 ```sh
 git branch 
 ```
-## (Crea una nueva rama con el nombre de newBranch)
+## git branch [name] (Crea una nueva rama con el nombre de ...)
 ```sh
 git branch [name]
 ```
-## (Cambiar a otra sucursal)
+## git checkout (Cambiar a otra rama)
 ```sh
 git checkout
 ```
