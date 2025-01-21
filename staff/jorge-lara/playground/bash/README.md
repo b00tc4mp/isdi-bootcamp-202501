@@ -24,6 +24,15 @@ Creates a new directory(folder)
 ```sh
 mkdir staff/jorge-lara/playground
 ```
+## rmdir (remove directory)
+- Remove an empty directory
+```sh
+rmdir staff/empty_folder
+```
+- Remove the directory an all the contents inside
+```sh
+rmdir -r staff/folder
+```
 
 ## touch
 Creates a file
