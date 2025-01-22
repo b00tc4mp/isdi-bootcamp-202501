@@ -1,5 +1,5 @@
-# Bash Cheat Sheet 
-![Markdown logo](https://imgs.search.brave.com/MEQDe4Za8XXJAKyQA4C9cccYgPKMlDZQM47VF8oxWJQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy82/LzYyL0dpdC1sb2dv/LW9yYW5nZS5zdmc)
+# Git Cheat Sheet 
+![Git logo](https://imgs.search.brave.com/MEQDe4Za8XXJAKyQA4C9cccYgPKMlDZQM47VF8oxWJQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy82/LzYyL0dpdC1sb2dv/LW9yYW5nZS5zdmc)
 
 ## Git Init
 * Inicializa un nuevo repositorio Git en el directorio actual.
@@ -127,5 +127,12 @@ git merge <rama>
 
 
 ```sh
-git clone "name repository github"
+git clone "name repository github (link)"
+```
+
+## Git Reset 
+* Me permite resetear los commits hasta el codigo del commit que le pase, ejemplo tengo 4 commits y el 3 es erroneo y hice uno mas encima de el, la solucion es hacer un reset hasta ese commit y volver a hacer el proceso de add y commit de ellos 
+
+```sh 
+git reset 374ff61eef829d3af47e65d693fc7599933a818b
 ```
