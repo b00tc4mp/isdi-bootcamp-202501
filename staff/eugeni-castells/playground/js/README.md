@@ -1,5 +1,9 @@
 # Javascript manual
 
+### COMMANDS
+
+console.dir() -> Prints the object and let you inspect it.
+
 ### BROWSER DEBUGGER
 
 #### Inspector -> Source -> Snippets -> New Snippets
@@ -115,3 +119,81 @@ MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Ob
 ```js
 
 ```
+
+STACK MEMORY vs HEAP MEMORY
+
+In JavaScript, memory management is divided into two main areas: heap memory and stack memory. They serve different purposes and handle data in different ways.
+
+1. Stack Memory
+   The stack is used to store primitive values (like numbers, strings, and booleans) and references to objects and functions. The stack operates in a LIFO (Last In, First Out) order, meaning the last piece of data pushed onto the stack is the first one to be popped off.
+
+Here’s how it works:
+
+Function calls are stored on the stack. Each time a function is invoked, a "stack frame" is created, which holds the function’s local variables and some bookkeeping information.
+Primitive values (like number, string, boolean, etc.) are stored directly on the stack, and they are copied when passed between functions. This is why changes to primitive values in one function do not affect those in another function.
+When a function completes, its stack frame is destroyed, and control is returned to the calling function.
+Example of stack:
+
+```js
+function calculateArea(radius) {
+let area = Math.PI _ radius _ radius;
+return area;
+}
+
+let result = calculateArea(5); // When this function is called, it goes onto the stack
+In this case:
+```
+
+The calculateArea function is called and its stack frame is created.
+The radius parameter and the area variable are stored in the stack.
+Once the function returns the result, its stack frame is popped off. 2. Heap Memory
+The heap is used to store objects, arrays, and functions. Unlike stack memory, which is more structured, the heap is a large pool of memory that is dynamically allocated at runtime.
+
+Here’s how it works:
+
+Objects (including arrays and functions) are stored in the heap, and only a reference to the object is stored on the stack.
+When you create an object or an array, memory is allocated in the heap, and the variable on the stack holds the reference (pointer) to that memory location.
+Unlike the stack, the heap is not automatically cleaned up when a function returns. Instead, garbage collection happens periodically in JavaScript to reclaim memory from objects that are no longer accessible.
+Example of heap:
+
+```js
+function createPerson(name, age) {
+  return { name: name, age: age }; // The object is created in heap memory
+}
+
+let person1 = createPerson("Alice", 30);
+```
+
+In this case:
+
+The createPerson function creates an object in heap memory with name and age properties.
+The variable person1 in the stack holds a reference (pointer) to the object in the heap.
+Key Differences:
+Memory Allocation:
+
+Stack is used for primitives and function calls.
+Heap is used for objects, arrays, and functions.
+Memory Management:
+
+Stack memory is automatically cleaned up when a function call finishes.
+Heap memory requires garbage collection to reclaim space when objects are no longer in use.
+Size and Performance:
+
+Stack is usually much smaller in size and has faster access time.
+Heap is larger, but access to it is slower due to the complexity of dynamically managing memory.
+Summary:
+Stack: Stores primitives and function calls. It’s fast but limited in size.
+Heap: Stores objects, arrays, and functions. It's large but slower and requires garbage collection for cleanup.
+
+Data types in javascript:
+
+Primitive:
+
+Type typeof return value Object wrapper
+Null "object" N/A
+Undefined "undefined" N/A
+Boolean "boolean" Boolean
+Number "number" Number
+BigInt "bigint" BigInt
+String "string" String
+Symbol "symbol" Symbol
