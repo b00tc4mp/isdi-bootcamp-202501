@@ -60,6 +60,15 @@ function askCharacter() {
 }
 
 function guessCheckCharacter() {
+    //convertir todo a minuscula
+    guessCharacter = guessCharacter.toLowerCase()
+
+    //limitar las incorrectas
+    if (wrongCharacters.includes(guessCharacter)) {
+        alert(`Ya intentaste la letra "${guessCharacter}" y fue incorrecta. Intenta otra.`)
+        askCharacter()
+    }
+
     var found = false
 
     for (var j = 0; j < word.length; j++) {
