@@ -31,19 +31,20 @@ function isGameWon() {
     }
   }
   if (mockCounter === matches.length) {
-    console.log("Congrats,you won!");
+    alert(`Congrats,you won! The word was ${word}.`);
     attempts = 6;
   } else if (mockCounter < matches.length && attempts < maxAttempts) {
-    console.log("Keep, trying!");
+    printAttempts();
   } else {
-    console.log("Oh no, you lost! :(");
+    alert("Oh no, you lost! :(");
   }
 }
 function printAttempts() {
   if (maxAttempts - attempts > 1) {
-    console.log(`${maxAttempts - attempts} attempts remaining!`);
+    alert(`${maxAttempts - attempts} attempts remaining, keep trying!.
+    Your progress: ${matchString}`);
   } else if (maxAttempts - attempts === 1) {
-    console.log(`${maxAttempts - attempts} attempt remaining. Be careful!`);
+    alert(`${maxAttempts - attempts} attempt remaining. Be careful!`);
   }
 }
 function returnMatchesString() {
@@ -51,7 +52,6 @@ function returnMatchesString() {
   for (let i = 0; i < matches.length; i++) {
     matchString += matches[i] + " ";
   }
-  console.log(matchString);
 }
 
 askWord();
@@ -61,7 +61,6 @@ for (let i = 0; i < word.length; i++) {
 returnMatchesString();
 while (attempts < maxAttempts) {
   guessCharacter();
-  printAttempts();
   returnMatchesString();
   isGameWon();
 }
