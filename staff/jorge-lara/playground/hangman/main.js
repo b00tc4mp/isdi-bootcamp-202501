@@ -1,36 +1,32 @@
-let word = prompt('Enter a word')
+let word = "";
+
+do{
+    word = prompt('Enter a word')    
+}while (word.length <= 0)
 
 let matchesString = '';
 let attemps = 6;
 let character = '';
 let matches = [];
-let aux = 1;
 let end = false;
 
 for (let i = 0; i < word.length; i++) {
     matches[i] = '_';
 }
 
-//WIP method (its so bad)
 function printMatches() {
-    if (aux == 1) {
-        for (let i = 0; i < matches.length; i++) {
-            matchesString += matches[i] + " ";
-        }
-        aux++;
-    } else {
-        matchesString = "";
-        for (let k = 0; k < matches.length; k++) {
-            matchesString += matches[k] + " ";
-        }
+    matchesString = "";
+
+    for (let i = 0; i < matches.length; i++) {
+        matchesString += matches[i] + " ";
     }
 
-    console.log(matchesString);
+    return matchesString;
 }
 
 function askCharacter() {
     do {
-        character = prompt("character");
+        character = prompt("Write a character\nProgress: " + printMatches() + "\nAttempts left: " + attemps);
     } while (!(character.length == 1))
 
 }
@@ -50,21 +46,22 @@ function checkCharacter() {
         printMatches();
     } else {
         attemps--;
-        console.log("Wrong, Attempts left:" + attemps);
+        alert("Wrong character!");
     }
 }
 
 function wordFound() {
+    let isFinished = true;
+
     for (let n = 0; n < word.length; n++) {
         if (matches[n] != word[n]) {
-            return;
+            isFinished = false;
         }
     }
-    end = true
+    end = isFinished;
 }
 
 function coreGame() {
-    console.log("...");
 
     do {
         askCharacter();
@@ -73,9 +70,9 @@ function coreGame() {
     } while (!end && attemps > 0);
 
     if (attemps == 0) {
-        console.log("You lose!")
+        alert("You lose! " + "The word was: " + word);
     } else {
-        console.log("You won!")
+        alert("Congratulations, you found the word! " + word);
     }
 
 }
