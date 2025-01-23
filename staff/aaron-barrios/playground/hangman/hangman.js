@@ -14,6 +14,13 @@ var guessedCount = 0
 var wrongCharacters = []
 var guessWord = ''
 
+var one = ''
+var two = ''
+var three = ''
+var four = ''
+var five = ''
+var six = ''
+
 function printMatches() {
     var matchesString = ''
 
@@ -22,15 +29,16 @@ function printMatches() {
     alert(
         `${matchesString}
         Attempts: ${attempts}
-        Incorrect Characters: ${wrongCharacters}`)
+        Incorrect Characters: ${wrongCharacters}`
+    )
 }
 
 function askCharacter() {
     guessWord = prompt('Guess word: Write yes or no')
     if (guessWord === 'yes') {
-        var word
+        var vWord
         word = prompt('Word')
-        if (word === word) {
+        if (vWord === word) {
             guessedCount = word.length
             winorLose()
         }
@@ -70,15 +78,41 @@ function guessCheckCharacter() {
     }
 
     if (!found) {
-        attempts++
-        alert('character not found')
         wrongCharacters.push(guessCharacter)
+        attempts++
+        if (attempts === 1) {
+            one += ' ┌──┐'
+        }
+        else if (attempts === 2) {
+            two += ' |     |'
+        }
+        else if (attempts === 3) {
+            three += ' |   ☹'
+        }
+        else if (attempts === 4) {
+            four += ' |  ⌈⌷⌉'
+        }
+        else if (attempts === 5) {
+            five += ' |    ∆'
+        }
+        else if (attempts === 6) {
+            six += '⍊  ⌋ ⌊'
+        }
+        alert(`character not found 
+                ${one}
+                ${two}
+                ${three}
+                ${four}
+                ${five}
+                ${six}
+                Attempts: ${attempts}
+                Incorrect Characters: ${wrongCharacters}
+                `)
     }
 
     if (attempts >= maxAttempts) {
         alert('You have lost')
         location.reload()
-        //revisar
     }
     else
         checkWord()
@@ -104,6 +138,7 @@ function winorLose() {
         location.reload()
     }
 }
+
 
 
 printMatches()
