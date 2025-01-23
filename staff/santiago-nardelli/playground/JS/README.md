@@ -193,7 +193,7 @@ o['name']='santiago'
 console.dir(o)
 
 ```
-
+# Tipos de memoria donde se alojan las variables 
 ## Memoria Stack
 * anotacion de clase:
 Las variables se guardan aqui 
@@ -221,3 +221,21 @@ Es más lenta que la pila pero ofrece mayor flexibilidad.
 ## Uso recomendado
 * Para variables temporales pequeñas: Pila
 * Para objetos grandes o persistentes: Montón
+
+## Tabla
+### Stack
+| NAME | VALUE   |
+|-------|--------------|
+|A      |3             |
+|B      | 5            |
+|C      | 7            |
+|D      |0x001         |
+|E      |0x002         |
+|F      |0x002         |
+
+### Heap
+| NAME  | VALUE |  
+|-------|--------------------|
+|0x001  |Object{}            |
+|0x001  |Array[]             |
+|0x001  |                    |
