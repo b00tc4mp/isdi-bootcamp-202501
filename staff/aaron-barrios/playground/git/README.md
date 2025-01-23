@@ -55,6 +55,12 @@ save changes localy at target issue
 upload changes to the cloud 
 ```
 
+## git push -u origin
+
+```
+upload changes to new branch 1st time 
+```
+
 ## git log
 ```
 shows commit register
