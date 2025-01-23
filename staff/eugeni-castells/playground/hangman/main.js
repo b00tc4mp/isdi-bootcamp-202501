@@ -1,51 +1,85 @@
 console.clear();
 var word = "";
-
+var guessedMatches = 0;
 var matches = [];
+var errorArr = [];
 var matchString = "";
 var attempts = 0;
 var maxAttempts = 6;
-
+var repeatedChaMessage = "";
+var resetGame = false;
+var oneCha = "";
 function askWord() {
   word = prompt(`What is the secret word?`);
 }
 
 function guessCharacter() {
-  let cha = prompt("What letter?");
-  let mockCounter = 0;
-  for (let i = 0; i < word.length; i++) {
-    if (cha === word[i]) {
-      matches[i] = cha;
-      mockCounter++;
+  var match = false;
+  while (oneCha !== "yes" && oneCha !== "no") {
+    oneCha = prompt("You wanna guess the whole word? Write 'yes' or 'no'");
+  }
+
+  let cha = "";
+
+  if (oneCha === "yes") {
+    cha = prompt("What word?");
+  } else if (oneCha === "no") {
+    cha = prompt("What letter?");
+  }
+
+  if (oneCha === "no" || oneCha === "No") {
+    for (let i = 0; i < word.length; i++) {
+      if (cha === word[i] && cha !== matches[i]) {
+        matches[i] = cha;
+        guessedMatches++;
+        match = true;
+      } else if (cha === word[i] && cha === matches[i]) {
+        repeatedChaMessage = "Oops, looks like the letter was already guessed.";
+      }
+    }
+  } else if (oneCha === "yes" || oneCha === "Yes") {
+    if (word === cha) {
+      guessedMatches = word.length;
     }
   }
-  if (mockCounter === 0) {
+  if (match === false) {
     attempts++;
+    errorArr.push(cha);
   }
+  oneCha = "";
 }
+
 function isGameWon() {
-  let mockCounter = 0;
-  for (let i = 0; i < matches.length; i++) {
-    if (matches[i] !== "_") {
-      mockCounter++;
-    }
-  }
-  if (mockCounter === matches.length) {
-    alert(`Congrats,you won! The word was ${word}.`);
+  if (guessedMatches === word.length) {
+    alert(
+      `Congrats, you won! The word was ${word}. You had ${
+        maxAttempts - attempts
+      } attempts remaining. What a beast!`
+    );
     attempts = 6;
-  } else if (mockCounter < matches.length && attempts < maxAttempts) {
+  } else if (guessedMatches < word.length && attempts < maxAttempts) {
     printAttempts();
   } else {
-    alert("Oh no, you lost! :(");
+    alert(`Oh no, you lost :( The word was ${word}`);
   }
 }
 function printAttempts() {
   if (maxAttempts - attempts > 1) {
-    alert(`${maxAttempts - attempts} attempts remaining, keep trying!.
-    Your progress: ${matchString}`);
+    alert(`${repeatedChaMessage} ${
+      maxAttempts - attempts
+    } attempts remaining, keep trying!.
+    Your progress: ${matchString}
+    Errors: ${errorArr}
+    `);
   } else if (maxAttempts - attempts === 1) {
-    alert(`${maxAttempts - attempts} attempt remaining. Be careful!`);
+    alert(`${repeatedChaMessage} ${
+      maxAttempts - attempts
+    } attempt remaining. Be careful!
+      Your progress: ${matchString}
+      Errors: ${errorArr}
+       `);
   }
+  repeatedChaMessage = "";
 }
 function returnMatchesString() {
   matchString = "";
