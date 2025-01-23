@@ -1,13 +1,8 @@
 console.clear()
 
 //var word = 'ura' //palabra a adivinar
-var word = askWord() //palabra a adivinar
+var word = '' //palabra a adivinar
 var matches = [] // array de almacenaje de '_' y letras adivinadas
-
-for (var i = 0; i < word.length; i++){ //bucle para mostrar primero los '_'
-    matches[i] = '_'
-}
-
 var attempts = 0 //intentos actuales
 var maxAttempts = 6 //intentos maximos
 var guessCharacter = '' //intento de letra dada
@@ -15,12 +10,19 @@ var charactersChecked = []
 var correctCharacters = 0
 
 function askWord() {
-    var word = prompt('Introduce la palabra a adivinar')
-    return word
+    var localWord = prompt('Introduce la palabra a adivinar')
+    word = localWord
+    initialLowBarArray()
+}
+
+function initialLowBarArray() {
+    for (var i = 0; i < word.length; i++){ //bucle para mostrar primero los '_'
+    matches[i] = '_'
+    }
 }
 
 function askCharacter() { // funcion que pregunta input por prompt y retorna el input
-    guessCharacter = prompt('prueba con una letra')
+    guessCharacter = prompt('prueba con una letra \n' + matches)
     checkGuessCharacterMatches(guessCharacter)
 }
 
@@ -48,21 +50,19 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
         if (isCorrect === false) { // si la letra no coincide con ninguna de las letras de la palabra, 
             attempts += 1 // suma un intento a attempts
             alert('Error, llevas ' + attempts + ' intentos de ' + maxAttempts + '\n' + charactersChecked) // retorna alert con los intentos
-            //printMatches()
         } else {
             if (correctCharacters === word.length) {
-                alert('¡Has ganado!. Volvamos a jugar')
-                askWord()
+                alert('¡Has ganado!. Efectivamente, la palabra era ' + word + ' Volvamos a jugar')
+                resetGame()
             } else {
                 alert('¡Vas bien!\n' + matches)
             }
-            //printMatches()
         }
         if (attempts < maxAttempts) { //si no has perdido sigues jugando
             askCharacter()
         } else {
-            alert('Has perdido.' + attempts + ' intentos de ' + maxAttempts + '. Volvamos a jugar :)')
-            askWord()
+            alert('Has perdido.' + attempts + ' intentos de ' + maxAttempts + '.\nLa palabra era ' + word + '. Volvamos a jugar :)')
+            resetGame()
         }
 
     } else {
@@ -71,14 +71,18 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
     }
 }
 
-/*function printMatches() { //printea por consola el array con _ y letras adivinadas
-    var matchesString = ''
-    for (var i = 0; i < matches.length; i++) {
-        matchesString += matches[i] + ' '
-    }
-    console.log(matchesString)
-}*/
+function resetGame() {
+    word = ''
+    guessCharacter = ''
+    attempts = 0
+    correctCharacters = 0
+    matches = []
+    charactersChecked = []
+    askWord()
+    askCharacter()
+}
 
+askWord()
 askCharacter()
 
 
