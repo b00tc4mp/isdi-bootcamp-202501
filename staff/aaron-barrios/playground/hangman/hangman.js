@@ -37,7 +37,7 @@ function askCharacter() {
     guessWord = prompt('Guess word: Write yes or no')
     if (guessWord === 'yes') {
         var vWord
-        word = prompt('Word')
+        vWord = prompt('Word')
         if (vWord === word) {
             guessedCount = word.length
             winorLose()
@@ -89,23 +89,25 @@ function guessCheckCharacter() {
     if (!found) {
         wrongCharacters.push(guessCharacter)
         attempts++
-        if (attempts === 1) {
-            one += ' ┌──┐'
-        }
-        else if (attempts === 2) {
-            two += ' |     |'
-        }
-        else if (attempts === 3) {
-            three += ' |   ☹'
-        }
-        else if (attempts === 4) {
-            four += ' |  ⌈⌷⌉'
-        }
-        else if (attempts === 5) {
-            five += ' |    ∆'
-        }
-        else if (attempts === 6) {
-            six += '⍊  ⌋ ⌊'
+        switch (attempts) {
+            case 1:
+                one += ' ┌──┐'
+                break;
+            case 2:
+                two += ' |     |'
+                break;
+            case 3:
+                three += ' |   ☹'
+                break;
+            case 4:
+                four += ' |  ⌈⌷⌉'
+                break;
+            case 5:
+                five += ' |    ∆'
+                break;
+            case 6:
+                six += '⍊  ⌋ ⌊'
+                break;
         }
         alert(`character not found 
                 ${one}
