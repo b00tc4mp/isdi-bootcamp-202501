@@ -14,7 +14,7 @@ function askWord() { // pregunta por prompt la palabra a adivinar
         word = localWord
         initialLowBarArray()
     } else {
-        alert('Nen siusplau no et passis de llest')
+        alert('Solo palabras en minuscula y sin espacios :)')
         askWord()
     }
 }
@@ -39,7 +39,6 @@ function askCharacter() { // funcion que pregunta input por prompt y retorna el 
 function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con cada caracter de la palabra
     if (onlyOneSimpleLetter(guessCharacter) === true) {
         if (checkIfChecked(guessCharacter) === false) {
-            charactersChecked.push(guessCharacter)
             var isCorrect = false
             for (var i = 0; i < word.length; i++) {
                 if (guessCharacter === word[i]) {
@@ -49,20 +48,22 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
                 }
             }
             if (isCorrect === false) { // si la letra no coincide con ninguna de las letras de la palabra, 
+                charactersChecked.push(guessCharacter)
                 attempts += 1 // suma un intento a attempts
-                alert('Error, llevas ' + attempts + ' intentos de ' + maxAttempts) // retorna alert con los intentos
+                var dollDraw = drawDoll(attempts)
+                alert('Error, llevas ' + attempts + ' intentos de ' + maxAttempts + '\n' + dollDraw) // retorna alert con los intentos
             } else {
                 if (correctCharacters === word.length) {
                     alert('¡Has ganado!. Efectivamente, la palabra era ' + word + '. Volvamos a jugar')
                     resetGame()
                 } else {
-                    alert('¡Vas bien!')
+                    alert('¡Vas bien! Sigues con ' + attempts + ' intentos de ' + maxAttempts)
                 }
             }
             if (attempts < maxAttempts) { //si no has perdido sigues jugando
                 askCharacter()
             } else {
-                alert('Has perdido.' + attempts + ' intentos de ' + maxAttempts + '.\nLa palabra era ' + word + '. Volvamos a jugar :)')
+                alert('Has perdido. ' + attempts + ' intentos de ' + maxAttempts + '.\nLa palabra era ' + word + '. Volvamos a jugar :)')
                 resetGame()
             }
 
@@ -141,6 +142,75 @@ function resetGame() { // resetea variables para volver a empezar
     charactersChecked = []
     askWord()
     askCharacter()
+}
+
+function drawDoll(attempts) {
+    var dollDraw = [
+        `
+           _______
+          |/      |
+          |      
+          |      
+          |            
+         _|_
+        |   |
+        `,
+        `
+           _______
+          |/      |
+          |      (_)
+          |      
+          |            
+         _|_
+        |   |
+        `,
+        `
+           _______
+          |/      |
+          |      (_)
+          |       |
+          |       |      
+         _|_
+        |   |
+        `,
+        `
+           _______
+          |/      |
+          |      (_)
+          |      \\|
+          |       |      
+         _|_
+        |   |
+        `,
+        `
+           _______
+          |/      |
+          |      (_)
+          |      \\|/
+          |       |      
+         _|_
+        |   |
+        `,
+        `
+           _______
+          |/      |
+          |      (_)
+          |      \\|/
+          |       |             
+         _|_     / 
+        |   |
+        `,
+        `
+           _______
+          |/      |
+          |      (_)
+          |      \\|/
+          |       |             
+         _|_     / \\
+        |   |
+        `
+    ]
+    return dollDraw[attempts]
 }
 
 askWord()
