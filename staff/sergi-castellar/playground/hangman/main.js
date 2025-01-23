@@ -1,6 +1,5 @@
 console.clear()
 
-
 var word = '' //palabra a adivinar
 var matches = [] // array de almacenaje de '_' y letras adivinadas
 var attempts = 0 //intentos actuales
@@ -11,8 +10,13 @@ var correctCharacters = 0 // letras de la palabra que llevas adivinadas
 
 function askWord() { // pregunta por prompt la palabra a adivinar
     var localWord = prompt('Introduce la palabra a adivinar')
-    word = localWord
-    initialLowBarArray()
+    if (isWordInLowerCase(localWord) === true) {
+        word = localWord
+        initialLowBarArray()
+    } else {
+        alert('Nen siusplau no et passis de llest')
+        askWord()
+    }
 }
 
 function initialLowBarArray() { // funcion para mostrar primero los '_'
@@ -22,7 +26,13 @@ function initialLowBarArray() { // funcion para mostrar primero los '_'
 }
 
 function askCharacter() { // funcion que pregunta input por prompt y retorna el input
-    guessCharacter = prompt('prueba con una letra \n' + matches)
+    var printMatches = printArray(matches)
+    var printCharactersChecked = printArray(charactersChecked)
+    if (charactersChecked.length === 0) {
+        guessCharacter = prompt('prueba con una letra \n' + printMatches)
+    } else {
+        guessCharacter = prompt('prueba con una letra \n' + printMatches + '\nLetras intentadas: ' + printCharactersChecked)
+    }
     checkGuessCharacterMatches(guessCharacter)
 }
 
@@ -40,13 +50,13 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
             }
             if (isCorrect === false) { // si la letra no coincide con ninguna de las letras de la palabra, 
                 attempts += 1 // suma un intento a attempts
-                alert('Error, llevas ' + attempts + ' intentos de ' + maxAttempts + '\n' + charactersChecked) // retorna alert con los intentos
+                alert('Error, llevas ' + attempts + ' intentos de ' + maxAttempts) // retorna alert con los intentos
             } else {
                 if (correctCharacters === word.length) {
                     alert('¡Has ganado!. Efectivamente, la palabra era ' + word + '. Volvamos a jugar')
                     resetGame()
                 } else {
-                    alert('¡Vas bien!\n' + matches)
+                    alert('¡Vas bien!')
                 }
             }
             if (attempts < maxAttempts) { //si no has perdido sigues jugando
@@ -57,7 +67,7 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
             }
 
         } else {
-            alert('Esa ya la has dicho, que no te enteras. Sigues con ' + attempts + ' intentos de ' + maxAttempts + '\n' + matches)
+            alert('Esa ya la has dicho, que no te enteras. Sigues con ' + attempts + ' intentos de ' + maxAttempts)
             askCharacter()
         }
     } else if (isThisTheResult(guessCharacter) === true) {
@@ -85,6 +95,15 @@ function checkIfChecked(guessCharacter) { // mira si esa letra ya ha sido introd
     return isChecked
 }
 
+function isWordInLowerCase(input) {
+    var regex = /^[a-z]+$/
+    if (regex.test(input)){
+        return true
+    } else {
+        return false
+    }
+}
+
 function onlyOneSimpleLetter(input) {
     var regex = /^[a-z]$/
     if (regex.test(input)){
@@ -103,6 +122,14 @@ function isThisTheResult(input) {
     } else {
         return false
     }
+}
+
+function printArray(arr) {
+    var arrString = ''
+    for (var i = 0; i < arr.length; i++) {
+        arrString += arr[i] + ' '
+    }
+    return arrString
 }
 
 function resetGame() { // resetea variables para volver a empezar
