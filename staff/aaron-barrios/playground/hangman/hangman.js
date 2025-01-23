@@ -41,11 +41,11 @@ function askCharacter() {
         }
     }
     else if (guessWord === 'no') {
-        guessCharacter = prompt('Which character?')
+        guessCharacter = prompt('character?')
         guessCheckCharacter()
     }
     else {
-        guessCharacter = prompt('Which character?')
+        guessCharacter = prompt('character?')
         guessCheckCharacter()
     }
 
@@ -60,6 +60,7 @@ function guessCheckCharacter() {
                 attempts++
                 alert('character already wrote')
                 found = true
+                break
             } else {
                 matches[j] = guessCharacter
                 guessedCount++
