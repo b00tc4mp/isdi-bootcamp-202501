@@ -54,4 +54,6 @@ reduce el array a un único valor.
 ```sh
 ordena los elementos.
 ```
+## stack & heap
 
+[table](https://1drv.ms/x/c/b2efa61216e23dbe/EQvlV7JkbP9MuWbGHuMZmIEBvK2UY0kdB2LJ1G0tAdg5eA)
