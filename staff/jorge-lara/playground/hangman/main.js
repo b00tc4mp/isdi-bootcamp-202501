@@ -7,6 +7,7 @@ do{
 let matchesString = '';
 let attemps = 6;
 let character = '';
+let stickman = "";
 let matches = [];
 let end = false;
 
@@ -26,9 +27,34 @@ function printMatches() {
 
 function askCharacter() {
     do {
-        character = prompt("Write a character\nProgress: " + printMatches() + "\nAttempts left: " + attemps);
+        character = prompt("Write a character\nProgress: " + printMatches() + "\nAttempts left: " + attemps + "\n" + drawCharacter());
     } while (!(character.length == 1))
 
+}
+
+function drawCharacter() {
+
+    switch (attemps) {
+    case 5:
+        stickman += "-----\n";
+        break;
+    case 4:
+        stickman += "   |  \n";
+        break;
+    case 3:
+        stickman += "  O  \n";
+        break;
+    case 2:
+        stickman += "  ▋ \n";
+        break;
+    case 1:
+        stickman += "  ❘ ❘  \n";
+        break;
+    case 0:
+        stickman += "  L L  \n";
+        break;
+    }
+    return stickman;
 }
 
 function checkCharacter() {
@@ -70,7 +96,7 @@ function coreGame() {
     } while (!end && attemps > 0);
 
     if (attemps == 0) {
-        alert("You lose! " + "The word was: " + word);
+        alert("You lose! " + "The word was: " + word + "\n" + drawCharacter());
     } else {
         alert("Congratulations, you found the word! " + word);
     }
