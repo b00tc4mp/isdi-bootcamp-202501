@@ -14,9 +14,8 @@ var guessCharacter = ''
 function printMatches() {
     var matchesString = ''
 
-    for (var i = 0; i < matches.length; i++) {
-        matchesString += matches[i] + (i < matches.length - 1 ? ' ' : '')
-    }
+    for (var i = 0; i < matches.length; i++)
+        matchesString += matches[i] + ' '
 
     console.log(matchesString)
 }
@@ -59,9 +58,13 @@ function printStatus() {
     else {
         var match = true
 
-        for (var i = 0; (i < matches.length) && match; i++)
-            if (matches[i] !== word[i])
+        for (var i = 0; i < matches.length; i++) {
+            if (matches[i] !== word[i]) {
                 match = false
+
+                break
+            }
+        }
 
         if (match === true)
             console.log('you win!')

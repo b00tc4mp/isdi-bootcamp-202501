@@ -15,7 +15,9 @@ function printMatches() {
     var matchesString = ''
 
     for (var i = 0; i < matches.length; i++) {
-        matchesString += matches[i] + (i < matches.length - 1 ? ' ' : '')
+        matchesString += matches[i]
+
+        if (i < matches.length - 1) matchesString += ' '
     }
 
     console.log(matchesString)
@@ -59,9 +61,10 @@ function printStatus() {
     else {
         var match = true
 
-        for (var i = 0; (i < matches.length) && match; i++)
+        for (var i = 0; (i < matches.length) && match; i++) {
             if (matches[i] !== word[i])
                 match = false
+        }
 
         if (match === true)
             console.log('you win!')

@@ -14,9 +14,8 @@ var guessCharacter = ''
 function printMatches() {
     var matchesString = ''
 
-    for (var i = 0; i < matches.length; i++) {
-        matchesString += matches[i] + (i < matches.length - 1 ? ' ' : '')
-    }
+    for (var i = 0; i < matches.length; i++)
+        matchesString += matches[i] + ' '
 
     console.log(matchesString)
 }
@@ -46,26 +45,7 @@ function checkGuessCharacterMatches() {
         }
     }
 
-    if (characterFound === false && attemps < maxAttemps) attemps++
-}
-
-function printStatus() {
-    var remainingAttemps = maxAttemps - attemps
-
-    console.log('you have ' + remainingAttemps + ' attemps')
-
-    if (remainingAttemps === 0)
-        console.log('you loose')
-    else {
-        var match = true
-
-        for (var i = 0; (i < matches.length) && match; i++)
-            if (matches[i] !== word[i])
-                match = false
-
-        if (match === true)
-            console.log('you win!')
-    }
+    if (characterFound === false) attemps++
 }
 
 
