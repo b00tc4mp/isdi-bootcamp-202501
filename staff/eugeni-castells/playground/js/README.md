@@ -4,6 +4,10 @@
 
 console.dir() -> Prints the object and let you inspect it.
 
+### STYLES
+
+Google style: https://google.github.io/styleguide/jsguide.html
+
 ### BROWSER DEBUGGER
 
 #### Inspector -> Source -> Snippets -> New Snippets
