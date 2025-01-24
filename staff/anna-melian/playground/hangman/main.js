@@ -34,12 +34,12 @@ function checkGuessCharacterMatches() {
             
         }
     if (anyone) {
-        console.log('Wrong')
+        console.log('%cWrong', 'color: red; background-color: white; font-size: 15px; font-weight: bold;')
         attemps++
         console.log("You have " + (maxAttemps - attemps) + " attemps left")
     }
     else {
-        console.log('Correct')
+        console.log('%cCorrect', 'color: green; background-color: white; font-size: 15px; font-weight: bold;')
     }
     } 
 
@@ -53,11 +53,11 @@ function winOrDefeat() {
         }
         }
     if (allEquals) {
-        console.log('You win!')
+        console.log('%cYou win!', 'color: yellow; font-size: 20px; font-weight: bold;')
         end = true
     }
     if (attemps===maxAttemps) {
-        console.log('You lost. The secret word was: ' + word)
+        console.log('%cYou lost. The secret word was: ' + word , 'color: black; background-color: white; font-size: 20px; font-weight: bold;')
         end = true
         }
 }
