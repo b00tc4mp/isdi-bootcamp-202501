@@ -54,16 +54,26 @@ function checkGuessCharacterMatches() {
 }
 
 function asks() {
+    var lose = 0
     while (equalCharacters!=word.length) {
         if (attemps!=maxAttemps) {
         askCharacter()
         checkGuessCharacterMatches()
         }
         else {
-        console.log("You lose!" + " The secret word was " + word)
+            console.log("You lose!" + " The secret word was: " + word)
+            lose++
+            break
         }
     }
-    console.log("Congratulations! You win!!!")
+    if (lose === 0) {
+        console.log("Congratulations! You win!!!")
+    
+    }
+    else {
+        
+    }
+    
 }
 console.log("...")
 printMatches()
