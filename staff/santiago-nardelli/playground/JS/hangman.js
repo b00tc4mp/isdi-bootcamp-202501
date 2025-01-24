@@ -15,6 +15,9 @@ var guessCharacter = ''
 for (var i = 0; i < word.length; i++)
     matches[i] = '_'
 
+// 1.1 Definir una función que imprima los caracteres a adivinar
+// 1.2 Recorrer el array de caracteres y concatenarlos en un string
+// 1.3 Imprimir el string en la consola
 function printMatches() {
     // Inicializamos una variable vacía para almacenar el string que vamos a construir 
     // lo que buscamos aqui es pasar de un array  de "_ "_" "_"_" _" a un string "_ _ _ _ _"
