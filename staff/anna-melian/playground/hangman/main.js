@@ -49,6 +49,7 @@ function checkGuessCharacterMatches() {
     else {
         console.log("Wrong!")
         attemps++
+        console.log("You have " + (maxAttemps - attemps) + " attemps left")
     }
     
 }
