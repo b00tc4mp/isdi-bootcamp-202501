@@ -6,9 +6,9 @@ for (var i = 0; i < word.length; i++)
     matches[i] = "_"
 
 var attemps = 0
-var maxAttemps = 6
+var maxAttemps = 4
 var guessCharacter = ""
-var equalCharacters = 0
+var end = false
 
 function printMatches() {
     var matchesString = ""
@@ -20,62 +20,62 @@ function printMatches() {
 }
 
 function askCharacter() {
-    guessCharacter = prompt("Choose a character")
-
-    
+    guessCharacter = prompt("Choose a character")    
 }
-
 
 
 function checkGuessCharacterMatches() {
-    var correct = 0
-    for (i = 0; i < word.length; i++) {
-        if (guessCharacter!=word[i]) {
-            
-            
-            }
-        else {
-            correct++
-            equalCharacters++
+    var anyone = true
+    for (var i = 0; i < word.length; i++) {
+        if (guessCharacter===word[i]) {
             matches[i] = guessCharacter
+            anyone = false
+            }
             
         }
-        
-    }
-    if (correct != 0) {
-        printMatches()
-        console.log("Correct!")
-    }
-    else {
-        console.log("Wrong!")
+    if (anyone) {
+        console.log('Wrong')
         attemps++
         console.log("You have " + (maxAttemps - attemps) + " attemps left")
     }
-    
+    else {
+        console.log('Correct')
+    }
+    } 
+
+
+
+function winOrDefeat() {
+    var allEquals = true
+    for (var i = 0; i < word.length; i++) {
+        if (matches[i]!=word[i]) {
+            allEquals = false
+        }
+        }
+    if (allEquals) {
+        console.log('You win!')
+        end = true
+    }
+    if (attemps===maxAttemps) {
+        console.log('You lost. The secret word was: ' + word)
+        end = true
+        }
 }
 
-function asks() {
-    var lose = 0
-    while (equalCharacters!=word.length) {
-        if (attemps!=maxAttemps) {
+function play() {
+    while (end != true) {
         askCharacter()
         checkGuessCharacterMatches()
+        if (attemps!=maxAttemps) {
+            printMatches()
         }
-        else {
-            console.log("You lose!" + " The secret word was: " + word)
-            lose++
-            break
-        }
-    }
-    if (lose === 0) {
-        console.log("Congratulations! You win!!!")
-    
-    }
-    else {
+        winOrDefeat()
         
     }
-    
+        
 }
+
+
 console.log("...")
 printMatches()
-asks()
+play()
