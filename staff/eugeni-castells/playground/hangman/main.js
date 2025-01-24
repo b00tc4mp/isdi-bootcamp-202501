@@ -11,6 +11,7 @@ var resetGame = false;
 var oneCha = "";
 var hangMessage = "";
 var repeatedErrorMessage = "";
+var playAgain = "";
 function askWord() {
   word = prompt(`What is the secret word?`);
 }
@@ -90,6 +91,15 @@ function guessCharacter() {
       break;
   }
 }*/
+function playGameAgain() {
+  playAgain = prompt("Do you want to play again? Type 'yes' or 'no' ");
+  if (playAgain === "yes") {
+    askWord();
+    attempts = 0;
+  } else if (playAgain === "no") {
+    alert("Okay, hope to see you soon!");
+  }
+}
 function isGameWon() {
   if (guessedMatches === word.length) {
     alert(
@@ -99,12 +109,14 @@ function isGameWon() {
       `
     );
     attempts = 6;
+    playGameAgain();
   } else if (guessedMatches < word.length && attempts < maxAttempts) {
     printAttempts();
   } else {
     alert(`Oh no, you lost :( The word was ${word}   ${hangMessage}`);
   }
 }
+
 function printAttempts() {
   if (maxAttempts - attempts > 1) {
     alert(`${repeatedChaMessage} ${repeatedErrorMessage} ${
@@ -128,7 +140,11 @@ function printAttempts() {
 function returnMatchesString() {
   matchString = "";
   for (let i = 0; i < matches.length; i++) {
-    matchString += matches[i] + " ";
+    if (i < matches.length - 1) {
+      matchString += matches[i] + " ";
+    } else if (i === matches.length - 1) {
+      matchString += matches[i];
+    }
   }
 }
 
