@@ -5,7 +5,8 @@ var matches = [] // array de almacenaje de '_' y letras adivinadas
 var attempts = 0 //intentos actuales
 var maxAttempts = 6 //intentos maximos
 var guessCharacter = '' //intento de letra dada
-var charactersChecked = [] // array de letras ya introducidas
+var correctCharactersChecked = [] // array de letras ya introducidas correctas
+var incorrectCharactersChecked = [] // array de letras ya introducidas incorrectas
 var correctCharacters = 0 // letras de la palabra que llevas adivinadas
 
 function askWord() { // pregunta por prompt la palabra a adivinar
@@ -27,8 +28,8 @@ function initialLowBarArray() { // funcion para mostrar primero los '_'
 
 function askCharacter() { // funcion que pregunta input por prompt y retorna el input
     var printMatches = printArray(matches)
-    var printCharactersChecked = printArray(charactersChecked)
-    if (charactersChecked.length === 0) {
+    var printCharactersChecked = printArray(incorrectCharactersChecked)
+    if (incorrectCharactersChecked.length === 0) {
         guessCharacter = prompt('prueba con una letra \n' + printMatches)
     } else {
         guessCharacter = prompt('prueba con una letra \n' + printMatches + '\nLetras intentadas: ' + printCharactersChecked)
@@ -48,11 +49,12 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
                 }
             }
             if (isCorrect === false) { // si la letra no coincide con ninguna de las letras de la palabra, 
-                charactersChecked.push(guessCharacter)
+                pushToArray(guessCharacter, incorrectCharactersChecked) // mete todas las letras intentadas en el array charactersChecked
                 attempts += 1 // suma un intento a attempts
                 var dollDraw = drawDoll(attempts)
                 alert('Error, llevas ' + attempts + ' intentos de ' + maxAttempts + '\n' + dollDraw) // retorna alert con los intentos
             } else {
+                pushToArray(guessCharacter, correctCharactersChecked) // mete todas las letras intentadas en el array charactersChecked
                 if (correctCharacters === word.length) {
                     alert('¡Has ganado!. Efectivamente, la palabra era ' + word + '. Volvamos a jugar')
                     resetGame()
@@ -88,8 +90,13 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
 
 function checkIfChecked(guessCharacter) { // mira si esa letra ya ha sido introducida en esta partida
     var isChecked = false
-    for (var i = 0; i < charactersChecked.length; i++) {
-        if (guessCharacter === charactersChecked[i]) {
+    for (var i = 0; i < correctCharactersChecked.length; i++) { //!!!!
+        if (guessCharacter === correctCharactersChecked[i]) {
+            isChecked = true
+        }
+    }
+    for (var i = 0; i < incorrectCharactersChecked.length; i++) { //!!!!
+        if (guessCharacter === incorrectCharactersChecked[i]) {
             isChecked = true
         }
     }
@@ -133,13 +140,19 @@ function printArray(arr) {
     return arrString
 }
 
+function pushToArray(variable, array) {
+    var newLastPosition = array.length
+    array[newLastPosition] = variable
+}
+
 function resetGame() { // resetea variables para volver a empezar
     word = ''
     guessCharacter = ''
     attempts = 0
     correctCharacters = 0
     matches = []
-    charactersChecked = []
+    correctCharactersChecked = []
+    incorrectCharactersChecked = []
     askWord()
     askCharacter()
 }
@@ -215,3 +228,4 @@ function drawDoll(attempts) {
 
 askWord()
 askCharacter()
+
