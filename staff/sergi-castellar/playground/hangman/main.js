@@ -29,10 +29,11 @@ function initialLowBarArray() { // funcion para mostrar primero los '_'
 function askCharacter() { // funcion que pregunta input por prompt y retorna el input
     var printMatches = printArray(matches)
     var printCharactersChecked = printArray(incorrectCharactersChecked)
+    var dollDraw = drawDoll(attempts)
     if (incorrectCharactersChecked.length === 0) {
-        guessCharacter = prompt('prueba con una letra \n' + printMatches)
+        guessCharacter = prompt('prueba con una letra \n' + printMatches + '\n' + dollDraw)
     } else {
-        guessCharacter = prompt('prueba con una letra \n' + printMatches + '\nLetras intentadas: ' + printCharactersChecked)
+        guessCharacter = prompt('prueba con una letra \n' + printMatches + '\nLetras intentadas: ' + printCharactersChecked + '\n' + dollDraw)
     }
     checkGuessCharacterMatches(guessCharacter)
 }
@@ -51,8 +52,7 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
             if (isCorrect === false) { // si la letra no coincide con ninguna de las letras de la palabra, 
                 pushToArray(guessCharacter, incorrectCharactersChecked) // mete todas las letras intentadas en el array charactersChecked
                 attempts += 1 // suma un intento a attempts
-                var dollDraw = drawDoll(attempts)
-                alert('Error, llevas ' + attempts + ' intentos de ' + maxAttempts + '\n' + dollDraw) // retorna alert con los intentos
+                alert('Error, llevas ' + attempts + ' intentos de ' + maxAttempts) // retorna alert con los intentos
             } else {
                 pushToArray(guessCharacter, correctCharactersChecked) // mete todas las letras intentadas en el array charactersChecked
                 if (correctCharacters === word.length) {
