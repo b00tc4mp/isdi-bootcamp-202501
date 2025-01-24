@@ -6,7 +6,7 @@
 4. Permisos: chmod (permisos)(archivo), chown (usuario):(grupo) (archivo)
 5. Otros: find . -name"<
 
-## pwd ()
+## pwd (print working directory)
 Si  estás perdido en el sistema de archivos este comando te dice donde estás
 
 ## ls (listar archivos y carpetas)
@@ -14,7 +14,7 @@ Si  estás perdido en el sistema de archivos este comando te dice donde estás
 - ls -l: muestra detalles como permisos, tamaño y fecha
 - ls -la: incluye archivos ocultos (los que empiezan por .)
 
-## cd (cambiar directorio)
+## cd (change directory)
 cd Documentos
 
 ## volver al directorio anterior

@@ -1,4 +1,12 @@
 # Declarar variables
+var =1
+Var s=
+definir valores primitivos:
+
+true se define con valor númerico de 1
+false 0
+
+## var
 
 ## let
 let (valor que puede cambiar) 
@@ -69,3 +77,56 @@ let b = 3;
 let residuo = a % b;
 console.log(residuo); 
 // Salida: 1 (10 dividido entre 3 da 3 con residuo 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+heap= memoria más amplia y menos esturcturada, almacena datos dinámicos y objetos. mayor capacidad, mas lento que el stack objetos y funciones 
+const persona = { 
+  nombre: "Juan", // Se almacena en el heap
+  edad: 30        // También en el heap
+};
+
+const otraPersona = persona; // Referencia al mismo objeto en el heap
+
+
+
+stack= memoria limitada, tamaño fijo, no sirve para almacenar grandes cantidades de datos. alamacena números, cadenas y valores booleanos 
+
+alamacena números, cadenas y valores booleanos 
+function sumar(a, b) {
+  return a + b;
+}
+
+function calcular() {
+  const x = 10; // Se guarda en el stack
+  const y = 20; // Se guarda en el stack
+  return sumar(x, y); // Llamada a función: se agrega al stack
+}
+
+calcular(); // La ejecución y los datos se manejan en el stack
