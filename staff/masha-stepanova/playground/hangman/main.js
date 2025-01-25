@@ -1,7 +1,6 @@
 
        var word = prompt('Write here your secret word:') // genera una ventana emergente que guarda la palabra escrita como valor de la variable.
        var matches = [] // para guardar los matches de letras que se adivinan.
-     //  var attempts = 0 
        var lives = 6 // el máximo número de fallos permitidos
        var guessCharacter = '' // para guardar la letra que usaremos para adivinar
    
