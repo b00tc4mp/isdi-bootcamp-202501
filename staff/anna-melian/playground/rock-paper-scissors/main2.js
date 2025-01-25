@@ -1,6 +1,8 @@
 console.clear()
 var namePlayer1 =''
 var optionPlayer1 = ''
+var player1Punctuation = 0
+var machinePunctuation = 0
 
 var listOptions = ['ROCK','PAPER','SCISSORS']
 // Seleccionar un índice aleatorio
@@ -32,6 +34,7 @@ function validOptionPlayer1() {
     else {
         console.log('This is not a valid answer, the options are : ROCK, PAPER or SCISSORS and has to be in uppercase.')
         choosingOptionPlayer1()
+        validOptionPlayer1()
     }
 }
 
@@ -43,46 +46,60 @@ function optionsComparation() {
             console.log(namePlayer1 + ' has choose ' + optionPlayer1)
             console.log('The machine has choose ' + randomOption)
             console.log(randomOption + ' wins ' + optionPlayer1 + '. The machine WIN!')
+            machinePunctuation++
         }
         else if (optionPlayer1===rock && randomOption===scissors) {
             console.log(namePlayer1 + ' has choose ' + optionPlayer1)
             console.log('The machine has choose ' + randomOption)
             console.log(optionPlayer1 + ' wins ' + randomOption + '. ' + namePlayer1 + " WIN!")
+            player1Punctuation++
         }
         else if (optionPlayer1===paper && randomOption===rock) {
             console.log(namePlayer1 + ' has choose ' + optionPlayer1)
             console.log('The machine has choose ' + randomOption)
             console.log(optionPlayer1 + ' wins ' + randomOption + '. ' + namePlayer1 + " WIN!")
+            player1Punctuation++
         }
         else if (optionPlayer1===paper && randomOption===scissors) {
             console.log(namePlayer1 + ' has choose ' + optionPlayer1)
             console.log('The machine has choose ' + randomOption)
             console.log(randomOption + ' wins ' + optionPlayer1 + '. The machine WIN!')
+            machinePunctuation++
         }
         else if (optionPlayer1===scissors && randomOption===rock) {
             console.log(namePlayer1 + ' has choose ' + optionPlayer1)
             console.log('The machine has choose ' + randomOption)
             console.log(randomOption + ' wins ' + optionPlayer1 + '. The machine WIN!')
+            machinePunctuation++
         }
         else if (optionPlayer1===scissors && randomOption===paper) {
             console.log(namePlayer1 + ' has choose ' + optionPlayer1)
             console.log('The machine has choose ' + randomOption)
             console.log(optionPlayer1 + ' wins ' + randomOption + '. ' + namePlayer1 + " WIN!")
+            player1Punctuation++
         }
             
 }
 
+function gameScore() {
+    console.log('Game score: ' + namePlayer1 + ': ' + player1Punctuation + '  ' + 'Machine: ' + machinePunctuation)
+}
+
 
 function play() {
-    initialStatment()
     choosingOptionPlayer1()
+    validOptionPlayer1()
     while (validOption1 === false) {
+        choosingOptionPlayer1()
         validOptionPlayer1()
     }
     optionsComparation()
+    gameScore()
     
 }
 
 
 
 console.log('...')
+initialStatment()
+play()
