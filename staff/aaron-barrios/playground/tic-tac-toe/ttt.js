@@ -35,13 +35,13 @@ function askPosition() {
 
             if (checkWinner(symbol)) {
                 alert(`Player ${playerName} wins! 🏆`)
-                restartGame()
+                resetGame()
                 return
             }
 
             if (checkDraw()) {
                 alert('It is a draw! 🤝')
-                restartGame()
+                resetGame()
                 return
             }
 
@@ -140,6 +140,17 @@ function restartGame() {
     currentPlayer = true
     printBoard();
     askPosition()
+}
+
+function resetGame() {
+    var ha = prompt('Restart game? (yes - no)')
+
+    if (ha === 'yes') {
+        restartGame()
+    }
+    else {
+        alert('Ciao')
+    }
 }
 
 printBoard()

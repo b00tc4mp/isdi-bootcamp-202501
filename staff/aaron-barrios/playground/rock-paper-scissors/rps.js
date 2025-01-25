@@ -5,6 +5,7 @@ console.clear()
 
 var p1target
 var p2target
+
 var moves = ['rock', 'paper', 'scissors']
 
 var isGameOver = false
@@ -19,21 +20,19 @@ function winCon() {
                         ${player1} wins! 🏆`)
         restartGame()
     }
-    else if (p2target === moves[0] && p1target === moves[2] ||
-        p2target === moves[1] && p1target === moves[0] ||
-        p2target === moves[2] && p1target === moves[1]) {
+    else if (p2target === p1target) {
+        icons()
+        alert(` ${player1}: ${p1target} vs ${p2target} :${player2}
+            IT IS A DRAW!!!`)
+        isGameOver = false
+        restartGame()
+    }
+    else {
         isGameOver = true
         icons()
         alert(` ${player1}: ${p1target} vs ${p2target} :${player2}
                         ${player2} wins! 🏆`)
         restartGame()
-    }
-    else {
-        icons()
-        alert(` ${player1}: ${p1target} vs ${p2target} :${player2}
-            IT IS A DRAW!!!`)
-        isGameOver = false
-        startGame()
     }
 }
 
