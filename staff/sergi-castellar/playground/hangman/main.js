@@ -90,12 +90,12 @@ function checkGuessCharacterMatches(guessCharacter) { //comparar letra dada con 
 
 function checkIfChecked(guessCharacter) { // mira si esa letra ya ha sido introducida en esta partida
     var isChecked = false
-    for (var i = 0; i < correctCharactersChecked.length; i++) { //!!!!
+    for (var i = 0; i < correctCharactersChecked.length; i++) {
         if (guessCharacter === correctCharactersChecked[i]) {
             isChecked = true
         }
     }
-    for (var i = 0; i < incorrectCharactersChecked.length; i++) { //!!!!
+    for (var i = 0; i < incorrectCharactersChecked.length; i++) { 
         if (guessCharacter === incorrectCharactersChecked[i]) {
             isChecked = true
         }
@@ -144,6 +144,35 @@ function pushToArray(variable, array) {
     var newLastPosition = array.length
     array[newLastPosition] = variable
 }
+
+/*function giveHint() {
+    var characterChosen = generateCharacter()
+    if (isCharacterAlreadyShown(characterChosen) === false) {
+        //mostrarlo y pushearlo
+    } else {
+        giveHint()
+    }
+}
+
+function generateCharacter() {
+    var nPosition = giveCharacterPosition(word.length) // genera un numero random entre 0 y word.length-1
+    var characterChosen = word[nPosition] // la letra provisional elegida para darla como hint
+    return characterChosen
+}
+
+function isCharacterAlreadyShown(characterChosen) { //genera un numero aleatorio que da una letra aleatoria de la palabra a adivinar y te devuelve si ya esta dicha
+    var isAlreadyShown = false // variable de control
+    for (var i = 0; i < correctCharactersChecked.length; i++) { //bucle para ver si esa letra esta ya dada o no
+        if (characterChosen === correctCharactersChecked[i]) {
+            isAlreadyShown = true
+        } 
+    }
+    return isAlreadyShown
+}
+
+function giveCharacterPosition(n) { //genera un numero aleatorio entre 0 y n-1
+    return Math.floor(Math.random() * (n))
+}*/
 
 function resetGame() { // resetea variables para volver a empezar
     word = ''
