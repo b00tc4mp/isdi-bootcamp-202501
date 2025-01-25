@@ -1,5 +1,9 @@
 var word = prompt('Write the word!')
-//var word = 'water'
+
+function sortWord() {
+    word = word.toLowerCase()
+}
+
 var matches = []
 
 for (var i = 0; i < word.length; i++)
@@ -63,7 +67,7 @@ function guessCheckCharacter() {
     //convertir todo a minuscula
     guessCharacter = guessCharacter.toLowerCase()
 
-    //limitar las incorrectas
+    //limitar las letras incorrectas
     if (wrongCharacters.includes(guessCharacter)) {
         alert(`Ya intentaste la letra "${guessCharacter}" y fue incorrecta. Intenta otra.`)
         askCharacter()
@@ -151,8 +155,10 @@ function winorLose() {
 }
 
 
-
+sortWord()
 printMatches()
 askCharacter()
 
-///HACERLO CON ALERTA 
+///QUITAR BREAKS
+///CONDICION DE 1 O + LETRAS
+///CAMBIAR VARIABLE ATTEMPTS -> LIVES
