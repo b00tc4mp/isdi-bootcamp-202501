@@ -1,6 +1,6 @@
 console.clear()
 
-var possiblePlays = ['rock 👊', 'paper 🤚', 'scissors ✌️']
+var possiblePlays = ['rock', 'paper', 'scissors']
 var numberOfGames = 0 // total de partidas que el jugador ha elegido jugar
 var numberOfGamesPlayed = 0 // contador del numero de partidas que se llevan
 var gamesWonPlayer = 0 // contador de las partidas ganadas que lleva el jugador en esta ronda de partidas
@@ -23,7 +23,7 @@ function getOverallWinner() {
 }
 
 function playTurn() {
-    var playerInput = prompt(`Round ${numberOfGamesPlayed+1}/${numberOfGames}: it's your turn\nChoose your move by entering one of the following options.\n- r for 'Rock'👊\n- p for 'Paper'🤚\n- s for 'Scissors'✌️\nReady?`).toLowerCase()
+    var playerInput = prompt(`Round ${numberOfGamesPlayed+1}/${numberOfGames}: it's your turn\nChoose your move by entering one of the following options.\n- r for 'Rock'👊\n- p for 'Paper'🤚\n- s for 'Scissors'✌️\nReady when you are ;)`).toLowerCase()
     var playerPlay = ''
     var cpuPlay = ''
     var gameResult= ''
@@ -39,12 +39,13 @@ function playTurn() {
         } else {
             gamesDrawn ++
         }
-        alert(selectEndingPhrase(gameResult) + `\n\nYour play: ${playerPlay}\n\nCPU play: ${cpuPlay}\n\nWinner: ${gameResult}\n\nYou won ${gamesWonPlayer} games\nCpu won ${gamesWonCpu} games\nYou both have drawn ${gamesDrawn} games`)
+        alert(selectEndingPhrase(gameResult) + `\n\nYour play: ${playerPlay} ${selectPlayEmoji(playerPlay)}\n\nCPU play: ${cpuPlay} ${selectPlayEmoji(cpuPlay)}\n\nWinner: ${gameResult} ${selectWinnerEmoji(gameResult)}\n\nYou won ${gamesWonPlayer} games\nCpu won ${gamesWonCpu} games\nYou both have drawn ${gamesDrawn} games`)
         if (numberOfGamesPlayed < numberOfGames) {
             playTurn()
         } else {
             var overallWinner = getOverallWinner()
             var finalPhrase = ''
+            var overallWinnerEmoji = selectWinnerEmoji(overallWinner)
             switch (overallWinner) {
                 case 'draw': finalPhrase = `End of the agreed-upon ${numberOfGames} rounds. The final result is a ${overallWinner}`
                     break
@@ -53,6 +54,7 @@ function playTurn() {
                 case 'cpu': finalPhrase = `End of the agreed-upon ${numberOfGames} rounds. Winner: ${overallWinner}`
                     break
             }
+            finalPhrase += ' ' + overallWinnerEmoji
             alert(finalPhrase)
             if (confirm(`Nice game! Do you want to restart the game?`)){
                 restartGame()
@@ -80,15 +82,15 @@ function evaluateResult(playerPlay, cpuPlay) {
         result = 'nobody'
     } // empate
 
-    else if (playerPlay === 'rock 👊' && cpuPlay === 'paper 🤚' ||
-    playerPlay === 'paper 🤚' && cpuPlay === 'scissors ✌️' ||
-    playerPlay === 'scissors ✌️' && cpuPlay === 'rock 👊') {
+    else if (playerPlay === 'rock' && cpuPlay === 'paper' ||
+    playerPlay === 'paper' && cpuPlay === 'scissors' ||
+    playerPlay === 'scissors' && cpuPlay === 'rock') {
         result = 'cpu'
     } // gana cpu
 
-    else if (playerPlay === 'rock 👊' && cpuPlay === 'scissors ✌️' ||
-    playerPlay === 'paper 🤚' && cpuPlay === 'rock 👊' ||
-    playerPlay === 'scissors ✌️' && cpuPlay === 'paper 🤚') {
+    else if (playerPlay === 'rock' && cpuPlay === 'scissors' ||
+    playerPlay === 'paper' && cpuPlay === 'rock' ||
+    playerPlay === 'scissors' && cpuPlay === 'paper') {
         result = 'player'
     } // gana player
     return result
@@ -122,6 +124,16 @@ function isValidPlay(input) { // regex para aceptar solo r, p o s
     } else {
         return false
     }
+}
+
+function selectWinnerEmoji(gameResult) {
+    var winnerEmoji = gameResult === 'cpu' ? '💻' : gameResult === 'player' ? '😁' : '✖️'
+    return winnerEmoji
+}
+
+function selectPlayEmoji(play) {
+    var playEmoji = play === 'rock' ? '👊' : play === 'paper' ? '🤚' : '✌️'
+    return playEmoji
 }
 
 function restartGame() {
