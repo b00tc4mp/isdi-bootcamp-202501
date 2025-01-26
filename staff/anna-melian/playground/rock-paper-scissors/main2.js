@@ -98,8 +98,23 @@ function play() {
     
 }
 
+function keepPlaying() {
+    var keepPlay = prompt('Do you want to keep playing? YES or NO');
+    while (keepPlay !== 'YES' && keepPlay !== 'NO') {
+        console.log('This is not a valid answer, the options are: YES or NO. Has to be in uppercase.');
+        keepPlay = prompt('Do you want to keep playing? YES or NO');
+    }
+    return keepPlay;  
+}
 
 
-console.log('...')
-initialStatment()
-play()
+console.log('...');
+initialStatment(); 
+
+var keepPlay = 'YES'; 
+while (keepPlay === 'YES') {
+    play();  
+    keepPlay = keepPlaying();  
+}
+
+console.log('Thank you for playing!');
