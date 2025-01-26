@@ -5,6 +5,7 @@ var numberOfGames = 0 // total de partidas que el jugador ha elegido jugar
 var numberOfGamesPlayed = 0 // contador del numero de partidas que se llevan
 var gamesWonPlayer = 0 // contador de las partidas ganadas que lleva el jugador en esta ronda de partidas
 var gamesWonCpu = 0 // contador de las partidas ganadas que lleva la cpu en esta ronda de partidas
+var gamesDrawn = 0 // contador de las partidas empatadas en esta ronda de partidas
 
 function chooseNumberOfMatches() {
     numberOfGames = prompt('Welcome to the classic game of Rock, Paper, Scissors! How many rounds do you want to play?')
@@ -16,13 +17,13 @@ function chooseNumberOfMatches() {
     }
 }
 
-function wasItTheLastGame() {
-    playTurn()
-
+function getOverallWinner() {
+    var overallResult = gamesWonPlayer === gamesWonCpu ? 'draw' : gamesWonPlayer > gamesWonCpu ? 'player' : 'cpu'
+    return overallResult
 }
 
 function playTurn() {
-    var playerInput = prompt(`It's your turn: choose your move by entering one of the following options.\n- r for 'Rock'👊\n- p for 'Paper'🤚\n- s for 'Scissors'✌️\nReady to play?`).toLowerCase()
+    var playerInput = prompt(`Round ${numberOfGamesPlayed+1}/${numberOfGames}: it's your turn\nChoose your move by entering one of the following options.\n- r for 'Rock'👊\n- p for 'Paper'🤚\n- s for 'Scissors'✌️\nReady?`).toLowerCase()
     var playerPlay = ''
     var cpuPlay = ''
     var gameResult= ''
@@ -35,13 +36,29 @@ function playTurn() {
             gamesWonPlayer ++
         } else if (gameResult === 'cpu') {
             gamesWonCpu ++
+        } else {
+            gamesDrawn ++
         }
-        alert(selectEndingPhrase(gameResult) + `\n\nYour play: ${playerPlay}\n\nCPU play: ${cpuPlay}\n\nWinner: ${gameResult}\n\nYou won ${gamesWonPlayer} games\n\nCpu won ${gamesWonCpu} matches`)
+        alert(selectEndingPhrase(gameResult) + `\n\nYour play: ${playerPlay}\n\nCPU play: ${cpuPlay}\n\nWinner: ${gameResult}\n\nYou won ${gamesWonPlayer} games\nCpu won ${gamesWonCpu} games\nYou both have drawn ${gamesDrawn} games`)
         if (numberOfGamesPlayed < numberOfGames) {
             playTurn()
         } else {
-
-            alert(`End of the agreed-upon ${numberOfGames} rounds. The winner is ${winner}`) /// falta hacer funcion q diga quien gana la ronda de n partidas
+            var overallWinner = getOverallWinner()
+            var finalPhrase = ''
+            switch (overallWinner) {
+                case 'draw': finalPhrase = `End of the agreed-upon ${numberOfGames} rounds. The final result is a ${overallWinner}`
+                    break
+                case 'player': finalPhrase = `End of the agreed-upon ${numberOfGames} rounds. Winner: ${overallWinner}`
+                    break
+                case 'cpu': finalPhrase = `End of the agreed-upon ${numberOfGames} rounds. Winner: ${overallWinner}`
+                    break
+            }
+            alert(finalPhrase)
+            if (confirm(`Nice game! Do you want to restart the game?`)){
+                restartGame()
+            } else {
+                alert('OK, bye!')
+            }
         }
     } else {
         alert("Please, only type 'r', 'p' or 's' in order to play the game")
@@ -110,8 +127,10 @@ function isValidPlay(input) { // regex para aceptar solo r, p o s
 function restartGame() {
     numberOfGames = 0
     numberOfGamesPlayed = 0
-    gamesWonCpu = 0
     gamesWonPlayer = 0
+    gamesWonCpu = 0
+    gamesDrawn = 0
+    chooseNumberOfMatches()
 }
 
 chooseNumberOfMatches()
