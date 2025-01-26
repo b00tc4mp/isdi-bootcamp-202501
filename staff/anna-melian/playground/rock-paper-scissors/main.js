@@ -1,142 +1,86 @@
-console.clear()
-var namePlayer1 =''
-var namePlayer2 = ''
-var optionPlayer1 = ''
-var optionPlayer2 = ''
-var rock = 'ROCK'
-var paper = 'PAPER'
-var scissors = 'SCISSORS'
-var validOption1 = false
-var validOption2 = false
-var player1Punctuation = 0
-var player2Punctuation = 0
+console.clear();
+var namePlayer1 = '';
+var namePlayer2 = '';
+var optionPlayer1 = '';
+var optionPlayer2 = '';
+var rock = 'ROCK';
+var paper = 'PAPER';
+var scissors = 'SCISSORS';
+var player1Punctuation = 0;
+var player2Punctuation = 0;
 
 function initialStatment() {
-    namePlayer1 = prompt('Player 1, enter your name: ')
-    namePlayer2 = prompt('Player 2, enter your name: ')
+    namePlayer1 = prompt('Player 1, enter your name: ');
+    namePlayer2 = prompt('Player 2, enter your name: ');
 }
 
-function choosingOptionPlayer1() {
-    optionPlayer1 = prompt ('Please ' + namePlayer1 + ', choose: ROCK, PAPER or SCISSORS')
-
+function choosingOption(playerName) {
+    return prompt('Please ' + playerName + ', choose: ROCK, PAPER or SCISSORS');
 }
 
-function choosingOptionPlayer2() {
-    optionPlayer2 = prompt ('Please ' + namePlayer2 + ', choose: ROCK, PAPER or SCISSORS')
-
+function validOption(option) {
+    return option === rock || option === paper || option === scissors;
 }
 
-function validOptionPlayer1() {
-    if (optionPlayer1 === rock || optionPlayer1 === paper || optionPlayer1 === scissors) {
-        validOption1 = true
+function choosingOptions() {
+    optionPlayer1 = choosingOption(namePlayer1);
+    while (!validOption(optionPlayer1)) {
+        console.log('This is not a valid answer, the options are : ROCK, PAPER or SCISSORS. Has to be in uppercase.');
+        optionPlayer1 = choosingOption(namePlayer1);
     }
-    else {
-        console.log('This is not a valid answer, the options are : ROCK, PAPER or SCISSORS and has to be in uppercase.')
-        choosingOptionPlayer1()
 
-    }
-}
-
-function validOptionPlayer2() {
-    if (optionPlayer2 === rock || optionPlayer2 === paper || optionPlayer2 === scissors) {
-        validOption2 = true
-    }
-    else {
-        console.log('This is not a valid answer, the options are : ROCK, PAPER or SCISSORS. Has to be in uppercase.')
-        choosingOptionPlayer2()
-
+    optionPlayer2 = choosingOption(namePlayer2);
+    while (!validOption(optionPlayer2)) {
+        console.log('This is not a valid answer, the options are : ROCK, PAPER or SCISSORS. Has to be in uppercase.');
+        optionPlayer2 = choosingOption(namePlayer2);
     }
 }
 
 function optionsComparation() {
-    if (optionPlayer1===optionPlayer2) {
-        console.log('TIE')
-    }
-        else if (optionPlayer1===rock && optionPlayer2===paper) {
-            console.log(namePlayer1 + ' has choose ' + optionPlayer1)
-            console.log(namePlayer2 + ' has choose ' + optionPlayer2)
-            console.log(optionPlayer2 + ' wins ' + optionPlayer1 + '. ' + namePlayer2 +" WIN!")
-            player2Punctuation++
-        }
-        else if (optionPlayer1===rock && optionPlayer2===scissors) {
-            console.log(namePlayer1 + ' has choose ' + optionPlayer1)
-            console.log(namePlayer2 + ' has choose ' + optionPlayer2)
-            console.log(optionPlayer1 + ' wins ' + optionPlayer2 + '. ' + namePlayer1 + " WIN!")
-            player1Punctuation++
-        }
-        else if (optionPlayer1===paper && optionPlayer2===rock) {
-            console.log(namePlayer1 + ' has choose ' + optionPlayer1)
-            console.log(namePlayer2 + ' has choose ' + optionPlayer2)
-            console.log(optionPlayer1 + ' wins ' + optionPlayer2 + '. ' + namePlayer1 + " WIN!")
-            player1Punctuation++
-        }
-        else if (optionPlayer1===paper && optionPlayer2===scissors) {
-            console.log(namePlayer1 + ' has choose ' + optionPlayer1)
-            console.log(namePlayer2 + ' has choose ' + optionPlayer2)
-            console.log(optionPlayer2 + ' wins ' + optionPlayer1 + '. ' + namePlayer2 + " WIN!")
-            player2Punctuation++
-        }
-        else if (optionPlayer1===scissors && optionPlayer2===rock) {
-            console.log(namePlayer1 + ' has choose ' + optionPlayer1)
-            console.log(namePlayer2 + ' has choose ' + optionPlayer2)
-            console.log(optionPlayer2 + ' wins ' + optionPlayer1 + '. ' + namePlayer2 + " WIN!")
-            player2Punctuation++
-        }
-        else if (optionPlayer1===scissors && optionPlayer2===paper) {
-            console.log(namePlayer1 + ' has choose ' + optionPlayer1)
-            console.log(namePlayer2 + ' has choose ' + optionPlayer2)
-            console.log(optionPlayer1 + ' wins ' + optionPlayer2 + '. ' + namePlayer1 + " WIN!")
-            player1Punctuation++
-        }
-            
-}
+    console.log(namePlayer1 + ' has chosen ' + optionPlayer1);
+    console.log(namePlayer2 + ' has chosen ' + optionPlayer2);
 
+    if (optionPlayer1 === optionPlayer2) {
+        console.log('TIE');
+    } else if (
+        (optionPlayer1 === rock && optionPlayer2 === scissors) ||
+        (optionPlayer1 === paper && optionPlayer2 === rock) ||
+        (optionPlayer1 === scissors && optionPlayer2 === paper)
+    ) {
+        console.log(optionPlayer1 + ' wins ' + optionPlayer2 + '. ' + namePlayer1 + " WIN!");
+        player1Punctuation++;
+    } else {
+        console.log(optionPlayer2 + ' wins ' + optionPlayer1 + '. ' + namePlayer2 + " WIN!");
+        player2Punctuation++;
+    }
+}
 
 function gameScore() {
-    console.log('Game score: ' + namePlayer1 + ': ' + player1Punctuation + '  ' + namePlayer2 + ': ' + player2Punctuation)
+    console.log('Game score: ' + namePlayer1 + ': ' + player1Punctuation + '  ' + namePlayer2 + ': ' + player2Punctuation);
 }
-
 
 function play() {
-    choosingOptionPlayer1()
-    while (validOption1 === false) {
-        validOptionPlayer1()
-    }
-    choosingOptionPlayer2()
-    while (validOption2 === false) {
-        validOptionPlayer2()
-    }
-    optionsComparation()
-    gameScore()
+    choosingOptions();  
+    optionsComparation(); 
+    gameScore();  
 }
 
-var keepPlay = ''
 function keepPlaying() {
-    keepPlay = prompt('Do you want to keep playing? YES or NO')
-    if (keepPlay==='YES' || keepPlay==='NO') {
-        if (keepPlay==='YES') {
-            play()
+    var keepPlay = prompt('Do you want to keep playing? YES or NO');
+    while (keepPlay !== 'YES' && keepPlay !== 'NO') {
+        console.log('This is not a valid answer, the options are: YES or NO. Has to be in uppercase.');
+        keepPlay = prompt('Do you want to keep playing? YES or NO');
     }
-        if (keepPlay === 'NO') {
-        
-    }
-        else {
-            keepPlaying()
-    }
-    }
-    else {
-        console.log('This is not a valid answer, the options are : YES or NO. Has to be in uppercase.')
-        keepPlaying()
-    }
-    
-
+    return keepPlay;  
 }
 
+console.log('...');
+initialStatment(); 
 
-console.log('...')
-
-initialStatment()
-play()
-while (keepPlay != 'NO') {
-        keepPlaying()
+var keepPlay = 'YES'; 
+while (keepPlay === 'YES') {
+    play();  
+    keepPlay = keepPlaying();  
 }
+
+console.log('Thank you for playing!');
