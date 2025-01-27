@@ -1,5 +1,5 @@
 function ticTacToe() {
-    var initialBoard = ' 1️ | 2️ | 3 \n――――\n 4 | 5 | 6 \n――――\n 7 | 8 | 9 '
+    var initialBoard = ' 1 | 2 | 3 \n――――\n 4 | 5 | 6 \n――――\n 7 | 8 | 9 '
     var boardToChange = []
     var boardInGame = ''
     var options = ['X', 'O']
@@ -64,8 +64,8 @@ function ticTacToe() {
     }
    
 
-    function winner() {
-        win = true
+    function getWinner() {
+        var win = true
         if (p1 === p2 && p2 === p3) {
             win = false
             winPlayer = p1
@@ -104,12 +104,11 @@ function ticTacToe() {
     alert(`${initialBoard}`)
     assignPlayer()
 
-    while (winner() && attempts > 0) {
+    while (getWinner() && attempts > 0) {
     move()
-    winner()
     }
 
-    if (!winner()) {
+    if (!win) {
         if (winPlayer === player1) {
         alert('Congratulations player 1, you won the game!')
         } else {
@@ -272,7 +271,7 @@ var rounds = 0
     machine = Math.floor(Math.random() * 3)
     }
 
-    function roundWinner() {
+    function roundgetWinner() {
     var message
     if (player == machine) {
         result += 0
