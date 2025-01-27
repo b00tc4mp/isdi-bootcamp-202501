@@ -2,15 +2,15 @@ var initialBoard = ' 1 | 2 | 3 \n―――――――――――\n 4 | 5 | 6 \
 var boardToChange = []
 var boardInGame = ''
 
-var p1 = 9
-var p2 = 8
-var p3 = 7
-var p4 = 6
+var p1 = 1
+var p2 = 2
+var p3 = 3
+var p4 = 4
 var p5 = 5
-var p6 = 4
-var p7 = 3
-var p8 = 2
-var p9 = 1
+var p6 = 6
+var p7 = 7
+var p8 = 8
+var p9 = 9
 
 for (var i = 0; i < initialBoard.length; i++) {
     boardToChange[i] = initialBoard[i]
@@ -19,7 +19,7 @@ for (var i = 0; i < initialBoard.length; i++) {
 var options = ['X', 'O']
 var player1 = prompt('Player 1, please select X or O')
 player1 = player1.toUpperCase()
-player2 = ''
+var player2 = ''
 for (var i = 0; i < options.length; i++) {
     if (!(options[i] === player1)) {
     player2 += options[i]
@@ -28,7 +28,6 @@ for (var i = 0; i < options.length; i++) {
 var attempts = 9
 
 function move() {
-// for (let a = attempts; a > 0; a = attempts) {
     boardInGame = ''
     var position = prompt('Player, please introduce a position. Choose from 1 to 9')
     for (let i = 0; i < boardToChange.length; i++) {
@@ -64,8 +63,8 @@ function move() {
 
 var winPlayer = ''
 
-function winner() {
-    win = false
+function getWinner() {
+    var win = false
 if (p1 === p2 && p2 === p3) {
     win = true
     winPlayer = p1
@@ -102,12 +101,11 @@ return win
 }
 
 console.log('%c' + initialBoard, 'color: chocolate; background-color: beige; font-size: 25; font-weight: bold')
-while (!winner() && attempts > 0) {
+while (!getWinner() && attempts > 0) {
     move()
-    winner()
 }
 
-if (winner()) {
+if (win) {
     if (winPlayer === player1) {
     console.log('Congratulations player 1, you won the game!')
     } else {
