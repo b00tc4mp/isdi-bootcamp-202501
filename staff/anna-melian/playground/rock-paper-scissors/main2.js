@@ -105,7 +105,7 @@ function play() {
 function keepPlaying() {
     var keepPlay = prompt('Do you want to keep playing? YES or NO').toUpperCase()
     while (keepPlay !== 'YES' && keepPlay !== 'NO') {
-        console.log('This is not a valid answer, the options are: YES or NO. Has to be in uppercase.')
+        console.log('This is not a valid answer, the options are: YES or NO.')
         keepPlay = prompt('Do you want to keep playing? YES or NO').toUpperCase()
     }
     return keepPlay;  
