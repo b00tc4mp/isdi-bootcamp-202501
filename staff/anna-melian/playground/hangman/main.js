@@ -1,12 +1,13 @@
 console.clear()
 var word = prompt ('Choose a secret word:')
 var matches = []
+var mistakes = []
 
 for (var i = 0; i < word.length; i++)
     matches[i] = "_"
 
 var attemps = 0
-var maxAttemps = 4
+var maxAttemps = 6
 var guessCharacter = ""
 var end = false
 
@@ -26,6 +27,7 @@ function askCharacter() {
 
 function checkGuessCharacterMatches() {
     var anyone = true
+
     for (var i = 0; i < word.length; i++) {
         if (guessCharacter===word[i]) {
             matches[i] = guessCharacter
@@ -34,9 +36,22 @@ function checkGuessCharacterMatches() {
             
         }
     if (anyone) {
-        console.log('%cWrong', 'color: red; background-color: white; font-size: 15px; font-weight: bold;')
-        attemps++
-        console.log("You have " + (maxAttemps - attemps) + " attemps left")
+        var repeatMistake = false
+        for (var j = 0; j < mistakes.length; j++) {
+            if (guessCharacter ===mistakes[j]) {
+            console.log('%cWrong, you have already tried this character.', 'color: red; background-color: white; font-size: 15px; font-weight: bold;')
+            console.log("You have " + (maxAttemps - attemps) + " attemps left")
+            console.log('Characters tried: ' + mistakes)
+            repeatMistake = true
+        }
+        }
+        if (repeatMistake===false) {
+            console.log('%cWrong', 'color: red; background-color: white; font-size: 15px; font-weight: bold;')
+            attemps++
+            console.log("You have " + (maxAttemps - attemps) + " attemps left")
+            mistakes += guessCharacter + ', '
+            console.log('Characters tried: ' + mistakes)
+            }
     }
     else {
         console.log('%cCorrect', 'color: green; background-color: white; font-size: 15px; font-weight: bold;')
