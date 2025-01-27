@@ -1,5 +1,4 @@
 console.clear()
-
 var cells = [[], [], []]
 var maxRows = 3
 var maxColumns = 3
@@ -15,7 +14,6 @@ var emptyCells = 9
 var winnerPlayer1 = false
 var winnerPlayer2 = false
 var someoneWin = false
-
 
 function askingName() {
     playerName1 = prompt('Player 1, enter your name: ') 
@@ -55,7 +53,6 @@ function askMovePlayer1() {
     checkValidMovePlayer1()
 }
 
-
 function checkValidMovePlayer1() {
     validMovePlayer1 = false
     if (
@@ -73,7 +70,6 @@ function askMovePlayer2() {
     movePlayer2 = prompt( playerName2 + ' choose a cell. Has to be in this format: row,column')
     checkValidMovePlayer2()
 }
-
 
 function checkValidMovePlayer2() {
     validMovePlayer2 = false
@@ -105,7 +101,6 @@ function validCellPlayer1() {
     }
 }
 
-
 function validCellPlayer2() {
     if (
         (cells[Number(movePlayer2[0])-1][Number(movePlayer2[2])-1] === symbolPlayer1) ||
@@ -122,7 +117,6 @@ function validCellPlayer2() {
         winOrLose()
     }
 }
-
 
 function winOrLose () {
     someoneWin = false
@@ -146,28 +140,22 @@ function winOrLose () {
             winnerPlayer2 = true
         }
     }
-
     if (cells[0][0] === symbolPlayer1 && cells[1][1] === symbolPlayer1 & cells[2][2] === symbolPlayer1) {
         winnerPlayer1 = true
     }
-
     if (cells[0][0] === symbolPlayer2 && cells[1][1] === symbolPlayer2 & cells[2][2] === symbolPlayer2) {
         winnerPlayer2 = true
     }
-
     if (cells[2][0] === symbolPlayer1 && cells[1][1] === symbolPlayer1 && cells[2][0] === symbolPlayer1) {
         winnerPlayer1 = true
     }
-    
     if (cells[2][0] === symbolPlayer2 && cells[1][1] === symbolPlayer2 && cells[2][0] === symbolPlayer2) {
         winnerPlayer2 = true
     }
-
     if (winnerPlayer1 === true || winnerPlayer2 === true) {
         someoneWin = true
         return someoneWin
     }
-    
 }
 
 function play() {
@@ -184,7 +172,6 @@ function play() {
         else {
             console.log(playerName1 + ' has ganado')
         }
-          
         }
         
     if (emptyCells === 0) {
@@ -193,8 +180,8 @@ function play() {
 }
 
 
-
 console.log('...')
-askingName()
-choosingSymbol()
-emptyBoard()
+//askingName()
+//choosingSymbol()
+//emptyBoard()
+//play()
