@@ -1,4 +1,5 @@
 console.clear()
+
 var namePlayer1 = ''
 var namePlayer2 = ''
 var optionPlayer1 = ''
