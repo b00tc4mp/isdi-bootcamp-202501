@@ -13,11 +13,11 @@ let draw = false;
 
 function checkwin() {
     if (player1 == 'r') {
-        won = (player2 == 's') ? true : (player2 == 'p') ? false : draw = true;
+        won = (player2 == 's') ? true : (player2 == 'p') ? false : !(draw = true);
     } else if (player1 == 's') {
-        won = (player2 == 'p') ? true : (player2 == 'r') ? false : draw = true;
+        won = (player2 == 'p') ? true : (player2 == 'r') ? false : !(draw = true);
     } else if (player1 == 'p') {
-        won = (player2 == 'r') ? true : (player2 == 's') ? false : draw = true;
+        won = (player2 == 'r') ? true : (player2 == 's') ? false : !(draw = true);
     }
 }
 
@@ -33,8 +33,7 @@ function startGame() {
         checkwin();
 
         if (draw) {
-            console.log('Draw');
-            won = false;
+            console.log('Draw!');
         }
     } while (draw)
     if (won) {

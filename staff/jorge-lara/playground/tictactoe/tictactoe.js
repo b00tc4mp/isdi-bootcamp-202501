@@ -91,7 +91,7 @@ function checkRows() {
 
 //Checking the columns
 function checkColumns() {
-    for (let i = 0; i < cells.length; i++) {
+    for (let i = 0; i < cells.length && !won; i++) {
         for (let k = 0; k < 3; k++) {
             if (cells[k][i] == 'X') {
                 contx++;
