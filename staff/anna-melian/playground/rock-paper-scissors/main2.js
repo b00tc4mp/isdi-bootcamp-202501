@@ -1,5 +1,5 @@
 console.clear()
-var namePlayer1 =''
+var namePlayer1 = prompt('Player 1, enter your name: ')
 var optionPlayer1 = ''
 var player1Punctuation = 0
 var machinePunctuation = 0
@@ -18,11 +18,15 @@ var scissors = 'SCISSORS'
 var validOption1 = false
 
 function initialStatment() {
-    namePlayer1 = prompt('Player 1, enter your name: ')
+// Seleccionar un índice aleatorio
+    randomIndex = Math.floor(Math.random() * listOptions.length);
+
+// Obtener el elemento aleatorio
+    randomOption = listOptions[randomIndex];
 }
 
 function choosingOptionPlayer1() {
-    optionPlayer1 = prompt ('Please ' + namePlayer1 + ', choose: ROCK, PAPER or SCISSORS')
+    optionPlayer1 = prompt ('Please ' + namePlayer1 + ', choose: ROCK, PAPER or SCISSORS').toUpperCase()
 
 }
 
@@ -40,7 +44,7 @@ function validOptionPlayer1() {
 
 function optionsComparation() {
     if (optionPlayer1===randomOption) {
-        console.log('TIE')
+        console.log('You have choose the same options.\n\TIE')
     }
         else if (optionPlayer1===rock && randomOption===paper) {
             console.log(namePlayer1 + ' has choose ' + optionPlayer1)
@@ -99,10 +103,10 @@ function play() {
 }
 
 function keepPlaying() {
-    var keepPlay = prompt('Do you want to keep playing? YES or NO');
+    var keepPlay = prompt('Do you want to keep playing? YES or NO').toUpperCase()
     while (keepPlay !== 'YES' && keepPlay !== 'NO') {
-        console.log('This is not a valid answer, the options are: YES or NO. Has to be in uppercase.');
-        keepPlay = prompt('Do you want to keep playing? YES or NO');
+        console.log('This is not a valid answer, the options are: YES or NO. Has to be in uppercase.')
+        keepPlay = prompt('Do you want to keep playing? YES or NO').toUpperCase()
     }
     return keepPlay;  
 }
@@ -111,10 +115,11 @@ function keepPlaying() {
 console.log('...');
 initialStatment(); 
 
-var keepPlay = 'YES'; 
+var keepPlay = 'YES'
 while (keepPlay === 'YES') {
-    play();  
-    keepPlay = keepPlaying();  
+    initialStatment()
+    play()
+    keepPlay = keepPlaying()
 }
 
-console.log('Thank you for playing!');
+console.log('Thank you for playing!')
