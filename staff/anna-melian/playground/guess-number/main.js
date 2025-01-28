@@ -1,15 +1,3 @@
-/*
-player
-- adivinar numero random que sólo conoce la maquina (entre 0 y 100)
-- tiene 10 intentos
-- si intento (numero) tiene una diferencia >= 50 con el random, entonces "very cold"
-- si intento tiene una diferencia < 50 y >= 30, entonces "cold"
-- si intento tiene una diferencia < 30 y >= 20, entonces "tempered"
-- si intento tiene una diferencia < 20 y >= 10, entonces "warm"
-- si intento tiene una diferencia < 10 y >= 5, entonces "hot"
-- si intento tiene una diferencia < 5 y >= 1, entonces "very hot"
-- si acierta en menos de 10 intentos, win! por el contrario lost!
-*/
 console.clear()
 var randomNumber
 var interval = []
@@ -18,7 +6,6 @@ var attemps = 0
 var maxAttemps = 10
 var maxNumber = 100
 var win = false
-var charactersTried = []
 
 interval = []
 for (var i = 0; i <= maxNumber; i++) {
@@ -27,25 +14,15 @@ for (var i = 0; i <= maxNumber; i++) {
 function getRandomNumber() {
     var randomIndex = Math.floor(Math.random() * interval.length)
     randomNumber = interval[randomIndex]
-    return randomNumber
+    //return randomNumber
 }
+
 
 function askGuessNumber() {
     var numAlreadyTried = false
     guessNumber = prompt('Choose a number between 0 and '+ maxNumber + ': ')
     if (Number(guessNumber) >= 0 && Number(guessNumber) <= maxNumber ) {
-        for (var i = 0; i < charactersTried.length; i++) {
-            if (Number(guessNumber) === Number(charactersTried[i])) {
-                numAlreadyTried = true
-            }      
-        }
-        if (numAlreadyTried) {
-            console.log('This number is not valid because you already tried.')
-            askGuessNumber() //només funciona amb numeros d'una sola xifra
-        }
-        else {
-            guessNumber = Number(guessNumber)
-        }
+        guessNumber = Number(guessNumber)
         
     }
     else {
@@ -64,69 +41,46 @@ function numberComparation() {
     } else if (guessNumber < randomNumber) {
         difference = (randomNumber - guessNumber)
         if (difference >= 50 ) {
-            console.log('You are very cold. It is 50 or more from this number.')
+            console.log('You are very cold. Your guess was ' + guessNumber + '. Your number is 50 or more from the secret number.')
+            actualAttemp++
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 50 && difference >= 30) {
-            console.log('You are cold. It is between 50 and 30 of this number.')
+            console.log('You are cold. Your guess was ' + guessNumber +'. Your number is between 50 and 30 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 30 && difference >= 20) {
-            console.log('You are tempered. It is between 30 and 20 of this number.')
+            console.log('You are tempered. Your guess was ' + guessNumber +'. Your number is between 30 and 20 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 20 && difference >= 10) {
-            console.log('You are warm. It is between 20 and 10 of this number.')
+            console.log('You are warm. Your guess was ' + guessNumber +'. Your number is between 20 and 10 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 10 && difference >= 5) {
-            console.log('You are hot. It is between 10 and 5 of this number.')
+            console.log('You are hot. Your guess was ' + guessNumber +'. Your number is between 10 and 5 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 5 && difference >= 1) {
-            console.log('You are very hot. It is between 5 and 1 of this number.')
+            console.log('You are very hot. Your guess was ' + guessNumber +'. Your number is between 5 and 1 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         }
         
     } else if (guessNumber > randomNumber) {
         difference = (guessNumber - randomNumber)
         if (difference >= 50 ) {
-            console.log('You are very cold. It is 50 or more from this number.')
+            console.log('You are very cold. Your guess was ' + guessNumber +'. Your number is 50 or more from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 50 && difference >= 30) {
-            console.log('You are cold. It is between 50 and 30 of this number.')
+            console.log('You are cold. Your guess was ' + guessNumber +'. Your number is between 50 and 30 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 30 && difference >= 20) {
-            console.log('You are tempered. It is between 30 and 20 of this number.')
+            console.log('You are tempered. Your guess was ' + guessNumber +'. Your number is between 30 and 20 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 20 && difference >= 10) {
-            console.log('You are warm. It is between 20 and 10 of this number.')
+            console.log('You are warm. Your guess was ' + guessNumber +'. Your number is between 20 and 10 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 10 && difference >= 5) {
-            console.log('You are hot. It is between 10 and 5 of this number.')
+            console.log('You are hot. Your guess was ' + guessNumber +'. Your number is between 10 and 5 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         } else if (difference < 5 && difference >= 1) {
-            console.log('You are very hot. It is between 5 and 1 of this number.')
+            console.log('You are very hot. Your guess was ' + guessNumber +'. Your number is between 5 and 1 far away from the secret number.')
             attemps++
-            charactersTried += guessNumber + ','
-            console.log('You tried the next numbers: ' + charactersTried)
         }
     }
 }
