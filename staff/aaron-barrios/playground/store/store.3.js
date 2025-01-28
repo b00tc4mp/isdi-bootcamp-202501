@@ -3,9 +3,7 @@ console.clear()
 var cart = []
 
 var checkout = []
-
-var admin = 'sisoy'
-var attempts = 3
+//generar array con su fecha y precio
 
 var z900 = {
     id: 'nin-2R',
@@ -118,7 +116,7 @@ function getStarted() {
                         5. Search products
                         6. List orders
                         7. Flash Offer
-                        8. Add product
+                        8. Compare products
                         9. Filter Products`)
 
     if (isNaN(operations) ||
@@ -152,7 +150,7 @@ function getStarted() {
                 flashOffer()
                 break;
             case '8':
-                checkAdmin()
+                compareProducts()
                 break;
             case '9':
                 filterProducts()
@@ -292,60 +290,8 @@ function flashOffer() {
         with a 20% discount at ${productwOffer.price} price!!`)
 }
 
-function addProduct() {
-    var newProduct = {
-        id: '',
-        brand: '',
-        model: '',
-        price: 0,
-        engine: '',
-        cilinderCapacity: '',
-        stock: 0
-    }
+function compareProducts() {
 
-    var id = prompt('Please could you send the new product id?')
-    newProduct.id = id
-
-    var brand = prompt('Please could you send the new product brand?')
-    newProduct.brand = brand
-
-    var model = prompt('Please could you send the new product model?')
-    newProduct.model = model
-
-    var price = Number(prompt('Please could you send the new product price?'))
-    newProduct.price = price
-
-    var engine = prompt('Please could you send the new product engine?')
-    newProduct.engine = engine
-
-    var cilinderCapacity = prompt('Please could you send the new product cilinderCapacity?')
-    newProduct.cilinderCapacity = cilinderCapacity
-
-    var stock = Number(prompt('Please could you send the new product stock?'))
-    newProduct.stock = stock
-
-    products[products.length] = newProduct
-    console.table(products)
-    interact()
-}
-
-function checkAdmin() {
-    var password = prompt('Hey admin, LOG IN')
-
-    if (attempts > 0) {
-        if (password === admin) {
-            return addProduct()
-        } else {
-            attempts--
-            if (attempts > 0) {
-                alert(`Dafuck. Are you not the admin? You have ${attempts} attempts left.`)
-                checkAdmin()
-            } else {
-                alert('Fuck u hacker')
-                interact()
-            }
-        }
-    }
 }
 
 
