@@ -1,49 +1,120 @@
 var greenApples = {
-    id: 'gr-ap-1kg',
+    id: 'gr-ap-1',
     name: 'Green apples "Golden", 1 kg',
-    type: 'fruits',
+    type: 'apples',
     price: 2.5,
+    stock: 10
 }
 
 var redApples = {
-    id: 're-ap-1kg',
+    id: 're-ap-1',
     name: 'Red apples "Fuji", 1 kg',
-    type: 'fruits',
-    price: 3.5
+    type: 'apples',
+    price: 3.5,
+    stock: 10
 }
 
 var bananas = {
-    id: 'ca-ba-1kg',
+    id: 'ca-ba-1',
     name: 'Canarian bananas, 1 kg',
-    type: 'fruits',
-    price: 3
+    type: 'bananas',
+    price: 3,
+    stock: 10
 }
 
 var oranges = {
-    id: 'si-or-1kg',
+    id: 'si-or-1',
     name: 'Sicilian oranges, 1 kg',
-    type: 'fruits',
-    price: 2.5
+    type: 'oranges',
+    price: 2.5,
+    stock: 10
 }
 
 var strawberries1 = {
-    id: 'straw-1kg',
+    id: 'st-1',
     name: 'Strawberries, 1 kg',
-    type: 'fruits',
-    price: 7
+    type: 'strawberries',
+    price: 7,
+    stock: 10
 }
 
 var strawberries500 = {
-    id: 'straw-500gr',
+    id: 'st-500',
     name: 'Strawberries, 500 gr',
-    type: 'fruits',
-    price: 4
+    type: 'strawberries',
+    price: 4,
+    stock: 10
 }
 
-var productsList = [greenApples, redApples, bananas, oranges, strawberries1, strawberries500]
+var blueberries = {
+    id: 'bl-300',
+    name: 'Blueberies, 300 gr',
+    type: 'blueberries',
+    price: 3,
+    stock: 10
+}
+
+var kiwi = {
+    id: 'ki-1',
+    name: 'Kiwi, 1kg',
+    type: 'strawberries',
+    price: 5,
+    stock: 10
+}
+
+var potatoes = {
+    id: 'po-5',
+    name: 'Potatoes, 5kg',
+    type: 'potatoes',
+    price: 5.5,
+    stock: 10
+}
+
+var carrots = {
+    id: 'ca-1',
+    name: 'Carrots, 1kg',
+    type: 'carrots',
+    price: 1.5,
+    stock: 10
+}
+
+var tomatoes = {
+    id: 'to-2',
+    name: 'Tomatoes, 2kg',
+    type: 'tomatoes',
+    price: 3.5,
+    stock: 10
+}
+
+var cabbages = {
+    id: 'cab-1',
+    name: 'Cabbage, 1 item',
+    type: 'cabbages',
+    price: 2,
+    stock: 10
+}
+
+var eggplant = {
+    id: 'egp-1',
+    name: 'Eggplants, 2 items',
+    type: 'eggplants',
+    price: 4,
+    stock: 10
+}
+
+var onion = {
+    id: 'on-3',
+    name: 'Onions, 3kg',
+    type: 'onions',
+    price: 3,
+    stock: 10
+}
+
+
+var productsList = [greenApples, redApples, bananas, oranges, strawberries1, strawberries500, blueberries, kiwi, potatoes, carrots, tomatoes, cabbages, eggplant, onion]
 
 function filterProducts() {
-    var filter = prompt('What would you like to search now?')
+    var filter = prompt('What would you like to search now?').toLowerCase
     var searchResult = []
     var productIsFound = false
     for (var i = 0; i < productsList.length; i++) {
@@ -67,18 +138,22 @@ function addToCart() {
     var askForQuantity = prompt('Please, introduce desired quantity')
     var productIsAdded = false
 
-    while (askForQuantity > 0) {
     for (var i = 0; i < productsList.length; i++) {
-            if (productsList[i]['id'] === askForItem) {
+        if (productsList[i]['id'] === askForItem) {
+            if (productsList[i]['stock'] > 0) {
                 productIsAdded = true
-                cart[cart.length] = productsList[i]
-                // cart[cart.length - 1]['quantity'] = askForQuantity
-                askForQuantity--
+                productsList[i]['stock'] -= +askForQuantity
+                cart[cart.length] = {...productsList[i]}
+                delete cart[cart.length - 1]['stock']
+                cart[cart.length - 1]['quantity'] = +askForQuantity
+            } else {
+            alert('There\'s not enough stock to add a product')
             }
+        }
     }
-    }
+
     if (productIsAdded) {
-        console.log(`The item is added to cart!`)
+        console.log(`The item '${cart[cart.length - 1]['name']}' is added to cart!`)
     } else {
         console.log('We don\'t have any product with this ID')
     }
@@ -89,16 +164,17 @@ function showList() {console.table(productsList)}
 function showCart() {console.table(cart)}
 
 var reciept = []
-var total = 0
-var tax = 0
-var basePrice = 0
 var hist = []
 
 function generateReciept() {
     reciept = []
+    var total = 0
+    var tax = 0
+    var basePrice = 0
+
     for (var i = 0; i < cart.length; i++) {
         reciept[reciept.length] = cart[i]
-        total += cart[i]['price']
+        total += cart[i]['price'] * cart[i]['quantity']
     }
 
     tax = total * 0.21
@@ -108,16 +184,16 @@ function generateReciept() {
     reciept.push(`Taxes: ${tax} €`)
     reciept.push(`Total: ${total} €`)
     reciept.push(Date())
-    hist.push(cart)
+    
+    for (var i = 0; i < reciept.length; i++) {
+        hist.unshift(reciept[i])
+    }
+
     cart = []
     console.table(reciept)
-    
 }
 
-
-function shoppingHistory() {
-    console.table(hist)
-}
+function shoppingHistory() {console.table(hist)}
 
 function shopping() {
     var action = prompt(`Please, choose what you would like to do:
