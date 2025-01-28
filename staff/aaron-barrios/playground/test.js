@@ -129,12 +129,6 @@ function getStarted() {
             case '7':
                 flashOffer()
                 break;
-            case '8':
-                compareProducts()
-                break;
-            case '9':
-                filterProducts()
-                break;
         }
     }
 }
@@ -274,33 +268,10 @@ function compareProducts() {
 }
 
 function filterProducts() {
-    console.table(products)
-    var searchedProduct = prompt('Search product brand')
-    var foundProductBrand = []
+    var foundProduct = prompt('Search product brand')
     var found = null
+    for (let i = 0; i < products.length; i) {
 
-    for (let i = 0; i < products.length; i++) {
-        if (products[i].brand === searchedProduct) {
-            found = products[i]
-            foundProductBrand.push(found)
-        }
-    }
-
-    console.table(foundProductBrand)
-
-    searchedProduct = prompt('Select product model')
-    for (let j = 0; j < foundProductBrand.length; j++) {
-        if (foundProductBrand[j].brand === searchedProduct) {
-            found = foundProductBrand[j]
-            break
-        }
-    }
-
-    console.table(found)
-
-    if (found === null) {
-        alert('Product not found')
-        return filterProducts()
     }
 }
 
