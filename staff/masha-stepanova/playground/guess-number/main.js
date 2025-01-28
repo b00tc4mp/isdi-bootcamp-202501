@@ -12,6 +12,8 @@ var turns = 10
 var mainNumber 
 var playerGuess 
 
+console.log(turns)
+
 function createNumber() {
 mainNumber = Math.floor(Math.random() * 100 + 1)
 }
