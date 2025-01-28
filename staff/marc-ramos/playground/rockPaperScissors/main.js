@@ -13,9 +13,11 @@ var userWins = 0
 var cpuWins = 0
 var maxWins = 3
 var anotherGame = ''
+var checkWin11 = false
 
 function choosePlay(){ //pedimos una jugada al usuario
     userPlay = prompt('Your move please, you can choose "r" rock, "p" paper or "s" scissors')
+    filterUserPlay()
 }
 
 function filterUserPlay(){ //filtramos la jugada del usuario para ver si ha introducido 'r' || 'p' || 's'
@@ -50,60 +52,84 @@ function comparePlays(){ //compara las jugadas para ver quien ha ganado
         
     } else if (userPlay === 'r' && cpuPlay === 'p'){
         cpuWins++
-        alert("CPU won this round!")
+        alert(userPlay + ' vs ' + cpuPlay + "\n" + "CPU won this round!")
         
     } else if (userPlay === 'r' && cpuPlay === 's'){
         userWins++
-        alert("You won this round!")
+        alert( userPlay + ' vs ' + cpuPlay + "\n" + "You won this round!")
         
     } else if (userPlay === 'p' && cpuPlay === 'r'){
         userWins++
-        alert("You won this round!")
+        alert( userPlay + ' vs ' + cpuPlay + "\n" + "You won this round!")
         
     } else if (userPlay === 'p' && cpuPlay === 's'){
         cpuWins++
-        alert("CPU won this round!")
+        alert(userPlay + ' vs ' + cpuPlay + "\n" + "CPU won this round!")
         
     } else if (userPlay === 's' && cpuPlay === 'p'){
         userWins++
-        alert("You won this round!")
+        alert( userPlay + ' vs ' + cpuPlay + "\n" + "You won this round!")
         
     } else if (userPlay === 's' && cpuPlay === 'r'){
         cpuWins++
-        alert("CPU won this round!")
+        alert(userPlay + ' vs ' + cpuPlay + "\n" + "CPU won this round!")
     }
 }
 
 function checkWinningCounter(){ // check si cpu o user han ganado
+    
     if (cpuWins >= maxWins){
         alert ('CPU won the game!')
+        checkWin11 = true
+        
     } else if (userWins >= maxWins){
         alert ('Congratulations, you won the game!')
+        checkWin11 = true
     }
 }
 
 function askPlayAgain(){ // preguntar si queremos volver a jugar
    var askAnotherGame = prompt('You want to play again? answer "y"(yes) or "n"(no)')
     anotherGame = askAnotherGame.toLowerCase()
+    filterPlayAgain()
 }
 
 function filterPlayAgain(){ // depende de si el usuario ha respondido yes or no, acabaremos el juego o volveremos a jugar
     var reGexPlayAgain = /[yn]/
     
     if(reGexPlayAgain.test(anotherGame)){
-        return
+        playAgain()
 
     } else {
         alert('Not the correct answer, please you can only choose "y"(yes) or "n"(no)')
+        askPlayAgain()
     }
 }
 
 function playAgain(){
-    if (anotherGame === y){
-        // poner el reiniciador del juego
-    } else if (anotherGame === n){
+    if (anotherGame === 'y'){
+        
+    userWins = 0
+    cpuWins = 0
+    checkWin11 = false
+        
+       gameAutoMode()
+        
+    } else if (anotherGame === 'n'){
         alert('Thank you for playing! See you soon!')
     }
 }
+function gameAutoMode() {
+do {
+    choosePlay()
+    generateCpuPlay()
+    comparePlays()
+    checkWinningCounter()
+    
+} while(checkWin11 === false)
+askPlayAgain()
+}
 
-//while () {}
+gameAutoMode()
+
+//poner marcador
