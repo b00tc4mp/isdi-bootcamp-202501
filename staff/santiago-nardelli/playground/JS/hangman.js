@@ -55,12 +55,13 @@ function checkGuessCharacterMatches(){
         // Si la letra de la palabra es igual al caracter ingresado por el usuario
         // Reemplazar el guión bajo por la letra en la misma posición
         // Cambiar el valor de 'check' a true 
-        if(guessCharacter == word[i]){
+        if(guessCharacter === word[i]){
             // Reemplazamos el guión bajo por la letra en la misma posición
             matches[i] = word[i]
             // Cambiamos el valor de 'check' a true
             check = true
             alert('Cathed')
+            printMatches()
         }
         
         
