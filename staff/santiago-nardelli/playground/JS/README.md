@@ -239,3 +239,42 @@ Es más lenta que la pila pero ofrece mayor flexibilidad.
 |0x001  |Object{}            |
 |0x001  |Array[]             |
 |0x001  |                    |
+
+### Ciclos while y do
+
+```sh
+Considera un programa que muestra todos los números pares de 0 a 12. Una
+forma de escribir esto es la siguiente:
+console.log(0);
+console.log(2);
+console.log(4);
+console.log(6);
+console.log(8);
+console.log(10);
+console.log(12);
+Eso funciona, pero la idea de escribir un programa es hacer de algo menos
+trabajo, no más. Si necesitáramos todos los números pares menores a 1.000,
+este enfoque sería poco práctico. Lo que necesitamos es una forma de ejecutar
+una pieza de código multiples veces. Esta forma de flujo de control es llamada
+un ciclo (o “loop”):
+
+let numero = 0;
+while (numero <= 12) {
+console.log(numero);
+numero = numero + 2;
+}
+// → 0
+// → 2
+// … etcetera
+```
+* La
+palabra while es seguida por una expresión en paréntesis y luego por una
+declaración, muy similar a if. El bucle sigue ingresando a esta declaración
+siempre que la expresión produzca un valor que dé true cuando sea convertida
+a Boolean.
+* La vinculación numero demuestra la forma en que una vinculaciónpuede
+seguir el progreso de un programa. Cada vez que el ciclo se repite, numero
+obtiene un valor que es 2 más que su valor anterior
+ * Al comienzo de cada
+repetición, se compara con el número 12 para decidir si el trabajo del programa
+está terminado.
