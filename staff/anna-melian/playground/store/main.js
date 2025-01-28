@@ -1,3 +1,4 @@
+
 console.clear()
 
 var apple = {
@@ -53,19 +54,16 @@ var cart = []
 var principalMenu = ['0: VER PRODUCTOS','1: BUSCAR PRODUCTO','2: AÑADIR PRODUCTO AL CARRO ','3: AÑADIR PRODUCTO NUEVO','4: VER EL CARRO','5: GENERAR RECIBO','6: VER HISTORIAL DE COMPRA']
 var alphabet = 'aàábcdeéèfghiïíjklmnóòopqrstuüúvwxyz-'
  
-function showTheProducts() { //ver lista de productos
-    console.table(productsList)
-}
 
-function askWhatToDo() { //preguntar a usuario que quiere hacer
+function askWhatToDo() { //preguntar a usuario que quiere hacer en el menu
     userChoice = 0
     userChoice = prompt('What do you want to do? Write the number of the option you want to choose. ')
     userChoice = Number(userChoice)
 }
 
-function numberOptionValidation() { //comprobar numero valido (numero del 1 al máximo de opciones)
+function numberOptionValidation(numberToCheck) { //comprobar numero valido (numero del 1 al máximo de opciones)
     validNumber = false
-    if (userChoice >= 0 && userChoice < 8) {
+    if (numberToCheck >= 0 && numberToCheck < 8) {
         validNumber = true
     }
     else {
@@ -75,11 +73,11 @@ function numberOptionValidation() { //comprobar numero valido (numero del 1 al m
     return validNumber
 }
 
-function textAnswerValidation() { //comprobar texto valido (dentro del alfabet)
+function textAnswerValidation(textToCheck) { //comprobar texto valido (dentro del alfabet)
     validtext = false
-    for (var i = 0; i < idWishProduct.length; i++) {
+    for (var i = 0; i < textToCheck.length; i++) {
         for (var j = 0; j < alphabet.length; j++) {
-            if (idWishProduct[i] === alphabet[j]) {
+            if (textToCheck[i] === alphabet[j]) {
                 validtext = true
             }
         }
@@ -91,7 +89,7 @@ function textAnswerValidation() { //comprobar texto valido (dentro del alfabet)
     return validtext
 }
 
-function showPrincipalMenu() { //se muestra el menu
+function showPrincipalMenu() { //se muestra el menu principal
     console.log(principalMenu)
 }
 
@@ -100,23 +98,25 @@ function showTheOptionChoose() { //muestra la opcion elegida
         seeTheProducts()
     } else if (userChoice === 1) {
         askForTheProductId()
-        textAnswerValidation()
+        textAnswerValidation(idWishProduct)
         searchAProduct()
     } else if (userChoice === 2) {
         addAProductToCart()
+    } else if (userChoice === 3) {
+        addNewProduct()
     }
 }
 
-function seeTheProducts() { //ver productos
+function seeTheProducts() { //ver productos de la lista
     console.table(productsList)
-    showPrincipalMenu()
+    //showPrincipalMenu()
 }
 
 function askForTheProductId() { //pregunta usuario el ID del producto 
-    idWishProduct = prompt('What is the ID product you are looking for?')
+    idWishProduct = prompt('What is the ID product ?')
 }
 
-function productExist() {
+function productExist() {//comprueba que el producto exsite en la lista
     isInTheList = false
     indexProduct
     for (var i = 0; i < productsList.length; i++ ) {
@@ -138,12 +138,13 @@ function searchAProduct() { //buscar un producto
     }
 }
 
-function addAProductToCart() {
+function addAProductToCart() { //añade un producto al carro
     askForTheProductId()
-    textAnswerValidation()
+    textAnswerValidation(idWishProduct)
     productExist()
     if (isInTheList === true) {
-        cart[cart.length] += productsList[indexProduct]
+        cart[cart.length] = productsList[indexProduct]
+        //console.log(cart)
     }
     else {
         console.log('Product not found ')
@@ -153,17 +154,33 @@ function addAProductToCart() {
 
 
 
-/*
--preguntar a usuario que quiere hacer:
--comprobar respuesta valida (numero del 1 al máximo de opciones)
-se muestra el menu :
-    menu:
-        opciones:
-            -1: VER LOS PRODUCTOS
-                aparece la lista de productos
-                se vuelve a imprimir el menu
-                
-*/
+function addNewProduct() {
+    var generalNameNewProduct = prompt("What's the new object general name? ")
+    textAnswerValidation(generalNameNewProduct)
+    generalNameNewProduct = generalNameNewProduct.toLowerCase()
+    
+    var nameNewProduct = prompt("What's the new object concrete name and the quantity? ex. Fuji apple, 1 kg")
+    textAnswerValidation(nameNewProduct)
+    nameNewProduct = nameNewProduct.toLowerCase()
+    generalNameNewProduct.name = nameNewProduct
+    
+    var typeNewProduct = prompt("Which kind of food is?")
+    textAnswerValidation(typeNewProduct)
+    typeNewProduct = typeNewProduct.toLowerCase()
+    generalNameNewProduct.type = typeNewProduct
+    
+    var priceNewProduct = prompt("What's the new object price?")
+    numberOptionValidation(priceNewProduct)
+    priceNewProduct = priceNewProduct.toLowerCase()
+    generalNameNewProduct.price = priceNewProduct
+    
+    productsList[productsList.length] = generalNameNewProduct
+    
+}
+
+
+
+
 
 console.log('...')
 //console.table(productsList)
