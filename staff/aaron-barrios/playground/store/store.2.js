@@ -164,26 +164,21 @@ function listProducts() {
     interact()
 }
 
-function findProductById(id, arr, found) {
-    var product = {}
-
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i].id == id) {
-            product = arr[i]
-            return product
-        }
-    }
-}
 
 function addProductToCart() {
     console.table(products);
     var productId = prompt('Select product Id');
-    var foundProduct
+    var foundProduct = null;
 
     var units = 0
 
-    foundProduct = findProductById(productId, products, foundProduct)
-
+    // Buscar el producto en la lista con un for
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].id === productId) {
+            foundProduct = products[i];
+            break;
+        }
+    }
 
     if (foundProduct === null) {
         alert('Please select a correct Id');
@@ -200,11 +195,10 @@ function addProductToCart() {
     if (units <= foundProduct.stock && units > 1) {
         foundProduct.units = units
         if (confirm(`Do you want to add ${foundProduct.model} to the cart?`)) {
-            cart[cart.length] = foundProduct //push
-            foundProduct.stock -= units
+            cart.push(foundProduct);
             foundProduct.date = new Date()
-            console.table(products)
-            console.table(cart);
+            console.log(products)
+            console.log(cart);
             alert('Product added to cart');
             interact()
         } else {
@@ -255,11 +249,16 @@ function checkoutCart() {
 function searchProducts() {
     console.table(products)
     var searchedProduct = prompt('Search product Id')
-    var found
+    var found = null
 
-    found = findProductById(searchedProduct, products, found)
-    console.log(found)
-    interact()
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].id === searchedProduct) {
+            found = products[i]
+            console.log(found)
+            interact()
+            break
+        }
+    }
 
     if (found === null) {
         alert('Product not found')
@@ -272,6 +271,7 @@ function listOrders() {
     interact()
 }
 
+//CAMBIAR INTERACTS POR CONFIRMS!!!!
 function interact() {
     var cont = prompt('Do you want to keep interacting? (yes (y) or no (n)')
 
@@ -293,7 +293,6 @@ function flashOffer() {
 function compareProducts() {
 
 }
-
 
 function filterProducts() {
     console.table(products)
