@@ -234,7 +234,7 @@ function showTheProductSearch() { //muestra el producto que se estaba buscando
 }
 
 function generateReceipt() {
-    if (numReceipt != 0) {
+    if (somethingInTheCart) {
         console.table(cart)
         console.log('Taxes: ' + totalPrice*0.21 + '€')
         console.log('Base price: ' + totalPrice*0.79 + '€')
@@ -246,7 +246,7 @@ function generateReceipt() {
         somethingInTheCart = false
     }
     else {
-        console.log('No receipts generate')
+        console.log('No products in the cart')
     }
     
 }
@@ -296,6 +296,9 @@ function wantToKeepShooping() {
         wantToKeepShooping()
     }
 }
+
+
+
 
 console.log('...')
 while (stillInShop === true) {
