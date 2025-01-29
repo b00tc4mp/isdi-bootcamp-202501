@@ -16,7 +16,7 @@ var anotherGame = ''
 var checkWin11 = false
 
 function choosePlay(){ //pedimos una jugada al usuario
-    userPlay = prompt('Your move please, you can choose "r" rock, "p" paper or "s" scissors')
+    userPlay = prompt('Your move please, you can choose "r" rock, "p" paper or "s" scissors' + '\n' + 'The score is:' + '\n' + 'user -> ' + userWins + ' wins' + '\n' + 'cpu -> ' + cpuWins + ' wins')
     filterUserPlay()
 }
 
@@ -131,5 +131,3 @@ askPlayAgain()
 }
 
 gameAutoMode()
-
-//poner marcador
