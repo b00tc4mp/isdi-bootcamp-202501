@@ -1,13 +1,22 @@
-console.clear()
+var word = prompt('Write the word!')
 
-//--- DATA ---
-var lives = 6
+function sortWord() {
+    word = word.toLowerCase()
+}
+
+var matches = []
+
+for (var i = 0; i < word.length; i++)
+    matches[i] = '_'
+
+console.log(matches)
+
+var attempts = 0
+var maxAttempts = 6
 var guessCharacter = ''
 var guessedCount = 0
 var wrongCharacters = []
-var matches = []
 var guessWord = ''
-var word = ''
 
 var one = ''
 var two = ''
@@ -16,16 +25,6 @@ var four = ''
 var five = ''
 var six = ''
 
-//--- LOGIC ---
-function setGame() {
-    for (var i = 0; i < word.length; i++)
-        matches[i] = '_'
-
-    console.log(matches)
-
-    printMatches()
-}
-
 function printMatches() {
     var matchesString = ''
 
@@ -33,51 +32,22 @@ function printMatches() {
         matchesString += matches[i] + ' '
     alert(
         `${matchesString}
-        Lives: ${lives}
+        Attempts: ${attempts}
         Incorrect Characters: ${wrongCharacters}`
     )
-
-    askCharacter()
 }
-
-function askPlayer() {
-    try {
-        guessWord = prompt('Guess word: Write yes(y) or no(n)')
-
-        askCharacter()
-    } catch (error) {
-        alert(error.message)
-
-        console.error(error)
-    }
-}
-
-
-//--- PRESENTATION ---
-function startGame() {
-    try {
-        word = prompt('Write the word!')
-
-        word = word.toLowerCase()
-
-        setGame()
-    } catch (error) {
-        alert(error.message)
-
-        console.error(error)
-    }
-}
-
 
 function askCharacter() {
-    if (guessWord === 'yes' || guessWord === 'y') {
-        var vWord = prompt('Word')
+    guessWord = prompt('Guess word: Write yes or no')
+    if (guessWord === 'yes') {
+        var vWord
+        vWord = prompt('Word')
         if (vWord === word) {
             guessedCount = word.length
             winorLose()
         }
         else {
-            lives = 0
+            attempts = maxAttempts
             alert('You have lost')
             location.reload()
         }
@@ -90,11 +60,14 @@ function askCharacter() {
         guessCharacter = prompt('character?')
         guessCheckCharacter()
     }
+
 }
 
 function guessCheckCharacter() {
-    guessCharacter = guessCharacter.toLowerCase() //COMPROBAR SI NO ESCRIBES NADA
+    //convertir todo a minuscula
+    guessCharacter = guessCharacter.toLowerCase()
 
+    //limitar las letras incorrectas
     if (wrongCharacters.includes(guessCharacter)) {
         alert(`Ya intentaste la letra "${guessCharacter}" y fue incorrecta. Intenta otra.`)
         askCharacter()
@@ -105,7 +78,7 @@ function guessCheckCharacter() {
     for (var j = 0; j < word.length; j++) {
         if (word[j] === guessCharacter) {
             if (matches[j] === guessCharacter) {
-                lives--
+                attempts++
                 alert('character already wrote')
                 found = true
                 break
@@ -119,24 +92,24 @@ function guessCheckCharacter() {
 
     if (!found) {
         wrongCharacters.push(guessCharacter)
-        lives--
-        switch (lives) {
-            case 6:
+        attempts++
+        switch (attempts) {
+            case 1:
                 one += ' ┌──┐'
                 break;
-            case 5:
+            case 2:
                 two += ' |     |'
                 break;
-            case 4:
+            case 3:
                 three += ' |   ☹'
                 break;
-            case 3:
+            case 4:
                 four += ' |  ⌈⌷⌉'
                 break;
-            case 2:
+            case 5:
                 five += ' |    ∆'
                 break;
-            case 1:
+            case 6:
                 six += '⍊  ⌋ ⌊'
                 break;
         }
@@ -147,11 +120,12 @@ function guessCheckCharacter() {
                 ${four}
                 ${five}
                 ${six}
-                Lives: ${lives}
-                Incorrect Characters: ${wrongCharacters}`)
+                Attempts: ${attempts}
+                Incorrect Characters: ${wrongCharacters}
+                `)
     }
 
-    if (lives <= 0) {
+    if (attempts >= maxAttempts) {
         alert('You have lost')
         location.reload()
     }
@@ -162,24 +136,29 @@ function guessCheckCharacter() {
 function checkWord() {
     if (guessedCount === word.length) {
         alert(`You have won. The word is ${word}`)
-        return
     }
-    printMatches()
+    else {
+        printMatches()
+        askCharacter()
+    }
 }
 
 function winorLose() {
     if (guessedCount === word.length) {
         alert(`You have won. The word is ${word}`)
-        return
     }
     else {
-        lives = 0
+        attempts = maxAttempts
         alert('You have lost')
         location.reload()
     }
 }
 
 
-startGame()
+sortWord()
+printMatches()
+askCharacter()
 
+///QUITAR BREAKS
 ///CONDICION DE 1 O + LETRAS
+///CAMBIAR VARIABLE ATTEMPTS -> LIVES
