@@ -1,3 +1,4 @@
+//Data
 let fear = {
     id: 'tr-fe',
     developer: 'Monolith',
@@ -7,19 +8,18 @@ let fear = {
 
 let halflife = {
     id: 'so-hl',
-    developer: 'smart',
+    developer: 'Valve',
     name: 'halflife',
     price: 25
 }
 
 let portal = {
     id: 'pz-po',
-    developer: 'opel',
+    developer: 'Valve',
     name: 'portal',
     price: 25
 }
 let products = [fear, halflife, portal]
-let lista = '';
 //Constants
 const LIST_PRODUCTS = 1;
 const ADD_PRODUCT_TO_CART = 2;
@@ -36,63 +36,50 @@ let cart = [];
 let total = 0;
 //Variable that saves all the old purchases
 let orderhistory = [];
-//This to variables are for the function searchProducts. One save the product found and the other tells if its found the product or not
-let productFound = '';
-let found = false;
 
-//Lists all available products
-function listproducts() {
-    console.table(products);
-}
+//LOGIC
 
-//Function that adds an item into the cart. This function asks the user what product he/she wants and searches for it by calling the function searchProducts()
-function addToCart() {
-    let backtomenu = '';
-    do {
-        let product = searchProducts();
+//Function that adds an item into the cart.
+function addToCart(idproduct) {
+    let addedsucesfully = true;
+    if (idproduct === null) {
+        throw new Error('Action cancelled');
+    } else {
+        let product = searchProducts(idproduct);
+
         if (product == PRODUCT_NOT_FOUND) {
-            backtomenu = prompt("Type product id again or press cancel")
+            addedsucesfully = false;
         } else {
-            //cart[cart.length] = product;
             cart.push(product);
-            backtomenu = null;
         }
-    } while (backtomenu != null);
-
-
-}
-
-//Displays the total price excluding tax and the current products in the cart
-function getCartTotal() {
-    for (let i = 0; i < cart.length; i++) {
-        total += cart[i].price;
     }
-    console.table(cart);
-    console.log('Total (without iva): ' + total + '€');
-    total = 0;
+
+    return addedsucesfully;
 }
 
-//This function calculates the total VAT and asks the user if he/she wants to finalize the purchase. Once the purchase is finished, it is saved in the history by calling the addToOrderHistory().
-function checkoutCart() {
-    if (cart.length != 0) {
-        console.log("Cart");
-        console.table(cart);
+//Gets the total price excluding tax and the current products in the cart
+function getCartTotal(option) {
+    total = 0;
+    if (option === GET_CART_TOTAL) {
+        for (let i = 0; i < cart.length; i++) {
+            total += cart[i].price;
+        }
+    } else if (option === CHECKOUT_CART) {
         for (let i = 0; i < cart.length; i++) {
             total += cart[i].price * IVA;
         }
-        console.log('Total: ' + total + '€')
-        if (window.confirm('Confirm purchase?')) {
-            console.log("Order Processed");
-            addToOrderHistory();
-            cart = [];
-        } else {
-            total = 0;
-        }
-    } else {
-        console.log("Cart is empty!")
     }
+    return {
+        cart: cart,
+        total: total
+    }
+}
 
-
+//This function save the checkout
+function checkoutCart() {
+    addToOrderHistory();
+    cart = [];
+    total = 0;
 }
 
 //Adds the processed order to the orderhistory array and also adds the time and the total amount of the purchased item
@@ -107,17 +94,13 @@ function addToOrderHistory() {
     }
 }
 
-//Displays the history
-function viewOrdersHistory() {
-    console.table(orderhistory);
-}
-
 //Search the products by id
-function searchProducts() {
+function searchProducts(productid) {
+    let productFound = '';
+    let found = false;
 
-    let id = prompt("introduce id of the product");
     for (let i = 0; i < products.length && !found; i++) {
-        if (products[i].id == id) {
+        if (products[i].id == productid) {
             found = true;
             productFound = products[i];
         }
@@ -131,6 +114,24 @@ function searchProducts() {
 
 }
 
+//Checks if the cart is empty
+function isCartEmpty(cart) {
+    return cart.length === 0;
+}
+
+// VIEW
+
+//Displays the history
+function viewOrdersHistory() {
+    console.table(orderhistory);
+}
+
+
+//Lists all available products
+function listproducts() {
+    console.table(products);
+}
+
 //Main menu of the store
 function storeMenu() {
     let option = 0;
@@ -141,13 +142,39 @@ function storeMenu() {
                 listproducts();
                 break;
             case ADD_PRODUCT_TO_CART:
-                addToCart();
+                let idproduct = prompt('Introduce id of the product')
+                try {
+                    if (addToCart(idproduct)) {
+                        alert('Added to cart');
+                    } else {
+                        alert(PRODUCT_NOT_FOUND);
+                    }
+                } catch (error) {
+                    alert(error.message)
+                }
                 break;
             case GET_CART_TOTAL:
-                getCartTotal();
+                let carttotal = getCartTotal(option);
+                if (isCartEmpty(carttotal.cart)) {
+                    console.log('Cart is empty');
+                } else {
+                    console.table(carttotal.cart);
+                    console.log(carttotal.total + '€');
+                }
                 break;
             case CHECKOUT_CART:
-                checkoutCart();
+                let checkouttotal = getCartTotal(option);
+                if (isCartEmpty(checkouttotal.cart)) {
+                    console.log('Cart is empty');
+                } else {
+                    
+                    console.table(checkouttotal.cart);
+                    console.log(checkouttotal.total + '€');
+                    if (window.confirm('Confirm purchase?')) {
+                        checkoutCart();
+                        console.log('Checkout completed');
+                    }
+                }
                 break;
             case VIEW_ORDERS_HISTORY:
                 viewOrdersHistory();
