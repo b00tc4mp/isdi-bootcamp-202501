@@ -163,14 +163,14 @@ function showList() {console.table(productsList)}
 
 function showCart() {console.table(cart)}
 
-var reciept = []
-var hist = []
+
 
 function generateReciept() {
-    reciept = []
+    var reciept = []
     var total = 0
     var tax = 0
     var basePrice = 0
+    var hist
 
     for (var i = 0; i < cart.length; i++) {
         reciept[reciept.length] = cart[i]
