@@ -1,36 +1,14 @@
-/*
-User
-- introducir una palabra a adivinar (por el que propone la palabra) [U1]
-- ver los espacios que puede rellenar (de la palbra, sus caracteres) y las oportunidades que tiene para adivinar esos espacios [U2]
-- probar con una letra (adivinar si coincide con alguna de la palabra oculta) [U3]
-- probar de adivinar la palabra entera [U4]
-- volver a empezar [U5]
-*/
+// DATA
 
 var word = ''
+var progress = []
+// 'stop'
+// [false, false, true, false]
+var remainingAttemps = 6
 
-// introducir una palabra a adivinar (por el que propone la palabra) [U1]
-function introduceWord() {
-    /*
-    Maquina
-    - pedir palabra al usuario (el que propone la palabra) [M1]
-    - verificar que solo sean letras (en caso que no, informar al usuario) [M2]
-    - guardar palabra para luego jugar [M3]
-    */
+// LOGIC
 
-    // [M1]
-
-    var candidateWord = prompt('input a word')
-    candidateWord = candidateWord.toLowerCase()
-
-    // [M2]
-
-    /*
-    Maquina
-    - pasar palabra candidata a minusculas
-    - recorrer los caracteres de la palabra candidata y con ellos recorrer el alfabeto y verificar uno a uno si los encuentra en él (si hay un caracter que no lo encuentra, avisar al usuario que la palabra tiene un caracter no valido, y que vuelva a introducir una palabra)
-    */
-
+function keepGuessingWord(candidateWord) {
     var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
 
     var wordIsValid = true
@@ -58,9 +36,7 @@ function introduceWord() {
     }
 
     if (wordIsValid === false) {
-        alert('word is not valid (because it has characters that do not match the catalan-spanish-english alphabet. try again.')
-
-        introduceWord()
+        throw new Error('invalid word') // -> { message: 'invalid word' }
     } else {
         // [M3]
 
@@ -71,20 +47,7 @@ function introduceWord() {
     }
 }
 
-var progress = []
-// 'stop'
-// [false, false, true, false]
-
-var remainingAttemps = 6
-
-// ver los espacios que puede rellenar (de la palabra, sus caracteres) y las oportunidades que tiene para adivinar esos espacios [U2]
-function viewGameStatus() {
-    /*
-    Maquina
-    - iterar sobre el progress y mostrar caracter correspondiente de la palabra en la posicion donde haya un 1, y un guion donde haya un 0 [M1]
-    - mostrar intentos que le quedan [M2]
-    */
-
+function getGameStatus() {
     var status = ''
 
     for (var i = 0; i < progress.length; i++) {
@@ -98,9 +61,187 @@ function viewGameStatus() {
             status += '-'
     }
 
-    console.log(status)
+    return {
+        status: status,
+        remainingAttemps: remainingAttemps
+    }
+}
 
-    console.log('you have ' + remainingAttemps + ' attemps')
+function hasRemainingAttemps() {
+    return remainingAttemps !== 0
+}
+
+function hasGuessedWord() {
+    var progressFullTrue = true
+
+    for (var i = 0; i < progress.length; i++) {
+        var status = progress[i]
+
+        if (status === false) {
+            progressFullTrue = false
+
+            break
+        }
+    }
+
+    return progressFullTrue
+}
+
+function attemptCharacter(attemptedCharacter) {
+    // [M2]
+    var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
+
+    var characterInAlphabet = false
+
+    for (var i = 0; i < alphabet.length; i++) {
+        var alphabetCharacter = alphabet[i]
+
+        if (attemptedCharacter === alphabetCharacter) {
+            characterInAlphabet = true
+
+            break
+        }
+    }
+
+    // [M3]
+
+    if (characterInAlphabet === false) {
+        throw new Error('invalid character')
+    } else {
+        // [M4]
+
+        var attemptedCharacterFound = false
+
+        for (var i = 0; i < word.length; i++) {
+            var character = word[i]
+
+            if (attemptedCharacter === character) {
+                progress[i] = true
+
+                attemptedCharacterFound = true
+            }
+        }
+
+        // [M5]
+
+        if (attemptedCharacterFound === false) {
+            remainingAttemps--
+        }
+    }
+}
+
+function attemptWord(attemptedWord) {
+    // [M2]
+
+    var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
+
+    var wordIsValid = true
+
+    for (var i = 0; i < attemptedWord.length; i++) {
+        var attemptedCharacter = attemptedWord[i]
+
+        var characterInAlphabet = false
+
+        for (var j = 0; j < alphabet.length; j++) {
+            var alphabetCharacter = alphabet[j]
+
+            if (attemptedCharacter === alphabetCharacter) {
+                characterInAlphabet = true
+
+                break
+            }
+        }
+
+        if (characterInAlphabet === false) {
+            wordIsValid = false
+
+            break
+        }
+    }
+
+    // [M3]
+    if (wordIsValid === false) {
+        throw new Error('invalid word')
+    } else {
+        // si es valida compararla con la palabra introducida (por el otro usuario). si coinciden poner aciertos en todo el progreso (true). si no poner attemps restantes a 0. [M4]
+
+        if (attemptedWord === word)
+            for (var i = 0; i < progress.length; i++)
+                progress[i] = true
+        else
+            remainingAttemps = 0
+    }
+}
+
+function resetGame() {
+    word = ''
+    remainingAttemps = 6
+    progress = []
+}
+
+// PRESENTACION
+
+/*
+User
+- introducir una palabra a adivinar (por el que propone la palabra) [U1]
+- ver los espacios que puede rellenar (de la palbra, sus caracteres) y las oportunidades que tiene para adivinar esos espacios [U2]
+- probar con una letra (adivinar si coincide con alguna de la palabra oculta) [U3]
+- probar de adivinar la palabra entera [U4]
+- volver a empezar [U5]
+*/
+
+// introducir una palabra a adivinar (por el que propone la palabra) [U1]
+function introduceWord() {
+    /*
+    Maquina
+    - pedir palabra al usuario (el que propone la palabra) [M1]
+    - verificar que solo sean letras (en caso que no, informar al usuario) [M2]
+    - guardar palabra para luego jugar [M3]
+    */
+
+    // [M1]
+
+    var candidateWord = prompt('input a word')
+    candidateWord = candidateWord.toLowerCase()
+
+    // [M2]
+
+    /*
+    Maquina
+    - pasar palabra candidata a minusculas
+    - recorrer los caracteres de la palabra candidata y con ellos recorrer el alfabeto y verificar uno a uno si los encuentra en él (si hay un caracter que no lo encuentra, avisar al usuario que la palabra tiene un caracter no valido, y que vuelva a introducir una palabra)
+    */
+
+    try {
+        keepGuessingWord(candidateWord)
+    } catch (error) {
+        alert(error.message)
+
+        console.error(error)
+
+        introduceWord()
+    }
+}
+
+// ver los espacios que puede rellenar (de la palabra, sus caracteres) y las oportunidades que tiene para adivinar esos espacios [U2]
+function viewGameStatus() {
+    /*
+    Maquina
+    - iterar sobre el progress y mostrar caracter correspondiente de la palabra en la posicion donde haya un 1, y un guion donde haya un 0 [M1]
+    - mostrar intentos que le quedan [M2]
+    */
+
+    try {
+        var gameStatus = getGameStatus()
+
+        console.log(gameStatus.status)
+
+        console.log('you have ' + gameStatus.remainingAttemps + ' attemps')
+    } catch (error) {
+        alert(error.message)
+
+        console.error(error)
+    }
 }
 
 // probar con una letra (adivinar si coincide con alguna de la palabra oculta) [U3]
@@ -117,69 +258,31 @@ function tryCharacter() {
     */
 
     // [M0]
-    if (remainingAttemps === 0) {
-        alert('you have no more attemps')
-    } else {
-        // [M0B]
-        var progressFullTrue = true
 
-        for (var i = 0; i < progress.length; i++) {
-            var status = progress[i]
+    try {
+        var hasAttemps = hasRemainingAttemps()
 
-            if (status === false) {
-                progressFullTrue = false
+        if (!hasAttemps) {
+            alert('you have no more attemps')
+        } else {
+            var wordGuessed = hasGuessedWord()
 
-                break
+            if (wordGuessed) {
+                alert('word already guessed')
+            } else {
+                var attemptedCharacter = prompt('character?')
+                attemptedCharacter = attemptedCharacter.toLowerCase()
+
+                attemptCharacter(attemptedCharacter)
             }
         }
-
-        if (progressFullTrue === true) {
-            alert('word already guessed')
+    } catch (error) {
+        if (error.message === 'invalid character') {
+            tryCharacter()
         } else {
-            // [M1]
-            var attemptedCharacter = prompt('character?')
-            attemptedCharacter = attemptedCharacter.toLowerCase()
+            alert(error.message)
 
-            // [M2]
-            var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
-
-            var characterInAlphabet = false
-
-            for (var i = 0; i < alphabet.length; i++) {
-                var alphabetCharacter = alphabet[i]
-
-                if (attemptedCharacter === alphabetCharacter) {
-                    characterInAlphabet = true
-
-                    break
-                }
-            }
-
-            // [M3]
-
-            if (characterInAlphabet === false) {
-                tryCharacter()
-            } else {
-                // [M4]
-
-                var attemptedCharacterFound = false
-
-                for (var i = 0; i < word.length; i++) {
-                    var character = word[i]
-
-                    if (attemptedCharacter === character) {
-                        progress[i] = true
-
-                        attemptedCharacterFound = true
-                    }
-                }
-
-                // [M5]
-
-                if (attemptedCharacterFound === false) {
-                    remainingAttemps--
-                }
-            }
+            console.error(error)
         }
     }
 }
@@ -195,72 +298,30 @@ function tryWord() {
     - si palabra no es valida, volver a pedir palabra [M3]
     - si es valida compararla con la palabra introducida (por el otro usuario). si coinciden poner aciertos en todo el progreso (true). si no poner attemps a 0. [M4]
     */
+    try {
+        var hasAttemps = hasRemainingAttemps()
 
-    // [M0]
-    if (remainingAttemps === 0) {
-        alert('you have no more attemps')
-    } else {
-        // [M0B]
-        var progressFullTrue = true
+        if (!hasAttemps) {
+            alert('you have no more attemps')
+        } else {
+            var wordGuessed = hasGuessedWord()
 
-        for (var i = 0; i < progress.length; i++) {
-            var status = progress[i]
+            if (wordGuessed) {
+                alert('word already guessed')
+            } else {
+                var attemptedWord = prompt('word?')
+                attemptedWord = attemptedWord.toLowerCase()
 
-            if (status === false) {
-                progressFullTrue = false
-
-                break
+                attemptWord(attemptedWord)
             }
         }
-
-        if (progressFullTrue === true) {
-            alert('word already guessed')
+    } catch (error) {
+        if (error.message === 'invalid word') {
+            tryWord()
         } else {
-            // [M1]
+            alert(error.message)
 
-            var attemptedWord = prompt('word?')
-            attemptedWord = attemptedWord.toLowerCase()
-
-            // [M2]
-
-            var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
-
-            var wordIsValid = true
-
-            for (var i = 0; i < attemptedWord.length; i++) {
-                var attemptedCharacter = attemptedWord[i]
-
-                var characterInAlphabet = false
-
-                for (var j = 0; j < alphabet.length; j++) {
-                    var alphabetCharacter = alphabet[j]
-
-                    if (attemptedCharacter === alphabetCharacter) {
-                        characterInAlphabet = true
-
-                        break
-                    }
-                }
-
-                if (characterInAlphabet === false) {
-                    wordIsValid = false
-
-                    break
-                }
-            }
-
-            // [M3]
-            if (wordIsValid === false) {
-                tryWord()
-            } else {
-                // si es valida compararla con la palabra introducida (por el otro usuario). si coinciden poner aciertos en todo el progreso (true). si no poner attemps restantes a 0. [M4]
-
-                if (attemptedWord === word)
-                    for (var i = 0; i < progress.length; i++)
-                        progress[i] = true
-                else
-                    remainingAttemps = 0
-            }
+            console.error(error)
         }
     }
 }
@@ -270,10 +331,13 @@ function playAgain() {
     Maquina
     - reiniciar variables
     */
+    try {
+        resetGame()
+    } catch (error) {
+        alert(error.message)
 
-    word = ''
-    remainingAttemps = 6
-    progress = []
+        console.error(error)
+    }
 }
 
 // automate all process
@@ -316,32 +380,28 @@ function startGame() {
             tryWord()
 
         // [M3]
+        try {
+            var hasAttemps = hasAttemps()
+            var wordGuessed = hasGuessedWord()
 
-        var progressFullTrue = true
+            if (hasAttemps === 0 || wordGuessed === true) {
+                viewGameStatus()
 
-        for (var i = 0; i < progress.length; i++) {
-            var status = progress[i]
+                var replay = confirm('play again?')
 
-            if (status === false) {
-                progressFullTrue = false
+                if (replay === true) {
+                    playAgain()
+                    startGame()
+                } else {
+                    alert('bye')
+                }
+            } else
+                tryGuess()
+        } catch (error) {
+            alert(error.message)
 
-                break
-            }
+            console.error(error)
         }
-
-        if (remainingAttemps === 0 || progressFullTrue === true) {
-            viewGameStatus()
-
-            var replay = confirm('play again?')
-
-            if (replay === true) {
-                playAgain()
-                startGame()
-            } else {
-                alert('bye')
-            }
-        } else
-            tryGuess()
     }
 
     tryGuess()
