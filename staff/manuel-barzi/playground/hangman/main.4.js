@@ -1,18 +1,14 @@
-var data = {}
-var logic = {}
-var interface = {}
-
 // DATA
 
-data.word = ''
-data.progress = []
+var word = ''
+var progress = []
 // 'stop'
 // [false, false, true, false]
-data.remainingAttemps = 6
+var remainingAttemps = 6
 
 // LOGIC
 
-logic.keepGuessingWord = function (candidateWord) {
+function keepGuessingWord(candidateWord) {
     var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
 
     var wordIsValid = true
@@ -40,24 +36,23 @@ logic.keepGuessingWord = function (candidateWord) {
     }
 
     if (wordIsValid === false) {
-        throw new Error('invalid word')
-        // -> { message: 'invalid word' }
+        throw new Error('invalid word') // -> { message: 'invalid word' }
     } else {
-        data.word = candidateWord
+        word = candidateWord
 
-        for (var i = 0; i < data.word.length; i++)
-            data.progress[i] = false
+        for (var i = 0; i < word.length; i++)
+            progress[i] = false
     }
 }
 
-logic.getGameStatus = function () {
+function getGameStatus() {
     var status = ''
 
-    for (var i = 0; i < data.progress.length; i++) {
-        var characterStatus = data.progress[i]
+    for (var i = 0; i < progress.length; i++) {
+        var characterStatus = progress[i]
 
         if (characterStatus === true) {
-            var character = data.word[i]
+            var character = word[i]
 
             status += character
         } else
@@ -66,19 +61,19 @@ logic.getGameStatus = function () {
 
     return {
         status: status,
-        remainingAttemps: data.remainingAttemps
+        remainingAttemps: remainingAttemps
     }
 }
 
-logic.hasRemainingAttemps = function () {
-    return data.remainingAttemps !== 0
+function hasRemainingAttemps() {
+    return remainingAttemps !== 0
 }
 
-logic.hasGuessedWord = function () {
+function hasGuessedWord() {
     var progressFullTrue = true
 
-    for (var i = 0; i < data.progress.length; i++) {
-        var status = data.progress[i]
+    for (var i = 0; i < progress.length; i++) {
+        var status = progress[i]
 
         if (status === false) {
             progressFullTrue = false
@@ -90,7 +85,7 @@ logic.hasGuessedWord = function () {
     return progressFullTrue
 }
 
-logic.attemptCharacter = function (attemptedCharacter) {
+function attemptCharacter(attemptedCharacter) {
     var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
 
     var characterInAlphabet = false
@@ -110,23 +105,23 @@ logic.attemptCharacter = function (attemptedCharacter) {
     } else {
         var attemptedCharacterFound = false
 
-        for (var i = 0; i < data.word.length; i++) {
-            var character = data.word[i]
+        for (var i = 0; i < word.length; i++) {
+            var character = word[i]
 
             if (attemptedCharacter === character) {
-                data.progress[i] = true
+                progress[i] = true
 
                 attemptedCharacterFound = true
             }
         }
 
         if (attemptedCharacterFound === false) {
-            data.remainingAttemps--
+            remainingAttemps--
         }
     }
 }
 
-logic.attemptWord = function (attemptedWord) {
+function attemptWord(attemptedWord) {
     var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
 
     var wordIsValid = true
@@ -156,21 +151,21 @@ logic.attemptWord = function (attemptedWord) {
     if (wordIsValid === false) {
         throw new Error('invalid word')
     } else {
-        if (attemptedWord === data.word)
-            for (var i = 0; i < data.progress.length; i++)
-                data.progress[i] = true
+        if (attemptedWord === word)
+            for (var i = 0; i < progress.length; i++)
+                progress[i] = true
         else
-            data.remainingAttemps = 0
+            remainingAttemps = 0
     }
 }
 
-logic.resetGame = function () {
-    data.word = ''
-    data.remainingAttemps = 6
-    data.progress = []
+function resetGame() {
+    word = ''
+    remainingAttemps = 6
+    progress = []
 }
 
-// INTERFACE
+// PRESENTACION
 
 /*
 User
@@ -181,7 +176,7 @@ User
 - volver a empezar [U5]
 */
 
-interface.introduceWord = function () {
+function introduceWord() {
     /*
     Maquina
     - pedir palabra al usuario (el que propone la palabra) [M1]
@@ -199,17 +194,17 @@ interface.introduceWord = function () {
     */
 
     try {
-        logic.keepGuessingWord(candidateWord)
+        keepGuessingWord(candidateWord)
     } catch (error) {
         alert(error.message)
 
         console.error(error)
 
-        interface.introduceWord()
+        introduceWord()
     }
 }
 
-interface.viewGameStatus = function () {
+function viewGameStatus() {
     /*
     Maquina
     - iterar sobre el progress y mostrar caracter correspondiente de la palabra en la posicion donde haya un 1, y un guion donde haya un 0 [M1]
@@ -217,9 +212,11 @@ interface.viewGameStatus = function () {
     */
 
     try {
-        var gameStatus = logic.getGameStatus()
+        var gameStatus = getGameStatus()
 
-        alert(gameStatus.status + '\nyou have ' + gameStatus.remainingAttemps + ' attemps')
+        console.log(gameStatus.status)
+
+        console.log('you have ' + gameStatus.remainingAttemps + ' attemps')
     } catch (error) {
         alert(error.message)
 
@@ -227,7 +224,7 @@ interface.viewGameStatus = function () {
     }
 }
 
-interface.tryCharacter = function () {
+function tryCharacter() {
     /*
     Maquina
     - comprobar intentos restantes. si quedan 0 intentos, alertamos al usuario de que no le quedan intentos y paramos aqui. de lo contrario operamos (continuamos) [M0]
@@ -240,12 +237,12 @@ interface.tryCharacter = function () {
     */
 
     try {
-        var hasAttemps = logic.hasRemainingAttemps()
+        var hasAttemps = hasRemainingAttemps()
 
         if (!hasAttemps) {
             alert('you have no more attemps')
         } else {
-            var wordGuessed = logic.hasGuessedWord()
+            var wordGuessed = hasGuessedWord()
 
             if (wordGuessed) {
                 alert('word already guessed')
@@ -253,12 +250,12 @@ interface.tryCharacter = function () {
                 var attemptedCharacter = prompt('character?')
                 attemptedCharacter = attemptedCharacter.toLowerCase()
 
-                logic.attemptCharacter(attemptedCharacter)
+                attemptCharacter(attemptedCharacter)
             }
         }
     } catch (error) {
         if (error.message === 'invalid character') {
-            interface.tryCharacter()
+            tryCharacter()
         } else {
             alert(error.message)
 
@@ -267,7 +264,7 @@ interface.tryCharacter = function () {
     }
 }
 
-interface.tryWord = function () {
+function tryWord() {
     /*
     Maquina
     - comprobar intentos restantes. si quedan 0 intentos, alertamos al usuario de que no le quedan intentos y paramos aqui. de lo contrario operamos (continuamos) [M0]
@@ -279,12 +276,12 @@ interface.tryWord = function () {
     */
 
     try {
-        var hasAttemps = logic.hasRemainingAttemps()
+        var hasAttemps = hasRemainingAttemps()
 
         if (!hasAttemps) {
             alert('you have no more attemps')
         } else {
-            var wordGuessed = logic.hasGuessedWord()
+            var wordGuessed = hasGuessedWord()
 
             if (wordGuessed) {
                 alert('word already guessed')
@@ -292,12 +289,12 @@ interface.tryWord = function () {
                 var attemptedWord = prompt('word?')
                 attemptedWord = attemptedWord.toLowerCase()
 
-                logic.attemptWord(attemptedWord)
+                attemptWord(attemptedWord)
             }
         }
     } catch (error) {
         if (error.message === 'invalid word') {
-            interface.tryWord()
+            tryWord()
         } else {
             alert(error.message)
 
@@ -306,13 +303,13 @@ interface.tryWord = function () {
     }
 }
 
-interface.playAgain = function () {
+function playAgain() {
     /*
     Maquina
     - reiniciar variables
     */
     try {
-        logic.resetGame()
+        resetGame()
     } catch (error) {
         alert(error.message)
 
@@ -332,64 +329,55 @@ Maquina
 }
 */
 
-interface.startGame = function () {
-    try {
-        interface.introduceWord()
+function startGame() {
+    introduceWord()
 
-        // bucle
-        function tryGuess() {
-            interface.viewGameStatus()
+    // bucle
+    function tryGuess() {
+        viewGameStatus()
 
-            var option = ''
+        var option = ''
 
-            function chooseOption() {
-                option = prompt('character (c) or word (w)?')
-                option = option.toLowerCase()
+        function chooseOption() {
+            option = prompt('character (c) or word (w)?')
+            option = option.toLowerCase()
 
-                if (option !== 'c' && option !== 'w')
-                    chooseOption()
-            }
-
-            chooseOption()
-
-            if (option === 'c')
-                interface.tryCharacter()
-            else if (option === 'w')
-                interface.tryWord()
-
-            try {
-                var hasAttemps = logic.hasRemainingAttemps()
-                var wordGuessed = logic.hasGuessedWord()
-
-                if (hasAttemps === 0 || wordGuessed === true) {
-                    interface.viewGameStatus()
-
-                    var replay = confirm('play again?')
-
-                    if (replay === true) {
-                        interface.playAgain()
-                        interface.startGame()
-                    } else {
-                        alert('bye')
-                    }
-                } else
-                    tryGuess()
-            } catch (error) {
-                alert(error.message)
-
-                console.error(error)
-            }
+            if (option !== 'c' && option !== 'w')
+                chooseOption()
         }
 
-        tryGuess()
-    } catch (error) {
-        alert(error.message)
+        chooseOption()
 
-        console.error(error)
+        if (option === 'c')
+            tryCharacter()
+        else if (option === 'w')
+            tryWord()
+
+        try {
+            var hasAttemps = hasAttemps()
+            var wordGuessed = hasGuessedWord()
+
+            if (hasAttemps === 0 || wordGuessed === true) {
+                viewGameStatus()
+
+                var replay = confirm('play again?')
+
+                if (replay === true) {
+                    playAgain()
+                    startGame()
+                } else {
+                    alert('bye')
+                }
+            } else
+                tryGuess()
+        } catch (error) {
+            alert(error.message)
+
+            console.error(error)
+        }
     }
+
+    tryGuess()
 }
 
-console.clear()
-
-interface.startGame()
-
+startGame()
