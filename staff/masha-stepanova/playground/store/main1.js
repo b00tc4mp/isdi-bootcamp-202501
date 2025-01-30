@@ -114,11 +114,13 @@ data.onion = {
     stock: 10
 }
 
-data.productsList = [greenApples, redApples, bananas, oranges, strawberries1, strawberries500, blueberries, kiwi, potatoes, carrots, tomatoes, cabbages, eggplant, onion]
+data.productsList = [data.greenApples, data.redApples, data.bananas, data.oranges, data.strawberries1, data.strawberries500, data.blueberries, data.kiwi, data.potatoes, data.carrots, data.tomatoes, data.cabbages, data.eggplant, data.onion]
 data.cart = []
 data.productQuantity
 data.productId
 data.continueShopping = true
+data.reciept = []
+data.generatedHistory = []
 
 // PRESENTATION
 
@@ -211,7 +213,7 @@ logic.validateOption = function (str) {
     var validOptions = '123456'
     var isValid = false
     for (var i = 0; i < validOptions.length; i++) {
-        if (argument === validOptions[i]) {
+        if (str === validOptions[i]) {
             return true
     }
     }
@@ -235,7 +237,7 @@ logic.shopping = function (str) {
             interface.showCart()
             break
         case '5':
-            interface.generateReciept()
+            interface.checkout()
             break
         case '6':
             interface.showShoppingHistory()
@@ -253,36 +255,36 @@ logic.getCart = function () {
 }
 
 logic.generateReciept = function () {
-    var reciept = []
+    data.reciept = []
     var total = 0
     var tax = 0
     var basePrice = 0
 
     for (var i = 0; i < data.cart.length; i++) {
-        reciept[reciept.length] = data.cart[i]
+        data.reciept[data.reciept.length] = data.cart[i]
         total += data.cart[i]['price'] * data.cart[i]['quantity']
     }
 
     tax = total * 0.21
     basePrice = total * 0.79
     
-    reciept[reciept.length] = `Base price: ${basePrice} €`
-    reciept[reciept.length] = `Taxes: ${tax} €`
-    reciept[reciept.length] = `Total: ${total} €`
-    reciept[reciept.length] = Date()
+    data.reciept[data.reciept.length] = `Base price: ${basePrice} €`
+    data.reciept[data.reciept.length] = `Taxes: ${tax} €`
+    data.reciept[data.reciept.length] = `Total: ${total} €`
+    data.reciept[data.reciept.length] = Date()
     data.cart = []
+    // logic.generateHistory(data.reciept)
 
-    return reciept
+    return data.reciept
 }
 
 logic.generateHistory = function () {
-    var generatedHistory = []
-
-    for (var i = reciept.length; i > 0 ; i--) {
-        generatedHistory[generatedHistory.length](reciept[i])
+    
+    for (var i = data.reciept.length - 1; i >= 0 ; i--) {
+        data.generatedHistory[data.generatedHistory.length] = data.reciept[i]
     }
 
-    return generatedHistory
+    return data.generatedHistory
 }
 
 logic.checkProductStock = function (id, quantity) {
@@ -301,6 +303,7 @@ logic.addToCart = function (prod, quantity) {
     data.cart[data.cart.length] = {...prod}
     delete data.cart[data.cart.length - 1]['stock']
     data.cart[data.cart.length - 1]['quantity'] = +quantity
+    return data.cart
     }
     throw new Error('Couldn\'t add to cart')
 }
