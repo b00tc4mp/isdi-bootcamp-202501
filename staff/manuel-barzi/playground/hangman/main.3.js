@@ -38,6 +38,8 @@ function keepGuessingWord(candidateWord) {
     if (wordIsValid === false) {
         throw new Error('invalid word') // -> { message: 'invalid word' }
     } else {
+        // [M3]
+
         word = candidateWord
 
         for (var i = 0; i < word.length; i++)
@@ -86,6 +88,7 @@ function hasGuessedWord() {
 }
 
 function attemptCharacter(attemptedCharacter) {
+    // [M2]
     var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
 
     var characterInAlphabet = false
@@ -100,9 +103,13 @@ function attemptCharacter(attemptedCharacter) {
         }
     }
 
+    // [M3]
+
     if (characterInAlphabet === false) {
         throw new Error('invalid character')
     } else {
+        // [M4]
+
         var attemptedCharacterFound = false
 
         for (var i = 0; i < word.length; i++) {
@@ -115,6 +122,8 @@ function attemptCharacter(attemptedCharacter) {
             }
         }
 
+        // [M5]
+
         if (attemptedCharacterFound === false) {
             remainingAttemps--
         }
@@ -122,6 +131,8 @@ function attemptCharacter(attemptedCharacter) {
 }
 
 function attemptWord(attemptedWord) {
+    // [M2]
+
     var alphabet = 'aàábcçdeèéfghiíïjklmnñoòópqrstuúüvwxyz'
 
     var wordIsValid = true
@@ -148,9 +159,12 @@ function attemptWord(attemptedWord) {
         }
     }
 
+    // [M3]
     if (wordIsValid === false) {
         throw new Error('invalid word')
     } else {
+        // si es valida compararla con la palabra introducida (por el otro usuario). si coinciden poner aciertos en todo el progreso (true). si no poner attemps restantes a 0. [M4]
+
         if (attemptedWord === word)
             for (var i = 0; i < progress.length; i++)
                 progress[i] = true
@@ -176,6 +190,7 @@ User
 - volver a empezar [U5]
 */
 
+// introducir una palabra a adivinar (por el que propone la palabra) [U1]
 function introduceWord() {
     /*
     Maquina
@@ -184,8 +199,12 @@ function introduceWord() {
     - guardar palabra para luego jugar [M3]
     */
 
+    // [M1]
+
     var candidateWord = prompt('input a word')
     candidateWord = candidateWord.toLowerCase()
+
+    // [M2]
 
     /*
     Maquina
@@ -204,6 +223,7 @@ function introduceWord() {
     }
 }
 
+// ver los espacios que puede rellenar (de la palabra, sus caracteres) y las oportunidades que tiene para adivinar esos espacios [U2]
 function viewGameStatus() {
     /*
     Maquina
@@ -224,6 +244,7 @@ function viewGameStatus() {
     }
 }
 
+// probar con una letra (adivinar si coincide con alguna de la palabra oculta) [U3]
 function tryCharacter() {
     /*
     Maquina
@@ -235,6 +256,8 @@ function tryCharacter() {
     - comprobar si caracter esta en la palabra, entonces, guardar posicion encontrada en progress [M4]
     - si caracter no está en palabra, entonces decrementar intentos restantes [M5]
     */
+
+    // [M0]
 
     try {
         var hasAttemps = hasRemainingAttemps()
@@ -264,6 +287,7 @@ function tryCharacter() {
     }
 }
 
+// - probar de adivinar la palabra entera [U4]
 function tryWord() {
     /*
     Maquina
@@ -274,7 +298,6 @@ function tryWord() {
     - si palabra no es valida, volver a pedir palabra [M3]
     - si es valida compararla con la palabra introducida (por el otro usuario). si coinciden poner aciertos en todo el progreso (true). si no poner attemps a 0. [M4]
     */
-
     try {
         var hasAttemps = hasRemainingAttemps()
 
@@ -330,12 +353,15 @@ Maquina
 */
 
 function startGame() {
+    // M0
     introduceWord()
 
     // bucle
     function tryGuess() {
+        // [M1]
         viewGameStatus()
 
+        // [M2]
         var option = ''
 
         function chooseOption() {
@@ -353,6 +379,7 @@ function startGame() {
         else if (option === 'w')
             tryWord()
 
+        // [M3]
         try {
             var hasAttemps = hasAttemps()
             var wordGuessed = hasGuessedWord()
