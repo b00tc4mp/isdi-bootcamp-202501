@@ -8,7 +8,7 @@ data.won = false
 
 logic.generateRandom = function () {
     data.randomNumber = Math.floor(Math.random() * 11)
-    //console.log(data.randomNumber)
+    console.log(data.randomNumber)
     data.remainingAttempts = 3
     data.won = false
 }
@@ -16,7 +16,7 @@ logic.generateRandom = function () {
 logic.attemptNumber = function (number) {
     if (data.remainingAttempts === 0)
         throw new Error('no remaining attemps')
-    if (data.won)
+    if (data.won === true)
         throw new Error('player already won')
 
     data.remainingAttempts--
@@ -33,28 +33,22 @@ logic.getStatus = function () {
     return status
 }
 
-logic.isFinished = function () {
-    return data.remainingAttempts !== 0 && data.won === false
-}
-
 interface.begin = function () {
     try {
         logic.generateRandom()
     } catch (error) {
-        console.error(error)
-
         alert(error.message)
     }
 }
 
 interface.tryNumber = function () {
     try {
-        var intentNumber = parseInt(prompt('number?'))
+        var intentNumber = prompt('number?')
+        //intentNumber = parseInt(intentNumber)
+        intentNumber = Number(intentNumber)
 
         logic.attemptNumber(intentNumber)
     } catch (error) {
-        console.error(error)
-
         if (error.message === 'no remaining attemps' || error.message === 'already won')
             alert(error.message + ' GAME OVER')
         else
@@ -66,10 +60,8 @@ interface.viewStatus = function () {
     try {
         var status = logic.getStatus()
 
-        alert('remainingAttempts ' + status.remainingAttempts + ', won ' + status.won + ' ' + (status.remainingAttempts === 0 || status.won ? 'GAME OVER' : ''))
+        alert('remainingAttempts ' + status.remainingAttempts + ', won ' + status.won + ' ' + (status.remainingAttempts === 0 || status.won === true ? 'GAME OVER' : ''))
     } catch (error) {
-        console.error(error)
-
         alert(error.message)
     }
 }
@@ -83,13 +75,15 @@ interface.automate = function () {
         interface.begin()
         interface.viewStatus()
 
+        var status
+
         do {
             interface.tryNumber()
             interface.viewStatus()
-        } while (logic.isFinished())
-    } catch (error) {
-        console.error(error)
 
+            status = logic.getStatus()
+        } while (status.remainingAttempts !== 0 && status.won === false)
+    } catch (error) {
         alert(error.message)
     }
 }
