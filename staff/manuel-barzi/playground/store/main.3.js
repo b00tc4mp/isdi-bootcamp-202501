@@ -1,19 +1,19 @@
 var data = {
     products: [
         {
-            id: '123-abc',
+            id: 'fi-ci',
             brand: 'fiat',
             model: 'cinquecento',
             price: 10000
         },
         {
-            id: '456-def',
+            id: 'sm-br',
             brand: 'smart',
             model: 'bravus',
             price: 25000
         },
         {
-            id: '789-ghi',
+            id: 'op-co',
             brand: 'opel',
             model: 'corsa',
             price: 9000
@@ -23,22 +23,7 @@ var data = {
 
 
 var logic = {
-    getProducts: function () {
-        return data.products
-    },
 
-    getProduct: function (productId) {
-        if (typeof productId !== 'string') throw new TypeError('invalid productId type')
-
-        for (var i = 0; i < data.products.length; i++) {
-            var product = data.products[i]
-
-            if (product.id === productId)
-                return product
-        }
-
-        throw new Error('product not found')
-    }
 }
 
 var interface = {
@@ -58,12 +43,12 @@ var interface = {
         try {
             var products = logic.getProducts()
 
-            var table = 'Products\n'
+            var table = ''
 
             for (var i = 0; i < products.length; i++) {
                 var product = products[i]
 
-                table += product.id + ' ' + product.brand + ' ' + product.model + ' ' + product.price + '\n'
+                table += product.id + '\t' + product.brand + '\t' + product.model + '\t' + product.price
             }
 
             alert(table)
@@ -77,17 +62,7 @@ var interface = {
     },
 
     showItem: function () {
-        try {
-            var productId = prompt('Product id?')
-
-            var product = logic.getProduct(productId)
-
-            var line = 'Product\n' + product.id + ' ' + product.brand + ' ' + product.model + ' ' + product.price
-
-            alert(line)
-        } catch (error) {
-            interface.helper.handlerError(error)
-        }
+        // TODO implement me
     },
 
     addToCart: function () {
@@ -106,5 +81,3 @@ var interface = {
         // TODO implement me
     }
 }
-
-console.clear()
