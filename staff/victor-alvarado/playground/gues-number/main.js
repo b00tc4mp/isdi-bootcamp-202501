@@ -1,22 +1,27 @@
-var intentos = 10 // Numero de intentos
 
-function crearNumeroAleatorio() {
-    return Math.floor(Math.random() * 100) + 1 // Crear un número aleatorio del 1 al 100
+var data = {}
+var logic = {}
+var interface = {}
+
+data.intentos = 10 // Numero de intentos //Data
+
+logic.crearNumeroAleatorio = function() {
+    return Math.floor(Math.random() * 100) + 1 // Crear un número aleatorio del 1 al 100 // Logic
 }
 
-function inicioJuego() { 
+logic.inicioJuego = function() {  //Logic
     var hasGanado = false // La variale has ganado es false, porque ahun no has ganado.
-    var numeroAleatorio = crearNumeroAleatorio() // numero aleatorio es = que la funcion crear numero y llama a la funcion()
+    var numeroAleatorio = logic.crearNumeroAleatorio() // numero aleatorio es = que la funcion crear numero y llama a la funcion()
 
-    while (intentos > 0 && !hasGanado) {
-        var numeroDelUsuario = pedirNumero() // variable numero del usuario es = que pedir numero y llama a la funcion()
+    while (data.intentos > 0 && !hasGanado) {
+        var numeroDelUsuario = interface.pedirNumero() // variable numero del usuario es = que pedir numero y llama a la funcion()
 
         if (numeroDelUsuario === null) { // Si el numero de ususario es = null saldra una alerta.
             alert("Juego cancelado")
             return
         }
 
-        hasGanado = compararRangos(numeroAleatorio, numeroDelUsuario) // compara el numero que ha introducido el usuario, con el numero aleatorio
+        hasGanado = logic.compararRangos(numeroAleatorio, numeroDelUsuario) // compara el numero que ha introducido el usuario, con el numero aleatorio
     }
 
     if (!hasGanado) { // si no has ganado muestra una alerta
@@ -24,7 +29,7 @@ function inicioJuego() {
     }
 }
 
-function pedirNumero() {
+    interface.pedirNumero = function  () { //interfaz
     var numeroIngresado // variable con el lunero ingresado de el usuario
 
     while (true) { // bucle while 
@@ -42,7 +47,7 @@ function pedirNumero() {
     }
 }
 
-function compararRangos(numeroAleatorio, numeroDelUsuario) {
+    logic.compararRangos = function (numeroAleatorio, numeroDelUsuario) { //logic
     var diferencia = numeroAleatorio - numeroDelUsuario // calculamos la diferencia restando numero aleatorio - numero de usuario.
 
     if (diferencia === 0) { // si la diferencia es = a 0 has ganado.
@@ -64,9 +69,9 @@ function compararRangos(numeroAleatorio, numeroDelUsuario) {
         alert("Muy frío")
     }
 
-    intentos-- // restamos intentos cada vez.
+    data.intentos-- // restamos intentos cada vez.
 
     return false
 }
 
-    inicioJuego() // se llama a la funcion inicio juego.
+    logic.inicioJuego() // se llama a la funcion inicio juego. //interfaz
