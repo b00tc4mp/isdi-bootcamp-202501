@@ -1,4 +1,4 @@
-var data  = {}
+var data = {}
 var logic = {}
 var interface = {}
 
@@ -34,18 +34,18 @@ data.oranges = {
     stock: 10
 }
 
-data.strawberries1 = {
+data.productNameawberries1 = {
     id: 'st-1',
     name: 'Strawberries, 1 kg',
-    type: 'strawberries',
+    type: 'productNameawberries',
     price: 7,
     stock: 10
 }
 
-data.strawberries500 = {
+data.productNameawberries500 = {
     id: 'st-500',
     name: 'Strawberries, 500 gr',
-    type: 'strawberries',
+    type: 'productNameawberries',
     price: 4,
     stock: 10
 }
@@ -61,7 +61,7 @@ data.blueberries = {
 data.kiwi = {
     id: 'ki-1',
     name: 'Kiwi, 1kg',
-    type: 'strawberries',
+    type: 'productNameawberries',
     price: 5,
     stock: 10
 }
@@ -114,12 +114,12 @@ data.onion = {
     stock: 10
 }
 
-data.productsList = [data.greenApples, data.redApples, data.bananas, data.oranges, data.strawberries1, data.strawberries500, data.blueberries, data.kiwi, data.potatoes, data.carrots, data.tomatoes, data.cabbages, data.eggplant, data.onion]
+data.productsList = [data.greenApples, data.redApples, data.bananas, data.oranges, data.productNameawberries1, data.productNameawberries500, data.blueberries, data.kiwi, data.potatoes, data.carrots, data.tomatoes, data.cabbages, data.eggplant, data.onion]
 data.cart = []
 data.productQuantity
 data.productId
 data.continueShopping = true
-data.reciept = []
+data.receipt = []
 data.generatedHistory = []
 
 // PRESENTATION
@@ -133,12 +133,12 @@ interface.chooseShoppingOption = function () {
         4 - see total of the cart
         5 - cart checkout
         6 - see shopping history`)
-    
+
     try {
-        logic.validateOption(action) 
+        logic.validateOption(action)
         logic.shopping(action)
     } catch (error) {
-        alert(error.message) 
+        alert(error.message)
         console.log(error)
         interface.chooseShoppingOption()
     }
@@ -147,7 +147,7 @@ interface.chooseShoppingOption = function () {
 interface.showProductsList = function () {
     try {
         console.table(logic.getProductsList())
-    } catch(error) {
+    } catch (error) {
         alert(error.message)
         console.log(error)
     }
@@ -156,7 +156,7 @@ interface.showProductsList = function () {
 interface.showCart = function () {
     try {
         console.table(logic.getCart())
-    } catch(error) {
+    } catch (error) {
         alert(error.message)
         console.log(error)
     }
@@ -164,8 +164,8 @@ interface.showCart = function () {
 
 interface.checkout = function () {
     try {
-        console.table(logic.generateReciept())
-    } catch(error) {
+        console.table(logic.generatereceipt())
+    } catch (error) {
         alert(error.message)
         console.log(error)
     }
@@ -174,7 +174,7 @@ interface.checkout = function () {
 interface.showShoppingHistory = function () {
     try {
         console.table(logic.generateHistory())
-    } catch(error) {
+    } catch (error) {
         alert(error.message)
         console.log(error)
     }
@@ -183,14 +183,14 @@ interface.showShoppingHistory = function () {
 interface.askForProduct = function () {
     data.productId = prompt('Please, introduce the item ID')
     data.productQuantity = prompt('Please, introduce desired quantity')
-    var product = logic.checkProductStock(data.productId, data.productQuantity) 
-    
+    var product = logic.checkProductStock(data.productId, data.productQuantity)
+
     try {
-        logic.checkProductStock(data.productId, data.productQuantity) 
+        logic.checkProductStock(data.productId, data.productQuantity)
         logic.addToCart(product, data.productQuantity)
         alert(`The item '${data.cart[data.cart.length - 1]['name']}' is added to cart!`)
 
-    } catch(error) {
+    } catch (error) {
         alert(error.message)
         console.log(error)
         interface.askForProduct()
@@ -199,31 +199,31 @@ interface.askForProduct = function () {
 
 interface.filterProducts = function () {
     var filter = prompt('What would you like to search now?')
-    
+
     try {
         var foundProduct = logic.checkProductExistance(filter)
         console.table(logic.addFoundProduct(foundProduct))
-    } catch(error) {
+    } catch (error) {
         alert(error.message)
         console.log(error)
     }
 }
 
-logic.validateOption = function (str) {
+logic.validateOption = function (productName) {
     var validOptions = '123456'
     var isValid = false
     for (var i = 0; i < validOptions.length; i++) {
-        if (str === validOptions[i]) {
+        if (productName === validOptions[i]) {
             return true
-    }
+        }
     }
     if (!isValid)
-    throw new Error('Invalid option')
+        throw new Error('Invalid option')
 }
 
-logic.shopping = function (str) {
+interface.shopping = function (productName) {
 
-    switch(str) {
+    switch (productName) {
         case '1':
             interface.showProductsList()
             break
@@ -242,7 +242,7 @@ logic.shopping = function (str) {
         case '6':
             interface.showShoppingHistory()
             break
-            
+
     }
 }
 
@@ -254,34 +254,34 @@ logic.getCart = function () {
     return data.cart
 }
 
-logic.generateReciept = function () {
-    data.reciept = []
+logic.generatereceipt = function () {
+    data.receipt = []
     var total = 0
     var tax = 0
     var basePrice = 0
 
     for (var i = 0; i < data.cart.length; i++) {
-        data.reciept[data.reciept.length] = data.cart[i]
+        data.receipt[data.receipt.length] = data.cart[i]
         total += data.cart[i]['price'] * data.cart[i]['quantity']
     }
 
     tax = total * 0.21
     basePrice = total * 0.79
-    
-    data.reciept[data.reciept.length] = `Base price: ${basePrice} €`
-    data.reciept[data.reciept.length] = `Taxes: ${tax} €`
-    data.reciept[data.reciept.length] = `Total: ${total} €`
-    data.reciept[data.reciept.length] = Date()
-    data.cart = []
-    // logic.generateHistory(data.reciept)
 
-    return data.reciept
+    data.receipt[data.receipt.length] = `Base price: ${basePrice} €`
+    data.receipt[data.receipt.length] = `Taxes: ${tax} €`
+    data.receipt[data.receipt.length] = `Total: ${total} €`
+    data.receipt[data.receipt.length] = Date()
+    data.cart = []
+    // logic.generateHistory(data.receipt)
+
+    return data.receipt
 }
 
 logic.generateHistory = function () {
-    
-    for (var i = data.reciept.length - 1; i >= 0 ; i--) {
-        data.generatedHistory[data.generatedHistory.length] = data.reciept[i]
+
+    for (var i = data.receipt.length - 1; i >= 0; i--) {
+        data.generatedHistory[data.generatedHistory.length] = data.receipt[i]
     }
 
     return data.generatedHistory
@@ -290,38 +290,45 @@ logic.generateHistory = function () {
 logic.checkProductStock = function (id, quantity) {
     for (var i = 0; i < data.productsList.length; i++) {
         if (data.productsList[i]['id'] === id) {
-            if (data.productsList[i]['stock'] >= quantity) 
+            if (data.productsList[i]['stock'] >= quantity)
                 return data.productsList[i]
         }
     }
+
     throw new Error('Not enough stock')
 }
 
 logic.addToCart = function (prod, quantity) {
     for (var i = 1; i > 0; i--) {
-    prod['stock'] -= +quantity
-    data.cart[data.cart.length] = {...prod}
-    delete data.cart[data.cart.length - 1]['stock']
-    data.cart[data.cart.length - 1]['quantity'] = +quantity
-    return data.cart
+        prod['stock'] -= +quantity
+
+        data.cart[data.cart.length] = { ...prod }
+
+        delete data.cart[data.cart.length - 1]['stock']
+
+        data.cart[data.cart.length - 1]['quantity'] = +quantity
+
+        return data.cart
     }
+
     throw new Error('Couldn\'t add to cart')
 }
 
-logic.checkProductExistance = function (str) {
+logic.checkProductExistance = function (productName) {
     for (var i = 0; i < data.productsList.length; i++) {
         for (var prop in data.productsList[i]) {
-            if (data.productsList[i][prop] === str) {
+            if (data.productsList[i][prop] === productName) {
                 return data.productsList[i]
             }
         }
     }
+
     throw new Error('This product does not exist')
 }
 
-logic.addFoundProduct = function (str) {
+logic.addFoundProduct = function (productName) {
     var searchResult = []
-    searchResult.push(str)   
+    searchResult.push(productName)
     return searchResult
 }
 
