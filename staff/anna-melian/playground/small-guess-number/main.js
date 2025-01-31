@@ -7,6 +7,7 @@ data.randomNumber
 data.attempts = 3
 data.victory = false
 data.playAgain = true
+data.alphabet = 'abcdefghijklmnopqrstuvwxyzàáéèóòúí-.,-'
 
 
 logical.initialStatment = function () {
@@ -26,25 +27,51 @@ logical.getStatus = function() {
 }
 
 logical.numberValidation = function(num) {
-    var isANumber = false
-    for (var i = 0 ; i < data.optionsList.length; i++) {
-        if (Number(num) === data.optionsList[i]) {
-            isANumber = true
+    
+    if (num === null) {
+        throw new Error('Game cancel')
+    }
+    if (typeof num != 'string') {
+        throw new TypeError('Incorrect type of answer')
+    }
+
+    var isANumber
+    if (num === '' || num.length > 2) {
+        isANumber = false
+    }
+    else {
+        for (var j = 0; j < data.alphabet.length; j++) {
+            if (num === data.alphabet[j]) {
+                isANumber = false
+            }
+        }
+        for (var i = 0 ; i < data.optionsList.length; i++) {
+            if (Number(num) === data.optionsList[i]) {
+                isANumber = true
+            }
         }
     }
-    if (isANumber === false) {
-        interface.askUserGuess()
+    
+    if (isANumber === false || isANumber === undefined) {
+        interface.showInvalidMessage()
     }
+    return isANumber
+}
+
+interface.showInvalidMessage = function () {
+    alert('Invalid answer')
 }
 
 interface.askUserGuess = function() {
     var userNumber = prompt('Guess the number: ')
-    logical.numberValidation(userNumber)
-    userNumber = Number(userNumber)
-    logical.numberComparation(userNumber)
+    if (logical.numberValidation(userNumber)) {
+        userNumber = Number(userNumber)
+        logical.numberComparation(userNumber)
+    }
+    
 }
 
-logical.numberComparation = function(guess,) {
+logical.numberComparation = function(guess) {
     if (guess === data.randomNumber) {
         data.victory = true
     }
@@ -88,6 +115,9 @@ interface.isEnd = function(result) {
 
 interface.keepPlaying = function() {
     var wantToPlay = prompt('Do you want to play again? yes or no ')
+    if (wantToPlay === null) {
+        throw new Error('Game cancel')
+    }
     wantToPlay = wantToPlay.toLowerCase()
     logical.validAnswer(wantToPlay)
 }
@@ -99,24 +129,30 @@ logical.validAnswer = function(answer) {
         data.playAgain = false
     }
     else {
+        interface.showInvalidMessage()
         interface.keepPlaying()
     }
 }
 
-interface.start = function() {
-    logical.initialStatment()
-    while (data.playAgain) {
-        if (data.victory === true) {
+logical.start = function() {
+    try {
         logical.initialStatment()
-        }
+        while (data.playAgain) {
+            if (data.victory === true) {
+                logical.initialStatment()
+            }
         interface.askUserGuess()
         logical.getStatus()
         logical.isAWin()
+        }
+    } catch (error) {
+        alert(error.message)
     }
+    
         
     
 }
 
 console.clear()
 
-interface.start()
+logical.start()
