@@ -4,7 +4,7 @@ console.clear()
 var matches = []
 var showSpaces = []
 
-for (var i = 0 ; i  <word.length ; i++){
+for (var i = 0 ; i  < word.length ; i++){
     showSpaces[i]=' _ '
     
 }
@@ -18,7 +18,7 @@ var guessCharacter = ""
 function printMatches(){
     var matchesString = ""
 
-    for(var i=0 ; i<matches.length ; i++){
+    for(var i=0 ; i < matches.length ; i++){
         matchesString += matches[i] + " "
     }
     alert(matchesString)
