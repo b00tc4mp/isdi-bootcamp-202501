@@ -1,195 +1,278 @@
 //Data
-let fear = {
-    id: 'tr-fe',
-    developer: 'Monolith',
-    name: 'fear',
-    price: 40
+let data = {
+    products: [
+        {
+            id: 'tr-fe',
+            developer: 'Monolith',
+            name: 'fear',
+            price: 40
+        },
+        {
+            id: 'so-hl',
+            developer: 'Valve',
+            name: 'halflife',
+            price: 25
+        },
+        {
+            id: 'pz-po',
+            developer: 'Valve',
+            name: 'portal',
+            price: 25
+        }
+    ],
+    //Variable for the cart
+    cart: [],
+    //Variable that acummulates the prices of the products
+    total: 0,
+    //Variable that saves all the old purchases
+    orderhistory: []
 }
-
-let halflife = {
-    id: 'so-hl',
-    developer: 'Valve',
-    name: 'halflife',
-    price: 25
-}
-
-let portal = {
-    id: 'pz-po',
-    developer: 'Valve',
-    name: 'portal',
-    price: 25
-}
-let products = [fear, halflife, portal]
-//Constants
-const LIST_PRODUCTS = 1;
-const ADD_PRODUCT_TO_CART = 2;
-const GET_CART_TOTAL = 3;
-const CHECKOUT_CART = 4;
-const VIEW_ORDERS_HISTORY = 5;
-const EXIT = 6;
-const PRODUCT_NOT_FOUND = 'product not found';
-const IVA = 1.21;
-
-//Variable for the cart
-let cart = [];
-//Variable that acummulates the prices of the products
-let total = 0;
-//Variable that saves all the old purchases
-let orderhistory = [];
 
 //LOGIC
+let logic = {
+    constants: {
+        TAX: 1.21
+    },
 
-//Function that adds an item into the cart.
-function addToCart(idproduct) {
-    let addedsucesfully = true;
-    if (idproduct === null) {
-        throw new Error('Action cancelled');
-    } else {
-        let product = searchProducts(idproduct);
-
-        if (product == PRODUCT_NOT_FOUND) {
-            addedsucesfully = false;
-        } else {
-            cart.push(product);
+    helper: {
+        checkIfActionCancelled: function (checkinput) {
+            if (checkinput === null || checkinput === '') {
+                throw new Error('Action cancelled')
+            }
+        },
+        isCartEmpty: function () {
+            if (data.cart.length === 0) {
+                throw new Error('Cart is empty');
+            }
+        },
+        isOrderHistoryEmpty: function () {
+            if (data.orderhistory.length === 0) {
+                throw new Error('History is empty');
+            }
         }
-    }
+    },
 
-    return addedsucesfully;
-}
+    addToCart: function (idproduct) {
+        logic.helper.checkIfActionCancelled(idproduct);
 
-//Gets the total price excluding tax and the current products in the cart
-function getCartTotal(option) {
-    total = 0;
-    if (option === GET_CART_TOTAL) {
-        for (let i = 0; i < cart.length; i++) {
-            total += cart[i].price;
+        let searchresults = logic.searchProducts(idproduct);
+
+        if (searchresults.found) {
+            data.cart.push(searchresults.productFound);
         }
-    } else if (option === CHECKOUT_CART) {
-        for (let i = 0; i < cart.length; i++) {
-            total += cart[i].price * IVA;
+
+        return searchresults.found;
+    },
+
+    searchProducts: function (idproduct) {
+        logic.helper.checkIfActionCancelled(idproduct);
+
+        let productFound = '';
+        let found = false;
+
+        for (let i = 0; i < data.products.length && !found; i++) {
+            if (data.products[i].id == idproduct) {
+                found = true;
+                productFound = data.products[i];
+            }
         }
-    }
-    return {
-        cart: cart,
-        total: total
-    }
-}
 
-//This function save the checkout
-function checkoutCart() {
-    addToOrderHistory();
-    cart = [];
-    total = 0;
-}
-
-//Adds the processed order to the orderhistory array and also adds the time and the total amount of the purchased item
-function addToOrderHistory() {
-    let purchasetime = {
-        fecha: new Date(),
-        checkout: total
-    }
-    cart.push(purchasetime);
-    for (let i = 0; i < cart.length; i++) {
-        orderhistory.push(cart[i])
-    }
-}
-
-//Search the products by id
-function searchProducts(productid) {
-    let productFound = '';
-    let found = false;
-
-    for (let i = 0; i < products.length && !found; i++) {
-        if (products[i].id == productid) {
-            found = true;
-            productFound = products[i];
+        return {
+            productFound: productFound,
+            found: found
         }
+    },
+
+    calculateCartTotal: function () {
+        logic.helper.isCartEmpty()
+
+        data.total = 0;
+        for (let items of data.cart) {
+            data.total += items.price
+        }
+
+        return data.total;
+    },
+
+    checkoutCart: function () {
+        logic.helper.isCartEmpty();
+        logic.addToOrderHistory();
+        data.cart = [];
+        data.total = 0;
+    },
+
+    addToOrderHistory: function () {
+        logic.helper.isCartEmpty();
+
+        let purchasetime = {
+            fecha: new Date(),
+            checkout: data.total
+        }
+
+        data.cart.push(purchasetime);
+        for (let i = 0; i < data.cart.length; i++) {
+            data.orderhistory.push(data.cart[i])
+        }
+    },
+
+    calculateTax: function () {
+        logic.helper.isCartEmpty();
+
+        data.total = 0;
+
+        for (let items of data.cart) {
+            data.total += items.price * this.constants.TAX;
+        }
+
+        return data.total;
+    },
+
+    getCart: function () {
+        return data.cart;
+    },
+
+    getProducts: function () {
+        return data.products;
+    },
+
+    getOrderHistory: function () {
+        logic.helper.isOrderHistoryEmpty();
+        return data.orderhistory;
     }
-    if (found) {
-        found = false;
-        return productFound;
-    } else {
-        return PRODUCT_NOT_FOUND;
-    }
 
 }
 
-//Checks if the cart is empty
-function isCartEmpty(cart) {
-    return cart.length === 0;
-}
+// INTERFACE
 
-// VIEW
+let interface = {
+    constants: {
+        TABLE_HEADERS: 'Products | Developer | name | price\n',
+        LIST_PRODUCTS : 1,
+        ADD_PRODUCT_TO_CART : 2,
+        GET_CART_TOTAL : 3,
+        CHECKOUT_CART : 4,
+        VIEW_ORDERS_HISTORY : 5,
+        EXIT : 6
+    },
+    //Lists all available products
+    listproducts: function () {
+        let products = logic.getProducts();
 
-//Displays the history
-function viewOrdersHistory() {
-    console.table(orderhistory);
-}
+        let table = this.constants.TABLE_HEADERS;
+
+        for (var i = 0; i < products.length; i++) {
+            var product = products[i]
+
+            table += product.id + '     ' + product.developer + '     ' + product.name + '     ' + product.price + '\n'
+        }
+        alert(table);
+    },
+
+    addProductToCart: function () {
+        let idproduct = prompt('Introduce id of the product')
+        try {
+            if (logic.addToCart(idproduct)) {
+                alert('Added to cart');
+            } else {
+                alert('Product not found');
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+    },
+
+    showCart: function () {
+        try {
+            let total = logic.calculateCartTotal();
+            let cart = logic.getCart();
+            let table = interface.constants.TABLE_HEADERS;
+
+            for (var i = 0; i < cart.length; i++) {
+                table += cart[i].id + cart[i].developer + cart[i].name + cart[i].price + '\n'
+            }
+
+            alert(table + '\n Total: ' + total + '€');
+        } catch (error) {
+            alert(error.message);
+        }
+
+    },
+
+    placeOrder: function () {
+        try {
+            let totaltaxed = logic.calculateTax();
+            let cart = logic.getCart();
+            let table = interface.constants.TABLE_HEADERS;
+
+            for (var i = 0; i < cart.length; i++) {
+                table += cart[i].id + cart[i].developer + cart[i].name + cart[i].price + '\n'
+            }
+
+            alert(table + '\n Total: ' + totaltaxed + '€');
+
+            if (window.confirm('Confirm purchase?')) {
+                logic.checkoutCart();
+                alert('Checkout completed');
+            }
+
+        } catch (error) {
+            alert(error.message);
+        }
+
+    },
+    //Displays the history
+    viewOrdersHistory: function () {
+        try {
+            let history = logic.getOrderHistory();
+
+            let table = this.constants.TABLE_HEADERS;
+
+            for (let i = 0; i < history.length; i++) {
+                if (history[i].id && history[i].developer && history[i].name && history[i].price) {
+                    table += history[i].id + '     ' + history[i].developer + '     ' + history[i].name + '     ' + history[i].price + '€\n'
+                } else {
+                    table += 'Checkout total: ' + history[i].checkout + '€ on ' + history[i].fecha + '\n';
+                }
+            }
+            alert(table)
+        } catch (error) {
+            alert(error.message);
+        }
+
+    },
 
 
-//Lists all available products
-function listproducts() {
-    console.table(products);
-}
-
-//Main menu of the store
-function storeMenu() {
-    let option = 0;
-    do {
-        option = parseInt(prompt('Choose an option by typing the number\n 1.List of products\n 2.Add to cart\n 3.Get cart total\n 4.Checkout\n 5.View old orders\n 6.Exit shop'));
-        switch (option) {
-            case LIST_PRODUCTS:
-                listproducts();
-                break;
-            case ADD_PRODUCT_TO_CART:
-                let idproduct = prompt('Introduce id of the product')
-                try {
-                    if (addToCart(idproduct)) {
-                        alert('Added to cart');
+    storeMenu: function () {
+        let option = 0;
+        do {
+            option = parseInt(prompt('Choose an option by typing the number\n 1.List of products\n 2.Add to cart\n 3.Get cart total\n 4.Checkout\n 5.View old orders\n 6.Exit shop'));
+            switch (option) {
+                case this.constants.LIST_PRODUCTS:
+                    interface.listproducts();
+                    break;
+                case this.constants.ADD_PRODUCT_TO_CART:
+                    interface.addProductToCart();
+                    break;
+                case this.constants.GET_CART_TOTAL:
+                    interface.showCart();
+                    break;
+                case this.constants.CHECKOUT_CART:
+                    interface.placeOrder();
+                    break;
+                case this.constants.VIEW_ORDERS_HISTORY:
+                    interface.viewOrdersHistory();
+                    break;
+                default:
+                    if (option == this.constants.EXIT) {
+                        console.log("Program ended")
                     } else {
-                        alert(PRODUCT_NOT_FOUND);
+                        alert('Option not found, type the correct menu numbers')
                     }
-                } catch (error) {
-                    alert(error.message)
-                }
-                break;
-            case GET_CART_TOTAL:
-                let carttotal = getCartTotal(option);
-                if (isCartEmpty(carttotal.cart)) {
-                    console.log('Cart is empty');
-                } else {
-                    console.table(carttotal.cart);
-                    console.log(carttotal.total + '€');
-                }
-                break;
-            case CHECKOUT_CART:
-                let checkouttotal = getCartTotal(option);
-                if (isCartEmpty(checkouttotal.cart)) {
-                    console.log('Cart is empty');
-                } else {
-                    
-                    console.table(checkouttotal.cart);
-                    console.log(checkouttotal.total + '€');
-                    if (window.confirm('Confirm purchase?')) {
-                        checkoutCart();
-                        console.log('Checkout completed');
-                    }
-                }
-                break;
-            case VIEW_ORDERS_HISTORY:
-                viewOrdersHistory();
-                break;
-            default:
-                if (option == EXIT) {
-                    console.log("Program ended")
-                } else {
-                    alert('Option not found, type the correct menu numbers')
-                }
-                break;
-        }
-    } while (option != 6)
-
+                    break;
+            }
+        } while (option != this.constants.EXIT)
+    }
 
 }
 
-storeMenu();
+interface.storeMenu();
