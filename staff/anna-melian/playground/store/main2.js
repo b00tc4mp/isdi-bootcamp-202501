@@ -47,6 +47,7 @@ data.strawberries = {
 
 data.products = [data.apple, data.tomato, data.carrot, data.banana, data.lettuce, data.melon, data.strawberries]
 data.cart = []
+data.receipt = []
 
 logic.helper = {
 
@@ -158,10 +159,11 @@ interface.showTheMatch = function (id) {
     try {
         logic.helper.invalidText(id)
         logic.helper.idExist(id)
+        var products = logic.getProducts()
         var matchProduct = ''
-        for (var i = 0; i < data.products.length; i++) {
-            if (id === data.products[i].id) {
-                matchProduct = 'ID: ' + data.products[i].id + '  NAME: ' + data.products[i].name + '  TYPE: ' + data.products[i].type + '  PRICE: ' + data.products[i].price + '\n'
+        for (var i = 0; i < products.length; i++) {
+            if (id === products[i].id) {
+                matchProduct = 'ID: ' + products[i].id + '  NAME: ' + products[i].name + '  TYPE: ' + products[i].type + '  PRICE: ' + products[i].price + '\n'
             }
         }
         alert(matchProduct)
@@ -174,7 +176,7 @@ interface.showTheMatch = function (id) {
 
 interface.askUserIdProductSearch = function () {
     try {
-        var id = prompt("What's the product id?")
+        var id = prompt("What's the product id you are looking for?")
         logic.helper.invalidText(id)
         logic.helper.idExist(id)
         interface.showTheMatch(id)
@@ -220,6 +222,7 @@ interface.askUserIdProductAddCart = function () {
         logic.helper.invalidText(id)
         logic.helper.idExist(id)
         logic.addProductToCart(id)
+        logic.addToReceipt(id)
 
 
     } catch (error) {
@@ -228,7 +231,6 @@ interface.askUserIdProductAddCart = function () {
 }
 
 logic.addProductToCart = function (id) {
-    var selectProduct = ''
     for (var i = 0; i < data.products.length; i++) {
         if (id === data.products[i].id) {
             data.cart[data.cart.length] = data.products[i]
@@ -250,7 +252,7 @@ interface.showTheCart = function () {
         var totalPrice = 0
         for (var i = 0; i < cart.length; i++) {
             var product = cart[i]
-            table += 'ID: ' + product.id + '  NAME: ' + product.name + '  TYPE: ' + product.type + '  PRICE: ' + product.price + '\n'
+            table += 'ID: ' + product.id + '  NAME: ' + product.name + '  TYPE: ' + product.type + '  PRICE: ' + product.price + ' €' + '\n'
             totalPrice += Number(product.price)
         }
         alert(table + '\nTotal price: ' + totalPrice)
@@ -273,9 +275,47 @@ logic.WhatsUserElection = function (num) {
         interface.askUserIdProductAddCart()
     } else if (num == 4) {
         interface.showTheCart()
+    } else if (num == 5) {
+        interface.showToReceipt()
     }
 
 }
+
+logic.addToReceipt = function (id) {
+    for (var i = 0; i < data.products.length; i++) {
+        if (id === data.products[i].id) {
+            data.receipt[data.receipt.length] = data.products[i]
+        }
+    }
+}
+
+logic.receiptStatus = function () {
+    if (data.receipt.length === 0) {
+        throw new Error("The cart is empty, you can't generate a receipt")
+    }
+    return data.receipt
+}
+
+logic.resetCart = function () {
+    data.cart = []
+}
+
+interface.showToReceipt = function () {
+    var cart = logic.receiptStatus()
+    var table = ''
+    var totalPrice = 0
+    var taxes = 0
+    var basePrice = 0
+    for (var i = 0; i < cart.length; i++) {
+        var product = cart[i]
+        table += 'ID: ' + product.id + '  NAME: ' + product.name + '  PRICE: ' + product.price + ' €' + '\n'
+        totalPrice += Number(product.price)
+    }
+    alert(table + '\n ' + totalPrice + ' €' + '\n--------------------------------')
+    logic.resetCart()
+
+}
+
 
 
 console.clear()
