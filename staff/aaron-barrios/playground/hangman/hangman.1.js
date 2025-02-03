@@ -12,7 +12,6 @@ for (var i = 0; i < word.length; i++)
 console.log(matches)
 
 var attempts = 0
-var maxAttempts = 6
 var guessCharacter = ''
 var guessedCount = 0
 var wrongCharacters = []
