@@ -240,6 +240,47 @@ Es más lenta que la pila pero ofrece mayor flexibilidad.
 |0x001  |Array[]             |
 |0x001  |                    |
 
+
+# Operador AND (&&)
+El operador AND se usa para combinar dos condiciones. Sólo será verdadero si ambas condiciones son verdaderas.
+
+* Ejemplo:
+
+```sh
+x > 5 && y < 10
+```
+
+* Esta condición será verdadera solo si x es mayor que 5 y y es menor que 10.
+
+# Operador OR (||)
+* El operador OR se usa para combinar dos condiciones. Sólo será falso si ambas condiciones son falsas.
+
+* Ejemplo:
+
+```sh
+x > 5 || y < 10
+```
+
+* Esta condición será verdadera si x es mayor que 5 o y es menor que 10 (o ambas cosas).
+
+# Operador NOT (!)
+* El operador NOT se usa para invertir una condición. Si una condición es verdadera, NOT la hará falsa, y viceversa.
+
+* Ejemplo:
+
+```sh
+!(x == 5)
+Esto será verdadero si x no es igual a 5.
+```
+
+```sh Puntos importantes a recordar:
+Los operadores AND (&&) y OR (||) se usan para combinar condiciones.
+NOT (!) se usa para invertir una condición individual.
+Los operadores AND y OR tienen un comportamiento de "cortocircuito":
+Si el primer operando de AND es falso, no se evalúa el segundo.
+Si el primer operando de OR es verdadero, no se evalúa el segundo.
+Estos operadores son muy útiles para escribir condiciones complejas en programación.
+```
 ### Ciclos while y do
 
 ```sh
