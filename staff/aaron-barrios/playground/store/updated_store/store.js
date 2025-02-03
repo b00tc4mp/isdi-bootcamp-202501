@@ -6,7 +6,7 @@ var data = {
             model: 'z-900',
             price: 10750,
             engine: '4-stroke, 4 cylinder, 16 valves',
-            cilinderCapacity: '948',
+            cilinderCapacity: 948,
             stock: 2
         },
         {
@@ -15,7 +15,7 @@ var data = {
             model: 'Ninja H2R',
             price: 55000,
             engine: '4-stroke, 4 cylinder, 16 valves',
-            cilinderCapacity: '998',
+            cilinderCapacity: 998,
             stock: 2
         },
         {
@@ -24,7 +24,7 @@ var data = {
             model: 'S1000 RR',
             price: 24000,
             engine: '4-stroke, 4 cylinders, 4 valves',
-            cilinderCapacity: '999',
+            cilinderCapacity: 999,
             stock: 2
         },
         {
@@ -33,7 +33,7 @@ var data = {
             model: 'r 1250 RS',
             price: 18000,
             engine: '4-stroke, 4 cylinders, 4 valves',
-            cilinderCapacity: '1254',
+            cilinderCapacity: 1254,
             stock: 2
         },
         {
@@ -42,7 +42,7 @@ var data = {
             model: 'R1',
             price: 23000,
             engine: '4-stroke, 4 cylinders, 4 valves',
-            cilinderCapacity: '998',
+            cilinderCapacity: 998,
             stock: 2
         },
         {
@@ -51,7 +51,7 @@ var data = {
             model: 'MT-07',
             price: 8000,
             engine: '4-stroke, 2 cylinders, 4 valves',
-            cilinderCapacity: '689',
+            cilinderCapacity: 689,
             stock: 2
         },
         {
@@ -60,7 +60,7 @@ var data = {
             model: 'CBR650R',
             price: 10500,
             engine: '4-stroke, 4 cylinders, 16 valves',
-            cilinderCapacity: '649',
+            cilinderCapacity: 649,
             stock: 2
         },
         {
@@ -69,7 +69,7 @@ var data = {
             model: 'CB1000R',
             price: 15250,
             engine: '4-stroke, 4 cylinders, 16 valves',
-            cilinderCapacity: '998',
+            cilinderCapacity: 998,
             stock: 2
         },
         {
@@ -78,7 +78,7 @@ var data = {
             model: 'PANIGALE V4',
             price: 32000,
             engine: '4-stroke, 4 cylinders, 4 valves',
-            cilinderCapacity: '1103',
+            cilinderCapacity: 1103,
             stock: 2
         },
         {
@@ -87,7 +87,7 @@ var data = {
             model: 'STREETFIGHTER V2',
             price: 17000,
             engine: '4-stroke, 2 cylinders, 4 valves',
-            cilinderCapacity: '890',
+            cilinderCapacity: 890,
             stock: 2
         }
     ],
@@ -195,7 +195,7 @@ var logic = {
         //var foundProduct = null
         var foundProductRay = []
 
-        if (criteria === 'price') {
+        if (criteria === 'price' || criteria === 'cc') {
             var filter = parseInt(prompt(`By which ${criteria} do you want to filter`))
         }
         else {
@@ -229,32 +229,34 @@ var logic = {
                 }
                 break;
             case 'cc':
+                var Min = (filter - 100)
+                var Max = (filter + 100)
+
                 for (var i = 0; i < products.length; i++) {
-                    if (products[i].cilinderCapacity === filter) {
+                    if (products[i].cilinderCapacity >= Min && products[i].cilinderCapacity <= Max) {
                         foundCC = products[i]
                         foundProductRay[foundProductRay.length] = foundCC
                     }
                 }
                 break;
             case 'price':
-                var Min = (filter - 1000)
-                var Max = (filter + 1000)
+                var Min = (filter - 3000)
+                var Max = (filter + 3000)
 
                 for (var i = 0; i < products.length; i++) {
                     if (products[i].price >= Min && products[i].price <= Max) {
                         foundPrice = products[i]
                         foundProductRay[foundProductRay.length] = foundPrice
                     }
-
-                    if (foundProductRay.length === 0) {
-                        alert('Not found');
-
-                    }
-
-                    return foundProductRay
                 }
                 break;
         }
+
+        if (foundProductRay.length === 0) {
+            alert('Not found');
+        }
+
+        return foundProductRay
     },
 
 
