@@ -1,107 +1,204 @@
-// declaro tablero con filas y columnas
-var tictac = [[], [], []];
-// declaro entrada de user
-var userXentry = "";
-// declaro entrada de user
-var userOentry = "";
-//declaro valor inicial de fila por defecto 0
-var row = 0;
-//declaro valor inicial de columna por defecto 0
-var col = 0;
+// Este es un juego de tic tac toe en el que dos jugadores pueden jugar en la consola.
 
-// Este bucle for me permite inicializar el tablero con '_'
-// su funcionalidad esta en que el primer for me accede al array tictac y el segundo for me accede a cada uno de los arrays que estan dentro de tictac
-//  tictac[i][j] = '_'; esto me permite asignarle a cada uno de los arrays que estan dentro de tictac un guion bajo
-for (var i = 0; i < 3; i++) {
-  for (var j = 0; j < 3; j++) {
-    tictac[i][j] = "_";
+// Capa de datos
+var tictac = [[], [], []];
+var user1entry = { name: "", symbol: "" };
+var user2entry = { name: "", symbol: "" };
+var currentPlayer = "";
+var row = 0;
+var col = 0;
+var moveCount = 0;
+
+// CAPA DE LOGICA
+
+// Inicializa el tablero con guiones bajos
+function initTable() {
+  for (var i = 0; i < 3; i++) {
+    for (var j = 0; j < 3; j++) {
+      tictac[i][j] = "_";
+    }
   }
 }
-// Este bucle me permite imprimir el tablero en la consola con los espacios entre celda y celda y las filas separadas por un salto de linea 
+
+// Imprime el tablero en la consola
 function printTable() {
+  console.log("    0   1   2");
+  console.log("  -------------");
   for (var i = 0; i < 3; i++) {
-    var rowString = "";
+    var rowString = i + " | ";
     for (var j = 0; j < 3; j++) {
-      rowString += tictac[i][j];
-      if (j < 2) {
-        rowString += " ";
-      }
+      rowString += tictac[i][j] + " | ";
     }
     console.log(rowString);
+    console.log("  -------------");
   }
 }
-// entrada de primer jugador me permite ingresar la fila y columna donde quiero poner la X
-function player1Entry() {
-  alert("Primer jugador es su turno");
-  var row = parseInt(prompt("Primer jugador, ingrese la fila (0, 1, 2):"));
-  var col = parseInt(prompt("Primer jugador, ingrese la columna (0, 1, 2):"));
+
+// Pregunta los nombres de los jugadores
+function askNamesUsers() {
+  user1entry.name = prompt("Primer jugador, ingrese su nombre:");
+  user2entry.name = prompt("Segundo jugador, ingrese su nombre:");
+  console.log(`Bienvenido ${user1entry.name} y ${user2entry.name}`);
+}
+
+// Decide aleatoriamente quién empieza y asigna los símbolos
+function randomPlayerInit() {
+  var random = Math.floor(Math.random() * 2);
+  if (random === 0) {
+    console.log(`Empieza ${user1entry.name} con X`);
+    user1entry.symbol = "X";
+    user2entry.symbol = "O";
+    currentPlayer = user1entry.symbol;
+  } else {
+    console.log(`Empieza ${user2entry.name} con X`);
+    user1entry.symbol = "O";
+    user2entry.symbol = "X";
+    currentPlayer = user2entry.symbol;
+  }
+}
+
+// Valida la entrada del usuario
+function validateUserEntry(row, col) {
+  if (isNaN(row) || isNaN(col)) {
+    console.error("Debe ingresar números válidos.");
+    return false;
+  }
 
   if (row < 0 || row > 2 || col < 0 || col > 2) {
-    console.warn("SOLO PUEDE ELEGIR ENTRE 0, 1, 2");
-    return;
+    console.warn("Solo puede elegir entre 0 y 2 para fila y columna.");
+    return false;
   }
+
   if (tictac[row][col] !== "_") {
     console.error("Espacio ocupado, intenta de nuevo.");
-    return;
+    return false;
   }
-  // Si el espacio está vacío, asignar 'X'
-  tictac[row][col] = "X";
-}
-// entrada de segundo jugador me permite ingresar la fila y columna donde quiero poner la O
-function player2Entry() {
-  alert("Segundo jugador es su turno");
-  var row = parseInt(prompt("Segundo jugador, ingrese la fila (0, 1, 2):"));
-  var col = parseInt(prompt("Segundo jugador, ingrese la columna (0, 1, 2):"));
 
-  if (row < 0 || row > 2 || col < 0 || col > 2) {
-    console.warn("SOLO PUEDE ELEGIR ENTRE 0, 1, 2");
-    return;
-  }
-  // Si el espacio está ocupado, imprimir un mensaje de error
-  if (tictac[row][col] !== "_") {
-    console.error("Espacio ocupado, intenta de nuevo.");
-    return;
-  }
-  // Si el espacio está vacío, asignar 'O'
-  tictac[row][col] = "O";
+  return true;
 }
 
+// Pide entrada de movimientos a los jugadores
+function makeMove() {
+  var player = currentPlayer === "X" ? user1entry : user2entry;
+  alert(player.name + " ingrese su jugada");
+  row = parseInt(prompt(player.name + ", ingrese la fila (0, 1, 2):"));
+  if (isNaN(row)) {
+    if (!confirmEndGame()) return;
+  }
+  col = parseInt(prompt(player.name + ", ingrese la columna (0, 1, 2):"));
+  if (isNaN(col)) {
+    if (!confirmEndGame()) return;
+  }
+
+  if (validateUserEntry(row, col)) {
+    tictac[row][col] = player.symbol;
+    printTable();
+    moveCount++;
+    if (checkWins(player.symbol)) {
+      alert("¡" + player.name + " ha ganado!");
+      if (!endGame()) return;
+    } else if (moveCount === 9) {
+      alert("¡Es un empate!");
+      if (!endGame()) return;
+    }
+    switchPlayer();
+  } else {
+    alert("Movimiento inválido, intenta de nuevo.");
+    makeMove();
+  }
+}
+
+// Cambia de jugador
+function switchPlayer() {
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+  console.log(`${currentPlayer} es el jugador actual.`);
+}
+
+// Verifica si hay un ganador
 function checkWins(player) {
-  // recorro el tablero buscando coincidencias con un for iterando de 0 a 3
-  //empezando con un if y iterando en el array[array externo(global)//tablero]buscando los match con el primer if
-  //luego en el siguiente if itero sobre los array internos//casillas//
-  //con esto chequeo filas y columnas
-  for (var i = 0; i < 3; i++) {
+  // Check rows
+  for (let i = 0; i < 3; i++) {
     if (
       tictac[i][0] === player &&
       tictac[i][1] === player &&
       tictac[i][2] === player
-    )
-      return true;
-    if (
-      tictac[0][i] === player &&
-      tictac[1][i] === player &&
-      tictac[2][i] === player
-    )
-      return true;
+    ) return true;
   }
-  // con esto chequeo diagonales
+  
+  // Check columns
+  for (let j = 0; j < 3; j++) {
+    if (
+      tictac[0][j] === player &&
+      tictac[1][j] === player &&
+      tictac[2][j] === player
+    ) return true;
+  }
+  
+  // Check diagonals
   if (
     tictac[0][0] === player &&
     tictac[1][1] === player &&
     tictac[2][2] === player
-  )
-    return true;
+  ) return true;
   if (
-    tictac[1][0] === player &&
+    tictac[0][2] === player &&
     tictac[1][1] === player &&
     tictac[2][0] === player
-  )
-    return true;
+  ) return true;
+  
   return false;
 }
 
-while (true) {
-    
+// Confirma si el usuario quiere terminar el juego
+function confirmEndGame() {
+  var confirmEnd = prompt("¿Quieres terminar de jugar? si/no").toLowerCase();
+  if (confirmEnd === "si") {
+    console.log("Juego terminado");
+    return false;
+  }
+  return true;
 }
- 
+
+// Finaliza el juego y pregunta si quieren seguir jugando
+function endGame() {
+  var askUserEndGameOrNot = prompt("¿Quieren seguir jugando? si/no").toLowerCase();
+  if (askUserEndGameOrNot === "no") {
+    console.log("Juego terminado");
+    return false;
+  } else {
+    resetGame();
+    return true;
+  }
+}
+
+// Reinicia el juego
+function resetGame() {
+  initTable();
+  printTable();
+  randomPlayerInit();
+  moveCount = 0;
+}
+
+// Función principal del juego
+function main() {
+  initTable();
+  printTable();
+  askNamesUsers();
+  randomPlayerInit();
+  while (true) {
+    makeMove();
+    if (checkWins(currentPlayer)) {
+      printTable();
+      console.log("¡" + (currentPlayer === "X" ? user1entry.name : user2entry.name) + " ha ganado!");
+      if (!endGame()) break;
+    } else if (moveCount === 9) {
+      printTable();
+      console.log("¡Es un empate!");
+      if (!endGame()) break;
+    }
+    switchPlayer();
+  }
+}
+
+console.clear();
+main();
