@@ -1,3 +1,5 @@
+
+
 //Juego del ahorcado
 // 1. Definir una palabra
 var word = 'batman'
