@@ -27,43 +27,36 @@ var data = {
 
 
 var logic = {
-    helper: {
-        validateProductId: function (productId) {
-            if (typeof productId !== 'string') throw new TypeError('invalid productId type')
-        },
-
-        getProductById: function (productId) {
-            for (var i = 0; i < data.products.length; i++) {
-                var product = data.products[i]
-
-                if (product.id === productId)
-                    return product
-            }
-
-            return null
-        }
-    },
-
     getProducts: function () {
         return data.products
     },
 
     getProduct: function (productId) {
-        logic.helper.validateProductId(productId)
+        if (typeof productId !== 'string') throw new TypeError('invalid productId type')
 
-        var product = logic.helper.getProductById(productId)
+        for (var i = 0; i < data.products.length; i++) {
+            var product = data.products[i]
 
-        if (product === null) throw new Error('product not found')
+            if (product.id === productId)
+                return product
+        }
 
-        return product
+        throw new Error('product not found')
     },
 
     addToCart: function (productId) {
-        logic.helper.validateProductId(productId)
+        if (typeof productId !== 'string') throw new TypeError('invalid productId type')
 
-        var product = logic.helper.getProductById(productId)
+        var found = false
 
-        if (product === null) throw new Error('product not found')
+        for (var i = 0; i < data.products.length && !found; i++) {
+            var product = data.products[i]
+
+            if (product.id === productId)
+                found = true
+        }
+
+        if (!found) throw new Error('product not found')
 
         data.cart[data.cart.length] = productId
     },
@@ -74,9 +67,16 @@ var logic = {
         for (var i = 0; i < data.cart.length; i++) {
             var productId = data.cart[i]
 
-            var productFound = logic.helper.getProductById(productId)
+            var productFound = undefined
 
-            if (productFound === null) throw new Error('product not found')
+            for (var j = 0; j < data.products.length && productFound === undefined; j++) {
+                var product = data.products[j]
+
+                if (product.id === productId)
+                    productFound = product
+            }
+
+            if (productFound === undefined) throw new Error('product not found')
 
             var itemFound = undefined
 
@@ -117,7 +117,7 @@ var interface = {
         // TODO implement me
     },
 
-    showProductList: function () {
+    showList: function () {
         try {
             var products = logic.getProducts()
 
@@ -135,11 +135,11 @@ var interface = {
         }
     },
 
-    filterProductList: function () {
+    filterList: function () {
         // TODO implement me
     },
 
-    showProduct: function () {
+    showItem: function () {
         try {
             var productId = prompt('Product id?')
 
@@ -153,7 +153,7 @@ var interface = {
         }
     },
 
-    addProductToCart: function () {
+    addToCart: function () {
         try {
             var productId = prompt('Product id?')
 
@@ -165,24 +165,17 @@ var interface = {
         }
     },
 
-    removeProductFromCart: function () {
-        // implement me
-    },
-
     showCart: function () {
         try {
             var cart = logic.getCartItems()
 
             var table = 'Cart\n'
 
-            if (cart.length === 0)
-                table += 'not items'
-            else
-                for (var i = 0; i < cart.length; i++) {
-                    var item = cart[i]
+            for (var i = 0; i < cart.length; i++) {
+                var item = cart[i]
 
-                    table += item.id + ' ' + item.brand + ' ' + item.model + ' ' + item.price + '€' + ' (' + item.quantity + ')\n'
-                }
+                table += item.id + ' ' + item.brand + ' ' + item.model + ' ' + item.price + '€' + ' (' + item.quantity + ')\n'
+            }
 
             alert(table)
         } catch (error) {
