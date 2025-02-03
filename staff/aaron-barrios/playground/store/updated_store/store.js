@@ -6,7 +6,7 @@ var data = {
             model: 'z-900',
             price: 10750,
             engine: '4-stroke, 4 cylinder, 16 valves',
-            cilinderCapacity: '948CC',
+            cilinderCapacity: '948',
             stock: 2
         },
         {
@@ -15,7 +15,7 @@ var data = {
             model: 'Ninja H2R',
             price: 55000,
             engine: '4-stroke, 4 cylinder, 16 valves',
-            cilinderCapacity: '998CC',
+            cilinderCapacity: '998',
             stock: 2
         },
         {
@@ -24,7 +24,7 @@ var data = {
             model: 'S1000 RR',
             price: 24000,
             engine: '4-stroke, 4 cylinders, 4 valves',
-            cilinderCapacity: '999CC',
+            cilinderCapacity: '999',
             stock: 2
         },
         {
@@ -33,7 +33,7 @@ var data = {
             model: 'r 1250 RS',
             price: 18000,
             engine: '4-stroke, 4 cylinders, 4 valves',
-            cilinderCapacity: '1254CC',
+            cilinderCapacity: '1254',
             stock: 2
         },
         {
@@ -42,7 +42,7 @@ var data = {
             model: 'R1',
             price: 23000,
             engine: '4-stroke, 4 cylinders, 4 valves',
-            cilinderCapacity: '998CC',
+            cilinderCapacity: '998',
             stock: 2
         },
         {
@@ -51,7 +51,7 @@ var data = {
             model: 'MT-07',
             price: 8000,
             engine: '4-stroke, 2 cylinders, 4 valves',
-            cilinderCapacity: '689CC',
+            cilinderCapacity: '689',
             stock: 2
         },
         {
@@ -60,7 +60,7 @@ var data = {
             model: 'CBR650R',
             price: 10500,
             engine: '4-stroke, 4 cylinders, 16 valves',
-            cilinderCapacity: '649CC',
+            cilinderCapacity: '649',
             stock: 2
         },
         {
@@ -69,7 +69,7 @@ var data = {
             model: 'CB1000R',
             price: 15250,
             engine: '4-stroke, 4 cylinders, 16 valves',
-            cilinderCapacity: '998CC',
+            cilinderCapacity: '998',
             stock: 2
         },
         {
@@ -78,7 +78,7 @@ var data = {
             model: 'PANIGALE V4',
             price: 32000,
             engine: '4-stroke, 4 cylinders, 4 valves',
-            cilinderCapacity: '1103CC',
+            cilinderCapacity: '1103',
             stock: 2
         },
         {
@@ -87,7 +87,7 @@ var data = {
             model: 'STREETFIGHTER V2',
             price: 17000,
             engine: '4-stroke, 2 cylinders, 4 valves',
-            cilinderCapacity: '890CC',
+            cilinderCapacity: '890',
             stock: 2
         }
     ],
@@ -185,6 +185,79 @@ var logic = {
         return product
     },
 
+    filterProducts: function (criteria) {
+        var properties = ['id', 'brand', 'model', 'cc', 'price']
+
+        if (typeof criteria !== 'string' || !properties.includes(criteria)) throw new Error('Incorrect filter')
+
+        var products = data.products
+
+        //var foundProduct = null
+        var foundProductRay = []
+
+        if (criteria === 'price') {
+            var filter = parseInt(prompt(`By which ${criteria} do you want to filter`))
+        }
+        else {
+            var filter = prompt(`By which ${criteria} do you want to filter`)
+        }
+
+
+        switch (criteria) {
+            case 'id':
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i].id === criteria) {
+                        foundId = products[i]
+                        foundProductRay[foundProductRay.length] = foundId
+                    }
+                }
+                break;
+            case 'brand':
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i].brand === filter) {
+                        foundBrand = products[i]
+                        foundProductRay[foundProductRay.length] = foundBrand
+                    }
+                }
+                break;
+            case 'model':
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i].model === filter) {
+                        foundModel = products[i]
+                        foundProductRay[foundProductRay.length] = foundModel
+                    }
+                }
+                break;
+            case 'cc':
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i].cilinderCapacity === filter) {
+                        foundCC = products[i]
+                        foundProductRay[foundProductRay.length] = foundCC
+                    }
+                }
+                break;
+            case 'price':
+                var Min = (filter - 1000)
+                var Max = (filter + 1000)
+
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i].price >= Min && products[i].price <= Max) {
+                        foundPrice = products[i]
+                        foundProductRay[foundProductRay.length] = foundPrice
+                    }
+
+                    if (foundProductRay.length === 0) {
+                        alert('Not found');
+
+                    }
+
+                    return foundProductRay
+                }
+                break;
+        }
+    },
+
+
     addToCart: function (productId) {
         logic.helper.validateProductId(productId)
 
@@ -192,7 +265,20 @@ var logic = {
 
         if (product === null) throw new Error('Product not found')
 
-        data.cart[data.cart.length] = productId
+        units = prompt('How many units do you want to add??')
+
+        while (units > product.stock) {
+            alert(`There's just ${product.stock} ${product.model} in stock currently.`)
+            units = prompt('How many units do you want to add??')
+        }
+
+        if (units <= product.stock && units > 1) {
+            product.units = units
+            if (confirm(`Do you want to add ${product.model} to the cart?`)) {
+                data.cart[data.cart.length] = productId //push
+                product.stock -= units
+            }
+        }
     },
 
     getCartItems: function () {
@@ -257,7 +343,7 @@ var interface = {
             for (var i = 0; i < products.length; i++) {
                 var product = products[i]
 
-                table += product.id + ' ' + product.brand + ' ' + product.model + ' ' + product.price + '€\n'
+                table += product.id + ' ' + product.brand + ' ' + product.model + ' ' + product.price + '€ ' + ' (' + product.stock + ')\n'
             }
 
             alert(table)
@@ -281,11 +367,22 @@ var interface = {
     },
 
     filterProductList: function () {
-        // try {
+        try {
+            var productFilter = prompt('What do you want to filter thre products by? (id, brand, model, cc or price')
 
-        // } catch (error) {
-        //     interface.helper.handleError(error)
-        // }
+            var productRay = logic.filterProducts(productFilter)
+
+            var line = 'Product\ n'
+
+            for (var i = 0; i < productRay.length; i++) {
+                var product = productRay[i]
+                line += product.brand + ' ' + product.model + ' ' + product.price + '€\n'
+            }
+
+            alert(line)
+        } catch (error) {
+            interface.helper.handleError(error)
+        }
     },
 
     addProductToCart: function () {
