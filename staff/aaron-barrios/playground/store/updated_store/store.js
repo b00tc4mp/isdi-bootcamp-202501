@@ -171,6 +171,14 @@ var logic = {
         }
     },
 
+    keepPurchasing: function (interact) {
+        if (interact === 'yes' || interact === 'y') {
+            logic.showOptions()
+        } else {
+            alert('C ya brah')
+        }
+    },
+
     getProducts: function () {
         return data.products
     },
@@ -252,10 +260,6 @@ var logic = {
                 break;
         }
 
-        if (foundProductRay.length === 0) {
-            alert('Not found');
-        }
-
         return foundProductRay
     },
 
@@ -280,6 +284,31 @@ var logic = {
                 data.cart[data.cart.length] = productId //push
                 product.stock -= units
             }
+        }
+    },
+
+    removeProdFromCart: function (productId) {
+        logic.helper.validateProductId(productId)
+
+        var product = logic.helper.getProductById(productId)
+
+        if (product === null) throw new Error('Product not found')
+
+        units = prompt('How many units do you want to remove??')
+
+        while (units > product.units) {
+            alert(`There's just ${product.units} ${product.model} in the cart currently.`)
+            units = prompt('How many units do you want to remove??')
+        }
+
+        if (units <= product.units && units > 1) {
+            if (confirm(`Do you want to remove ${product.model} from the cart?`)) {
+                product.units -= units
+            }
+        }
+
+        if (product.units === 0) {
+            //remove product from cart
         }
     },
 
@@ -328,6 +357,16 @@ var interface = {
         }
     },
 
+    keepInteracting: function () {
+        try {
+            var interact = prompt('Do you want to keep interacting? yes (y) or no (n)')
+
+            logic.keepPurchasing(interact)
+        } catch (error) {
+            interface.helper.handleError(error)
+        }
+    },
+
     showMenu: function () {
         try {
             logic.showOptions()
@@ -349,6 +388,8 @@ var interface = {
             }
 
             alert(table)
+
+            interface.keepInteracting()
         } catch (error) {
             interface.helper.handleError(error)
         }
@@ -363,6 +404,8 @@ var interface = {
             var line = 'Product\n' + product.id + ' ' + product.brand + ' ' + product.model + ' ' + product.price + '€\n' + product.engine + ' ' + product.cilinderCapacity
 
             alert(line)
+
+            interface.keepInteracting()
         } catch (error) {
             interface.helper.handleError(error)
         }
@@ -374,6 +417,10 @@ var interface = {
 
             var productRay = logic.filterProducts(productFilter)
 
+            if (productRay.length === 0) {
+                alert('Products not found');
+            }
+
             var line = 'Product\ n'
 
             for (var i = 0; i < productRay.length; i++) {
@@ -382,6 +429,8 @@ var interface = {
             }
 
             alert(line)
+
+            interface.keepInteracting()
         } catch (error) {
             interface.helper.handleError(error)
         }
@@ -393,18 +442,26 @@ var interface = {
 
             logic.addToCart(productId)
 
-            alert('product' + productId + ' added to cart')
+            alert('product ' + productId + ' added to cart')
+
+            interface.keepInteracting()
         } catch (error) {
             interface.helper.handleError(error)
         }
     },
 
     removeProductFromCart: function () {
-        // try {
+        try {
+            var productId = prompt('Product id?')
 
-        // } catch (error) {
-        //     interface.helper.handleError(error)
-        // }
+            logic.removeProdFromCart(productId)
+
+            alert('product' + productId + ' removed from cart')
+
+            interface.keepInteracting()
+        } catch (error) {
+            interface.helper.handleError(error)
+        }
     },
 
     showCart: function () {
@@ -423,6 +480,8 @@ var interface = {
                 }
 
             alert(table)
+
+            interface.keepInteracting()
         } catch (error) {
             interface.helper.handleError(error)
         }
