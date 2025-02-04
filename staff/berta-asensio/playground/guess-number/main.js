@@ -28,7 +28,7 @@ function preguntarNumero() {
     numeroJugador = parseInt(prompt('Introduzca un número del 0 al 100'))
 
     if(isNaN (numeroJugador) || numeroJugador < 0 || numeroJugador > 100) {
-        console.log('Número erroneo. Porfabor, introduzca un nuevo número.')
+        console.log('Número erróneo. Porfabor, introduzca un nuevo número.')
         return preguntarNumero()
         
     }else{
