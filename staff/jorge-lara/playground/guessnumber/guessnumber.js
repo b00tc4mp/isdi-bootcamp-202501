@@ -11,17 +11,17 @@ player
 - si acierta en menos de 10 intentos, win! por el contrario lost!
 */
 
-let ia = false;
 let attempts = 0;
 let won = false;
 let hiddennumber = '';
 let guessnumber = '';
-let difference = 0;
 let records = [];
-let log = '';
+
 let temperatures = ['Very cold', 'Cold', 'Tempered', 'Warm', 'Hot', 'Very hot']
 
+//Logic
 function printLog() {
+    let log = '';
     if (attempts != 0) {
         log = 'Number     Distance\n'
         for (let i = 0; i < records.length; i++) {
@@ -31,92 +31,125 @@ function printLog() {
     }
     return '';
 }
-function checkWin() {
-    difference = Math.abs(guessnumber - hiddennumber);
+
+//Logic
+function checkNumber(guessnumber) {
+    let difference = Math.abs(guessnumber - hiddennumber);
     if (difference >= 50) {
         //very cold
-        console.log(temperatures[0]);
         records[attempts] = guessnumber + '     ' + temperatures[0];
         attempts++;
     } else if (difference < 50 && difference >= 30) {
         //Cold
-        console.log(temperatures[1])
         records[attempts] = guessnumber + '     ' + temperatures[1];
         attempts++;
     } else if (difference < 30 && difference >= 20) {
         //Tempered
-        console.log(temperatures[2])
         records[attempts] = guessnumber + '     ' + temperatures[2];
         attempts++;
     } else if (difference < 20 && difference >= 10) {
         //Warm
-        console.log(temperatures[3]);
         records[attempts] = guessnumber + '     ' + temperatures[3];
         attempts++;
     } else if (difference < 10 && difference >= 5) {
         //Hot
-        console.log(temperatures[4]);
         records[attempts] = guessnumber + '     ' + temperatures[4];
         attempts++
     } else if (difference < 5 && difference >= 1) {
         //Very hot
-        console.log(temperatures[5]);
         records[attempts] = guessnumber + '     ' + temperatures[5];
         attempts++;
     } else {
         won = true;
     }
 }
-let cancelgame = false;
-function guessPlayer() {
 
-    do {
-        guessnumber = prompt('Pick a number between 0-100 \n' + printLog());
-        if (guessnumber == null) {
-            guessnumber = 0;
-            cancelgame = true
-        } else {
-            parseInt(guessnumber);
-        }
-        //parseInt returns Nan if is not a character number
-    } while (isNaN(guessnumber) || guessnumber < 0 || guessnumber > 101)if (!cancelgame) {
-        checkWin();
+//logic
+function generateNumber(num) {
+
+    if (num == undefined) {
+        hiddennumber = Math.floor(Math.random() * 101);
+    } else {
+        hiddennumber = num;
     }
+    console.log(hiddennumber)
 }
 
-function coreGame() {
-    ia = (prompt('Choose the gamemode by typing the number: \n 1 for ia (agains machine) or 2 for pvp (player vs player)') == 1) ? true : false;
-    if (ia) {
-        hiddennumber = parseInt(Math.floor(Math.random() * 101));
-    } else {
-        hiddennumber = parseInt(prompt('Enter number to guess'));
+//Logic
+function validInput(input) {
+    if (input === null) {
+        throw new Error('Game cancelled')
+    } else if (isNaN(input)) {
+        throw new Error('Wrong character')
     }
-    do {
-        guessPlayer();
-    } while (attempts <= 10 && won == false && !cancelgame)
-    if (cancelgame) {
-         return console.log('The game was cancelled');
-    } else if (won) {
-         console.log('Congratulations, you won!');
-    } else {
-         console.log('Sorry, you lose');
-    }
-    restartGame();
 }
+//Logic
+function checkWin() {
+    let status = {
+        attempts: attempts,
+        won: won
+    }
+
+    return status;
+
+}
+
+//Logic
 function restartGame() {
-    let answer = '';
-    do {
-        answer = prompt('Play again? yes/no').toLowerCase();
-    } while (answer !== 'yes' && answer !== 'no')
+    attempts = 0;
+    won = false;
+    log = '';
+}
 
-    if (answer == 'yes'){
-        attempts = 0;
-        won = false;
-        log = '';
-        coreGame();
-    }else{
-        return console.log("Game ended")
+//View
+function tryGuessNumber() {
+    let guessnumber = parseInt(prompt('Pick a number between 0-100'))
+    try {
+        validInput(guessnumber);
+        checkNumber(guessnumber);
+    } catch (error) {
+        alert(error.message);
     }
 
 }
+
+
+//View
+function coreGame() {
+    let option = prompt('Choose the gamemode by typing the number: \n 1 for ia (agains machine) or 2 for pvp (player vs player)');
+    try {
+        validInput(option);
+
+        if (option == '1') {
+            generateNumber();
+        } else if (option == '2') {
+            generateNumber(parseInt(prompt('Enter number to guess')));
+        }
+        let gamestatus = '';
+
+        do {
+            tryGuessNumber();
+            alert(printLog());
+            gamestatus = checkWin();
+        } while (gamestatus.attempts <= 10 && gamestatus.won == false)
+        if (gamestatus.won) {
+            alert('You won')
+        } else {
+            alert('You lose')
+        }
+
+        let playagain = confirm('Play again?');
+        if (playagain) {
+            restartGame();
+            coreGame();
+        } else {
+            alert('Program ended')
+        }
+    } catch (error) {
+        alert('Game cancelled');
+    }
+
+}
+
+
 coreGame();
