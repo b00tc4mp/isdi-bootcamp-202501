@@ -37,7 +37,7 @@ logic.preguntarNumero = function(){
         logic.flujoJuego()
     }
 }
-
+//esta parte es interfaz
 logic.flujoJuego = function () {
     data.intervaloNumeros = Math.abs(data.numeroCreado - data.numeroJugador)
     var oportunidadesRestantes = data.oportunidadesMaximas - data.oportunidades
@@ -99,3 +99,50 @@ logic.reiniciarJuego = function () {
         alert('¡Hasta otra!')
     }
 }
+
+//INTERFACE
+
+interface.primerPaso = function () {
+    try {
+        logic.numeroAleatorio()
+        console.log(data.numeroCreado)       
+
+    } catch(error) {
+        alert(error.message)
+    }
+}
+
+interface.segundoPaso = function () {
+    try{
+        data.numeroJugador = parseInt(prompt('Introduzca un número del 0 al 100'))
+        logic.preguntarNumero(data.numeroJugador)
+        
+
+    } catch(error) {
+        alert('Número erróneo. Porfabor, introduzca un nuevo número.')
+        //alert(error.message)
+        interface.segundoPaso()
+    }
+}
+
+interface.dinamicaJuego = function () {
+    try{
+        logic.flujoJuego()
+
+    } catch(error) {
+        alert('Algo va mal')
+    }
+}
+
+interface.repetirJuego = function () {
+    try {
+        reinicializar()
+    } catch (error) {
+        alert(error.message)
+
+        console.error(error)
+    }
+}
+
+interface.primerPaso()
+interface.segundoPaso()
