@@ -17,6 +17,25 @@ console.log(cells)
 // Crear 
 // Chequear todas las filas para ver si son iguales los indices, chequear todas las columnas, chequear las dos diagonales
 
+/*
+var cells = []
+
+var maxCells = 9
+
+for (var i = 0; i < maxCells; i++)
+    cells[i] = '-'
+
+console.log(cells)
+*/
+
+
+// or
+
+// Crear el tablero de tic tac toe en funcion de 1 array con 3 arrays anidados dentro(filas)
+// Vamos a solicitar la posicion (x,y) donde usuario 1 y usuario 2 desean poner X o O
+// Crear 
+// Chequear todas las filas para ver si son iguales los indices, chequear todas las columnas, chequear las dos diagonales
+
 
 var askPosition = ''
 var positionRow = 0
@@ -32,7 +51,6 @@ var maxRows = 3
 var maxColumns = 3
 
 var player = 'x'
-var someoneWin = false
 
 
 
@@ -93,6 +111,7 @@ function move () {
 }
 
 function winOrLose () {
+    var someoneWin = false
     
     for (var i = 0; i < maxRows; i++) {
         if (cells[i][0] === 'x' && cells[i][1] === 'x' && cells[i][2] === 'x') {
@@ -141,7 +160,7 @@ function keepPlaying () {
             if (cells[i][j] === '-') {
                 console.log('Keep playing')
                 return
-            }          
+            }
         }
     }
 }
@@ -151,14 +170,14 @@ printZeroBoard()
 
 while (!winOrLose()) {
     positionXY()
+    while (cells[positionRow][positionColumn] !== '-') {
+        console.log('That spot is taken, try again')
+        positionXY()
+    }
     move()
     printBoard()
     winOrLose()
-    
-    if (someoneWin === false) {
-        keepPlaying()
-    }
-    
+    keepPlaying()
     if (winner1 === true) {
         console.log('Player 1 won. Congrats!')
     } else if (winner2 === true) {
