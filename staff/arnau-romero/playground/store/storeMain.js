@@ -18,18 +18,18 @@ data.products = [{
     id: "ap",
     name: "apple",
     color: "green",
-    price: 2,
+    price: 2 + '€',
 
 }, {
     id: "st",
     name: "strawberry",
     color: "red",
-    price: 1,
+    price: 1 + '€',
 }, {
     id: "pi",
     name: "pinneaple",
     color: "yellow",
-    price: 5,
+    price: 5 + '€',
 }, ];
 
 //INTERFACE
