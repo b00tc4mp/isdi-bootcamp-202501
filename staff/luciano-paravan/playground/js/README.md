@@ -289,4 +289,4 @@ const sum = numbers.reduce((acc, num) => acc + num, 0);
 console.log(sum); // 10
 ```
 
-
+## Stack & Heap

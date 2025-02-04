@@ -8,7 +8,7 @@
 
 #### pwd (path to working directory)
 
-Show current directory
+Show current directory.
 
 ```sh
 pwd
@@ -17,7 +17,7 @@ pwd
 
 #### ls (list)
 
-Lists files and directories in the current directory
+Lists files and directories in the current directory.
 
 ```sh
 ls 
@@ -26,7 +26,7 @@ README.md staff
 
 #### cd  (change directory)
 
-To change the directory
+To change the directory.
 
 ```sh
 cd staff/lucianoparavanit/playground
@@ -36,7 +36,7 @@ cd staff/lucianoparavanit/playground
 
 #### touch
 
-Creates an empty file
+Creates an empty file.
 
 ```sh
 touch new_file.txt
@@ -58,7 +58,7 @@ cat <filename>
 
 #### rm
 
-Deletes a file
+Deletes a file.
 
 ```sh
 rm file_to_delete.txt
@@ -66,7 +66,7 @@ rm file_to_delete.txt
 
 #### clear
 
-To clean the console
+To clean the console.
 
 ```sh
 clear
@@ -78,7 +78,7 @@ clear
 
 #### mkdir
 
-To create a directory
+To create a directory.
 
 ```sh
 mkdir new_folder
@@ -86,7 +86,7 @@ mkdir new_folder
 
 #### mkdir -p
 
-Creates a directory and its specified subdirectories
+Creates a directory and its specified subdirectories.
 
 ```sh
 mkdir -p staff/lucianoparavanit
@@ -94,7 +94,7 @@ mkdir -p staff/lucianoparavanit
 
 #### rmdir
 
-Removes a directory (if empty)
+Removes a directory (if empty).
 
 ```sh
 rmdir empty_folder

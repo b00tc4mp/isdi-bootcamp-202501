@@ -43,6 +43,10 @@ function checkGuessCharacter() {
     }
 }
 
+function hangBody () {
+    
+}
+
 function winOrNot() { //funcion para validar si se gana o pierde, o si todavia puede seguir jugando
     var winOrLose = false
     if (guessedCharacters === word.length || attempts === maxAttempts) {
@@ -61,7 +65,7 @@ while (!winOrNot()) { //while para repetir las funciones de pedir un caracter si
     printMatches()
 }
 
-//una vez se sale del while se valida si gano o perdio 
+//una vez se sale del while se valida si ganó o perdió 
 
 if (guessedCharacters === word.length) { //valida si gana comparando la longitud de la palabra con el contador de letras acertadas
     alert('You won')
