@@ -1,7 +1,7 @@
 console.clear()
 /// tienda de algun producto, descripcion, atributos, id, caracteristicas, precio... listar el producto, listar todas las de x caracteristica: ej filtrar por marca
 // añadimos buscar el producto como añadido. añadir al carrito el producto... calcular el total del carrito. (tener en cuenta subtotal de 2 productos iguales, x ej)
-
+//añadir productos → checkout → obtener factura → historial de pedidos
 var fiatCinquecento = {
     id: 'fi-ci',
     brand: 'fiat',
@@ -157,16 +157,6 @@ var products = [
 //var productsCart = []
 var productsCart = [kiaCeed, hondaCivic]
 
-function listProductsByPropierty(propierty, value) { // comparar igualdad de valor de una propiedad dada
-    var propierty = propierty
-    for (var i = 0; i < products.length; i++) {
-        if (products[i][propierty] === value) {
-            filteredArray[filteredArray.length] = products[i]
-        }
-    }
-    return filteredArray
-}
-
 function functionMenu() {
     var functionSelected = parseInt(prompt('Select what you want to do:\n1. List products\n2. Add products to cart\n3. Get total cart\n4. Checkout cart\n5. Search products\n6. List orders'))
     switch (functionSelected){
@@ -174,36 +164,51 @@ function functionMenu() {
             listProducts()
             break
             case 2:
-            addToCart()
-            break
-            case 3:
-                getTotalCart()
+                addToCart()
                 break
-            case 4: 
-            proceedToCheckout()
+                case 3:
+            getTotalCart()
             break
-                
-                
-                
-                
+        case 4: 
+        proceedToCheckout()
+        break
+        case 5:
+            searchProducts()
+            break
+            case 6:
+                listPastOrders()
+                break
             }
         }
-
+        
         function listProducts() {
-    console.table(products)
-    alert(`The available cars are: ${arrayToStringText(products)}`)
-    functionMenu()
-}
-
+            console.table(products)
+            alert(`The available cars are: ${arrayToStringText(products)}`)
+            functionMenu()
+        }
+        
 function addToCart() {
     console.table(products)
+    var productSelected = {}
     var idProduct = prompt(`Insert the product ID shown in the product table`)
+    var productFound = false
     for (var i = 0; i < products.length; i++) {
         if (products[i]['id'] === idProduct) {
+            productSelected = products[i]
             productsCart[productsCart.length] = products[i]
+            productFound = true
         }
     }
-    confirm(`Nice! ${productsCart[productsCart.length - 1].brand} ${productsCart[productsCart.length - 1].model} added to cart.\nDo you want to checkout now?`) ? proceedToCheckout() : functionMenu()
+    if (productFound) {
+        confirm(`Nice! ${productSelected.brand} ${productSelected.model} added to cart.\nDo you want to add another product?`) ? addToCart() : confirm(`Do you want to checkout now?`) ? proceedToCheckout() : functionMenu()
+    } else {
+        alert('Product not found, insert a valid id')
+        addToCart()
+    }
+}
+
+function getTotalCart() {
+    confirm(`Your current cart includes ${productsCart.length} products and has a total cost of ${calculateTotalCart()}€\nDo you want to go to checkout now?`) ? proceedToCheckout() : functionMenu()
 }
 
 function calculateTotalCart() {
@@ -214,12 +219,50 @@ function calculateTotalCart() {
     return totalCartCost
 }
 
-function getTotalCart() {
-    confirm(`Your current cart includes ${productsCart.length} products and has a total cost of ${calculateTotalCart()}€\nDo you want to checkout now?`) ? proceedToCheckout() : functionMenu()
+function proceedToCheckout() {
+    confirm(`YOUR CURRENT CART:\n${arrayToStringList(productsCart)}\nTotal Cost: ${calculateTotalCart()}€\nDo you want proceed to the payment?`) ? generateInvoice() : functionMenu()
 }
 
-function proceedToCheckout() {
-    confirm(`YOUR CURRENT CART:\n${arrayToStringList(productsCart)}\n\nTotal Cost: ${calculateTotalCart()}€`)
+function generateInvoice() {
+    confirm(`ISDI AUTOMOTIVE, SL\n`)////eliminar esto y hacer el iva en el checkout?
+}
+
+function calculateVat(product) {
+    var vatPercent = 0.21
+    var vatValue = product['price'] * vatPercent
+    return vatValue
+}
+
+/*function searchProducts() {
+    for (var i = 0; i < array.length; i++) {
+        
+    }
+    }*/
+   
+   function printInvoice(array) {
+       
+       for (var i = 0; i < array.length; i++) {
+        arrayToStringList(array[i])
+        
+    }
+}
+
+function listProductsByPropierty(propierty, value) { // comparar igualdad de valor de una propiedad dada
+    var propierty = propierty
+    for (var i = 0; i < products.length; i++) {
+        if (products[i][propierty] === value) {
+            filteredArray[filteredArray.length] = products[i]
+        }
+    }
+    return filteredArray
+}
+
+function arrayToStringListWithVat(array) { // stringea un array con comas y punto final
+    var arrayString = ''
+    for (var i = 0; i < array.length; i++) {
+        arrayString += `${(array[i].brand).toUpperCase()} ${(array[i].model).toUpperCase()}, ${array[i].price}€\n`
+    }
+    return arrayString
 }
 
 function arrayToStringList(array) { // stringea un array con comas y punto final
@@ -229,6 +272,7 @@ function arrayToStringList(array) { // stringea un array con comas y punto final
     }
     return arrayString
 }
+
 function arrayToStringText(array) { // stringea un array con comas y punto final
     var arrayString = ''
     for (var i = 0; i < array.length; i++) {
@@ -237,14 +281,11 @@ function arrayToStringText(array) { // stringea un array con comas y punto final
     return arrayString
 }
 
-function prueba() {
-    var arrayeste = listProductsByPropierty('fuel', 'gasoline')
-    alert(`The available cars are: ${arrayToString(arrayeste)}`)
-    console.table(arrayeste)
-    
+function table() {
+    console.table(products)
 }
 
-functionMenu() 
+//functionMenu() 
 
 
 

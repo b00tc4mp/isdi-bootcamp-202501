@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISDI Car Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>ISDI Car Shop</h1>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by ID, name or brand...">
+                <select id="filterType">
+                    <option value="all">All</option>
+                    <option value="fuel">Fuel</option>
+                    <option value="doors">Doors</option>
+                    <option value="price">Price</option>
+                </select>
+                <select id="filterValue" disabled>
+                    <option value="">Select value</option>
+                </select>
+            </div>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒 <span id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="products" class="products-grid"></section>
+    </main>
+
+    <div class="modal-overlay" id="cartModal">
+        <div class="cart">
+            <div class="cart-header">
+                <button class="back-button" onclick="toggleCart()">
+                    <span>←</span> Back to Shop
+                </button>
+                <h2>Shopping Cart</h2>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                <p>Subtotal: <span id="subtotal">0</span>€</p>
+                <p>IVA (21%): <span id="iva">0</span>€</p>
+                <p class="total">Total: <span id="total">0</span>€</p>
+                <button class="checkout-btn" onclick="checkout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <section id="orders" class="orders hidden">
+        <h2>Previous Orders</h2>
+        <div id="ordersList"></div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>

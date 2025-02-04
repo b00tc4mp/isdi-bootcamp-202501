@@ -1,148 +1,211 @@
 console.clear()
 
-var possiblePlays = ['rock', 'paper', 'scissors']
-var numberOfGames = 0 // total de partidas que el jugador ha elegido jugar
-var numberOfGamesPlayed = 0 // contador del numero de partidas que se llevan
-var gamesWonPlayer = 0 // contador de las partidas ganadas que lleva el jugador en esta ronda de partidas
-var gamesWonCpu = 0 // contador de las partidas ganadas que lleva la cpu en esta ronda de partidas
-var gamesDrawn = 0 // contador de las partidas empatadas en esta ronda de partidas
-
-function chooseNumberOfMatches() {
-    numberOfGames = prompt('Welcome to the classic game of Rock, Paper, Scissors! How many rounds do you want to play?')
-    if (isAPositiveNumber(numberOfGames)) {
-        playTurn()
-    } else {
-        alert('Please, enter a valid positive number')
-        chooseNumberOfMatches()
-    }
+var data = {
+    constants: {
+        POSSIBLE_PLAYS: ['rock', 'paper', 'scissors'],
+        GAME_ROUNDS: 3
+    },
+    computerPlay: '',
+    userPlay: '',
+    gamesWonComputer: 0,
+    gamesWonPlayer: 0,
+    gamesDrawn: 0,
+    roundsPlayed: 0,
 }
+data.possiblePlays = data.constants.POSSIBLE_PLAYS
+data.gameRounds = data.constants.GAME_ROUNDS
 
-function getOverallWinner() {
-    var overallResult = gamesWonPlayer === gamesWonCpu ? 'draw' : gamesWonPlayer > gamesWonCpu ? 'player' : 'cpu'
-    return overallResult
-}
 
-function playTurn() {
-    var playerInput = prompt(`Round ${numberOfGamesPlayed+1}/${numberOfGames}: it's your turn\nChoose your move by entering one of the following options.\n- r for 'Rock'👊\n- p for 'Paper'🤚\n- s for 'Scissors'✌️\nReady when you are ;)`).toLowerCase()
-    var playerPlay = ''
-    var cpuPlay = ''
-    var gameResult= ''
-    if (isValidPlay(playerInput)){
-        numberOfGamesPlayed ++
-        playerPlay = possiblePlays[convertPlayerInput(playerInput)] 
-        cpuPlay = possiblePlays[generateFromZeroToTwo()]
-        gameResult = evaluateResult(playerPlay, cpuPlay)
-        if (gameResult === 'player') {
-            gamesWonPlayer ++
-        } else if (gameResult === 'cpu') {
-            gamesWonCpu ++
-        } else {
-            gamesDrawn ++
+var logic = {
+    helper: {
+        validateInputIsRPS: function(playerOption) {
+            if (playerOption !== 'r' && playerOption !== 'p' && playerOption !== 's')
+                throw new SyntaxError('Invalid input format')
+        },
+
+        validateInputIsNotEmpty: function(playerOption) {
+            if (playerOption === '' || playerOption === null)
+                throw new Error('Invalid input length')
         }
-        alert(selectEndingPhrase(gameResult) + `\n\nYour play: ${playerPlay} ${selectPlayEmoji(playerPlay)}\n\nCPU play: ${cpuPlay} ${selectPlayEmoji(cpuPlay)}\n\nWinner: ${gameResult} ${selectWinnerEmoji(gameResult)}\n\nYou won ${gamesWonPlayer} games\nCpu won ${gamesWonCpu} games\nYou both have drawn ${gamesDrawn} games`)
-        if (numberOfGamesPlayed < numberOfGames) {
-            playTurn()
-        } else {
-            var overallWinner = getOverallWinner()
-            var finalPhrase = ''
-            var overallWinnerEmoji = selectWinnerEmoji(overallWinner)
-            switch (overallWinner) {
-                case 'draw': finalPhrase = `End of the agreed-upon ${numberOfGames} rounds. The final result is a ${overallWinner}`
-                    break
-                case 'player': finalPhrase = `End of the agreed-upon ${numberOfGames} rounds. Winner: ${overallWinner}`
-                    break
-                case 'cpu': finalPhrase = `End of the agreed-upon ${numberOfGames} rounds. Winner: ${overallWinner}`
-                    break
-            }
-            finalPhrase += ' ' + overallWinnerEmoji
-            alert(finalPhrase)
-            if (confirm(`Nice game! Do you want to restart the game?`)){
-                restartGame()
-            } else {
-                alert('OK, bye!')
-            }
+
+    },
+
+    convertCharacterToNumber: function(playerOption) {
+        switch(playerOption) {
+            case 'r': return 0
+            case 'p': return 1
+            case 's': return 2
         }
-    } else {
-        alert("Please, only type 'r', 'p' or 's' in order to play the game")
-        playTurn()
+    },
+
+    generateComputerOption: function() { //esta en tijeras para probar
+        var randomPlay = Math.floor(Math.random() * 3)
+        data.computerPlay = 'scissors' //logic.convertNumberToPlay(randomPlay)
+    },
+
+    setUserPlay: function(numberPlayerOption) {
+        data.userPlay = logic.convertNumberToPlay(numberPlayerOption)
+    },
+
+    convertNumberToPlay: function(number) {
+        return data.possiblePlays[number]
+    },
+
+    getRoundWinner: function() {
+        var player = data.userPlay
+        var computer = data.computerPlay
+
+        if (player === computer) {
+            return 'draw'
+        }
+
+        else if (player === 'rock' && computer === 'paper' ||
+        player === 'paper' && computer === 'scissors' ||
+        player === 'scissors' && computer === 'rock') {
+            return 'computer'
+        }
+
+        else if (player === 'rock' && computer === 'scissors' ||
+        player === 'paper' && computer === 'rock' ||
+        player === 'scissors' && computer === 'paper') {
+            return 'player'
+        }
+    },
+
+    increaseWinningCount: function() {
+        var winner = logic.getRoundWinner()
+        data.roundsPlayed++
+
+        switch(winner) {
+            case 'computer': 
+                data.gamesWonComputer++
+                break
+            case 'player': 
+                data.gamesWonPlayer++
+                break
+            case 'draw': 
+                data.gamesDrawn++
+                break
+        }
+    },
+
+    hasRoundsLeft : function() {
+        return (data.roundsPlayed < data.gameRounds)
+    },
+
+    getOverallWinner: function() {
+        if (data.gamesWonComputer > data.gamesWonPlayer)
+            return 'computer'
+        else if (data.gamesWonComputer < data.gamesWonPlayer)
+            return 'player'
+        else
+            return 'draw'
+    },
+    
+    selectWinnerSentence: function(roundWinner) {
+        switch(roundWinner) {
+            case 'computer': return 'Computer wins this round. Don\'t give up, try again!!'
+                
+            case 'player': return 'Congratulations, you won! You got lucky this time!!'
+
+            case 'draw': return 'It\'s a tie! You both chose the same!!'
+        }
+    },
+
+    selectWinnerDeclare: function(winner, word) { //final o round
+        switch(winner) {
+            case 'computer': return `${word} winner: Computer ${logic.getResultEmoji(winner)}`
+                
+            case 'player': return `${word} winner: Player ${logic.getResultEmoji(winner)}`
+
+            case 'draw': return `${word} result: Draw ${logic.getResultEmoji(winner)}`
+        }
+    },
+
+    getOverallResults: function() {
+        return `Your wins: ${data.gamesWonPlayer}\nComputer wins: ${data.gamesWonComputer}\nDraws: ${data.gamesDrawn}`
+    },
+
+    getBothPlays: function() {
+        var userPlay = data.userPlay
+        var computerPlay = data.computerPlay
+        return `Your play: ${userPlay} ${logic.getPlayEmoji(userPlay)}\nComputer play: ${computerPlay} ${logic.getPlayEmoji(computerPlay)}`
+    },
+
+    getResultEmoji: function(result) {
+        switch(result) {
+            case 'computer': return '💻'
+                
+            case 'player': return '😁'
+
+            case 'draw': return '✖️'
+        }
+    },
+
+    getPlayEmoji: function(play) {
+        switch(play) {
+            case 'rock': return '👊'
+
+            case 'paper': return '🤚'
+            
+            case 'scissors': return '✌️'            
+        }
+    },
+    restartGame: function() {
+        data.computerPlay = ''
+        data.userPlay = ''
+        data.gamesWonComputer = 0
+        data.gamesWonPlayer = 0
+        data.gamesDrawn = 0
+        data.roundsPlayed = 0
     }
 }
 
-function selectEndingPhrase(gameResult) {
-    switch (gameResult) {
-        case 'nobody': return "It's a tie! You both chose the same. Try again!"
-        case 'player': return "Congratulations, you won! You got lucky this time."
-        case 'cpu': return "The CPU wins this round. Don't give up, try again!"
+var interface = {
+    helpers: {
+        promptToLowerCase: function() {
+            var playerOption = prompt('r for rock, p for paper and s for scissors')
+            logic.helper.validateInputIsNotEmpty(playerOption)
+            logic.helper.validateInputIsRPS(playerOption)
+            playerOption = playerOption.toLowerCase()
+            return playerOption
+        }
+    },
+
+    introducePlayerOption: function() {
+        try {
+            var playerOption = interface.helpers.promptToLowerCase()
+            var numberPlayerOption = logic.convertCharacterToNumber(playerOption)
+            logic.setUserPlay(numberPlayerOption)
+        } catch(error) {
+            console.log(error)
+            alert(error.message)
+            interface.introducePlayerOption()
+        }
+    },
+
+    startGame: function() {
+        logic.generateComputerOption()
+        interface.introducePlayerOption()
+        var roundWinner = logic.getRoundWinner()
+        logic.increaseWinningCount()
+        alert(`${logic.selectWinnerSentence(roundWinner)}\n\n${logic.getBothPlays()}\n${logic.selectWinnerDeclare(roundWinner, 'Round')}\n\n${logic.getOverallResults()}`) // post de cada partida
+
+        if (logic.hasRoundsLeft()) {
+            interface.startGame()
+        } else if (!logic.hasRoundsLeft()) {
+            var overallWinner = logic.getOverallWinner()
+            alert(logic.selectWinnerDeclare(overallWinner, 'Final')) // post overall
+            interface.askForRematch()
+        }
+    },
+    askForRematch: function() {
+        if (confirm(`Do you want a rematch?`)){
+            logic.restartGame()
+            interface.startGame()
+        } else {
+            alert('Bye!!')
+        }
     }
 }
-
-function evaluateResult(playerPlay, cpuPlay) {
-    var result = ''
-    if (playerPlay === cpuPlay) {
-        result = 'nobody'
-    } // empate
-
-    else if (playerPlay === 'rock' && cpuPlay === 'paper' ||
-    playerPlay === 'paper' && cpuPlay === 'scissors' ||
-    playerPlay === 'scissors' && cpuPlay === 'rock') {
-        result = 'cpu'
-    } // gana cpu
-
-    else if (playerPlay === 'rock' && cpuPlay === 'scissors' ||
-    playerPlay === 'paper' && cpuPlay === 'rock' ||
-    playerPlay === 'scissors' && cpuPlay === 'paper') {
-        result = 'player'
-    } // gana player
-    return result
-}
-
-function convertPlayerInput(playerInput) { // recoge la letra y devuelve el numero de 0 a 2 que le corresponda
-    switch(playerInput) {
-        case 'r': return 0
-        case 'p': return 1
-        case 's': return 2
-    }
-}
-
-function generateFromZeroToTwo() { // genera un numero de 0 a 2
-    return Math.floor(Math.random() * 3)
-}
-
-function isAPositiveNumber(input) { // regex para aceptar numeros enteros superiores a 0
-    var regex = /^[+]?\d*\.?\d+$/
-    if (regex.test(input)){
-        return true
-    } else {
-        return false
-    }
-}
-
-function isValidPlay(input) { // regex para aceptar solo r, p o s
-    var regex = /^[rps]$/
-    if (regex.test(input)){
-        return true
-    } else {
-        return false
-    }
-}
-
-function selectWinnerEmoji(gameResult) {
-    var winnerEmoji = gameResult === 'cpu' ? '💻' : gameResult === 'player' ? '😁' : '✖️'
-    return winnerEmoji
-}
-
-function selectPlayEmoji(play) {
-    var playEmoji = play === 'rock' ? '👊' : play === 'paper' ? '🤚' : '✌️'
-    return playEmoji
-}
-
-function restartGame() {
-    numberOfGames = 0
-    numberOfGamesPlayed = 0
-    gamesWonPlayer = 0
-    gamesWonCpu = 0
-    gamesDrawn = 0
-    chooseNumberOfMatches()
-}
-
-chooseNumberOfMatches()
+interface.startGame()
