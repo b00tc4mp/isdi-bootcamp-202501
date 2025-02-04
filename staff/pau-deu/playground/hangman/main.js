@@ -6,7 +6,7 @@ var attemps = 0;
 var maxAttemps = 6;
 var guessCharacter = "";
 
-// Inicializa las coincidencias con guiones bajos
+// Inicia las coincidencias con guiones bajos
 for (var i = 0; i < word.length; i++) {
     matches[i] = "_";
 }
