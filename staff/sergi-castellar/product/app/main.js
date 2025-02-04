@@ -1,7 +1,6 @@
 console.clear()
 console.log('Hello,App!')
 
-
 //////// Landing
 // landing logo
 
@@ -47,36 +46,45 @@ register.appendChild(registerInputForm)
 
 // name input
 var registerNameLabel = document.createElement('label')
-registerNameLabel.htmlFor = 'name'
+registerNameLabel.htmlFor = 'register-name'
 registerNameLabel.innerText = 'Name'
 registerInputForm.appendChild(registerNameLabel)
 
 var registerNameInput = document.createElement('input')
-registerNameInput.id = 'name'
+registerNameInput.id = 'register-name'
 registerNameInput.style.width = '300px'
 registerInputForm.appendChild(registerNameInput)
 
 // e-mail input
-var registerEmailText = document.createTextNode('E-mail')
+var registerEmailText = document.createElement('label')
+registerEmailText.htmlFor = 'register-email'
+registerEmailText.innerText = 'E-mail'
 registerInputForm.appendChild(registerEmailText)
 
 var registerEmailInput = document.createElement('input')
+registerEmailInput.id = 'register-email'
 registerEmailInput.style.width = '300px'
 registerInputForm.appendChild(registerEmailInput)
 
 // username input
-var registerUsernameText = document.createTextNode('Username')
+var registerUsernameText = document.createElement('label')
+registerUsernameText.htmlFor = 'register-username'
+registerUsernameText.innerText = 'Username'
 registerInputForm.appendChild(registerUsernameText)
 
 var registerUsernameInput = document.createElement('input')
+registerUsernameInput.id = 'register-username'
 registerUsernameInput.style.width = '300px'
 registerInputForm.appendChild(registerUsernameInput)
 
 // password input
-var registerPasswordText = document.createTextNode('Password')
+var registerPasswordText = document.createElement('label')
+registerPasswordText.htmlFor = 'register-password'
+registerPasswordText.innerText = 'Password'
 registerInputForm.appendChild(registerPasswordText)
 
 var registerPasswordInput = document.createElement('input')
+registerPasswordInput.id = 'register-password'
 registerPasswordInput.style.width = '300px'
 registerInputForm.appendChild(registerPasswordInput)
 
@@ -113,19 +121,25 @@ loginInputForm.style.display = 'flex'
 loginInputForm.style.flexDirection = 'column'
 login.appendChild(loginInputForm)
 
-// username input
-var loginUsernameText = document.createTextNode('Username')
+/// username input
+var loginUsernameText = document.createElement('label')
+loginUsernameText.htmlFor = 'login-username'
+loginUsernameText.innerText = 'Username'
 loginInputForm.appendChild(loginUsernameText)
 
 var loginUsernameInput = document.createElement('input')
+loginUsernameInput.id = 'login-username'
 loginUsernameInput.style.width = '300px'
 loginInputForm.appendChild(loginUsernameInput)
 
 // password input
-var loginPasswordText = document.createTextNode('Password')
+var loginPasswordText = document.createElement('label')
+loginPasswordText.htmlFor = 'login-password'
+loginPasswordText.innerText = 'Password'
 loginInputForm.appendChild(loginPasswordText)
 
 var loginPasswordInput = document.createElement('input')
+loginPasswordInput.id = 'login-password'
 loginPasswordInput.style.width = '300px'
 loginInputForm.appendChild(loginPasswordInput)
 
