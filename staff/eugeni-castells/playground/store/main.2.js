@@ -94,6 +94,7 @@ function searchProduct(id) {
       return (matchedProduct = products[i]);
     }
   }
+  return matchedProduct;
 }
 
 function askSearchOption() {
