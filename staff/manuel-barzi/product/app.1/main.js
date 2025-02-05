@@ -16,11 +16,6 @@ landingLogo.appendChild(landingLogoText)
 var landingRegisterAnchor = document.createElement('a')
 landing.appendChild(landingRegisterAnchor)
 
-landingRegisterAnchor.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(register)
-})
-
 var landingRegisterAnchorText = document.createTextNode('Register')
 landingRegisterAnchor.appendChild(landingRegisterAnchorText)
 
@@ -30,11 +25,6 @@ landing.appendChild(landingOrText)
 var landingLoginAnchor = document.createElement('a')
 landing.appendChild(landingLoginAnchor)
 
-landingLoginAnchor.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(login)
-})
-
 var landingLoginAnchorText = document.createTextNode('Login')
 landingLoginAnchor.appendChild(landingLoginAnchorText)
 
@@ -42,7 +32,7 @@ landingLoginAnchor.appendChild(landingLoginAnchorText)
 /* register */
 
 var register = document.createElement('div')
-// document.body.appendChild(register)
+document.body.appendChild(register)
 
 var registerLogo = document.createElement('h1')
 register.appendChild(registerLogo)
@@ -120,7 +110,7 @@ registerLoginAnchor.appendChild(registerLoginAnchorText)
 /* login */
 
 var login = document.createElement('div')
-// document.body.appendChild(login)
+document.body.appendChild(login)
 
 var loginLogo = document.createElement('h1')
 login.appendChild(loginLogo)
@@ -171,10 +161,10 @@ login.appendChild(loginRegisterAnchor)
 var loginRegisterAnchorText = document.createTextNode('Register')
 loginRegisterAnchor.appendChild(loginRegisterAnchorText)
 
-/* home */
+// home
 
 var home = document.createElement('div')
-// document.body.appendChild(home)
+document.body.appendChild(home)
 
 var homeLogo = document.createElement('h1')
 home.appendChild(homeLogo)
