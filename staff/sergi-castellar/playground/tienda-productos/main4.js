@@ -537,8 +537,8 @@ var logic = {
         return data.products
     },
 
-    searchProductById: function(id) {
-        var productId = id
+    searchProductById: function(productId) { // 3 buscar 1 producto
+        logic.helpers.validateIsAnId(productId)
 
         for (var i = 0; i < data.products.length; i++) {
             var product = data.products[i]
@@ -548,22 +548,27 @@ var logic = {
         }
         throw new Error('no item found')
     },
+
+    addIdToCartArray: function(product) {
+        var productId = product.id
+        data.cart[cart.length] = productId
+    }
 }
 
 var interface = {
     helper: {
-        handlerError: function (error) {
+        handlerError: function (error) { // catch error
             console.error(error)
 
             alert(error.message)
         }
     },
 
-    showMenu: function () {
+    showMenu: function() {
         // TODO implement me
     },
 
-    showProductList: function () {
+    showProductList: function() { // 1 lista productos
         try {
             var products = logic.getProductsArray()
             var list = 'Products:\n'
@@ -579,14 +584,14 @@ var interface = {
         }
     },
 
-    filterList: function () {
-        // TODO implement me
+    filterList: function() { // 2 filtrar productos
+        prompt('propiety?')
+        prompt()
     },
 
-    showProductById: function () {
+    showProductById: function() { // 3 buscar 1 producto
         try {
             var id = prompt('id?')
-            logic.helpers.validateIsAnId(id)
             var product = logic.searchProductById(id)
 
             var sentence = `${product.id}: ${product.brand} ${product.model}, ${product.price}€`
@@ -597,24 +602,27 @@ var interface = {
         }
     },
 
-    addToCart: function () {
-        try {
-            var id = prompt('id?')
-            logic.helpers.validateIsString(id)
-        } catch(error) {
+    addToCart: function() { // 4 añadir carrito
+        // try {
+        //     var id = prompt('id?')
+        //     logic.helpers.validateIsString(id)
+        //     var product = logic.searchProductById(id)
+        //     logic.addIdToCartArray(product)
 
-        }
+        // } catch(error) {
+
+        // }
     },
 
-    showCart: function () {
+    showCart: function() { // 5 ver carrito
         // TODO implement me
     },
 
-    placeOrder: function () {
+    placeOrder: function() { // 6 hacer checkout
         // TODO implement me
     },
 
-    showHistory: function () {
+    showHistory: function() { // 7 historial de pedidos
         // TODO implement me
     }
 }
