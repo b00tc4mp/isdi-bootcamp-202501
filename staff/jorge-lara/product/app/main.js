@@ -49,27 +49,30 @@ formRegister.style.flexDirection = 'column'
 formRegister.style.width = '250px'
 
 //Name Form
-let nameFormRegister = document.createTextNode('Name');
-formRegister.appendChild(nameFormRegister);
+let nameFormRegisterLabel = document.createElement('label')
+nameFormRegisterLabel.textContent = 'Name'
+formRegister.appendChild(nameFormRegisterLabel);
 let inputName = document.createElement('input');
-
 formRegister.appendChild(inputName);
 
 //Email form
-let emailFormRegister = document.createTextNode('Email')
-formRegister.appendChild(emailFormRegister)
+let emailFormRegisterLabel = document.createElement('label')
+emailFormRegisterLabel.textContent = 'Email';
+formRegister.appendChild(emailFormRegisterLabel);
 let inputEmail = document.createElement('input');
 formRegister.appendChild(inputEmail)
 
 //Username form
-let usernameForm = document.createTextNode('Username');
-formRegister.appendChild(usernameForm);
+let usernameFormRegisterLabel = document.createElement('label')
+usernameFormRegisterLabel.textContent = 'Username';
+formRegister.appendChild(usernameFormRegisterLabel);
 let inputUsername = document.createElement('input');
 formRegister.appendChild(inputUsername);
 
 //Password form
-let passwordLabel = document.createTextNode('Password')
-formRegister.appendChild(passwordLabel)
+let passwordFormRegisterLabel = document.createElement('label')
+passwordFormRegisterLabel.textContent = 'Password'
+formRegister.appendChild(passwordFormRegisterLabel)
 let inputPassword = document.createElement('input')
 formRegister.appendChild(inputPassword)
 
@@ -95,12 +98,10 @@ buttonsFormDivRegister.appendChild(registerButton);
 let registerButtonText = document.createTextNode('Register');
 registerButton.appendChild(registerButtonText);
 
-// login
+// LOGIN
 
 let loginDiv = document.createElement('div');
-loginDiv.style.display = 'flex';
-loginDiv.style.flexDirection = 'column';
-loginDiv.style.width = '250px';
+
 document.body.appendChild(loginDiv);
 
 let LoginLogo = document.createElement('h1');
@@ -111,18 +112,24 @@ LoginLogo.appendChild(loginlogoText);
 //form
 
 let loginForm = document.createElement('form')
+loginForm.style.display = 'flex';
+loginForm.style.flexDirection = 'column';
+loginForm.style.width = '250px';
+loginDiv.appendChild(loginForm)
 
 //Login username label
-let loginUsernameForm = document.createTextNode('Username');
-loginDiv.appendChild(loginUsernameForm);
+let loginUsernameLabel = document.createElement('label')
+loginUsernameLabel.textContent = 'Username'
+loginForm.appendChild(loginUsernameLabel)
 let loginInputUsername = document.createElement('input');
-loginDiv.appendChild(loginInputUsername);
+loginForm.appendChild(loginInputUsername);
 
 //Login password label
-let loginpasswordLabel = document.createTextNode('Password')
-loginDiv.appendChild(loginpasswordLabel)
+let loginPasswordLabel = document.createElement('label');
+loginPasswordLabel.textContent = 'Password';
+loginForm.appendChild(loginPasswordLabel);
 let loginInputPassword = document.createElement('input')
-loginDiv.appendChild(loginInputPassword)
+loginForm.appendChild(loginInputPassword)
 
 //Div login buttons
 
@@ -144,7 +151,7 @@ buttonsFormDivLogin.appendChild(loginButton);
 let loginButtonText = document.createTextNode('Login');
 loginButton.appendChild(loginButtonText);
 
-// // home
+// HOME
 
 let home = document.createElement('div')
 home.style.display = 'flex'
