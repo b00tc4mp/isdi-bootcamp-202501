@@ -12,18 +12,26 @@ landing.appendChild(landingLogo)
 let landingLogoText = document.createTextNode('Logo')
 landingLogo.appendChild(landingLogoText)
 
-
-
 //register landing
 let registerAnchor = document.createElement('a');
-let nameButton = document.createTextNode('Register');
-registerAnchor.appendChild(nameButton)
+registerAnchor.style.cursor = 'pointer'
+let registerAnchorText = document.createTextNode('Register');
+registerAnchor.appendChild(registerAnchorText)
+registerAnchor.addEventListener('click', function () {
+    document.body.removeChild(landing)
+    document.body.appendChild(registerDiv)
+})
 landing.appendChild(registerAnchor);
 
 //login landing
 let loginAnchor = document.createElement('a');
-let loginName = document.createTextNode('Login');
-loginAnchor.appendChild(loginName);
+loginAnchor.style.cursor = 'pointer'
+let loginAnchorText = document.createTextNode('Login');
+loginAnchor.appendChild(loginAnchorText);
+loginAnchor.addEventListener('click', function () {
+    document.body.removeChild(landing)
+    document.body.appendChild(loginDiv)
+})
 loginAnchor.style.marginLeft = '25px'
 landing.appendChild(loginAnchor);
 
@@ -31,7 +39,8 @@ landing.appendChild(loginAnchor);
 // REGISTER
 
 let registerDiv = document.createElement('div');
-document.body.appendChild(registerDiv);
+registerDiv.id = 'register_div';
+//document.body.appendChild(registerDiv);
 
 let registerLogo = document.createElement('h1');
 registerDiv.appendChild(registerLogo)
@@ -39,60 +48,69 @@ let registerLogoText = document.createTextNode('Logo');
 registerLogo.appendChild(registerLogoText);
 
 //Form
-let formDiv = document.createElement('div');
-document.body.appendChild(formDiv);
 
-let formRegister = document.createElement('form');
-formDiv.appendChild(formRegister);
-formRegister.style.display = 'flex'
-formRegister.style.flexDirection = 'column'
-formRegister.style.width = '250px'
+let registerForm = document.createElement('form');
+registerDiv.appendChild(registerForm);
+registerForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.body.removeChild(registerDiv);
+    document.body.appendChild(loginDiv);
+})
+registerForm.style.display = 'flex'
+registerForm.style.flexDirection = 'column'
+registerForm.style.width = '250px'
 
 //Name Form
 let nameFormRegisterLabel = document.createElement('label')
 nameFormRegisterLabel.textContent = 'Name'
-formRegister.appendChild(nameFormRegisterLabel);
+registerForm.appendChild(nameFormRegisterLabel);
 let inputName = document.createElement('input');
-formRegister.appendChild(inputName);
+registerForm.appendChild(inputName);
 
 //Email form
 let emailFormRegisterLabel = document.createElement('label')
 emailFormRegisterLabel.textContent = 'Email';
-formRegister.appendChild(emailFormRegisterLabel);
+registerForm.appendChild(emailFormRegisterLabel);
 let inputEmail = document.createElement('input');
-formRegister.appendChild(inputEmail)
+registerForm.appendChild(inputEmail)
 
 //Username form
 let usernameFormRegisterLabel = document.createElement('label')
 usernameFormRegisterLabel.textContent = 'Username';
-formRegister.appendChild(usernameFormRegisterLabel);
+registerForm.appendChild(usernameFormRegisterLabel);
 let inputUsername = document.createElement('input');
-formRegister.appendChild(inputUsername);
+registerForm.appendChild(inputUsername);
 
 //Password form
 let passwordFormRegisterLabel = document.createElement('label')
 passwordFormRegisterLabel.textContent = 'Password'
-formRegister.appendChild(passwordFormRegisterLabel)
+registerForm.appendChild(passwordFormRegisterLabel)
 let inputPassword = document.createElement('input')
-formRegister.appendChild(inputPassword)
+registerForm.appendChild(inputPassword)
 
 //Div register buttons
 
 let buttonsFormDivRegister = document.createElement('div')
-buttonsFormDivRegister.style.display= 'flex'
+buttonsFormDivRegister.style.display = 'flex'
 buttonsFormDivRegister.style.flexDirection = 'row'
-formRegister.appendChild(buttonsFormDivRegister);
+registerForm.appendChild(buttonsFormDivRegister);
 
 //Login anchor
 let registerLoginAnchor = document.createElement('a');
+registerLoginAnchor.style.cursor = 'pointer'
 buttonsFormDivRegister.appendChild(registerLoginAnchor);
 
+registerLoginAnchor.addEventListener('click', function () {
+    document.body.removeChild(registerDiv)
+    document.body.appendChild(loginDiv)
+})
 let registerLoginAnchorText = document.createTextNode('Login')
 registerLoginAnchor.appendChild(registerLoginAnchorText)
 
 //Register button
 let registerButton = document.createElement('button');
 registerButton.style.marginLeft = '50px'
+registerButton.type = 'submit'
 buttonsFormDivRegister.appendChild(registerButton);
 
 let registerButtonText = document.createTextNode('Register');
@@ -101,8 +119,8 @@ registerButton.appendChild(registerButtonText);
 // LOGIN
 
 let loginDiv = document.createElement('div');
-
-document.body.appendChild(loginDiv);
+loginDiv.id = 'login_div'
+//document.body.appendChild(loginDiv);
 
 let LoginLogo = document.createElement('h1');
 loginDiv.appendChild(LoginLogo)
@@ -115,6 +133,11 @@ let loginForm = document.createElement('form')
 loginForm.style.display = 'flex';
 loginForm.style.flexDirection = 'column';
 loginForm.style.width = '250px';
+loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.body.removeChild(loginDiv)
+    document.body.appendChild(homeDiv)
+})
 loginDiv.appendChild(loginForm)
 
 //Login username label
@@ -136,41 +159,64 @@ loginForm.appendChild(loginInputPassword)
 let buttonsFormDivLogin = document.createElement('div');
 buttonsFormDivLogin.style.display = 'flex';
 buttonsFormDivLogin.style.flexDirection = 'row';
-loginDiv.appendChild(buttonsFormDivLogin);
+loginForm.appendChild(buttonsFormDivLogin);
 
 //Register anchor
 let loginRegisterAnchor = document.createElement('a');
+loginRegisterAnchor.style.cursor = 'pointer'
 buttonsFormDivLogin.appendChild(loginRegisterAnchor);
 let loginRegisterAnchorText = document.createTextNode('Register');
 loginRegisterAnchor.appendChild(loginRegisterAnchorText);
 
+loginRegisterAnchor.addEventListener('click', function () {
+    document.body.removeChild(loginDiv)
+    document.body.appendChild(registerDiv)
+})
+
 //Login button
 let loginButton = document.createElement('button');
 loginButton.style.marginLeft = '50px';
+loginButton.type = 'submit'
 buttonsFormDivLogin.appendChild(loginButton);
 let loginButtonText = document.createTextNode('Login');
 loginButton.appendChild(loginButtonText);
 
 // HOME
 
-let home = document.createElement('div')
-home.style.display = 'flex'
-home.style.flexDirection = 'column'
-home.style.width = '250px'
-document.body.appendChild(home);
+let homeDiv = document.createElement('div')
+// homeDiv.style.display = 'flex'
+// homeDiv.style.flexDirection = 'row'
+// homeDiv.style.width = '250px'
+
 
 let homeLogo = document.createElement('h1')
-home.appendChild(homeLogo)
+homeLogo.style.width = '32px'
+homeDiv.appendChild(homeLogo)
 
 let homeLogoText = document.createTextNode('Logo')
 homeLogo.appendChild(homeLogoText)
 
-let posts = document.createElement('div')
-home.appendChild(posts)
+let signOutButton = document.createElement('button')
+signOutButton.textContent = 'Sign out'
+homeDiv.appendChild(signOutButton)
+signOutButton.addEventListener('click', function () {
+    document.body.removeChild(homeDiv)
+    document.body.appendChild(landing)
+})
 
-let postContent = document.createElement('artcile')
-posts.appendChild(postContent)
+let postsDiv = document.createElement('div')
+postsDiv.style.display = 'flex'
+postsDiv.style.flexDirection = 'column'
+postsDiv.style.width = '250px'
+homeDiv.appendChild(postsDiv)
 
-let img = document.createElement('img')
-img.src = 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM='
-postContent.appendChild(img)
+let postContent = document.createElement('article')
+postsDiv.appendChild(postContent)
+
+
+let imgArray = ['https://static.vecteezy.com/system/resources/thumbnails/008/695/917/small_2x/no-image-available-icon-simple-two-colors-template-for-no-image-or-picture-coming-soon-and-placeholder-illustration-isolated-on-white-background-vector.jpg', 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg', 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=']
+imgArray.forEach(function (image) {
+    let img = document.createElement('img')
+    img.src = image
+    postContent.appendChild(img)
+})
