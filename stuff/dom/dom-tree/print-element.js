@@ -1,12 +1,10 @@
-debugger
-
 function printElement(element, level) {
     var spaces = ''
 
     for (var i = 0; i < level; i++)
         spaces += ' '
 
-    console.log(spaces + element.constructor.name)
+    console.log(spaces + element.tagName + ' (' + element.constructor.name + ')')
 
     for (var i = 0; i < element.children.length; i++) {
         var childElement = element.children[i]
@@ -18,10 +16,12 @@ function printElement(element, level) {
 printElement(document, 0)
 
 /*
-HTMLDocument
-VM5408:7  HTMLHtmlElement
-VM5408:7   HTMLHeadElement
-VM5408:7    HTMLTitleElement
-VM5408:7   HTMLBodyElement
-VM5408:7    HTMLHeadingElement
+VM66:7 undefined (HTMLDocument)
+VM66:7  HTML (HTMLHtmlElement)
+VM66:7   HEAD (HTMLHeadElement)
+VM66:7    TITLE (HTMLTitleElement)
+VM66:7   BODY (HTMLBodyElement)
+VM66:7    HEADER (HTMLElement)
+VM66:7     H1 (HTMLHeadingElement)
+VM66:7     IMG (HTMLImageElement)
 */

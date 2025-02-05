@@ -1,0 +1,38 @@
+hexadecimal (16 symbols: 0 ... 9 A ... F)
+
+2 digits
+
+0   00
+1   01
+2   02
+3   03
+4   04
+5   05
+6   06
+7   07
+8   08
+9   09
+10  0A
+11  0B
+12  0C
+13  0D
+14  0E
+15  0F
+16  10
+17  11
+18  12
+19  13
+...
+255 FF
+
+ex: 
+
+colors RGB
+red     FF 00 00    255 0 0
+green   00 FF 00    0 255 0
+blue    00 00 FF    0 0 255
+white   FF FF FF    255 255 255
+black   00 00 00    0 0 0
+
+colors RGBA
+red     FF 00 00 88
