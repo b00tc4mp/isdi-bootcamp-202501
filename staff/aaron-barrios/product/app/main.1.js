@@ -221,19 +221,12 @@ loginForm.addEventListener('submit', function (event) {
     event.preventDefault()
     document.body.removeChild(login)
     document.body.appendChild(home)
-    document.body.appendChild(main)
 })
 
 
-// ---- HOME ----
-//Header
-var home = document.createElement('header')
-home.style.width = '100%'
-home.style.height = '50px'
-home.style.margin = '10px'
-home.style.display = 'flex'
-home.style.justifyContent = 'space-between'
-home.style.alignItems = 'center'
+//home
+var home = document.createElement('div')
+home.style.width = '400px'
 // document.body.appendChild(home)
 
 var logoTitle = document.createElement('h2')
@@ -242,32 +235,13 @@ home.appendChild(logoTitle)
 var homeText = document.createTextNode('Logo')
 logoTitle.appendChild(homeText)
 
-var logoutButton = document.createElement('button')
-logoutButton.style.width = '100px'
-logoutButton.style.height = '35px'
-logoutButton.style.marginRight = '10px'
-home.appendChild(logoutButton)
-
-var logoutButtonText = document.createTextNode('Logout')
-logoutButton.appendChild(logoutButtonText)
-
-logoutButton.addEventListener('click', function () {
-    document.body.removeChild(home)
-    document.body.removeChild(main)
-    document.body.appendChild(landing)
-})
-
-//MAIN HOME
-var main = document.createElement('main')
-// document.body.appendChild(main)
-
 var posts = document.createElement('article')
 posts.style.display = 'flex'
 posts.style.width = '100%'
 posts.style.maxWidth = 'inherit'
 posts.style.flexDirection = 'column'
 posts.style.gap = '10px'
-main.appendChild(posts)
+home.appendChild(posts)
 
 var kiwiPost = document.createElement('img')
 kiwiPost.src = 'https://www.nutritionadvance.com/wp-content/uploads/2017/12/whole-kiwi-fruit-and-half-a-kiwi-showing-flesh.jpg'
