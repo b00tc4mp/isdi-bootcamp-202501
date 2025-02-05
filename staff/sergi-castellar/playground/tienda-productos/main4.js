@@ -537,11 +537,26 @@ var logic = {
         return data.products
     },
 
+    createFilteredArray: function(propierty, value) {
+        if (propierty.length < 1 || value.length < 1)
+            throw new Error('invalid input length')
+
+        var filteredProducts = []
+        for (var i = 0; i < logic.getProductsArray().length; i++) {
+            if (logic.getProductsArray()[i][propierty] === value)
+                filteredProducts[filteredProducts.length] = logic.getProductsArray()[i]
+        }
+
+        if (filteredProducts.length === 0) throw new Error('no products found')
+
+        return filteredProducts
+    },
+
     searchProductById: function(productId) { // 3 buscar 1 producto
         logic.helpers.validateIsAnId(productId)
 
-        for (var i = 0; i < data.products.length; i++) {
-            var product = data.products[i]
+        for (var i = 0; i < logic.getProductsArray().length; i++) {
+            var product = logic.getProductsArray()[i]
             if (product.id === productId) {
                 return product
             }
@@ -550,8 +565,9 @@ var logic = {
     },
 
     addIdToCartArray: function(product) {
+
         var productId = product.id
-        data.cart[cart.length] = productId
+        data.cart[data.cart.length] = productId
     }
 }
 
@@ -585,8 +601,18 @@ var interface = {
     },
 
     filterList: function() { // 2 filtrar productos
-        prompt('propiety?')
-        prompt()
+        var filterListProperty = prompt('property?')
+        var filterListValue = prompt('value?')
+        
+        var filteredProducts = logic.createFilteredArray(filterListProperty, filterListValue)
+        var list = 'Products\n'
+
+        for (var i = 0; i < filteredProducts.length; i++) {
+            var product = filteredProducts[i]
+            list += `${product.id}: ${product.brand} ${product.model}, ${product.price}€ → ${filterListProperty}: ${product[filterListProperty]}\n`
+        }
+
+        alert(list)
     },
 
     showProductById: function() { // 3 buscar 1 producto
@@ -603,15 +629,16 @@ var interface = {
     },
 
     addToCart: function() { // 4 añadir carrito
-        // try {
-        //     var id = prompt('id?')
-        //     logic.helpers.validateIsString(id)
-        //     var product = logic.searchProductById(id)
-        //     logic.addIdToCartArray(product)
+        try {
+            var productId = prompt('id?')
+            
+            var productToAdd = logic.searchProductById(productId)
+            //decidir si sumar cantidad o añadir nuevo
+            logic.addIdToCartArray(productToAdd)
 
-        // } catch(error) {
-
-        // }
+        } catch(error) {
+            interface.helper.handlerError()
+        }
     },
 
     showCart: function() { // 5 ver carrito
