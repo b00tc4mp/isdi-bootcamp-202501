@@ -4,189 +4,193 @@ console.clear();
 
 //LANDING
 
-var landing = document.createElement("div"); //creo la pagina landing con el div
-document.body.appendChild(landing);
+var landing = {
+  mount: function () {
+    var container = document.createElement("div");
+    landing.container = container;
+    document.body.appendChild(container);
 
-var landingLogo = document.createElement("h1"); //creo el logo arriba de la pagina como un texto h1
-landing.appendChild(landingLogo);
+    var logo = document.createElement("h1");
+    logo.textContent = "Landing";
+    container.appendChild(logo);
 
-var landingLogoText = document.createTextNode("Landing"); //ponemos nombre al h1
-landingLogo.appendChild(landingLogoText);
+    var registerAnchor = document.createElement("a");
+    registerAnchor.textContent = "Register";
+    registerAnchor.addEventListener("click", function () {
+      document.body.removeChild(container);
+      document.body.appendChild(register.container);
+    });
+    container.appendChild(registerAnchor);
 
-var landingRegisterAnchor = document.createElement("a"); //creamos una anchor (hipervinculos)
-landing.appendChild(landingRegisterAnchor);
+    var orText = document.createTextNode(" or ");
+    container.appendChild(orText);
 
-landingRegisterAnchor.addEventListener("click", function () {
-  document.body.removeChild(landing);
-  document.body.appendChild(register);
-});
-
-var landingRegisterAnchorText = document.createTextNode("Register"); //le ponemos texto al hipervinculo
-landingRegisterAnchor.appendChild(landingRegisterAnchorText);
-
-var landingOrText = document.createTextNode(" or "); //le ponemos texto el parrafo
-landing.appendChild(landingOrText);
-
-var landingLoginAnchor = document.createElement("a"); //creamos una anchor (hipervinculos)
-landing.appendChild(landingLoginAnchor);
-
-landingLoginAnchor.addEventListener("click", function () {
-  document.body.removeChild(landing);
-  document.body.appendChild(login);
-});
-
-var landingLoginAnchorText = document.createTextNode("Login"); //ponemos texto al hipervinculo
-landingLoginAnchor.appendChild(landingLoginAnchorText);
-
-// pagina register con el logo h1, un texto name y abajo un input, un texto email y abajo un input, un texto username y abajo un input, un texto password y abajo un input;
-// tambien un link (login) y un botón (register)
+    var loginAnchor = document.createElement("a");
+    loginAnchor.textContent = "Login";
+    loginAnchor.addEventListener("click", function () {
+      document.body.removeChild(container);
+      document.body.appendChild(login.container);
+    });
+    container.appendChild(loginAnchor);
+  },
+};
 
 // REGISTER
 
-var register = document.createElement("div");
-//document.body.appendChild(register);
+var register = {
+  mount: function () {
+    var container = document.createElement("div");
+    //document.body.appendChild(container);
+    register.container = container;
 
-var registerLogo = document.createElement("h1"); //creo el logo arriba de la pagina como un texto h1
-register.appendChild(registerLogo);
+    var logo = document.createElement("h1"); //creo el logo arriba de la pagina como un texto h1
+    logo.textContent = "Register";
+    container.appendChild(logo);
 
-var registerLogoText = document.createTextNode("Register"); //ponemos nombre al h1
-registerLogo.appendChild(registerLogoText);
+    //form
+    var form = document.createElement("form");
+    container.appendChild(form);
 
-//input name
+    //input name
 
-var registerForm = document.createElement("form"); //form para meter elementos dentro
-register.appendChild(registerForm);
-registerForm.style.display = "flex";
-registerForm.style.flexDirection = "column";
-registerForm.style.gap = "15px";
+    container.appendChild(form);
+    form.style.display = "flex";
+    form.style.flexDirection = "column";
+    form.style.gap = "15px";
 
-var registerFormNameLabel = document.createElement("label");
-registerForm.appendChild(registerFormNameLabel);
+    var nameLabel = document.createElement("label");
+    nameLabel.textContent = "Name";
+    form.appendChild(nameLabel);
 
-var registerFormNameLabelText = document.createTextNode("Name");
-registerFormNameLabel.appendChild(registerFormNameLabelText);
+    var nameInput = document.createElement("input");
+    nameInput.style.width = "200px";
+    form.appendChild(nameInput);
 
-var inputUsername = document.createElement("input");
-registerForm.appendChild(inputUsername);
+    //input e-mail
 
-//input e-mail
+    var emailLabel = document.createElement("label");
+    emailLabel.textContent = "E-mail";
+    form.appendChild(emailLabel);
 
-var registerFormNameLabel = document.createElement("label");
-registerForm.appendChild(registerFormNameLabel);
+    var emailInput = document.createElement("input");
+    emailInput.style.width = "200px";
+    form.appendChild(emailInput);
 
-var registerFormNameLabelText = document.createTextNode("E-mail");
-registerFormNameLabel.appendChild(registerFormNameLabelText);
+    // input Username
 
-var inputEmail = document.createElement("input");
-registerForm.appendChild(inputEmail);
+    var usernameLabel = document.createElement("label");
+    usernameLabel.textContent = "Username";
+    form.appendChild(usernameLabel);
 
-// input Username
+    var usernameInput = document.createElement("input");
+    usernameInput.style.width = "200px";
+    form.appendChild(usernameInput);
 
-var registerFormNameLabel = document.createElement("label");
-registerForm.appendChild(registerFormNameLabel);
+    //input password
 
-var registerFormNameLabelText = document.createTextNode("Username");
-registerFormNameLabel.appendChild(registerFormNameLabelText);
+    var passwordLabel = document.createElement("label");
+    passwordLabel.textContent = "Password";
+    form.appendChild(passwordLabel);
 
-var inputUsername = document.createElement("input");
-registerForm.appendChild(inputUsername);
+    var passwordInput = document.createElement("input");
+    passwordInput.style.width = "200px";
+    form.appendChild(passwordInput);
 
-//input password
+    //hipervinculo login
 
-var registerFormNameLabel = document.createElement("label");
-registerForm.appendChild(registerFormNameLabel);
-
-var registerFormNameLabelText = document.createTextNode("Password");
-registerFormNameLabel.appendChild(registerFormNameLabelText);
-
-var inputPassword = document.createElement("input");
-registerForm.appendChild(inputPassword);
-
-//hipervinculo login
-
-var registerLoginAnchor = document.createElement("button"); //creamos una anchor (hipervinculos)
-register.appendChild(registerLoginAnchor);
-
-registerLoginAnchor.addEventListener("click", function () {
-  document.body.removeChild(register);
-  document.body.appendChild(login);
-});
-
-var registerLoginAnchorText = document.createTextNode("Login"); //ponemos texto al hipervinculo
-registerLoginAnchor.appendChild(registerLoginAnchorText);
+    var loginButton = document.createElement("button");
+    loginButton.textContent = "Login";
+    loginButton.addEventListener("click", function () {
+      document.body.removeChild(container);
+      document.body.appendChild(login.container);
+    });
+    container.appendChild(loginButton);
+  },
+};
 
 // WIP boton de register al lado
 
 // LOGIN
 
-var login = document.createElement("div");
-//document.body.appendChild(login);
-login.style.display = "flex";
-login.style.flexDirection = "column";
-login.style.gap = "15px";
+var login = {
+  mount: function () {
+    var container = document.createElement("div");
+    //document.body.appendChild(container);
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+    container.style.gap = "15px";
 
-var loginLogo = document.createElement("h1"); //creo el logo arriba de la pagina como un texto h1
-login.appendChild(loginLogo);
+    login.container = container;
 
-var loginLogoText = document.createTextNode("Login"); //ponemos nombre al h1
-loginLogo.appendChild(loginLogoText);
+    var logo = document.createElement("h1"); //creo el logo arriba de la pagina como un texto h1
+    logo.textContent = "Login";
+    container.appendChild(logo);
 
-var registerForm = document.createElement("form"); //form para meter elementos dentro
-registerForm.style.display = "flex";
-registerForm.style.flexDirection = "column";
-registerForm.style.gap = "15px";
-login.appendChild(registerForm);
+    var form = document.createElement("form"); //form para meter elementos dentro
+    form.style.display = "flex";
+    form.style.flexDirection = "column";
+    form.style.gap = "15px";
+    container.appendChild(form);
 
-// input Username
-var loginFormNameLabel = document.createElement("label");
-registerForm.appendChild(loginFormNameLabel);
+    // input Username
+    var usernameLabel = document.createElement("label");
+    form.appendChild(usernameLabel);
+    usernameLabel.textContent = "Username";
 
-var loginFormNameLabelText = document.createTextNode("Username");
-loginFormNameLabel.appendChild(loginFormNameLabelText);
+    var usernameInput = document.createElement("input");
+    usernameInput.style.width = "200px";
+    form.appendChild(usernameInput);
 
-var inputUsername = document.createElement("input");
-inputUsername.style.width = "200px";
-registerForm.appendChild(inputUsername);
+    // input Password
+    var passwordLabel = document.createElement("label");
+    form.appendChild(passwordLabel);
+    passwordLabel.textContent = "Password";
 
-// input Password
-var loginFormNameLabel = document.createElement("label");
-registerForm.appendChild(loginFormNameLabel);
+    var passwordInput = document.createElement("input");
+    passwordInput.style.width = "200px";
+    form.appendChild(passwordInput);
 
-var loginFormNameLabelText = document.createTextNode("Password");
-loginFormNameLabel.appendChild(loginFormNameLabelText);
+    //boton enter
 
-var inputPassword = document.createElement("input");
-inputPassword.style.width = "200px";
-registerForm.appendChild(inputPassword);
+    var homeButton = document.createElement("button");
+    homeButton.textContent = "Enter";
+    homeButton.style.width = "200px";
+    homeButton.addEventListener("click", function () {
+      document.body.removeChild(container);
+      document.body.appendChild(home.container);
+    });
+    container.appendChild(homeButton);
 
-//boton enter
-
-var buttonToHomeAnchor = document.createElement("button"); //creamos una anchor (hipervinculos)
-login.appendChild(buttonToHomeAnchor);
-
-buttonToHomeAnchor.addEventListener("click", function () {
-  document.body.removeChild(login);
-  document.body.appendChild(home);
-});
-
-//var buttonToHomeText = document.createTextNode("Enter"); //ponemos texto al hipervinculo
-//buttonToHomeAnchor.appendChild(buttonToHomeText);
-
-buttonToHomeAnchor.innerHTML = "Enter";
+    //homeButton.innerHTML = "Enter";
+  },
+};
 
 //home
 
-var home = document.createElement("div");
-//document.appendChild(home);
+var home = {
+  mount: function () {
+    var container = document.createElement("div");
+    //document.appendChild(container);
+    home.container = container;
+    //logo container
 
-//logo home
+    var logo = document.createElement("h1");
+    logo.textContent = "Home";
+    container.appendChild(logo);
 
-var homeLogo = document.createElement("h1");
-home.appendChild(homeLogo);
+    //Boton de logout
 
-var homeLogoText = document.createTextNode("Home");
-homeLogo.appendChild(homeLogoText);
+    var logoutAnchor = document.createElement("a");
+    logoutAnchor.textContent = "Logout";
+    logoutAnchor.addEventListener("click", function () {
+      document.body.removeChild(container);
+      document.body.appendChild(landing.container);
+    });
+    container.appendChild(logoutAnchor);
+  },
+};
 
-//Boton de logout
-
-var buttonLogout = document.createElement("button");
+landing.mount();
+register.mount();
+login.mount();
+home.mount();
