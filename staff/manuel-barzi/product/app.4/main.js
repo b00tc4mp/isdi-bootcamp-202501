@@ -49,18 +49,6 @@ register.mount = function () {
     // form
 
     var form = document.createElement('form')
-    form.addEventListener('submit', function (event) {
-        event.preventDefault()
-
-        console.log('register submit')
-
-        var name = nameInput.value
-        var email = emailInput.value
-        var username = usernameInput.value
-        var password = passwordInput.value
-
-        console.log(name, email, username, password)
-    })
     this.container.appendChild(form)
 
     // name
