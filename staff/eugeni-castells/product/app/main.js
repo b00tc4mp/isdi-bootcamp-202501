@@ -2,218 +2,324 @@ console.clear();
 
 //data
 
+var fakeUser = {
+  username: "castells",
+  password: "hunterxhunter",
+};
+
+var loginFormData = {
+  username: "",
+  password: "",
+};
+//object
+
+function Component(container) {
+  this.container = container;
+}
+
+function inputHandler() {}
+// function Form(...input) {
+//   this.form = document.createElement("form");
+//   for (var i = 0; i < input.length; i++) {
+//     this.input = document.createElement("input");
+//     this.form.appendChild(this.input);
+//   }
+// }
+
 // landing
+var landing = new Component(document.createElement("div"));
 
-var landing = document.createElement("div");
-document.body.appendChild(landing);
-landing.style.height = "100vh";
-landing.style.padding = "2rem";
+landing.mount = function () {
+  document.body.appendChild(this.container);
+  this.container.style.height = "100vh";
+  this.container.style.padding = "2rem";
 
-var landingLogo = document.createElement("h1");
-landingLogo.innerHTML = "Logo";
-landing.appendChild(landingLogo);
+  var logo = document.createElement("h1");
+  logo.textContent = "Logo";
+  this.container.appendChild(logo);
 
-//var register or login div
-var landingLinkDiv = document.createElement("div");
-landing.appendChild(landingLinkDiv);
+  //var register or login div
+  var linkDiv = document.createElement("div");
+  this.container.appendChild(linkDiv);
 
-//var link Register
-var registerLink = document.createElement("a");
-registerLink.href = "#register";
-registerLink.innerHTML = "Register";
-landingLinkDiv.appendChild(registerLink);
+  //var link Register
+  var registerLink = document.createElement("a");
+  registerLink.href = "#register";
+  registerLink.textContent = "Register";
+  linkDiv.appendChild(registerLink);
 
-//or text
-var orText = document.createElement("span");
-orText.innerHTML = " or ";
-orText.className = "landingLinkDivText";
-landingLinkDiv.appendChild(orText);
+  registerLink.addEventListener(
+    "click",
+    function () {
+      document.body.removeChild(this.container);
+      document.body.appendChild(register.container);
+    }.bind(this)
+  );
 
-//var link Login
-var loginLink = document.createElement("a");
-loginLink.innerHTML = "Login";
-loginLink.href = "#login";
+  //or text
+  var orText = document.createElement("span");
+  orText.textContent = " or ";
+  linkDiv.appendChild(orText);
 
-landingLinkDiv.appendChild(loginLink);
+  //var link Login
+  var loginLink = document.createElement("a");
+  loginLink.textContent = "Login";
+  loginLink.href = "#login";
+  loginLink.addEventListener(
+    "click",
+    function () {
+      document.body.removeChild(this.container);
+      document.body.appendChild(login.container);
+    }.bind(this)
+  );
+
+  linkDiv.appendChild(loginLink);
+};
 
 // register
 
-var register = document.createElement("div");
-register.id = "register";
+var register = new Component(document.createElement("div"));
+register.mount = function () {
+  this.container.style.height = "100vh";
+  this.container.style.padding = "2rem";
 
-document.body.appendChild(register);
-register.style.height = "100vh";
-register.style.padding = "2rem";
+  //logo
+  var logo = document.createElement("h1");
+  logo.innerText = "Logo";
+  this.container.appendChild(logo);
 
-//logo
-var registerLogo = document.createElement("h1");
-registerLogo.innerText = "Logo";
-register.appendChild(registerLogo);
+  //form
+  var form = document.createElement("form");
+  form.style.display = "flex";
+  form.style.flexDirection = "column";
+  form.style.gap = "1rem";
+  this.container.appendChild(form);
 
-//form
-var registerForm = document.createElement("form");
-registerForm.style.display = "flex";
-registerForm.style.flexDirection = "column";
-registerForm.style.gap = "1rem";
-register.appendChild(registerForm);
+  //form namefield
+  var nameFieldRegister = document.createElement("div");
+  nameFieldRegister.style.display = "flex";
+  nameFieldRegister.style.flexDirection = "column";
+  nameFieldRegister.style.gap = "5px";
+  form.appendChild(nameFieldRegister);
 
-//form namefield
-var nameFieldRegister = document.createElement("div");
-nameFieldRegister.style.display = "flex";
-nameFieldRegister.style.flexDirection = "column";
-nameFieldRegister.style.gap = "5px";
-registerForm.appendChild(nameFieldRegister);
+  //nameInputRegister
+  var nameLabel = document.createElement("label");
+  nameLabel.htmlFor = "name";
+  nameLabel.textContent = "Name";
+  nameFieldRegister.appendChild(nameLabel);
 
-//nameInputRegister
-var nameLabel = document.createElement("label");
-nameLabel.htmlFor = "name";
-nameLabel.innerHTML = "Name";
-nameFieldRegister.appendChild(nameLabel);
+  var nameInput = document.createElement("input");
+  nameInput.type = "text";
+  nameInput.id = "name";
+  nameFieldRegister.appendChild(nameInput);
 
-var nameInput = document.createElement("input");
-nameInput.type = "text";
-nameInput.id = "name";
-nameFieldRegister.appendChild(nameInput);
+  //form emailField
+  var emailFieldRegister = document.createElement("div");
+  emailFieldRegister.style.display = "flex";
+  emailFieldRegister.style.flexDirection = "column";
+  emailFieldRegister.style.gap = "5px";
+  form.appendChild(emailFieldRegister);
 
-//form emailField
-var emailFieldRegister = document.createElement("div");
-emailFieldRegister.style.display = "flex";
-emailFieldRegister.style.flexDirection = "column";
-emailFieldRegister.style.gap = "5px";
-registerForm.appendChild(emailFieldRegister);
+  //emailInputRegister
+  var emailLabel = document.createElement("label");
+  emailLabel.htmlFor = "email";
+  emailLabel.textContent = "E-mail";
+  emailFieldRegister.appendChild(emailLabel);
 
-//emailInputRegister
-var emailLabel = document.createElement("label");
-emailLabel.htmlFor = "email";
-emailLabel.innerHTML = "E-mail";
-emailFieldRegister.appendChild(emailLabel);
+  var emailInput = document.createElement("input");
+  emailInput.type = "text";
+  emailInput.id = "name";
+  emailFieldRegister.appendChild(emailInput);
 
-var emailInput = document.createElement("input");
-emailInput.type = "text";
-emailInput.id = "name";
-emailFieldRegister.appendChild(emailInput);
+  //form usernameField
+  var usernameFieldRegister = document.createElement("div");
+  usernameFieldRegister.style.display = "flex";
+  usernameFieldRegister.style.flexDirection = "column";
+  usernameFieldRegister.style.gap = "5px";
+  form.appendChild(usernameFieldRegister);
 
-//form usernameField
-var usernameFieldRegister = document.createElement("div");
-usernameFieldRegister.style.display = "flex";
-usernameFieldRegister.style.flexDirection = "column";
-usernameFieldRegister.style.gap = "5px";
-registerForm.appendChild(usernameFieldRegister);
+  //usernameInputRegister
+  var usernameLabel = document.createElement("label");
+  usernameLabel.htmlFor = "username";
+  usernameLabel.textContent = "Username";
+  usernameFieldRegister.appendChild(usernameLabel);
 
-//usernameInputRegister
-var usernameLabel = document.createElement("label");
-usernameLabel.htmlFor = "username";
-usernameLabel.innerHTML = "Username";
-usernameFieldRegister.appendChild(usernameLabel);
+  var usernameInput = document.createElement("input");
+  usernameInput.type = "text";
+  usernameInput.id = "name";
+  usernameFieldRegister.appendChild(usernameInput);
 
-var usernameInput = document.createElement("input");
-usernameInput.type = "text";
-usernameInput.id = "name";
-usernameFieldRegister.appendChild(usernameInput);
+  //form passwordField
+  var passwordFieldRegister = document.createElement("div");
+  passwordFieldRegister.style.display = "flex";
+  passwordFieldRegister.style.flexDirection = "column";
+  passwordFieldRegister.style.gap = "5px";
+  form.appendChild(passwordFieldRegister);
 
-//form passwordField
-var passwordFieldRegister = document.createElement("div");
-passwordFieldRegister.style.display = "flex";
-passwordFieldRegister.style.flexDirection = "column";
-passwordFieldRegister.style.gap = "5px";
-registerForm.appendChild(passwordFieldRegister);
+  //passwordInputRegister
+  var passwordLabel = document.createElement("label");
+  passwordLabel.htmlFor = "password";
+  passwordLabel.textContent = "Password";
+  passwordFieldRegister.appendChild(passwordLabel);
 
-//passwordInputRegister
-var passwordLabel = document.createElement("label");
-passwordLabel.htmlFor = "password";
-passwordLabel.innerHTML = "Password";
-passwordFieldRegister.appendChild(passwordLabel);
+  var passwordInput = document.createElement("input");
+  passwordInput.type = "password";
+  passwordInput.id = "password";
+  passwordFieldRegister.appendChild(passwordInput);
 
-var passwordInput = document.createElement("input");
-passwordInput.type = "password";
-passwordInput.id = "password";
-passwordFieldRegister.appendChild(passwordInput);
+  //button wrapper
+  var buttonWrapper = document.createElement("div");
+  form.appendChild(buttonWrapper);
+  buttonWrapper.style.display = "flex";
+  buttonWrapper.style.justifyContent = "space-between";
 
-//register button
-var registerFormButton = document.createElement("button");
-registerFormButton.innerHTML = "Register";
-registerFormButton.type = "submit";
-registerForm.appendChild(registerFormButton);
-registerFormButton.style.width = "65px";
-registerFormButton.style.backgroundColor = "black";
-registerFormButton.style.color = "white";
-registerFormButton.style.padding = "5px";
-registerFormButton.style.alignSelf = "flex-end";
+  //login
+  var loginButton = document.createElement("button");
+  loginButton.textContent = "Login";
+  loginButton.type = "button";
+  loginButton.style.width = "auto";
+  loginButton.style.padding = "5px";
+  buttonWrapper.appendChild(loginButton);
+
+  loginButton.addEventListener(
+    "click",
+    function () {
+      document.body.removeChild(this.container);
+      document.body.appendChild(login.container);
+    }.bind(this)
+  );
+
+  //register button
+  var registerFormButton = document.createElement("button");
+  registerFormButton.textContent = "Register";
+  registerFormButton.type = "submit";
+  buttonWrapper.appendChild(registerFormButton);
+  registerFormButton.style.width = "65px";
+  registerFormButton.style.backgroundColor = "black";
+  registerFormButton.style.color = "white";
+  registerFormButton.style.padding = "5px";
+};
 
 // login
+var login = new Component(document.createElement("div"));
 
-var login = document.createElement("div");
-login.id = "login";
-document.body.appendChild(login);
-login.style.height = "100vh";
-login.style.padding = "2rem";
+login.mount = function () {
+  this.container.id = "login";
+  this.container.style.height = "100vh";
+  this.container.style.padding = "2rem";
 
-//loginLogo
-var loginLogo = document.createElement("h1");
-loginLogo.innerHTML = "Logo";
-login.appendChild(loginLogo);
+  //loginLogo
+  var logo = document.createElement("h1");
+  logo.textContent = "Logo";
+  this.container.appendChild(logo);
 
-//loginForm
-var loginForm = document.createElement("form");
-loginForm.style.display = "flex";
-loginForm.style.flexDirection = "column";
-loginForm.style.gap = "1rem";
-login.appendChild(loginForm);
+  //loginForm
+  var form = document.createElement("form");
+  form.style.display = "flex";
+  form.style.flexDirection = "column";
+  form.style.gap = "1rem";
+  this.container.appendChild(form);
 
-//form namefield
-var nameFieldLogin = document.createElement("div");
-nameFieldLogin.style.display = "flex";
-nameFieldLogin.style.flexDirection = "column";
-nameFieldLogin.style.gap = "5px";
-loginForm.appendChild(nameFieldLogin);
+  //form namefield
+  var nameField = document.createElement("div");
+  nameField.style.display = "flex";
+  nameField.style.flexDirection = "column";
+  nameField.style.gap = "5px";
+  form.appendChild(nameField);
 
-//usernameInputLogin
-var loginNameLabel = document.createElement("label");
-loginNameLabel.htmlFor = "username";
-loginNameLabel.innerHTML = "Username";
-nameFieldLogin.appendChild(loginNameLabel);
+  //usernameInputLogin
+  var nameLabel = document.createElement("label");
+  nameLabel.htmlFor = "username";
+  nameLabel.textContent = "Username";
+  nameField.appendChild(nameLabel);
 
-var loginNameInput = document.createElement("input");
-loginNameInput.type = "text";
-loginNameInput.id = "username";
-nameFieldLogin.appendChild(loginNameInput);
+  var nameInput = document.createElement("input");
+  nameInput.type = "text";
+  nameInput.id = "username";
+  nameInput.addEventListener("keyup", function (event) {
+    loginFormData.username = event.target.value;
+  });
+  nameField.appendChild(nameInput);
 
-//form passwordField
-var passwordFieldLogin = document.createElement("div");
-passwordFieldLogin.style.display = "flex";
-passwordFieldLogin.style.flexDirection = "column";
-passwordFieldLogin.style.gap = "5px";
-loginForm.appendChild(passwordFieldLogin);
+  //form passwordField
+  var passwordField = document.createElement("div");
+  passwordField.style.display = "flex";
+  passwordField.style.flexDirection = "column";
+  passwordField.style.gap = "5px";
+  form.appendChild(passwordField);
 
-//emailInputRegiste
-var loginPasswordLabel = document.createElement("label");
-loginPasswordLabel.htmlFor = "password";
-loginPasswordLabel.innerHTML = "Password";
-passwordFieldLogin.appendChild(loginPasswordLabel);
+  //username password Login
+  var passwordLabel = document.createElement("label");
+  passwordLabel.htmlFor = "password";
+  passwordLabel.textContent = "Password";
+  passwordField.appendChild(passwordLabel);
 
-var loginPasswordInput = document.createElement("input");
-loginPasswordInput.type = "password";
-loginPasswordInput.id = "password";
-passwordFieldLogin.appendChild(loginPasswordInput);
+  var passwordInput = document.createElement("input");
+  passwordInput.type = "password";
+  passwordInput.id = "password";
+  passwordInput.addEventListener("keyup", function (event) {
+    loginFormData.password = event.target.value;
+  });
+  passwordField.appendChild(passwordInput);
 
-//login button
-var loginFormButton = document.createElement("button");
-loginFormButton.innerHTML = "Login";
-loginFormButton.type = "submit";
-loginForm.appendChild(loginFormButton);
-loginFormButton.style.width = "50px";
-loginFormButton.style.backgroundColor = "black";
-loginFormButton.style.color = "white";
-loginFormButton.style.padding = "5px";
-loginFormButton.style.alignSelf = "flex-end";
+  var buttonWrapper = document.createElement("div");
+  buttonWrapper.style.display = "flex";
+  buttonWrapper.style.justifyContent = "space-between";
+  form.appendChild(buttonWrapper);
+
+  //register button
+  var registerButton = document.createElement("button");
+  registerButton.textContent = "Register";
+  registerButton.type = "submit";
+  buttonWrapper.appendChild(registerButton);
+  registerButton.addEventListener("click", function () {
+    document.body.removeChild(container);
+    document.body.appendChild(register.container);
+  });
+
+  //login button
+  var formButton = document.createElement("button");
+  formButton.textContent = "Login";
+  formButton.type = "submit";
+  buttonWrapper.appendChild(formButton);
+  formButton.style.width = "50px";
+  formButton.style.backgroundColor = "black";
+  formButton.style.color = "white";
+  formButton.style.padding = "5px";
+  formButton.style.alignSelf = "flex-end";
+  formButton.addEventListener(
+    "click",
+    function () {
+      console.log(
+        `Username introduced: ${loginFormData.username}`,
+        `Password introduced: ${loginFormData.password}`
+      );
+      if (
+        loginFormData.username === fakeUser.username &&
+        loginFormData.password === fakeUser.password
+      ) {
+        alert("Login successful!");
+        document.body.removeChild(this.container);
+        document.body.appendChild(home.container);
+      } else alert("Login failed!");
+    }.bind(this)
+  );
+};
 
 // home
 
-var home = document.createElement("div");
-document.body.appendChild(home);
+var home = new Component(document.createElement("div"));
+home.mount = function () {
+  var logo = document.createElement("h1");
+  logo.textContent = "Logo";
+  this.container.appendChild(logo);
+};
 
+landing.mount();
+register.mount();
+login.mount();
+home.mount();
 //global styles
-
 var styledLinks = document.getElementsByTagName("a");
 
 for (var i = 0; i < styledLinks.length; i++) {
@@ -225,216 +331,7 @@ for (var i = 0; i < styledLinks.length; i++) {
 
 var styledSpans = document.getElementsByTagName("span");
 
-for (var i = 0; i < styledLinks.length; i++) {
+for (var i = 0; i < styledSpans.length; i++) {
   styledSpans[i].style.color = "black";
   styledSpans[i].style.fontSize = "26px";
 }
-
-// Landing
-// document.body.style.color = "#428A82";
-// document.body.style.backgroundColor = "#E0EEEC";
-// document.body.style.fontFamily = "verdana";
-// var landing = document.createElement("div");
-// document.body.appendChild(landing);
-// var landingLogo = document.createElement("h1");
-// landing.appendChild(landingLogo);
-// var landingLogoText = document.createTextNode("Logo");
-// landingLogo.appendChild(landingLogoText);
-// var welcome = document.createElement("h3");
-// landing.appendChild(welcome);
-// var welcomeText = document.createTextNode("Welcome!");
-// welcome.appendChild(welcomeText);
-// var loginRegisterBox = document.createElement("div");
-// loginRegisterBox.style.display = "flex";
-// loginRegisterBox.style.flexDirection = "column";
-// loginRegisterBox.style.gap = "5px";
-// landing.appendChild(loginRegisterBox);
-// var loginBox = document.createElement("button");
-// loginBox.textContent = "Login";
-// loginBox.style.color = "#FFFFFF";
-// loginBox.style.backgroundColor = "#428A82";
-// loginRegisterBox.appendChild(loginBox);
-// loginBox.addEventListener("click", function () {
-//   document.body.removeChild(landing);
-//   document.body.appendChild(login);
-// });
-// var registerBox = document.createElement("button");
-// registerBox.textContent = "Register";
-// registerBox.style.backgroundColor = "#E0EEEC";
-// registerBox.style.borderColor = "#428A82";
-// loginRegisterBox.appendChild(registerBox);
-// registerBox.addEventListener("click", function () {
-//   document.body.removeChild(landing);
-//   document.body.appendChild(register);
-// });
-// // Register
-// var register = document.createElement("div");
-// //document.body.appendChild(register)
-// var registerLogo = document.createElement("h1");
-// register.appendChild(registerLogo);
-// var registerLogoText = document.createTextNode("Logo");
-// registerLogo.appendChild(registerLogoText);
-// var registerForm = document.createElement("form");
-// registerForm.style.display = "flex";
-// registerForm.style.flexDirection = "column";
-// registerForm.style.gap = "0.5rem";
-// //registerForm.style.alignItems = 'center'
-// register.appendChild(registerForm);
-// var nameLabel = document.createElement("label");
-// nameLabel.textContent = "Name: ";
-// registerForm.appendChild(nameLabel);
-// var nameInput = document.createElement("input");
-// nameInput.type = "text";
-// nameInput.name = "name";
-// registerForm.appendChild(nameInput);
-// var surnameLabel = document.createElement("label");
-// surnameLabel.textContent = "Surname: ";
-// registerForm.appendChild(surnameLabel);
-// var surnameInput = document.createElement("input");
-// surnameInput.type = "text";
-// surnameInput.name = "surname";
-// registerForm.appendChild(surnameInput);
-// var emailLabel = document.createElement("label");
-// emailLabel.textContent = "E-mail: ";
-// registerForm.appendChild(emailLabel);
-// var emailInput = document.createElement("input");
-// emailInput.type = "text";
-// emailInput.name = "email";
-// registerForm.appendChild(emailInput);
-// var usernameLabel = document.createElement("label");
-// usernameLabel.textContent = "Username: ";
-// registerForm.appendChild(usernameLabel);
-// var usernameInput = document.createElement("input");
-// usernameInput.type = "text";
-// usernameInput.name = "username";
-// registerForm.appendChild(usernameInput);
-// var passwordLabel = document.createElement("label");
-// passwordLabel.textContent = "Password: ";
-// registerForm.appendChild(passwordLabel);
-// var passwordInput = document.createElement("input");
-// passwordInput.type = "password";
-// passwordInput.name = "password";
-// registerForm.appendChild(passwordInput);
-// var registerSubmit = document.createElement("button");
-// registerSubmit.textContent = "Register";
-// registerSubmit.type = "submit";
-// registerSubmit.style.backgroundColor = "#428A82";
-// registerSubmit.style.color = "#FFFFFF";
-// registerForm.appendChild(registerSubmit);
-// var loginRegister = document.createElement("a");
-// loginRegister.textContent = "Login";
-// loginRegister.style.fontWeight = "bold";
-// loginRegister.style.textDecoration = "underline";
-// loginRegister.style.marginTop = "50px";
-// loginRegister.style.textAlign = "center";
-// registerForm.appendChild(loginRegister);
-// loginRegister.addEventListener("click", function () {
-//   document.body.removeChild(register);
-//   document.body.appendChild(login);
-// });
-// // Login
-// var login = document.createElement("div");
-// //document.body.appendChild(login)
-// var loginLogo = document.createElement("h1");
-// loginLogo.textContent = "Logo";
-// login.appendChild(loginLogo);
-// var loginText = document.createElement("h3");
-// loginText.textContent = "Login";
-// login.appendChild(loginText);
-// var loginForm = document.createElement("form");
-// loginForm.style.display = "flex";
-// loginForm.style.flexDirection = "column";
-// loginForm.style.gap = "0.5rem";
-// login.appendChild(loginForm);
-// var loginNameLabel = document.createElement("label");
-// loginNameLabel.textContent = "Name: ";
-// loginForm.appendChild(loginNameLabel);
-// var loginNameInput = document.createElement("input");
-// loginNameInput.type = "text";
-// loginNameInput.name = "login-name";
-// loginForm.appendChild(loginNameInput);
-// var loginPasswordLabel = document.createElement("label");
-// loginPasswordLabel.textContent = "Password: ";
-// loginForm.appendChild(loginPasswordLabel);
-// var loginPasswordInput = document.createElement("input");
-// loginPasswordInput.type = "password";
-// loginPasswordInput.name = "password-input";
-// loginForm.appendChild(loginPasswordInput);
-// var loginSubmit = document.createElement("button");
-// loginSubmit.textContent = "Login";
-// loginSubmit.type = "submit";
-// loginSubmit.style.backgroundColor = "#428A82";
-// loginSubmit.style.color = "#FFFFFF";
-// loginForm.appendChild(loginSubmit);
-// var registerLogin = document.createElement("a");
-// registerLogin.textContent = "Register";
-// registerLogin.style.fontWeight = "bold";
-// registerLogin.style.textDecoration = "underline";
-// registerLogin.style.marginTop = "50px";
-// registerLogin.style.textAlign = "center";
-// loginForm.appendChild(registerLogin);
-// registerLogin.addEventListener("click", function () {
-//   document.body.removeChild(login);
-//   document.body.appendChild(register);
-// });
-// // HOME
-// var home = document.createElement("div");
-// //document.body.appendChild(home)
-// var logoHome = document.createElement("h1");
-// logoHome.textContent = "Logo";
-// home.appendChild(logoHome);
-// var logOutHome = document.createElement("button");
-// logOutHome.textContent = "Log out";
-// logOutHome.style.color = "#FFFFFF";
-// logOutHome.style.backgroundColor = "#428A82";
-// home.appendChild(logOutHome);
-// var postFrame1 = document.createElement("article");
-// home.appendChild(postFrame1);
-// var usernamePostFrame1 = document.createElement("p");
-// usernamePostFrame1.textContent = "username1";
-// postFrame1.appendChild(usernamePostFrame1);
-// var photoContainer1 = document.createElement("div");
-// photoContainer1.style.width = "100%"; //'440px'
-// photoContainer1.style.height = "440px";
-// postFrame1.appendChild(photoContainer1);
-// var photoImg1 = document.createElement("img");
-// photoImg1.src =
-//   "https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
-// photoImg1.style.objectFit = "cover";
-// photoImg1.style.width = "100%";
-// photoImg1.style.height = "100%";
-// photoContainer1.appendChild(photoImg1);
-// var commentPostFrame1 = document.createElement("p");
-// commentPostFrame1.textContent = "comment 1";
-// postFrame1.appendChild(commentPostFrame1);
-// var postFrame2 = document.createElement("article");
-// home.appendChild(postFrame2);
-// var usernamePostFrame2 = document.createElement("p");
-// usernamePostFrame2.textContent = "username2";
-// postFrame2.appendChild(usernamePostFrame2);
-// var photoContainer2 = document.createElement("div");
-// photoContainer2.style.width = "100%";
-// photoContainer2.style.height = "440px";
-// postFrame2.appendChild(photoContainer2);
-// var photoImg2 = document.createElement("img");
-// photoImg2.src =
-//   "https://images.pexels.com/photos/1107717/pexels-photo-1107717.jpeg?cs=srgb&dl=pexels-fotios-photos-1107717.jpg&fm=jpg";
-// photoImg2.style.objectFit = "cover";
-// photoImg2.style.width = "100%";
-// photoImg2.style.height = "100%";
-// photoContainer2.appendChild(photoImg2);
-// var commentPostFrame2 = document.createElement("p");
-// commentPostFrame2.textContent = "comment 2";
-// postFrame2.appendChild(commentPostFrame2);
-// registerForm.addEventListener("submit", function () {
-//   document.body.removeChild(register);
-//   document.body.appendChild(login);
-// });
-// loginForm.addEventListener("submit", function () {
-//   document.body.removeChild(login);
-//   document.body.appendChild(home);
-// });
-// logOutHome.addEventListener("click", function () {
-//   document.body.removeChild(home);
-//   document.body.appendChild(landing);
-// });
