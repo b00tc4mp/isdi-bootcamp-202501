@@ -112,7 +112,7 @@ var register = {
         var formSubmitButton = document.createElement('button')
         form.appendChild(formSubmitButton)
 
-        formSubmitButton.textContent = 'Register'
+        formSubmitButton.textContent = 'Create new account'
 
         formSubmitButton.addEventListener('click', function () {
             document.body.removeChild(container)
