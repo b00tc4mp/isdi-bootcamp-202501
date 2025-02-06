@@ -3,184 +3,182 @@ console.log('Hello, App!')
 
 // landing
 
-var landing = document.createElement('div')
-document.body.appendChild(landing)
+var landing = {
+    mount: function () {
+        var container = document.createElement('div')
+        landing.container = container
+        document.body.appendChild(container)
 
-var landingLogo = document.createElement('h1')
-landing.appendChild(landingLogo)
+        var logo = document.createElement('h1')
+        logo.textContent = 'Logo'
+        container.appendChild(logo)
 
-//var landingLogoText = new Text('Logo')
-var landingLogoText = document.createTextNode('Logo')
-landingLogo.appendChild(landingLogoText)
 
-var landingRegisterAnchor = document.createElement('a')
-landing.appendChild(landingRegisterAnchor)
+        var registerAnchor = document.createElement('a')
+        registerAnchor.textContent = 'Register'
+        registerAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(register.container)
+        })
+        container.appendChild(registerAnchor)
 
-landingRegisterAnchor.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(register)
-})
 
-var landingRegisterAnchorText = document.createTextNode('Register')
-landingRegisterAnchor.appendChild(landingRegisterAnchorText)
+        var orText = document.createTextNode('or')
+        container.appendChild(orText)
 
-var landingOrText = document.createTextNode('or')
-landing.appendChild(landingOrText)
+        var loginAnchor = document.createElement('a')
+        loginAnchor.textContent = 'Login'
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+        container.appendChild(loginAnchor)
 
-var landingLoginAnchor = document.createElement('a')
-landing.appendChild(landingLoginAnchor)
-
-landingLoginAnchor.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(login)
-})
-
-var landingLoginAnchorText = document.createTextNode('Login')
-landingLoginAnchor.appendChild(landingLoginAnchorText)
-
+    }
+}
 
 /* register */
 
-var register = document.createElement('div')
-// document.body.appendChild(register)
+var register = {
+    mount: function () {
+        var container = document.createElement('div')
+        register.container = container
 
-var registerLogo = document.createElement('h1')
-register.appendChild(registerLogo)
+        var logo = document.createElement('h1')
+        logo.textContent = 'Logo'
+        container.appendChild(logo)
 
-var registerLogoText = document.createTextNode('Logo')
-registerLogo.appendChild(registerLogoText)
+        // form
 
-// form
+        var form = document.createElement('form')
+        container.appendChild(form)
 
-var registerForm = document.createElement('form')
-register.appendChild(registerForm)
+        // name
 
-var registerFormNameLabel = document.createElement('label')
-registerForm.appendChild(registerFormNameLabel)
+        var nameLabel = document.createElement('label')
+        nameLabel.textContent = 'Name'
+        form.appendChild(nameLabel)
 
-// name
 
-var registerFormNameLabelText = document.createTextNode('Name')
-registerFormNameLabel.appendChild(registerFormNameLabelText)
+        var nameInput = document.createElement('input')
+        form.appendChild(nameInput)
 
-var registerFormNameInput = document.createElement('input')
-registerForm.appendChild(registerFormNameInput)
+        // email
 
-// email
+        var emailLabel = document.createElement('label')
+        emailLabel.textContent = 'E-mail'
+        form.appendChild(emailLabel)
 
-var registerFormEmailLabel = document.createElement('label')
-registerForm.appendChild(registerFormEmailLabel)
 
-var registerFormEmailLabelText = document.createTextNode('E-mail')
-registerFormEmailLabel.appendChild(registerFormEmailLabelText)
+        var emailInput = document.createElement('input')
+        form.appendChild(emailInput)
 
-var registerFormEmailInput = document.createElement('input')
-registerForm.appendChild(registerFormEmailInput)
+        // username
 
-// username
+        var usernameLabel = document.createElement('label')
+        usernameLabel.textContent = 'Username'
+        form.appendChild(usernameLabel)
 
-var registerFormUsernameLabel = document.createElement('label')
-registerForm.appendChild(registerFormUsernameLabel)
 
-var registerFormUsernameLabelText = document.createTextNode('Username')
-registerFormUsernameLabel.appendChild(registerFormUsernameLabelText)
+        var usernameInput = document.createElement('input')
+        form.appendChild(usernameInput)
 
-var registerFormUsernameInput = document.createElement('input')
-registerForm.appendChild(registerFormUsernameInput)
+        // password
 
-// password
+        var passwordLabel = document.createElement('label')
+        passwordLabel.textContent = 'Password'
+        form.appendChild(passwordLabel)
 
-var registerFormPasswordLabel = document.createElement('label')
-registerForm.appendChild(registerFormPasswordLabel)
 
-var registerFormPasswordLabelText = document.createTextNode('Password')
-registerFormPasswordLabel.appendChild(registerFormPasswordLabelText)
+        var passwordInput = document.createElement('input')
+        form.appendChild(passwordInput)
 
-var registerFormPasswordInput = document.createElement('input')
-registerForm.appendChild(registerFormPasswordInput)
+        // submit
 
-// submit
+        var submitButton = document.createElement('button')
+        submitButton.textContent = 'Register'
+        form.appendChild(submitButton)
 
-var registerFormSubmitButton = document.createElement('button')
-registerForm.appendChild(registerFormSubmitButton)
+        // anchor
 
-var registerFormSubmitButtonText = document.createTextNode('Register')
-registerFormSubmitButton.appendChild(registerFormSubmitButtonText)
-
-// anchor
-
-var registerLoginAnchor = document.createElement('a')
-register.appendChild(registerLoginAnchor)
-
-var registerLoginAnchorText = document.createTextNode('Login')
-registerLoginAnchor.appendChild(registerLoginAnchorText)
-
-// ...
+        var loginAnchor = document.createElement('a')
+        loginAnchor.textContent = 'Login'
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+        container.appendChild(loginAnchor)
+    }
+}
 
 /* login */
 
-var login = document.createElement('div')
-// document.body.appendChild(login)
+var login = {
+    mount: function () {
+        var container = document.createElement('div')
+        login.container = container
 
-var loginLogo = document.createElement('h1')
-login.appendChild(loginLogo)
+        var logo = document.createElement('h1')
+        logo.textContent = 'Logo'
+        container.appendChild(logo)
 
-var loginLogoText = document.createTextNode('Logo')
-loginLogo.appendChild(loginLogoText)
+        // form
 
-// form
+        var form = document.createElement('form')
+        container.appendChild(form)
 
-var loginForm = document.createElement('form')
-login.appendChild(loginForm)
+        // username
 
-// username
+        var usernameLabel = document.createElement('label')
+        usernameLabel.textContent = 'Username'
+        form.appendChild(usernameLabel)
 
-var loginFormUsernameLabel = document.createElement('label')
-loginForm.appendChild(loginFormUsernameLabel)
 
-var loginFormUsernameLabelText = document.createTextNode('Username')
-loginFormUsernameLabel.appendChild(loginFormUsernameLabelText)
+        var usernameInput = document.createElement('input')
+        form.appendChild(usernameInput)
 
-var loginFormUsernameInput = document.createElement('input')
-loginForm.appendChild(loginFormUsernameInput)
+        // password
 
-// password
+        var passwordLabel = document.createElement('label')
+        passwordLabel.textContent = 'Password'
+        form.appendChild(passwordLabel)
 
-var loginFormPasswordLabel = document.createElement('label')
-loginForm.appendChild(loginFormPasswordLabel)
 
-var loginFormPasswordLabelText = document.createTextNode('Password')
-loginFormPasswordLabel.appendChild(loginFormPasswordLabelText)
+        var passwordInput = document.createElement('input')
+        form.appendChild(passwordInput)
 
-var loginFormPasswordInput = document.createElement('input')
-loginForm.appendChild(loginFormPasswordInput)
+        // submit
 
-// submit
+        var submitButton = document.createElement('button')
+        submitButton.textContent = 'Login'
+        form.appendChild(submitButton)
 
-var loginFormSubmitButton = document.createElement('button')
-loginForm.appendChild(loginFormSubmitButton)
+        // anchor
 
-var loginFormSubmitButtonText = document.createTextNode('Login')
-loginFormSubmitButton.appendChild(loginFormSubmitButtonText)
-
-// anchor
-
-var loginRegisterAnchor = document.createElement('a')
-login.appendChild(loginRegisterAnchor)
-
-var loginRegisterAnchorText = document.createTextNode('Register')
-loginRegisterAnchor.appendChild(loginRegisterAnchorText)
+        var registerAnchor = document.createElement('a')
+        registerAnchor.textContent = 'Register'
+        registerAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(register.container)
+        })
+        container.appendChild(registerAnchor)
+    }
+}
 
 /* home */
 
-var home = document.createElement('div')
-// document.body.appendChild(home)
+var home = {
+    mount: function () {
+        var container = document.createElement('div')
+        home.container = container
 
-var homeLogo = document.createElement('h1')
-home.appendChild(homeLogo)
+        var logo = document.createElement('h1')
+        logo.textContent = 'Logo'
+        container.appendChild(logo)
+    }
+}
 
-//var homeLogoText = new Text('Logo')
-var homeLogoText = document.createTextNode('Logo')
-homeLogo.appendChild(homeLogoText)
-
-// ...
+landing.mount()
+register.mount()
+login.mount()
+home.mount()
