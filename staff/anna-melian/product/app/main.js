@@ -1,293 +1,497 @@
 console.clear()
-console.log('Hello, App!')
 
 // landing
 
-var landing = document.createElement('div')
-document.body.appendChild(landing)
+var landing = {
+    mount: function () {
+        var container = document.createElement('div')
+        landing.container = container
+        document.body.appendChild(container)
 
-var landingLogo = document.createElement('h1')
-landing.appendChild(landingLogo)
+        var logo = document.createElement('h1')
+        container.appendChild(logo)
+        logo.textContent = 'Logo'
 
-var landingLogoText = document.createTextNode('Logo')
-landingLogo.appendChild(landingLogoText)
+        var registerAnchor = document.createElement('a')
+        registerAnchor.style.textDecoration = 'underline'
+        container.appendChild(registerAnchor)
 
+        registerAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(register.container)
+        })
 
-var landingRegisterAnchor = document.createElement('a')
-landing.appendChild(landingRegisterAnchor)
+        registerAnchor.textContent = 'Register'
 
-// click en register, aparece pantalla de register
-landingRegisterAnchor.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(register)
-})
+        var orText = document.createTextNode(' or ')
+        container.appendChild(orText)
 
-var landingRegisterAnchorText = document.createTextNode('Register')
-landingRegisterAnchor.appendChild(landingRegisterAnchorText)
+        var loginAnchor = document.createElement('a')
+        loginAnchor.style.textDecoration = 'underline'
+        container.appendChild(loginAnchor)
 
-var landingOrText = document.createTextNode(' or ')
-landing.appendChild(landingOrText)
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+        loginAnchor.textContent = 'Login'
 
-var landingLoginAnchor = document.createElement('a')
-landing.appendChild(landingLoginAnchor)
+    }
+}
 
-landingLoginAnchor.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(login)
-})
-
-
-
-var landingLoginAnchorText = document.createTextNode('Login')
-landingLoginAnchor.appendChild(landingLoginAnchorText)
+landing.mount()
 
 
 /* register */
 
-var register = document.createElement('div')
-//document.body.appendChild(register)
+var register = {
+    mount: function () {
+        var container = document.createElement('div')
+        register.container = container
 
-var registerLogo = document.createElement('h1')
-register.appendChild(registerLogo)
+        var logo = document.createElement('h1')
+        container.appendChild(logo)
 
-var registerLogoText = document.createTextNode('Logo')
-registerLogo.appendChild(registerLogoText)
+        logo.textContent = 'Logo'
 
-var registerInstructions = document.createElement('p')
-register.appendChild(registerInstructions)
+        var intructions = document.createElement('p')
+        container.appendChild(intructions)
 
-var registerInstructionsText = document.createTextNode('To register, enter the following information. ')
-registerInstructions.appendChild(registerInstructionsText)
+        intructions.textContent = 'To register, enter the following information. '
 
-// from
+        // from
 
-var registerForm = document.createElement('form')
-register.appendChild(registerForm)
+        var form = document.createElement('form')
+        form.style.display = 'flex'
+        form.style.gap = '15px'
+        form.style.flexDirection = 'column'
 
-var registerFormNameLabel = document.createElement('label')
-registerForm.appendChild(registerFormNameLabel)
+        container.appendChild(form)
 
-//name
+        //name
+        var formNameLabel = document.createElement('label')
 
-var registerFormNameLabelText = document.createTextNode('Name')
-registerFormNameLabel.appendChild(registerFormNameLabelText)
+        form.appendChild(formNameLabel)
+        formNameLabel.textContent = 'Name'
 
-var registerFormNameInput = document.createElement('input')
-registerForm.appendChild(registerFormNameInput)
-
-
-// email
-var registerFormEmailLabel = document.createElement('label')
-registerForm.appendChild(registerFormEmailLabel)
-
-var registerFormEmailLabelText = document.createTextNode('E-mail')
-registerFormEmailLabel.appendChild(registerFormEmailLabelText)
-
-var registerFormEmailInput = document.createElement('input')
-registerForm.appendChild(registerFormEmailInput)
-
-// username
-
-var registerFormUsernameLabel = document.createElement('label')
-registerForm.appendChild(registerFormUsernameLabel)
-
-var registerFormUsernameLabelText = document.createTextNode('Username')
-registerFormUsernameLabel.appendChild(registerFormUsernameLabelText)
-
-var registerFormUsernameInput = document.createElement('input')
-registerForm.appendChild(registerFormUsernameInput)
-
-// password
-
-var registerFormPasswordLabel = document.createElement('label')
-registerForm.appendChild(registerFormPasswordLabel)
-
-var registerFormPasswordLabelText = document.createTextNode('Password')
-registerFormPasswordLabel.appendChild(registerFormPasswordLabelText)
-
-var registerFormPasswordInput = document.createElement('input')
-registerForm.appendChild(registerFormPasswordInput)
+        var formNameInput = document.createElement('input')
+        form.appendChild(formNameInput)
 
 
-// submit
-var registerFormSubmitButton = document.createElement('button')
-registerForm.appendChild(registerFormSubmitButton)
+        // email
+        var formEmailLabel = document.createElement('label')
+        form.appendChild(formEmailLabel)
 
-var registerFormSubmitButtonText = document.createTextNode('Register')
-registerFormSubmitButton.appendChild(registerFormSubmitButtonText)
+        formEmailLabel.textContent = 'E-mail'
+
+        var formEmailInput = document.createElement('input')
+        form.appendChild(formEmailInput)
+
+        // username
+
+        var formUsernameLabel = document.createElement('label')
+        form.appendChild(formUsernameLabel)
+
+        formUsernameLabel.textContent = 'Username'
+
+        var formUsernameInput = document.createElement('input')
+        form.appendChild(formUsernameInput)
+
+        // password
+
+        var formPasswordLabel = document.createElement('label')
+        form.appendChild(formPasswordLabel)
+
+        formPasswordLabel.textContent = 'Password'
+
+        var formPasswordInput = document.createElement('input')
+        form.appendChild(formPasswordInput)
 
 
-registerFormSubmitButton.addEventListener('click', function () {
-    document.body.removeChild(register)
-    document.body.appendChild(login)
-})
+        // submit botton
+        var formSubmitButton = document.createElement('button')
+        form.appendChild(formSubmitButton)
+
+        formSubmitButton.textContent = 'Register'
+
+        formSubmitButton.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+
+        // anchor 
+
+        var loginAnchor = document.createElement('a')
+        loginAnchor.style.textDecoration = 'underline'
+        container.appendChild(loginAnchor)
+
+        loginAnchor.textContent = 'Login'
+
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
 
 
-// anchor 
-
-var registerLoginAnchor = document.createElement('a')
-register.appendChild(registerLoginAnchor)
-
-var registerLoginAnchorText = document.createTextNode('Login')
-registerLoginAnchor.appendChild(registerLoginAnchorText)
-
-registerLoginAnchor.addEventListener('click', function () {
-    document.body.removeChild(register)
-    document.body.appendChild(login)
-})
-
+    }
+}
+register.mount()
 
 /* login */
 
-var login = document.createElement('div')
-//document.body.appendChild(login)
+var login = {
+    mount: function () {
+        var container = document.createElement('div')
+        login.container = container
 
-var loginLogo = document.createElement('h1')
-login.appendChild(loginLogo)
+        var logo = document.createElement('h1')
+        container.appendChild(logo)
 
-var loginLogoText = document.createTextNode('Logo')
-loginLogo.appendChild(loginLogoText)
+        logo.textContent = 'Logo'
 
-var loginInstructions = document.createElement('p')
-login.appendChild(loginInstructions)
+        var intructions = document.createElement('p')
+        container.appendChild(intructions)
 
-var loginInstructionsText = document.createTextNode('To login enter your credentials.')
-loginInstructions.appendChild(loginInstructionsText)
+        intructions.textContent = 'To login enter your credentials.'
 
+        // form
 
-// form
+        var form = document.createElement('form')
+        form.style.display = 'flex'
+        form.style.gap = '15px'
+        form.style.flexDirection = 'column'
+        container.appendChild(form)
 
-var loginForm = document.createElement('form')
-login.appendChild(loginForm)
+        // username
 
-// username
+        var formUsernameLabel = document.createElement('label')
+        form.appendChild(formUsernameLabel)
 
-var loginFormUsernameLabel = document.createElement('label')
-loginForm.appendChild(loginFormUsernameLabel)
+        formUsernameLabel.textContent = 'Name'
 
-var loginFormUsernameLabelText = document.createTextNode('Username')
-loginFormUsernameLabel.appendChild(loginFormUsernameLabelText)
+        var formUsernameInput = document.createElement('input')
+        form.appendChild(formUsernameInput)
 
-var loginFormUsernameInput = document.createElement('input')
-loginForm.appendChild(loginFormUsernameInput)
+        // password
 
-// password
+        var formPasswordLabel = document.createElement('label')
+        form.appendChild(formPasswordLabel)
 
-var loginFormPasswordLabel = document.createElement('label')
-loginForm.appendChild(loginFormPasswordLabel)
+        formPasswordLabel.textContent = 'Password'
 
-var loginFormPasswordLabelText = document.createTextNode('Password')
-loginFormPasswordLabel.appendChild(loginFormPasswordLabelText)
+        var formPasswordInput = document.createElement('input')
+        form.appendChild(formPasswordInput)
 
-var loginFormPasswordInput = document.createElement('input')
-loginForm.appendChild(loginFormPasswordInput)
+        // submit
 
-// submit
+        var formSubmitButton = document.createElement('button')
+        form.appendChild(formSubmitButton)
 
-var loginFormSubmitButton = document.createElement('button')
-loginForm.appendChild(loginFormSubmitButton)
+        formSubmitButton.textContent = 'Login'
 
-var loginFormSubmitButtonText = document.createTextNode('Login')
-loginFormSubmitButton.appendChild(loginFormSubmitButtonText)
+        formSubmitButton.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(home.container)
+        })
 
-loginFormSubmitButton.addEventListener('click', function () {
-    document.body.removeChild(login)
-    document.body.appendChild(home)
-})
+        // anchor
 
+        var registerAnchor = document.createElement('a')
+        registerAnchor.style.textDecoration = 'underline'
+        container.appendChild(registerAnchor)
 
+        registerAnchor.textContent = 'Register'
 
-// anchor
+        registerAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(register.container)
+        })
 
-var loginRegisterAnchor = document.createElement('a')
-login.appendChild(loginRegisterAnchor)
+    }
+}
 
-var loginRegisterAnchorText = document.createTextNode('Register')
-loginRegisterAnchor.appendChild(loginRegisterAnchorText)
-
-loginRegisterAnchor.addEventListener('click', function () {
-    document.body.removeChild(login)
-    document.body.appendChild(register)
-})
-
+login.mount()
 
 /* home */
 
-var home = document.createElement('div')
-//document.body.appendChild(home)
-
-var homeLogo = document.createElement('h1')
-home.appendChild(homeLogo)
-
-var homeLogoText = document.createTextNode('Logo')
-homeLogo.appendChild(homeLogoText)
-
-var homeTop = document.createElement('span')
-homeTop.style.display = 'flex'
-homeTop.style.justifyContent = 'space-between'
-home.appendChild(homeTop)
-
-var homeGreeting = document.createTextNode('Hello, User!')
-homeTop.appendChild(homeGreeting)
-
-var homeExitButton = document.createElement('button')
-homeTop.appendChild(homeExitButton)
-
-var homeExitButtonText = document.createTextNode('Exit')
-homeExitButton.appendChild(homeExitButtonText)
-
-homeExitButton.addEventListener('click', function () {
-    document.body.removeChild(home)
-    document.body.appendChild(landing)
-})
-
-var homeSpace = document.createElement('div')
-homeSpace.style.height = '50px'
-home.appendChild(homeSpace)
+var home = {
+    mount: function () {
+        var container = document.createElement('div')
+        home.container = container
 
 
-var homePost1 = document.createElement('div')
-home.appendChild(homePost1)
+        var logo = document.createElement('h1')
+        container.appendChild(logo)
 
-var homePost1UserName = document.createElement('p')
-homePost1.appendChild(homePost1UserName)
+        logo.textContent = 'Logo'
 
-var homePost1UserNameText = document.createTextNode('username1')
-homePost1UserName.appendChild(homePost1UserNameText)
+        var containerTop = document.createElement('span')
+        containerTop.style.display = 'flex'
+        containerTop.style.justifyContent = 'space-between'
+        container.appendChild(containerTop)
 
-var homePost1Photo = document.createElement('img')
-homePost1Photo.src = 'https://imgs.search.brave.com/gLe1nNepyk97sd_4fBikHFr8rWHTdPIChvqye9jikaU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjc1/MjU4NDEyL2VzL2Zv/dG8vYm9zcXVlLWRl/LXNlY3VveWFzLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1y/NXZqRjRkSWhnVkdo/aXFUMFhmV2Z0MUVa/SFU1X1hwZnJndTky/QUk5SWFjPQ'
-homePost1Photo.style.width = '500px'
-homePost1Photo.style.display = 'block'
-homePost1.appendChild(homePost1Photo)
+        var greeting = document.createTextNode('Hello, User!')
+        containerTop.appendChild(greeting)
 
-var homePost1PhotoCaption = document.createElement('span')
-homePost1PhotoCaption.style.display = 'flex'
-homePost1PhotoCaption.style.justifyContent = 'space-between'
-homePost1PhotoCaption.style.width = '500px'
-homePost1.appendChild(homePost1PhotoCaption)
+        var exitButton = document.createElement('button')
+        containerTop.appendChild(exitButton)
 
-var homePost1PhotoCaptionText = document.createTextNode('Caption')
-homePost1PhotoCaption.appendChild(homePost1PhotoCaptionText)
+        exitButton.textContent = 'Exit'
 
-var homePost1PhotoCaptionLikeButton = document.createElement('button')
-homePost1PhotoCaption.appendChild(homePost1PhotoCaptionLikeButton)
+        exitButton.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(landing.container)
+        })
 
-var homePost1PhotoCaptionLikeButtonWhite = document.createTextNode('🤍')
-homePost1PhotoCaptionLikeButton.appendChild(homePost1PhotoCaptionLikeButtonWhite)
+        var space = document.createElement('div')
+        space.style.height = '50px'
+        container.appendChild(space)
 
-var homePost1PhotoCaptionLikeButtonRed = document.createTextNode('❤️')
 
-var post1Like = false
-homePost1PhotoCaptionLikeButton.addEventListener('click', function () {
-    if (!post1Like) {
-        homePost1PhotoCaptionLikeButton.removeChild(homePost1PhotoCaptionLikeButtonWhite)
-        homePost1PhotoCaptionLikeButton.appendChild(homePost1PhotoCaptionLikeButtonRed)
-        post1Like = true
+        // Post 1
+        var post1 = document.createElement('div')
+        post1.style.background = 'lightblue'
+        post1.style.width = '500px'
+        container.appendChild(post1)
+
+        var post1UserName = document.createElement('p')
+        post1UserName.style.fontWeight = 'bold'
+        post1.appendChild(post1UserName)
+
+        var post1UserNameText = document.createTextNode('username1')
+        post1UserName.appendChild(post1UserNameText)
+
+        var post1Photo = document.createElement('img')
+        post1Photo.src = 'https://imgs.search.brave.com/gLe1nNepyk97sd_4fBikHFr8rWHTdPIChvqye9jikaU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjc1/MjU4NDEyL2VzL2Zv/dG8vYm9zcXVlLWRl/LXNlY3VveWFzLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1y/NXZqRjRkSWhnVkdo/aXFUMFhmV2Z0MUVa/SFU1X1hwZnJndTky/QUk5SWFjPQ'
+        post1Photo.style.width = '500px'
+        post1Photo.style.display = 'block'
+        post1.appendChild(post1Photo)
+
+        var post1PhotoCaption = document.createElement('span')
+        post1PhotoCaption.style.display = 'flex'
+        post1PhotoCaption.style.justifyContent = 'space-between'
+        post1PhotoCaption.style.width = '500px'
+        post1.appendChild(post1PhotoCaption)
+
+        var post1PhotoCaptionText = document.createTextNode('Caption')
+        post1PhotoCaption.appendChild(post1PhotoCaptionText)
+
+        var post1PhotoCaptionLikeButton = document.createElement('button')
+        post1PhotoCaption.appendChild(post1PhotoCaptionLikeButton)
+
+        var post1PhotoCaptionLikeButtonWhite = document.createTextNode('🤍')
+        post1PhotoCaptionLikeButton.appendChild(post1PhotoCaptionLikeButtonWhite)
+
+        var post1PhotoCaptionLikeButtonRed = document.createTextNode('💙')
+
+        var post1Like = false
+        post1PhotoCaptionLikeButton.addEventListener('click', function () {
+            if (!post1Like) {
+                post1PhotoCaptionLikeButton.removeChild(post1PhotoCaptionLikeButtonWhite)
+                post1PhotoCaptionLikeButton.appendChild(post1PhotoCaptionLikeButtonRed)
+                post1Like = true
+            }
+            else {
+                post1PhotoCaptionLikeButton.removeChild(post1PhotoCaptionLikeButtonRed)
+                post1PhotoCaptionLikeButton.appendChild(post1PhotoCaptionLikeButtonWhite)
+                post1Like = false
+            }
+        })
+
+        var post1PhotoCaptionDate = document.createElement('p')
+        post1.appendChild(post1PhotoCaptionDate)
+
+        var post1PhotoCaptionDateText = document.createTextNode('1 hours ago')
+        post1PhotoCaptionDate.appendChild(post1PhotoCaptionDateText)
+
+
+        var spaceBetweenPost12 = document.createElement('div')
+        spaceBetweenPost12.style.height = '50px'
+        container.appendChild(spaceBetweenPost12)
+
+        //post 2
+        var post2 = document.createElement('div')
+        post2.style.background = 'darkseagreen'
+        post2.style.width = '500px'
+        container.appendChild(post2)
+
+        var post2UserName = document.createElement('p')
+        post2UserName.style.fontWeight = 'bold'
+        post2.appendChild(post2UserName)
+
+        var post2UserNameText = document.createTextNode('username2')
+        post2UserName.appendChild(post2UserNameText)
+
+        var post2Photo = document.createElement('img')
+        post2Photo.src = 'https://imgs.search.brave.com/Cnh02OiyfEeEPUHV_Tc2KU6AN48vRUngZI01EopI4XE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cmV2aXN0YW94aWdl/bm8uZXMvdXBsb2Fk/cy9zMS85Ni85Ny84/Ny8zL3J1dGFzLWNv/bi10b2RvLWVsLWVz/cGxlbmRvci1kZWwt/b3Rvbm8tZW4tbGEt/cHJvdmluY2lhLWRl/LWxlb24uanBlZw'
+        post2Photo.style.width = '500px'
+        post2Photo.style.display = 'block'
+        post2.appendChild(post2Photo)
+
+        var post2PhotoCaption = document.createElement('span')
+        post2PhotoCaption.style.display = 'flex'
+        post2PhotoCaption.style.justifyContent = 'space-between'
+        post2PhotoCaption.style.width = '500px'
+        post2.appendChild(post2PhotoCaption)
+
+        var post2PhotoCaptionText = document.createTextNode('Caption')
+        post2PhotoCaption.appendChild(post2PhotoCaptionText)
+
+        var post2PhotoCaptionLikeButton = document.createElement('button')
+        post2PhotoCaption.appendChild(post2PhotoCaptionLikeButton)
+
+        var post2PhotoCaptionLikeButtonWhite = document.createTextNode('🤍')
+        post2PhotoCaptionLikeButton.appendChild(post2PhotoCaptionLikeButtonWhite)
+
+        var post2PhotoCaptionLikeButtonRed = document.createTextNode('💚')
+
+        var post2Like = false
+        post2PhotoCaptionLikeButton.addEventListener('click', function () {
+            if (!post2Like) {
+                post2PhotoCaptionLikeButton.removeChild(post2PhotoCaptionLikeButtonWhite)
+                post2PhotoCaptionLikeButton.appendChild(post2PhotoCaptionLikeButtonRed)
+                post2Like = true
+            }
+            else {
+                post2PhotoCaptionLikeButton.removeChild(post2PhotoCaptionLikeButtonRed)
+                post2PhotoCaptionLikeButton.appendChild(post2PhotoCaptionLikeButtonWhite)
+                post2Like = false
+            }
+        })
+
+        var post2PhotoCaptionDate = document.createElement('p')
+        post2.appendChild(post2PhotoCaptionDate)
+
+        var post2PhotoCaptionDateText = document.createTextNode('4 days ago')
+        post2PhotoCaptionDate.appendChild(post2PhotoCaptionDateText)
+
+        //space between posts
+        var spaceBetweenPost23 = document.createElement('div')
+        spaceBetweenPost23.style.height = '50px'
+        container.appendChild(spaceBetweenPost23)
+
+        //post 3
+        var post3 = document.createElement('div')
+        post3.style.background = 'lightcoral'
+        post3.style.width = '500px'
+        container.appendChild(post3)
+
+        var post3UserName = document.createElement('p')
+        post3UserName.style.fontWeight = 'bold'
+        post3.appendChild(post3UserName)
+
+        var post3UserNameText = document.createTextNode('username3')
+        post3UserName.appendChild(post3UserNameText)
+
+        var post3Photo = document.createElement('img')
+        post3Photo.src = 'https://imgs.search.brave.com/2T65C8AIVGMdeWWfmDLdz3T-jDOaI_iqKbmnBnw3zXs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTM4/MzQyNTA4Ni9lcy9m/b3RvL3NlbmRlcm8t/bSVDMyVBMWdpY28t/ZGVsLWJvc3F1ZS15/LXQlQzMlQkFuZWwt/ZGUtJUMzJUExcmJv/bGVzLWFsLWFtYW5l/Y2VyLWVuLXByaW1h/dmVyYS5qcGc_cz02/MTJ4NjEyJnc9MCZr/PTIwJmM9TFE5R1VX/MTctclV2dkhKampn/eGZ2VS1yMlZ2UDJl/eFRyT21kcFNFQlA4/Zz0'
+        post3Photo.style.width = '500px'
+        post3Photo.style.display = 'block'
+        post3.appendChild(post3Photo)
+
+        var post3PhotoCaption = document.createElement('span')
+        post3PhotoCaption.style.display = 'flex'
+        post3PhotoCaption.style.justifyContent = 'space-between'
+        post3PhotoCaption.style.width = '500px'
+        post3.appendChild(post3PhotoCaption)
+
+        var post3PhotoCaptionText = document.createTextNode('Caption')
+        post3PhotoCaption.appendChild(post3PhotoCaptionText)
+
+        var post3PhotoCaptionLikeButton = document.createElement('button')
+        post3PhotoCaption.appendChild(post3PhotoCaptionLikeButton)
+
+        var post3PhotoCaptionLikeButtonWhite = document.createTextNode('🤍')
+        post3PhotoCaptionLikeButton.appendChild(post3PhotoCaptionLikeButtonWhite)
+
+        var post3PhotoCaptionLikeButtonRed = document.createTextNode('❤️')
+
+        var post3Like = false
+        post3PhotoCaptionLikeButton.addEventListener('click', function () {
+            if (!post3Like) {
+                post3PhotoCaptionLikeButton.removeChild(post3PhotoCaptionLikeButtonWhite)
+                post3PhotoCaptionLikeButton.appendChild(post3PhotoCaptionLikeButtonRed)
+                post3Like = true
+            }
+            else {
+                post3PhotoCaptionLikeButton.removeChild(post3PhotoCaptionLikeButtonRed)
+                post3PhotoCaptionLikeButton.appendChild(post3PhotoCaptionLikeButtonWhite)
+                post3Like = false
+            }
+        })
+
+        var post3PhotoCaptionDate = document.createElement('p')
+        post3.appendChild(post3PhotoCaptionDate)
+
+        var post3PhotoCaptionDateText = document.createTextNode('3 weeks ago')
+        post3PhotoCaptionDate.appendChild(post3PhotoCaptionDateText)
+
+        //space between posts
+        var spaceBetweenPost34 = document.createElement('div')
+        spaceBetweenPost34.style.height = '50px'
+        container.appendChild(spaceBetweenPost34)
+
+        //post 4
+        var post4 = document.createElement('div')
+        post4.style.background = 'moccasin'
+        post4.style.width = '500px'
+        container.appendChild(post4)
+
+        var post4UserName = document.createElement('p')
+        post4UserName.style.fontWeight = 'bold'
+        post4.appendChild(post4UserName)
+
+        var post4UserNameText = document.createTextNode('username4')
+        post4UserName.appendChild(post4UserNameText)
+
+        var post4Photo = document.createElement('img')
+        post4Photo.src = 'https://imgs.search.brave.com/U4-w0Zr88dLLLn8MpUKZX5VMd36FmA8leGiN0nwKuIU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTE4/ODEwODQ0L2VzL2Zv/dG8vbHV6LWEtdHJh/diVDMyVBOXMtZGUt/Ym9zcXVlLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz12RDZi/TzFILU9YWEp3WWRO/c2xEYXB4TzNhZkJk/MzJLRkVQUnpXeC1Y/ZUVvPQ'
+        post4Photo.style.width = '500px'
+        post4Photo.style.display = 'block'
+        post4.appendChild(post4Photo)
+
+        var post4PhotoCaption = document.createElement('span')
+        post4PhotoCaption.style.display = 'flex'
+        post4PhotoCaption.style.justifyContent = 'space-between'
+        post4PhotoCaption.style.width = '500px'
+        post4.appendChild(post4PhotoCaption)
+
+        var post4PhotoCaptionText = document.createTextNode('Caption')
+        post4PhotoCaption.appendChild(post4PhotoCaptionText)
+
+        var post4PhotoCaptionLikeButton = document.createElement('button')
+        post4PhotoCaption.appendChild(post4PhotoCaptionLikeButton)
+
+        var post4PhotoCaptionLikeButtonWhite = document.createTextNode('🤍')
+        post4PhotoCaptionLikeButton.appendChild(post4PhotoCaptionLikeButtonWhite)
+
+        var post4PhotoCaptionLikeButtonRed = document.createTextNode('💛')
+
+        var post4Like = false
+        post4PhotoCaptionLikeButton.addEventListener('click', function () {
+            if (!post4Like) {
+                post4PhotoCaptionLikeButton.removeChild(post4PhotoCaptionLikeButtonWhite)
+                post4PhotoCaptionLikeButton.appendChild(post4PhotoCaptionLikeButtonRed)
+                post4Like = true
+            }
+            else {
+                post4PhotoCaptionLikeButton.removeChild(post4PhotoCaptionLikeButtonRed)
+                post4PhotoCaptionLikeButton.appendChild(post4PhotoCaptionLikeButtonWhite)
+                post4Like = false
+            }
+        })
+
+        var post4PhotoCaptionDate = document.createElement('p')
+        post4.appendChild(post4PhotoCaptionDate)
+
+        var post4PhotoCaptionDateText = document.createTextNode('1 month ago')
+        post4PhotoCaptionDate.appendChild(post4PhotoCaptionDateText)
     }
-    else {
-        homePost1PhotoCaptionLikeButton.removeChild(homePost1PhotoCaptionLikeButtonRed)
-        homePost1PhotoCaptionLikeButton.appendChild(homePost1PhotoCaptionLikeButtonWhite)
-        post1Like = false
-    }
-})
+}
+
+home.mount()
+
+
+//posts saved
+
+
