@@ -1,355 +1,350 @@
 console.clear()
 console.log('Hello, App!')
 
-//landing
-var landing = document.createElement('div')
-document.body.appendChild(landing)
+// --- LANDING ---
+var landing = {
+    mount: function () {
+        var container = document.createElement('div')
+        landing.container = container
+        document.body.appendChild(container)
 
-var landingLogo = document.createElement('h1')
-landing.appendChild(landingLogo)
+        var logoh1 = document.createElement('h1')
+        logoh1.textContent = 'Logo'
+        container.appendChild(logoh1)
 
-var landingLogoText = document.createTextNode('Logo')
-landingLogo.appendChild(landingLogoText)
+        //SPAN DE ANCHORS 
+        var anchorsSpan = document.createElement('span')
+        anchorsSpan.style.display = 'flex'
+        anchorsSpan.style.justifyContent = 'left'
+        anchorsSpan.style.gap = '5px'
+        container.appendChild(anchorsSpan)
 
-//DIV DE ANCHORS 
-var linkDiv = document.createElement('span')
-linkDiv.style.display = 'flex'
-linkDiv.style.justifyContent = 'left'
-linkDiv.style.gap = '5px'
-landing.appendChild(linkDiv)
+        var registerAnchor = document.createElement('a')
+        registerAnchor.innerText = 'Register'
+        registerAnchor.style.textDecoration = 'underline'
+        registerAnchor.style.cursor = 'pointer'
+        anchorsSpan.appendChild(registerAnchor)
 
+        registerAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(register.container)
+        })
 
-var registerLink = document.createElement('a')
-registerLink.innerText = 'Register'
-registerLink.style.textDecoration = 'underline'
-registerLink.style.cursor = 'pointer'
-linkDiv.appendChild(registerLink)
+        var orText = document.createElement('text')
+        orText.textContent = ' or '
+        anchorsSpan.appendChild(orText)
 
-registerLink.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(register)
-})
+        var loginAnchor = document.createElement('a')
+        loginAnchor.innerText = 'Login'
+        loginAnchor.style.textDecoration = 'underline'
+        loginAnchor.style.cursor = 'pointer'
+        anchorsSpan.appendChild(loginAnchor)
 
-var registerLink = document.createElement('text')
-linkDiv.appendChild(registerLink)
-
-var registerLinkText = document.createTextNode(' or ')
-registerLink.appendChild(registerLinkText)
-
-var loginLink = document.createElement('a')
-loginLink.innerText = 'Login'
-loginLink.style.textDecoration = 'underline'
-loginLink.style.cursor = 'pointer'
-linkDiv.appendChild(loginLink)
-
-loginLink.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(login)
-})
-
-
-//register
-var register = document.createElement('div')
-register.style.width = '400px'
-// document.body.appendChild(register)
-
-var registerTitle = document.createElement('h2')
-register.appendChild(registerTitle)
-
-var registerText = document.createTextNode('Register')
-registerTitle.appendChild(registerText)
-
-var registerForm = document.createElement('form')
-registerForm.style.display = 'flex'
-registerForm.style.flexDirection = 'column'
-registerForm.style.justifyContent = 'left'
-registerForm.style.gap = '5px'
-register.appendChild(registerForm)
-
-//NAME
-var nameLabel = document.createElement('label')
-registerForm.appendChild(nameLabel)
-
-var nameLabelText = document.createTextNode('Name')
-nameLabel.appendChild(nameLabelText)
-
-var nameInput = document.createElement('input')
-nameInput.style.width = '350px'
-registerForm.appendChild(nameInput)
-
-//EMAIL
-var emailLabel = document.createElement('label')
-registerForm.appendChild(emailLabel)
-
-var emailLabelText = document.createTextNode('E-mail')
-emailLabel.appendChild(emailLabelText)
-
-var labelInput = document.createElement('input')
-labelInput.style.width = '350px'
-registerForm.appendChild(labelInput)
-
-//USERNAME
-var usernameLabel = document.createElement('label')
-registerForm.appendChild(usernameLabel)
-
-var usernameLabelText = document.createTextNode('Username')
-usernameLabel.appendChild(usernameLabelText)
-
-var usernameInput = document.createElement('input')
-usernameInput.style.width = '350px'
-registerForm.appendChild(usernameInput)
-
-//PASSWORD
-var passwordLabel = document.createElement('label')
-registerForm.appendChild(passwordLabel)
-
-var passwordLabelText = document.createTextNode('Password')
-passwordLabel.appendChild(passwordLabelText)
-
-var passwordInput = document.createElement('input')
-passwordInput.style.width = '350px'
-registerForm.appendChild(passwordInput)
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+    }
+}
 
 
-var registerUnder = document.createElement('span')
-registerUnder.style.margin = '10px'
-registerUnder.style.marginRight = '55px'
-registerUnder.style.display = 'flex'
-registerUnder.style.justifyContent = 'space-between'
-registerUnder.style.alignItems = 'center'
-registerUnder.width = '100%'
+//--- REGISTER ---
+var register = {
+    mount: function () {
+        var container = document.createElement('div')
+        register.container = container
+        container.style.width = '400px'
 
-var logiinLink = document.createElement('a')
-logiinLink.innerText = 'Login'
-logiinLink.style.textDecoration = 'underline'
-logiinLink.style.cursor = 'pointer'
-registerUnder.appendChild(logiinLink)
+        var title = document.createElement('h2')
+        title.textContent = 'Register'
+        container.appendChild(title)
 
-var registerButton = document.createElement('button')
-registerButton.type = 'submit'
-registerButton.style.width = '80px'
-registerUnder.appendChild(registerButton)
+        var form = document.createElement('form')
+        form.style.display = 'flex'
+        form.style.flexDirection = 'column'
+        form.style.justifyContent = 'left'
+        form.style.gap = '5px'
+        container.appendChild(form)
 
-registerForm.appendChild(registerUnder)
+        //NAME
+        var nameLabel = document.createElement('label')
+        nameLabel.textContent = 'Name'
+        form.appendChild(nameLabel)
 
-logiinLink.addEventListener('click', function () {
-    document.body.removeChild(register)
-    document.body.appendChild(login)
-})
+        var nameInput = document.createElement('input')
+        nameInput.style.width = '350px'
+        form.appendChild(nameInput)
 
-registerForm.addEventListener('submit', function (event) {
-    event.preventDefault()
-    document.body.removeChild(register)
-    document.body.appendChild(login)
-})
+        //EMAIL
+        var emailLabel = document.createElement('label')
+        emailLabel.textContent = 'E-mail'
+        form.appendChild(emailLabel)
 
-var registerButtonText = document.createTextNode('Register')
-registerButton.appendChild(registerButtonText)
+        var labelInput = document.createElement('input')
+        labelInput.style.width = '350px'
+        form.appendChild(labelInput)
 
-//login
-var login = document.createElement('div')
-login.style.width = '400px'
-// document.body.appendChild(login)
+        //USERNAME
+        var usernameLabel = document.createElement('label')
+        usernameLabel.textContent = 'Username'
+        form.appendChild(usernameLabel)
 
-var loginTitle = document.createElement('h2')
-login.appendChild(loginTitle)
+        var usernameInput = document.createElement('input')
+        usernameInput.style.width = '350px'
+        form.appendChild(usernameInput)
 
-var loginText = document.createTextNode('Login')
-loginTitle.appendChild(loginText)
+        //PASSWORD
+        var passwordLabel = document.createElement('label')
+        passwordLabel.textContent = 'Password'
+        form.appendChild(passwordLabel)
 
-var loginForm = document.createElement('form')
-loginForm.style.display = 'flex'
-loginForm.style.flexDirection = 'column'
-loginForm.style.justifyContent = 'left'
-loginForm.style.gap = '5px'
-login.appendChild(loginForm)
-
-//USERNAME
-var usernameLabel = document.createElement('label')
-loginForm.appendChild(usernameLabel)
-
-var usernameLabelText = document.createTextNode('Username')
-usernameLabel.appendChild(usernameLabelText)
-
-var usernameInput = document.createElement('input')
-usernameInput.style.width = '350px'
-loginForm.appendChild(usernameInput)
-
-//PASSWORD
-var passwordLabel = document.createElement('label')
-loginForm.appendChild(passwordLabel)
-
-var passwordLabelText = document.createTextNode('Password')
-passwordLabel.appendChild(passwordLabelText)
-
-var passwordInput = document.createElement('input')
-passwordInput.style.width = '350px'
-loginForm.appendChild(passwordInput)
+        var passwordInput = document.createElement('input')
+        passwordInput.style.width = '350px'
+        form.appendChild(passwordInput)
 
 
-var loginUnder = document.createElement('span')
-loginUnder.style.margin = '10px'
-loginUnder.style.marginRight = '60px'
-loginUnder.style.display = 'flex'
-loginUnder.style.justifyContent = 'space-between'
-login.appendChild(loginUnder)
+        var lowerSpan = document.createElement('span')
+        lowerSpan.style.margin = '10px'
+        lowerSpan.style.marginRight = '55px'
+        lowerSpan.style.display = 'flex'
+        lowerSpan.style.justifyContent = 'space-between'
+        lowerSpan.style.alignItems = 'center'
+        lowerSpan.width = '100%'
 
-var regiisterLink = document.createElement('a')
-regiisterLink.innerText = 'Register'
-regiisterLink.style.textDecoration = 'underline'
-regiisterLink.style.cursor = 'pointer'
-loginUnder.appendChild(regiisterLink)
+        var loginAnchor = document.createElement('a')
+        loginAnchor.innerText = 'Login'
+        loginAnchor.style.textDecoration = 'underline'
+        loginAnchor.style.cursor = 'pointer'
+        lowerSpan.appendChild(loginAnchor)
 
-var loginButton = document.createElement('button')
-loginButton.style.width = '80px'
-loginButton.type = 'submit'
-loginUnder.appendChild(loginButton)
-
-var loginButtonText = document.createTextNode('Login')
-loginButton.appendChild(loginButtonText)
-
-
-loginForm.appendChild(loginUnder)
-
-regiisterLink.addEventListener('click', function () {
-    document.body.removeChild(login)
-    document.body.appendChild(register)
-})
+        var registerButton = document.createElement('button')
+        registerButton.textContent = 'Register'
+        registerButton.type = 'submit'
+        registerButton.style.width = '80px'
+        lowerSpan.appendChild(registerButton)
 
 
-loginForm.addEventListener('submit', function (event) {
-    event.preventDefault()
-    document.body.removeChild(login)
-    document.body.appendChild(home)
-    document.body.appendChild(main)
-})
+        form.appendChild(lowerSpan)
+
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+    }
+}
+
+
+//--- LOGIN ---
+var login = {
+    mount: function () {
+        var container = document.createElement('div')
+        login.container = container
+        container.style.width = '400px'
+
+        var title = document.createElement('h2')
+        title.textContent = 'Login'
+        container.appendChild(title)
+
+        var form = document.createElement('form')
+        form.style.display = 'flex'
+        form.style.flexDirection = 'column'
+        form.style.justifyContent = 'left'
+        form.style.gap = '5px'
+        container.appendChild(form)
+
+        //USERNAME
+        var usernameLabel = document.createElement('label')
+        usernameLabel.textContent = 'Username'
+        form.appendChild(usernameLabel)
+
+        var usernameInput = document.createElement('input')
+        usernameInput.style.width = '350px'
+        form.appendChild(usernameInput)
+
+        //PASSWORD
+        var passwordLabel = document.createElement('label')
+        passwordLabel.textContent = 'Password'
+        form.appendChild(passwordLabel)
+
+        var passwordInput = document.createElement('input')
+        passwordInput.style.width = '350px'
+        form.appendChild(passwordInput)
+
+
+        var lowerSpan = document.createElement('span')
+        lowerSpan.style.margin = '10px'
+        lowerSpan.style.marginRight = '60px'
+        lowerSpan.style.display = 'flex'
+        lowerSpan.style.justifyContent = 'space-between'
+        container.appendChild(lowerSpan)
+
+        var registerAnchor = document.createElement('a')
+        registerAnchor.innerText = 'Register'
+        registerAnchor.style.textDecoration = 'underline'
+        registerAnchor.style.cursor = 'pointer'
+        lowerSpan.appendChild(registerAnchor)
+
+        var loginButton = document.createElement('button')
+        loginButton.textContent = 'Login'
+        loginButton.style.width = '80px'
+        loginButton.type = 'submit'
+        lowerSpan.appendChild(loginButton)
+
+
+        form.appendChild(lowerSpan)
+
+        registerAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(register.container)
+        })
+
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
+            document.body.removeChild(container)
+            document.body.appendChild(home.header)
+            document.body.appendChild(home.main)
+        })
+    }
+}
 
 
 // ---- HOME ----
-//Header
-var home = document.createElement('header')
-home.style.width = '100%'
-home.style.height = '50px'
-home.style.margin = '10px'
-home.style.display = 'flex'
-home.style.justifyContent = 'space-between'
-home.style.alignItems = 'center'
-// document.body.appendChild(home)
+var home = {
+    mount: function () {
+        //Header
+        var header = document.createElement('header')
+        home.header = header
+        header.style.width = '100%'
+        header.style.height = '50px'
+        header.style.margin = '10px'
+        header.style.display = 'flex'
+        header.style.justifyContent = 'space-between'
+        header.style.alignItems = 'center'
 
-var logoTitle = document.createElement('h2')
-home.appendChild(logoTitle)
+        var logoTitle = document.createElement('h2')
+        logoTitle.textContent = 'Logo'
+        header.appendChild(logoTitle)
 
-var homeText = document.createTextNode('Logo')
-logoTitle.appendChild(homeText)
+        var logoutButton = document.createElement('button')
+        logoutButton.textContent = 'Logout'
+        logoutButton.style.width = '100px'
+        logoutButton.style.height = '35px'
+        logoutButton.style.marginRight = '10px'
+        header.appendChild(logoutButton)
 
-var logoutButton = document.createElement('button')
-logoutButton.style.width = '100px'
-logoutButton.style.height = '35px'
-logoutButton.style.marginRight = '10px'
-home.appendChild(logoutButton)
+        logoutButton.addEventListener('click', function () {
+            document.body.removeChild(header)
+            document.body.removeChild(main)
+            document.body.appendChild(landing.container)
+        })
 
-var logoutButtonText = document.createTextNode('Logout')
-logoutButton.appendChild(logoutButtonText)
+        //MAIN HOME
+        var main = document.createElement('main')
+        home.main = main
 
-logoutButton.addEventListener('click', function () {
-    document.body.removeChild(home)
-    document.body.removeChild(main)
-    document.body.appendChild(landing)
-})
-
-//MAIN HOME
-var main = document.createElement('main')
-// document.body.appendChild(main)
-
-var posts = document.createElement('article')
-posts.style.display = 'flex'
-posts.style.width = '100%'
-posts.style.maxWidth = 'inherit'
-posts.style.flexDirection = 'column'
-posts.style.gap = '10px'
-main.appendChild(posts)
-
-var kiwiPost = document.createElement('img')
-kiwiPost.src = 'https://www.nutritionadvance.com/wp-content/uploads/2017/12/whole-kiwi-fruit-and-half-a-kiwi-showing-flesh.jpg'
-kiwiPost.style.width = '100%'
-kiwiPost.style.height = 'auto'
-posts.appendChild(kiwiPost)
-
-var kiwiMojis = document.createElement('span')
-kiwiMojis.style.display = 'flex'
-kiwiMojis.style.justifyContent = 'left'
-kiwiMojis.style.gap = '5px'
-posts.appendChild(kiwiMojis)
-
-var likeEmoji = document.createElement('a')
-likeEmoji.innerText = '❤️'
-kiwiMojis.appendChild(likeEmoji)
-
-var commentEmoji = document.createElement('a')
-commentEmoji.innerText = '📃'
-kiwiMojis.appendChild(commentEmoji)
-
-var comment = document.createElement('Text')
-comment.style.opacity = '60%'
-comment.style.color = 'black'
-kiwiMojis.appendChild(comment)
-
-var commentText = document.createTextNode('Comment...')
-comment.appendChild(commentText)
-
-var bananaPost = document.createElement('img')
-bananaPost.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAVh4eUU6jtRS9zzlomMGLvWgpua5Xj5IcoQ&s'
-bananaPost.style.width = '100%'
-bananaPost.style.height = 'auto'
-posts.appendChild(bananaPost)
-
-var nanaMojis = document.createElement('span')
-nanaMojis.style.display = 'flex'
-nanaMojis.style.justifyContent = 'left'
-nanaMojis.style.gap = '5px'
-posts.appendChild(nanaMojis)
-
-var likeEmoji = document.createElement('a')
-likeEmoji.innerText = '❤️'
-nanaMojis.appendChild(likeEmoji)
-
-var commentEmoji = document.createElement('a')
-commentEmoji.innerText = '📃'
-nanaMojis.appendChild(commentEmoji)
-
-var comment = document.createElement('Text')
-comment.style.opacity = '60%'
-comment.style.color = 'black'
-nanaMojis.appendChild(comment)
-
-var commentText = document.createTextNode('Comment...')
-comment.appendChild(commentText)
+        var posts = document.createElement('article')
+        posts.style.display = 'flex'
+        posts.style.width = '100%'
+        posts.style.maxWidth = 'inherit'
+        posts.style.flexDirection = 'column'
+        posts.style.gap = '10px'
+        main.appendChild(posts)
 
 
-var orangePost = document.createElement('img')
-orangePost.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgqLw4idW1IdAusBGfdZPewk0HTJyRUzPCPg&s'
-orangePost.style.width = '100%'
-orangePost.style.height = 'auto'
-posts.appendChild(orangePost)
+        //KIWIII POST
+        var kiwiPost = document.createElement('img')
+        kiwiPost.src = 'https://www.nutritionadvance.com/wp-content/uploads/2017/12/whole-kiwi-fruit-and-half-a-kiwi-showing-flesh.jpg'
+        kiwiPost.style.width = '100%'
+        kiwiPost.style.height = 'auto'
+        posts.appendChild(kiwiPost)
 
-var oraMojis = document.createElement('span')
-oraMojis.style.display = 'flex'
-oraMojis.style.justifyContent = 'left'
-oraMojis.style.gap = '5px'
-posts.appendChild(oraMojis)
+        var kiwiMojis = document.createElement('span')
+        kiwiMojis.style.display = 'flex'
+        kiwiMojis.style.justifyContent = 'left'
+        kiwiMojis.style.gap = '5px'
+        posts.appendChild(kiwiMojis)
 
-var likeEmoji = document.createElement('a')
-likeEmoji.innerText = '❤️'
-oraMojis.appendChild(likeEmoji)
+        var likeEmoji = document.createElement('a')
+        likeEmoji.innerText = '❤️'
+        kiwiMojis.appendChild(likeEmoji)
 
-var commentEmoji = document.createElement('a')
-commentEmoji.innerText = '📃'
-oraMojis.appendChild(commentEmoji)
+        var commentEmoji = document.createElement('a')
+        commentEmoji.innerText = '📃'
+        kiwiMojis.appendChild(commentEmoji)
 
-var comment = document.createElement('Text')
-comment.style.opacity = '60%'
-comment.style.color = 'black'
-oraMojis.appendChild(comment)
+        var comment = document.createElement('Text')
+        comment.textContent = 'Comment...'
+        comment.style.opacity = '60%'
+        comment.style.color = 'black'
+        kiwiMojis.appendChild(comment)
 
-var commentText = document.createTextNode('Comment...')
-comment.appendChild(commentText)
+
+        //BANANA POST
+        var bananaPost = document.createElement('img')
+        bananaPost.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAVh4eUU6jtRS9zzlomMGLvWgpua5Xj5IcoQ&s'
+        bananaPost.style.width = '100%'
+        bananaPost.style.height = 'auto'
+        posts.appendChild(bananaPost)
+
+        var nanaMojis = document.createElement('span')
+        nanaMojis.style.display = 'flex'
+        nanaMojis.style.justifyContent = 'left'
+        nanaMojis.style.gap = '5px'
+        posts.appendChild(nanaMojis)
+
+        var likeEmoji = document.createElement('a')
+        likeEmoji.innerText = '❤️'
+        nanaMojis.appendChild(likeEmoji)
+
+        var commentEmoji = document.createElement('a')
+        commentEmoji.innerText = '📃'
+        nanaMojis.appendChild(commentEmoji)
+
+        var comment = document.createElement('Text')
+        comment.textContent = 'Comment...'
+        comment.style.opacity = '60%'
+        comment.style.color = 'black'
+        nanaMojis.appendChild(comment)
+
+
+        //ORANGE POST
+        var orangePost = document.createElement('img')
+        orangePost.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgqLw4idW1IdAusBGfdZPewk0HTJyRUzPCPg&s'
+        orangePost.style.width = '100%'
+        orangePost.style.height = 'auto'
+        posts.appendChild(orangePost)
+
+        var oraMojis = document.createElement('span')
+        oraMojis.style.display = 'flex'
+        oraMojis.style.justifyContent = 'left'
+        oraMojis.style.gap = '5px'
+        posts.appendChild(oraMojis)
+
+        var likeEmoji = document.createElement('a')
+        likeEmoji.innerText = '❤️'
+        oraMojis.appendChild(likeEmoji)
+
+        var commentEmoji = document.createElement('a')
+        commentEmoji.innerText = '📃'
+        oraMojis.appendChild(commentEmoji)
+
+        var comment = document.createElement('Text')
+        comment.textContent = 'Comment...'
+        comment.style.opacity = '60%'
+        comment.style.color = 'black'
+        oraMojis.appendChild(comment)
+    }
+}
+
+//LLAMAR FUNCIONES
+landing.mount()
+register.mount()
+login.mount()
+home.mount()
