@@ -1,14 +1,10 @@
 console.clear()
-
-
 document.body.style.background = 'lightcyan'
-
+document.body.style.placeItems = 'center'
 
 function Component(container) {
     this.container = container
 }
-
-
 
 // landing
 
@@ -17,23 +13,28 @@ var landing = new Component(document.createElement('div'))
 landing.mount = function () {
     document.body.appendChild(this.container)
 
+    this.container.style.textAlign = 'center'
+
     var logo = document.createElement('h1')
     this.container.appendChild(logo)
     logo.textContent = 'Logo'
 
+    var text = document.createElement('span')
+    this.container.appendChild(text)
+
     var registerAnchor = document.createElement('a')
     registerAnchor.style.textDecoration = 'underline'
-    this.container.appendChild(registerAnchor)
 
     registerAnchor.addEventListener('click', function () {
         document.body.removeChild(landing.container)
         document.body.appendChild(register.container)
-    })
+    }.bind(this))
+    text.appendChild(registerAnchor)
 
     registerAnchor.textContent = 'Register'
 
     var orText = document.createTextNode(' or ')
-    this.container.appendChild(orText)
+    text.appendChild(orText)
 
     var loginAnchor = document.createElement('a')
     loginAnchor.style.textDecoration = 'underline'
@@ -42,27 +43,21 @@ landing.mount = function () {
     loginAnchor.addEventListener('click', function () {
         document.body.removeChild(landing.container)
         document.body.appendChild(login.container)
-    })
+    }.bind(this))
+    text.appendChild(loginAnchor)
+
     loginAnchor.textContent = 'Login'
-
 }
-
-landing.mount()
-
 
 /* register */
 var register = new Component(document.createElement('div'))
 register.mount = function () {
     var logo = document.createElement('h1')
-
-    var logo = document.createElement('h1')
     this.container.appendChild(logo)
-
     logo.textContent = 'Logo'
 
     var intructions = document.createElement('p')
     this.container.appendChild(intructions)
-
     intructions.textContent = 'To register, enter the following information. '
 
     // from
@@ -72,6 +67,21 @@ register.mount = function () {
     form.style.gap = '15px'
     form.style.flexDirection = 'column'
 
+    form.addEventListener('submit', function (event) {
+        event.preventDefault()
+
+        console.log('register submit')
+
+        var name = formNameInput.value
+        var email = formEmailInput.value
+        var username = formUsernameInput.value
+        var password = formPasswordInput.value
+
+        console.log(name, email, username, password)
+
+        document.body.removeChild(register.container)
+        document.body.appendChild(login.container)
+    })
     this.container.appendChild(form)
 
     //name
@@ -82,7 +92,6 @@ register.mount = function () {
 
     var formNameInput = document.createElement('input')
     form.appendChild(formNameInput)
-
 
     // email
     var formEmailLabel = document.createElement('label')
@@ -107,23 +116,15 @@ register.mount = function () {
 
     var formPasswordLabel = document.createElement('label')
     form.appendChild(formPasswordLabel)
-
     formPasswordLabel.textContent = 'Password'
 
     var formPasswordInput = document.createElement('input')
     form.appendChild(formPasswordInput)
 
-
     // submit botton
     var formSubmitButton = document.createElement('button')
     form.appendChild(formSubmitButton)
-
     formSubmitButton.textContent = 'Create new account'
-
-    formSubmitButton.addEventListener('click', function () {
-        document.body.removeChild(register.container)
-        document.body.appendChild(login.container)
-    })
 
     // anchor 
 
@@ -136,25 +137,20 @@ register.mount = function () {
     loginAnchor.addEventListener('click', function () {
         document.body.removeChild(register.container)
         document.body.appendChild(login.container)
-    })
-
-
+    }.bind(this))
+    this.container.appendChild(loginAnchor)
 }
-register.mount()
 
 /* login */
 
 var login = new Component(document.createElement('div'))
 login.mount = function () {
-
     var logo = document.createElement('h1')
     this.container.appendChild(logo)
-
     logo.textContent = 'Logo'
 
     var intructions = document.createElement('p')
     this.container.appendChild(intructions)
-
     intructions.textContent = 'To login enter your credentials.'
 
     // form
@@ -163,6 +159,21 @@ login.mount = function () {
     form.style.display = 'flex'
     form.style.gap = '15px'
     form.style.flexDirection = 'column'
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault()
+
+        console.log('login submit')
+
+        var username = formUsernameInput.value
+        var password = formPasswordInput.value
+
+        console.log(username, password)
+
+        document.body.removeChild(login.container)
+        document.body.appendChild(home.container)
+    })
+
     this.container.appendChild(form)
 
     // username
@@ -192,27 +203,18 @@ login.mount = function () {
 
     formSubmitButton.textContent = 'Login'
 
-    formSubmitButton.addEventListener('click', function () {
-        document.body.removeChild(login.container)
-        document.body.appendChild(home.container)
-    })
-
     // anchor
 
     var registerAnchor = document.createElement('a')
     registerAnchor.style.textDecoration = 'underline'
-    this.container.appendChild(registerAnchor)
-
     registerAnchor.textContent = 'Register'
 
     registerAnchor.addEventListener('click', function () {
         document.body.removeChild(login.container)
         document.body.appendChild(register.container)
-    })
-
+    }.bind(this))
+    this.container.appendChild(registerAnchor)
 }
-
-login.mount()
 
 /* home */
 
@@ -242,7 +244,6 @@ home.mount = function () {
         document.body.removeChild(home.container)
         document.body.appendChild(landing.container)
     })
-
 
     // component post
     function Post(container, userName, imgAdress, date) {
@@ -304,11 +305,8 @@ home.mount = function () {
             this.container.appendChild(postPhotoCaptionDate)
 
             postPhotoCaptionDate.textContent = date
-
         }
         this.structure()
-
-
     }
 
     // post1
@@ -325,13 +323,9 @@ home.mount = function () {
     // post 4
     var post4 = new Post(document.createElement('div'), 'username4', 'https://imgs.search.brave.com/U4-w0Zr88dLLLn8MpUKZX5VMd36FmA8leGiN0nwKuIU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTE4/ODEwODQ0L2VzL2Zv/dG8vbHV6LWEtdHJh/diVDMyVBOXMtZGUt/Ym9zcXVlLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz12RDZi/TzFILU9YWEp3WWRO/c2xEYXB4TzNhZkJk/MzJLRkVQUnpXeC1Y/ZUVvPQ', '2 month ago')
 
-
 }
 
-
+landing.mount()
+register.mount()
+login.mount()
 home.mount()
-
-
-//posts saved
-
-
