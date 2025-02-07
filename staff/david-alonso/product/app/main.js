@@ -2,278 +2,260 @@ console.clear()
 console.log('Hello, App!')
 
 // ****  LANDING
+var landing = {
+    mount: function () {
 
-var landing = document.createElement('div')
-document.body.appendChild(landing)
+        var container = document.createElement('div')
+        landing.container = container
+        document.body.appendChild(container)
 
-var landingLogo = document.createElement('h1')
-landing.appendChild(landingLogo)
-
-var landingLogoText = document.createTextNode('Landing')
-landingLogo.appendChild(landingLogoText)
+        var logo = document.createElement('h1')
+        logo.textContent = 'Landing'
+        container.appendChild(logo)
 
 
-// Login
-var landingLoginAnchor = document.createElement('a')
-landingLoginAnchor.style.textDecoration = 'underline'
-landingLoginAnchor.style.fontWeight = 'bold'
-landingLoginAnchor.style.color = 'white'
-landing.appendChild(landingLoginAnchor)
+        // Login
+        var loginAnchor = document.createElement('a')
+        loginAnchor.textContent = 'Login'
+        loginAnchor.style.textDecoration = 'underline'
+        loginAnchor.style.fontWeight = 'bold'
+        loginAnchor.style.color = 'white'
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+        container.appendChild(loginAnchor)
 
-landingLoginAnchor.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(login)
-})
 
-var landingLoginAnchorText = document.createTextNode('Login')
-landingLoginAnchor.appendChild(landingLoginAnchorText)
 
-// Or
-var landingOrText = document.createTextNode(' or ')
-landing.appendChild(landingOrText)
+        // Or
+        var OrText = document.createTextNode(' or ')
+        container.appendChild(OrText)
 
-// Register
-var landingRegisterAnchor = document.createElement('a')
-landingRegisterAnchor.style.textDecoration = 'underline'
-landingRegisterAnchor.style.fontWeight = 'bold'
-landingRegisterAnchor.style.color = 'white'
-landing.appendChild(landingRegisterAnchor)
+        // Register
+        var registerAnchor = document.createElement('a')
+        registerAnchor.textContent = 'Register'
+        registerAnchor.style.textDecoration = 'underline'
+        registerAnchor.style.fontWeight = 'bold'
+        registerAnchor.style.color = 'white'
+        registerAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(register.container)
+        })
+        container.appendChild(registerAnchor)
 
-landingRegisterAnchor.addEventListener('click', function () {
-    document.body.removeChild(landing)
-    document.body.appendChild(register)
-})
 
-var landingRegisterAnchorText = document.createTextNode('Register')
-landingRegisterAnchor.appendChild(landingRegisterAnchorText)
-
-//  --------
+    }
+}
 
 
 // ****  REGISTER
-var register = document.createElement('div')
-//document.body.appendChild(register)
+var register = {
+    mount: function () {
 
-var registerLogo = document.createElement('h1')
-register.appendChild(registerLogo)
+        var container = document.createElement('div')
+        register.container = container
 
-var registerLogoText = document.createTextNode('Register')
-registerLogo.appendChild(registerLogoText)
+        var logo = document.createElement('h1')
+        logo.textContent = 'Register'
+        container.appendChild(logo)
 
-// Form
-var registerForm = document.createElement('form')
-register.appendChild(registerForm)
+        // Form
+        var form = document.createElement('form')
+        container.appendChild(form)
 
-var registerFormNameLabel = document.createElement('label')
-registerForm.appendChild(registerFormNameLabel)
+        var nameLabel = document.createElement('label')
+        nameLabel.textContent = 'Name'
+        form.appendChild(nameLabel)
 
-// Name 
-var registerFormNameLabelText = document.createTextNode('Name')
-registerFormNameLabel.appendChild(registerFormNameLabelText)
+        form.appendChild(document.createElement('br'))
+        // Formulario 
+        var nameInput = document.createElement('input')
+        form.appendChild(nameInput)
+        // Espacio
+        form.appendChild(document.createElement('br'))
 
-registerForm.appendChild(document.createElement('br'))
-// Formulario 
-var registerFormNameInput = document.createElement('input')
-registerForm.appendChild(registerFormNameInput)
-// Espacio
-registerForm.appendChild(document.createElement('br'))
+        // Email 
+        var emailLabel = document.createElement('label')
+        emailLabel.textContent = 'E-mail'
+        form.appendChild(emailLabel)
+
+        form.appendChild(document.createElement('br'))
+
+        var emailInput = document.createElement('input')
+        form.appendChild(emailInput)
+
+        form.appendChild(document.createElement('br'))
+
+        // Username 
+        var usernameLabel = document.createElement('label')
+        usernameLabel.textContent = 'Username'
+        form.appendChild(usernameLabel)
+
+        form.appendChild(document.createElement('br'))
+
+        var usernameInput = document.createElement('input')
+        form.appendChild(usernameInput)
+
+        form.appendChild(document.createElement('br'))
+
+        // Password
+        var passwordLabel = document.createElement('label')
+        passwordLabel.textContent = 'Password'
+        form.appendChild(passwordLabel)
+
+        form.appendChild(document.createElement('br'))
+
+        var passwordInput = document.createElement('input')
+        form.appendChild(passwordInput)
+
+        form.appendChild(document.createElement('br'))
+        form.appendChild(document.createElement('br'))
+
+        // Login
+        var loginAnchor = document.createElement('a')
+        loginAnchor.textContent = 'Login'
+        loginAnchor.style.textDecoration = 'underline'
+        loginAnchor.style.fontWeight = 'bold'
+        loginAnchor.style.color = 'white'
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(login.container)
+        })
+        form.appendChild(loginAnchor)
 
 
-// Email 
-var registerFormEmailLabel = document.createElement('label')
-registerForm.appendChild(registerFormEmailLabel)
 
-var registerFormEmailLabelText = document.createTextNode('E-mail')
-registerFormEmailLabel.appendChild(registerFormEmailLabelText)
+        // Button - Register
+        var submitButton = document.createElement('button')
+        submitButton.textContent = 'Register'
+        submitButton.style.marginLeft = '70px'
+        submitButton.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(home.container)
+        })
+        form.appendChild(submitButton)
 
-registerForm.appendChild(document.createElement('br'))
+        // ------------
 
-var registerFormEmailInput = document.createElement('input')
-registerForm.appendChild(registerFormEmailInput)
-
-registerForm.appendChild(document.createElement('br'))
-
-
-// Username 
-var registerFormUsernameLabel = document.createElement('label')
-registerForm.appendChild(registerFormUsernameLabel)
-
-var registerFormUsernameLabelText = document.createTextNode('Username')
-registerFormUsernameLabel.appendChild(registerFormUsernameLabelText)
-
-registerForm.appendChild(document.createElement('br'))
-
-var registerFormUsernameInput = document.createElement('input')
-registerForm.appendChild(registerFormUsernameInput)
-
-registerForm.appendChild(document.createElement('br'))
-
-
-// Password
-var registerFormPasswordLabel = document.createElement('label')
-registerForm.appendChild(registerFormPasswordLabel)
-
-var registerFormPasswordLabelText = document.createTextNode('Password')
-registerFormPasswordLabel.appendChild(registerFormPasswordLabelText)
-
-registerForm.appendChild(document.createElement('br'))
-
-var registerFormPasswordInput = document.createElement('input')
-registerForm.appendChild(registerFormPasswordInput)
-
-registerForm.appendChild(document.createElement('br'))
-registerForm.appendChild(document.createElement('br'))
-
-// Login
-var registerFormLoginAnchor = document.createElement('a')
-registerFormLoginAnchor.style.textDecoration = 'underline'
-registerFormLoginAnchor.style.fontWeight = 'bold'
-registerFormLoginAnchor.style.color = 'white'
-registerForm.appendChild(registerFormLoginAnchor)
-
-var registerFormLoginAnchorText = document.createTextNode('Login')
-registerFormLoginAnchor.appendChild(registerFormLoginAnchorText)
-
-registerFormLoginAnchor.addEventListener('click', function () {
-    document.body.removeChild(register)
-    document.body.appendChild(login)
-})
-
-// Button - Register
-var registerFormSubmitButton = document.createElement('button')
-registerForm.appendChild(registerFormSubmitButton)
-
-var registerFormSubmitButtonText = document.createTextNode('Register')
-registerFormSubmitButton.appendChild(registerFormSubmitButtonText)
-
-// ------------
-registerFormSubmitButton.addEventListener('click', function () {
-    document.body.removeChild(register)
-    document.body.appendChild(home)
-})
+    }
+}
 
 // ****  LOGIN
+var login = {
+    mount: function () {
 
-var login = document.createElement('div')
-//document.body.appendChild(login)
+        var container = document.createElement('div')
+        login.container = container
 
-var landingLoginLogo = document.createElement('h1')
-login.appendChild(landingLoginLogo)
+        var logo = document.createElement('h1')
+        logo.textContent = 'Login'
+        container.appendChild(logo)
 
-var landingLoginText = document.createTextNode('Login')
-landingLoginLogo.appendChild(landingLoginText)
+        // Form
+        var form = document.createElement('form')
+        container.appendChild(form)
 
-// Form
-var loginForm = document.createElement('form')
-login.appendChild(loginForm)
+        // Username 
+        var usernameLabel = document.createElement('label')
+        usernameLabel.textContent = 'Username'
+        form.appendChild(usernameLabel)
 
-// Username 
-var loginFormUsernameLabel = document.createElement('label')
-loginForm.appendChild(loginFormUsernameLabel)
+        form.appendChild(document.createElement('br'))
 
-var loginFormUsernameLabelText = document.createTextNode('Username')
-loginFormUsernameLabel.appendChild(loginFormUsernameLabelText)
+        var usernameInput = document.createElement('input')
+        form.appendChild(usernameInput)
 
-loginForm.appendChild(document.createElement('br'))
+        form.appendChild(document.createElement('br'))
 
-var loginFormUsernameInput = document.createElement('input')
-loginForm.appendChild(loginFormUsernameInput)
+        // Password
+        var passwordLabel = document.createElement('label')
+        passwordLabel.textContent = 'Password'
+        form.appendChild(passwordLabel)
 
-loginForm.appendChild(document.createElement('br'))
+        form.appendChild(document.createElement('br'))
 
+        var passwordInput = document.createElement('input')
+        form.appendChild(passwordInput)
 
-// Password
-var loginFormPasswordLabel = document.createElement('label')
-loginForm.appendChild(loginFormPasswordLabel)
+        form.appendChild(document.createElement('br'))
+        form.appendChild(document.createElement('br'))
 
-var loginFormPasswordLabelText = document.createTextNode('Password')
-loginFormPasswordLabel.appendChild(loginFormPasswordLabelText)
+        // Button Login
+        var submitButton = document.createElement('button')
+        submitButton.textContent = 'Login'
+        submitButton.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(home.container)
+        })
+        form.appendChild(submitButton)
 
-loginForm.appendChild(document.createElement('br'))
-
-var loginFormPasswordInput = document.createElement('input')
-loginForm.appendChild(loginFormPasswordInput)
-
-loginForm.appendChild(document.createElement('br'))
-loginForm.appendChild(document.createElement('br'))
-
-// Button - Register
-var loginFormSubmitButton = document.createElement('button')
-loginForm.appendChild(loginFormSubmitButton)
-
-loginFormSubmitButton.addEventListener('click', function () {
-    document.body.removeChild(login)
-    document.body.appendChild(register)
-})
-
-var loginFormSubmitButtonTesxt = document.createTextNode('Register')
-loginFormSubmitButton.appendChild(loginFormSubmitButtonTesxt)
-
-// Login
-var loginFormLoginAnchor = document.createElement('a')
-loginFormLoginAnchor.style.textDecoration = 'underline'
-loginFormLoginAnchor.style.fontWeight = 'bold'
-loginFormLoginAnchor.style.color = 'white'
-loginForm.appendChild(loginFormLoginAnchor)
-
-loginFormLoginAnchor.addEventListener('click', function () {
-    document.body.removeChild(login)
-    document.body.appendChild(home)
-})
-
-var loginFormLoginAnchorText = document.createTextNode('Login')
-loginFormLoginAnchor.appendChild(loginFormLoginAnchorText)
-
+        // // Register
+        var loginAnchor = document.createElement('a')
+        loginAnchor.textContent = 'Register'
+        loginAnchor.style.textDecoration = 'underline'
+        loginAnchor.style.fontWeight = 'bold'
+        loginAnchor.style.color = 'white'
+        loginAnchor.style.marginLeft = '70px'
+        loginAnchor.addEventListener('click', function () {
+            document.body.removeChild(container)
+            document.body.appendChild(register.container)
+        })
+        form.appendChild(loginAnchor)
+    }
+}
 
 // ****  HOME 
+var home = {
+    mount: function () {
+        var container = document.createElement('div')
+        home.container = container
 
-var home = document.createElement('div')
-// document.body.appendChild(home)
+        var logo = document.createElement('h1')
+        logo.textContent = 'Home'
+        container.appendChild(logo)
 
-var homeLogo = document.createElement('h1')
-home.appendChild(homeLogo)
+        // Form
+        var form = document.createElement('form')
 
-var homeLogoText = document.createTextNode('Home')
-homeLogo.appendChild(homeLogoText)
+        container.appendChild(form)
 
-// Form
+        // Imagenes
+        var news1 = document.createElement('img')
+        news1.src = 'https://i.pinimg.com/236x/ff/a1/22/ffa122f36bffb392661c0de948475635.jpg'
+        news1.style.width = '90%'
+        news1.style.height = 'auto'
+        news1.style.margin = 'auto'
+        news1.style.marginBlock = '20px'
+        news1.style.borderRadius = '10%'
+        news1.style.border = '5px solid'
+        container.appendChild(news1)
 
-var news = document.createElement('article')
-news.style.display = 'flex'
-news.style.width = '100%'
-news.style.flexDirection = 'column'
-news.style.gap = '30px'
-home.appendChild(news)
+        var news2 = document.createElement('img')
+        news2.src = 'https://i.pinimg.com/564x/bd/68/af/bd68af256a4c6fd0ada2f60183e88f39.jpg'
+        news2.style.width = '90%'
+        news2.style.height = 'auto'
+        news2.style.margin = 'auto'
+        news2.style.marginBlock = '20px'
+        news2.style.borderRadius = '10%'
+        news2.style.border = '5px solid'
+        container.appendChild(news2)
 
+        var news3 = document.createElement('img')
+        news3.src = 'https://image.spreadshirtmedia.net/image-server/v1/products/T1459A839PA4459PT28D179581354W8333H10000/views/1,width=378,height=378,appearanceId=839,backgroundColor=F2F2F2/programador-informatico-codificadores-software-burger-lovers.jpg'
+        news3.style.width = '90%'
+        news3.style.height = 'auto'
+        news3.style.margin = 'auto'
+        news3.style.marginBlock = '20px'
+        news3.style.borderRadius = '10%'
+        news3.style.border = '5px solid'
+        container.appendChild(news3)
+    }
+}
 
-// Imagenes
-var news1 = document.createElement('img')
-news1.src = 'https://i.pinimg.com/236x/ff/a1/22/ffa122f36bffb392661c0de948475635.jpg'
-news1.style.width = '90%'
-news1.style.height = 'auto'
-news1.style.margin = 'auto'
-news1.style.borderRadius = '10%'
-news1.style.border = '5px solid'
-news.appendChild(news1)
-
-var news2 = document.createElement('img')
-news2.src = 'https://i.pinimg.com/564x/bd/68/af/bd68af256a4c6fd0ada2f60183e88f39.jpg'
-news2.style.width = '90%'
-news2.style.height = 'auto'
-news2.style.margin = 'auto'
-news2.style.borderRadius = '10%'
-news2.style.border = '5px solid'
-news.appendChild(news2)
-
-var news3 = document.createElement('img')
-news3.src = 'https://image.spreadshirtmedia.net/image-server/v1/products/T1459A839PA4459PT28D179581354W8333H10000/views/1,width=378,height=378,appearanceId=839,backgroundColor=F2F2F2/programador-informatico-codificadores-software-burger-lovers.jpg'
-news3.style.width = '90%'
-news3.style.height = 'auto'
-news3.style.margin = 'auto'
-news3.style.borderRadius = '10%'
-news3.style.border = '5px solid'
-news.appendChild(news3)
-
-
+landing.mount()
+register.mount()
+login.mount()
+home.mount()
 
 // // ... 
