@@ -1,299 +1,287 @@
 console.clear()
 console.log('Hello,App!')
-// elemento article para los posts. img parrafo... montar un post de ig en html
+
+// constuctors
+
+function Component(container) {
+    this.container = container
+}
+
+
+
+
 
 //////// Landing
-// landing logo
-
-var landing = document.createElement('div')
-//document.body.appendChild(landing)
-
-var landingLogo = document.createElement('h1')
-landingLogo.innerText = 'Logo'
-landing.appendChild(landingLogo)
-
-// landing register or login
-
-var landingRegisterOrLogin = document.createElement('div')
-landing.appendChild(landingRegisterOrLogin)
-
-var registerAnchor = document.createElement('a')
-//registerAnchor.href = 'index.html'
-registerAnchor.innerText = 'Register'
-landingRegisterOrLogin.appendChild(registerAnchor)
-
-registerAnchor.addEventListener('click',
-    function() {
-        document.body.removeChild(landing)
-        document.body.appendChild(register)
-    }
-)
-
-var orText = document.createTextNode(' or ')
-landingRegisterOrLogin.appendChild(orText)
-
-var loginAnchor = document.createElement('a')
-//loginAnchor.href = 'index.html'
-loginAnchor.innerText = 'Login'
-landingRegisterOrLogin.appendChild(loginAnchor)
-
-loginAnchor.addEventListener('click',
-    function() {
-        document.body.removeChild(landing)
-        document.body.appendChild(login)
-    }
-)
-
+var landing = new Component(document.createElement('div'))
+landing.mount = function() {
+    document.body.appendChild(this.container)
+    
+    var logo = document.createElement('h1')
+    logo.innerText = 'Logo'
+    this.container.appendChild(logo)
+    
+    // container register or login
+    
+    var registerOrLogin = document.createElement('div')
+    this.container.appendChild(registerOrLogin)
+    
+    var registerAnchor = document.createElement('a')
+    registerAnchor.innerText = 'Register'
+    registerAnchor.addEventListener('click', function() {
+        document.body.removeChild(this.container)
+        document.body.appendChild(register.container)
+    }.bind(this))
+    registerOrLogin.appendChild(registerAnchor)
+    
+    var orText = document.createTextNode(' or ')
+    registerOrLogin.appendChild(orText)
+    
+    var loginAnchor = document.createElement('a')
+    loginAnchor.innerText = 'Login'
+    loginAnchor.addEventListener('click', function() {
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
+    }.bind(this))
+    registerOrLogin.appendChild(loginAnchor)
+}
 
 //////// Register
 
-var register = document.createElement('div') //register div general
-//document.body.appendChild(register)
+var register = new Component(document.createElement('div'))
+register.mount = function() {
+    var logo = document.createElement('h1') // logo de register
+    logo.innerText = 'Logo'
+    this.container.appendChild(logo)
+    
+    var inputForm = document.createElement('form') // div form de los inputs de register
+    inputForm.id = 'register-form'
+    inputForm.style.display = 'flex'
+    inputForm.style.flexDirection = 'column'
+    inputForm.addEventListener('submit', function(event) {
+        event.preventDefault()
+        
+        var name = nameInput.value
+        var email = emailInput.value
+        var username = usernameInput.value
+        var password = passwordInput.value
+    
+        alert(name + email + username + password)
+        console.log(name, email, username, password)
 
-var registerLogo = document.createElement('h1') // logo de register
-registerLogo.innerText = 'Logo'
-register.appendChild(registerLogo)
+        document.body.removeChild(this.container)
+        document.body.appendChild(home.container)
+    }.bind(this))
+    this.container.appendChild(inputForm)
+    
+    // name input
+    var nameLabel = document.createElement('label')
+    nameLabel.htmlFor = 'register-name'
+    nameLabel.innerText = 'Name'
+    inputForm.appendChild(nameLabel)
+    
+    var nameInput = document.createElement('input')
+    nameInput.type = 'text'
+    nameInput.id = 'register-name'
+    nameInput.style.width = '300px'
+    inputForm.appendChild(nameInput)
+    
+    // e-mail input
+    var emailLabel = document.createElement('label')
+    emailLabel.htmlFor = 'register-email'
+    emailLabel.innerText = 'E-mail'
+    inputForm.appendChild(emailLabel)
+    
+    var emailInput = document.createElement('input')
+    emailInput.type = 'text'
+    emailInput.id = 'register-email'
+    emailInput.style.width = '300px'
+    inputForm.appendChild(emailInput)
+    
+    // username input
+    var usernameLabel = document.createElement('label')
+    usernameLabel.htmlFor = 'register-username'
+    usernameLabel.innerText = 'Username'
+    inputForm.appendChild(usernameLabel)
+    
+    var usernameInput = document.createElement('input')
+    usernameInput.type = 'text'
+    usernameInput.id = 'register-username'
+    usernameInput.style.width = '300px'
+    inputForm.appendChild(usernameInput)
+    
+    // password input
+    var passwordLabel = document.createElement('label')
+    passwordLabel.htmlFor = 'register-password'
+    passwordLabel.innerText = 'Password'
+    inputForm.appendChild(passwordLabel)
+    
+    var passwordInput = document.createElement('input')
+    passwordInput.type = 'password'
+    passwordInput.id = 'register-password'
+    passwordInput.style.width = '300px'
+    inputForm.appendChild(passwordInput)
 
-var registerInputForm = document.createElement('form') // div form de los inputs de register
-registerInputForm.style.display = 'flex'
-registerInputForm.style.flexDirection = 'column'
-register.appendChild(registerInputForm)
+    // div del login y del register
+    var loginAndRegister = document.createElement('div') // div login register
+    loginAndRegister.style.width = '310px'
+    loginAndRegister.style.marginTop = '15px'
+    loginAndRegister.style.display = 'flex'
+    loginAndRegister.style.justifyContent = 'space-between'
+    inputForm.appendChild(loginAndRegister)
 
-// name input
-var registerNameLabel = document.createElement('label')
-registerNameLabel.htmlFor = 'register-name'
-registerNameLabel.innerText = 'Name'
-registerInputForm.appendChild(registerNameLabel)
-
-var registerNameInput = document.createElement('input')
-registerNameInput.id = 'register-name'
-registerNameInput.style.width = '300px'
-registerInputForm.appendChild(registerNameInput)
-
-// e-mail input
-var registerEmailText = document.createElement('label')
-registerEmailText.htmlFor = 'register-email'
-registerEmailText.innerText = 'E-mail'
-registerInputForm.appendChild(registerEmailText)
-
-var registerEmailInput = document.createElement('input')
-registerEmailInput.id = 'register-email'
-registerEmailInput.style.width = '300px'
-registerInputForm.appendChild(registerEmailInput)
-
-// username input
-var registerUsernameText = document.createElement('label')
-registerUsernameText.htmlFor = 'register-username'
-registerUsernameText.innerText = 'Username'
-registerInputForm.appendChild(registerUsernameText)
-
-var registerUsernameInput = document.createElement('input')
-registerUsernameInput.id = 'register-username'
-registerUsernameInput.style.width = '300px'
-registerInputForm.appendChild(registerUsernameInput)
-
-// password input
-var registerPasswordText = document.createElement('label')
-registerPasswordText.htmlFor = 'register-password'
-registerPasswordText.innerText = 'Password'
-registerInputForm.appendChild(registerPasswordText)
-
-var registerPasswordInput = document.createElement('input')
-registerPasswordInput.id = 'register-password'
-registerPasswordInput.style.width = '300px'
-registerInputForm.appendChild(registerPasswordInput)
-
-// div del login y del register
-
-var registerLoginAndRegister = document.createElement('div') // div login register
-registerLoginAndRegister.style.width = '310px'
-registerLoginAndRegister.style.marginTop = '15px'
-registerLoginAndRegister.style.display = 'flex'
-registerLoginAndRegister.style.justifyContent = 'space-between'
-register.appendChild(registerLoginAndRegister)
-
-var registerLoginAnchor = document.createElement('a') // anchor login
-//registerLoginAnchor.href = 'index.html'
-registerLoginAnchor.innerText = 'Login'
-registerLoginAndRegister.appendChild(registerLoginAnchor)
-
-registerLoginAnchor.addEventListener('click',
-    function() {
-        document.body.removeChild(register)
-        document.body.appendChild(login)
-    }
-)
-
-var registerRegisterButton = document.createElement('button') // boton register
-//registerRegisterButton.href = 'index.html'
-registerRegisterButton.innerText = 'Register'
-registerLoginAndRegister.appendChild(registerRegisterButton)
-
-
-registerRegisterButton.addEventListener('click',
-    function() {
-        document.body.removeChild(register)
-        document.body.appendChild(home)
-    }
-)
+    // BOTONES
+    
+    var loginAnchor = document.createElement('a') // anchor login
+    loginAnchor.innerText = 'Login'
+    loginAnchor.addEventListener('click', function() {
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
+    }.bind(this))
+    loginAndRegister.appendChild(loginAnchor)
+    
+    var registerButton = document.createElement('button') // boton register
+    registerButton.type = 'submit'
+    registerButton.form = 'register-form'
+    registerButton.innerText = 'Register'
+    loginAndRegister.appendChild(registerButton)
+}
 
 //////// Login
 
-var login = document.createElement('div') //login div general
-//document.body.appendChild(login)
+var login = new Component(document.createElement('div'))
+login.mount = function() {
+    var logo = document.createElement('h1') // logo de login
+    logo.innerText = 'Logo'
+    this.container.appendChild(logo)
+    
+    var inputForm = document.createElement('form') // div form de los inputs de login
+    inputForm.id = 'login-form'
+    inputForm.style.display = 'flex'
+    inputForm.style.flexDirection = 'column'
+    inputForm.addEventListener('submit', function(event) {
+        event.preventDefault()
 
-var loginLogo = document.createElement('h1') // logo de login
-loginLogo.innerText = 'Logo'
-login.appendChild(loginLogo)
+        var username = usernameInput.value
+        var password = passwordInput.value
 
-var loginInputForm = document.createElement('form') // div form de los inputs de login
-loginInputForm.style.display = 'flex'
-loginInputForm.style.flexDirection = 'column'
-login.appendChild(loginInputForm)
+        alert(username + password)
+        console.log(username, password)
 
-/// username input
-var loginUsernameText = document.createElement('label')
-loginUsernameText.htmlFor = 'login-username'
-loginUsernameText.innerText = 'Username'
-loginInputForm.appendChild(loginUsernameText)
+        document.body.removeChild(this.container)
+        document.body.appendChild(home.container)
+    }.bind(this))
+    this.container.appendChild(inputForm)
+    
+    /// username input
+    var usernameLabel = document.createElement('label')
+    usernameLabel.htmlFor = 'login-username'
+    usernameLabel.innerText = 'Username'
+    inputForm.appendChild(usernameLabel)
+    
+    var usernameInput = document.createElement('input')
+    usernameInput.type = 'text'
+    usernameInput.id = 'login-username'
+    usernameInput.style.width = '300px'
+    inputForm.appendChild(usernameInput)
+    
+    // password input
+    var passwordLabel = document.createElement('label')
+    passwordLabel.htmlFor = 'login-password'
+    passwordLabel.innerText = 'Password'
+    inputForm.appendChild(passwordLabel)
+    
+    var passwordInput = document.createElement('input')
+    passwordInput.type = 'password'
+    passwordInput.id = 'login-password'
+    passwordInput.style.width = '300px'
+    inputForm.appendChild(passwordInput)
 
-var loginUsernameInput = document.createElement('input')
-loginUsernameInput.id = 'login-username'
-loginUsernameInput.style.width = '300px'
-loginInputForm.appendChild(loginUsernameInput)
+    // div del register y del login
+    
+    var registerAndLogin = document.createElement('div') // div register login
+    registerAndLogin.style.width = '310px'
+    registerAndLogin.style.marginTop = '15px'
+    registerAndLogin.style.display = 'flex'
+    registerAndLogin.style.justifyContent = 'space-between'
+    inputForm.appendChild(registerAndLogin)
+    
+    // BOTONES
+    
+    var registerAnchor = document.createElement('a') // anchor register
+    registerAnchor.innerText = 'Register'
+    registerAnchor.addEventListener('click', function() {
+        document.body.removeChild(this.container)
+        document.body.appendChild(register.container)
+    }.bind(this))
+    registerAndLogin.appendChild(registerAnchor)
 
-// password input
-var loginPasswordText = document.createElement('label')
-loginPasswordText.htmlFor = 'login-password'
-loginPasswordText.innerText = 'Password'
-loginInputForm.appendChild(loginPasswordText)
-
-var loginPasswordInput = document.createElement('input')
-loginPasswordInput.id = 'login-password'
-loginPasswordInput.style.width = '300px'
-loginInputForm.appendChild(loginPasswordInput)
-
-// div del register y del login
-
-var loginRegisterAndLogin = document.createElement('div') // div register login
-loginRegisterAndLogin.style.width = '310px'
-loginRegisterAndLogin.style.marginTop = '15px'
-loginRegisterAndLogin.style.display = 'flex'
-loginRegisterAndLogin.style.justifyContent = 'space-between'
-login.appendChild(loginRegisterAndLogin)
-
-var loginRegisterAnchor = document.createElement('a') // anchor register
-//loginRegisterAnchor.href = 'index.html'
-loginRegisterAnchor.innerText = 'Register'
-loginRegisterAndLogin.appendChild(loginRegisterAnchor)
-
-loginRegisterAnchor.addEventListener('click',
-    function() {
-        document.body.removeChild(login)
-        document.body.appendChild(register)
-    }
-)
-
-var loginLoginButton = document.createElement('button') // boton login
-//loginLoginButton.href = 'index.html'
-loginLoginButton.innerText = 'Login'
-loginRegisterAndLogin.appendChild(loginLoginButton)
-
-loginLoginButton.addEventListener('click',
-    function() {
-        document.body.removeChild(login)
-        document.body.appendChild(home)
-    }
-)
+    var loginButton = document.createElement('button') // boton login
+    loginButton.type = 'submit'
+    loginButton.form = 'login-form'
+    loginButton.innerText = 'Login'
+    registerAndLogin.appendChild(loginButton)
+}
 
 //////// Home
 
-var home = document.createElement('div') //home div general
-document.body.appendChild(home)
+var home = new Component(document.createElement('div'))
+home.mount = function() {
+    document.body.appendChild(this.container) // provisional!!!!!!!!!!!!!!!!!!!!!!!
 
-var homeLogo = document.createElement('h1') // logo de login
-homeLogo.innerText = 'Logo'
-home.appendChild(homeLogo)
+    var logo = document.createElement('h1') // logo de login
+    logo.innerText = 'Logo'
+    this.container.appendChild(logo)
+    
+    var postArticleContainer = document.createElement('article')
+    postArticleContainer.style.display = 'flex'
+    postArticleContainer.style.flexDirection = 'column'
+    postArticleContainer.style.width = '500px'
+    postArticleContainer.style.textAlign = 'justify'
+    this.container.appendChild(postArticleContainer)
+    
+    // post 1
+    
+    var article = document.createElement('article')
+    postArticleContainer.appendChild(article)
+    
+    var header = document.createElement('header')
+    article.appendChild(header)
+    
+    var title = document.createElement('h2')
+    title.innerText = 'Post 1 Title'
+    header.appendChild(title)
+    
+    var figure = document.createElement('figure')
+    article.appendChild(figure)
+    
+    var image = document.createElement('img')
+    image.src = '1.jpg'
+    figure.appendChild(image)
+    image.style.width = '300px'
+    
+    var footer = document.createElement('footer')
+    article.appendChild(footer)
+    
+    var footerSection = document.createElement('section')
+    footer.appendChild(footerSection)
+    
+    var footerSectionButton = document.createElement('button')
+    footerSectionButton.innerText = '♥'
+    footerSectionButton.style.fontSize = '200%'
 
-var postArticleDiv = document.createElement('article')
-postArticleDiv.style.display = 'flex'
-postArticleDiv.style.flexDirection = 'column'
-home.appendChild(postArticleDiv)
+    footerSectionButton.addEventListener('click', function() {
+        document.body.removeChild(this.container)
+        document.body.appendChild(register.container)
+    }.bind(this))
 
-// post 1
-
-var firstPostDiv = document.createElement('article')
-postArticleDiv.appendChild(firstPostDiv)
-
-var firstPostHeader = document.createElement('header')
-firstPostDiv.appendChild(firstPostHeader)
-
-var firstPostTitle = document.createElement('h2')
-firstPostTitle.innerText = 'Post 1 Title'
-firstPostHeader.appendChild(firstPostTitle)
-
-var firstPostFigure = document.createElement('figure')
-firstPostDiv.appendChild(firstPostFigure)
-
-var firstPostImage = document.createElement('img')
-firstPostImage.src = '1.jpg'
-firstPostFigure.appendChild(firstPostImage)
-firstPostImage.style.width = '300px'
-
-var firstPostFooter = document.createElement('footer')
-firstPostDiv.appendChild(firstPostFooter)
-
-var firstPostFooterSection = document.createElement('section')
-firstPostFooter.appendChild(firstPostFooterSection)
-
-var firstPostFooterSectionFirstA = document.createElement('a')
-firstPostFooterSectionFirstA.innerText = '♥'
-firstPostFooterSectionFirstA.style.fontSize = '200%'
-firstPostFooterSection.appendChild(firstPostFooterSectionFirstA)
-
-var firstPostDescriptionText = document.createElement('p')
-firstPostDescriptionText.innerText = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus maxime quibusdam officia adipisci dolor ducimus inventore numquam expedita reprehenderit, quaerat sit quam tempore laboriosam fuga eaque, eius consectetur totam eligendi rerum ad in praesentium excepturi. Non velit perferendis blanditiis dignissimos.'
-firstPostFooter.appendChild(firstPostDescriptionText)
-
-// post 2
-
-var secondPostDiv = document.createElement('article')
-postArticleDiv.appendChild(secondPostDiv)
-
-var secondPostHeader = document.createElement('header')
-secondPostDiv.appendChild(secondPostHeader)
-
-var secondPostTitle = document.createElement('h2')
-secondPostTitle.innerText = 'Post 2 Title'
-secondPostHeader.appendChild(secondPostTitle)
-
-var secondPostFigure = document.createElement('figure')
-secondPostDiv.appendChild(secondPostFigure)
-
-var secondPostImage = document.createElement('img')
-secondPostImage.src = '2.jpg'
-secondPostFigure.appendChild(secondPostImage)
-secondPostImage.style.width = '300px'
-
-var secondPostFooter = document.createElement('footer')
-secondPostDiv.appendChild(secondPostFooter)
-
-var secondPostFooterSection = document.createElement('section')
-secondPostFooter.appendChild(secondPostFooterSection)
-
-var secondPostFooterSectionFirstA = document.createElement('a')
-secondPostFooterSectionFirstA.innerText = '♥'
-secondPostFooterSectionFirstA.style.fontSize = '200%'
-secondPostFooterSection.appendChild(secondPostFooterSectionFirstA)
-
-var secondPostDescriptionText = document.createElement('p')
-secondPostDescriptionText.innerText = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus maxime quibusdam officia adipisci dolor ducimus inventore numquam expedita reprehenderit, quaerat sit quam tempore laboriosam fuga eaque, eius consectetur totam eligendi rerum ad in praesentium excepturi. Non velit perferendis blanditiis dignissimos.'
-secondPostFooter.appendChild(secondPostDescriptionText)
-
-
-
-
-
+    footerSection.appendChild(footerSectionButton)
+    
+    var descriptionText = document.createElement('p')
+    descriptionText.innerText = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus maxime quibusdam officia adipisci dolor ducimus inventore numquam expedita reprehenderit, quaerat sit quam tempore laboriosam fuga eaque, eius consectetur totam eligendi rerum ad in praesentium excepturi. Non velit perferendis blanditiis dignissimos.'
+    footer.appendChild(descriptionText)
+    
+     
+}
 
 /*
 var img2 = document.createElement('img')
@@ -313,4 +301,7 @@ img4.style.width = '300px'
 
 */
 
-
+landing.mount()
+login.mount()
+register.mount()
+home.mount()
