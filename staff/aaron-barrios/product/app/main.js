@@ -1,140 +1,300 @@
 console.clear()
 console.log('Hello, App!')
 
-// --- CONSTRUCTOR FUNCTION --- 
-function Component(container) {
-    this.container = container
+// --- FATHER COMPONENT --- 
+function Component(tagName) {
+    this.container = document.createElement(tagName)
 }
+
+// --- FATHER COMPONENT FUNCTIONS ---
+Component.prototype.add = function (child) {
+    this.container.appendChild(child.container)
+}
+
+Component.prototype.remove = function (child) {
+    this.container.removeChild(child.container)
+}
+
+Component.prototype.addClickListener = function (callback) {
+    this.container.addEventListener('click', callback)
+}
+
+Component.prototype.addSubmitListener = function (callback) {
+    this.container.addEventListener('submit', callback)
+}
+
+// --- COMPONENT CHILD FUNCTIONS ---
+
+// FORM
+function Form() {
+    Component.call(this, 'form')
+}
+
+Form.prototype = Object.create(Component.prototype)
+Form.prototype.constructor = Form
+
+//SPAN
+function Span() {
+    Component.call(this, 'span')
+}
+
+Span.prototype = Object.create(Component.prototype)
+Span.prototype.constructor = Span
+
+Span.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+//MAIN
+function Main() {
+    Component.call(this, 'main')
+}
+
+Main.prototype = Object.create(Component.prototype)
+Main.prototype.constructor = Main
+
+//ARTICLE
+function Article() {
+    Component.call(this, 'article')
+}
+
+Article.prototype = Object.create(Component.prototype)
+Article.prototype.constructor = Article
+
+// INPUT
+function Input() {
+    Component.call(this, 'input')
+}
+
+Input.prototype = Object.create(Component.prototype)
+Input.prototype.constructor = Input
+
+Input.prototype.setType = function (type) {
+    this.container.type = type
+}
+
+Input.prototype.setPlaceholder = function (placeholder) {
+    this.container.placeholder = placeholder
+}
+
+// LABEL
+function Label() {
+    Component.call(this, 'label')
+}
+
+Label.prototype = Object.create(Component.prototype)
+Label.prototype.constructor = Label
+
+Label.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+Label.prototype.setType = function (type) {
+    this.container.type = type
+}
+
+
+//BUTTON
+function Button() {
+    Component.call(this, 'button')
+}
+
+Button.prototype = Object.create(Component.prototype)
+Button.prototype.constructor = Button
+
+Button.prototype.setType = function (type) {
+    this.container.type = type
+}
+
+Button.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+//ANCHOR
+function Anchor() {
+    Component.call(this, 'a')
+}
+
+Anchor.prototype = Object.create(Component.prototype)
+Anchor.prototype.constructor = Anchor
+
+Anchor.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+//HEADING
+function Heading(level) {
+    Component.call(this, 'h' + level)
+}
+
+Heading.prototype = Object.create(Component.prototype)
+Heading.prototype.constructor = Heading
+
+Heading.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+//IMAGE
+function Image() {
+    Component.call(this, 'img')
+}
+
+Image.prototype = Object.create(Component.prototype)
+Image.prototype.constructor = Image
+
+//BODY
+function Body() {
+    Component.call(this, 'body')
+}
+
+Body.prototype = Object.create(Component.prototype)
+Body.prototype.constructor = Body
+
+//asign our body
+const body = new Body()
+document.body = body.container
+
+//HEADER
+function Header() {
+    Component.call(this, 'header')
+}
+
+Header.prototype = Object.create(Component.prototype)
+Header.prototype.constructor = Header
 
 // --- LANDING ---
-var landing = new Component(document.createElement('div'))
-landing.mount = function () {
-    document.body.appendChild(this.container)
+function Landing() {
+    Component.call(this, 'div')
 
-    var logoh1 = document.createElement('h1')
-    logoh1.textContent = 'Logo'
-    this.container.appendChild(logoh1)
+    var logo = new Heading(1)
+    logo.setText('Logo')
+    this.add(logo)
 
     //SPAN DE ANCHORS 
-    var anchorsSpan = document.createElement('span')
-    anchorsSpan.style.display = 'flex'
-    anchorsSpan.style.justifyContent = 'left'
-    anchorsSpan.style.gap = '5px'
-    this.container.appendChild(anchorsSpan)
+    var anchorsSpan = new Span()
+    anchorsSpan.container.style.display = 'flex'
+    anchorsSpan.container.style.justifyContent = 'left'
+    anchorsSpan.container.style.gap = '5px'
+    this.add(anchorsSpan)
 
-    var registerAnchor = document.createElement('a')
-    registerAnchor.innerText = 'Register'
-    registerAnchor.style.textDecoration = 'underline'
-    registerAnchor.style.cursor = 'pointer'
-    anchorsSpan.appendChild(registerAnchor)
+    var registerAnchor = new Anchor()
+    registerAnchor.setText('Register')
+    registerAnchor.container.style.textDecoration = 'underline'
+    registerAnchor.container.style.cursor = 'pointer'
+    anchorsSpan.add(registerAnchor)
 
-    registerAnchor.addEventListener('click', function () {
+    registerAnchor.addClickListener(function () {
         document.body.removeChild(this.container)
-        document.body.appendChild(register.container)
+        document.body.appendChild(register.container) //register.container = div de register
     }.bind(this))
 
-    var orText = document.createElement('text')
-    orText.textContent = ' or '
-    anchorsSpan.appendChild(orText)
+    var orText = document.createTextNode('text')
+    anchorsSpan.container.appendChild(orText)
 
-    var loginAnchor = document.createElement('a')
-    loginAnchor.innerText = 'Login'
-    loginAnchor.style.textDecoration = 'underline'
-    loginAnchor.style.cursor = 'pointer'
-    anchorsSpan.appendChild(loginAnchor)
+    var loginAnchor = new Anchor()
+    loginAnchor.setText('Login')
+    loginAnchor.container.style.textDecoration = 'underline'
+    loginAnchor.container.style.cursor = 'pointer'
+    anchorsSpan.add(loginAnchor)
 
-    loginAnchor.addEventListener('click', function () {
+    loginAnchor.addClickListener(function () {
         document.body.removeChild(this.container)
         document.body.appendChild(login.container)
     }.bind(this))
 }
 
+Landing.prototype = Object.create(Component.prototype)
+Landing.prototype.constructor = Landing
+
+var landing = new Landing()
+body.add(landing)
 
 //--- REGISTER ---
-var register = new Component(document.createElement('div'))
-register.mount = function () {
+function Register() {
+    Component.call(this, 'div')
+
     this.container.style.width = '400px'
 
-    var title = document.createElement('h2')
-    title.textContent = 'Register'
-    this.container.appendChild(title)
+    var title = new Heading(1)
+    title.setText('Register')
+    this.add(title)
 
-    var form = document.createElement('form')
-    form.style.display = 'flex'
-    form.style.flexDirection = 'column'
-    form.style.justifyContent = 'left'
-    form.style.gap = '5px'
-    this.container.appendChild(form)
+    var form = new Form()
+    form.container.style.display = 'flex'
+    form.container.style.flexDirection = 'column'
+    form.container.style.justifyContent = 'left'
+    form.container.style.gap = '5px'
+    this.add(form)
 
     //NAME
-    var nameLabel = document.createElement('label')
-    nameLabel.textContent = 'Name'
-    form.appendChild(nameLabel)
+    var nameLabel = new Label()
+    nameLabel.setText('Name')
+    form.add(nameLabel)
 
-    var nameInput = document.createElement('input')
-    nameInput.style.width = '350px'
-    form.appendChild(nameInput)
+    var nameInput = new Input()
+    nameInput.container.style.width = '350px'
+    form.add(nameInput)
 
     //EMAIL
-    var emailLabel = document.createElement('label')
-    emailLabel.textContent = 'E-mail'
-    form.appendChild(emailLabel)
+    var emailLabel = new Label()
+    emailLabel.setText('E-mail')
+    form.add(emailLabel)
 
-    var emailInput = document.createElement('input')
-    emailInput.style.width = '350px'
-    form.appendChild(emailInput)
+    var emailInput = new Input()
+    emailInput.container.style.width = '350px'
+    form.add(emailInput)
 
     //USERNAME
-    var usernameLabel = document.createElement('label')
-    usernameLabel.textContent = 'Username'
-    form.appendChild(usernameLabel)
+    var usernameLabel = new Label()
+    usernameLabel.setText('Username')
+    form.add(usernameLabel)
 
-    var usernameInput = document.createElement('input')
-    usernameInput.style.width = '350px'
-    form.appendChild(usernameInput)
+    var usernameInput = new Input()
+    usernameInput.container.style.width = '350px'
+    form.add(usernameInput)
 
     //PASSWORD
-    var passwordLabel = document.createElement('label')
-    passwordLabel.textContent = 'Password'
-    form.appendChild(passwordLabel)
+    var passwordLabel = new Label()
+    passwordLabel.setText('Password')
+    form.add(passwordLabel)
 
-    var passwordInput = document.createElement('input')
-    passwordInput.type = 'password'
-    passwordInput.style.width = '350px'
-    form.appendChild(passwordInput)
+    var passwordInput = new Input()
+    passwordInput.setType('password')
+    passwordInput.container.style.width = '350px'
+    form.add(passwordInput)
 
 
-    var lowerSpan = document.createElement('span')
-    lowerSpan.style.margin = '10px'
-    lowerSpan.style.marginRight = '55px'
-    lowerSpan.style.display = 'flex'
-    lowerSpan.style.justifyContent = 'space-between'
-    lowerSpan.style.alignItems = 'center'
+    var lowerSpan = new Span()
+    lowerSpan.container.style.margin = '10px'
+    lowerSpan.container.style.marginRight = '55px'
+    lowerSpan.container.style.display = 'flex'
+    lowerSpan.container.style.justifyContent = 'space-between'
+    lowerSpan.container.style.alignItems = 'center'
     lowerSpan.width = '100%'
 
-    var loginAnchor = document.createElement('a')
-    loginAnchor.innerText = 'Login'
-    loginAnchor.style.textDecoration = 'underline'
-    loginAnchor.style.cursor = 'pointer'
-    lowerSpan.appendChild(loginAnchor)
+    var loginAnchor = new Anchor()
+    loginAnchor.setText('Login')
+    loginAnchor.container.style.textDecoration = 'underline'
+    loginAnchor.container.style.cursor = 'pointer'
+    lowerSpan.add(loginAnchor)
 
-    var registerButton = document.createElement('button')
-    registerButton.textContent = 'Register'
-    registerButton.type = 'submit'
-    registerButton.style.width = '80px'
-    lowerSpan.appendChild(registerButton)
+    var registerButton = new Button()
+    registerButton.setText('Register')
+    registerButton.setType('submit')
+    registerButton.container.style.width = '80px'
+    lowerSpan.add(registerButton)
 
 
-    form.appendChild(lowerSpan)
+    form.add(lowerSpan)
 
-    loginAnchor.addEventListener('click', function () {
+    loginAnchor.addClickListener(function () {
         document.body.removeChild(this.container)
         document.body.appendChild(login.container)
 
-        form.reset()
+        // form.reset()
     }.bind(this))
 
-    form.addEventListener('submit', function (event) {
+    form.addSubmitListener(function (event) {
         event.preventDefault()
         document.body.removeChild(this.container)
         document.body.appendChild(login.container)
@@ -148,78 +308,85 @@ register.mount = function () {
 
         console.log(userRegistered)
 
-        form.reset()
+        // form.reset() //REVISAR
     }.bind(this))
 }
 
+Register.prototype = Object.create(Component.prototype)
+Register.prototype.constructor = Register
+
+var register = new Register()
+// body.add(register)
+
 
 //--- LOGIN ---
-var login = new Component(document.createElement('div'))
-login.mount = function () {
+function Login() {
+    Component.call(this, 'div')
+
     this.container.style.width = '400px'
 
-    var title = document.createElement('h2')
-    title.textContent = 'Login'
-    this.container.appendChild(title)
+    var title = new Heading(2)
+    title.setText('Login')
+    this.add(title)
 
-    var form = document.createElement('form')
-    form.style.display = 'flex'
-    form.style.flexDirection = 'column'
-    form.style.justifyContent = 'left'
-    form.style.gap = '5px'
-    this.container.appendChild(form)
+    var form = new Form()
+    form.container.style.display = 'flex'
+    form.container.style.flexDirection = 'column'
+    form.container.style.justifyContent = 'left'
+    form.container.style.gap = '5px'
+    this.add(form)
 
     //USERNAME
-    var usernameLabel = document.createElement('label')
-    usernameLabel.textContent = 'Username'
-    form.appendChild(usernameLabel)
+    var usernameLabel = new Label()
+    usernameLabel.setText('Username')
+    form.add(usernameLabel)
 
-    var usernameInput = document.createElement('input')
-    usernameInput.style.width = '350px'
-    form.appendChild(usernameInput)
+    var usernameInput = new Input()
+    usernameInput.container.style.width = '350px'
+    form.add(usernameInput)
 
     //PASSWORD
-    var passwordLabel = document.createElement('label')
-    passwordLabel.textContent = 'Password'
-    form.appendChild(passwordLabel)
+    var passwordLabel = new Label()
+    passwordLabel.setText('Password')
+    form.add(passwordLabel)
 
-    var passwordInput = document.createElement('input')
-    passwordInput.type = 'password'
-    passwordInput.style.width = '350px'
-    form.appendChild(passwordInput)
-
-
-    var lowerSpan = document.createElement('span')
-    lowerSpan.style.margin = '10px'
-    lowerSpan.style.marginRight = '60px'
-    lowerSpan.style.display = 'flex'
-    lowerSpan.style.justifyContent = 'space-between'
-    this.container.appendChild(lowerSpan)
-
-    var registerAnchor = document.createElement('a')
-    registerAnchor.innerText = 'Register'
-    registerAnchor.style.textDecoration = 'underline'
-    registerAnchor.style.cursor = 'pointer'
-    lowerSpan.appendChild(registerAnchor)
-
-    var loginButton = document.createElement('button')
-    loginButton.textContent = 'Login'
-    loginButton.style.width = '80px'
-    loginButton.type = 'submit'
-    lowerSpan.appendChild(loginButton)
+    var passwordInput = new Input()
+    passwordInput.setType('password')
+    passwordInput.container.style.width = '350px'
+    form.add(passwordInput)
 
 
-    form.appendChild(lowerSpan)
+    var lowerSpan = new Span()
+    lowerSpan.container.style.margin = '10px'
+    lowerSpan.container.style.marginRight = '60px'
+    lowerSpan.container.style.display = 'flex'
+    lowerSpan.container.style.justifyContent = 'space-between'
+    this.add(lowerSpan)
 
-    registerAnchor.addEventListener('click', function () {
+    var registerAnchor = new Anchor()
+    registerAnchor.setText('Register')
+    registerAnchor.container.style.textDecoration = 'underline'
+    registerAnchor.container.style.cursor = 'pointer'
+    lowerSpan.add(registerAnchor)
+
+    var loginButton = new Button()
+    loginButton.setText('Login')
+    loginButton.container.style.width = '80px'
+    loginButton.setType8
+    lowerSpan.add(loginButton)
+
+
+    form.add(lowerSpan)
+
+    registerAnchor.addClickListener(function () {
         document.body.removeChild(this.container)
         document.body.appendChild(register.container)
 
-        form.reset()
+        // form.reset() //REVISAR
     }.bind(this))
 
 
-    form.addEventListener('submit', function (event) {
+    form.addSubmitListener(function (event) {
         event.preventDefault()
         document.body.removeChild(this.container)
         document.body.appendChild(home.container)
@@ -231,169 +398,173 @@ login.mount = function () {
 
         console.log(userLogged)
 
-        form.reset()
+        // form.reset()
     }.bind(this))
 }
 
+Login.prototype = Object.create(Component.prototype)
+Login.prototype.constructor = Login
+
+var login = new Login()
+// body.add(login)
+
 
 // ---- HOME ----
-var home = new Component(document.createElement('div'))
-home.mount = function () {
+function Home() {
+    Component.call(this, 'div')
+
     //Header
-    var header = document.createElement('header')
-    home.header = header
-    header.style.width = '100%'
-    header.style.height = '50px'
-    header.style.margin = '10px'
-    header.style.display = 'flex'
-    header.style.justifyContent = 'space-between'
-    header.style.alignItems = 'center'
-    this.container.appendChild(header)
+    var header = new Header()
+    header.container.style.width = '100%'
+    header.container.style.height = '50px'
+    header.container.style.margin = '10px'
+    header.container.style.display = 'flex'
+    header.container.style.justifyContent = 'space-between'
+    header.container.style.alignItems = 'center'
+    this.add(header)
 
-    var logoTitle = document.createElement('h2')
-    logoTitle.textContent = 'Logo'
-    header.appendChild(logoTitle)
+    var logoTitle = new Heading(2)
+    logoTitle.setText('Logo')
+    header.add(logoTitle)
 
-    var logoutButton = document.createElement('button')
-    logoutButton.textContent = 'Logout'
-    logoutButton.style.width = '100px'
-    logoutButton.style.height = '35px'
-    logoutButton.style.marginRight = '10px'
-    header.appendChild(logoutButton)
+    var logoutButton = new Button()
+    logoutButton.setText('Logout')
+    logoutButton.container.style.width = '100px'
+    logoutButton.container.style.height = '35px'
+    logoutButton.container.style.marginRight = '10px'
+    header.add(logoutButton)
 
-    logoutButton.addEventListener('click', function () {
+    logoutButton.addClickListener(function () {
         document.body.removeChild(this.container)
         document.body.appendChild(landing.container)
     }.bind(this))
 
     //MAIN HOME
-    var main = document.createElement('main')
-    home.main = main
-    this.container.appendChild(main)
+    var main = new Main()
+    this.add(main)
 
-    var posts = document.createElement('article')
-    posts.style.display = 'flex'
-    posts.style.width = '100%'
-    posts.style.maxWidth = 'inherit'
-    posts.style.flexDirection = 'column'
-    posts.style.gap = '10px'
-    main.appendChild(posts)
+    var posts = new Article()
+    posts.container.style.display = 'flex'
+    posts.container.style.width = '100%'
+    posts.container.style.maxWidth = 'inherit'
+    posts.container.style.flexDirection = 'column'
+    posts.container.style.gap = '10px'
+    main.add(posts)
 
 
     //KIWIII POST
-    var kiwiUser = document.createElement('h3')
-    kiwiUser.textContent = 'Juanpi'
-    posts.appendChild(kiwiUser)
+    var kiwiUser = new Heading(3)
+    kiwiUser.setText('Juanpi')
+    posts.add(kiwiUser)
 
-    var kiwiPost = document.createElement('img')
-    kiwiPost.src = 'https://www.nutritionadvance.com/wp-content/uploads/2017/12/whole-kiwi-fruit-and-half-a-kiwi-showing-flesh.jpg'
-    kiwiPost.style.width = '100%'
-    kiwiPost.style.height = 'auto'
-    posts.appendChild(kiwiPost)
+    var kiwiPost = new Image()
+    kiwiPost.container.src = 'https://www.nutritionadvance.com/wp-content/uploads/2017/12/whole-kiwi-fruit-and-half-a-kiwi-showing-flesh.jpg'
+    kiwiPost.container.style.width = '100%'
+    kiwiPost.container.style.height = 'auto'
+    posts.add(kiwiPost)
 
-    var kiwiMojis = document.createElement('span')
-    kiwiMojis.style.display = 'flex'
-    kiwiMojis.style.justifyContent = 'left'
-    kiwiMojis.style.gap = '5px'
-    posts.appendChild(kiwiMojis)
+    var kiwiMojis = new Span()
+    kiwiMojis.container.style.display = 'flex'
+    kiwiMojis.container.style.justifyContent = 'left'
+    kiwiMojis.container.style.gap = '5px'
+    posts.add(kiwiMojis)
 
-    var kiwiLikeButton = document.createElement('button')
-    kiwiLikeButton.textContent = '🤍'
-    kiwiLikeButton.style.backgroundColor = 'transparent'
-    kiwiMojis.appendChild(kiwiLikeButton)
+    var kiwiLikeButton = new Button()
+    kiwiLikeButton.setText('🤍')
+    kiwiLikeButton.container.style.backgroundColor = 'transparent'
+    kiwiMojis.add(kiwiLikeButton)
 
-    kiwiLikeButton.addEventListener('click', function () {
+    kiwiLikeButton.addClickListener(function () {
         this.textContent = this.textContent === '🤍' ? '❤️' : '🤍'
     })
 
-    var commentEmoji = document.createElement('a')
-    commentEmoji.innerText = '📃'
-    kiwiMojis.appendChild(commentEmoji)
+    var commentEmoji = new Anchor()
+    commentEmoji.setText('📃')
+    kiwiMojis.add(commentEmoji)
 
-    var comment = document.createElement('Text')
-    comment.textContent = 'Comment...'
-    comment.style.opacity = '60%'
-    comment.style.color = 'black'
-    kiwiMojis.appendChild(comment)
+    var comment = new Span()
+    comment.setText('Comment...')
+    comment.container.style.opacity = '60%'
+    comment.container.style.color = 'black'
+    kiwiMojis.add(comment)
 
 
-    //BANANA POST
-    var bananaUser = document.createElement('h3')
-    bananaUser.textContent = 'Manu'
-    posts.appendChild(bananaUser)
+    // //BANANA POST
+    var bananaUser = new Heading(3)
+    bananaUser.setText('Manu')
+    posts.add(bananaUser)
 
-    var bananaPost = document.createElement('img')
-    bananaPost.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAVh4eUU6jtRS9zzlomMGLvWgpua5Xj5IcoQ&s'
-    bananaPost.style.width = '100%'
-    bananaPost.style.height = 'auto'
-    posts.appendChild(bananaPost)
+    var bananaPost = new Image()
+    bananaPost.container.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAVh4eUU6jtRS9zzlomMGLvWgpua5Xj5IcoQ&s'
+    bananaPost.container.style.width = '100%'
+    bananaPost.container.style.height = 'auto'
+    posts.add(bananaPost)
 
-    var nanaMojis = document.createElement('span')
-    nanaMojis.style.display = 'flex'
-    nanaMojis.style.justifyContent = 'left'
-    nanaMojis.style.gap = '5px'
-    posts.appendChild(nanaMojis)
+    var nanaMojis = new Span()
+    nanaMojis.container.style.display = 'flex'
+    nanaMojis.container.style.justifyContent = 'left'
+    nanaMojis.container.style.gap = '5px'
+    posts.add(nanaMojis)
 
-    var bananaLikeButton = document.createElement('button')
-    bananaLikeButton.textContent = '🤍'
-    bananaLikeButton.style.backgroundColor = 'transparent'
-    nanaMojis.appendChild(bananaLikeButton)
+    var bananaLikeButton = new Button()
+    bananaLikeButton.setText('🤍')
+    bananaLikeButton.container.style.backgroundColor = 'transparent'
+    nanaMojis.add(bananaLikeButton)
 
-    bananaLikeButton.addEventListener('click', function () {
+    bananaLikeButton.addClickListener(function () {
         this.textContent = this.textContent === '🤍' ? '❤️' : '🤍'
     })
 
-    var commentEmoji = document.createElement('a')
-    commentEmoji.innerText = '📃'
-    nanaMojis.appendChild(commentEmoji)
+    var commentEmoji = new Anchor()
+    commentEmoji.setText('📃')
+    nanaMojis.add(commentEmoji)
 
-    var comment = document.createElement('Text')
-    comment.textContent = 'Comment...'
-    comment.style.opacity = '60%'
-    comment.style.color = 'black'
-    nanaMojis.appendChild(comment)
+    var comment = new Span()
+    comment.setText('Comment...')
+    comment.container.style.opacity = '60%'
+    comment.container.style.color = 'black'
+    nanaMojis.add(comment)
 
 
-    //ORANGE POST
-    var orangeUser = document.createElement('h3')
-    orangeUser.textContent = 'Frank'
-    posts.appendChild(orangeUser)
+    // //ORANGE POST
+    var orangeUser = new Heading(3)
+    orangeUser.setText('Frank')
+    posts.add(orangeUser)
 
-    var orangePost = document.createElement('img')
-    orangePost.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgqLw4idW1IdAusBGfdZPewk0HTJyRUzPCPg&s'
-    orangePost.style.width = '100%'
-    orangePost.style.height = 'auto'
-    posts.appendChild(orangePost)
+    var orangePost = new Image()
+    orangePost.container.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgqLw4idW1IdAusBGfdZPewk0HTJyRUzPCPg&s'
+    orangePost.container.style.width = '100%'
+    orangePost.container.style.height = 'auto'
+    posts.add(orangePost)
 
-    var oraMojis = document.createElement('span')
-    oraMojis.style.display = 'flex'
-    oraMojis.style.justifyContent = 'left'
-    oraMojis.style.gap = '5px'
-    posts.appendChild(oraMojis)
+    var oraMojis = new Span()
+    oraMojis.container.style.display = 'flex'
+    oraMojis.container.style.justifyContent = 'left'
+    oraMojis.container.style.gap = '5px'
+    posts.add(oraMojis)
 
-    var orangeLikeButton = document.createElement('button')
-    orangeLikeButton.textContent = '🤍'
-    orangeLikeButton.style.backgroundColor = 'transparent'
-    oraMojis.appendChild(orangeLikeButton)
+    var orangeLikeButton = new Button()
+    orangeLikeButton.setText('🤍')
+    orangeLikeButton.container.style.backgroundColor = 'transparent'
+    oraMojis.add(orangeLikeButton)
 
-    orangeLikeButton.addEventListener('click', function () {
+    orangeLikeButton.addClickListener(function () {
         this.textContent = this.textContent === '🤍' ? '❤️' : '🤍'
     })
 
-    var commentEmoji = document.createElement('a')
-    commentEmoji.innerText = '📃'
-    oraMojis.appendChild(commentEmoji)
+    var commentEmoji = new Anchor()
+    commentEmoji.setText('📃')
+    oraMojis.add(commentEmoji)
 
-    var comment = document.createElement('Text')
-    comment.textContent = 'Comment...'
-    comment.style.opacity = '60%'
-    comment.style.color = 'black'
-    oraMojis.appendChild(comment)
+    var comment = new Span()
+    comment.setText('Comment...')
+    comment.container.style.opacity = '60%'
+    comment.container.style.color = 'black'
+    oraMojis.add(comment)
 }
 
+Home.prototype = Object.create(Component.prototype)
+Home.prototype.constructor = Home
 
-//LLAMAR FUNCIONES
-landing.mount()
-register.mount()
-login.mount()
-home.mount()
+var home = new Home()
+// body.add(home)
