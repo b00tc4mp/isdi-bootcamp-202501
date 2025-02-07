@@ -29,8 +29,8 @@ landing.appendChild(landingRegisterButton)
 
 landingRegisterButton.addEventListener('click', function () {
     document.body.removeChild(landing)
-    document.body.removeChild(login)
-    document.body.removeChild(home)
+    //document.body.removeChild(login)
+    //document.body.removeChild(home)
     document.body.appendChild(register)
 })
 
@@ -59,8 +59,8 @@ landing.appendChild(landingLoginButton)
 
 landingLoginButton.addEventListener('click', function () {
     document.body.removeChild(landing)
-    document.body.removeChild(register)
-    document.body.removeChild(home)
+    //document.body.removeChild(register)
+    //document.body.removeChild(home)
     document.body.appendChild(login)
 
 })
@@ -72,7 +72,7 @@ landingLoginButton.appendChild(landingButtonLoginText)
 
 
 var register = document.createElement('div')
-document.body.appendChild(register)
+//document.body.appendChild(register)
 
 
 //logo
@@ -219,8 +219,8 @@ registerForm.appendChild(registerButton)
 
 registerButton.addEventListener('click', function () {
     document.body.removeChild(register)
-    document.body.removeChild(login)
-    document.body.appendChild(home)
+    //document.body.removeChild(login)
+    document.body.appendChild(login)
 })
 
 var registerButtonText = document.createTextNode('Register')
@@ -230,7 +230,7 @@ registerButton.appendChild(registerButtonText)
 //LOGIN PAGE
 
 var login = document.createElement('div')
-document.body.appendChild(login)
+//document.body.appendChild(login)
 
 //logo
 var loginLogo = document.createElement('h1')
@@ -318,7 +318,7 @@ loginButton.appendChild(loginButtonText)
 // HOMEPAGE
 
 var home = document.createElement('div')
-document.body.appendChild(home)
+//document.body.appendChild(home)
 
 //logo
 
