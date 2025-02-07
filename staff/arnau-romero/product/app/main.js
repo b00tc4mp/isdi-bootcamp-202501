@@ -2,12 +2,12 @@ console.clear()
 console.log('Hello, App!')
 
 // =========================================================LANDING=====================================================================================
-// document.body.style.backgroundColor = '#E0EEEC'
-// document.bosy.style.fontFamily = 'verdana'
+
 //CREAR EL DIV DE LOGO
 var landing = document.createElement('div') //Creo div landing.
 document.body.appendChild(landing) // Asigno la div landing a body (ahora landing es hijo de body).
-
+landing.style.backgroundColor = '#E0EEEC'
+landing.style.fontFamily = 'verdana'
 var landingLogo = document.createElement('h1') // Creo elemento cabecera Landinglogo.
 landing.appendChild(landingLogo) //Asigno el LandingLogo al landing (ahora landingLogo es el hijo de landing).
 
@@ -49,7 +49,8 @@ landingLoginAnchor.appendChild(landingLoginText)
 
 var register = document.createElement('div') // Creo div register
 //document.body.appendChild(register) // Asigno la div register a body (ahora register es hijo de body)
-
+register.style.backgroundColor = '#E0EEEC'
+registerstyle.fontFamily = 'verdana'
 var registerLogo = document.createElement('h1') // Creo el elemento register logo
 register.appendChild(registerLogo) // Assigno el elemento registerLogo a register 
 
