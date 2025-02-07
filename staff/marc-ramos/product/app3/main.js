@@ -2,20 +2,8 @@ console.clear();
 
 // pagina landing donde vamos a ver el logo h1, un link (register), un texto (or) y otro link (login)
 
-function Component(tagName) {
-  this.container = document.createElement(tagName);
-}
-
-Component.prototype.add = function (child) {
-  this.container.appendChild(child.container);
-};
-
-Component.prototype.addClickListener = function (callback) {
-  this.container.addEventListener("click", callback);
-};
-
-function Form() {
-  Component.call(this, "form");
+function Component(container) {
+  this.container = container;
 }
 
 //LANDING
