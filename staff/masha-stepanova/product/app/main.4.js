@@ -1,18 +1,21 @@
 console.clear()
 
+// LANDING
+
 var Component = function (container) {
     this.container = container
 }
 
 var helper = {
     createLogo: function () {
-        var logo = document.createElement('h1')
-        logo.innerText = 'Logo'
-        return logo
+        var logito = document.createElement('h1')
+        logito.innerText = 'Logo'
+        return logito
     },
     createLikeButton: function () {
         var likeButton = document.createElement('button')
         likeButton.innerText = '🤍'
+        likeButtonStatus = false
         likeButton.addEventListener('click', function () {
             likeButton.innerText = likeButton.innerText === '🤍' ? '❤️' : '🤍'
         })
@@ -43,11 +46,6 @@ var helper = {
         form.style.gap = '0.2rem'
         form.style.width = '500px'
 
-        for (let i = 0; i < arguments.length; i++) {
-            form.appendChild(helper.createLabel(arguments[i]))
-            form.appendChild(document.createElement('input'))
-        }
-
         return form
     },
     createDirectionAnchor: function (innerText, currentDirection, nextDirection) {
@@ -75,27 +73,6 @@ var helper = {
     }
 }
 
-var createPost = function (userName, pictureSource, captionText, postDate) {
-    var article = helper.createArticle()
-
-    var username = document.createElement('h3')
-    username.innerText = userName
-    article.appendChild(username)
-
-    article.appendChild(helper.createPicture(pictureSource))
-
-    var caption = helper.createSpan()
-    caption.textContent = captionText
-    caption.appendChild(helper.createLikeButton())
-    article.appendChild(caption)
-
-    article.appendChild(document.createTextNode(postDate))
-
-    return article
-}
-
-// LANDING
-
 var landing = new Component(document.createElement('div'))
 landing.mount = function () {
     document.body.appendChild(this.container)
@@ -118,7 +95,7 @@ var register = new Component(document.createElement('div'))
 register.mount = function () {
     this.container.appendChild(helper.createLogo())
 
-    var form = helper.createForm('Name', 'E-mail', 'Username', 'Password')
+    var form = helper.createForm()
     this.container.appendChild(form)
 
     form.addEventListener('submit', function (event) {
@@ -136,6 +113,30 @@ register.mount = function () {
         console.log(name, email, username, password)
     }.bind(this))
 
+    var nameLabel = helper.createLabel('Name')
+    form.appendChild(nameLabel)
+
+    var nameInput = document.createElement('input')
+    form.appendChild(nameInput)
+
+    var emailLabel = helper.createLabel('E-mail')
+    form.appendChild(emailLabel)
+
+    var emailInput = document.createElement('input')
+    form.appendChild(emailInput)
+
+    var usernameLabel = helper.createLabel('Username')
+    form.appendChild(usernameLabel)
+
+    var usernameInput = document.createElement('input')
+    form.appendChild(usernameInput)
+
+    var passwordLabel = helper.createLabel('Password')
+    form.appendChild(passwordLabel)
+
+    var passwordInput = document.createElement('input')
+    form.appendChild(passwordInput)
+
     var registerButton = document.createElement('button')
     registerButton.type = 'submit'
     registerButton.innerText = 'Register'
@@ -151,8 +152,20 @@ var login = new Component(document.createElement('div'))
 login.mount = function () {
     this.container.appendChild(helper.createLogo())
 
-    var form = helper.createForm('Username', 'Password')
+    var form = helper.createForm()
     this.container.appendChild(form)
+
+    var usernameLabel = helper.createLabel('Username')
+    form.appendChild(usernameLabel)
+
+    var usernameInput = document.createElement('input')
+    form.appendChild(usernameInput)
+
+    var passwordLabel = helper.createLabel('Password')
+    form.appendChild(passwordLabel)
+
+    var passwordInput = document.createElement('input')
+    form.appendChild(passwordInput)
 
     var loginButton = document.createElement('button')
     loginButton.innerText = 'Login'
@@ -175,17 +188,91 @@ home.mount = function () {
     this.container.style.gap = '0.5rem'
     this.container.appendChild(helper.createLogo())
 
-    var article1 = createPost('username1', 'https://t4.ftcdn.net/jpg/09/02/37/89/240_F_902378980_u4sL7oSE5RB3fTlgJnCyscPoH6lrF4uy.jpg', 'Caption', '2 weeks ago')
+    // ARTICLE 1
+
+    var article1 = helper.createArticle()
     this.container.appendChild(article1)
 
-    var article2 = createPost('username2', 'https://imgs.search.brave.com/sZjKUhOvtfY9crCnDhxXV0l62Y1j-6MOfn3qjktlfr8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAyLzk0Lzk4LzM0/LzM2MF9GXzI5NDk4/MzQ4NF9uZEx2eDZa/bkRManJQckFGSjJy/NDNlSVVUNk5HZkxu/SS5qcGc', 'Caption', '3 weeks ago')
+    var article1Username = document.createElement('h3')
+    article1Username.innerText = 'username1'
+    article1.appendChild(article1Username)
+
+    var article1Picture = helper.createPicture('https://t4.ftcdn.net/jpg/09/02/37/89/240_F_902378980_u4sL7oSE5RB3fTlgJnCyscPoH6lrF4uy.jpg')
+    article1.appendChild(article1Picture)
+
+    var article1Caption = helper.createSpan()
+    article1Caption.textContent = 'Caption'
+    article1.appendChild(article1Caption)
+
+    article1Caption.appendChild(helper.createLikeButton())
+
+    var article1Date = document.createTextNode('3 weeks ago')
+    article1.appendChild(article1Date)
+
+    // ARTICLE 2
+
+    var article2 = helper.createArticle()
     this.container.appendChild(article2)
 
-    var article3 = createPost('username3', 'https://t4.ftcdn.net/jpg/10/28/90/93/240_F_1028909330_gJNTy01sKzbYo0umWlGa1e5oiWHkJxB9.jpg', 'Caption', '4 weeks ago')
+    var article2Username = document.createElement('h3')
+    article2Username.innerText = 'username2'
+    article2.appendChild(article2Username)
+
+    var article2Picture = helper.createPicture('https://imgs.search.brave.com/sZjKUhOvtfY9crCnDhxXV0l62Y1j-6MOfn3qjktlfr8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAyLzk0Lzk4LzM0/LzM2MF9GXzI5NDk4/MzQ4NF9uZEx2eDZa/bkRManJQckFGSjJy/NDNlSVVUNk5HZkxu/SS5qcGc')
+    article2.appendChild(article2Picture)
+
+    // SPAN CAPTION & BUTTON
+
+    var article2Caption = helper.createSpan()
+    article2Caption.textContent = 'Caption'
+    article2.appendChild(article2Caption)
+
+    article2Caption.appendChild(helper.createLikeButton())
+
+    var article2Date = document.createTextNode('3 weeks ago')
+    article2.appendChild(article2Date)
+
+    // ARTICLE 3
+
+    var article3 = helper.createArticle()
     this.container.appendChild(article3)
 
-    var article4 = createPost('username4', 'https://t3.ftcdn.net/jpg/08/69/02/92/240_F_869029213_2y0i0t5Y6nZmb62r2pMp6vGfObRkcTVR.jpg', 'Caption', '4 weeks ago')
+    var article3Username = document.createElement('h3')
+    article3Username.innerText = 'username3'
+    article3.appendChild(article3Username)
+
+    var article3Picture = helper.createPicture('https://t4.ftcdn.net/jpg/10/28/90/93/240_F_1028909330_gJNTy01sKzbYo0umWlGa1e5oiWHkJxB9.jpg')
+    article3.appendChild(article3Picture)
+
+    var article3Caption = helper.createSpan()
+    article3Caption.textContent = 'Caption'
+    article3.appendChild(article3Caption)
+
+    article3Caption.appendChild(helper.createLikeButton())
+
+    var article3Date = document.createTextNode('4 weeks ago')
+    article3.appendChild(article3Date)
+
+    // ARTICLE 4
+
+    var article4 = helper.createArticle()
     this.container.appendChild(article4)
+
+    var article4Username = document.createElement('h3')
+    article4Username.innerText = 'username4'
+    article4.appendChild(article4Username)
+
+    var article4Picture = helper.createPicture('https://t3.ftcdn.net/jpg/08/69/02/92/240_F_869029213_2y0i0t5Y6nZmb62r2pMp6vGfObRkcTVR.jpg')
+    article4.appendChild(article4Picture)
+
+    var article4Caption = helper.createSpan()
+    article4Caption.textContent = 'Caption'
+    article4.appendChild(article4Caption)
+
+    article4Caption.appendChild(helper.createLikeButton())
+
+    var article4Date = document.createTextNode('4 weeks ago')
+    article4.appendChild(article4Date)
 }
 
 landing.mount()
