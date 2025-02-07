@@ -3,128 +3,44 @@ console.log('Hello, App!')
 
 // component
 
-function Component(tagName) {
-    this.container = document.createElement(tagName)
+function Component(container) {
+    this.container = container
 }
-
-Component.prototype.add = function (child) {
-    this.container.appendChild(child.container)
-}
-
-Component.prototype.addClickListener = function (callback) {
-    this.container.addEventListener('click', callback)
-}
-
-function Form() {
-    Component.call(this, 'form')
-}
-
-Form.prototype = Object.create(Component.prototype)
-Form.prototype.constructor = Form
-
-function Input() {
-    Component.call(this, 'input')
-}
-
-Input.prototype = Object.create(Component.prototype)
-Input.prototype.constructor = Input
-
-Input.prototype.setType = function (type) {
-    this.container.type = type
-}
-
-Input.prototype.setPlaceholder = function (placeholder) {
-    this.container.placeholder = placeholder
-}
-
-function Button() {
-    Component.call(this, 'button')
-}
-
-Button.prototype = Object.create(Component.prototype)
-Button.prototype.constructor = Button
-
-Button.prototype.setType = function (type) {
-    this.container.type = type
-}
-
-Button.prototype.setText = function (text) {
-    this.container.textContent = text
-}
-
-function Heading(level) {
-    Component.call(this, 'h' + level)
-}
-
-Heading.prototype = Object.create(Component.prototype)
-Heading.prototype.constructor = Heading
-
-Heading.prototype.setText = function (text) {
-    this.container.textContent = text
-}
-
-function Anchor() {
-    Component.call(this, 'a')
-}
-
-Anchor.prototype = Object.create(Component.prototype)
-Anchor.prototype.constructor = Anchor
-
-Anchor.prototype.setText = function (text) {
-    this.container.textContent = text
-}
-
-function Body() {
-    Component.call(this, 'body')
-}
-
-Body.prototype = Object.create(Component.prototype)
-Body.prototype.constructor = Body
-
-// body
-
-const body = new Body()
-document.body = body.container
 
 // landing
 
-function Landing() {
-    Component.call(this, 'div')
+var landing = new Component(document.createElement('div'))
+landing.mount = function () {
+    document.body.appendChild(this.container)
 
-    var logo = new Heading(1)
-    logo.setText('Logo')
-    this.add(logo)
+    var logo = document.createElement('h1')
+    logo.textContent = 'Logo'
+    this.container.appendChild(logo)
 
-    var registerAnchor = new Anchor()
-    registerAnchor.setText('Register')
-    registerAnchor.addClickListener(function () {
+    var registerAnchor = document.createElement('a')
+    registerAnchor.textContent = 'Register'
+    registerAnchor.addEventListener('click', function () {
         document.body.removeChild(this.container)
         document.body.appendChild(register.container)
     }.bind(this))
-    this.add(registerAnchor)
+    this.container.appendChild(registerAnchor)
 
 
     var orText = document.createTextNode('or')
     this.container.appendChild(orText)
 
-    var loginAnchor = new Anchor()
-    loginAnchor.setText('Login')
-    loginAnchor.addClickListener(function () {
+    var loginAnchor = document.createElement('a')
+    loginAnchor.textContent = 'Login'
+    loginAnchor.addEventListener('click', function () {
         document.body.removeChild(this.container)
         document.body.appendChild(login.container)
     }.bind(this))
-    this.add(loginAnchor)
+    this.container.appendChild(loginAnchor)
 }
-
-Landing.prototype = Object.create(Component.prototype)
-Landing.prototype.constructor = Landing
-
-var landing = new Landing()
-body.add(landing)
 
 /* register */
 
-var register = new Component('div')
+var register = new Component(document.createElement('div'))
 register.mount = function () {
     var logo = document.createElement('h1')
     logo.textContent = 'Logo'
@@ -206,7 +122,7 @@ register.mount = function () {
 
 /* login */
 
-var login = new Component('div')
+var login = new Component(document.createElement('div'))
 login.mount = function () {
     var logo = document.createElement('h1')
     logo.textContent = 'Logo'
@@ -256,13 +172,14 @@ login.mount = function () {
 
 /* home */
 
-var home = new Component('div')
+var home = new Component(document.createElement('div'))
 home.mount = function () {
     var logo = document.createElement('h1')
     logo.textContent = 'Logo'
     this.container.appendChild(logo)
 }
 
+landing.mount()
 register.mount()
 login.mount()
 home.mount()
