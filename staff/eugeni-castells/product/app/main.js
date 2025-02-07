@@ -1,30 +1,28 @@
 console.clear();
 
+document.body.style.margin = "0";
 //data
-
-var fakeUser = {
-  username: "castells",
-  password: "hunterxhunter",
-};
 
 var loginFormData = {
   username: "",
   password: "",
 };
+
+var registerFormData = {
+  name: "",
+  email: "",
+  username: "",
+  password: "",
+};
+
+var users = [];
+users = JSON.parse(localStorage.getItem("users"));
+
 //object
 
 function Component(container) {
   this.container = container;
 }
-
-function inputHandler() {}
-// function Form(...input) {
-//   this.form = document.createElement("form");
-//   for (var i = 0; i < input.length; i++) {
-//     this.input = document.createElement("input");
-//     this.form.appendChild(this.input);
-//   }
-// }
 
 // landing
 var landing = new Component(document.createElement("div"));
@@ -44,7 +42,6 @@ landing.mount = function () {
 
   //var link Register
   var registerLink = document.createElement("a");
-  registerLink.href = "#register";
   registerLink.textContent = "Register";
   linkDiv.appendChild(registerLink);
 
@@ -64,7 +61,6 @@ landing.mount = function () {
   //var link Login
   var loginLink = document.createElement("a");
   loginLink.textContent = "Login";
-  loginLink.href = "#login";
   loginLink.addEventListener(
     "click",
     function () {
@@ -93,79 +89,116 @@ register.mount = function () {
   form.style.display = "flex";
   form.style.flexDirection = "column";
   form.style.gap = "1rem";
+
+  form.addEventListener(
+    "submit",
+    function (event) {
+      event.preventDefault();
+      var registerPassed = true;
+      for (var property in registerFormData) {
+        if (registerFormData[property] === "") {
+          registerPassed = false;
+          break;
+        }
+      }
+
+      if (registerPassed) {
+        users[users.length] = registerFormData;
+        localStorage.setItem("users", JSON.stringify(users));
+        document.body.removeChild(this.container);
+        document.body.appendChild(login.container);
+      } else alert("Register failed");
+    }.bind(this)
+  );
+
   this.container.appendChild(form);
 
   //form namefield
-  var nameFieldRegister = document.createElement("div");
-  nameFieldRegister.style.display = "flex";
-  nameFieldRegister.style.flexDirection = "column";
-  nameFieldRegister.style.gap = "5px";
-  form.appendChild(nameFieldRegister);
+  var nameField = document.createElement("div");
+  nameField.style.display = "flex";
+  nameField.style.flexDirection = "column";
+  nameField.style.gap = "5px";
+  form.appendChild(nameField);
 
   //nameInputRegister
   var nameLabel = document.createElement("label");
   nameLabel.htmlFor = "name";
   nameLabel.textContent = "Name";
-  nameFieldRegister.appendChild(nameLabel);
+  nameField.appendChild(nameLabel);
 
   var nameInput = document.createElement("input");
   nameInput.type = "text";
   nameInput.id = "name";
-  nameFieldRegister.appendChild(nameInput);
+  nameInput.addEventListener("keydown", function (event) {
+    registerFormData.name = event.target.value;
+  });
+
+  nameField.appendChild(nameInput);
 
   //form emailField
-  var emailFieldRegister = document.createElement("div");
-  emailFieldRegister.style.display = "flex";
-  emailFieldRegister.style.flexDirection = "column";
-  emailFieldRegister.style.gap = "5px";
-  form.appendChild(emailFieldRegister);
+  var emailField = document.createElement("div");
+  emailField.style.display = "flex";
+  emailField.style.flexDirection = "column";
+  emailField.style.gap = "5px";
+
+  form.appendChild(emailField);
 
   //emailInputRegister
   var emailLabel = document.createElement("label");
   emailLabel.htmlFor = "email";
   emailLabel.textContent = "E-mail";
-  emailFieldRegister.appendChild(emailLabel);
+  emailField.appendChild(emailLabel);
 
   var emailInput = document.createElement("input");
   emailInput.type = "text";
-  emailInput.id = "name";
-  emailFieldRegister.appendChild(emailInput);
+  emailInput.id = "email";
+  emailInput.addEventListener("keydown", function (event) {
+    registerFormData.email = event.target.value;
+  });
+
+  emailField.appendChild(emailInput);
 
   //form usernameField
-  var usernameFieldRegister = document.createElement("div");
-  usernameFieldRegister.style.display = "flex";
-  usernameFieldRegister.style.flexDirection = "column";
-  usernameFieldRegister.style.gap = "5px";
-  form.appendChild(usernameFieldRegister);
+  var usernameField = document.createElement("div");
+  usernameField.style.display = "flex";
+  usernameField.style.flexDirection = "column";
+  usernameField.style.gap = "5px";
+  form.appendChild(usernameField);
 
   //usernameInputRegister
   var usernameLabel = document.createElement("label");
   usernameLabel.htmlFor = "username";
   usernameLabel.textContent = "Username";
-  usernameFieldRegister.appendChild(usernameLabel);
+  usernameField.appendChild(usernameLabel);
 
   var usernameInput = document.createElement("input");
   usernameInput.type = "text";
-  usernameInput.id = "name";
-  usernameFieldRegister.appendChild(usernameInput);
+  usernameInput.id = "username";
+  usernameField.appendChild(usernameInput);
 
+  usernameInput.addEventListener("keydown", function (event) {
+    registerFormData.username = event.target.value;
+  });
   //form passwordField
-  var passwordFieldRegister = document.createElement("div");
-  passwordFieldRegister.style.display = "flex";
-  passwordFieldRegister.style.flexDirection = "column";
-  passwordFieldRegister.style.gap = "5px";
-  form.appendChild(passwordFieldRegister);
+  var passwordField = document.createElement("div");
+  passwordField.style.display = "flex";
+  passwordField.style.flexDirection = "column";
+  passwordField.style.gap = "5px";
+  form.appendChild(passwordField);
 
   //passwordInputRegister
   var passwordLabel = document.createElement("label");
   passwordLabel.htmlFor = "password";
   passwordLabel.textContent = "Password";
-  passwordFieldRegister.appendChild(passwordLabel);
+  passwordField.appendChild(passwordLabel);
 
   var passwordInput = document.createElement("input");
   passwordInput.type = "password";
   passwordInput.id = "password";
-  passwordFieldRegister.appendChild(passwordInput);
+  passwordField.appendChild(passwordInput);
+  passwordInput.addEventListener("keydown", function (event) {
+    registerFormData.password = event.target.value;
+  });
 
   //button wrapper
   var buttonWrapper = document.createElement("div");
@@ -236,7 +269,7 @@ login.mount = function () {
   var nameInput = document.createElement("input");
   nameInput.type = "text";
   nameInput.id = "username";
-  nameInput.addEventListener("keyup", function (event) {
+  nameInput.addEventListener("keydown", function (event) {
     loginFormData.username = event.target.value;
   });
   nameField.appendChild(nameInput);
@@ -257,7 +290,7 @@ login.mount = function () {
   var passwordInput = document.createElement("input");
   passwordInput.type = "password";
   passwordInput.id = "password";
-  passwordInput.addEventListener("keyup", function (event) {
+  passwordInput.addEventListener("keydown", function (event) {
     loginFormData.password = event.target.value;
   });
   passwordField.appendChild(passwordInput);
@@ -270,12 +303,14 @@ login.mount = function () {
   //register button
   var registerButton = document.createElement("button");
   registerButton.textContent = "Register";
-  registerButton.type = "submit";
   buttonWrapper.appendChild(registerButton);
-  registerButton.addEventListener("click", function () {
-    document.body.removeChild(container);
-    document.body.appendChild(register.container);
-  });
+  registerButton.addEventListener(
+    "click",
+    function () {
+      document.body.removeChild(this.container);
+      document.body.appendChild(register.container);
+    }.bind(this)
+  );
 
   //login button
   var formButton = document.createElement("button");
@@ -289,19 +324,29 @@ login.mount = function () {
   formButton.style.alignSelf = "flex-end";
   formButton.addEventListener(
     "click",
-    function () {
-      console.log(
-        `Username introduced: ${loginFormData.username}`,
-        `Password introduced: ${loginFormData.password}`
-      );
-      if (
-        loginFormData.username === fakeUser.username &&
-        loginFormData.password === fakeUser.password
-      ) {
+    function (event) {
+      event.preventDefault();
+
+      var correctUsername = false;
+
+      var correctPassword = false;
+
+      for (var i = 0; i < users.length; i++) {
+        if (loginFormData.username === users[i].username) {
+          correctUsername = true;
+        }
+
+        if (loginFormData.password === users[i].password) {
+          correctPassword = true;
+        }
+      }
+      if (correctPassword && correctPassword) {
         alert("Login successful!");
         document.body.removeChild(this.container);
         document.body.appendChild(home.container);
-      } else alert("Login failed!");
+      } else {
+        alert("Login failed!");
+      }
     }.bind(this)
   );
 };
@@ -309,10 +354,19 @@ login.mount = function () {
 // home
 
 var home = new Component(document.createElement("div"));
+
 home.mount = function () {
+  this.container.style.padding = "1rem";
   var logo = document.createElement("h1");
   logo.textContent = "Logo";
   this.container.appendChild(logo);
+
+  var sectionWrapper = document.createElement("div");
+  sectionWrapper.style.width = "calc(100vw - 2rem)";
+  sectionWrapper.style.height = "150px";
+  sectionWrapper.style.backgroundColor = "gray";
+
+  this.container.appendChild(sectionWrapper);
 };
 
 landing.mount();
