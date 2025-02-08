@@ -1,5 +1,5 @@
 console.clear();
-//console.log("Hello,App!");
+console.log("Hello,App!");
 
 /*
 crear componentes con el constructor
@@ -268,24 +268,6 @@ Image.prototype.setSrc = function (src) {
 var body = new Body();
 document.body = body.container;
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 //////// Landing
 function Landing() {
   Component.call(this, "div");
@@ -347,15 +329,13 @@ function Register() {
 
       var user = new User(name, email, username, password);
 
-      //alert(`${user.name} ${user.email} ${user.username} ${user.password}`);
-      //console.dir(user);
+      alert(`${user.name} ${user.email} ${user.username} ${user.password}`);
+      console.dir(user);
 
       body.remove(this);
       body.add(home);
     }.bind(this)
   );
-  inputForm.container.style.display = "flex";
-  inputForm.container.style.flexDirection = "column";
   this.add(inputForm);
 
   var nameLabel = new Label();
@@ -366,7 +346,6 @@ function Register() {
   var nameInput = new Input();
   nameInput.setType("text");
   nameInput.setId("register-name");
-  nameInput.setPlaceholder('name')
   inputForm.add(nameInput);
 
   var emailLabel = new Label();
@@ -377,7 +356,6 @@ function Register() {
   var emailInput = new Input();
   emailInput.setType("text");
   emailInput.setId("register-email");
-  emailInput.setPlaceholder('e-mail')
   inputForm.add(emailInput);
 
   var usernameLabel = new Label();
@@ -388,7 +366,6 @@ function Register() {
   var usernameInput = new Input();
   usernameInput.setType("text");
   usernameInput.setId("register-username");
-  usernameInput.setPlaceholder('username')
   inputForm.add(usernameInput);
 
   var passwordLabel = new Label();
@@ -399,18 +376,9 @@ function Register() {
   var passwordInput = new Input();
   passwordInput.setType("password");
   passwordInput.setId("register-password");
-  passwordInput.setPlaceholder('********')
   inputForm.add(passwordInput);
 
-  inputForm.container.querySelectorAll("input").forEach(function (child) {
-    child.style.width = "300px";
-  })
-
   var loginAndRegister = new Div();
-  loginAndRegister.container.style.width = '310px'
-  loginAndRegister.container.style.marginTop = '15px'
-  loginAndRegister.container.style.display = 'flex'
-  loginAndRegister.container.style.justifyContent = 'space-between'
   inputForm.add(loginAndRegister);
 
   var loginAnchor = new Anchor();
@@ -451,15 +419,13 @@ function Login() {
       var username = usernameInput.container.value;
       var password = passwordInput.container.value;
 
-      //alert(username + password);
-      //console.log(username, password);
+      alert(username + password);
+      console.log(username, password);
 
       body.remove(this);
       body.add(home);
     }.bind(this)
   );
-  inputForm.container.style.display = 'flex'
-  inputForm.container.style.flexDirection = 'column'
   this.add(inputForm);
 
   var usernameLabel = new Label();
@@ -470,7 +436,6 @@ function Login() {
   var usernameInput = new Input();
   usernameInput.setType("text");
   usernameInput.setId("login-username");
-  usernameInput.setPlaceholder('username')
   inputForm.add(usernameInput);
 
   var passwordLabel = new Label();
@@ -481,18 +446,9 @@ function Login() {
   var passwordInput = new Input();
   passwordInput.setType("password");
   passwordInput.setId("login-password");
-  passwordInput.setPlaceholder('********')
   inputForm.add(passwordInput);
 
-  inputForm.container.querySelectorAll("input").forEach(function (child) {
-    child.style.width = "300px";
-  })
-
   var registerAndLogin = new Div();
-  registerAndLogin.container.style.width = '310px'
-  registerAndLogin.container.style.marginTop = '15px'
-  registerAndLogin.container.style.display = 'flex'
-  registerAndLogin.container.style.justifyContent = 'space-between'
   inputForm.add(registerAndLogin);
 
   var registerAnchor = new Anchor();
@@ -525,10 +481,6 @@ function Home() {
   this.add(logo);
 
   var postArticleDiv = new Article();
-  postArticleDiv.container.style.display = 'flex'
-  postArticleDiv.container.style.flexDirection = 'column'
-  postArticleDiv.container.style.width = '500px'
-  postArticleDiv.container.style.textAlign = 'justify'
   this.add(postArticleDiv);
 }
 
@@ -541,8 +493,6 @@ var home = new Home();
 function Post() {
   Component.call(this, "article");
 
-  this.container.style.width = '500px'
-
   var header = new Header();
   this.add(header);
 
@@ -551,14 +501,10 @@ function Post() {
   header.add(title);
 
   var figure = new Figure();
-  figure.container.style.display = 'flex'
-  figure.container.style.justifyContent = 'center'
-  //figure.container.style.width = '300px'
   this.add(figure);
 
   var image = new Image();
   image.setSrc("./assets/n.jpg");
-  image.container.style.width = '300px'
   figure.add(image);
 
   var footer = new Footer();
@@ -583,9 +529,8 @@ function Post() {
 
   var descriptionP = new Paragraph();
   descriptionP.setText(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus maxime quibusdam officia adipisci dolor ducimus inventore numquam expedita reprehenderit, quaerat sit quam tempore laboriosam fuga eaque, eius consectetur totam eligendi rerum ad in praesentium excepturi. Non velit perferendis blanditiis dignissimos."
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus maxime quibusdam officia adipisci dolor ducimus inventore numquam expedita."
   );
-  descriptionP.container.style.textAlign = 'justify'
   footer.add(descriptionP);
 }
 
@@ -593,4 +538,3 @@ Post.prototype = Object.create(Component.prototype);
 Post.prototype.constructor = Post;
 var post = new Post();
 home.add(post);
-//body.add(post); // provisional
