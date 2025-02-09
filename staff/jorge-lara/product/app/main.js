@@ -1,251 +1,334 @@
 console.clear()
 
 
-function Component(container) {
-    this.container = container
+//Constructor
+function Component(tag) {
+    this.container = document.createElement(tag);
 }
 
-// LANDING
-
-let landing = new Component(document.createElement('div'))
-landing.mount = function () {
-    document.body.appendChild(this.container)
-
-    let landingLogo = document.createElement('h1')
-    landingLogo.textContent = 'Logo'
-    this.container.appendChild(landingLogo)
-
-    //register landing
-    let registerAnchor = document.createElement('a');
-    registerAnchor.textContent = 'Register'
-    registerAnchor.style.cursor = 'pointer'
-    registerAnchor.addEventListener('click', function () {
-        document.body.removeChild(this.container)
-        document.body.appendChild(registerDiv.container)
-    }.bind(this))
-    this.container.appendChild(registerAnchor);
-
-    //login landing
-    let loginAnchor = document.createElement('a');
-    loginAnchor.textContent = 'Login'
-    loginAnchor.style.cursor = 'pointer'
-    loginAnchor.style.marginLeft = '25px'
-
-    loginAnchor.addEventListener('click', function () {
-        document.body.removeChild(this.container)
-        document.body.appendChild(loginDiv.container)
-    }.bind(this))
-    this.container.appendChild(loginAnchor);
+//Element Constructors
+function Body() {
+    Component.call(this, 'body');
 }
 
+Body.prototype = Object.create(Component.prototype);
+Body.prototype.constructor = Body;
 
-// REGISTER
+function Heading(level) {
+    Component.call(this, 'h' + level);
+}
+Heading.prototype = Object.create(Component.prototype);
+Heading.prototype.constructor = Heading;
 
-let registerDiv = new Component(document.createElement('div'));
-registerDiv.mount = function () {
-    registerDiv.id = 'register_div';
+Heading.prototype.setText = function (text) {
+    this.container.textContent = text;
+};
 
-    let registerLogo = document.createElement('h1');
-    registerLogo.textContent = 'Logo'
-    this.container.appendChild(registerLogo)
+function Anchor() {
+    Component.call(this, 'a');
+}
+Anchor.prototype = Object.create(Component.prototype);
+Anchor.prototype.constructor = Anchor;
 
-    //Form
+Anchor.prototype.setText = function (text) {
+    this.container.textContent = text;
+};
 
-    let registerForm = document.createElement('form');
-    registerForm.style.display = 'flex'
-    registerForm.style.flexDirection = 'column'
-    registerForm.style.width = '250px'
+function Form() {
+    Component.call(this, 'form');
+}
+Form.prototype = Object.create(Component.prototype);
+Form.prototype.constructor = Form;
 
-    registerForm.addEventListener('submit', function (e) {
+function Label() {
+    Component.call(this, 'label');
+}
+
+Label.prototype = Object.create(Component.prototype);
+Label.prototype.container = Label;
+
+Label.prototype.setText = function (text) {
+    this.container.textContent = text;
+};
+
+function Input() {
+    Component.call(this, 'input')
+}
+Input.prototype = Object.create(Component.prototype);
+Input.prototype.container = Input;
+
+function Span() {
+    Component.call(this, 'span');
+}
+
+Span.prototype = Object.create(Component.prototype);
+Span.prototype.container = Span;
+
+function Button() {
+    Component.call(this, 'button');
+}
+Button.prototype = Object.create(Component.prototype)
+Button.prototype.container = Button;
+
+Button.prototype.setText = function (text) {
+    this.container.textContent = text;
+};
+
+function Article(){
+    Component.call(this, 'article');
+}
+Article.prototype = Object.create(Component.prototype);
+Article.prototype.container = Article;
+
+function Image(){
+    Component.call(this, 'img');
+}
+Image.prototype = Object.create(Component.prototype);
+Image.prototype.container = Image;
+
+//Child components
+Component.prototype.add = function (child) {
+    this.container.appendChild(child.container);
+}
+
+Component.prototype.remove = function (child) {
+    this.container.removeChild(child.container);
+}
+
+Component.prototype.addClickListener = function (callback) {
+    this.container.addEventListener('click', callback)
+}
+
+Component.prototype.addSubmitListener = function (callback) {
+    this.container.addEventListener('submit', callback)
+}
+
+//PAGE CONSTRUCTORS //
+function Landing() {
+    Component.call(this, 'div');
+
+    let logo = new Heading(1);
+    logo.setText('Logo');
+    this.add(logo);
+
+    let registerAnchor = new Anchor();
+    registerAnchor.setText('Register')
+    registerAnchor.container.style.cursor = 'pointer';
+    registerAnchor.addClickListener(function () {
+        document.body.removeChild(this.container);
+        document.body.appendChild(register.container);
+    }.bind(this));
+    this.add(registerAnchor);
+
+
+    let loginAnchor = new Anchor();
+    loginAnchor.setText('Login');
+    loginAnchor.container.style.cursor = 'pointer';
+    loginAnchor.container.style.marginLeft = '25px';
+    loginAnchor.addClickListener(function () {
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
+    }.bind(this))
+    this.add(loginAnchor)
+}
+Landing.prototype = Object.create(Component.prototype);
+Landing.prototype.constructor = Landing;
+
+
+function Register() {
+    Component.call(this, 'div');
+
+    let logoRegister = new Heading(1);
+    logoRegister.setText('Register');
+    this.add(logoRegister);
+
+    let registerForm = new Form();
+    registerForm.container.style.display = 'flex';
+    registerForm.container.style.flexDirection = 'column';
+    registerForm.container.style.width = '250px';
+
+    registerForm.addSubmitListener(function (e) {
         e.preventDefault();
         document.body.removeChild(this.container);
-        document.body.appendChild(loginDiv.container);
+        document.body.appendChild(login.container);
 
-        let registeredUser ={
-            name : nameInput.value,
-            email : emailInput.value,
-            username : usernameInput.value,
-            password : passwordInput.value
+        let registeredUser = {
+            name: nameInput.container.value,
+            email: emailInput.container.value,
+            username: usernameInput.container.value,
+            password: passwordInput.container.value
         }
 
-        console.log(registeredUser)
+        console.log(registeredUser);
     }.bind(this))
+    this.add(registerForm);
 
-    this.container.appendChild(registerForm);
+    //Name
+    let nameLabel = new Label();
+    nameLabel.setText('Name');
+    registerForm.add(nameLabel);
 
-    //Name Form
-    let nameFormRegisterLabel = document.createElement('label')
-    nameFormRegisterLabel.textContent = 'Name'
-    registerForm.appendChild(nameFormRegisterLabel);
+    let nameInput = new Input();
+    registerForm.add(nameInput);
 
-    let nameInput = document.createElement('input');
-    registerForm.appendChild(nameInput);
+    //Email
+    let emailLabel = new Label();
+    emailLabel.setText('Email');
+    registerForm.add(emailLabel);
 
-    //Email form
-    let emailFormRegisterLabel = document.createElement('label')
-    emailFormRegisterLabel.textContent = 'Email';
-    registerForm.appendChild(emailFormRegisterLabel);
+    let emailInput = new Input();
+    registerForm.add(emailInput);
 
-    let emailInput = document.createElement('input');
-    registerForm.appendChild(emailInput)
+    //Username
+    let usernameLabel = new Label();
+    usernameLabel.setText('Username');
+    registerForm.add(usernameLabel);
 
-    //Username form
-    let usernameFormRegisterLabel = document.createElement('label')
-    usernameFormRegisterLabel.textContent = 'Username';
-    registerForm.appendChild(usernameFormRegisterLabel);
+    let usernameInput = new Input();
+    registerForm.add(usernameInput);
 
-    let usernameInput = document.createElement('input');
-    registerForm.appendChild(usernameInput);
+    //Password
+    let passwordLabel = new Label();
+    passwordLabel.setText('Password');
+    registerForm.add(passwordLabel);
 
-    //Password form
-    let passwordFormRegisterLabel = document.createElement('label')
-    passwordFormRegisterLabel.textContent = 'Password'
-    registerForm.appendChild(passwordFormRegisterLabel)
+    let passwordInput = new Input();
+    registerForm.add(passwordInput);
 
-    let passwordInput = document.createElement('input')
-    registerForm.appendChild(passwordInput)
+    //Span buttons
+    let spanButtons = new Span();
+    registerForm.add(spanButtons)
 
-    //Div register buttons
+    let loginAnchor = new Anchor();
+    loginAnchor.setText('Login');
+    loginAnchor.container.style.cursor = 'pointer';
+    spanButtons.add(loginAnchor);
 
-    let buttonsFormDivRegister = document.createElement('div')
-    buttonsFormDivRegister.style.display = 'flex'
-    buttonsFormDivRegister.style.flexDirection = 'row'
-    registerForm.appendChild(buttonsFormDivRegister);
-
-    //Login anchor
-    let registerLoginAnchor = document.createElement('a');
-    registerLoginAnchor.textContent = 'Login'
-    registerLoginAnchor.style.cursor = 'pointer'
-    buttonsFormDivRegister.appendChild(registerLoginAnchor);
-
-    registerLoginAnchor.addEventListener('click', function () {
+    loginAnchor.addClickListener(function () {
         document.body.removeChild(this.container)
-        document.body.appendChild(loginDiv.container)
+        document.body.appendChild(login.container)
     }.bind(this))
 
-    //Register button
-    let registerButton = document.createElement('button');
-    registerButton.textContent = 'Register'
-    registerButton.style.marginLeft = '50px'
-    registerButton.type = 'submit'
-    buttonsFormDivRegister.appendChild(registerButton);
+    let registerButton = new Button();
+    registerButton.setText('Register');
+    registerButton.container.style.marginLeft = '50px';
+    registerButton.container.style.type = 'submit';
+    spanButtons.add(registerButton);
+
+
 }
+Register.prototype = Object.create(Component.prototype);
+Register.prototype.constructor = Register;
 
+function Login() {
+    Component.call(this, 'div');
 
-// LOGIN
+    let logo = new Heading(1);
+    logo.setText('Login');
+    this.add(logo);
 
-let loginDiv = new Component(document.createElement('div'));
-loginDiv.mount = function () {
-    loginDiv.id = 'login_div'
+    let loginForm = new Form();
+    loginForm.container.style.display = 'flex';
+    loginForm.container.style.flexDirection = 'column';
+    loginForm.container.style.width = '250px';
 
-    let LoginLogo = document.createElement('h1');
-    LoginLogo.textContent = 'Logo'
-    this.container.appendChild(LoginLogo)
-
-    //form
-
-    let loginForm = document.createElement('form')
-    loginForm.style.display = 'flex';
-    loginForm.style.flexDirection = 'column';
-    loginForm.style.width = '250px';
-    loginForm.addEventListener('submit', function (e) {
+    loginForm.addSubmitListener(function (e) {
         e.preventDefault();
-        document.body.removeChild(this.container)
-        document.body.appendChild(homeDiv.container)
+        document.body.removeChild(this.container);
+        document.body.appendChild(home.container);
 
-        let userLogin  ={
-            username : usernameInput.value,
-            password : passwordInput.value
+        let userLogin = {
+            username: usernameInput.container.value,
+            password: passwordInput.container.value
         }
 
-        console.log(userLogin)
+        console.log(userLogin);
 
     }.bind(this))
-    this.container.appendChild(loginForm)
+    this.add(loginForm);
 
-    //Login username label
-    let loginUsernameLabel = document.createElement('label')
-    loginUsernameLabel.textContent = 'Username'
-    loginForm.appendChild(loginUsernameLabel)
-    let usernameInput = document.createElement('input');
-    loginForm.appendChild(usernameInput);
+    //username
+    let usernameLabel = new Label();
+    usernameLabel.setText('Username');
+    loginForm.add(usernameLabel);
 
-    //Login password label
-    let loginPasswordLabel = document.createElement('label');
-    loginPasswordLabel.textContent = 'Password';
-    loginForm.appendChild(loginPasswordLabel);
-    let passwordInput = document.createElement('input')
-    loginForm.appendChild(passwordInput)
+    let usernameInput = new Input();
+    loginForm.add(usernameInput);
 
-    //Div login buttons
+    //password
+    let passwordLabel = new Label();
+    passwordLabel.setText('Password');
+    loginForm.add(passwordLabel);
 
-    let buttonsFormDivLogin = document.createElement('div');
-    buttonsFormDivLogin.style.display = 'flex';
-    buttonsFormDivLogin.style.flexDirection = 'row';
-    loginForm.appendChild(buttonsFormDivLogin);
+    let passwordInput = new Input();
+    loginForm.add(passwordInput);
 
-    //Register anchor
-    let loginRegisterAnchor = document.createElement('a');
-    loginRegisterAnchor.textContent = 'Register'
-    loginRegisterAnchor.style.cursor = 'pointer'
-    buttonsFormDivLogin.appendChild(loginRegisterAnchor);
+    //span buttons
+    let spanButtons = new Span();
+    loginForm.add(spanButtons);
 
-    loginRegisterAnchor.addEventListener('click', function () {
+    //Register
+    let registerAnchor = new Anchor();
+    registerAnchor.setText('Register');
+    registerAnchor.container.style.cursor = 'pointer';
+    spanButtons.add(registerAnchor);
+
+    registerAnchor.addClickListener(function () {
         document.body.removeChild(this.container)
-        document.body.appendChild(registerDiv.container)
+        document.body.appendChild(register.container)
     }.bind(this))
 
-    //Login button
-    let loginButton = document.createElement('button');
-    loginButton.textContent = 'Login'
-    loginButton.style.marginLeft = '50px';
-    loginButton.type = 'submit'
-    buttonsFormDivLogin.appendChild(loginButton);
+    //Login
+    let loginButton = new Button();
+    loginButton.setText('Login');
+    loginButton.container.style.marginLeft = '50px';
+    loginButton.container.style.type = 'submit';
+    spanButtons.add(loginButton);
+
 }
+Login.prototype = Object.create(Component.prototype);
+Login.prototype.constructor = Login;
 
+function Home(){
+    Component.call(this, 'div');
 
-// HOME
+    let logoHome = new Heading(1);
+    logoHome.setText('Home');
+    this.add(logoHome);
 
-let homeDiv = new Component(document.createElement('div'));
-homeDiv.mount = function () {
-    homeDiv.id = 'home_div'
-    // homeDiv.style.display = 'flex'
-    // homeDiv.style.flexDirection = 'row'
-    // homeDiv.style.width = '250px'
+    let signOutButton = new Button();
+    signOutButton.container.textContent = 'Sign out';
+    this.add(signOutButton);
 
-    let homeLogo = document.createElement('h1')
-    homeLogo.textContent = 'Logo'
-    homeLogo.style.width = '32px'
-    this.container.appendChild(homeLogo)
+    signOutButton.addClickListener(function (){
+        document.body.removeChild(this.container);
+        document.body.appendChild(landing.container);
+    }.bind(this));
 
-    let signOutButton = document.createElement('button')
-    signOutButton.textContent = 'Sign out'
-    this.container.appendChild(signOutButton)
-    signOutButton.addEventListener('click', function () {
-        document.body.removeChild(this.container)
-        document.body.appendChild(landing.container)
-    }.bind(this))
-
-    let postsDiv = document.createElement('div')
-    postsDiv.style.display = 'flex'
-    postsDiv.style.flexDirection = 'column'
-    postsDiv.style.width = '250px'
-    this.container.appendChild(postsDiv)
-
-    let postContent = document.createElement('article')
-    postsDiv.appendChild(postContent)
-
-
+    let postContent = new Article();
+    postContent.container.style = 'flex';
+    postContent.container.style.flexDirection = 'column';
+    postContent.container.style.width = '250px';
+    this.add(postContent);
+    
     let imgArray = ['https://static.vecteezy.com/system/resources/thumbnails/008/695/917/small_2x/no-image-available-icon-simple-two-colors-template-for-no-image-or-picture-coming-soon-and-placeholder-illustration-isolated-on-white-background-vector.jpg', 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg', 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=']
-    imgArray.forEach(function (image) {
-        let img = document.createElement('img')
-        img.src = image
-        postContent.appendChild(img)
-    })
+    imgArray.forEach(function (image){
+        let img = new Image();
+        img.container.src = image;
+        postContent.add(img);
+    }.bind(this))
 }
+Home.prototype = Object.create(Component.prototype);
+Home.prototype.constructor = Home;
 
 
-landing.mount();
-registerDiv.mount();
-loginDiv.mount();
-homeDiv.mount();
+// WEBSITE INITIALIZATION //
+const body = new Body();
+document.body = body.container
+
+let landing = new Landing();
+body.add(landing);
+
+let register = new Register();
+let login = new Login();
+let home = new Home();
