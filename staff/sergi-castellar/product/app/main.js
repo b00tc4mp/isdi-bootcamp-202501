@@ -620,3 +620,13 @@ for (var i = 0; i < POSTS.length; i++) {
   home.add(post);
   //body.add(post); // provisional
 }
+
+// aplicar estilos a todos los 'a' independientemente de si estan inicialmente en el DOM o no
+const ANCHORS = [...landing.container.querySelectorAll("a"), ...register.container.querySelectorAll("a"), ...login.container.querySelectorAll("a")]
+
+ANCHORS.forEach(function (child) {
+  //child.style.color = 'blue'
+  child.style.textDecoration = 'underline'
+  child.style.fontWeight = 'bold'
+  child.style.cursor = 'pointer'
+})
