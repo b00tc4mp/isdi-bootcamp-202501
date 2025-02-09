@@ -264,28 +264,27 @@ Image.prototype.setSrc = function (src) {
   this.container.src = src;
 };
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 //////// Body
 var body = new Body();
 document.body = body.container;
-body.container.style.background = '#e6e6e6'
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 //////// Landing
 function Landing() {
@@ -539,16 +538,16 @@ var home = new Home();
 //body.add(home)
 
 // POST 1
-function Post(postTitle, imgSrc, postDescription) {
+function Post() {
   Component.call(this, "article");
 
-  this.container.style.width = '400px'
+  this.container.style.width = '500px'
 
   var header = new Header();
   this.add(header);
 
   var title = new Heading(2);
-  title.setText(postTitle);
+  title.setText("Post n Title");
   header.add(title);
 
   var figure = new Figure();
@@ -558,7 +557,7 @@ function Post(postTitle, imgSrc, postDescription) {
   this.add(figure);
 
   var image = new Image();
-  image.setSrc(`./assets/${imgSrc}`);
+  image.setSrc("./assets/n.jpg");
   image.container.style.width = '300px'
   figure.add(image);
 
@@ -583,40 +582,15 @@ function Post(postTitle, imgSrc, postDescription) {
   iconSection.add(likeAnchor);
 
   var descriptionP = new Paragraph();
-  descriptionP.setText(postDescription)
-
+  descriptionP.setText(
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus maxime quibusdam officia adipisci dolor ducimus inventore numquam expedita reprehenderit, quaerat sit quam tempore laboriosam fuga eaque, eius consectetur totam eligendi rerum ad in praesentium excepturi. Non velit perferendis blanditiis dignissimos."
+  );
   descriptionP.container.style.textAlign = 'justify'
   footer.add(descriptionP);
 }
 
-const POSTS = [
-  {
-    title: 'Home Racing shirt',
-    image: '1.jpg',
-    description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius tempore amet culpa voluptatibus alias? Mollitia iusto, optio quam libero perspiciatis qui odio minima eos at repudiandae illum, impedit repellat autem, neque temporibus. Molestias sint quo minima saepe assumenda consequatur odio!'
-  },
-  {
-    title: 'Away Racing shirt',
-    image: '2.jpg',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, cupiditate. Ipsum sint dolor dicta, voluptatibus fugiat praesentium quaerat aperiam quidem esse, omnis sit voluptates sequi tempora provident magnam officiis eius architecto blanditiis? Assumenda autem voluptate ex saepe porro eaque earum?'
-  },
-  {
-    title: 'GK Home Racing shirt',
-    image: '3.jpg',
-    description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque, iste! Voluptas temporibus incidunt quaerat! Impedit eius et ad dicta labore omnis quis. Illum deleniti repudiandae velit ducimus vel iure omnis doloremque reiciendis placeat rem sed, explicabo voluptates, minus nobis! Veritatis?'
-  },
-  {
-    title: 'GK Away Racing shirt',
-    image: '4.jpg',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos rerum impedit, quae, aspernatur, veritatis debitis sed modi distinctio perspiciatis unde aperiam deserunt assumenda nostrum voluptas quas fuga iusto saepe. Deserunt cumque adipisci ab quod quae consectetur delectus impedit ad ducimus.'
-  },
-]
-
 Post.prototype = Object.create(Component.prototype);
 Post.prototype.constructor = Post;
-for (var i = 0; i < POSTS.length; i++) {
-  var { title, image, description } = POSTS[i]
-  var post = new Post(title, image, description);
-  home.add(post);
-  //body.add(post); // provisional
-}
+var post = new Post();
+home.add(post);
+//body.add(post); // provisional

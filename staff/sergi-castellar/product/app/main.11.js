@@ -614,9 +614,6 @@ const POSTS = [
 
 Post.prototype = Object.create(Component.prototype);
 Post.prototype.constructor = Post;
-for (var i = 0; i < POSTS.length; i++) {
-  var { title, image, description } = POSTS[i]
-  var post = new Post(title, image, description);
-  home.add(post);
-  //body.add(post); // provisional
-}
+var post = new Post(POSTS[0].title, POSTS[0].image, POSTS[0].description);
+//home.add(post);
+body.add(post); // provisional
