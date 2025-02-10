@@ -40,6 +40,10 @@ Component.prototype.addClickListener = function (callback) {
   this.container.addEventListener("click", callback);
 };
 
+Component.prototype.setId = function (id) {
+  this.container.id = id;
+};
+
 // body
 function Body() {
   Component.call(this, "body");
@@ -56,10 +60,6 @@ function Div() {
 Div.prototype = Object.create(Component.prototype);
 Div.prototype.constructor = Div;
 
-Div.prototype.setId = function (id) {
-  this.container.id = id;
-};
-
 // form
 function Form() {
   Component.call(this, "form");
@@ -67,10 +67,6 @@ function Form() {
 
 Form.prototype = Object.create(Component.prototype);
 Form.prototype.constructor = Form;
-
-Form.prototype.setId = function (id) {
-  this.container.id = id;
-};
 
 Form.prototype.addSubmitListener = function (callback) {
   this.container.addEventListener("submit", callback);
@@ -100,10 +96,6 @@ function Input() {
 Input.prototype = Object.create(Component.prototype);
 Input.prototype.constructor = Input;
 
-Input.prototype.setId = function (id) {
-  this.container.id = id;
-};
-
 Input.prototype.setType = function (type) {
   this.container.type = type;
 };
@@ -119,10 +111,6 @@ function Button() {
 
 Button.prototype = Object.create(Component.prototype);
 Button.prototype.constructor = Button;
-
-Button.prototype.setId = function (id) {
-  this.container.id = id;
-};
 
 Button.prototype.setForm = function (form) {
   this.container.form = form;
@@ -144,10 +132,6 @@ function Heading(level) {
 Heading.prototype = Object.create(Component.prototype);
 Heading.prototype.constructor = Heading;
 
-Heading.prototype.setId = function (id) {
-  this.container.id = id;
-};
-
 Heading.prototype.setText = function (text) {
   this.container.textContent = text;
 };
@@ -159,10 +143,6 @@ function Anchor() {
 
 Anchor.prototype = Object.create(Component.prototype);
 Anchor.prototype.constructor = Anchor;
-
-Anchor.prototype.setId = function (id) {
-  this.container.id = id;
-};
 
 Anchor.prototype.setClass = function (aClass) {
   this.container.className = aClass;
@@ -180,10 +160,6 @@ function Header() {
 Header.prototype = Object.create(Component.prototype);
 Header.prototype.constructor = Header;
 
-Header.prototype.setId = function (id) {
-  this.container.id = id;
-};
-
 // Article
 function Article() {
   Component.call(this, "article");
@@ -191,10 +167,6 @@ function Article() {
 
 Article.prototype = Object.create(Component.prototype);
 Article.prototype.constructor = Article;
-
-Article.prototype.setId = function (id) {
-  this.container.id = id;
-};
 
 // Figure
 function Figure() {
@@ -204,10 +176,6 @@ function Figure() {
 Figure.prototype = Object.create(Component.prototype);
 Figure.prototype.constructor = Figure;
 
-Figure.prototype.setId = function (id) {
-  this.container.id = id;
-};
-
 // Footer
 function Footer() {
   Component.call(this, "footer");
@@ -215,10 +183,6 @@ function Footer() {
 
 Footer.prototype = Object.create(Component.prototype);
 Footer.prototype.constructor = Footer;
-
-Footer.prototype.setId = function (id) {
-  this.container.id = id;
-};
 
 // Section
 function Section() {
@@ -228,10 +192,6 @@ function Section() {
 Section.prototype = Object.create(Component.prototype);
 Section.prototype.constructor = Section;
 
-Section.prototype.setId = function (id) {
-  this.container.id = id;
-};
-
 // Paragraph
 function Paragraph() {
   Component.call(this, "p");
@@ -239,10 +199,6 @@ function Paragraph() {
 
 Paragraph.prototype = Object.create(Component.prototype);
 Paragraph.prototype.constructor = Paragraph;
-
-Paragraph.prototype.setId = function (id) {
-  this.container.id = id;
-};
 
 Paragraph.prototype.setText = function (text) {
   this.container.textContent = text;
@@ -255,10 +211,6 @@ function Image() {
 
 Image.prototype = Object.create(Component.prototype);
 Image.prototype.constructor = Image;
-
-Image.prototype.setId = function (id) {
-  this.container.id = id;
-};
 
 Image.prototype.setSrc = function (src) {
   this.container.src = src;
@@ -580,6 +532,7 @@ function Post(postTitle, imgSrc, postDescription) {
       this.textContent = "🤍";
     }
   });
+  likeAnchor.container.style.cursor = 'pointer'
   iconSection.add(likeAnchor);
 
   var descriptionP = new Paragraph();
