@@ -2,72 +2,164 @@ console.clear()
 document.body.style.background = 'lightcyan'
 document.body.style.placeItems = 'center'
 
-function Component(container) {
-    this.container = container
+function Component(tagName) {
+    this.container = document.createElement(tagName)
 }
+
+
+Component.prototype.add = function (child) {
+    this.container.appendChild(child.container)
+}
+
+Component.prototype.addClickListener = function (callback) {
+    this.container.addEventListener('click', callback)
+}
+
+function Form() {
+    Component.call(this, 'form')
+}
+
+
+Form.prototype = Object.create(Component.prototype)
+Form.prototype.constructor = Form
+
+function Input() {
+    Component.call(this, 'input')
+}
+
+
+Input.prototype = Object.create(Component.prototype)
+Input.prototype.constructor = Input
+
+function Label() {
+    Component.call(this, 'label')
+}
+
+Label.prototype = Object.create(Component.prototype)
+Label.prototype.constructor = Label
+
+Input.prototype.setType = function (type) {
+    this.container.type = type
+}
+
+Input.prototype.setPlaceHolder = function (placeholder) {
+    this.container.placeholder = placeholder
+}
+
+
+function Button() {
+    Component.call(this, 'button')
+}
+
+Button.prototype = Object.create(Component.prototype)
+Button.prototype.constructor = Button
+
+Button.prototype.setType = function (type) {
+    this.container.type = type
+}
+
+
+Button.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+function Heading(level) {
+    Component.call(this, 'h' + level)
+}
+
+Heading.prototype = Object.create(Component.prototype)
+Heading.prototype.constructor = Heading
+
+Heading.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+
+function Anchor() {
+    Component.call(this, 'a')
+}
+
+Anchor.prototype = Object.create(Component.prototype)
+Anchor.prototype.constructor = Anchor
+
+Anchor.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+function Body() {
+    Component.call(this, 'body')
+}
+
+Body.prototype = Object.create(Component.prototype)
+Body.prototype.constructor = Body
+
+
+// body
+
+const body = new Body()
+document.body = body.container
+
+
 
 // landing
 
-var landing = new Component(document.createElement('div'))
-
-landing.mount = function () {
-    document.body.appendChild(this.container)
+function Landing() {
+    Component.call(this, 'div')
 
     this.container.style.textAlign = 'center'
 
-    var logo = document.createElement('h1')
-    this.container.appendChild(logo)
-    logo.textContent = 'Logo'
+    var logo = new Heading(1)
+    this.add(logo)
+    logo.setText('Logo')
 
-    var text = document.createElement('span')
-    this.container.appendChild(text)
 
-    var registerAnchor = document.createElement('a')
-    registerAnchor.style.textDecoration = 'underline'
-
-    registerAnchor.addEventListener('click', function () {
-        document.body.removeChild(landing.container)
+    var registerAnchor = new Anchor()
+    registerAnchor.addClickListener(function () {
+        document.body.removeChild(this.container)
         document.body.appendChild(register.container)
     }.bind(this))
-    text.appendChild(registerAnchor)
+    this.add(registerAnchor)
 
-    registerAnchor.textContent = 'Register'
+    registerAnchor.setText('Register')
 
     var orText = document.createTextNode(' or ')
-    text.appendChild(orText)
+    this.container.appendChild(orText)
 
-    var loginAnchor = document.createElement('a')
-    loginAnchor.style.textDecoration = 'underline'
-    this.container.appendChild(loginAnchor)
+    var loginAnchor = new Anchor()
 
-    loginAnchor.addEventListener('click', function () {
-        document.body.removeChild(landing.container)
+
+    loginAnchor.addClickListener(function () {
+        document.body.removeChild(this.container)
         document.body.appendChild(login.container)
     }.bind(this))
-    text.appendChild(loginAnchor)
+    this.add(loginAnchor)
 
-    loginAnchor.textContent = 'Login'
+    loginAnchor.setText('Login')
 }
 
-/* register */
-var register = new Component(document.createElement('div'))
-register.mount = function () {
-    var logo = document.createElement('h1')
-    this.container.appendChild(logo)
-    logo.textContent = 'Logo'
+Landing.prototype = Object.create(Component.prototype)
+Landing.prototype.constructor = Landing
 
-    var intructions = document.createElement('p')
-    this.container.appendChild(intructions)
-    intructions.textContent = 'To register, enter the following information. '
+var landing = new Landing()
+body.add(landing)
+
+
+/* register */
+function Register() {
+    Component.call(this, 'div')
+    var logo = new Heading(1)
+    this.add(logo)
+    logo.setText('Logo')
+
+    var intructions = new Heading(4)
+    this.add(intructions)
+    intructions.setText('To register, enter the following information. ')
 
     // from
 
-    var form = document.createElement('form')
-    form.style.display = 'flex'
-    form.style.gap = '15px'
-    form.style.flexDirection = 'column'
+    var form = new Form()
 
-    form.addEventListener('submit', function (event) {
+    this.container.addEventListener('submit', function (event) {
         event.preventDefault()
 
         console.log('register submit')
@@ -79,67 +171,70 @@ register.mount = function () {
 
         console.log(name, email, username, password)
 
-        document.body.removeChild(register.container)
+        document.body.removeChild(this.container)
         document.body.appendChild(login.container)
-    })
-    this.container.appendChild(form)
+    }.bind(this))
+    this.add(form)
 
     //name
     var formNameLabel = document.createElement('label')
+    this.container.appendChild(formNameLabel)
+    form.textContent = 'Name'
 
-    form.appendChild(formNameLabel)
-    formNameLabel.textContent = 'Name'
-
-    var formNameInput = document.createElement('input')
-    form.appendChild(formNameInput)
+    var formNameInput = new Input()
+    form.bind(this).container.appendChild(formNameInput)
 
     // email
-    var formEmailLabel = document.createElement('label')
+    var formEmailLabel = new Label()
     form.appendChild(formEmailLabel)
+    formEmailLabel.setText('E-mail')
 
-    formEmailLabel.textContent = 'E-mail'
-
-    var formEmailInput = document.createElement('input')
+    var formEmailInput = new Input()
     form.appendChild(formEmailInput)
 
     // username
 
-    var formUsernameLabel = document.createElement('label')
+    var formUsernameLabel = new Label()
     form.appendChild(formUsernameLabel)
 
-    formUsernameLabel.textContent = 'Username'
+    formUsernameLabel.setText('Username')
 
-    var formUsernameInput = document.createElement('input')
+    var formUsernameInput = new Input()
     form.appendChild(formUsernameInput)
 
     // password
 
-    var formPasswordLabel = document.createElement('label')
+    var formPasswordLabel = new Label()
     form.appendChild(formPasswordLabel)
-    formPasswordLabel.textContent = 'Password'
+    formPasswordLabel.setText('Password')
 
-    var formPasswordInput = document.createElement('input')
+    var formPasswordInput = new Input()
     form.appendChild(formPasswordInput)
 
     // submit botton
-    var formSubmitButton = document.createElement('button')
+    var formSubmitButton = new Button()
     form.appendChild(formSubmitButton)
-    formSubmitButton.textContent = 'Create new account'
+    formSubmitButton.setText('Create new account')
 
     // anchor 
 
-    var loginAnchor = document.createElement('a')
+    var loginAnchor = new Anchor()
     loginAnchor.style.textDecoration = 'underline'
-    this.container.appendChild(loginAnchor)
+    loginAnchor.setText('Login')
 
-    loginAnchor.textContent = 'Login'
-
-    loginAnchor.addEventListener('click', function () {
-        document.body.removeChild(register.container)
+    loginAnchor.addClickListener(function () {
+        document.body.removeChild(this.container)
         document.body.appendChild(login.container)
     }.bind(this))
-    this.container.appendChild(loginAnchor)
+    this.add(loginAnchor)
 }
+
+Register.prototype = Object.create(Component.prototype)
+Register.prototype.constructor = register
+
+var register = new Register()
+
+
 
 /* login */
 
@@ -325,7 +420,6 @@ home.mount = function () {
 
 }
 
-landing.mount()
-register.mount()
+
 login.mount()
 home.mount()
