@@ -1,130 +1,223 @@
 console.clear()
 
-var Component = function (container) {
-    this.container = container
+function Component(tagName) {
+    this.container = document.createElement(tagName)
 }
 
-var helper = {
-    createLogo: function () {
-        var logo = document.createElement('h1')
-        logo.innerText = 'Logo'
-        return logo
-    },
-    createLikeButton: function () {
-        var likeButton = document.createElement('button')
-        likeButton.innerText = '🤍'
-        likeButton.addEventListener('click', function () {
-            likeButton.innerText = likeButton.innerText === '🤍' ? '❤️' : '🤍'
-        })
-
-        return likeButton
-    },
-    createArticle: function () {
-        var article = document.createElement('article')
-        article.style.display = 'flex'
-        article.style.flexDirection = 'column'
-        article.style.width = '500px'
-        article.style.gap = '0.3rem'
-
-        return article
-    },
-    createSpan: function () {
-        var span = document.createElement('span')
-        span.style.display = 'flex'
-        span.style.width = '500px'
-        span.style.justifyContent = 'space-between'
-
-        return span
-    },
-    createForm: function () {
-        var form = document.createElement('form')
-        form.style.display = 'flex'
-        form.style.flexDirection = 'column'
-        form.style.gap = '0.2rem'
-        form.style.width = '500px'
-
-        for (let i = 0; i < arguments.length; i++) {
-            form.appendChild(helper.createLabel(arguments[i]))
-            form.appendChild(document.createElement('input'))
-        }
-
-        return form
-    },
-    createDirectionAnchor: function (innerText, currentDirection, nextDirection) {
-        var anchor = document.createElement('a')
-        anchor.innerText = innerText
-        anchor.style.textDecoration = 'underline'
-        anchor.addEventListener('click', function () {
-            document.body.removeChild(currentDirection)
-            document.body.appendChild(nextDirection)
-        }.bind(this))
-
-        return anchor
-    },
-    createLabel: function (innerText) {
-        var label = document.createElement('label')
-        label.innerText = innerText
-        return label
-    },
-    createPicture: function (source) {
-        var picture = document.createElement('img')
-        picture.src = source
-        picture.width = '500'
-
-        return picture
-    }
+// añade una propiedad al prototype, que es una función, que permite hacer appendChild más agilmente
+Component.prototype.add = function (child) {
+    this.container.appendChild(child.container)
+}
+// añade una propiedad - función al prototype que crea un event listener para un elemento
+Component.prototype.addClickListener = function (callback) {
+    this.container.addEventListener('click', callback)
 }
 
-var createPost = function (userName, pictureSource, captionText, postDate) {
-    var article = helper.createArticle()
-
-    var username = document.createElement('h3')
-    username.innerText = userName
-    article.appendChild(username)
-
-    article.appendChild(helper.createPicture(pictureSource))
-
-    var caption = helper.createSpan()
-    caption.textContent = captionText
-    caption.appendChild(helper.createLikeButton())
-    article.appendChild(caption)
-
-    article.appendChild(document.createTextNode(postDate))
-
-    return article
+// creamos un constructor Form a partir del constructor Component. Ahora contiene todas sus propiedades
+function Form() {
+    Component.call(this, 'form')
 }
+
+Form.prototype = Object.create(Component.prototype)
+Form.prototype.constructor = Form
+
+Form.prototype.addSubmitListener = function (callback) {
+    this.container.addEventListener('submit', callback)
+}
+
+function Label() {
+    Component.call(this, 'label')
+}
+
+Label.prototype = Object.create(Component.prototype)
+Label.prototype.constructor = Label
+
+Label.prototype.setText = function (text) {
+    this.container.innerText = text
+}
+
+function Input() {
+    Component.call(this, 'input')
+}
+
+Input.prototype = Object.create(Component.prototype)
+Input.prototype.constructor = Input
+
+Input.prototype.setType = function (type) {
+    this.container.type = type
+}
+
+Input.prototype.setPlaceholder = function (placeholder) {
+    this.container.placeholder = placeholder
+}
+
+function Button() {
+    Component.call(this, 'button')
+}
+
+Button.prototype = Object.create(Component.prototype)
+Button.prototype.constructor = Button
+
+Button.prototype.setType = function (type) {
+    this.container.type = type
+}
+
+Button.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+function Heading(level) {
+    Component.call(this, 'h' + level)
+}
+
+Heading.prototype = Object.create(Component.prototype)
+Heading.prototype.constructor = Heading
+
+Heading.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+function Anchor() {
+    Component.call(this, 'a')
+}
+
+Anchor.prototype = Object.create(Component.prototype)
+Anchor.prototype.constructor = Anchor
+
+Anchor.prototype.setText = function (text) {
+    this.container.textContent = text
+}
+
+function Article() {
+    Component.call(this, 'article')
+}
+
+Article.prototype = Object.create(Component.prototype)
+Article.prototype.constructor = Article
+
+function Picture() {
+    Component.call(this, 'img')
+}
+
+Picture.prototype = Object.create(Component.prototype)
+Picture.prototype.constructor = Picture
+
+Picture.prototype.setSource = function (source) {
+    this.container.src = source
+}
+
+function Span() {
+    Component.call(this, 'span')
+}
+
+Span.prototype = Object.create(Component.prototype)
+Span.prototype.constructor = Span
+
+function Text() {
+    Component.call(this, 'text')
+}
+
+Text.prototype = Object.create(Component.prototype)
+Text.prototype.constructor = Text
+
+Text.prototype.setText = function (description) {
+    this.container.innerText = description
+}
+
+function Body() {
+    Component.call(this, 'body')
+}
+
+Body.prototype = Object.create(Component.prototype)
+Body.prototype.constructor = Body
+
+const body = new Body()
+document.body = body.container
 
 // LANDING
 
-var landing = new Component(document.createElement('div'))
-landing.mount = function () {
-    document.body.appendChild(this.container)
+function Landing() {
+    Component.call(this, 'div')
 
-    this.container.appendChild(helper.createLogo())
+    var logo = new Heading(1)
+    logo.setText('Logo')
+    this.add(logo)
 
-    var registerAnchor = helper.createDirectionAnchor('Register', this.container, register.container)
-    this.container.appendChild(registerAnchor)
+    var registerAnchor = new Anchor()
+    registerAnchor.setText('Register')
+    registerAnchor.addClickListener(function () {
+        body.removeChild(this.container)
+        body.appendChild(register.container)
+    }.bind(this))
+    this.add(registerAnchor)
 
     var orText = document.createTextNode(' or ')
     this.container.appendChild(orText)
 
-    var loginAnchor = helper.createDirectionAnchor('Login', this.container, login.container)
-    this.container.appendChild(loginAnchor)
+    var loginAnchor = new Anchor()
+    loginAnchor.setText('Login')
+    loginAnchor.addClickListener(function () {
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
+    }.bind(this))
+    this.add(loginAnchor)
 }
+
+Landing.prototype = Object.create(Component.prototype)
+Landing.prototype.constructor = Landing
+
+var landing = new Landing()
+body.add(landing)
 
 // REGISTER
 
-var register = new Component(document.createElement('div'))
-register.mount = function () {
-    this.container.appendChild(helper.createLogo())
+function Register() {
+    Component.call(this, 'div')
 
-    var form = helper.createForm('Name', 'E-mail', 'Username', 'Password')
-    this.container.appendChild(form)
+    var logo = new Heading(1)
+    logo.setText('Logo')
+    this.add(logo)
 
-    form.addEventListener('submit', function (event) {
+    var form = new Form()
+    this.add(form)
+
+    var labelName = new Label()
+    labelName.setText('Name')
+    form.add(labelName)
+
+    var inputName = new Input()
+    form.add(inputName)
+
+    var labelEmail = new Label()
+    labelEmail.setText('E-mail')
+    form.add(labelEmail)
+
+    var inputEmail = new Input()
+    form.add(inputEmail)
+
+    var labelUsername = new Label()
+    labelUsername.setText('Username')
+    form.add(labelUsername)
+
+    var inputUsername = new Input()
+    form.add(inputUsername)
+
+    var labelPassword = new Label()
+    labelPassword.setText('Password')
+    form.add(labelPassword)
+
+    var inputPassword = new Input()
+    form.add(inputPassword)
+
+    var submitButton = new Button()
+    submitButton.setType('submit')
+    submitButton.setText('Submit')
+    form.add(submitButton)
+
+    form.addSubmitListener(function (event) {
         event.preventDefault()
-        document.body.removeChild(this.container)
-        document.body.appendChild(login.container)
+        document.body.container.removeChild(this.container)
+        document.body.container.appendChild(login.container)
 
         console.log('register submit')
 
@@ -136,59 +229,185 @@ register.mount = function () {
         console.log(name, email, username, password)
     }.bind(this))
 
-    var registerButton = document.createElement('button')
-    registerButton.type = 'submit'
-    registerButton.innerText = 'Register'
-    form.appendChild(registerButton)
+    var loginAnchor = new Anchor()
+    loginAnchor.setText('Login')
+    loginAnchor.addClickListener(function () {
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
+    }.bind(this))
+    this.add(loginAnchor)
 
-    var loginAnchor = helper.createDirectionAnchor('Login', this.container, login.container)
-    this.container.appendChild(loginAnchor)
 }
+
+Register.prototype = Object.create(Component.prototype)
+Register.prototype.constructor = Register
+
+var register = new Register()
 
 // LOGIN
 
-var login = new Component(document.createElement('div'))
-login.mount = function () {
-    this.container.appendChild(helper.createLogo())
+function Login() {
+    Component.call(this, 'div')
 
-    var form = helper.createForm('Username', 'Password')
-    this.container.appendChild(form)
+    var logo = new Heading(1)
+    logo.setText('Logo')
+    this.add(logo)
 
-    var loginButton = document.createElement('button')
-    loginButton.innerText = 'Login'
-    loginButton.addEventListener('click', function () {
+    var form = new Form()
+    this.add(form)
+
+    var labelUsername = new Label()
+    labelUsername.setText('Username')
+    form.add(labelUsername)
+
+    var inputUsername = new Input()
+    form.add(inputUsername)
+
+    var labelPassword = new Label()
+    labelPassword.setText('Password')
+    form.add(labelPassword)
+
+    var inputPassword = new Input()
+    form.add(inputPassword)
+
+    var loginButton = new Button()
+    loginButton.setText('Login')
+    loginButton.setType('submit')
+    form.add(loginButton)
+
+    form.addSubmitListener(function (event) {
+        event.preventDefault()
         document.body.removeChild(this.container)
         document.body.appendChild(home.container)
     }.bind(this))
-    form.appendChild(loginButton)
 
-    var registerAnchor = helper.createDirectionAnchor('Register', this.container, register.container)
-    this.container.appendChild(registerAnchor)
+    var registerAnchor = new Anchor()
+    registerAnchor.setText('Register')
+    registerAnchor.addClickListener(function () {
+        document.body.removeChild(this.container)
+        document.body.appendChild(register.container)
+    }.bind(this))
+    this.add(registerAnchor)
+
 }
+
+Login.prototype = Object.create(Component.prototype)
+Login.prototype.constructor = Login
+
+var login = new Login()
+
 
 // HOME
 
-var home = new Component(document.createElement('div'))
-home.mount = function () {
-    this.container.style.display = 'flex'
-    this.container.style.flexDirection = 'column'
-    this.container.style.gap = '0.5rem'
-    this.container.appendChild(helper.createLogo())
+function Home() {
+    Component.call(this, 'div')
 
-    var article1 = createPost('username1', 'https://t4.ftcdn.net/jpg/09/02/37/89/240_F_902378980_u4sL7oSE5RB3fTlgJnCyscPoH6lrF4uy.jpg', 'Caption', '2 weeks ago')
-    this.container.appendChild(article1)
+    var logo = new Heading(1)
+    logo.setText('Logo')
+    this.add(logo)
 
-    var article2 = createPost('username2', 'https://imgs.search.brave.com/sZjKUhOvtfY9crCnDhxXV0l62Y1j-6MOfn3qjktlfr8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAyLzk0Lzk4LzM0/LzM2MF9GXzI5NDk4/MzQ4NF9uZEx2eDZa/bkRManJQckFGSjJy/NDNlSVVUNk5HZkxu/SS5qcGc', 'Caption', '3 weeks ago')
-    this.container.appendChild(article2)
+    var article1 = new Article()
+    this.add(article1)
 
-    var article3 = createPost('username3', 'https://t4.ftcdn.net/jpg/10/28/90/93/240_F_1028909330_gJNTy01sKzbYo0umWlGa1e5oiWHkJxB9.jpg', 'Caption', '4 weeks ago')
-    this.container.appendChild(article3)
+    var username1 = new Heading(3)
+    username1.setText('username1')
+    article1.add(username1)
 
-    var article4 = createPost('username4', 'https://t3.ftcdn.net/jpg/08/69/02/92/240_F_869029213_2y0i0t5Y6nZmb62r2pMp6vGfObRkcTVR.jpg', 'Caption', '4 weeks ago')
-    this.container.appendChild(article4)
+    var picture1 = new Picture()
+    picture1.setSource('https://t4.ftcdn.net/jpg/09/02/37/89/240_F_902378980_u4sL7oSE5RB3fTlgJnCyscPoH6lrF4uy.jpg')
+    article1.add(picture1)
+
+    var spanArticle1 = new Span()
+    article1.add(spanArticle1)
+
+    var description1 = new Text()
+    description1.setText('Caption')
+    spanArticle1.add(description1)
+
+    var likeButton1 = new Button()
+    likeButton1.setText('🤍')
+    likeButton1.addClickListener(function () {
+        likeButton1.container.innerText = likeButton1.container.innerText === '🤍' ? '❤️' : '🤍'
+    })
+    spanArticle1.add(likeButton1)
+
+    var article2 = new Article()
+    this.add(article2)
+
+    var username2 = new Heading(3)
+    username2.setText('username2')
+    article2.add(username2)
+
+    var picture2 = new Picture()
+    picture2.setSource('https://imgs.search.brave.com/sZjKUhOvtfY9crCnDhxXV0l62Y1j-6MOfn3qjktlfr8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAyLzk0Lzk4LzM0/LzM2MF9GXzI5NDk4/MzQ4NF9uZEx2eDZa/bkRManJQckFGSjJy/NDNlSVVUNk5HZkxu/SS5qcGc')
+    article2.add(picture2)
+
+    var spanArticle2 = new Span()
+    article2.add(spanArticle2)
+
+    var description2 = new Text()
+    description2.setText('Caption')
+    spanArticle2.add(description2)
+
+    var likeButton2 = new Button()
+    likeButton2.setText('🤍')
+    likeButton2.addClickListener(function () {
+        likeButton2.container.innerText = likeButton2.container.innerText === '🤍' ? '❤️' : '🤍'
+    })
+    spanArticle2.add(likeButton2)
+
+    var article3 = new Article()
+    this.add(article3)
+
+    var username3 = new Heading(3)
+    username3.setText('username3')
+    article3.add(username3)
+
+    var picture3 = new Picture()
+    picture3.setSource('https://t4.ftcdn.net/jpg/10/28/90/93/240_F_1028909330_gJNTy01sKzbYo0umWlGa1e5oiWHkJxB9.jpg')
+    article3.add(picture3)
+
+    var spanArticle3 = new Span()
+    article3.add(spanArticle3)
+
+    var description3 = new Text()
+    description3.setText('Caption')
+    spanArticle3.add(description3)
+
+    var likeButton3 = new Button()
+    likeButton3.setText('🤍')
+    likeButton3.addClickListener(function () {
+        likeButton3.container.innerText = likeButton3.container.innerText === '🤍' ? '❤️' : '🤍'
+    })
+    spanArticle3.add(likeButton3)
+
+    var article4 = new Article()
+    this.add(article4)
+
+    var username4 = new Heading(3)
+    username4.setText('username4')
+    article4.add(username4)
+
+    var picture4 = new Picture()
+    picture4.setSource('https://t3.ftcdn.net/jpg/08/69/02/92/240_F_869029213_2y0i0t5Y6nZmb62r2pMp6vGfObRkcTVR.jpg')
+    article4.add(picture4)
+
+    var spanArticle4 = new Span()
+    article4.add(spanArticle4)
+
+    var description4 = new Text()
+    description4.setText('Caption')
+    spanArticle4.add(description4)
+
+    var likeButton4 = new Button()
+    likeButton4.setText('🤍')
+    likeButton4.addClickListener(function () {
+        likeButton4.container.innerText = likeButton4.container.innerText === '🤍' ? '❤️' : '🤍'
+    })
+    spanArticle4.add(likeButton4)
 }
 
-landing.mount()
-register.mount()
-login.mount()
-home.mount()
+Home.prototype = Object.create(Component.prototype)
+Home.prototype.constructor = Home
+
+var home = new Home()
