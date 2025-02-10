@@ -33,12 +33,20 @@ Anchor.prototype.constructor = Anchor;
 Anchor.prototype.setText = function (text) {
     this.container.textContent = text;
 };
+Anchor.prototype.setCursor = function (cursor){
+    this.container.style.cursor = cursor;
+}
 
 function Form() {
     Component.call(this, 'form');
 }
 Form.prototype = Object.create(Component.prototype);
 Form.prototype.constructor = Form;
+
+Form.prototype.setOrientation = function(type,orientation){
+    this.container.style.display = type;
+    this.container.style.flexDirection = orientation
+}
 
 function Label() {
     Component.call(this, 'label');
@@ -57,6 +65,10 @@ function Input() {
 Input.prototype = Object.create(Component.prototype);
 Input.prototype.container = Input;
 
+Input.prototype.getValue = function () {
+    return this.container.value
+}
+
 function Span() {
     Component.call(this, 'span');
 }
@@ -74,11 +86,20 @@ Button.prototype.setText = function (text) {
     this.container.textContent = text;
 };
 
+Button.prototype.setType = function (type){
+    this.container.type = type
+}
+
 function Article(){
     Component.call(this, 'article');
 }
 Article.prototype = Object.create(Component.prototype);
 Article.prototype.container = Article;
+
+Article.prototype.setOrientation = function(type,orientation){
+    this.container.style.display = type;
+    this.container.style.flexDirection = orientation
+}
 
 function Image(){
     Component.call(this, 'img');
@@ -113,7 +134,7 @@ function Landing() {
 
     let registerAnchor = new Anchor();
     registerAnchor.setText('Register')
-    registerAnchor.container.style.cursor = 'pointer';
+    registerAnchor.setCursor('pointer');
     registerAnchor.addClickListener(function () {
         document.body.removeChild(this.container);
         document.body.appendChild(register.container);
@@ -123,7 +144,7 @@ function Landing() {
 
     let loginAnchor = new Anchor();
     loginAnchor.setText('Login');
-    loginAnchor.container.style.cursor = 'pointer';
+    loginAnchor.setCursor('pointer');
     loginAnchor.container.style.marginLeft = '25px';
     loginAnchor.addClickListener(function () {
         document.body.removeChild(this.container)
@@ -143,8 +164,7 @@ function Register() {
     this.add(logoRegister);
 
     let registerForm = new Form();
-    registerForm.container.style.display = 'flex';
-    registerForm.container.style.flexDirection = 'column';
+    registerForm.setOrientation('flex','column')
     registerForm.container.style.width = '250px';
 
     registerForm.addSubmitListener(function (e) {
@@ -153,10 +173,10 @@ function Register() {
         document.body.appendChild(login.container);
 
         let registeredUser = {
-            name: nameInput.container.value,
-            email: emailInput.container.value,
-            username: usernameInput.container.value,
-            password: passwordInput.container.value
+            name: nameInput.getValue(),
+            email: emailInput.getValue(),
+            username: usernameInput.getValue(),
+            password: passwordInput.getValue()
         }
 
         console.log(registeredUser);
@@ -201,7 +221,7 @@ function Register() {
 
     let loginAnchor = new Anchor();
     loginAnchor.setText('Login');
-    loginAnchor.container.style.cursor = 'pointer';
+    loginAnchor.setCursor('pointer');
     spanButtons.add(loginAnchor);
 
     loginAnchor.addClickListener(function () {
@@ -211,8 +231,8 @@ function Register() {
 
     let registerButton = new Button();
     registerButton.setText('Register');
+    registerButton.setType('submit');
     registerButton.container.style.marginLeft = '50px';
-    registerButton.container.style.type = 'submit';
     spanButtons.add(registerButton);
 
 
@@ -228,8 +248,7 @@ function Login() {
     this.add(logo);
 
     let loginForm = new Form();
-    loginForm.container.style.display = 'flex';
-    loginForm.container.style.flexDirection = 'column';
+    loginForm.setOrientation('flex','column');
     loginForm.container.style.width = '250px';
 
     loginForm.addSubmitListener(function (e) {
@@ -238,8 +257,8 @@ function Login() {
         document.body.appendChild(home.container);
 
         let userLogin = {
-            username: usernameInput.container.value,
-            password: passwordInput.container.value
+            username: usernameInput.getValue(),
+            password: passwordInput.getValue()
         }
 
         console.log(userLogin);
@@ -270,7 +289,7 @@ function Login() {
     //Register
     let registerAnchor = new Anchor();
     registerAnchor.setText('Register');
-    registerAnchor.container.style.cursor = 'pointer';
+    registerAnchor.setCursor('pointer');
     spanButtons.add(registerAnchor);
 
     registerAnchor.addClickListener(function () {
@@ -281,8 +300,8 @@ function Login() {
     //Login
     let loginButton = new Button();
     loginButton.setText('Login');
+    loginButton.setType('submit');
     loginButton.container.style.marginLeft = '50px';
-    loginButton.container.style.type = 'submit';
     spanButtons.add(loginButton);
 
 }
@@ -297,7 +316,7 @@ function Home(){
     this.add(logoHome);
 
     let signOutButton = new Button();
-    signOutButton.container.textContent = 'Sign out';
+    signOutButton.setText('Sign out');
     this.add(signOutButton);
 
     signOutButton.addClickListener(function (){
@@ -306,8 +325,7 @@ function Home(){
     }.bind(this));
 
     let postContent = new Article();
-    postContent.container.style = 'flex';
-    postContent.container.style.flexDirection = 'column';
+    postContent.setOrientation('flex','column');
     postContent.container.style.width = '250px';
     this.add(postContent);
     
