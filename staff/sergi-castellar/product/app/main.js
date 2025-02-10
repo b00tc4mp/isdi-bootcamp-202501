@@ -328,7 +328,7 @@ function Register() {
   inputForm.add(emailLabel);
 
   var emailInput = new Input();
-  emailInput.setType("text");
+  emailInput.setType("email");
   emailInput.setId("register-email");
   emailInput.setPlaceholder('e-mail')
   inputForm.add(emailInput);
