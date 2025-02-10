@@ -22,21 +22,6 @@ function Form() {
 Form.prototype = Object.create(Component.prototype)
 Form.prototype.constructor = Form
 
-Form.prototype.addSubmitListener = function (callback) {
-    this.container.addEventListener('submit', callback)
-}
-
-function Label() {
-    Component.call(this, 'label')
-}
-
-Label.prototype = Object.create(Component.prototype)
-Label.prototype.constructor = Label
-
-Label.prototype.setText = function (text) {
-    this.container.textContent = text
-}
-
 function Input() {
     Component.call(this, 'input')
 }
@@ -50,10 +35,6 @@ Input.prototype.setType = function (type) {
 
 Input.prototype.setPlaceholder = function (placeholder) {
     this.container.placeholder = placeholder
-}
-
-Input.prototype.getValue = function () {
-    return this.container.value
 }
 
 function Button() {
@@ -143,94 +124,85 @@ body.add(landing)
 
 /* register */
 
-function Register() {
-    Component.call(this, 'div')
-
-    var logo = new Heading(1)
-    logo.setText('Logo')
-    this.add(logo)
+var register = new Component('div')
+register.mount = function () {
+    var logo = document.createElement('h1')
+    logo.textContent = 'Logo'
+    this.container.appendChild(logo)
 
     // form
 
-    var form = new Form()
-    form.addSubmitListener(function (event) {
+    var form = document.createElement('form')
+    form.addEventListener('submit', function (event) {
         event.preventDefault()
 
         console.log('register submit')
 
-        var name = nameInput.getValue()
-        var email = emailInput.getValue()
-        var username = usernameInput.getValue()
-        var password = passwordInput.getValue()
+        var name = nameInput.value
+        var email = emailInput.value
+        var username = usernameInput.value
+        var password = passwordInput.value
 
         console.log(name, email, username, password)
     })
-    this.add(form)
+    this.container.appendChild(form)
 
     // name
 
-    var nameLabel = new Label()
-    nameLabel.setText('Name')
-    form.add(nameLabel)
+    var nameLabel = document.createElement('label')
+    nameLabel.textContent = 'Name'
+    form.appendChild(nameLabel)
 
-    var nameInput = new Input()
-    form.add(nameInput)
+
+    var nameInput = document.createElement('input')
+    form.appendChild(nameInput)
 
     // email
 
-    var emailLabel = new Label()
-    emailLabel.setText('E-mail')
-    form.add(emailLabel)
+    var emailLabel = document.createElement('label')
+    emailLabel.textContent = 'E-mail'
+    form.appendChild(emailLabel)
 
 
-    var emailInput = new Input()
-    emailInput.setType('email')
-    form.add(emailInput)
+    var emailInput = document.createElement('input')
+    form.appendChild(emailInput)
 
     // username
 
-    var usernameLabel = new Label()
-    usernameLabel.setText('Username')
-    form.add(usernameLabel)
+    var usernameLabel = document.createElement('label')
+    usernameLabel.textContent = 'Username'
+    form.appendChild(usernameLabel)
 
 
-    var usernameInput = new Input()
-    usernameInput.setType('text')
-    form.add(usernameInput)
+    var usernameInput = document.createElement('input')
+    form.appendChild(usernameInput)
 
     // password
 
-    var passwordLabel = new Label()
-    passwordLabel.setText('Password')
-    form.add(passwordLabel)
+    var passwordLabel = document.createElement('label')
+    passwordLabel.textContent = 'Password'
+    form.appendChild(passwordLabel)
 
 
-    var passwordInput = new Input()
-    passwordInput.setType('password')
-    form.add(passwordInput)
+    var passwordInput = document.createElement('input')
+    form.appendChild(passwordInput)
 
     // submit
 
-    var submitButton = new Button()
-    submitButton.setText('Register')
-    submitButton.setType('submit')
-    form.add(submitButton)
+    var submitButton = document.createElement('button')
+    submitButton.textContent = 'Register'
+    form.appendChild(submitButton)
 
     // anchor
 
-    var loginAnchor = new Anchor('a')
-    loginAnchor.setText('Login')
-    loginAnchor.addClickListener(function () {
+    var loginAnchor = document.createElement('a')
+    loginAnchor.textContent = 'Login'
+    loginAnchor.addEventListener('click', function () {
         document.body.removeChild(this.container)
         document.body.appendChild(login.container)
     }.bind(this))
-    this.add(loginAnchor)
+    this.container.appendChild(loginAnchor)
 }
-
-Register.prototype = Object.create(Component.prototype)
-Register.prototype.constructor = Register
-
-var register = new Register()
 
 /* login */
 
@@ -291,5 +263,6 @@ home.mount = function () {
     this.container.appendChild(logo)
 }
 
+register.mount()
 login.mount()
 home.mount()
