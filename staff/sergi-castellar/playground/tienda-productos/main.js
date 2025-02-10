@@ -531,10 +531,15 @@ var logic = {
         validateIsAnId: function (input) {
             var regex = /^[a-z]{2}-[a-z]{2}$/
             if (!regex.test(input)) throw new TypeError('invalid ID format')
+        },
+
+        getProductArray: function () {
+            return data.products
+        },
+
+        getCartArray: function () {
+            return data.cart
         }
-    },
-    getProductsArray: function () {
-        return data.products
     },
 
     createFilteredArray: function (propierty, value) {
@@ -542,9 +547,9 @@ var logic = {
             throw new Error('invalid input length')
 
         var filteredProducts = []
-        for (var i = 0; i < logic.getProductsArray().length; i++) {
-            if (logic.getProductsArray()[i][propierty] === value)
-                filteredProducts[filteredProducts.length] = logic.getProductsArray()[i]
+        for (var i = 0; i < logic.helpers.getProductArray().length; i++) {
+            if (logic.helpers.getProductArray()[i][propierty] === value)
+                filteredProducts[filteredProducts.length] = logic.helpers.getProductArray()[i]
         }
 
         if (filteredProducts.length === 0) throw new Error('no products found')
@@ -555,8 +560,8 @@ var logic = {
     searchProductById: function (productId) { // 3 buscar 1 producto
         logic.helpers.validateIsAnId(productId)
 
-        for (var i = 0; i < logic.getProductsArray().length; i++) {
-            var product = logic.getProductsArray()[i]
+        for (var i = 0; i < logic.helpers.getProductArray().length; i++) {
+            var product = logic.helpers.getProductArray()[i]
             if (product.id === productId) {
                 return product
             }
@@ -567,8 +572,8 @@ var logic = {
     searchProductInCart: function (productId) {
         logic.helpers.validateIsAnId(productId)
 
-        for (var i = 0; i < data.cart.length; i++) {
-            var product = data.cart[i]
+        for (var i = 0; i < logic.helpers.getCartArray().length; i++) {
+            var product = logic.helpers.getCartArray()[i]
             if (product.id === productId) {
                 return product
             }
@@ -586,7 +591,7 @@ var logic = {
                 quantity: 1
             }
 
-            data.cart[data.cart.length] = product
+            logic.helpers.getCartArray()[logic.helpers.getCartArray().length] = product
         } else {
             productInCart.quantity += 1
         }
@@ -608,7 +613,7 @@ var interface = {
 
     showProductList: function () { // 1 lista productos
         try {
-            var products = logic.getProductsArray()
+            var products = logic.helpers.getProductArray()
             var list = 'Products:\n'
 
             for (var i = 0; i < products.length; i++) {
@@ -624,8 +629,8 @@ var interface = {
 
     filterList: function () { // 2 filtrar productos
         try {
-            var filterListProperty = prompt('property?')
-            var filterListValue = prompt('value?')
+            var filterListProperty = prompt('property?').toLowerCase()
+            var filterListValue = prompt('value?').toLowerCase()
 
             var filteredProducts = logic.createFilteredArray(filterListProperty, filterListValue)
 
@@ -644,7 +649,7 @@ var interface = {
 
     showProductById: function () { // 3 buscar 1 producto
         try {
-            var id = prompt('id?')
+            var id = prompt('id?').toLowerCase()
             var product = logic.searchProductById(id) // podria aplicar spread
 
             var sentence = `${product.id}: ${product.brand} ${product.model}, ${product.price}€`
@@ -657,7 +662,7 @@ var interface = {
 
     addToCart: function () { // 4 añadir carrito
         try {
-            var id = prompt('id?')
+            var id = prompt('id?').toLowerCase()
             logic.addIdToCartArray(id)
 
         } catch (error) {
@@ -666,7 +671,19 @@ var interface = {
     },
 
     showCart: function () { // 5 ver carrito
-        // TODO implement me
+        try {
+            var cart = logic.helpers.getCartArray()
+            var list = 'Products in cart:\n'
+
+            for (var i = 0; i < cart.length; i++) { // spread??
+                var product = cart[i]
+                list += `${product.id}: ${product.brand} ${product.model}, ${product.price}€\n`
+            }
+
+            alert(list)
+        } catch (error) {
+            interface.helper.handlerError(error)
+        }
     },
 
     placeOrder: function () { // 6 hacer checkout
