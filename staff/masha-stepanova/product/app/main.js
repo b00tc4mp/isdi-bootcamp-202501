@@ -53,6 +53,7 @@ Input.prototype.setPlaceholder = function (placeholder) {
 
 function Button() {
     Component.call(this, 'button')
+    this.container.style.backgroundColor = '#00A706'
 }
 
 Button.prototype = Object.create(Component.prototype)
@@ -79,6 +80,7 @@ Heading.prototype.setText = function (text) {
 
 function Anchor() {
     Component.call(this, 'a')
+
 }
 
 Anchor.prototype = Object.create(Component.prototype)
@@ -126,6 +128,7 @@ Text.prototype.setText = function (description) {
 
 function Body() {
     Component.call(this, 'body')
+    this.container.style.backgroundColor = '#E5FFE6'
 }
 
 Body.prototype = Object.create(Component.prototype)
@@ -146,8 +149,8 @@ function Landing() {
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
     registerAnchor.addClickListener(function () {
-        body.removeChild(this.container)
-        body.appendChild(register.container)
+        document.body.removeChild(this.container)
+        document.body.appendChild(register.container)
     }.bind(this))
     this.add(registerAnchor)
 
@@ -179,6 +182,9 @@ function Register() {
     this.add(logo)
 
     var form = new Form()
+    form.container.style.display = 'flex'
+    form.container.style.flexDirection = 'column'
+    form.container.style.gap = '0.3rem'
     this.add(form)
 
     var labelName = new Label()
@@ -216,8 +222,8 @@ function Register() {
 
     form.addSubmitListener(function (event) {
         event.preventDefault()
-        document.body.container.removeChild(this.container)
-        document.body.container.appendChild(login.container)
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
 
         console.log('register submit')
 
@@ -255,6 +261,10 @@ function Login() {
 
     var form = new Form()
     this.add(form)
+
+    form.container.style.display = 'flex'
+    form.container.style.flexDirection = 'column'
+    form.container.style.gap = '0.3rem'
 
     var labelUsername = new Label()
     labelUsername.setText('Username')
@@ -309,6 +319,10 @@ function Home() {
     var article1 = new Article()
     this.add(article1)
 
+    article1.container.style.display = 'flex'
+    article1.container.style.flexDirection = 'column'
+    article1.container.style.gap = '0.3rem'
+
     var username1 = new Heading(3)
     username1.setText('username1')
     article1.add(username1)
@@ -320,6 +334,9 @@ function Home() {
     var spanArticle1 = new Span()
     article1.add(spanArticle1)
 
+    spanArticle1.container.style.display = 'flex'
+    spanArticle1.container.style.justifyContent = 'space-between'
+
     var description1 = new Text()
     description1.setText('Caption')
     spanArticle1.add(description1)
@@ -327,12 +344,16 @@ function Home() {
     var likeButton1 = new Button()
     likeButton1.setText('🤍')
     likeButton1.addClickListener(function () {
-        likeButton1.container.innerText = likeButton1.container.innerText === '🤍' ? '❤️' : '🤍'
+        likeButton1.container.innerText = likeButton1.container.innerText === '🤍' ? '💛' : '🤍'
     })
     spanArticle1.add(likeButton1)
 
     var article2 = new Article()
     this.add(article2)
+
+    article2.container.style.display = 'flex'
+    article2.container.style.flexDirection = 'column'
+    article2.container.style.gap = '0.3rem'
 
     var username2 = new Heading(3)
     username2.setText('username2')
@@ -345,6 +366,9 @@ function Home() {
     var spanArticle2 = new Span()
     article2.add(spanArticle2)
 
+    spanArticle2.container.style.display = 'flex'
+    spanArticle2.container.style.justifyContent = 'space-between'
+
     var description2 = new Text()
     description2.setText('Caption')
     spanArticle2.add(description2)
@@ -352,12 +376,16 @@ function Home() {
     var likeButton2 = new Button()
     likeButton2.setText('🤍')
     likeButton2.addClickListener(function () {
-        likeButton2.container.innerText = likeButton2.container.innerText === '🤍' ? '❤️' : '🤍'
+        likeButton2.container.innerText = likeButton2.container.innerText === '🤍' ? '💛' : '🤍'
     })
     spanArticle2.add(likeButton2)
 
     var article3 = new Article()
     this.add(article3)
+
+    article3.container.style.display = 'flex'
+    article3.container.style.flexDirection = 'column'
+    article3.container.style.gap = '0.3rem'
 
     var username3 = new Heading(3)
     username3.setText('username3')
@@ -370,6 +398,9 @@ function Home() {
     var spanArticle3 = new Span()
     article3.add(spanArticle3)
 
+    spanArticle3.container.style.display = 'flex'
+    spanArticle3.container.style.justifyContent = 'space-between'
+
     var description3 = new Text()
     description3.setText('Caption')
     spanArticle3.add(description3)
@@ -377,12 +408,16 @@ function Home() {
     var likeButton3 = new Button()
     likeButton3.setText('🤍')
     likeButton3.addClickListener(function () {
-        likeButton3.container.innerText = likeButton3.container.innerText === '🤍' ? '❤️' : '🤍'
+        likeButton3.container.innerText = likeButton3.container.innerText === '🤍' ? '💛' : '🤍'
     })
     spanArticle3.add(likeButton3)
 
     var article4 = new Article()
     this.add(article4)
+
+    article4.container.style.display = 'flex'
+    article4.container.style.flexDirection = 'column'
+    article4.container.style.gap = '0.3rem'
 
     var username4 = new Heading(3)
     username4.setText('username4')
@@ -395,6 +430,13 @@ function Home() {
     var spanArticle4 = new Span()
     article4.add(spanArticle4)
 
+    spanArticle4.container.style.display = 'flex'
+    spanArticle4.container.style.justifyContent = 'space-between'
+
+    article4.container.style.display = 'flex'
+    article4.container.style.flexDirection = 'column'
+    article4.container.style.gap = '0.3rem'
+
     var description4 = new Text()
     description4.setText('Caption')
     spanArticle4.add(description4)
@@ -402,7 +444,7 @@ function Home() {
     var likeButton4 = new Button()
     likeButton4.setText('🤍')
     likeButton4.addClickListener(function () {
-        likeButton4.container.innerText = likeButton4.container.innerText === '🤍' ? '❤️' : '🤍'
+        likeButton4.container.innerText = likeButton4.container.innerText === '🤍' ? '💛' : '🤍'
     })
     spanArticle4.add(likeButton4)
 }
