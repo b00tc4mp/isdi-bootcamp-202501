@@ -523,7 +523,17 @@ var data = {
             doors: 5
         }*/
     ],
-    cart: []
+    cart: [
+        {
+            id: 'fi-ci',
+            quantity: 2
+        },
+        {
+            id: 'se-ib',
+            quantity: 1
+        },
+    ],
+    completeCart: []
 }
 
 var logic = {
@@ -539,7 +549,11 @@ var logic = {
 
         getCartArray: function () {
             return data.cart
-        }
+        },
+
+        getCompleteCartArray: function () {
+            return data.completeCart
+        },
     },
 
     createFilteredArray: function (propierty, value) {
@@ -607,10 +621,6 @@ var interface = {
         }
     },
 
-    showMenu: function () {
-        // TODO implement me
-    },
-
     showProductList: function () { // 1 lista productos
         try {
             var products = logic.helpers.getProductArray()
@@ -626,7 +636,7 @@ var interface = {
             interface.helper.handlerError(error)
         }
     },
-
+    // TODO solucionar que cuando es valor numerico no lo coge
     filterList: function () { // 2 filtrar productos
         try {
             var filterListProperty = prompt('property?').toLowerCase()
@@ -673,12 +683,27 @@ var interface = {
     showCart: function () { // 5 ver carrito
         try {
             var cart = logic.helpers.getCartArray()
+            var products = logic.helpers.getProductArray()
             var list = 'Products in cart:\n'
 
+            //logic
+
             for (var i = 0; i < cart.length; i++) { // spread??
-                var product = cart[i]
-                list += `${product.id}: ${product.brand} ${product.model}, ${product.price}€\n`
+                var productInCart = cart[i]
+                for (var j = 0; j < products.length; j++) {
+                    var productInProducts = products[j]
+                    if (productInCart.id === productInProducts.id) {
+                        var completeProduct = {
+                            ...productInCart,
+                            ...productInProducts
+                        }
+                        console.dir(completeProduct)
+                        list += `[${completeProduct.quantity}] ${completeProduct.id}: ${completeProduct.brand} ${completeProduct.model}, ${completeProduct.price}€\n`
+                    }
+                }
             }
+
+            //interface
 
             alert(list)
         } catch (error) {
@@ -687,10 +712,72 @@ var interface = {
     },
 
     placeOrder: function () { // 6 hacer checkout
-        // TODO implement me
+        try { //TODO vaciar el array o sino se duplican
+            //logic
+            var cart = logic.helpers.getCartArray()
+            var products = logic.helpers.getProductArray()
+
+            for (var i = 0; i < cart.length; i++) { // spread??
+                var productInCart = cart[i]
+                for (var j = 0; j < products.length; j++) {
+                    var productInProducts = products[j]
+                    if (productInCart.id === productInProducts.id) {
+                        var completeProduct = {
+                            ...productInCart,
+                            ...productInProducts
+                        }
+                        logic.helpers.getCompleteCartArray()[logic.helpers.getCompleteCartArray().length] = completeProduct
+                    }
+                }
+            }
+            // logic
+            var list = 'Checkout:\n'
+            var completeCart = logic.helpers.getCompleteCartArray()
+
+            for (var k = 0; k < completeCart.length; k++) {
+                var product = completeCart[k]
+                var subtotal = product.quantity * product.price
+                list += `[${product.quantity}] ${product.brand} ${product.model}, ${product.price}€\n→ Subtotal: ${subtotal}\n`
+            }
+            console.log(list)
+            alert(list)
+
+        } catch (error) {
+            interface.helper.handlerError(error)
+        }
     },
 
     showHistory: function () { // 7 historial de pedidos
         // TODO implement me
+    },
+
+    showMenu: function () { // menu principal
+        var menuSelected = parseInt(prompt('Select what you want to do:\n1. List products\n2. Filter products\n3. Search product\n4. Add products to cart\n5. Check cart\n6. Checkout\n7. List orders'))
+        //logic
+        switch (menuSelected) {
+            case 1:
+                interface.showProductList()
+                break
+            case 2:
+                interface.filterList()
+                break
+            case 3:
+                interface.showProductById()
+                break
+            case 4:
+                interface.addToCart()
+                break
+            case 5:
+                interface.showCart()
+                break
+            case 6:
+                interface.placeOrder()
+                break
+            case 7:
+                interface.showHistory()
+                break
+        }
     }
 }
+
+//interface.showMenu()
