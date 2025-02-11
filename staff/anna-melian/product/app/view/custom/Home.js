@@ -17,13 +17,9 @@ function Home() {
 
     var exitButton = new Button()
     containerTop.add(exitButton)
-
     exitButton.setText('Exit')
+    this.exitButton = exitButton
 
-    exitButton.addClickListener(function () {
-        body.remove(home)
-        body.add(landing)
-    })
 
     var post1 = new Post('username1', 'https://imgs.search.brave.com/gLe1nNepyk97sd_4fBikHFr8rWHTdPIChvqye9jikaU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjc1/MjU4NDEyL2VzL2Zv/dG8vYm9zcXVlLWRl/LXNlY3VveWFzLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1y/NXZqRjRkSWhnVkdo/aXFUMFhmV2Z0MUVa/SFU1X1hwZnJndTky/QUk5SWFjPQ', '6 hour ago')
     this.add(post1)
@@ -40,3 +36,7 @@ function Home() {
 
 Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home
+
+Home.prototype.addExitClickListener = function (listener) {
+    this.exitButton.addClickListener(listener)
+}

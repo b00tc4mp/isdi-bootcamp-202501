@@ -1,5 +1,6 @@
 function Register() {
     Component.call(this, 'div')
+
     var logo = new Heading(1)
     this.add(logo)
     logo.setText('Logo')
@@ -17,18 +18,15 @@ function Register() {
 
         console.log('register submit')
 
-        var name = formNameInput.container.value
-        var email = formEmailInput.container.value
-        var username = formUsernameInput.container.value
-        var password = formPasswordInput.container.value
+        var name = formNameInput.getValue()
+        var email = formEmailInput.getValue()
+        var username = formUsernameInput.getValue()
+        var password = formPasswordInput.getValue()
 
         console.log(name, email, username, password)
 
-        body.remove(register)
-        body.add(login)
-
-    })
-
+        this.registerSubmitListener()
+    }.bind(this))
     this.add(form)
 
     //name
@@ -74,18 +72,23 @@ function Register() {
     var formSubmitButton = new Button()
     form.add(formSubmitButton)
     formSubmitButton.setText('Create new account')
+    formSubmitButton.setType('submit')
 
     // anchor 
 
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
-
-    loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
-    }.bind(this))
+    this.loginAnchor = loginAnchor
     this.add(loginAnchor)
 }
 
 Register.prototype = Object.create(Component.prototype)
 Register.prototype.constructor = Register
+
+Register.prototype.addLoginClickListener = function (listener) {
+    this.loginAnchor.addClickListener(listener)
+}
+
+Register.prototype.addRegisterSubmitListener = function (listener) {
+    this.registerSubmitListener = listener
+}

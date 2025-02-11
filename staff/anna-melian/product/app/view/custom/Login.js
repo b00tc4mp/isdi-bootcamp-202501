@@ -17,15 +17,13 @@ function Login() {
 
         console.log('login submit')
 
-        var username = formUsernameInput.container.value
-        var password = formPasswordInput.container.value
+        var username = formUsernameInput.getValue()
+        var password = formPasswordInput.getValue()
 
         console.log(username, password)
 
-        body.remove(login)
-        body.add(home)
-    })
-
+        this.loginSubmitListener()
+    }.bind(this))
     this.add(form)
 
     // username
@@ -59,13 +57,17 @@ function Login() {
 
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
-
-    registerAnchor.addClickListener(function () {
-        body.remove(login)
-        body.add(register)
-    })
+    this.registerAnchor = registerAnchor
     this.add(registerAnchor)
 }
 
 Login.prototype = Object.create(Component.prototype)
 Login.prototype.constructor = Login
+
+Login.prototype.addRegisterClickListener = function (listener) {
+    this.registerAnchor.addClickListener(listener)
+}
+
+Login.prototype.addLoginSubmitListener = function (listener) {
+    this.loginSubmitListener = listener
+}
