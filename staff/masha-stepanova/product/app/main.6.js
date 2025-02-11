@@ -8,11 +8,6 @@ function Component(tagName) {
 Component.prototype.add = function (child) {
     this.container.appendChild(child.container)
 }
-
-Component.prototype.remove = function (child) {
-    this.container.removeChild(child.container)
-}
-
 // añade una propiedad - función al prototype que crea un event listener para un elemento
 Component.prototype.addClickListener = function (callback) {
     this.container.addEventListener('click', callback)
@@ -154,20 +149,19 @@ function Landing() {
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
     registerAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(register)
+        document.body.removeChild(this.container)
+        document.body.appendChild(register.container)
     }.bind(this))
     this.add(registerAnchor)
 
-    var orText = new Text()
-    orText.setText(' or ')
-    this.add(orText)
+    var orText = document.createTextNode(' or ')
+    this.container.appendChild(orText)
 
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
     loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
     }.bind(this))
     this.add(loginAnchor)
 }
@@ -228,15 +222,15 @@ function Register() {
 
     form.addSubmitListener(function (event) {
         event.preventDefault()
-        body.remove(this)
-        body.add(login)
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
 
         console.log('register submit')
 
-        var name = inputName.value
-        var email = inputEmail.value
-        var username = inputUsername.value
-        var password = inputPassword.value
+        var name = nameInput.value
+        var email = emailInput.value
+        var username = usernameInput.value
+        var password = passwordInput.value
 
         console.log(name, email, username, password)
     }.bind(this))
@@ -244,8 +238,8 @@ function Register() {
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
     loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
+        document.body.removeChild(this.container)
+        document.body.appendChild(login.container)
     }.bind(this))
     this.add(loginAnchor)
 
@@ -293,15 +287,15 @@ function Login() {
 
     form.addSubmitListener(function (event) {
         event.preventDefault()
-        body.remove(this)
-        body.add(home)
+        document.body.removeChild(this.container)
+        document.body.appendChild(home.container)
     }.bind(this))
 
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
     registerAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(register)
+        document.body.removeChild(this.container)
+        document.body.appendChild(register.container)
     }.bind(this))
     this.add(registerAnchor)
 
