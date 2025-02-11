@@ -1,6 +1,5 @@
 console.clear()
 
-
 document.body.style.backgroundColor = '#FFD033'
 document.body.style.fontFamily = 'nunito'
 
@@ -82,6 +81,7 @@ register.mount = function () {
     var form = document.createElement('form')
     //creamos este addEventListener para crear un boton submit
     form.addEventListener('submit', function (event) {
+        debugger
         event.preventDefault()  //evita el envio por defecto del formulario
 
         var name = nameInput.value
@@ -163,21 +163,17 @@ register.mount = function () {
         document.body.removeChild(this.container)
         document.body.appendChild(landing.container)
     }.bind(this))
-    this.container.appendChild(returnButton)
+    form.appendChild(returnButton)
 
 
     var spaceBetweenButton = document.createTextNode(' ')
-    this.container.appendChild(spaceBetweenButton)
+    form.appendChild(spaceBetweenButton)
 
     //register button
 
     var button = document.createElement('button')
     button.textContent = 'Register'
-    button.addEventListener('click', function () {
-        document.body.removeChild(this.container)
-        document.body.appendChild(login.container)
-    }.bind(this))
-    this.container.appendChild(button)
+    form.appendChild(button)
 }
 
 //LOGIN PAGE
@@ -201,6 +197,7 @@ login.mount = function () {
 
     var form = document.createElement('form')
     form.addEventListener('submit', function (event) {
+        debugger
         event.preventDefault()
 
         var username = usernameInput.value
@@ -244,26 +241,20 @@ login.mount = function () {
 
     var returnButton = document.createElement('button')
     returnButton.textContent = 'Return'
-
     returnButton.addEventListener('click', function () {
         document.body.removeChild(this.container)
         document.body.appendChild(landing.container)
     }.bind(this))
-    this.container.appendChild(returnButton)
+    form.appendChild(returnButton)
 
     var spaceBetweenButton = document.createTextNode(' ')
-    this.container.appendChild(spaceBetweenButton)
+    form.appendChild(spaceBetweenButton)
 
     //login button
 
     var button = document.createElement('button')
     button.textContent = 'Login'
-
-    button.addEventListener('click', function () {
-        document.body.removeChild(this.container)
-        document.body.appendChild(home.container)
-    }.bind(this))
-    this.container.appendChild(button)
+    form.appendChild(button)
 
 }
 
