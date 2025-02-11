@@ -5,6 +5,6 @@ function Form() {
 Form.prototype = Object.create(Component.prototype)
 Form.prototype.constructor = Form
 
-Form.prototype.addSubmitListener = function (listener) {
-    this.container.addEventListener('submit', listener)
+Form.prototype.addSubmitListener = function (callback) {
+    this.container.addEventListener('submit', callback)
 }

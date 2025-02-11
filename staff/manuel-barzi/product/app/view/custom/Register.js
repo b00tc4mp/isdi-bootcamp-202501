@@ -19,7 +19,9 @@ function Register() {
         var password = passwordInput.getValue()
 
         console.log(name, email, username, password)
-    })
+
+        this.registerSubmitListener()
+    }.bind(this))
     this.add(form)
 
     // name
@@ -75,12 +77,17 @@ function Register() {
 
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
-    loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
-    }.bind(this))
+    this.loginAnchor = loginAnchor
     this.add(loginAnchor)
 }
 
 Register.prototype = Object.create(Component.prototype)
 Register.prototype.constructor = Register
+
+Register.prototype.addLoginClickListener = function (listener) {
+    this.loginAnchor.addClickListener(listener)
+}
+
+Register.prototype.addRegisterSubmitListener = function (listener) {
+    this.registerSubmitListener = listener
+}

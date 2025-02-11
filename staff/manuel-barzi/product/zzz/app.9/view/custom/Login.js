@@ -18,7 +18,8 @@ function Login() {
 
         console.log(username, password)
 
-        this.loginSubmitListener()
+        body.remove(this)
+        body.add(home)
     }.bind(this))
     this.add(form)
 
@@ -55,17 +56,12 @@ function Login() {
 
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
-    this.registerAnchor = registerAnchor
+    registerAnchor.addClickListener(function () {
+        body.remove(this)
+        body.add(register)
+    }.bind(this))
     this.add(registerAnchor)
 }
 
 Login.prototype = Object.create(Component.prototype)
 Login.prototype.constructor = Login
-
-Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerAnchor.addClickListener(listener)
-}
-
-Login.prototype.addLoginSubmitListener = function (listener) {
-    this.loginSubmitListener = listener
-}
