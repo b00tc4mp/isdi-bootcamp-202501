@@ -7,7 +7,7 @@ function Register() {
 
     var intructions = new Heading(4)
     this.add(intructions)
-    intructions.setText('To register, enter the following information. ')
+    intructions.setText('To create a new account enter the following information. ')
 
     // from
 
@@ -23,9 +23,17 @@ function Register() {
         var username = formUsernameInput.getValue()
         var password = formPasswordInput.getValue()
 
-        console.log(name, email, username, password)
+        try {
+            this.submitVerification(name, email)
 
-        this.registerSubmitListener()
+            console.log(name, email, username, password)
+
+            this.registerSubmitListener()
+
+        } catch (error) {
+            alert("Error: " + error.message)
+        }
+
     }.bind(this))
     this.add(form)
 
@@ -36,6 +44,7 @@ function Register() {
 
     var formNameInput = new Input()
     form.add(formNameInput)
+    formNameInput.setPlaceholder('Anna')
     formNameInput.setType('Name')
 
     // email
@@ -44,6 +53,7 @@ function Register() {
     formEmailLabel.setText('E-mail')
 
     var formEmailInput = new Input()
+    formEmailInput.setPlaceholder('abc@gmail.com')
     formEmailInput.setType('E-mail')
     form.add(formEmailInput)
 
@@ -55,6 +65,7 @@ function Register() {
     formUsernameLabel.setText('Username')
 
     var formUsernameInput = new Input()
+    formUsernameInput.setPlaceholder('Anna10')
     formUsernameInput.setType('Username')
     form.add(formUsernameInput)
 
@@ -91,4 +102,20 @@ Register.prototype.addLoginClickListener = function (listener) {
 
 Register.prototype.addRegisterSubmitListener = function (listener) {
     this.registerSubmitListener = listener
+}
+
+Register.prototype.submitVerification = function (name, email) {
+    if (typeof name != 'string') {
+        throw new Error('Invalid answer')
+    }
+
+    var isEmail = false
+    for (var i = 0; i < email.length; i++) {
+        if (email[i] === '@') {
+            isEmail = true
+        }
+    }
+    if (!isEmail) {
+        throw new Error('Invalid answer')
+    }
 }

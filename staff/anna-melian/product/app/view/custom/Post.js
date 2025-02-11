@@ -2,6 +2,7 @@ function Post(username, imgAdress, date) {
     Component.call(this, 'div')
     this.container.style.marginTop = '50px'
     this.container.style.background = 'lightblue'
+    this.container.style.border = '10px solid darkcyan'
     this.Username(username)
     this.Img(imgAdress)
     this.Caption()
@@ -37,6 +38,11 @@ Post.prototype.Caption = function () {
     captionText.setText('Caption')
     caption.add(captionText)
     var like = new Button()
+    like.container.style.textAlign = 'center'
+    like.container.style.width = '40px'
+    like.container.style.height = '30px'
+    like.container.style.fontSize = '15px'
+
     like.setText('🤍')
     like.addClickListener(function () {
         like.container.innerText = like.container.innerText === '🤍' ? '💙' : '🤍'

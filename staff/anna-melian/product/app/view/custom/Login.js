@@ -33,6 +33,7 @@ function Login() {
     formUsernameLabel.setText('Username')
 
     var formUsernameInput = new Input()
+    formUsernameInput.setPlaceholder('Anna10')
     formUsernameInput.setType('Username')
     form.add(formUsernameInput)
 
