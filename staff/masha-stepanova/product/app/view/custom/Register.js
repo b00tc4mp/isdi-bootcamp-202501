@@ -9,6 +9,20 @@ function Register() {
     form.container.style.display = 'flex'
     form.container.style.flexDirection = 'column'
     form.container.style.gap = '0.3rem'
+    form.addSubmitListener(function (event) {
+        event.preventDefault()
+
+        console.log('register submit')
+
+        var name = inputName.container.value
+        var email = inputEmail.container.value
+        var username = inputUsername.container.value
+        var password = inputPassword.container.value
+
+        console.log(name, email, username, password)
+
+        this.registerSubmitListener()
+    }.bind(this))
     this.add(form)
 
     var labelName = new Label()
@@ -44,30 +58,22 @@ function Register() {
     submitButton.setText('Submit')
     form.add(submitButton)
 
-    form.addSubmitListener(function (event) {
-        event.preventDefault()
-        body.remove(this)
-        body.add(login)
 
-        console.log('register submit')
-
-        var name = inputName.value
-        var email = inputEmail.value
-        var username = inputUsername.value
-        var password = inputPassword.value
-
-        console.log(name, email, username, password)
-    }.bind(this))
 
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
-    loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
-    }.bind(this))
+    this.loginAnchor = loginAnchor
     this.add(loginAnchor)
 
 }
 
 Register.prototype = Object.create(Component.prototype)
 Register.prototype.constructor = Register
+
+Register.prototype.addLoginClickListener = function (listener) {
+    this.loginAnchor.addClickListener(listener)
+}
+
+Register.prototype.addRegisterSubmitListener = function (listener) {
+    this.registerSubmitListener = listener
+}

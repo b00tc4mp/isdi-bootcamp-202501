@@ -33,19 +33,23 @@ function Login() {
 
     form.addSubmitListener(function (event) {
         event.preventDefault()
-        body.remove(this)
-        body.add(home)
+        this.loginSubmitButton()
     }.bind(this))
 
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
-    registerAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(register)
-    }.bind(this))
+    this.registerAnchor = registerAnchor
     this.add(registerAnchor)
 
 }
 
 Login.prototype = Object.create(Component.prototype)
 Login.prototype.constructor = Login
+
+Login.prototype.addRegisterClickListener = function (listener) {
+    this.registerAnchor.addClickListener(listener)
+}
+
+Login.prototype.addLoginSubmitListener = function (listener) {
+    this.loginSubmitButton = listener
+}

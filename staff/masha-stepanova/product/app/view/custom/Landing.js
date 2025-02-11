@@ -7,10 +7,7 @@ function Landing() {
 
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
-    registerAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(register)
-    }.bind(this))
+    this.registerAnchor = registerAnchor
     this.add(registerAnchor)
 
     var orText = new Text()
@@ -19,12 +16,17 @@ function Landing() {
 
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
-    loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
-    }.bind(this))
+    this.loginAnchor = loginAnchor
     this.add(loginAnchor)
 }
 
 Landing.prototype = Object.create(Component.prototype)
 Landing.prototype.constructor = Landing
+
+Landing.prototype.addRegisterClickListener = function (listener) {
+    this.registerAnchor.addClickListener(listener)
+}
+
+Landing.prototype.addLoginClickListener = function (listener) {
+    this.loginAnchor.addClickListener(listener)
+}
