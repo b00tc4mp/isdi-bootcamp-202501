@@ -124,7 +124,7 @@ var register = new Component(document.createElement('div'))
         logginAnchor2.addEventListener('click', function () {
             document.body.removeChild(this.container)
             document.body.appendChild(home.container)
-        }.bind())
+        }.bind(this))
 
         // CREAR BOTON ENVIO REGISTER
 
@@ -142,16 +142,17 @@ var register = new Component(document.createElement('div'))
         
         //document.body.appendChild(login)
         // PONGO ESTILOS AL FORMULARIO PARA QUE SE ALINEEN VERTICALMENTE
-        container.style.display = "flex";
-        container.style.flexDirection = "column";
-        container.style.gap = '15px'
+        this.container.style.display = "flex";
+        this.container.style.flexDirection = "column";
+        this.container.style.gap = '15px'
 
         var header = document.createElement('h1') //header login
+        header.textContent = 'Login'
         this.container.appendChild(header)
 
         // var loginHeaderText = document.createTextNode('Login') //texto para el header
         // loginHeader.appendChild(loginHeaderText)
-        header.textContent = 'Login'
+       
 
         var label = document.createElement('label') //etiqueta para username
         this.container.appendChild(label)
@@ -171,34 +172,26 @@ var register = new Component(document.createElement('div'))
 
         var labelInputPassword = document.createElement('input')
         this.container.appendChild(labelInputPassword)
-
+        
+        // Anchor para que te lleve a register
         var anchorRegister = document.createElement('a')
-       this.container.appendChild(anchorRegister)
-
-        // Boton para que register te lleve a register
+        anchorRegister.textContent = 'Register' 
         anchorRegister.addEventListener('click', function () {
             document.body.removeChild(this.container)
             document.body.appendChild(register.container)
-        }.bind())
+        }.bind(this))
+        this.container.appendChild(anchorRegister)
 
-
-        // var anchorLoginRegisterText = document.createTextNode('Register')
-        // anchorLoginRegister.appendChild(anchorLoginRegisterText)
-
-
+        // Butoon para que haga login
         var loginButton = document.createElement('button')
-        this.container.appendChild(loginButton)
-
+        loginButton.textContent = "Login"
         loginButton.addEventListener('click', function () {
             document.body.removeChild(this.container)
             document.body.appendChild(home.container)
-        }.bind())
+        }.bind(this))
+        this.container.appendChild(loginButton)
 
-
-        loginButton.textContent = "Login";
     }
-
-
         //==================================================================HOME=================================================================================0
    
         var home = new Component(document.createElement('div'))
@@ -224,7 +217,7 @@ var register = new Component(document.createElement('div'))
             document.body.removeChild(this.container)
 
             document.body.appendChild(landing.container) 
-        }.bind())
+        }.bind(this))
         this.container.appendChild(logoutButton)
 
         // var main = document.createElement('main')
