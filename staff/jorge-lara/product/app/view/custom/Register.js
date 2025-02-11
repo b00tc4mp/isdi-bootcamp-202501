@@ -6,13 +6,11 @@ function Register() {
     this.add(logoRegister);
 
     let registerForm = new Form();
-    registerForm.setOrientation('flex','column')
+    registerForm.setOrientation('flex', 'column')
     registerForm.container.style.width = '250px';
 
     registerForm.addSubmitListener(function (e) {
         e.preventDefault();
-        body.remove(this);
-        body.add(login);
 
         let registeredUser = {
             name: nameInput.getValue(),
@@ -22,6 +20,8 @@ function Register() {
         }
 
         console.log(registeredUser);
+
+        this.registerSubmitListener();
     }.bind(this))
     this.add(registerForm);
 
@@ -66,10 +66,7 @@ function Register() {
     loginAnchor.setCursor('pointer');
     spanButtons.add(loginAnchor);
 
-    loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
-    }.bind(this))
+    this.loginAnchor = loginAnchor;
 
     let registerButton = new Button();
     registerButton.setText('Register');
@@ -81,3 +78,11 @@ function Register() {
 }
 Register.prototype = Object.create(Component.prototype);
 Register.prototype.constructor = Register;
+
+Register.prototype.addLoginClickListener = function (listener) {
+    this.loginAnchor.addClickListener(listener);
+}
+
+Register.prototype.addRegisterSubmitListener = function (listener) {
+    this.registerSubmitListener = listener;
+}

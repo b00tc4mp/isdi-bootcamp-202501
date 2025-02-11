@@ -8,10 +8,8 @@ function Landing() {
     let registerAnchor = new Anchor();
     registerAnchor.setText('Register')
     registerAnchor.setCursor('pointer');
-    registerAnchor.addClickListener(function () {
-        body.remove(this);
-        body.add(register);
-    }.bind(this));
+    this.registerAnchor = registerAnchor;
+
     this.add(registerAnchor);
 
 
@@ -19,11 +17,17 @@ function Landing() {
     loginAnchor.setText('Login');
     loginAnchor.setCursor('pointer');
     loginAnchor.container.style.marginLeft = '25px';
-    loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
-    }.bind(this))
-    this.add(loginAnchor)
+    this.loginAnchor = loginAnchor;
+
+    this.add(loginAnchor);
 }
 Landing.prototype = Object.create(Component.prototype);
 Landing.prototype.constructor = Landing;
+
+Landing.prototype.addRegisterClickListener = function (listener) {
+    this.registerAnchor.addClickListener(listener);
+}
+
+Landing.prototype.addLoginClickListener = function (listener) {
+    this.loginAnchor.addClickListener(listener);
+}

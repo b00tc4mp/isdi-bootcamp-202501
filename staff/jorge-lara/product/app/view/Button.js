@@ -8,6 +8,6 @@ Button.prototype.setText = function (text) {
     this.container.textContent = text;
 };
 
-Button.prototype.setType = function (type){
+Button.prototype.setType = function (type) {
     this.container.type = type
 }

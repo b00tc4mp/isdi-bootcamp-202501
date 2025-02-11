@@ -7,6 +7,6 @@ Anchor.prototype.constructor = Anchor;
 Anchor.prototype.setText = function (text) {
     this.container.textContent = text;
 };
-Anchor.prototype.setCursor = function (cursor){
+Anchor.prototype.setCursor = function (cursor) {
     this.container.style.cursor = cursor;
 }

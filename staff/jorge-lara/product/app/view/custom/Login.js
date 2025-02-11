@@ -6,13 +6,11 @@ function Login() {
     this.add(logo);
 
     let loginForm = new Form();
-    loginForm.setOrientation('flex','column');
+    loginForm.setOrientation('flex', 'column');
     loginForm.container.style.width = '250px';
 
     loginForm.addSubmitListener(function (e) {
         e.preventDefault();
-        body.remove(this);
-        body.add(home);
 
         let userLogin = {
             username: usernameInput.getValue(),
@@ -21,6 +19,7 @@ function Login() {
 
         console.log(userLogin);
 
+        this.loginSubmitListener();
     }.bind(this))
     this.add(loginForm);
 
@@ -50,10 +49,7 @@ function Login() {
     registerAnchor.setCursor('pointer');
     spanButtons.add(registerAnchor);
 
-    registerAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(register)
-    }.bind(this))
+    this.registerAnchor = registerAnchor;
 
     //Login
     let loginButton = new Button();
@@ -65,3 +61,11 @@ function Login() {
 }
 Login.prototype = Object.create(Component.prototype);
 Login.prototype.constructor = Login;
+
+Login.prototype.addRegisterClickListener = function (listener) {
+    this.registerAnchor.addClickListener(listener)
+}
+
+Login.prototype.addLoginSubmitListener = function (listener) {
+    this.loginSubmitListener = listener;
+}

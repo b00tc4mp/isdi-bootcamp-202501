@@ -1,4 +1,4 @@
-function Image(){
+function Image() {
     Component.call(this, 'img');
 }
 Image.prototype = Object.create(Component.prototype);
