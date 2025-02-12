@@ -169,6 +169,7 @@ register.mount = function () {
     var spaceBetweenButton = document.createTextNode(' ')
     form.appendChild(spaceBetweenButton)
 
+
     //register button
 
     var button = document.createElement('button')
@@ -257,7 +258,6 @@ login.mount = function () {
     form.appendChild(button)
 
 }
-
 
 
 // HOMEPAGE
