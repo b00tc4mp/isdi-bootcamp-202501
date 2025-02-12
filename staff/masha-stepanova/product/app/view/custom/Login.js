@@ -33,7 +33,21 @@ function Login() {
 
     form.addSubmitListener(function (event) {
         event.preventDefault()
-        this.loginSubmitButton()
+
+        var username = inputUsername.getValue()
+        var password = inputPassword.getValue()
+
+        try {
+            logic.loginUser(username, password)
+
+            form.clear()
+
+            this.loginSubmitButton()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
     }.bind(this))
 
     var registerAnchor = new Anchor()

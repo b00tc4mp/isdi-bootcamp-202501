@@ -12,16 +12,22 @@ function Register() {
     form.addSubmitListener(function (event) {
         event.preventDefault()
 
-        console.log('register submit')
+        var name = inputName.getValue()
+        var email = inputEmail.getValue()
+        var username = inputUsername.getValue()
+        var password = inputPassword.getValue()
 
-        var name = inputName.container.value
-        var email = inputEmail.container.value
-        var username = inputUsername.container.value
-        var password = inputPassword.container.value
+        try {
+            logic.registerUser(name, email, username, password)
 
-        console.log(name, email, username, password)
+            form.clear()
 
-        this.registerSubmitListener()
+            this.registerSubmitListener()
+        } catch (error) {
+            console.log(error)
+
+            alert(error.message)
+        }
     }.bind(this))
     this.add(form)
 
@@ -37,6 +43,7 @@ function Register() {
     form.add(labelEmail)
 
     var inputEmail = new Input()
+    inputEmail.setType('email')
     form.add(inputEmail)
 
     var labelUsername = new Label()
@@ -44,6 +51,7 @@ function Register() {
     form.add(labelUsername)
 
     var inputUsername = new Input()
+    inputUsername.setType('text')
     form.add(inputUsername)
 
     var labelPassword = new Label()
@@ -51,6 +59,7 @@ function Register() {
     form.add(labelPassword)
 
     var inputPassword = new Input()
+    inputPassword.setType('password')
     form.add(inputPassword)
 
     var submitButton = new Button()
@@ -58,20 +67,21 @@ function Register() {
     submitButton.setText('Submit')
     form.add(submitButton)
 
-
-
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
-    this.loginAnchor = loginAnchor
-    this.add(loginAnchor)
+    loginAnchor.addClickListener(function () {
+        form.clear()
 
+        this.loginClickListener()
+    }.bind(this))
+    this.add(loginAnchor)
 }
 
 Register.prototype = Object.create(Component.prototype)
 Register.prototype.constructor = Register
 
 Register.prototype.addLoginClickListener = function (listener) {
-    this.loginAnchor.addClickListener(listener)
+    this.loginClickListener = listener
 }
 
 Register.prototype.addRegisterSubmitListener = function (listener) {

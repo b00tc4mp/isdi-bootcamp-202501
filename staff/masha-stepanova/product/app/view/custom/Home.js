@@ -5,6 +5,21 @@ function Home() {
     logo.setText('Logo')
     this.add(logo)
 
+    var logoutButton = new Button()
+    logoutButton.setText('Logout')
+    logoutButton.addClickListener(function () {
+        try {
+            logic.logoutUser()
+
+            this.logoutClickListener()
+        } catch (error) {
+            console.log(error)
+
+            alert(error.message)
+        }
+    }.bind(this))
+    this.add(logoutButton)
+
     var article1 = new Article()
     this.add(article1)
 
@@ -140,3 +155,7 @@ function Home() {
 
 Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home
+
+Home.prototype.addLogoutClickListener = function (listener) {
+    this.logoutClickListener = listener
+}

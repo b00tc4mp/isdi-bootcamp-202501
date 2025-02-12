@@ -1,7 +1,7 @@
-
+s
 const body = new Body()
 body.container = document.body
-// body.container.style.backgroundImage = "url('https://imgs.search.brave.com/wORb9PxQKXep5pUJuADeoU5HD2PThiYFRqeE6eRAZT4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2IyLzYy/LzA4L2IyNjIwOGE3/ODRhYWVlNTk2NjJl/NTQ3ZjAzZGEwZGM4/LmpwZw')"
+body.container.style.backgroundImage = "url('https://imgs.search.brave.com/wORb9PxQKXep5pUJuADeoU5HD2PThiYFRqeE6eRAZT4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2IyLzYy/LzA4L2IyNjIwOGE3/ODRhYWVlNTk2NjJl/NTQ3ZjAzZGEwZGM4/LmpwZw')"
 
 var landing = new Landing()
 landing.addRegisterClickListener(function () {
@@ -37,7 +37,3 @@ login.addLoginSubmitListener(function () {
 })
 
 var home = new Home()
-home.addLogoutClickListener(function () {
-    body.remove(home)
-    body.add(landing)
-})
