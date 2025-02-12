@@ -11,22 +11,18 @@ function Register() {
     form.addSubmitListener(function (event) {
         event.preventDefault()
 
+        console.log('register submit')
+
         var name = nameInput.getValue()
         var email = emailInput.getValue()
         var username = usernameInput.getValue()
         var password = passwordInput.getValue()
 
-        try {
-            logic.registerUser(name, email, username, password)
+        console.log(name, email, username, password)
 
-            form.clear()
+        form.clear()
 
-            this.registerSubmitListener()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
+        this.registerSubmitListener()
     }.bind(this))
     this.add(form)
 
