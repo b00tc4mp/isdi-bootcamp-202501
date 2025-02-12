@@ -1,8 +1,7 @@
 var logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
-        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        ID_REGEX: /^[0-9A-Fa-f]+$/
+        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     },
 
     validate: {
@@ -33,14 +32,10 @@ var logic = {
             this.text(password, explain)
             this.minLength(password, 6, explain)
             this.maxLength(password, 16, explain)
-        },
-        id: function (id, explain) {
-            if (!logic.constant.ID_REGEX.test(id)) throw new SyntaxError(`invalid ${explain} syntax`)
         }
     },
 
     registerUser: function (name, email, username, password) {
-        this.validate.id(id, 'id')
         this.validate.text(name, 'name')
         this.validate.maxLength(name, 20, 'name')
         this.validate.email(email, 'name')
@@ -58,12 +53,13 @@ var logic = {
         if (found) throw new Error('User already exists')
 
         var user = {
-            id: data.uniqueUserId(),
+            id: data.uuid(),
             name: name,
             email: email,
             username: username,
             password: password,
             createdAt: new Date(),
+            state: null,
             modifiedAt: null,
         }
 
@@ -86,9 +82,28 @@ var logic = {
         if (!found || found.password !== password) throw new Error('Wrong credentials')
 
         data.userId = found.id
+        data.currentUser = found
+        found.state = 'Online'
+    },
+
+    currentUser: function () {
+        var found
+
+        for (var i = 0; i < data.users.length && !found; i++) {
+            var user = data.users[i]
+
+            if (user.state === 'Online') {
+                found = user
+                return found
+            }
+        }
+
+        if (!found) throw new Error('Any user online')
     },
 
     logoutUser: function () {
         data.userId = null
+        data.currentUser.state = 'Offline'
+        data.currentUser = null
     }
 }
