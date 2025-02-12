@@ -9,11 +9,8 @@ function Landing() {
    
     var registerButton = new Button()
     registerButton.setText('Register')
-    registerButton.addClickListener(function() {
-        body.remove(this)
-        body.add(register)
-    }.bind(this))
     this.add(registerButton)
+    this.registerButton = registerButton
 
     // simple text
 
@@ -26,15 +23,19 @@ function Landing() {
 
     //login anchor  
 
-    var loginAnchor = new Anchor()
-    loginAnchor.setText('Login')
-    loginAnchor.addClickListener(function () {
-        body.remove(this)
-        body.add(login)
-    }.bind(this))
-    this.add(loginAnchor)
+    var loginButton = new Button()
+    loginButton.setText('Login')
+    this.add(loginButton)
+    this.loginButton = loginButton
 }
 
 Landing.prototype = Object.create(Component.prototype)
 Landing.prototype.constructor = Landing
 
+Landing.prototype.addRegisterClickListener = function(listener) {
+    this.registerButton.addClickListener(listener)
+}
+
+Landing.prototype.addLoginClickListener = function(listener) {
+    this.loginButton.addClickListener(listener)
+}

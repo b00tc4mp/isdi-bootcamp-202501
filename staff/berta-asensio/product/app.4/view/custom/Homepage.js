@@ -57,17 +57,18 @@ function Home() {
     secondPostPicture.style.objectPosition = 'top'
     */
 
-    //logout button
+    //logout anchor
 
-    var logOutButton = new Button()
-    logOutButton.setText('Logout')
-    logOutButton.addClickListener(function () {
-        document.body.removeChild(this.container)
-        document.body.appendChild(landing.container)
-    }.bind(this))
-    this.add(logOutButton)
+    var logOutAnchor = new Anchor()
+    logOutAnchor.setText('Logout')
+
+    this.add(logOutAnchor)
+    this.logOutAnchor = logOutAnchor
 }
 
 Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home
 
+Home.prototype.addLogOutClickListener = function(listener) {
+    this.logOutAnchor.addClickListener(listener)
+}

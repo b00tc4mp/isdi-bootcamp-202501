@@ -25,8 +25,7 @@ function Login() {
 
         console.log(username, password)
 
-        body.remove(this)
-        body.add(home)
+        this.loginSubmitListener()
     }.bind(this))
     this.add(form)
 
@@ -60,15 +59,13 @@ function Login() {
     var br = new Br()
     form.add(br)
 
-    //return button
+    //return anchor
 
-    var returnButton = new Button()
-    returnButton.setText('Return')
-    returnButton.addClickListener(function () {
-        document.body.removeChild(this.container)
-        document.body.appendChild(landing.container)
-    }.bind(this))
-    form.add(returnButton)
+    var returnAnchor = new Anchor()
+    returnAnchor.setText('Return')
+
+    this.add(returnAnchor)
+    this.returnAnchor = returnAnchor
 
    // var spaceBetweenButton = document.createTextNode(' ')
     //form.appendChild(spaceBetweenButton)
@@ -84,4 +81,12 @@ function Login() {
 
 Login.prototype = Object.create(Component.prototype)
 Login.prototype.constructor = Login
+
+Login.prototype.addLoginSubmitListener = function(listener) {
+    this.loginSubmitListener = listener
+}
+
+Login.prototype.addReturnClickListener = function(listener) {
+    this.returnAnchor.addClickListener(listener)
+}
 

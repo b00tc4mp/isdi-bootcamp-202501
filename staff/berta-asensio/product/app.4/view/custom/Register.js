@@ -23,7 +23,9 @@ function Register() {
 
         console.log(name, username, password, email)
 
-    })
+        this.registerSubmitListener()
+
+    }.bind(this))
     this.add(form)
 
     //name
@@ -91,11 +93,9 @@ function Register() {
 
     var returnAnchor = new Anchor()
     returnAnchor.setText('Return')
-    returnAnchor.addClickListener(function () {
-        document.body.removeChild(this.container)
-        document.body.appendChild(landing.container)
-    }.bind(this))
-    form.add(returnAnchor)
+
+    this.add(returnAnchor)
+    this.returnAnchor = returnAnchor
 
     var spaceBetweenButton = document.createTextNode(' ')
     this.container.appendChild(spaceBetweenButton)
@@ -115,14 +115,27 @@ function Register() {
     var loginButton = new Button()
     loginButton.setType('button')
     loginButton.setText('Login')
-    loginButton.addClickListener(function() {
-        document.body.removeChild(this.container)
-        document.body.appendChild(login.container)
-    }.bind(this))
+
     this.add(loginButton)
+    this.loginButton = loginButton
+
 }
 
 Register.prototype = Object.create(Component.prototype)
 Register.prototype.constructor = Register
 
+//Creamos aquí el método de addLoginClickListener en el prototipo
+//El listener lo recibimos de fuera, porque main es el que hará la accion 
+Register.prototype.addLoginClickListener = function(listener) {
+    this.loginButton.addClickListener(listener)
+}
 
+Register.prototype.addRegisterSubmitListener = function(listener) {
+    this.registerSubmitListener = listener
+}
+
+Register.prototype.addReturnClickListener = function(listener) {
+    this.returnAnchor.addClickListener(listener)
+}
+
+//Con los cambios hechos, aquí ya no hay ninguna referencia a main (ni body, ni login ni landing)
