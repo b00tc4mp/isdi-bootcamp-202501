@@ -2,7 +2,7 @@ console.log('Hello, App!')
 
 //asign our body
 const body = new Body()
-document.body = body.container
+body.container = document.body //reemplazo el contenedor del body por el que creo yo
 
 // --- LANDING ---
 var landing = new Landing()

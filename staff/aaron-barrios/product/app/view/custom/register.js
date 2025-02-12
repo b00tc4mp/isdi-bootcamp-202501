@@ -91,7 +91,7 @@ function Register() {
 
         console.log(userRegistered)
 
-        form.container.reset()
+        form.clear()
         this.registerSubmitListener()
     }.bind(this))
 }

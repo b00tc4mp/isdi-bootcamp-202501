@@ -10,6 +10,6 @@ Form.prototype.addSubmitListener = function (callback) {
     this.container.addEventListener('submit', callback)
 }
 
-Form.prototype.reset = function (callback) {
+Form.prototype.clear = function () {
     this.container.reset()
 }

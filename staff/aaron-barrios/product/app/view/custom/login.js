@@ -70,7 +70,7 @@ function Login() {
         console.log(userLogged)
 
         this.loginSubmitListener()
-        form.container.reset()
+        form.clear()
     }.bind(this))
 }
 
