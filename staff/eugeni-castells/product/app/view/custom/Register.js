@@ -20,11 +20,10 @@ function Register() {
         password: passwordInput.getValue(),
       };
       try {
-        logic.helpers.validateEmptyFormField(registerInfo);
-        logic.helpers.validateIsString(registerInfo);
         logic.registerUser(registerInfo);
         this.addSubmitListener();
       } catch (error) {
+        console.log(error.message);
         alert(error.message);
       }
     }.bind(this)
@@ -87,7 +86,12 @@ function Register() {
   var loginButton = new Button("Login");
   loginButton.setType("button");
   loginButton.setStyle(style.secondaryButtonStyle);
-  this.loginButton = loginButton;
+  loginButton.addClickListener(
+    function () {
+      form.clear();
+      this.loginClickListener();
+    }.bind(this)
+  );
   buttonWrapper.add(loginButton);
 
   //register button
@@ -101,7 +105,7 @@ Register.prototype = Object.create(Component.prototype);
 Register.prototype.constructor = Register;
 
 Register.prototype.addLoginClickListener = function (listener) {
-  this.loginButton.addClickListener(listener);
+  this.loginClickListener = listener;
 };
 
 Register.prototype.addRegisterSubmitListener = function (listener) {

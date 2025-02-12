@@ -1,45 +1,96 @@
 var logic = {
-  helpers: {
-    validateEmptyFormField: function (formData) {
-      var notEmptyForm = true;
-      for (var property in formData) {
-        if (formData[property] === "") {
-          notEmptyForm = false;
-          break;
-        }
-      }
-
-      if (!notEmptyForm) {
-        throw new Error("There's an empty field");
-      }
+  constant: {
+    EMPTY_OR_BLANK_REGEX: /^\s*$/,
+    EMAIL_REGEX:
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+  },
+  validate: {
+    string: function (string, explain) {
+      if (typeof string !== "string")
+        throw new TypeError("invalid " + explain + " type");
     },
-    validateIsString: function (formData) {
-      var allString = true;
-
-      for (var field in formData) {
-        if (typeof field !== "string") {
-          allString = false;
-        }
-      }
-
-      if (!allString) {
-        throw new Error("Not all fields are string");
-      }
+    text: function (text, explain) {
+      this.string(text, explain);
+      if (logic.constant.EMPTY_OR_BLANK_REGEX.test(text))
+        throw new SyntaxError("invalid " + explain + " syntax");
+    },
+    email: function (email, explain) {
+      this.string(email, explain);
+      if (!logic.constant.EMAIL_REGEX.test(email))
+        throw new SyntaxError("invalid " + explain + " syntax");
+    },
+    username: function (username, explain) {
+      this.text(username, explain);
+      this.minLength(username, 3, explain);
+      this.maxLength(username, 20, explain);
+    },
+    password: function (password, explain) {
+      this.text(password, explain);
+      this.minLength(password, 8, explain);
+      this.maxLength(password, 20, explain);
+    },
+    maxLength: function (value, maxLength, explain) {
+      if (value.length > maxLength)
+        throw new RangeError("invalid " + explain + " range error");
+    },
+    minLength: function (value, minLength, explain) {
+      if (value.length < minLength)
+        throw new RangeError("invalid " + explain + " range error");
     },
   },
-
   registerUser: function (userInfo) {
-    var notRepitedUser = true;
+    this.validate.text(userInfo.name, "name");
+    this.validate.minLength(userInfo.name, 1, "name");
+    this.validate.maxLength(userInfo.name, 20, "name");
+    this.validate.email(userInfo.email, "email");
+    this.validate.username(userInfo.username, "username");
+    this.validate.password(userInfo.password, "password");
 
-    for (var i = 0; i < data.users.length && notRepitedUser === true; i++) {
-      if (userInfo.username === data.users[i].username) {
-        notRepitedUser = false;
+    var userFound;
+
+    for (var i = 0; i < data.users.length && !userFound; i++) {
+      if (
+        userInfo.username === data.users[i].username ||
+        userInfo.email === data.users[i].email
+      ) {
+        userFound = userInfo;
       }
     }
 
-    if (notRepitedUser) {
-      data.users[data.users.length] = userInfo;
-      localStorage.setItem("users", JSON.stringify(data.users));
-    } else throw new Error("Username already exists");
+    if (userFound) throw new Error("user already exists");
+
+    var user = {
+      id: data.uuid(),
+      name: userInfo.name,
+      email: userInfo.email,
+      username: userInfo.username,
+      password: userInfo.password,
+      createdAt: new Date(),
+      modifiedAt: null,
+    };
+
+    data.users[data.users.length] = user;
+
+    localStorage.setItem("users", JSON.stringify(data.users));
+  },
+  loginUser: function (username, password) {
+    this.validate.username(username, "username");
+    this.validate.password(password, "password");
+
+    var found;
+
+    for (var i = 0; i < data.users.length && !found; i++) {
+      var user = data.users[i];
+
+      if (user.username === username) found = user;
+    }
+
+    if (!found || user.password !== password)
+      throw new Error("wrong credentials");
+
+    data.userId = found.id;
+  },
+  setOfflineUser: function () {
+    data.userId = null;
   },
 };

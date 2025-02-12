@@ -1,7 +1,7 @@
 function Landing() {
   Component.call(this, "div");
 
-  this.setStyle();
+  this.setStyle(style.screenStyle);
 
   var logo = new Header("1", "Logo");
   this.add(logo);
@@ -12,15 +12,18 @@ function Landing() {
 
   //var link Register
   var registerLink = new Anchor("Register");
+  registerLink.setStyle(style.links);
   this.registerLink = registerLink;
   linkDiv.add(registerLink);
 
   //or text
   var orText = new Span(" or ");
+  orText.setStyle(style.landingSpan);
   linkDiv.add(orText);
 
   //var link Login
   var loginLink = new Anchor("Login");
+  loginLink.setStyle(style.links);
   this.loginLink = loginLink;
 
   linkDiv.add(loginLink);

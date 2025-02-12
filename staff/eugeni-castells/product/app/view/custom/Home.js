@@ -6,6 +6,16 @@ function Home() {
 
   this.add(logo);
 
+  var logoutButton = new Button("Logout");
+  logoutButton.setStyle(style.logoutButton);
+  logoutButton.addClickListener(
+    function () {
+      logic.setOfflineUser();
+      this.logoutClickListener();
+    }.bind(this)
+  );
+  this.add(logoutButton);
+
   var sectionWrapper = new Div();
   sectionWrapper.setStyle(style.sectionWrapperStyle);
 
@@ -17,4 +27,8 @@ Home.prototype.constructor = Home;
 
 Home.prototype.addLogoClickListener = function (listener) {
   this.logo.addClickListener(listener);
+};
+
+Home.prototype.addLogoutClickListener = function (listener) {
+  this.logoutClickListener = listener;
 };

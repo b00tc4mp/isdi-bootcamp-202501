@@ -25,4 +25,20 @@ var style = {
     height: "150px",
     backgroundColor: "gray",
   },
+  landingSpan: {
+    color: "black",
+    fontSize: "26px",
+  },
+  links: {
+    textDecoration: "underline",
+    color: "black",
+    fontSize: "30px",
+  },
+  logoutButton: {
+    backgroundColor: "red",
+    borderRadius: "50%",
+    width: "60px",
+    height: "60px",
+    padding: "5px",
+  },
 };

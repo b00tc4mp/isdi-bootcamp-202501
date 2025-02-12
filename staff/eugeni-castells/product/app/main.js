@@ -6,7 +6,7 @@ function removeItemAddItem(itemToRemove, itemToAdd) {
 }
 
 const body = new Body();
-document.body = body.container;
+body.container = document.body;
 
 var landing = new Landing();
 
@@ -44,18 +44,6 @@ home.addLogoClickListener(function () {
   removeItemAddItem(home, landing);
 });
 
-var styledLinks = document.getElementsByTagName("a");
-
-for (var i = 0; i < styledLinks.length; i++) {
-  console.log(styledLinks[i]);
-  styledLinks[i].style.textDecoration = "underline";
-  styledLinks[i].style.color = "black";
-  styledLinks[i].style.fontSize = "30px";
-}
-
-var styledSpans = document.getElementsByTagName("span");
-
-for (var i = 0; i < styledSpans.length; i++) {
-  styledSpans[i].style.color = "black";
-  styledSpans[i].style.fontSize = "26px";
-}
+home.addLogoutClickListener(function () {
+  removeItemAddItem(home, login);
+});

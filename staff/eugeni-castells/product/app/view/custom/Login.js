@@ -11,24 +11,18 @@ function Login() {
     function (event) {
       event.preventDefault();
 
-      var correctUsername = false;
+      try {
+        var username = nameInput.getValue();
 
-      var correctPassword = false;
+        var password = passwordInput.getValue();
 
-      for (var i = 0; i < data.users.length; i++) {
-        if (data.loginFormData.username === data.users[i].username) {
-          correctUsername = true;
-        }
+        logic.loginUser(username, password);
 
-        if (data.loginFormData.password === data.users[i].password) {
-          correctPassword = true;
-        }
-      }
-      if (correctPassword && correctPassword) {
-        alert("Login successful!");
+        form.clear();
+
         this.addSubmitListener();
-      } else {
-        alert("Login failed!");
+      } catch (error) {
+        alert(error.message);
       }
     }.bind(this)
   );
@@ -61,7 +55,12 @@ function Login() {
   var registerButton = new Button("Register");
   registerButton.setType("button");
   buttonWrapper.add(registerButton);
-  this.registerButton = registerButton;
+  registerButton.addClickListener(
+    function () {
+      form.clear();
+      this.registerClickListener();
+    }.bind(this)
+  );
 
   var formButton = new Button("Login");
   formButton.setType("submit");
@@ -73,7 +72,7 @@ Login.prototype = Object.create(Component.prototype);
 Login.prototype.constructor = Login;
 
 Login.prototype.addRegisterClickListener = function (listener) {
-  this.registerButton.addClickListener(listener);
+  this.registerClickListener = listener;
 };
 
 Login.prototype.addLoginSubmitListener = function (listener) {
