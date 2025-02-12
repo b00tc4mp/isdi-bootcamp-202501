@@ -12,7 +12,7 @@ var data = {
             password: 'mamama',
             createdAt: 'Ahora',
             role: 'user',
-            state: null,
+            state: 'Offline',
             modifiedAt: null
         },
         {
@@ -23,7 +23,18 @@ var data = {
             password: 'sesese',
             createdAt: 'Ahora',
             role: 'user',
-            state: null,
+            state: 'Offline',
+            modifiedAt: null
+        },
+        {
+            id: 'm71tml17lX',
+            name: 'admin',
+            email: 'ad@min.com',
+            username: 'ad',
+            password: 'adadad',
+            createdAt: 'Ahora',
+            role: 'admin',
+            state: 'Offline',
             modifiedAt: null
         }
     ],
