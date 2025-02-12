@@ -21,6 +21,10 @@ var register = new Register()
 register.addLoginClickListener(function () {
     body.remove(register)
     body.add(login)
+
+    if (register.form && typeof register.form.reset === 'function') {
+        register.form.reset();
+    }
 })
 register.addRegisterSubmitListener(function () {
     body.remove(register)
@@ -32,6 +36,10 @@ var login = new Login()
 login.addRegisterClickListener(function () {
     body.remove(login)
     body.add(register)
+
+    if (login.form && typeof login.form.reset === 'function') {
+        login.form.reset();
+    }
 })
 login.addLoginSubmitListener(function () {
     body.remove(login)

@@ -20,11 +20,7 @@ function Home() {
     logoutButton.container.style.width = '100px'
     logoutButton.container.style.height = '35px'
     logoutButton.container.style.marginRight = '10px'
-    logoutButton.addClickListener(function () {
-        logic.logoutUser()
-
-        this.logoutClickListener()
-    }.bind(this))
+    this.logoutButton = logoutButton
     header.add(logoutButton)
 
     //MAIN HOME
@@ -155,5 +151,5 @@ Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home
 
 Home.prototype.addLogoutClickListener = function (listener) {
-    this.logoutClickListener = listener
+    this.logoutButton.addClickListener(listener)
 }

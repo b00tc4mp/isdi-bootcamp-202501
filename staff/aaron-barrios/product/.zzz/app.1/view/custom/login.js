@@ -36,27 +36,6 @@ function Login() {
     form.add(passwordInput)
 
 
-    form.addSubmitListener(function (event) {
-        event.preventDefault()
-
-
-        var username = usernameInput.getValue()
-        var password = passwordInput.getValue()
-
-
-        try {
-            logic.loginUser(username, password)
-
-            form.clear()
-
-            this.loginSubmitListener()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }.bind(this))
-
     var lowerSpan = new Span()
     lowerSpan.container.style.margin = '10px'
     lowerSpan.container.style.marginRight = '60px'
@@ -68,11 +47,7 @@ function Login() {
     registerAnchor.setText('Register')
     registerAnchor.container.style.textDecoration = 'underline'
     registerAnchor.container.style.cursor = 'pointer'
-    registerAnchor.addClickListener(function () {
-        form.clear()
-
-        this.registerClickListener()
-    }.bind(this))
+    this.registerAnchor = registerAnchor
     lowerSpan.add(registerAnchor)
 
     var loginButton = new Button()
@@ -83,13 +58,27 @@ function Login() {
     lowerSpan.add(loginButton)
 
     form.add(lowerSpan)
+
+    form.addSubmitListener(function (event) {
+        event.preventDefault()
+
+        var userLogged = {
+            username: usernameInput.getValue(),
+            password: passwordInput.getValue()
+        }
+
+        console.log(userLogged)
+
+        this.loginSubmitListener()
+        form.clear()
+    }.bind(this))
 }
 
 Login.prototype = Object.create(Component.prototype)
 Login.prototype.constructor = Login
 
 Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerClickListener = listener
+    this.registerAnchor.addClickListener(listener)
 }
 
 Login.prototype.addLoginSubmitListener = function (listener) {
