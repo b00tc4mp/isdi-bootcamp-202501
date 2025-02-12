@@ -11,6 +11,7 @@ var data = {
             username: 'ma',
             password: 'mamama',
             createdAt: 'Ahora',
+            role: 'user',
             state: null,
             modifiedAt: null
         },
@@ -21,6 +22,7 @@ var data = {
             username: 'se',
             password: 'sesese',
             createdAt: 'Ahora',
+            role: 'user',
             state: null,
             modifiedAt: null
         }

@@ -59,7 +59,8 @@ var logic = {
             username: username,
             password: password,
             createdAt: new Date(),
-            state: null,
+            role: username === 'yisus' ? 'admin' : 'user', //TEST -> ROLE
+            state: null,  // TEST -> STATE
             modifiedAt: null,
         }
 
@@ -86,6 +87,7 @@ var logic = {
         found.state = 'Online'
     },
 
+    //TEST -> ONLINE USER
     currentUser: function () {
         var found
 
