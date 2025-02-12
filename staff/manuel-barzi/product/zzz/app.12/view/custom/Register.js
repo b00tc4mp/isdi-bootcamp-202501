@@ -1,4 +1,4 @@
-function Login() {
+function Register() {
     Component.call(this, 'div')
 
     var logo = new Heading(1)
@@ -11,15 +11,17 @@ function Login() {
     form.addSubmitListener(function (event) {
         event.preventDefault()
 
+        var name = nameInput.getValue()
+        var email = emailInput.getValue()
         var username = usernameInput.getValue()
         var password = passwordInput.getValue()
 
         try {
-            logic.loginUser(username, password)
+            logic.registerUser(name, email, username, password)
 
             form.clear()
 
-            this.loginSubmitListener()
+            this.registerSubmitListener()
         } catch (error) {
             console.error(error)
 
@@ -27,6 +29,26 @@ function Login() {
         }
     }.bind(this))
     this.add(form)
+
+    // name
+
+    var nameLabel = new Label()
+    nameLabel.setText('Name')
+    form.add(nameLabel)
+
+    var nameInput = new Input()
+    form.add(nameInput)
+
+    // email
+
+    var emailLabel = new Label()
+    emailLabel.setText('E-mail')
+    form.add(emailLabel)
+
+
+    var emailInput = new Input()
+    emailInput.setType('email')
+    form.add(emailInput)
 
     // username
 
@@ -53,29 +75,29 @@ function Login() {
     // submit
 
     var submitButton = new Button()
-    submitButton.setText('Login')
+    submitButton.setText('Register')
     submitButton.setType('submit')
     form.add(submitButton)
 
     // anchor
 
-    var registerAnchor = new Anchor()
-    registerAnchor.setText('Register')
-    registerAnchor.addClickListener(function () {
+    var loginAnchor = new Anchor()
+    loginAnchor.setText('Login')
+    loginAnchor.addClickListener(function () {
         form.clear()
 
-        this.registerClickListener()
+        this.loginClickListener()
     }.bind(this))
-    this.add(registerAnchor)
+    this.add(loginAnchor)
 }
 
-Login.prototype = Object.create(Component.prototype)
-Login.prototype.constructor = Login
+Register.prototype = Object.create(Component.prototype)
+Register.prototype.constructor = Register
 
-Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerClickListener = listener
+Register.prototype.addLoginClickListener = function (listener) {
+    this.loginClickListener = listener
 }
 
-Login.prototype.addLoginSubmitListener = function (listener) {
-    this.loginSubmitListener = listener
+Register.prototype.addRegisterSubmitListener = function (listener) {
+    this.registerSubmitListener = listener
 }

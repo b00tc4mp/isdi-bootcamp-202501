@@ -11,20 +11,16 @@ function Login() {
     form.addSubmitListener(function (event) {
         event.preventDefault()
 
+        console.log('login submit')
+
         var username = usernameInput.getValue()
         var password = passwordInput.getValue()
 
-        try {
-            logic.loginUser(username, password)
+        console.log(username, password)
 
-            form.clear()
+        form.clear()
 
-            this.loginSubmitListener()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
+        this.loginSubmitListener()
     }.bind(this))
     this.add(form)
 
