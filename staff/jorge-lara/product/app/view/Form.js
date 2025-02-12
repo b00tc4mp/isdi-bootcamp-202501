@@ -8,3 +8,7 @@ Form.prototype.setOrientation = function (type, orientation) {
     this.container.style.display = type;
     this.container.style.flexDirection = orientation
 }
+
+Form.prototype.clear  =function (){
+    this.container.reset();
+}

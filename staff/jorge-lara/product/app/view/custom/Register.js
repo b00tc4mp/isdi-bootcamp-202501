@@ -6,22 +6,28 @@ function Register() {
     this.add(logoRegister);
 
     let registerForm = new Form();
-    registerForm.setOrientation('flex', 'column')
+    registerForm.setOrientation('flex', 'column');
     registerForm.container.style.width = '250px';
 
     registerForm.addSubmitListener(function (e) {
         e.preventDefault();
 
-        let registeredUser = {
-            name: nameInput.getValue(),
-            email: emailInput.getValue(),
-            username: usernameInput.getValue(),
-            password: passwordInput.getValue()
+        let name = nameInput.getValue();
+        let email = emailInput.getValue();
+        let username = usernameInput.getValue();
+        let password = passwordInput.getValue();
+
+        try {
+            logic.registerUser(name, email, username, password);
+
+            registerForm.clear();
+
+            this.registerSubmitListener();
+        } catch (error) {
+            console.error(error);
+
+            alert(error.message);
         }
-
-        console.log(registeredUser);
-
-        this.registerSubmitListener();
     }.bind(this))
     this.add(registerForm);
 
@@ -66,7 +72,11 @@ function Register() {
     loginAnchor.setCursor('pointer');
     spanButtons.add(loginAnchor);
 
-    this.loginAnchor = loginAnchor;
+    loginAnchor.addClickListener(function (){
+        registerForm.clear();
+
+        this.loginClickListener();
+    }.bind(this))
 
     let registerButton = new Button();
     registerButton.setText('Register');
@@ -80,7 +90,7 @@ Register.prototype = Object.create(Component.prototype);
 Register.prototype.constructor = Register;
 
 Register.prototype.addLoginClickListener = function (listener) {
-    this.loginAnchor.addClickListener(listener);
+    this.loginClickListener = listener;
 }
 
 Register.prototype.addRegisterSubmitListener = function (listener) {

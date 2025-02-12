@@ -9,7 +9,17 @@ function Home() {
     signOutButton.setText('Sign out');
     this.add(signOutButton);
 
-    this.signOutButton = signOutButton;
+    signOutButton.addClickListener(function (){
+        try{
+            logic.logoutUser();
+
+            this.logoutClickListener();
+        }catch (error){
+            console.error(error);
+
+            alert(error.message);
+        }
+    }.bind(this))
 
     let postContent = new Article();
     postContent.setOrientation('flex', 'column');
@@ -27,5 +37,5 @@ Home.prototype = Object.create(Component.prototype);
 Home.prototype.constructor = Home;
 
 Home.prototype.addSignoutClickListener = function (listener) {
-    this.signOutButton.addClickListener(listener);
+    this.logoutClickListener = listener;
 }

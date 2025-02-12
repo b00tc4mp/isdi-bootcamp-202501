@@ -12,14 +12,20 @@ function Login() {
     loginForm.addSubmitListener(function (e) {
         e.preventDefault();
 
-        let userLogin = {
-            username: usernameInput.getValue(),
-            password: passwordInput.getValue()
+        let username = usernameInput.getValue();
+        let password = passwordInput.getValue();
+
+        try {
+            logic.loginUser(username, password);
+
+            loginForm.clear();
+
+            this.loginSubmitListener();
+        } catch (error) {
+            console.error(error);
+
+            alert(error.message);
         }
-
-        console.log(userLogin);
-
-        this.loginSubmitListener();
     }.bind(this))
     this.add(loginForm);
 
@@ -47,9 +53,13 @@ function Login() {
     let registerAnchor = new Anchor();
     registerAnchor.setText('Register');
     registerAnchor.setCursor('pointer');
-    spanButtons.add(registerAnchor);
 
-    this.registerAnchor = registerAnchor;
+    registerAnchor.addClickListener(function () {
+        loginForm.clear();
+
+        this.registerClickListener();
+    }.bind(this))
+    spanButtons.add(registerAnchor);
 
     //Login
     let loginButton = new Button();
@@ -63,7 +73,7 @@ Login.prototype = Object.create(Component.prototype);
 Login.prototype.constructor = Login;
 
 Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerAnchor.addClickListener(listener)
+    this.registerClickListener = listener;
 }
 
 Login.prototype.addLoginSubmitListener = function (listener) {
