@@ -38,26 +38,11 @@ login.addRegisterClickListener(function () {
     body.add(register)
 })
 login.addLoginSubmitListener(function () {
-    try {
-        const name = logic.getUserName()
-
-        home.setWelcomeText('Welcome, ' + name + '!')
-
-        const posts = logic.getPosts()
-
-        home.setPosts(posts)
-
-        body.remove(login)
-        body.add(home)
-    } catch (error) {
-        console.error(error)
-
-        alert(error.message)
-    }
+    body.remove(login)
+    body.add(home)
 })
 
 var home = new Home()
-
 home.addLogoutClickListener(function () {
     body.remove(home)
     body.add(landing)

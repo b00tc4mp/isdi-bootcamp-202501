@@ -41,6 +41,7 @@ var logic = {
         this.validate.password(password, 'password')
 
         var found
+
         for (var i = 0; i < data.users.length && !found; i++) {
             var user = data.users[i]
 
@@ -83,5 +84,24 @@ var logic = {
 
     logoutUser: function () {
         data.userId = null
+    },
+
+    getUserName: function () {
+        var found
+
+        for (let i = 0; i < data.users.length; i++) {
+            var user = data.users[i]
+
+            if (user.id === data.userId)
+                found = user
+        }
+
+        if (!found) throw new Error('user not found')
+
+        return found.name
+    },
+
+    getPosts: function () {
+        return data.posts
     }
 }
