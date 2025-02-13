@@ -6,8 +6,8 @@ body.container = document.body
 // // ****  LANDING
 var landing = new Landing()
 landing.addRegisterClickListener(function () {
-    body.remove(landing) // Quita la ventana Landing
-    body.add(register)   // Trae la ventana Registro
+    body.remove(landing) // Quita el landing
+    body.add(register)   // Trae el registro
 })
 
 landing.addLoginClickListener(function () {
@@ -32,7 +32,7 @@ register.addRegisterSubmitListener(function () {
 var login = new Login()
 login.addRegisterClickListener(function () {
     body.remove(login)
-    body.add(register)
+    body.add(home)
 })
 
 login.addLoginSubmitListener(function () {
@@ -42,8 +42,4 @@ login.addLoginSubmitListener(function () {
 
 // // // ****  HOME
 var home = new Home()
-home.addExitClickListener(function () {
-    body.remove(home)
-    body.add(login)
-})
 

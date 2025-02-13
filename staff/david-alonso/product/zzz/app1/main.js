@@ -58,12 +58,14 @@ registerLogo.appendChild(registerLogoText)
 // Form
 var registerForm = document.createElement('form')
 register.appendChild(registerForm)
+
 var registerFormNameLabel = document.createElement('label')
 registerForm.appendChild(registerFormNameLabel)
 
 // Name 
 var registerFormNameLabelText = document.createTextNode('Name')
 registerFormNameLabel.appendChild(registerFormNameLabelText)
+
 registerForm.appendChild(document.createElement('br'))
 
 // Formulario 
@@ -76,6 +78,7 @@ registerForm.appendChild(document.createElement('br'))
 // Email 
 var registerFormEmailLabel = document.createElement('label')
 registerForm.appendChild(registerFormEmailLabel)
+
 var registerFormEmailLabelText = document.createTextNode('E-mail')
 registerFormEmailLabel.appendChild(registerFormEmailLabelText)
 
