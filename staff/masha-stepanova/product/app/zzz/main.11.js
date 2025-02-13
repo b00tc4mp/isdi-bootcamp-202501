@@ -62,29 +62,3 @@ home.addLogoutClickListener(function () {
     body.remove(home)
     body.add(landing)
 })
-
-home.addPostSubmitListener(function () {
-    body.remove(home)
-    body.add(addPost)
-})
-
-var addPost = new AddPost()
-
-addPost.addPostSubmitListener(function () {
-    try {
-        const name = logic.getUserName()
-
-        home.setWelcomeText('Welcome, ' + name + '!')
-
-        const posts = logic.getPosts()
-
-        home.setPosts(posts)
-
-        body.remove(addPost)
-        body.add(home)
-    } catch (error) {
-        console.error(error)
-
-        alert(error.message)
-    }
-})

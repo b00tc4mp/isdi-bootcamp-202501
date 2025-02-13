@@ -103,5 +103,19 @@ var logic = {
 
     getPosts: function () {
         return data.posts
+    },
+
+    addPost: function (link, text) {
+        var newPost = {
+            id: data.uuid(),
+            author: data.userId,
+            image: link,
+            text: text,
+            createdAt: new Date().toLocaleDateString(),
+            modifiedAt: null
+        }
+
+        data.posts.push(newPost)
+
     }
 }
