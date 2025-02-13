@@ -59,8 +59,8 @@ var logic = {
             username: username,
             password: password,
             createdAt: new Date(),
-            role: username === 'yisus' ? 'admin' : 'user', //TEST -> ROLE
-            state: null,  // TEST -> STATE
+            role: username === 'god' ? 'admin' : 'user', //TEST -> ROLE
+            status: null,  // TEST -> status
             modifiedAt: null,
         }
 
@@ -84,17 +84,17 @@ var logic = {
 
         data.userId = found.id
         data.currentUser = found
-        found.state = 'Online'
+        found.status = 'Online'
     },
 
     //TEST -> ONLINE USER
-    currentUser: function () {
+    getCurrentUser: function () {
         var found
 
         for (var i = 0; i < data.users.length && !found; i++) {
             var user = data.users[i]
 
-            if (user.state === 'Online') {
+            if (user.status === 'Online') {
                 found = user
                 return found
             }
@@ -105,7 +105,7 @@ var logic = {
 
     logoutUser: function () {
         data.userId = null
-        data.currentUser.state = 'Offline'
+        data.currentUser.status = 'Offline'
         data.currentUser = null
     }
 }

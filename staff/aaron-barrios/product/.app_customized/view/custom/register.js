@@ -97,6 +97,8 @@ function Register() {
 
             form.clear()
 
+            alert('User created!')
+
             this.registerSubmitListener()
         } catch (error) {
             console.error(error)
