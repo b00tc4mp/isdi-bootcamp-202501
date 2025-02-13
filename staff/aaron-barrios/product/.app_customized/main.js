@@ -65,7 +65,9 @@ home.addCreatePostClickListener(function () {
 })
 
 //--- CREATE POST ---
-var createPost = new CreatePost()
+var createPost = new CreatePost(function (updatedPosts) {
+    home.setPosts(updatedPosts)
+})
 createPost.addCreatePostSubmitListener(function () {
     body.remove(createPost)
     body.add(home)

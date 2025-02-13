@@ -95,5 +95,4 @@ Home.prototype.setPosts = function (posts) {
 
         this.postsSection.add(postArticle)
     }
-
 }

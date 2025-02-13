@@ -1,5 +1,7 @@
-function CreatePost() {
+function CreatePost(updatePostsCallback) {
     Component.call(this, 'div')
+
+    this.updatePostsCallback = updatePostsCallback
 
     var form = new Form()
     form.container.style.display = 'flex'
@@ -48,6 +50,10 @@ function CreatePost() {
             this.createPostSubmitListener()
 
             //añadir aqui
+            if (this.updatePostsCallback) {
+                var updatedPosts = logic.getPosts()
+                this.updatePostsCallback(updatedPosts)
+            }
         } catch (error) {
             console.error(error)
 
