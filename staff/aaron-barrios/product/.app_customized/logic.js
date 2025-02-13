@@ -103,6 +103,25 @@ var logic = {
         if (!found) throw new Error('Any user online')
     },
 
+    getUsername: function () {
+        var found
+
+        for (var i = 0; i < data.users.length && !found; i++) {
+            var user = data.users[i]
+
+            if (user.id === data.userId)
+                found = user
+        }
+
+        if (!found) throw new Error('Any user online')
+
+        return found.name
+    },
+
+    getPosts: function () {
+        return data.posts
+    },
+
     logoutUser: function () {
         data.userId = null
         data.currentUser.status = 'Offline'

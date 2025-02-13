@@ -35,6 +35,14 @@ function Home() {
     var postsSection = new Section()
     main.add(postsSection)
     this.postsSection = postsSection
+
+    var createPostButton = new Button()
+    createPostButton.addClickListener(function () {
+        logic.createPost()
+
+        //refrescar vista
+    })
+    main.add(createPostButton)
 }
 
 Home.prototype = Object.create(Component.prototype)
