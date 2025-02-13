@@ -37,23 +37,26 @@ function Home() {
     this.postsSection = postsSection
 
     var createPostButton = new Button()
+    createPostButton.setText('🧉')
     createPostButton.addClickListener(function () {
-        logic.createPost()
-
-        //refrescar vista
-    })
+        this.createPostClickListener()
+    }.bind(this))
     main.add(createPostButton)
 }
 
 Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home
 
+Home.prototype.setWelcomeText = function (text) {
+    this.welcome.setText(text)
+}
+
 Home.prototype.addLogoutClickListener = function (listener) {
     this.logoutClickListener = listener
 }
 
-Home.prototype.setWelcomeText = function (text) {
-    this.welcome.setText(text)
+Home.prototype.addCreatePostClickListener = function (listener) {
+    this.createPostClickListener = listener
 }
 
 Home.prototype.setPosts = function (posts) {

@@ -122,6 +122,24 @@ var logic = {
         return data.posts
     },
 
+    createPost: function (text, image) {
+        // this.validate.string(text, 'text')
+        // this.validate.string(image, 'text')
+
+        var user = this.getCurrentUser()
+
+        var post = {
+            id: user.id,
+            author: user.username,
+            image: image,
+            text: text,
+            createdAt: new Date(),
+            modifiedAt: null
+        }
+
+        data.posts[data.posts.length] = post
+    },
+
     logoutUser: function () {
         data.userId = null
         data.currentUser.status = 'Offline'
