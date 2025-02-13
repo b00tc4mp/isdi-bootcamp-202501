@@ -1,7 +1,9 @@
 var logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
-        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        URL_REGEX: /(http[s]?:\/\/)?([^\/\s]+\/)(.*)/,
+        //PATH_REGEX : /^(\/|[a-zA-Z]:\\)[^:*?"<>|]+\/([^\/:*?"<>|]+\.[a-zA-Z0-9]+)$/
     },
 
     validate: {
@@ -24,12 +26,12 @@ var logic = {
             this.maxLength(email, 30, explain);
         },
         maxLength: function (value, maxLength, explain) {
-            if (value.length > maxLength){
+            if (value.length > maxLength) {
                 throw new RangeError(`invalid ${explain} maxLength`);
             }
         },
-        minLength: function (value, minLength, explain){
-            if (value.length < minLength){
+        minLength: function (value, minLength, explain) {
+            if (value.length < minLength) {
                 throw new RangeError(`invalid ${explain} minLength`);
             }
         },
@@ -42,12 +44,18 @@ var logic = {
             this.text(password, explain);
             this.minLength(password, 8, explain);
             this.maxLength(password, 20, explain);
+        },
+        url: function (url, explain) {
+            this.string(url, explain);
+            if (!logic.constant.URL_REGEX.test(url)) {
+                throw new SyntaxError(`invalid ${explain} syntax`);
+            }
         }
     },
 
     registerUser: function (name, email, username, password) {
         this.validate.text(name, 'name');
-        this.validate.maxLength(name ,20 ,'name');
+        this.validate.maxLength(name, 20, 'name');
         this.validate.email(email, 'email');
         this.validate.username(username, 'username');
         this.validate.password(password, 'password');
@@ -55,12 +63,12 @@ var logic = {
         let found;
 
         for (const user of data.users) {
-            if (user.email === email ||user.username === username){
+            if (user.email === email || user.username === username) {
                 found = user;
             }
         }
 
-        if (found){
+        if (found) {
             throw new Error('user already exists');
         }
 
@@ -77,19 +85,19 @@ var logic = {
         data.users[data.users.length] = user;
     },
 
-    loginUser : function (username,password){
+    loginUser: function (username, password) {
         this.validate.username(username, 'username');
         this.validate.password(password, 'password');
 
         let found;
 
         for (const user of data.users) {
-            if (user.username === username){
+            if (user.username === username) {
                 found = user;
             }
         }
 
-        if (!found || found.password !== password){
+        if (!found || found.password !== password) {
             throw new Error('Wrong credentials');
         }
 
@@ -97,11 +105,32 @@ var logic = {
         data.userlogged = found.username;
     },
 
-    logoutUser: function (){
+    logoutUser: function () {
         data.userId = null;
+        data.userlogged = null;
     },
 
-    showLoggedUser : function (){
+    getLoggedUser: function () {
         return data.userlogged;
+    },
+
+    getPosts: function () {
+        return data.posts;
+    },
+
+    addPost: function (text, image) {
+        this.validate.text(text, 'title');
+        this.validate.url(image, 'url');
+
+        let post = {
+            id: data.uuid(),
+            author: data.userlogged,
+            image : image,
+            text: text,
+            createdAt: new Date(),
+            modifiedAt: null
+        }
+
+        data.posts[data.posts.length] = post;
     }
 }

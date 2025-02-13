@@ -35,13 +35,46 @@ login.addRegisterClickListener(function () {
 })
 
 login.addLoginSubmitListener(function () {
-    body.remove(login);
-    body.add(home);
+    try {
+        const user = logic.getLoggedUser();
+
+        home.setUserLoggedText(`Current user: ${user}!`);
+
+        const posts = logic.getPosts()
+
+        home.setPosts(posts);
+
+        body.remove(login);
+        body.add(home);
+    } catch (error) {
+        console.error(error);
+
+        alert(error.message);
+    }
 })
 
 let home = new Home();
-
 home.addSignoutClickListener(function () {
     body.remove(home);
     body.add(landing);
+})
+
+home.addPostClickListener(function (){
+    body.remove(home);
+    body.add(createPost)
+})
+
+let createPost = new CreatePost();
+
+createPost.addCancelClickListener(function (){
+    body.remove(createPost);
+    body.add(home);
+})
+
+createPost.addCreatePostSubmitListener(function (){
+    body.remove(createPost);
+    const posts = logic.getPosts();
+
+    home.setPosts(posts);
+    body.add(home);
 })
