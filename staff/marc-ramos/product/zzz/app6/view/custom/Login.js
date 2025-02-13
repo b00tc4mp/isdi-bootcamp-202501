@@ -12,24 +12,21 @@ function Login() {
     form.container.style.flexDirection = "column";
     form.container.style.gap = "15px";
   
-    form.addSubmitListener(function (event) {
+    form.addSubmitListener(
+      function (event) {
         event.preventDefault();
-
+  
+        console.log("login submit");
+  
         var username = usernameInput.getValue();
         var password = passwordInput.getValue();
   
-        try {
-            logic.loginUser(username, password)
+        console.log(username, password);
+  
+        this.submitLoginListener()
 
-            form.clear()
-
-            this.submitLoginListener()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }  
-      }.bind(this));
+      }.bind(this)
+    );
     this.add(form);
   
     //username

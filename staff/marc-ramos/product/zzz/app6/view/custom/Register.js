@@ -14,7 +14,8 @@ function Register() {
     form.container.style.flexDirection = "column";
     form.container.style.gap = "15px";
   
-    form.addSubmitListener(function (event) {
+    form.addSubmitListener(
+      function (event) {
         event.preventDefault();
   
         console.log("register submit");
@@ -23,18 +24,11 @@ function Register() {
         var email = emailInput.getValue();
         var username = usernameInput.getValue();
         var password = passwordInput.getValue();
+  
+        console.log(name, email, username, password);
 
-        try {
-          logic.registerUser(name, email, username, password)
+        this.registerSubmitListener()
 
-          form.clear()
-
-          this.registerSubmitListener()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
       }.bind(this));
     this.add(form);
   

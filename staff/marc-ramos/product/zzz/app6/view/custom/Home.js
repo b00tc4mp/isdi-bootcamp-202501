@@ -11,24 +11,13 @@ function Home() {
 
     var logoutButton = new Button()
     logoutButton.setText('Logout')
-    logoutButton.addClickListener(function() {
-      try {
-        logic.logoutUser()
-
-        this.logoutButton()
-      } catch (error) {
-        console.error(error)
-
-        alert(error.message)
-      }
-    }.bind(this))
-    //this.logoutButton = logoutButton
+    this.logoutButton = logoutButton
     this.add(logoutButton)
   }
   
   Home.prototype = Object.create(Component.prototype);
   Home.prototype.constructor = Home;
 
-  Home.prototype.addHomeLogout = function(listener) {
-    this.logoutButton = listener
+  Home.prototype.addHomeLogout = function(listener) {
+    this.logoutButton.addClickListener(listener)
   }

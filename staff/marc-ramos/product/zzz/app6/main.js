@@ -1,7 +1,7 @@
 //console.clear();
 
 var body = new Body();
-body.container = document.body
+document.body = body.container;
 
 var landing = new Landing();
 body.add(landing);
