@@ -23,6 +23,8 @@ function Register() {
 
         console.log(name, username, password, email)
 
+        form.clear() //aquí llamo a clear
+
         this.registerSubmitListener()
 
     }.bind(this))
@@ -100,35 +102,18 @@ function Register() {
     var spaceBetweenButton = document.createTextNode(' ')
     this.container.appendChild(spaceBetweenButton)
 
-    //register button
+    //register Button
 
-    var button = new Button()
-    button.setType('submit')
-    button.setText('Register')
-    form.add(button)
-
-    var spaceBetweenButton = document.createTextNode(' ')
-    this.container.appendChild(spaceBetweenButton)
-
-    //login button
-
-    var loginButton = new Button()
-    loginButton.setType('button')
-    loginButton.setText('Login')
-
-    this.add(loginButton)
-    this.loginButton = loginButton
+    var registerButton = new Button()
+    registerButton.setType('submit')
+    registerButton.setText('Register') // Este botón ahora es el botón de "submit"
+    form.add(registerButton) 
 
 }
 
 Register.prototype = Object.create(Component.prototype)
 Register.prototype.constructor = Register
 
-//Creamos aquí el método de addLoginClickListener en el prototipo
-//El listener lo recibimos de fuera, porque main es el que hará la accion 
-Register.prototype.addLoginClickListener = function(listener) {
-    this.loginButton.addClickListener(listener)
-}
 
 Register.prototype.addRegisterSubmitListener = function(listener) {
     this.registerSubmitListener = listener

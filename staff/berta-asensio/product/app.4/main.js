@@ -19,15 +19,11 @@ landing.addLoginClickListener(function() {
     body.add(login)
 })
 
-body.add(landing) //hace falta?
+body.add(landing) // Esta línea establece que se abra landing como inicio
 
 //REGISTER
 var register = new Register()
-//desacoplamiento: creamos un método que se encargue de cambiar de página en main, para poder sacarlo de register. Asi aquí llamamos a las variables que estan definidas en esta pagina.
-register.addLoginClickListener(function() {
-    body.remove(register)
-    body.add(login)
-})
+
 
 register.addRegisterSubmitListener(function() {
     body.remove(register)
@@ -51,7 +47,7 @@ login.addLoginSubmitListener(function() {
 
 login.addReturnClickListener(function() {
     body.remove(login)
-    body.add(landing)
+    body.add(register)
 })
 
 //HOME

@@ -25,6 +25,8 @@ function Login() {
 
         console.log(username, password)
 
+        form.clear()
+
         this.loginSubmitListener()
     }.bind(this))
     this.add(form)
@@ -76,6 +78,7 @@ function Login() {
     button.setType('submit')
     button.setText('Login')
     form.add(button)
+    
 
 }
 
