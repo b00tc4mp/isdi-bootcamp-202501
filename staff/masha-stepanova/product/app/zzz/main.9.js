@@ -1,15 +1,9 @@
 
 const body = new Body()
 body.container = document.body
-body.container.style.fontFamily = 'sans-serif'
-body.container.style.backgroundSize = 'cover'
-body.container.style.backgroundImage = "url('https://imgs.search.brave.com/eVpWbjn73TWzvc2fj025Cfg5iapsH_pxWBSvRjS-2IM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvaGQvbGln/aHQtZ3JlZW4tdGV4/dHVyZS1waG9uZS0x/cXh1NXl1YnM5dm03/ZXBmLmpwZw')"
+// body.container.style.backgroundImage = "url('https://imgs.search.brave.com/wORb9PxQKXep5pUJuADeoU5HD2PThiYFRqeE6eRAZT4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2IyLzYy/LzA4L2IyNjIwOGE3/ODRhYWVlNTk2NjJl/NTQ3ZjAzZGEwZGM4/LmpwZw')"
 
 var landing = new Landing()
-landing.container.style.display = 'flex'
-//landing.container.style.flexDirection = 'column'
-landing.container.style.justifyContent = 'center'
-
 landing.addRegisterClickListener(function () {
     body.remove(landing)
     body.add(register)

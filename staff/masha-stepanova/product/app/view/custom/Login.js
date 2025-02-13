@@ -24,6 +24,7 @@ function Login() {
     form.add(labelPassword)
 
     var inputPassword = new Input()
+    inputPassword.setType('password')
     form.add(inputPassword)
 
     var loginButton = new Button()

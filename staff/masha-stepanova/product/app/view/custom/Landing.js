@@ -3,21 +3,25 @@ function Landing() {
 
     var logo = new Heading(1)
     logo.setText('Logo')
+    logo.container.style.justifyContent = 'center'
     this.add(logo)
+
+    var span = new Span()
+    this.add(span)
 
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
     this.registerAnchor = registerAnchor
-    this.add(registerAnchor)
+    span.add(registerAnchor)
 
     var orText = new Text()
     orText.setText(' or ')
-    this.add(orText)
+    span.add(orText)
 
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
     this.loginAnchor = loginAnchor
-    this.add(loginAnchor)
+    span.add(loginAnchor)
 }
 
 Landing.prototype = Object.create(Component.prototype)
