@@ -3,7 +3,20 @@
 * El Modelo de Objetos del Documento (DOM) es una estructura que representa al documento HTML, y que podemos utilizar desde JavaScript para modificar la página actual.
 * Todos los navegadores construyen el DOM de forma automática, estableciendo un objeto por cada etiqueta del HTML, así como una relación de jerarquía en función de la disposición de las etiquetas anidadas
 * Cuando la página se carga en el navegador, se genera el DOM constituido por una jerarquía de objetos (comúnmente llamada jerarquía de nodos) que el programador/a puede emplear para explorar la estructura de la página web, realizar salidas y capturar entradas.
+## En el Modelo de Objetos del Documento (DOM), cada etiqueta HTML es un objeto, al que podemos llamar nodo
+
+## Las etiquetas anidadas son llamadas “nodos hijos” de la etiqueta “nodo padre” que las contiene.
+
+
+
+
+
 # Acceso al DOM
+
+### ¿CÓMO FUNCIONA?
+
+* Todos estos objetos son accesibles empleando JavaScript mediante el objeto global document. 
+
 
 * Como desarrolladores/as front-end, empleamos el DOM para modificar la interfaz del usuario, controlando las acciones que realiza en la página web con la intención de obtener entradas, y en consecuencia efectuar salidas apropiadas. Para operar sobre el DOM en JavaScript, empleamos el objeto de acceso global document:
 
@@ -84,3 +97,139 @@ let contenedor = document.querySelector("#contenedor")
 parrafo = document.querySelector(".texto")
 
 ```
+
+
+# Funciones Constructoras 
+
+* Es una funcion que me permite mediante la palabra reservada NEW seguida de la nomenclatura de eleccion en este ejemplo vamos a usar a Person(siempre primera letra en mayuscula), crear objetos y inclusive crar prototypes a partir de el.
+
+## Definir la Función Constructora:
+
+* Se define como una función normal, pero por convención, su nombre empieza con una letra mayúscula.
+* Dentro de la función, usamos this para asignar propiedades y métodos al objeto que se va a crear.
+
+## Crear un Objeto con new:
+
+* Usamos la palabra clave new seguida del nombre de la función constructora para crear un nuevo objeto.
+
+* New crea un nuevo objeto vacío, asigna this a ese objeto, y luego llama a la función constructora.
+
+
+## Ejemplo: new Person
+
+* Vamos a crear una función constructora llamada Person y luego usarla para crear un nuevo objeto.
+
+### Paso 1: Definir la Función Constructora
+
+```sh
+function Person(name, age) {
+
+  this.name = name; // Asigna el parámetro name a la propiedad name del objeto
+  this.age = age;   // Asigna el parámetro age a la propiedad age del objeto
+
+  // Método para mostrar información de la persona
+  this.sayHello = function() {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  };
+}
+
+```
+
+### Paso 2: Crear un Objeto con new
+
+* El NEW es lo cre crea la funcion constructora ej:
+
+```sh
+var 1 = []
+var 1 = new Array[]
+var 2 = {}
+var 2 = new Object{}
+ 
+// esto es lo que aplica en la constructora 
+
+
+```
+
+```sh
+var person1 = new Person('Alice', 30); // Crea un nuevo objeto Person con name 'Alice' y age 30
+var person2 = new Person('Bob', 25);   // Crea un nuevo objeto Person con name 'Bob' y age 25
+```
+
+### Paso 3: Usar el Objeto
+
+```sh
+person1.sayHello(); // Output: Hello, my name is Alice and I am 30 years old.
+person2.sayHello(); // Output: Hello, my name is Bob and I am 25 years old.
+```
+
+## Explicación Detallada
+
+### Definir la Función Constructora:
+
+* function Person(name, age) { ... }: Define la función constructora Person que toma dos parámetros: name y age.
+this.name = name;: Asigna el valor del parámetro name a la propiedad name del objeto que se está creando.
+* this.age = age;: Asigna el valor del parámetro age a la propiedad age del objeto que se está creando.
+* this.sayHello = function() { ... }: Define un método sayHello que muestra un mensaje con el nombre y la edad de la persona.
+
+### Crear un Objeto con new:
+
+#### var person1 = new Person('Alice', 30);: Crea un nuevo objeto Person con name 'Alice' y age 30. new hace lo siguiente:
+* Crea un nuevo objeto vacío.
+* Asigna this al nuevo objeto.
+* Llama a la función Person con this apuntando al nuevo objeto.
+* Devuelve el nuevo objeto.
+* var person2 = new Person('Bob', 25);: Crea otro objeto Person con name 'Bob' y age 25.
+### Usar el Objeto:
+
+* person1.sayHello();: Llama al método sayHello del objeto person1, que muestra el mensaje: "Hello, my name is Alice and I am 30 years old."
+* person2.sayHello();: Llama al método sayHello del objeto person2, que muestra el mensaje: "Hello, my name is Bob and I am 25 years old."
+
+## Resumen
+
+* Las funciones constructoras son una forma de crear múltiples objetos con las mismas propiedades y métodos en JavaScript. Usamos la palabra clave new para crear un nuevo objeto a partir de una función constructora. Esto nos permite reutilizar el código y crear objetos de manera eficiente.
+
+
+## Utilizar prototype para crear metodos practicos para las funciones constructoras 
+
+* No crear los portotypes dentro de la constructora, crearlos fuera para poder reutelizar, se lo creo dentro por cada prodcuto que creo se me crea un nuevo metodo, OPTIMIZAR
+
+
+```sh
+function Producto(nombre, precio, stock) {
+  this.nombre = nombre;
+  this.precio = precio;
+  this.stock = stock;
+}
+
+// Métodos básicos
+Producto.prototype.mostrarInfo = function() {
+  console.log(`Producto: ${this.nombre}`);
+  console.log(`Precio: $${this.precio}`);
+  console.log(`Stock: ${this.stock} unidades`);
+};
+
+// Método con cálculos
+Producto.prototype.calcularDescuento = function(porcentaje) {
+  const descuento = this.precio * (porcentaje / 100);
+  return this.precio - descuento;
+};
+
+// Método que modifica el estado
+Producto.prototype.actualizarStock = function(cantidad) {
+  this.stock += cantidad;
+  return this.stock;
+};
+
+// Crear productos
+const laptop = new Producto('Laptop', 1200, 5);
+const telefono = new Producto('Teléfono', 800, 10);
+
+// Usar los métodos
+laptop.mostrarInfo();
+console.log(`Precio con 10% de descuento: $${laptop.calcularDescuento(10)}`);
+console.log(`Nuevo stock: ${laptop.actualizarStock(3)} unidades`);
+```
+
+### extencion de constructoras
+
+*
