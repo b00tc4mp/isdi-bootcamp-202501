@@ -93,4 +93,37 @@ var logic = {
   setOfflineUser: function () {
     data.userId = null;
   },
+  getPosts: function () {
+    return data.posts;
+  },
+  getUserName: function () {
+    for (var i = 0; i < data.users.length && !found; i++) {
+      var user = data.users[i];
+
+      var found;
+
+      if (user.id === data.userId) found = user;
+    }
+
+    if (!found) throw new Error("user not found");
+
+    return found.name;
+  },
+  addPost: function (image, bio) {
+    this.validate.text(image, "image URL");
+    this.validate.minLength(image, 10, "image URL");
+    this.validate.text(bio, "bio");
+
+    var post = {
+      id: data.uuid(),
+      author: data.userId,
+      image: image,
+      text: bio,
+      createdAt: new Date(),
+      modifiedAt: null,
+    };
+    data.posts[data.posts.length] = post;
+
+    localStorage.setItem("posts", JSON.stringify(data.posts));
+  },
 };

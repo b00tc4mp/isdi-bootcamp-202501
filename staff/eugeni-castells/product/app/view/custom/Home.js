@@ -16,10 +16,18 @@ function Home() {
   );
   this.add(logoutButton);
 
-  var sectionWrapper = new Div();
-  sectionWrapper.setStyle(style.sectionWrapperStyle);
+  var welcomeTextHeader = new Header(2);
+  this.welcomeTextHeader = welcomeTextHeader;
+  this.add(welcomeTextHeader);
 
-  this.add(sectionWrapper);
+  var postsSection = new Section();
+  this.postsSection = postsSection;
+  this.add(postsSection);
+
+  var createPostButton = new Button("+");
+  createPostButton.setStyle(style.createPostButton);
+  this.add(createPostButton);
+  this.createPostButton = createPostButton;
 }
 
 Home.prototype = Object.create(Component.prototype);
@@ -31,4 +39,20 @@ Home.prototype.addLogoClickListener = function (listener) {
 
 Home.prototype.addLogoutClickListener = function (listener) {
   this.logoutClickListener = listener;
+};
+
+Home.prototype.setWelcomeText = function (text) {
+  this.welcomeTextHeader.setText(text);
+};
+
+Home.prototype.setPosts = function (posts) {
+  for (var i = 0; i < posts.length; i++) {
+    var post = new Post(posts[i]);
+
+    this.postsSection.add(post);
+  }
+};
+
+Home.prototype.addCreatePostClickListener = function (listener) {
+  this.createPostButton.addClickListener(listener);
 };

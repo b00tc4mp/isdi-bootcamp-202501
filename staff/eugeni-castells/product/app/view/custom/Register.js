@@ -21,6 +21,7 @@ function Register() {
       };
       try {
         logic.registerUser(registerInfo);
+        form.clear();
         this.addSubmitListener();
       } catch (error) {
         console.log(error.message);

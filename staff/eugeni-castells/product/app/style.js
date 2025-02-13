@@ -41,4 +41,15 @@ var style = {
     height: "60px",
     padding: "5px",
   },
+  postImage: {
+    width: "80%",
+    heigth: "300px",
+  },
+  createPostButton: {
+    borderRadius: "100%",
+    width: "50px",
+    height: "50px",
+    backgroundColor: "gray",
+    color: "white",
+  },
 };

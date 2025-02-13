@@ -1,4 +1,5 @@
 data.users = JSON.parse(localStorage.getItem("users"));
+data.posts = JSON.parse(localStorage.getItem("posts"));
 
 function removeItemAddItem(itemToRemove, itemToAdd) {
   body.remove(itemToRemove);
@@ -36,14 +37,38 @@ login.addRegisterClickListener(function () {
 });
 
 login.addLoginSubmitListener(function () {
-  removeItemAddItem(login, home);
+  try {
+    const name = logic.getUserName();
+
+    home.setWelcomeText("Hello, " + name + "!");
+
+    const posts = logic.getPosts();
+
+    home.setPosts(posts);
+
+    removeItemAddItem(login, home);
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+  }
 });
 
 var home = new Home();
+
 home.addLogoClickListener(function () {
   removeItemAddItem(home, landing);
 });
 
 home.addLogoutClickListener(function () {
   removeItemAddItem(home, login);
+});
+
+home.addCreatePostClickListener(function () {
+  removeItemAddItem(home, createPost);
+});
+
+var createPost = new CreatePost();
+
+createPost.addCreatePostSubmitListener(function () {
+  removeItemAddItem(createPost, home);
 });
