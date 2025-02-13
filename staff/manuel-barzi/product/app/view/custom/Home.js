@@ -28,6 +28,10 @@ function Home() {
     var postsSection = new Section()
     this.add(postsSection)
     this.postsSection = postsSection
+
+    var addPostButton = new Button()
+    addPostButton.setText('+')
+    this.add(addPostButton)
 }
 
 Home.prototype = Object.create(Component.prototype)
