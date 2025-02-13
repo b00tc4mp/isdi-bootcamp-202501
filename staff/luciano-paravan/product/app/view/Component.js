@@ -10,8 +10,8 @@ Component.prototype.remove = function (child) {
     this.container.removeChild(child.container)
 }
 
-Component.prototype.addClickListener = function (callback) {
-    this.container.addEventListener('click', callback)
+Component.prototype.addClickListener = function (listener) {
+    this.container.addEventListener('click', listener)
 }
 
 Component.prototype.addSubmitListener = function (callback) {

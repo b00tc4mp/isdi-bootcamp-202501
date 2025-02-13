@@ -10,49 +10,6 @@ function Login () {
     this.add(loginText)
     
     var form = new Form()
-    form.container.style.display = 'flex'
-    form.container.style.flexDirection = 'column'
-    form.container.style.gap = '0.5rem'
-    this.add(form)
-    
-    var usernameLabel = new Label()
-    usernameLabel.setText('Username: ')
-    form.add(usernameLabel)
-    
-    var usernameInput = new Input()
-    usernameInput.setType('text')
-    usernameInput.name = 'login-name'
-    form.add(usernameInput)
-    
-    var passwordLabel = new Label()
-    passwordLabel.setText('Password: ')
-    form.add(passwordLabel)
-    
-    var passwordInput = new Input()
-    passwordInput.setType('password')
-    passwordInput.name = 'password-input'
-    form.add(passwordInput)
-    
-    var loginSubmit = new Button()
-    loginSubmit.setText('Login')
-    loginSubmit.setType('submit')
-    loginSubmit.container.style.backgroundColor = '#428A82'
-    loginSubmit.container.style.color = '#FFFFFF'
-    form.add(loginSubmit)
-    
-    var registerLogin = new Anchor()
-    registerLogin.setText('Register')
-    registerLogin.container.style.fontWeight = 'bold'
-    registerLogin.container.style.textDecoration = 'underline'
-    registerLogin.container.style.marginTop = '50px'
-    registerLogin.container.style.textAlign = 'center'
-    form.add(registerLogin)
-    
-    registerLogin.addClickListener(function () {
-        body.remove(this)
-        body.add(register)
-    }.bind(this))
-    
     form.addSubmitListener(function(event) {
         event.preventDefault()
 
@@ -63,10 +20,78 @@ function Login () {
 
         console.log(username, password)
 
-        body.remove(this)
-        body.add(home)
+        this.loginSubmitListener()
     }.bind(this))
+
+
+    this.add(form)
+    
+    // Username
+    
+    var usernameLabel = new Label()
+    usernameLabel.setText('Username: ')
+    form.add(usernameLabel)
+    
+    
+    var usernameInput = new Input()
+    usernameInput.setType('text')
+    usernameInput.name = 'login-name'
+    form.add(usernameInput)
+    
+    // Password
+
+    var passwordLabel = new Label()
+    passwordLabel.setText('Password: ')
+    form.add(passwordLabel)
+    
+    var passwordInput = new Input()
+    passwordInput.setType('password')
+    passwordInput.name = 'password-input'
+    form.add(passwordInput)
+    
+    // Submit - Login
+
+    var loginSubmit = new Button()
+    loginSubmit.setText('Login')
+    loginSubmit.setType('submit')
+    
+    form.add(loginSubmit)
+    
+    // Anchor - Register
+
+    var registerLogin = new Anchor()
+    registerLogin.setText('Register')
+    
+     this.registerLogin = registerLogin //se copia la referencia al objeto Anchor
+    
+    form.add(registerLogin)
+    
 }
 
 Login.prototype = Object.create(Component.prototype)
 Login.prototype.constructor = Login
+
+Login.prototype.addRegisterClickListener = function (listener) {
+    this.registerLogin.addClickListener(listener)
+}
+
+Login.prototype.addLoginSubmitListener = function (listener) {
+    this.loginSubmitListener = listener
+}
+//Lo que hace en el prototipo de arriba es recibir lo que quiero que haga desde el main (remover y agregar pantalla), guarda la referencia en el listener como propiedad, para poder usarlo en el login.
+
+
+
+// ---- ESTILOS
+
+//form.container.style.display = 'flex'
+//form.container.style.flexDirection = 'column'
+//form.container.style.gap = '0.5rem'
+
+//loginSubmit.container.style.backgroundColor = '#428A82'
+//loginSubmit.container.style.color = '#FFFFFF'
+
+//registerLogin.container.style.fontWeight = 'bold'
+//registerLogin.container.style.textDecoration = 'underline'
+//registerLogin.container.style.marginTop = '50px'
+//registerLogin.container.style.textAlign = 'center'

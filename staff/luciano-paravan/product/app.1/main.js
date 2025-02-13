@@ -404,7 +404,7 @@ function Home () {
     postFrame1.add(photoContainer1)
     
     var photoImg1 = new Img()
-    photoImg1.src = 'https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    photoImg1.container.src = 'https://images.pexels.com/photos/1619317/pexels-photo-1619317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
     photoImg1.container.style.objectFit = 'cover'
     photoImg1.container.style.width = '100%'
     photoImg1.container.style.height = '100%'
@@ -427,7 +427,7 @@ function Home () {
     postFrame2.add(photoContainer2)
     
     var photoImg2 = new Img()
-    photoImg2.src = 'https://images.pexels.com/photos/1107717/pexels-photo-1107717.jpeg?cs=srgb&dl=pexels-fotios-photos-1107717.jpg&fm=jpg'
+    photoImg2.container.src = 'https://images.pexels.com/photos/1107717/pexels-photo-1107717.jpeg?cs=srgb&dl=pexels-fotios-photos-1107717.jpg&fm=jpg'
     photoImg2.container.style.objectFit = 'cover'
     photoImg2.container.style.width = '100%'
     photoImg2.container.style.height = '100%'
