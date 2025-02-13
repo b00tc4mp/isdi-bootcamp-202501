@@ -72,7 +72,7 @@ Home.prototype.setPosts = function (posts) {
         //poner gap
 
         var authorHeading = new Heading(3)
-        authorHeading.setText(postArticle.author)
+        authorHeading.setText(post.author)
         postArticle.add(authorHeading)
 
         var postImage = new Image()
