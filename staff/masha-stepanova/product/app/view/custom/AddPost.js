@@ -10,6 +10,10 @@ function AddPost() {
     this.add(explanation)
 
     var form = new Form()
+    form.container.style.display = 'flex'
+    form.container.style.flexDirection = 'column'
+    form.container.style.gap = '0.3rem'
+
     form.addSubmitListener(function (event) {
         event.preventDefault()
 

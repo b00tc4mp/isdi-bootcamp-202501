@@ -5,6 +5,34 @@ function Home() {
     logo.setText('Logo')
     this.add(logo)
 
+    var welcome = new Heading(3)
+    welcome.setText('Welcome!')
+    this.welcome = welcome
+    this.add(welcome)
+
+    var postsSection = new Section()
+    this.add(postsSection)
+    this.postsSection = postsSection
+
+    var footer = new Footer()
+    footer.container.style.display = 'flex'
+    footer.container.style.position = 'fixed'
+    footer.container.style.height = '40px'
+    footer.container.style.bottom = '0'
+    footer.container.style.width = '100%'
+    footer.container.style.justifyContent = 'center'
+    footer.container.style.backgroundColor = 'white'
+
+    this.add(footer)
+
+    var postButton = new Button()
+    postButton.setText('➕')
+    postButton.container.style.borderRadius = '50%'
+    postButton.addClickListener(function () {
+        this.addPostButton()
+    }.bind(this))
+    footer.add(postButton)
+
     var logoutButton = new Button()
     logoutButton.setText('Logout')
     logoutButton.addClickListener(function () {
@@ -18,34 +46,7 @@ function Home() {
             alert(error.message)
         }
     }.bind(this))
-    this.add(logoutButton)
-
-    var welcome = new Heading(3)
-    welcome.setText('Welcome!')
-    this.welcome = welcome
-    this.add(welcome)
-
-    var postsSection = new Section()
-    this.add(postsSection)
-    this.postsSection = postsSection
-
-    var footer = new Footer()
-    footer.container.style.display = 'flex'
-    footer.container.style.position = 'fixed'
-    footer.container.style.height = '50px'
-    footer.container.style.bottom = '0'
-    footer.container.style.width = '100%'
-    footer.container.style.justifyContent = 'center'
-    footer.container.style.backgroundColor = 'green'
-
-    this.add(footer)
-
-    var postButton = new Button()
-    postButton.setText('➕')
-    postButton.addClickListener(function () {
-        this.addPostButton()
-    }.bind(this))
-    footer.add(postButton)
+    footer.add(logoutButton)
 }
 
 Home.prototype = Object.create(Component.prototype)

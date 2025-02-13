@@ -7,8 +7,10 @@ body.container.style.backgroundImage = "url('https://imgs.search.brave.com/eVpWb
 
 var landing = new Landing()
 landing.container.style.display = 'flex'
-//landing.container.style.flexDirection = 'column'
+landing.container.style.flexDirection = 'column'
 landing.container.style.justifyContent = 'center'
+landing.container.style.alignItems = 'center'
+landing.container.style.padding = '50px'
 
 landing.addRegisterClickListener(function () {
     body.remove(landing)
@@ -22,6 +24,13 @@ landing.addLoginClickListener(function () {
 body.add(landing)
 
 var register = new Register()
+register.container.style.display = 'flex'
+register.container.style.flexDirection = 'column'
+register.container.style.justifyContent = 'center'
+register.container.style.alignItems = 'center'
+register.container.style.padding = '40px'
+register.container.style.gap = '0.3rem'
+
 register.addLoginClickListener(function () {
     body.remove(register)
     body.add(login)
@@ -33,6 +42,13 @@ register.addRegisterSubmitListener(function () {
 })
 
 var login = new Login()
+login.container.style.display = 'flex'
+login.container.style.flexDirection = 'column'
+login.container.style.justifyContent = 'center'
+login.container.style.alignItems = 'center'
+login.container.style.padding = '40px'
+login.container.style.gap = '0.3rem'
+
 login.addRegisterClickListener(function () {
     body.remove(login)
     body.add(register)
@@ -57,6 +73,12 @@ login.addLoginSubmitListener(function () {
 })
 
 var home = new Home()
+home.container.style.display = 'flex'
+home.container.style.flexDirection = 'column'
+home.container.style.justifyContent = 'center'
+home.container.style.alignItems = 'center'
+home.container.style.padding = '40px'
+home.container.style.gap = '0.3rem'
 
 home.addLogoutClickListener(function () {
     body.remove(home)
@@ -69,6 +91,12 @@ home.addPostSubmitListener(function () {
 })
 
 var addPost = new AddPost()
+addPost.container.style.display = 'flex'
+addPost.container.style.flexDirection = 'column'
+addPost.container.style.justifyContent = 'center'
+addPost.container.style.alignItems = 'center'
+addPost.container.style.padding = '40px'
+addPost.container.style.gap = '0.3rem'
 
 addPost.addPostSubmitListener(function () {
     try {
