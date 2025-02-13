@@ -63,7 +63,7 @@ Home.prototype.setPosts = function (posts) {
     //LIMPIAR TODOS LOS POSTS AL REFRESCAR
     this.postsSection.container.innerHTML = ''
 
-    for (var i = 0; i < posts.length; i++) {
+    for (var i = posts.length - 1; i >= 0; i--) {
         var post = posts[i]
 
         var postArticle = new Article()
