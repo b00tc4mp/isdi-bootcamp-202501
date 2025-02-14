@@ -122,9 +122,14 @@ var logic = {
             image: image,
             text: text,
             createdAt: new Date(),
-            modifiedAt: null
+            modifiedAt: null,
+            likes: []
         }
 
         data.posts[data.posts.length] = post
+    },
+
+    toggleLikePost: function () {
+        // TODO add userId in post.likes or remove it
     }
 }

@@ -29,7 +29,8 @@ var data = {
             image: 'https://media.giphy.com/media/o39U5VHcfNWhXb5JAd/giphy.gif?cid=790b7611xf982xikkmim43z9oppnx9x6qrsdnxsp1w8s9g3t&ep=v1_gifs_search&rid=giphy.gif&ct=g',
             text: 'am i alive?',
             createdAt: new Date(2025, 0, 1),
-            modifiedAt: null
+            modifiedAt: null,
+            likes: ['m71tml17ly', 'm71tm7l3l5l']
         },
         {
             id: 'm737zabzix8',
@@ -37,7 +38,8 @@ var data = {
             image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2Z4OHhjZGdkbnl2d3Ayb20zaTB0cTgzYWg2Z3Y3YTl3eTB3bG44MiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/11NU4BxIpTYNGw/giphy.gif',
             text: 'eclipsed with...',
             createdAt: new Date(2025, 1, 10),
-            modifiedAt: null
+            modifiedAt: null,
+            likes: ['m71tml17ly']
         }
     ],
     userId: null

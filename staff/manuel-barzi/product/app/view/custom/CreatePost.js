@@ -45,6 +45,11 @@ function CreatePost() {
 
     var cancelAnchor = new Anchor()
     cancelAnchor.setText('Cancel')
+    cancelAnchor.addClickListener(function () {
+        form.clear()
+
+        this.cancelClickListener()
+    }.bind(this))
     this.add(cancelAnchor)
 }
 
@@ -53,4 +58,8 @@ CreatePost.prototype.constructor = CreatePost
 
 CreatePost.prototype.addCreatePostSubmitListener = function (listener) {
     this.createPostSubmitListener = listener
+}
+
+CreatePost.prototype.addCancelClickListener = function (listener) {
+    this.cancelClickListener = listener
 }

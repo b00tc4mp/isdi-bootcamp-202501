@@ -42,6 +42,12 @@ function Home() {
             this.add(addPostButton)
         }.bind(this))
 
+        createPost.addCancelClickListener(function () {
+            this.remove(createPost)
+            this.add(postsSection)
+            this.add(addPostButton)
+        }.bind(this))
+
         this.remove(postsSection)
         this.remove(addPostButton)
         this.add(createPost)
