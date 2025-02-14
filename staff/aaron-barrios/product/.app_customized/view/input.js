@@ -1,4 +1,4 @@
-class Input extends Component() {
+class Input extends Component {
     constructor() {
         super('input')
     }
@@ -14,4 +14,3 @@ class Input extends Component() {
         return this.container.value
     }
 }
-

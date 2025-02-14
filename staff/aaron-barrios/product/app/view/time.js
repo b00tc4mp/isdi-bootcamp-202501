@@ -6,4 +6,3 @@ class Time extends Component {
         this.container.textContent = text
     }
 }
-

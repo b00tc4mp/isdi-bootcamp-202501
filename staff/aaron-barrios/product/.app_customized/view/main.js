@@ -1,7 +1,5 @@
-//MAIN
-function Main() {
-    Component.call(this, 'main')
+class Main extends Component {
+    constructor() {
+        super('main')
+    }
 }
-
-Main.prototype = Object.create(Component.prototype)
-Main.prototype.constructor = Main

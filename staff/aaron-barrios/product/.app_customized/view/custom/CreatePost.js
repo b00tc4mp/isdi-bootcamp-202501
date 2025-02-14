@@ -1,71 +1,70 @@
-function CreatePost(updatePostsCallback) {
-    Component.call(this, 'div')
+class CreatePost extends (updatePostsCallback) {
+    constructor() {
+        super('div')
 
-    this.updatePostsCallback = updatePostsCallback
+        this.updatePostsCallback = updatePostsCallback
 
-    const form = new Form()
-    form.container.style.display = 'flex'
-    form.container.style.flexDirection = 'column'
-    form.container.style.justifyContent = 'left'
-    form.container.style.gap = '5px'
-    this.add(form)
+        const form = new Form()
+        form.container.style.display = 'flex'
+        form.container.style.flexDirection = 'column'
+        form.container.style.justifyContent = 'left'
+        form.container.style.gap = '5px'
+        this.add(form)
 
-    const postTextLabel = new Label()
-    postTextLabel.setText('Text')
-    form.add(postTextLabel)
+        const postTextLabel = new Label()
+        postTextLabel.setText('Text')
+        form.add(postTextLabel)
 
-    const textInput = new Input()
-    textInput.setType('text')
-    textInput.container.style.width = '350px'
-    form.add(textInput)
+        const textInput = new Input()
+        textInput.setType('text')
+        textInput.container.style.width = '350px'
+        form.add(textInput)
 
-    const postImageLabel = new Label()
-    postImageLabel.setText('Post Image')
-    form.add(postImageLabel)
+        const postImageLabel = new Label()
+        postImageLabel.setText('Post Image')
+        form.add(postImageLabel)
 
-    const imageInput = new Input()
-    imageInput.setType('text')
-    imageInput.container.style.width = '350px'
-    form.add(imageInput)
+        const imageInput = new Input()
+        imageInput.setType('text')
+        imageInput.container.style.width = '350px'
+        form.add(imageInput)
 
-    const createPostButton = new Button()
-    createPostButton.setType('submit')
-    createPostButton.setText('Create')
-    createPostButton.container.style.width = '80px'
-    form.add(createPostButton)
+        const createPostButton = new Button()
+        createPostButton.setType('submit')
+        createPostButton.setText('Create')
+        createPostButton.container.style.width = '80px'
+        form.add(createPostButton)
 
-    form.addSubmitListener(function (event) {
-        event.preventDefault()
+        form.addSubmitListener(function (event) {
+            event.preventDefault()
 
-        const postText = textInput.getValue()
-        const postImage = imageInput.getValue()
+            const postText = textInput.getValue()
+            const postImage = imageInput.getValue()
 
-        try {
-            logic.createPost(postText, postImage)
+            try {
+                logic.createPost(postText, postImage)
 
-            form.clear()
+                form.clear()
 
-            alert('Post created!')
+                alert('Post created!')
 
-            this.createPostSubmitListener()
+                this.createPostSubmitListener()
 
-            //REFRESCAR POSTS
-            if (this.updatePostsCallback) {
-                const updatedPosts = logic.getPosts()
-                this.updatePostsCallback(updatedPosts)
+                //REFRESCAR POSTS
+                if (this.updatePostsCallback) {
+                    const updatedPosts = logic.getPosts()
+                    this.updatePostsCallback(updatedPosts)
+                }
+            } catch (error) {
+                console.error(error)
+
+                alert(error.message)
             }
-        } catch (error) {
-            console.error(error)
+        }.bind(this))
 
-            alert(error.message)
-        }
-    }.bind(this))
+    }
 
-}
-
-CreatePost.prototype = Object.create(Component.prototype)
-CreatePost.prototype.constructor = CreatePost
-
-CreatePost.prototype.addCreatePostSubmitListener = function (listener) {
-    this.createPostSubmitListener = listener
+    addCreatePostSubmitListener(listener) {
+        this.createPostSubmitListener = listener
+    }
 }

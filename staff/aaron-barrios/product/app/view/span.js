@@ -6,4 +6,3 @@ class Span extends Component {
         this.container.textContent = text
     }
 }
-
