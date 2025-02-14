@@ -2,6 +2,10 @@
 // // ****  BODY
 var body = new Body()  // Llamamos al componente creado
 body.container = document.body
+body.container.style.display = 'flex'
+body.container.style.flexDirection = 'column'
+body.container.style.alignItems = 'center'
+
 
 // // ****  LANDING
 var landing = new Landing()
@@ -36,13 +40,27 @@ login.addRegisterClickListener(function () {
 })
 
 login.addLoginSubmitListener(function () {
-    body.remove(login)
-    body.add(home)
+    try {
+        const name = logic.getUserName()
+
+        home.setWelcomeText('Hello, ' + name + '!')
+
+        const posts = logic.getPosts()
+
+        home.setPosts(posts)
+
+        body.remove(login)
+        body.add(home)
+    } catch (error) {
+        console.error(error)
+
+        alert(error.message)
+    }
 })
 
 // // // ****  HOME
 var home = new Home()
-home.addExitClickListener(function () {
+home.addLogoutClickListener(function () {
     body.remove(home)
     body.add(login)
 })

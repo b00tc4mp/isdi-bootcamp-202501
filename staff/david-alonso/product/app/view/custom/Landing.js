@@ -3,6 +3,7 @@
 function Landing() {
     Component.call(this, 'div')
 
+
     var logo = new Heading(1) // LLamamos al componete creado
     logo.setText('Landing')
     this.add(logo)  // Añadimos la variable logo al contenedor

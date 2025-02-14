@@ -48,6 +48,7 @@ var logic = {
         }
     },
 
+    // Funcion para Registrar al usuario
     registerUser: function (name, email, username, password) {
         this.validate.text(name, 'name')
         this.validate.maxLength(name, 20, 'name')
@@ -79,6 +80,7 @@ var logic = {
         data.users[data.users.length] = user
     },
 
+    // Funcion para Iniciar sesion
     loginUser: function (username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
@@ -97,7 +99,30 @@ var logic = {
         data.userId = found.id
     },
 
+    // Funcion para Cerrar sesion
     logoutUser: function () {
         data.userId = null
+    },
+
+    // Funcion para Obtener nombre de usuario
+    getUserName: function () {
+        var found
+
+        for (var i = 0; i < data.users.length && !found; i++) {
+            var user = data.users[i]
+
+            if (user.id === data.userId)
+                found = user
+        }
+
+        if (!found) throw new Error('user not found')
+
+        return found.name
+    },
+
+    // Funcion para Obtener los Posts
+    getPosts: function () {
+        return data.posts
     }
+
 }

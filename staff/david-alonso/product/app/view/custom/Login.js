@@ -11,11 +11,9 @@ function Login() {
     var form = new Form()
     form.container.style.display = 'flex'
     form.container.style.flexDirection = 'column'
-    form.container.style.width = '50%'
+    form.container.style.alignItems = 'center'
     form.addSubmitListener(function (event) {
         event.preventDefault()
-
-        console.log('login submit')
 
         var username = usernameInput.getValue()
         var password = passwordInput.getValue()

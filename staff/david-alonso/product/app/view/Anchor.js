@@ -1,4 +1,5 @@
-// ANCHOR
+// **** ANCHOR
+
 function Anchor() {
     Component.call(this, 'a')
 }

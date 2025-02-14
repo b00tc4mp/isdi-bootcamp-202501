@@ -7,54 +7,77 @@ function Home() {
     logo.setText('Home')
     this.add(logo)
 
-    // Form
-    var form = new Form()
-    this.add(form)
+    // Texto de bienvenida
+    var welcome = new Heading(2)
+    welcome.setText('Hello, World')
+    this.add(welcome)
+    this.welcome = welcome
 
-    //     // Imagenes
-    var coment = new Heading(5)
-    coment.setText('Winnie the Pooh Junior vs Senior')
-    form.add(coment)
+    var logoutButton = new Button()
+    logoutButton.setText('Logout')
+    logoutButton.addClickListener(function () {
+        try {
+            logic.logoutUser()
 
-    var news1 = new Picture()
-    news1.setSrc('https://i.pinimg.com/236x/ff/a1/22/ffa122f36bffb392661c0de948475635.jpg')
-    news1.container.style.width = '60%'
-    form.add(news1)
+            this.logoutClickListener()
+        } catch (error) {
+            console.error(error)
 
-    var coment = new Heading(5)
-    coment.setText('SpongeBob in his first programming class')
-    form.add(coment)
+            alert(error.message)
 
-    var news2 = new Picture()
-    news2.setSrc('https://i.pinimg.com/564x/bd/68/af/bd68af256a4c6fd0ada2f60183e88f39.jpg')
-    news2.container.style.width = '60%'
-    form.add(news2)
-
-    var coment = new Heading(5)
-    coment.setText('The Full-Stack hamburger')
-    form.add(coment)
-
-    var news3 = new Picture()
-    news3.setSrc('https://image.spreadshirtmedia.net/image-server/v1/products/T1459A839PA4459PT28D179581354W8333H10000/views/1,width=378,height=378,appearanceId=839,backgroundColor=F2F2F2/programador-informatico-codificadores-software-burger-lovers.jpg')
-    news3.container.style.width = '60%'
-    form.add(news3)
-
-    // Exit
-    var exitButton = new Button()
-    exitButton.setText('EXIT')
-    exitButton.addClickListener(function () {
-        body.remove(home)
-        body.add(landing)
+        }
     }.bind(this))
-    form.add(exitButton)
+    this.add(logoutButton)
 
+    var postsSection = new Section()
+    this.add(postsSection)
+    this.postsSection = postsSection
 }
 
 Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home
 
 // Creamos un metodo para el cambio de ventana
-Home.prototype.addExitClickListener = function (listener) {
-    this.exitClickListener = listener
+Home.prototype.addLogoutClickListener = function (listener) {
+    this.logoutClickListener = listener
+}
+
+Home.prototype.setWelcomeText = function (text) {
+    this.welcome.setText(text)
+}
+
+// Bucle que genera el Post con toda la informacion
+Home.prototype.setPosts = function (posts) {
+    for (var i = 0; i < posts.length; i++) {
+        var post = posts[i]
+        body.container = document.body
+
+        var postArticle = new Article()
+
+        // Crea el texto con el nombre del Autor del post
+        var authorHeading = new Heading(4)
+        authorHeading.setText(post.author)
+        postArticle.add(authorHeading)
+
+        // Crea la Imagen del post
+        var postImage = new Image()
+        postImage.setUrl(post.image)
+        postArticle.add(postImage)
+        postImage.container.style.maxWidth = '600px'
+
+        // Crea el texto escrito por el Autor del post
+        var postText = new Paragraph()
+        postText.setText(post.text)
+        postArticle.add(postText)
+
+        // Crea la fecha de subida del post
+        var postDate = new Time()
+        postDate.setText(post.createdAt.toLocaleDateString())
+        postArticle.add(postDate)
+
+        // Añade el PostArticle al PostsSection
+        this.postsSection.add(postArticle)
+    }
+
 }
 

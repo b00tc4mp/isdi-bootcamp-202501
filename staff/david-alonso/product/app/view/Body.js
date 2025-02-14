@@ -1,4 +1,5 @@
-// BODY 
+// **** BODY
+
 function Body() {
     Component.call(this, 'body')
 }

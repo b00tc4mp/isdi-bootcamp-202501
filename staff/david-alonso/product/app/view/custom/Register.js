@@ -11,7 +11,7 @@ function Register() {
     var form = new Form()
     form.container.style.display = 'flex'
     form.container.style.flexDirection = 'column'
-    form.container.style.width = '50%'
+    form.container.style.alignItems = 'center'
     form.addSubmitListener(function (event) {
         event.preventDefault()
 
