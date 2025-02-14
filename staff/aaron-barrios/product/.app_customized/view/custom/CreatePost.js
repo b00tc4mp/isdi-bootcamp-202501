@@ -1,8 +1,6 @@
-class CreatePost extends (updatePostsCallback) {
+class CreatePost extends Component {
     constructor() {
         super('div')
-
-        this.updatePostsCallback = updatePostsCallback
 
         const form = new Form()
         form.container.style.display = 'flex'
@@ -61,10 +59,5 @@ class CreatePost extends (updatePostsCallback) {
                 alert(error.message)
             }
         }.bind(this))
-
-    }
-
-    addCreatePostSubmitListener(listener) {
-        this.createPostSubmitListener = listener
     }
 }

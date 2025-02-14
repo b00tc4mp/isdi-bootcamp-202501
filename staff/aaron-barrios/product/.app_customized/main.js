@@ -58,17 +58,3 @@ home.addLogoutClickListener(function () {
     body.remove(home)
     body.add(landing)
 })
-
-home.addCreatePostClickListener(function () {
-    body.remove(home)
-    body.add(createPost)
-})
-
-//--- CREATE POST ---
-var createPost = new CreatePost(function (updatedPosts) {
-    home.setPosts(updatedPosts)
-})
-createPost.addCreatePostSubmitListener(function () {
-    body.remove(createPost)
-    body.add(home)
-})
