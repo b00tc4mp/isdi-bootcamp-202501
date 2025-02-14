@@ -1,3 +1,6 @@
+/*
+
+
 function Post(username, imgAdress, date) {
     Component.call(this, 'div')
     this.container.style.marginTop = '50px'
@@ -56,3 +59,5 @@ Post.prototype.Date = function (time) {
     date.setText(time)
     this.add(date)
 }
+
+*/

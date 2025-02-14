@@ -26,8 +26,6 @@ function Register() {
         try {
             logic.registerUser(name, email, username, password)
 
-            console.log(name, email, username, password)
-
             form.clear()
 
             this.registerSubmitListener()

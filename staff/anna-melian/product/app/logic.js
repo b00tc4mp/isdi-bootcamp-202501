@@ -81,7 +81,6 @@ var logic = {
 
             if (user.username === username) {
                 found = user
-                data.userPosition = i
             }
         }
 
@@ -95,8 +94,24 @@ var logic = {
 
     logoutUser: function () {
         data.userId = null
+    },
+
+    getUserName: function () {
+        var found
+        for (var i = 0; i < data.users.length && !found; i++) {
+            var user = data.users[i]
+
+            if (user.id === data.userId)
+                found = user
+        }
+
+        if (!found) throw new Error('user not found')
+
+        return found.name
+    },
+
+    getPosts: function () {
+        return data.posts
     }
-
-
 
 }

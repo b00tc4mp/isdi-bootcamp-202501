@@ -20,8 +20,6 @@ function Login() {
         var username = formUsernameInput.getValue()
         var password = formPasswordInput.getValue()
 
-        console.log(username, password)
-
         try {
             logic.loginUser(username, password)
 
@@ -63,6 +61,7 @@ function Login() {
     var formSubmitButton = new Button()
     form.add(formSubmitButton)
     formSubmitButton.setText('Login')
+    formSubmitButton.setType('submit')
 
     // anchor
 
