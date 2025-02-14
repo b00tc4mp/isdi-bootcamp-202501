@@ -1,9 +1,9 @@
 console.log('Hello, App!')
 
-const body = new Body()
+var body = new Body()
 body.container = document.body
 
-const landing = new Landing()
+var landing = new Landing()
 landing.addRegisterClickListener(function () {
     body.remove(landing)
     body.add(register)
@@ -14,7 +14,7 @@ landing.addLoginClickListener(function () {
 })
 body.add(landing)
 
-const register = new Register()
+var register = new Register()
 register.addLoginClickListener(function () {
     body.remove(register)
     body.add(login)
@@ -24,7 +24,7 @@ register.addRegisterSubmitListener(function () {
     body.add(login)
 })
 
-const login = new Login()
+var login = new Login()
 login.addRegisterClickListener(function () {
     body.remove(login)
     body.add(register)
@@ -37,7 +37,7 @@ login.addLoginSubmitListener(function () {
     body.add(home)
 })
 
-const home = new Home()
+var home = new Home()
 home.addLogoutClickListener(function () {
     body.remove(home)
     body.add(login)

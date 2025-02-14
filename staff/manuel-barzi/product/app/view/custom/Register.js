@@ -1,103 +1,102 @@
-function Register() {
-    Component.call(this, 'div')
+class Register extends Component {
+    constructor() {
+        super('div')
 
-    var logo = new Heading(1)
-    logo.setText('Logo')
-    this.add(logo)
+        const logo = new Heading(1)
+        logo.setText('Logo')
+        this.add(logo)
 
-    // form
+        // form
 
-    var form = new Form()
-    form.addSubmitListener(function (event) {
-        event.preventDefault()
+        const form = new Form()
+        form.addSubmitListener(function (event) {
+            event.preventDefault()
 
-        var name = nameInput.getValue()
-        var email = emailInput.getValue()
-        var username = usernameInput.getValue()
-        var password = passwordInput.getValue()
+            const name = nameInput.getValue()
+            const email = emailInput.getValue()
+            const username = usernameInput.getValue()
+            const password = passwordInput.getValue()
 
-        try {
-            logic.registerUser(name, email, username, password)
+            try {
+                logic.registerUser(name, email, username, password)
 
+                form.clear()
+
+                this.registerSubmitListener()
+            } catch (error) {
+                console.error(error)
+
+                alert(error.message)
+            }
+        }.bind(this))
+        this.add(form)
+
+        // name
+
+        const nameLabel = new Label()
+        nameLabel.setText('Name')
+        form.add(nameLabel)
+
+        const nameInput = new Input()
+        form.add(nameInput)
+
+        // email
+
+        const emailLabel = new Label()
+        emailLabel.setText('E-mail')
+        form.add(emailLabel)
+
+
+        const emailInput = new Input()
+        emailInput.setType('email')
+        form.add(emailInput)
+
+        // username
+
+        const usernameLabel = new Label()
+        usernameLabel.setText('Username')
+        form.add(usernameLabel)
+
+
+        const usernameInput = new Input()
+        usernameInput.setType('text')
+        form.add(usernameInput)
+
+        // password
+
+        const passwordLabel = new Label()
+        passwordLabel.setText('Password')
+        form.add(passwordLabel)
+
+
+        const passwordInput = new Input()
+        passwordInput.setType('password')
+        form.add(passwordInput)
+
+        // submit
+
+        const submitButton = new Button()
+        submitButton.setText('Register')
+        submitButton.setType('submit')
+        form.add(submitButton)
+
+        // anchor
+
+        const loginAnchor = new Anchor()
+        loginAnchor.setText('Login')
+        loginAnchor.addClickListener(function () {
             form.clear()
 
-            this.registerSubmitListener()
-        } catch (error) {
-            console.error(error)
+            this.loginClickListener()
+        }.bind(this))
+        this.add(loginAnchor)
+    }
 
-            alert(error.message)
-        }
-    }.bind(this))
-    this.add(form)
+    addLoginClickListener(listener) {
+        this.loginClickListener = listener
+    }
 
-    // name
-
-    var nameLabel = new Label()
-    nameLabel.setText('Name')
-    form.add(nameLabel)
-
-    var nameInput = new Input()
-    form.add(nameInput)
-
-    // email
-
-    var emailLabel = new Label()
-    emailLabel.setText('E-mail')
-    form.add(emailLabel)
-
-
-    var emailInput = new Input()
-    emailInput.setType('email')
-    form.add(emailInput)
-
-    // username
-
-    var usernameLabel = new Label()
-    usernameLabel.setText('Username')
-    form.add(usernameLabel)
-
-
-    var usernameInput = new Input()
-    usernameInput.setType('text')
-    form.add(usernameInput)
-
-    // password
-
-    var passwordLabel = new Label()
-    passwordLabel.setText('Password')
-    form.add(passwordLabel)
-
-
-    var passwordInput = new Input()
-    passwordInput.setType('password')
-    form.add(passwordInput)
-
-    // submit
-
-    var submitButton = new Button()
-    submitButton.setText('Register')
-    submitButton.setType('submit')
-    form.add(submitButton)
-
-    // anchor
-
-    var loginAnchor = new Anchor()
-    loginAnchor.setText('Login')
-    loginAnchor.addClickListener(function () {
-        form.clear()
-
-        this.loginClickListener()
-    }.bind(this))
-    this.add(loginAnchor)
-}
-
-Register.prototype = Object.create(Component.prototype)
-Register.prototype.constructor = Register
-
-Register.prototype.addLoginClickListener = function (listener) {
-    this.loginClickListener = listener
-}
-
-Register.prototype.addRegisterSubmitListener = function (listener) {
-    this.registerSubmitListener = listener
+    addRegisterSubmitListener(listener) {
+        this.registerSubmitListener = listener
+    }
 }
