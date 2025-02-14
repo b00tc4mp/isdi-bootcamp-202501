@@ -1,7 +1,5 @@
-//HEADER
-function Header() {
-    Component.call(this, 'header')
+class Header extends Component {
+    constructor() {
+        super('header')
+    }
 }
-
-Header.prototype = Object.create(Component.prototype)
-Header.prototype.constructor = Header

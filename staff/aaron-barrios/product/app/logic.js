@@ -1,50 +1,55 @@
-var logic = {
+const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
-        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        URL_REGEX: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
     },
 
     validate: {
-        string: function (string, explain) {
+        string(string, explain) {
             if (typeof string !== 'string') throw new TypeError(`invalid ${explain} type`)
         },
-        text: function (text, explain) {
+        text(text, explain) {
             this.string(text, explain)
             if (logic.constant.EMPTY_OR_BLANK_REGEX.test(text)) throw new SyntaxError(`invalid ${explain} syntax`)
         },
-        email: function (email, explain) {
+        email(email, explain) {
             this.string(email, explain)
             if (!logic.constant.EMAIL_REGEX.test(email)) throw new SyntaxError(`invalid ${explain} syntax`)
             this.maxLength(email, 30, explain)
         },
-        maxLength: function (value, maxLength, explain) {
+        maxLength(value, maxLength, explain) {
             if (value.length > maxLength) throw new RangeError(`invalid ${explain} maxLength`)
         },
-        minLength: function (value, minLength, explain) {
+        minLength(value, minLength, explain) {
             if (value.length < minLength) throw new RangeError(`invalid ${explain} minLength`)
         },
-        username: function (username, explain) {
+        username(username, explain) {
             this.text(username, explain)
             this.minLength(username, 2, explain)
             this.maxLength(username, 16, explain)
         },
-        password: function (password, explain) {
+        password(password, explain) {
             this.text(password, explain)
             this.minLength(password, 6, explain)
             this.maxLength(password, 16, explain)
+        },
+        url(url, explain) {
+            this.string(url, explain)
+            if (!logic.constant.URL_REGEX.test(url)) throw new SyntaxError(`invalid ${explain} syntax`)
         }
     },
 
-    registerUser: function (name, email, username, password) {
+    registerUser(name, email, username, password) {
         this.validate.text(name, 'name')
         this.validate.maxLength(name, 20, 'name')
         this.validate.email(email, 'name')
         this.validate.username(username, 'name')
         this.validate.password(password, 'name')
 
-        var found
+        let found
         for (let i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
+            const user = data.users[i]
 
             if (user.email === email || user.username === username)
                 found = user
@@ -52,7 +57,7 @@ var logic = {
 
         if (found) throw new Error('User already exists')
 
-        var user = {
+        const user = {
             id: data.uuid(),
             name: name,
             email: email,
@@ -65,33 +70,33 @@ var logic = {
         data.users[data.users.length] = user
     },
 
-    loginUser: function (username, password) {
+    loginUser(username, password) {
         this.validate.username(username, 'name')
         this.validate.password(password, 'name')
 
-        var found
+        let found
 
-        for (var i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.username === username)
                 found = user
         }
 
-        if (!found || found.password !== password) throw new Error('Wrong credentials')
+        if (!found || found.password !== password) throw new CredentialsError('Wrong credentials')
 
         data.userId = found.id
     },
 
-    logoutUser: function () {
+    logoutUser() {
         data.userId = null
     },
 
-    getUsername: function () {
-        var found
+    getUsername() {
+        let found
 
         for (i = 0; i < data.users.length; i++) {
-            var user = data.users[i]
+            const user = data.users[i]
 
             if (user.id === data.userId)
                 found = user
@@ -102,7 +107,30 @@ var logic = {
         return found.name
     },
 
-    getPosts: function () {
+    getPosts() {
         return data.posts
+    },
+
+    createPost(image, text) {
+        this.validate.url(image)
+        this.validate.maxLength(1000)
+        this.validate.text(text)
+        this.validate.minLength(500)
+
+        const post = {
+            id: data.uuid(),
+            author: data.userId,
+            image: image,
+            text: text,
+            createdAt: new Date(),
+            modifiedAt: null,
+            likes: []
+        }
+
+        data.posts[data.posts.length] = post
+    },
+
+    toggleLikePost() {
+        //TO DO
     }
 }

@@ -2,7 +2,7 @@ function Home() {
     Component.call(this, 'div')
 
     //Header
-    var header = new Header()
+    const header = new Header()
     header.container.style.width = '100%'
     header.container.style.height = '50px'
     header.container.style.margin = '10px'
@@ -11,12 +11,12 @@ function Home() {
     header.container.style.alignItems = 'center'
     this.add(header)
 
-    var welcome = new Heading(2)
+    const welcome = new Heading(2)
     welcome.setText('Logo')
     header.add(welcome)
     this.welcome = welcome
 
-    var logoutButton = new Button()
+    const logoutButton = new Button()
     logoutButton.setText('Logout')
     logoutButton.container.style.width = '100px'
     logoutButton.container.style.height = '35px'
@@ -29,14 +29,14 @@ function Home() {
     header.add(logoutButton)
 
     //MAIN HOME
-    var main = new Main()
+    const main = new Main()
     this.add(main)
 
-    var postsSection = new Section()
+    const postsSection = new Section()
     main.add(postsSection)
     this.postsSection = postsSection
 
-    var createPostButton = new Button()
+    const createPostButton = new Button()
     createPostButton.setText('🧉')
     createPostButton.addClickListener(function () {
         this.createPostClickListener()
@@ -63,10 +63,10 @@ Home.prototype.setPosts = function (posts) {
     //LIMPIAR TODOS LOS POSTS AL REFRESCAR
     this.postsSection.container.innerHTML = ''
 
-    for (var i = posts.length - 1; i >= 0; i--) {
-        var post = posts[i]
+    for (let i = posts.length - 1; i >= 0; i--) {
+        const post = posts[i]
 
-        var postArticle = new Article()
+        const postArticle = new Article()
         postArticle.container.style.width = '100%'
         postArticle.container.style.padding = '10px'
         postArticle.container.style.border = '1px solid #ccc'
@@ -74,22 +74,22 @@ Home.prototype.setPosts = function (posts) {
         postArticle.container.style.backgroundColor = '#f9f9f9'
         //poner gap
 
-        var authorHeading = new Heading(3)
+        const authorHeading = new Heading(3)
         authorHeading.setText(post.author)
         postArticle.add(authorHeading)
 
-        var postImage = new Image()
+        const postImage = new Image()
         postImage.setUrl(post.image)
         postImage.container.style.width = '100%'
         postImage.container.style.height = 'auto'
         postImage.container.style.objectFit = 'cover'
         postArticle.add(postImage)
 
-        var postText = new Paragraph()
+        const postText = new Paragraph()
         postText.setText(post.text)
         postArticle.add(postText)
 
-        var postDate = new Time()
+        const postDate = new Time()
         postDate.setText(post.createdAt.toISOString())
         postArticle.add(postDate)
 

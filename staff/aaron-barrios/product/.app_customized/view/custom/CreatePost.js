@@ -3,32 +3,32 @@ function CreatePost(updatePostsCallback) {
 
     this.updatePostsCallback = updatePostsCallback
 
-    var form = new Form()
+    const form = new Form()
     form.container.style.display = 'flex'
     form.container.style.flexDirection = 'column'
     form.container.style.justifyContent = 'left'
     form.container.style.gap = '5px'
     this.add(form)
 
-    var postTextLabel = new Label()
+    const postTextLabel = new Label()
     postTextLabel.setText('Text')
     form.add(postTextLabel)
 
-    var textInput = new Input()
+    const textInput = new Input()
     textInput.setType('text')
     textInput.container.style.width = '350px'
     form.add(textInput)
 
-    var postImageLabel = new Label()
+    const postImageLabel = new Label()
     postImageLabel.setText('Post Image')
     form.add(postImageLabel)
 
-    var imageInput = new Input()
+    const imageInput = new Input()
     imageInput.setType('text')
     imageInput.container.style.width = '350px'
     form.add(imageInput)
 
-    var createPostButton = new Button()
+    const createPostButton = new Button()
     createPostButton.setType('submit')
     createPostButton.setText('Create')
     createPostButton.container.style.width = '80px'
@@ -37,8 +37,8 @@ function CreatePost(updatePostsCallback) {
     form.addSubmitListener(function (event) {
         event.preventDefault()
 
-        var postText = textInput.getValue()
-        var postImage = imageInput.getValue()
+        const postText = textInput.getValue()
+        const postImage = imageInput.getValue()
 
         try {
             logic.createPost(postText, postImage)
@@ -49,9 +49,9 @@ function CreatePost(updatePostsCallback) {
 
             this.createPostSubmitListener()
 
-            //añadir aqui
+            //REFRESCAR POSTS
             if (this.updatePostsCallback) {
-                var updatedPosts = logic.getPosts()
+                const updatedPosts = logic.getPosts()
                 this.updatePostsCallback(updatedPosts)
             }
         } catch (error) {

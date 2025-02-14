@@ -1,15 +1,13 @@
-// LABEL
-function Label() {
-    Component.call(this, 'label')
+class Label extends Component {
+    constructor() {
+        super('label')
+    }
+    setText(text) {
+        this.container.textContent = text
+    }
+
+    setType(type) {
+        this.container.type = type
+    }
 }
 
-Label.prototype = Object.create(Component.prototype)
-Label.prototype.constructor = Label
-
-Label.prototype.setText = function (text) {
-    this.container.textContent = text
-}
-
-Label.prototype.setType = function (type) {
-    this.container.type = type
-}

@@ -3,11 +3,11 @@ function Login() {
 
     this.container.style.width = '400px'
 
-    var title = new Heading(2)
+    const title = new Heading(2)
     title.setText('Login')
     this.add(title)
 
-    var form = new Form()
+    const form = new Form()
     form.container.style.display = 'flex'
     form.container.style.flexDirection = 'column'
     form.container.style.justifyContent = 'left'
@@ -16,21 +16,21 @@ function Login() {
     this.add(form)
 
     //USERNAME
-    var usernameLabel = new Label()
+    const usernameLabel = new Label()
     usernameLabel.setText('Username')
     form.add(usernameLabel)
 
-    var usernameInput = new Input()
+    const usernameInput = new Input()
     usernameInput.setType('text')
     usernameInput.container.style.width = '350px'
     form.add(usernameInput)
 
     //PASSWORD
-    var passwordLabel = new Label()
+    const passwordLabel = new Label()
     passwordLabel.setText('Password')
     form.add(passwordLabel)
 
-    var passwordInput = new Input()
+    const passwordInput = new Input()
     passwordInput.setType('password')
     passwordInput.container.style.width = '350px'
     form.add(passwordInput)
@@ -40,8 +40,8 @@ function Login() {
         event.preventDefault()
 
 
-        var username = usernameInput.getValue()
-        var password = passwordInput.getValue()
+        const username = usernameInput.getValue()
+        const password = passwordInput.getValue()
 
 
         try {
@@ -57,14 +57,14 @@ function Login() {
         }
     }.bind(this))
 
-    var lowerSpan = new Span()
+    const lowerSpan = new Span()
     lowerSpan.container.style.margin = '10px'
     lowerSpan.container.style.marginRight = '60px'
     lowerSpan.container.style.display = 'flex'
     lowerSpan.container.style.justifyContent = 'space-between'
     this.add(lowerSpan)
 
-    var registerAnchor = new Anchor()
+    const registerAnchor = new Anchor()
     registerAnchor.setText('Register')
     registerAnchor.container.style.textDecoration = 'underline'
     registerAnchor.container.style.cursor = 'pointer'
@@ -75,7 +75,7 @@ function Login() {
     }.bind(this))
     lowerSpan.add(registerAnchor)
 
-    var loginButton = new Button()
+    const loginButton = new Button()
     loginButton.setText('Login')
     loginButton.setType('submit')
     loginButton.container.style.width = '80px'

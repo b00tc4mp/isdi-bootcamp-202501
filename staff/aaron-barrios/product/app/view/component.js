@@ -1,17 +1,18 @@
 // --- FATHER COMPONENT --- 
-function Component(tagName) {
-    this.container = document.createElement(tagName)
-}
+class Component {
+    constructor(tagName) {
+        this.container = document.createElement(tagName)
+    }
 
-// --- FATHER COMPONENT FUNCTIONS ---
-Component.prototype.add = function (child) {
-    this.container.appendChild(child.container)
-}
+    add(child) {
+        this.container.appendChild(child.container)
+    }
 
-Component.prototype.remove = function (child) {
-    this.container.removeChild(child.container)
-}
+    remove(child) {
+        this.container.removeChild(child.container)
+    }
 
-Component.prototype.addClickListener = function (callback) {
-    this.container.addEventListener('click', callback)
+    addClickListener(listener) {
+        this.container.addEventListener('click', listener)
+    }
 }

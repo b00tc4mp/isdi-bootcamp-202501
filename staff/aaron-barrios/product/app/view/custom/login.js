@@ -1,97 +1,96 @@
-function Login() {
-    Component.call(this, 'div')
+class Login extends Component {
+    constructor() {
+        super('div')
+        this.container.style.width = '400px'
 
-    this.container.style.width = '400px'
-
-    var title = new Heading(2)
-    title.setText('Login')
-    this.add(title)
-
-    var form = new Form()
-    form.container.style.display = 'flex'
-    form.container.style.flexDirection = 'column'
-    form.container.style.justifyContent = 'left'
-    form.container.style.gap = '5px'
-    this.form = form
-    this.add(form)
-
-    //USERNAME
-    var usernameLabel = new Label()
-    usernameLabel.setText('Username')
-    form.add(usernameLabel)
-
-    var usernameInput = new Input()
-    usernameInput.setType('text')
-    usernameInput.container.style.width = '350px'
-    form.add(usernameInput)
-
-    //PASSWORD
-    var passwordLabel = new Label()
-    passwordLabel.setText('Password')
-    form.add(passwordLabel)
-
-    var passwordInput = new Input()
-    passwordInput.setType('password')
-    passwordInput.container.style.width = '350px'
-    form.add(passwordInput)
+        const title = new Heading(2)
+        title.setText('Login')
+        this.add(title)
 
 
-    form.addSubmitListener(function (event) {
-        event.preventDefault()
+        const form = new Form()
+        form.container.style.display = 'flex'
+        form.container.style.flexDirection = 'column'
+        form.container.style.justifyContent = 'left'
+        form.container.style.gap = '5px'
+        this.form = form
+        form.addSubmitListener(function (event) {
+            event.preventDefault()
 
 
-        var username = usernameInput.getValue()
-        var password = passwordInput.getValue()
+            const username = usernameInput.getValue()
+            const password = passwordInput.getValue()
 
 
-        try {
-            logic.loginUser(username, password)
+            try {
+                logic.loginUser(username, password)
 
+                form.clear()
+
+                this.loginSubmitListener()
+            } catch (error) {
+                console.error(error)
+
+                alert(error.message)
+            }
+        }.bind(this))
+        this.add(form)
+
+        //USERNAME
+        const usernameLabel = new Label()
+        usernameLabel.setText('Username')
+        form.add(usernameLabel)
+
+        const usernameInput = new Input()
+        usernameInput.setType('text')
+        usernameInput.container.style.width = '350px'
+        form.add(usernameInput)
+
+        //PASSWORD
+        const passwordLabel = new Label()
+        passwordLabel.setText('Password')
+        form.add(passwordLabel)
+
+        const passwordInput = new Input()
+        passwordInput.setType('password')
+        passwordInput.container.style.width = '350px'
+        form.add(passwordInput)
+
+        //LOWER SPAN
+        const lowerSpan = new Span()
+        lowerSpan.container.style.margin = '10px'
+        lowerSpan.container.style.marginRight = '60px'
+        lowerSpan.container.style.display = 'flex'
+        lowerSpan.container.style.justifyContent = 'space-between'
+        this.add(lowerSpan)
+
+        const registerAnchor = new Anchor()
+        registerAnchor.setText('Register')
+        registerAnchor.container.style.textDecoration = 'underline'
+        registerAnchor.container.style.cursor = 'pointer'
+        registerAnchor.addClickListener(function () {
             form.clear()
 
-            this.loginSubmitListener()
-        } catch (error) {
-            console.error(error)
+            this.registerClickListener()
+        }.bind(this))
+        lowerSpan.add(registerAnchor)
 
-            alert(error.message)
-        }
-    }.bind(this))
+        const loginButton = new Button()
+        loginButton.setText('Login')
+        loginButton.setType('submit')
+        loginButton.container.style.width = '80px'
+        loginButton.setType8
+        lowerSpan.add(loginButton)
 
-    var lowerSpan = new Span()
-    lowerSpan.container.style.margin = '10px'
-    lowerSpan.container.style.marginRight = '60px'
-    lowerSpan.container.style.display = 'flex'
-    lowerSpan.container.style.justifyContent = 'space-between'
-    this.add(lowerSpan)
+        form.add(lowerSpan)
+    }
+    addRegisterClickListener(listener) {
+        this.registerClickListener = listener
+    }
 
-    var registerAnchor = new Anchor()
-    registerAnchor.setText('Register')
-    registerAnchor.container.style.textDecoration = 'underline'
-    registerAnchor.container.style.cursor = 'pointer'
-    registerAnchor.addClickListener(function () {
-        form.clear()
-
-        this.registerClickListener()
-    }.bind(this))
-    lowerSpan.add(registerAnchor)
-
-    var loginButton = new Button()
-    loginButton.setText('Login')
-    loginButton.setType('submit')
-    loginButton.container.style.width = '80px'
-    loginButton.setType8
-    lowerSpan.add(loginButton)
-
-    form.add(lowerSpan)
+    addLoginSubmitListener(listener) {
+        this.loginSubmitListener = listener
+    }
 }
 
-Login.prototype = Object.create(Component.prototype)
-Login.prototype.constructor = Login
 
-Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerClickListener = listener
-}
-
-Login.prototype.addLoginSubmitListener = function (listener) {
-    this.loginSubmitListener = listener
-}

@@ -3,11 +3,11 @@ function Register() {
 
     this.container.style.width = '400px'
 
-    var title = new Heading(1)
+    const title = new Heading(1)
     title.setText('Register')
     this.add(title)
 
-    var form = new Form()
+    const form = new Form()
     form.container.style.display = 'flex'
     form.container.style.flexDirection = 'column'
     form.container.style.justifyContent = 'left'
@@ -16,47 +16,47 @@ function Register() {
     this.add(form)
 
     //NAME
-    var nameLabel = new Label()
+    const nameLabel = new Label()
     nameLabel.setText('Name')
     form.add(nameLabel)
 
-    var nameInput = new Input()
+    const nameInput = new Input()
     nameInput.setType('text')
     nameInput.container.style.width = '350px'
     form.add(nameInput)
 
     //EMAIL
-    var emailLabel = new Label()
+    const emailLabel = new Label()
     emailLabel.setText('E-mail')
     form.add(emailLabel)
 
-    var emailInput = new Input()
+    const emailInput = new Input()
     emailInput.setType('email')
     emailInput.container.style.width = '350px'
     form.add(emailInput)
 
     //USERNAME
-    var usernameLabel = new Label()
+    const usernameLabel = new Label()
     usernameLabel.setText('Username')
     form.add(usernameLabel)
 
-    var usernameInput = new Input()
+    const usernameInput = new Input()
     usernameInput.setType('text')
     usernameInput.container.style.width = '350px'
     form.add(usernameInput)
 
     //PASSWORD
-    var passwordLabel = new Label()
+    const passwordLabel = new Label()
     passwordLabel.setText('Password')
     form.add(passwordLabel)
 
-    var passwordInput = new Input()
+    const passwordInput = new Input()
     passwordInput.setType('password')
     passwordInput.container.style.width = '350px'
     form.add(passwordInput)
 
 
-    var lowerSpan = new Span()
+    const lowerSpan = new Span()
     lowerSpan.container.style.margin = '10px'
     lowerSpan.container.style.marginRight = '55px'
     lowerSpan.container.style.display = 'flex'
@@ -64,7 +64,7 @@ function Register() {
     lowerSpan.container.style.alignItems = 'center'
     lowerSpan.width = '100%'
 
-    var loginAnchor = new Anchor()
+    const loginAnchor = new Anchor()
     loginAnchor.setText('Login')
     loginAnchor.container.style.textDecoration = 'underline'
     loginAnchor.container.style.cursor = 'pointer'
@@ -75,7 +75,7 @@ function Register() {
     }.bind(this))
     lowerSpan.add(loginAnchor)
 
-    var registerButton = new Button()
+    const registerButton = new Button()
     registerButton.setText('Register')
     registerButton.setType('submit')
     registerButton.container.style.width = '80px'
@@ -86,10 +86,10 @@ function Register() {
     form.addSubmitListener(function (event) {
         event.preventDefault()
 
-        var name = nameInput.getValue()
-        var email = emailInput.getValue()
-        var username = usernameInput.getValue()
-        var password = passwordInput.getValue()
+        const name = nameInput.getValue()
+        const email = emailInput.getValue()
+        const username = usernameInput.getValue()
+        const password = passwordInput.getValue()
 
 
         try {
