@@ -42,6 +42,7 @@ const logic = {
 
     registerUser(name, email, username, password) {
         this.validate.text(name, 'name')
+        this.validate.minLength(name, 1, 'name')
         this.validate.maxLength(name, 20, 'name')
         this.validate.email(email, 'email')
         this.validate.username(username, 'username')
@@ -114,7 +115,9 @@ const logic = {
 
     createPost(image, text) {
         this.validate.url(image)
+        this.validate.maxLength(1000)
         this.validate.text(text)
+        this.validate.maxLength(500)
 
         const post = {
             id: data.uuid(),
