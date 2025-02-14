@@ -22,7 +22,17 @@ function Login() {
 
         console.log(username, password)
 
-        this.loginSubmitListener()
+        try {
+            logic.loginUser(username, password)
+
+            form.clear()
+
+            this.loginSubmitListener()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
     }.bind(this))
     this.add(form)
 
@@ -58,7 +68,11 @@ function Login() {
 
     var registerAnchor = new Anchor()
     registerAnchor.setText('Register')
-    this.registerAnchor = registerAnchor
+    registerAnchor.addClickListener(function () {
+        form.clear()
+
+        this.registerClickListener()
+    }.bind(this))
     this.add(registerAnchor)
 }
 
@@ -66,7 +80,7 @@ Login.prototype = Object.create(Component.prototype)
 Login.prototype.constructor = Login
 
 Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerAnchor.addClickListener(listener)
+    this.registerClickListener = listener
 }
 
 Login.prototype.addLoginSubmitListener = function (listener) {

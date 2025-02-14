@@ -38,7 +38,7 @@ login.addLoginSubmitListener(function () {
 
 
 var home = new Home()
-home.addExitClickListener(function () {
+home.addLogoutClickListener(function () {
     body.remove(home)
     body.add(landing)
 })

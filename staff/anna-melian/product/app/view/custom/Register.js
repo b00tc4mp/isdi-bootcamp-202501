@@ -24,14 +24,17 @@ function Register() {
         var password = formPasswordInput.getValue()
 
         try {
-            this.submitVerification(name, email)
+            logic.registerUser(name, email, username, password)
 
             console.log(name, email, username, password)
 
-            this.registerSubmitListener()
+            form.clear()
 
+            this.registerSubmitListener()
         } catch (error) {
-            alert("Error: " + error.message)
+            console.log(error)
+
+            alert(error.message)
         }
 
     }.bind(this))
@@ -89,7 +92,10 @@ function Register() {
 
     var loginAnchor = new Anchor()
     loginAnchor.setText('Login')
-    this.loginAnchor = loginAnchor
+    loginAnchor.addClickListener(function () {
+        form.clear()
+        this.loginClickListener()
+    }.bind(this))
     this.add(loginAnchor)
 }
 
@@ -97,25 +103,9 @@ Register.prototype = Object.create(Component.prototype)
 Register.prototype.constructor = Register
 
 Register.prototype.addLoginClickListener = function (listener) {
-    this.loginAnchor.addClickListener(listener)
+    this.loginClickListener = listener
 }
 
 Register.prototype.addRegisterSubmitListener = function (listener) {
     this.registerSubmitListener = listener
-}
-
-Register.prototype.submitVerification = function (name, email) {
-    if (typeof name != 'string') {
-        throw new Error('Invalid answer')
-    }
-
-    var isEmail = false
-    for (var i = 0; i < email.length; i++) {
-        if (email[i] === '@') {
-            isEmail = true
-        }
-    }
-    if (!isEmail) {
-        throw new Error('Invalid answer')
-    }
 }
