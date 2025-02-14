@@ -1,8 +1,7 @@
 var logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
-        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        URL_REGEX: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     },
 
     validate: {
@@ -33,10 +32,6 @@ var logic = {
             this.text(password, explain)
             this.minLength(password, 8, explain)
             this.maxLength(password, 20, explain)
-        },
-        url: function (url, explain) {
-            this.string(url, explain)
-            if (!logic.constant.URL_REGEX.test(url)) throw new SyntaxError('invalid ' + explain + ' syntax')
         }
     },
 
@@ -110,21 +105,5 @@ var logic = {
 
     getPosts: function () {
         return data.posts
-    },
-
-    createPost: function (image, text) {
-        this.validate.url(image)
-        this.validate.text(text)
-
-        var post = {
-            id: data.uuid(),
-            author: data.userId,
-            image: image,
-            text: text,
-            createdAt: new Date(),
-            modifiedAt: null
-        }
-
-        data.posts[data.posts.length] = post
     }
 }
