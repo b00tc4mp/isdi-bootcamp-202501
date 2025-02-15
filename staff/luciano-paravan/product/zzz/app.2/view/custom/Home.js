@@ -6,11 +6,11 @@ function Home () {
     logo.setText('Logo')
     this.add(logo)
     
-    var logoutButton = new Button()
-    logoutButton.setText('Log out')
-    logoutButton.container.style.color = '#FFFFFF'
-    logoutButton.container.style.backgroundColor = '#428A82'
-    this.add(logoutButton)
+    var logout = new Button()
+    logout.setText('Log out')
+    logout.container.style.color = '#FFFFFF'
+    logout.container.style.backgroundColor = '#428A82'
+    this.add(logout)
     
     var postFrame1 = new Article()
     this.add(postFrame1)
@@ -58,23 +58,11 @@ function Home () {
     commentPostFrame2.setText('comment 2')
     postFrame2.add(commentPostFrame2)
     
-    logoutButton.addClickListener(function () {
-        try {
-            logic.logoutUser()
-            
-            this.logoutClickListener()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-        
+    logout.addClickListener(function () {
+        body.remove(this)
+        body.add(landing)
     }.bind(this))
 }
 
 Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home
-
-Home.prototype.addLogoutClickListener = function (listener) {
-    this.logoutClickListener = listener
-}

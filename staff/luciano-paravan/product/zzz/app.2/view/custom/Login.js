@@ -13,22 +13,19 @@ function Login () {
     form.addSubmitListener(function(event) {
         event.preventDefault()
 
+        console.log('login submit')
+
         var username = usernameInput.getValue()
         var password = passwordInput.getValue()
-        
-        try {
-            logic.loginUser(username, password)
 
-            form.clear()
-    
-            this.loginSubmitListener()
-        } catch {
-            console.error(error)
+        console.log(username, password)
 
-            alert(error.message)
-        }
+        form.clear()
 
+        this.loginSubmitListener()
     }.bind(this))
+
+
     this.add(form)
     
     // Username
@@ -36,6 +33,7 @@ function Login () {
     var usernameLabel = new Label()
     usernameLabel.setText('Username: ')
     form.add(usernameLabel)
+    
     
     var usernameInput = new Input()
     usernameInput.setType('text')
@@ -63,15 +61,18 @@ function Login () {
     
     // Anchor - Register
 
-    var registerAnchor = new Anchor()
-    registerAnchor.setText('Register')
-    registerAnchor.addClickListener(function() {
+    var registerLogin = new Anchor()
+    registerLogin.setText('Register')
+    registerLogin.addClickListener(function() {
         form.clear()
 
         this.registerClickListener()
     }.bind(this))
     
-    form.add(registerAnchor)
+
+    //this.registerLogin = registerLogin //se copia la referencia al objeto Anchor
+    
+    form.add(registerLogin)
     
 }
 
@@ -79,11 +80,11 @@ Login.prototype = Object.create(Component.prototype)
 Login.prototype.constructor = Login
 
 Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerClickListener = listener
+    this.registerLogin.addClickListener(listener)
 }
 
 Login.prototype.addLoginSubmitListener = function (listener) {
-    this.loginSubmitListener = listener
+    this.registerClickListener = listener
     //this.loginSubmitListener = listener
 }
 //Lo que hace en el prototipo de arriba es recibir lo que quiero que haga desde el main (remover y agregar pantalla), guarda la referencia en el listener como propiedad, para poder usarlo en el login.

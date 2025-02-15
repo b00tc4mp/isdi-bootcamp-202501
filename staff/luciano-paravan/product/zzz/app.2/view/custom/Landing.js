@@ -16,18 +16,21 @@ function Landing() {
 
     // ---- LOGIN + REGISTER
 
-    var registerAnchor = new Anchor()
-    registerAnchor.setText('Register')
-    this.registerAnchor = registerAnchor
-    this.add(registerAnchor)
+    var loginRegisterBox = new Div() //document.createElement('div')
+    
+    this.add(loginRegisterBox)
 
-    var orText = document.createTextNode('or')
-    this.container.appendChild(orText)
+    var loginBox = new Button() //document.createElement('button')
+    loginBox.setText('Login') 
+    loginRegisterBox.add(loginBox)
 
-    var loginAnchor = new Anchor()
-    loginAnchor.setText('Login') 
-    this.loginAnchor = loginAnchor
-    this.add(loginAnchor)
+    this.loginBox = loginBox
+
+    var registerBox = new Button()//document.createElement('button')
+    registerBox.setText('Register')
+    loginRegisterBox.add(registerBox)
+
+    this.registerBox = registerBox
 
 }
 
@@ -35,12 +38,12 @@ Landing.prototype = Object.create(Component.prototype)
 Landing.prototype.constructor = Landing
 
 Landing.prototype.addRegisterClickListener = function (listener) {
-    this.registerAnchor.addClickListener(listener)
+    this.registerBox.addClickListener(listener)
 }
 // El Landing maneja solo el click. El comportamiento que uno decide fuera (el del main de eliminar pantalla y mostrar otra) que se recibe como parametro, se lo enviamos al click del button registerBox para que se dispare. 
 
 Landing.prototype.addLoginClickListener = function (listener) {
-    this.loginAnchor.addClickListener(listener)
+    this.loginBox.addClickListener(listener)
 }
 
 // ---- ESTILOS

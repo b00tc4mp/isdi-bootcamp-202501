@@ -108,7 +108,7 @@ Register.prototype = Object.create(Component.prototype)
 Register.prototype.constructor = Register
 
 Register.prototype.addLoginClickListener = function (listener) {
-    this.loginClickListener = listener
+    thise.loginClickListener = listener
     //this.loginRegister.addClickListener(listener)
 }
 

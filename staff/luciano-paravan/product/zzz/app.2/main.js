@@ -1,6 +1,6 @@
 
 var body = new Body()
-body.container = document.body
+document.body = body.container
 
 //body.container.style.color = '#428A82'
 //body.container.style.backgroundColor = '#E0EEEC'
@@ -10,17 +10,17 @@ body.container = document.body
 
 /* -------------------- Landing ------------------> */
 var landing = new Landing()
-
-landing.addRegisterClickListener(function () {
-    body.remove(landing)
-    body.add(register)
-})
+body.add(landing)
 
 landing.addLoginClickListener(function () {
     body.remove(landing)
     body.add(login)
 })
-body.add(landing)
+
+landing.addRegisterClickListener(function () {
+    body.remove(landing)
+    body.add(register)
+})
 
 /* ---------------- REGISTER -------------------> */
 var register = new Register
@@ -37,23 +37,20 @@ register.addRegisterSubmitListener(function () {
 // ------------------- Login ------------------>
 var login = new Login
 
-login.addRegisterClickListener(function () {
-    body.remove(login)
-    body.add(register)
-})
-
 login.addLoginSubmitListener(function () {
     body.remove(login)
     body.add(home)
 })
 
+login.addRegisterClickListener(function () {
+    body.remove(login)
+    body.add(register)
+})
+
+
 // ------------------- HOME --------------------->
 var home = new Home()
 
-home.addLogoutClickListener(function () {
-    body.remove(home)
-    body.add(landing)
-})
 
 
 
