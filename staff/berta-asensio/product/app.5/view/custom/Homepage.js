@@ -59,16 +59,28 @@ function Home() {
 
     //logout anchor
 
-    var logOutAnchor = new Anchor()
-    logOutAnchor.setText('Logout')
+    var logoutAnchor = new Anchor()
+    logoutAnchor.setText('Logout')
+    logoutAnchor.addClickListener(function() {
+        try {
+            logic.logoutUser()
 
-    this.add(logOutAnchor)
-    this.logOutAnchor = logOutAnchor
+            this.logoutClickListener()
+
+        } catch(error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }.bind(this))
+
+    this.add(logoutAnchor)
+   // this.logOutAnchor = logoutAnchor
 }
 
 Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home
 
-Home.prototype.addLogOutClickListener = function(listener) {
-    this.logOutAnchor.addClickListener(listener)
+Home.prototype.addLogoutClickListener = function(listener) {
+    this.logoutClickListener = listener
 }

@@ -21,7 +21,7 @@ function Register() {
         var password = passwordInput.getValue()
         var email = emailInput.getValue()
 
-
+        console.log(name, username, password, email)
         /* La logica registra al usuario al sistema y se encarga de procesarlo.
         Y recordemos que la logica se llama con un try/catch.
         Dentro del try, está todo lo happy. En el catch se captura el error.

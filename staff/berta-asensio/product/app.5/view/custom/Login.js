@@ -25,9 +25,19 @@ function Login() {
 
         console.log(username, password)
 
-        form.clear()
+        try {
+            logic.loginUser(username, password)
 
-        this.loginSubmitListener()
+            form.clear()
+    
+            this.loginSubmitListener()
+
+        } catch(error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+
     }.bind(this))
     this.add(form)
 

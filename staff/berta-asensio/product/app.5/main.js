@@ -1,7 +1,7 @@
 console.clear()
 
 var body = new Body()
-document.body = body.container
+body.container = document.body
 
 body.container.style.backgroundColor = '#FFD033'
 body.container.style.fontFamily = 'nunito'
@@ -54,7 +54,7 @@ login.addReturnClickListener(function() {
 
 var home = new Home()
 
-home.addLogOutClickListener(function() {
+home.addLogoutClickListener(function() {
     body.remove(home)
     body.add(landing)
 })
