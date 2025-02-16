@@ -18,4 +18,8 @@ class Component {
     setId(id) {
         this.container.id = id
     }
+
+    setClass(className) {
+        this.container.className = className
+    }
 }

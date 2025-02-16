@@ -115,9 +115,7 @@ class Home extends Component {
             for (let i = posts.length - 1; i > -1; i--) {
                 let post = posts[i]
 
-                const { authorId, imageSrc, textDescription, createdAt } = post
-
-                const newPost = new Post(authorId, imageSrc, textDescription, createdAt)
+                const newPost = new Post(post)
                 this.postArticleDiv.add(newPost)
             }
         } catch (error) {

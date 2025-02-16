@@ -59,7 +59,7 @@ const data = {
             textDescription: 'La maquina mas veloz de tutte Italie!!!',
             createdAt: new Date("2025-02-15T10:32:27Z"),
             modifiedAt: null,
-            likes: []
+            likes: ['002bcd5fd319256b1d61b9ed07482a00c9']
         },
         {
             id: '0151e85a6eff3f22ba6554fc79b5ff0851',
@@ -86,7 +86,7 @@ const data = {
             textDescription: 'Considering buying this social network as well :P',
             createdAt: new Date("2025-02-15T15:19:58Z"),
             modifiedAt: null,
-            likes: []
+            likes: ['00c69ff7dac4230157adf7c937d19abfeb']
         },
         {
             id: '015ad72016c465576c7717b57ed21b69fd',
@@ -95,7 +95,7 @@ const data = {
             textDescription: 'Estrenando cacharro un saludo a Manu',
             createdAt: new Date("2025-02-15T15:19:58Z"),
             modifiedAt: null,
-            likes: ['002bcd5fd319256b1d61b9ed07482a00c9']
+            likes: ['002bcd5fd319256b1d61b9ed07482a00c9', '00ed93c753b9c65bad4180036f80eed6e6', '00ed93c753b9c65bad4180036f80eed6e6']
         }
     ],
     userId: '78dfd4e3168502717c19a4905d239202'

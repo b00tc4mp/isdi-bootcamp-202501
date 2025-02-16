@@ -141,9 +141,46 @@ const logic = {
             imageSrc: imageSrc,
             textDescription: textDescription,
             createdAt: new Date(),
-            modifiedAt: null
+            modifiedAt: null,
+            likes: []
         }
 
         data.posts.push(newPost)
+    },
+
+    setLike(currentPostId) {
+        const currentPost = data.posts.find(post => post.id === currentPostId)
+
+        const userId = logic.getUserId()
+        const likePosition = currentPost.likes.indexOf(userId)
+        const isAlreadyLiked = likePosition !== -1
+
+        if (!isAlreadyLiked) {
+            currentPost.likes.push(data.userId)
+        } else {
+            currentPost.likes.splice(likePosition, 1)
+        }
+
+    },
+
+    getLikesUsernames(likesId) {
+        return likesId.map(likeId => {
+            const user = data.users.find(user => user.id === likeId)
+            return user.username
+        })
+    },
+
+    likesToString(likes) {
+        if (likes.length === 0) {
+            return ''
+        } else if (likes.length < 3) {
+            return `${likes.join(' and ')} liked that.`
+        } else {
+            const firstLike = likes[0]
+            const secondLike = likes[1]
+            const restLikes = likes.length - 2
+
+            return `${firstLike}, ${secondLike} and ${restLikes} more people liked that.`
+        }
     }
 }

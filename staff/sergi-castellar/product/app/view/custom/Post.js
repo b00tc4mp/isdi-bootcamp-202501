@@ -1,6 +1,8 @@
 class Post extends Component {
-    constructor(authorId, imageSrc, textDescription, createdAt) {
+    constructor(post) {
         super("article")
+
+        const { id: currentPostId, authorId: currentPostAuthorId, imageSrc: currentPostImageSrc, textDescription: currentPostTextDescription, createdAt: currentPostCreatedAt, modifiedAt: currentPostModifiedAt, likes: currentPostLikes } = post
 
         this.container.style.width = '400px'
 
@@ -9,7 +11,7 @@ class Post extends Component {
 
         let authorName = ''
         try {
-            authorName = logic.getUserProperty(authorId, 'name')
+            authorName = logic.getUserProperty(currentPostAuthorId, 'name')
 
             const author = new Heading(2)
             author.setText(authorName)
@@ -24,21 +26,21 @@ class Post extends Component {
         this.add(figure)
 
         const image = new Image()
-        image.setSrc(imageSrc)
+        image.setSrc(currentPostImageSrc)
         image.container.style.width = '300px'
         figure.add(image)
 
-        const footer = new Footer()
-        this.add(footer)
+        const postInfoSection = new Section()
+        this.add(postInfoSection)
 
         const iconSection = new Section()
-        footer.add(iconSection)
+        postInfoSection.add(iconSection)
 
-        let likeAnchor = new Anchor()
-        likeAnchor.setClass("unliked")
-        likeAnchor.setText("🤍")
-        likeAnchor.addClickListener(() => {
-            const elementContainer = likeAnchor.container
+        let likeButton = new Button()
+        likeButton.setClass("unliked")
+        likeButton.setText("🤍")
+        likeButton.addClickListener(() => {
+            const elementContainer = likeButton.container
             if (elementContainer.className === "unliked") {
                 elementContainer.className = "liked"
                 elementContainer.textContent = "❤️"
@@ -46,18 +48,49 @@ class Post extends Component {
                 elementContainer.className = "unliked"
                 elementContainer.textContent = "🤍"
             }
+
+            try {
+                logic.setLike(currentPostId)
+
+            } catch (error) {
+                logic.helper.handleError()
+            }
         })
-        likeAnchor.container.style.cursor = 'pointer'
-        iconSection.add(likeAnchor)
+        likeButton.container.style.cursor = 'pointer'
+        likeButton.container.style.background = 'transparent'
+        likeButton.container.style.border = 'none'
+        likeButton.container.style.fontSize = '18px'
 
-        let authorUsername
+        iconSection.add(likeButton)
+
+        const likeSection = new Section()
+        postInfoSection.add(likeSection)
+
         try {
-            authorUsername = logic.getUserProperty(authorId, 'username')
+            const likesUsernames = logic.getLikesUsernames(currentPostLikes)
+            const likesParagraph = new Paragraph()
+            likesParagraph.setText(`${logic.likesToString(likesUsernames)}`)
+            likeSection.add(likesParagraph)
+        } catch (error) {
+            logic.helper.handleError()
+        }
 
-            const datePost = new Paragraph()
-            datePost.setText(`${authorUsername}, ${createdAt.toLocaleString()}: ${textDescription}`)
-            datePost.container.style.textAlign = 'justify'
-            footer.add(datePost)
+        const descriptionSection = new Section()
+        postInfoSection.add(descriptionSection)
+        descriptionSection.container.style.display = 'flex'
+
+        try {
+            let authorUsername = logic.getUserProperty(currentPostAuthorId, 'username')
+
+            const authorParagraph = new Paragraph()
+            authorParagraph.setText(`${authorUsername}`)
+            authorParagraph.container.style.fontWeight = 'bold'
+            authorParagraph.container.style.marginRight = '4px'
+            descriptionSection.add(authorParagraph)
+
+            const descriptionParagraph = new Paragraph()
+            descriptionParagraph.setText(`${currentPostTextDescription}`)
+            descriptionSection.add(descriptionParagraph)
         } catch (error) {
             logic.helper.handleError()
         }
