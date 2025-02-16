@@ -123,10 +123,21 @@ const logic = {
 
     likePost(postToLike) {
         for (var i = 0; i < postToLike.likes.length; i++) {
-            if (postToLike.likes[i] === data.userId)
+            if (postToLike.likes[i] === data.userId) {
                 postToLike.likes.splice(i, 1)
-            return
+                return
+            }
         }
         postToLike.likes[postToLike.likes.length] = data.userId
+        localStorage.posts = JSON.stringify(data.posts)
+    },
+
+    isPostLikedByUser(post) {
+        for (var i = 0; i < post.likes.length; i++) {
+            if (post.likes[i] === data.userId) {
+                return true
+            }
+        }
+        return false
     }
 }

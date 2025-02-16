@@ -71,7 +71,11 @@ class Home extends Component {
             const postArticle = new Article()
 
             const authorHeading = new Heading(3)
-            authorHeading.setText(post.author)
+            for (var j = 0; j < data.users.length; j++) {
+                const user = data.users[j]
+                if (post.author === user.id)
+                    authorHeading.setText(user.username)
+            }
             postArticle.add(authorHeading)
 
             const postImage = new Image()
@@ -82,10 +86,6 @@ class Home extends Component {
             postText.setText(post.text)
             postArticle.add(postText)
 
-            const postDate = new Time()
-            postDate.setText(post.createdAt)
-            postArticle.add(postDate)
-
             const likeSection = new Section()
 
             const numberOfLikes = new Text()
@@ -93,7 +93,10 @@ class Home extends Component {
             likeSection.add(numberOfLikes)
 
             const likeAnchor = new Anchor()
-            likeAnchor.setText('🤍')
+            if (!logic.isPostLikedByUser(post))
+                likeAnchor.setText('🤍')
+            else
+                likeAnchor.setText('🩷')
             likeAnchor.addClickListener(function () {
                 logic.likePost(post)
 
@@ -107,6 +110,10 @@ class Home extends Component {
             })
             likeSection.add(likeAnchor)
             postArticle.add(likeSection)
+
+            const postDate = new Time()
+            postDate.setText(post.createdAt)
+            postArticle.add(postDate)
 
             this.postsSection.add(postArticle)
         }
