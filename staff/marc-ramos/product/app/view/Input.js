@@ -1,19 +1,17 @@
-function Input() {
-    //creamos funcion input para crear inputs
-    Component.call(this, "input");
-  }
-  
-  Input.prototype = Object.create(Component.prototype);
-  Input.prototype.constructor = Input;
-  
-  Input.prototype.setType = function (type) {
-    this.container.type = type;
-  };
-  
-  Input.prototype.setPlaceholder = function (placeholder) {
-    this.container.placeholder = placeholder;
-  };
-  
-  Input.prototype.getValue = function () {
-    return this.container.value;
-  };
+class Input extends Component {
+    constructor() {
+      super('input')
+    }
+
+    setType(type) {
+      this.container.type = type
+    }
+    
+    setPlaceholder(placeholder) {
+      this.container.placeholder = placeholder
+    }
+    
+    getValue() {
+      return this.container.value
+    }
+}

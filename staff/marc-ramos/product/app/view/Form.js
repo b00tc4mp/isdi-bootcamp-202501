@@ -1,15 +1,16 @@
-function Form() {
-    //creamos la función form para poder crear formularios con pocas lineas de codigo
-    Component.call(this, "form");
-  }
-  
-  Form.prototype = Object.create(Component.prototype);
-  Form.prototype.constructor = Form;
-  
-  Form.prototype.addSubmitListener = function (callback) {
-    this.container.addEventListener("submit", callback);
-  }
+class Form extends Component{
+    constructor() {
+        super('form')
+    }
 
-  Form.prototype.clear = function() {
-    this.container.reset()
-  }
+    addSubmitListener(listener) {
+      this.container.addEventListener("submit", listener);
+    }
+  
+    clear() {
+      this.container.reset()
+    }
+     
+}
+  
+  

@@ -1,9 +1,9 @@
 //console.clear();
 
-const body = new Body();
+var body = new Body();
 body.container = document.body
 
-const landing = new Landing();
+var landing = new Landing();
 body.add(landing);
 
 landing.addRegisterClickListener(function() {
@@ -15,7 +15,7 @@ landing.addLoginClickListener(function() {
   body.add(login)
 })
 
-const register = new Register();
+var register = new Register();
 
 register.addLoginSubmit(function() {
   body.remove(register)
@@ -27,7 +27,7 @@ register.addLoginClickListener(function(){
   body.add(login)
 })
 
-const login = new Login()
+var login = new Login()
 
 login.addRegisterClickListener(function(){
   body.remove(login)
@@ -42,7 +42,7 @@ login.addLoginSubmitListener(function() {
   body.add(home)
 })
 
-const home = new Home()
+var home = new Home()
 home.addLogoutClickListener(function() {
     body.remove(home)
     body.add(login)

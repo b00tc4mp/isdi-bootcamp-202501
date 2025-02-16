@@ -1,17 +1,16 @@
-class Home extends Component {
-  constructor() {
-    super('div')
+function Home() {
+    Component.call(this, "div")
   
-    const logo = new Heading(1);
+    var logo = new Heading(1);
     logo.setText('Home of DEEPSTAGRAM');
     this.add(logo);
   
-    const welcome = new Heading(2);
+    var welcome = new Heading(2);
     welcome.setText("Welcome to DEEPSTAGRAM");
     this.add(welcome)
     this.welcome = welcome
 
-    const logoutButton = new Button()
+    var logoutButton = new Button()
     logoutButton.setText('Logout')
     logoutButton.addClickListener(function() {
       try {
@@ -27,14 +26,14 @@ class Home extends Component {
 
     this.add(logoutButton)
 
-    const postsSection = new Section()
+    var postsSection = new Section()
     this.add(postsSection)
     this.postsSection = postsSection
 
-    const addPostButton = new Button()
+    var addPostButton = new Button()
     addPostButton.setText('+')
     addPostButton.addClickListener(function() {
-      const createPost = new CreatePost()
+      var createPost = new CreatePost()
 
       createPost.addCreatePostSubmitListener(function() {
         this.remove(createPost)
@@ -56,11 +55,15 @@ class Home extends Component {
     }.bind(this))
     this.add(addPostButton)
   }
-    addLogoutClickListener (listener) {
+  
+  Home.prototype = Object.create(Component.prototype);
+  Home.prototype.constructor = Home;
+
+  Home.prototype.addLogoutClickListener = function(listener) {
     this.logoutButton = listener
   }
 
-    loadUserName () {
+  Home.prototype.loadUserName = function() {
     try {
       const name = logic.getUserName()
 
@@ -72,30 +75,30 @@ class Home extends Component {
     }
   }
 
-    loadPosts() {
+  Home.prototype.loadPosts = function() {
     this.postsSection.container.innerHTML = ''
 
     try {
       const posts = logic.getPosts()
 
-      for (let i = posts.length - 1; i > -1; i--) {
-        const post = posts[i]
+      for (var i = posts.length - 1; i > -1; i--) {
+        var post = posts[i]
   
-        const postArticle = new Article()
+        var postArticle = new Article()
   
-        const authorHeading = new Heading(3)
+        var authorHeading = new Heading(3)
         authorHeading.setText(post.author)
         postArticle.add(authorHeading)
   
-        const postImage = new Image()
+        var postImage = new Image()
         postImage.setUrl(post.image)
         postArticle.add(postImage)
   
-        const postText = new Paragraph()
+        var postText = new Paragraph()
         postText.setText(post.text)
         postArticle.add(postText)
   
-        const postDate = new Time()
+        var postDate = new Time()
         postDate.setText(post.createdAt.toISOString())
         postArticle.add(postDate)
   
@@ -107,4 +110,3 @@ class Home extends Component {
       alert(error.message)
     }
   }
-}

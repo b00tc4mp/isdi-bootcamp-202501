@@ -1,6 +1,5 @@
-class Login extends Component {
-    constructor() {
-      super ('div')
+function Login() {
+    Component.call(this, "div");
 
     this.container.style.display = "flex";
     this.container.style.flexDirection = "column";
@@ -9,13 +8,13 @@ class Login extends Component {
     this.container.style.height = "100vh"; // Ocupa toda la pantalla
     this.container.style.backgroundColor = "gray"; // Fondo gris
   
-    const logo = new Heading(1);
+    var logo = new Heading(1);
     logo.setText("Login");
     this.add(logo);
   
     //form
 
-    const form = new Form();
+    var form = new Form();
     form.container.style.display = "flex";
     form.container.style.flexDirection = "column";
     form.container.style.gap = "15px";
@@ -23,8 +22,8 @@ class Login extends Component {
     form.addSubmitListener(function (event) {
         event.preventDefault();
 
-        const username = usernameInput.getValue();
-        const password = passwordInput.getValue();
+        var username = usernameInput.getValue();
+        var password = passwordInput.getValue();
   
         try {
             logic.loginUser(username, password)
@@ -42,29 +41,29 @@ class Login extends Component {
   
     //username
   
-    const usernameLabel = new Label();
+    var usernameLabel = new Label();
     usernameLabel.setText("Username");
     form.add(usernameLabel);
   
-    const usernameInput = new Input();
+    var usernameInput = new Input();
     usernameInput.container.style.width = "200px";
     usernameInput.setType("text");
     form.add(usernameInput);
   
     //password
   
-    const passwordLabel = new Label();
+    var passwordLabel = new Label();
     passwordLabel.setText("Password");
     form.add(passwordLabel);
   
-    const passwordInput = new Input();
+    var passwordInput = new Input();
     passwordInput.container.style.width = "200px";
     passwordInput.setType("password");
     form.add(passwordInput);
   
     // submit to LOGIN
   
-    const submitButton = new Button();
+    var submitButton = new Button();
     submitButton.setText("Login");
     submitButton.container.style.width = "200px";
     submitButton.setType("submit");
@@ -72,7 +71,7 @@ class Login extends Component {
   
     // anchor to Register
   
-    const registerAnchor = new Anchor()
+    var registerAnchor = new Anchor()
     registerAnchor.setText("Register")
     registerAnchor.addClickListener(function() {
       form.clear()
@@ -80,13 +79,15 @@ class Login extends Component {
       this.registerClickListener()
     }.bind(this))
     this.add(registerAnchor)
-    }
+  }
+  
+  Login.prototype = Object.create(Component.prototype);
+  Login.prototype.constructor = Login;
 
-    addRegisterClickListener(listener) {
-      this.registerClickListener = listener
-    }
+  Login.prototype.addRegisterClickListener = function(listener) {
+    this.registerClickListener = listener
+  }
 
-    addLoginSubmitListener(listener) {
-      this.loginSubmitListener = listener
-    }
-}
+  Login.prototype.addLoginSubmitListener = function(listener) {
+    this.loginSubmitListener = listener
+  }

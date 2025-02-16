@@ -1,4 +1,4 @@
-const logic = {
+var logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
         EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
@@ -7,24 +7,24 @@ const logic = {
 
     validate: {
         string: function(string, explain) {
-            if(typeof string !== 'string') throw new TypeError(`invalid ${explain} type`)
+            if(typeof string !== 'string') throw new TypeError('invalid ' + explain + ' type')
 
         },
         text: function(text, explain) {
             this.string(text, explain)
             if (logic.constant.EMPTY_OR_BLANK_REGEX.test(text))
-            throw new SyntaxError(`invalid ${explain} syntax`)
+            throw new SyntaxError('invalid ' + explain + ' syntax')
         },
         email: function (email, explain) {
             this.string(email, explain)
-            if(!logic.constant.EMAIL_REGEX.test(email)) throw new SyntaxError(`invalid ${explain} syntax`)
+            if(!logic.constant.EMAIL_REGEX.test(email)) throw new SyntaxError('invalid ' + explain + ' syntax')
             this.maxLength(email, 30, explain)
         },
         maxLength: function (value, maxLength, explain) {
-            if (value.length > maxLength) throw new RangeError(`invalid ${explain} maxLength`)
+            if (value.length > maxLength) throw new RangeError('invalid ' + explain + ' maxLength')
         },
         minLength: function (value, minLength, explain) {
-            if (value.length < minLength) throw new RangeError(`invalid ${explain} minLength`)
+            if (value.length < minLength) throw new RangeError('invalid ' + explain + ' minLength')
         },
         username: function (username, explain) {
             this.text(username, explain)
@@ -38,13 +38,12 @@ const logic = {
         },
         url: function (url, explain) {
             this.string(url, explain)
-            if (!logic.constant.URL_REGEX.test(url)) throw new SyntaxError(`invalid ${explain} syntax`)
+            if (!logic.constant.URL_REGEX.test(url)) throw new SyntaxError('invalid ' + explain + ' syntax')
         }
     },
 
     registerUser: function (name, email, username, password) {
         this.validate.text(name, 'name')
-        this.validate.minLength(name, 1, 'name')
         this.validate.maxLength(name, 20, 'name')
         this.validate.email(email, 'email')
         this.validate.username(username, 'username')
@@ -52,16 +51,16 @@ const logic = {
 
         let found
 
-        for (let i = 0; i < data.users.length && !found; i++) {
-            const user = data.users[i]
+        for (var i = 0; i < data.users.length && !found; i++) {
+            var user = data.users[i]
 
             if (user.email === email || user.username === username)
                 found = user
         }
 
-        if (found) throw new DuplicityError('user already exists')
+        if (found) throw new Error('user already exists')
         
-        const user = {
+        var user = {
             id: data.uuid(),
             name: name,
             email: email,
@@ -78,16 +77,16 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        let found
+        var found
 
-        for (let i = 0; i < data.users.length && !found; i++) {
-            const user = data.users[i]
+        for (var i = 0; i < data.users.length && !found; i++) {
+            var user = data.users[i]
 
             if(user.username === username)
                 found = user
         }
 
-        if (!found || found.password !== password) throw new CredentialsError('wrong credentials')
+        if (!found || found.password !== password) throw new Error('wrong credentials')
         
         data.userId = found.id
     },
@@ -97,16 +96,16 @@ const logic = {
     },
 
     getUserName: function() {
-        let found
+        var found
 
-        for (let i = 0; i < data.users.length && !found; i++){
-            const user = data.users[i]
+        for (var i = 0; i < data.users.length && !found; i++){
+            var user = data.users[i]
 
             if (user.id === data.userId)
                 found = user
         }
 
-        if(!found) throw new NotFoundError('user not found')
+        if(!found) throw new Error('user not found')
 
         return found.name
     },
@@ -117,11 +116,9 @@ const logic = {
 
     createPost: function(image, text) {
         this.validate.url(image)
-        this.validate.maxLength(1000)
         this.validate.text(text)
-        this.validate.maxLength(500)
 
-        const post = {
+        var post = {
             id: data.uuid(),
             author: data.userId,
             image: image,

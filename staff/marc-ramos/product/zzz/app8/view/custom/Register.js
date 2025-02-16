@@ -1,8 +1,8 @@
 //REGISTER
-class Register extends Component {
-    constructor() {
-      super('div')
-      
+
+function Register() {
+    Component.call(this, "div");
+
     this.container.style.display = "flex";
     this.container.style.flexDirection = "column";
     this.container.style.justifyContent = "center";
@@ -10,13 +10,13 @@ class Register extends Component {
     this.container.style.height = "100vh"; // Ocupa toda la pantalla
     this.container.style.backgroundColor = "gray"; // Fondo gris
 
-    const logo = new Heading(1);
+    var logo = new Heading(1);
     logo.setText("Register");
     this.add(logo);
   
     //form
   
-    const form = new Form();
+    var form = new Form();
     form.container.style.display = "flex";
     form.container.style.flexDirection = "column";
     form.container.style.gap = "15px";
@@ -26,10 +26,10 @@ class Register extends Component {
   
         console.log("register submit");
   
-        const name = nameInput.getValue();
-        const email = emailInput.getValue();
-        const username = usernameInput.getValue();
-        const password = passwordInput.getValue();
+        var name = nameInput.getValue();
+        var email = emailInput.getValue();
+        var username = usernameInput.getValue();
+        var password = passwordInput.getValue();
 
         try {
           logic.registerUser(name, email, username, password)
@@ -47,50 +47,50 @@ class Register extends Component {
   
     //name
   
-    const nameLabel = new Label();
+    var nameLabel = new Label();
     nameLabel.setText("Name");
     form.add(nameLabel);
   
-    const nameInput = new Input();
+    var nameInput = new Input();
     nameInput.container.style.width = "200px";
     form.add(nameInput);
   
     //email
   
-    const emailLabel = new Label();
+    var emailLabel = new Label();
     emailLabel.setText("E-mail");
     form.add(emailLabel);
   
-    const emailInput = new Input();
+    var emailInput = new Input();
     emailInput.container.style.width = "200px";
     emailInput.setType("email");
     form.add(emailInput);
   
     //username
   
-    const usernameLabel = new Label();
+    var usernameLabel = new Label();
     usernameLabel.setText("Username");
     form.add(usernameLabel);
   
-    const usernameInput = new Input();
+    var usernameInput = new Input();
     usernameInput.container.style.width = "200px";
     usernameInput.setType("text");
     form.add(usernameInput);
   
     //password
   
-    const passwordLabel = new Label();
+    var passwordLabel = new Label();
     passwordLabel.setText("Password");
     form.add(passwordLabel);
   
-    const passwordInput = new Input();
+    var passwordInput = new Input();
     passwordInput.container.style.width = "200px";
     passwordInput.setType("password");
     form.add(passwordInput);
   
     //submit
   
-    const submitButton = new Button();
+    var submitButton = new Button();
     submitButton.container.style.width = "200px";
     submitButton.setText("Register");
     submitButton.setType("submit");
@@ -98,21 +98,21 @@ class Register extends Component {
   
     //login button
   
-    const loginAnchor = new Anchor();
+    var loginAnchor = new Anchor();
     loginAnchor.setText("Login");
-    loginAnchor.addClickListener(function() {
-        form.clear()
+    
+    this.loginAnchor = loginAnchor
 
-        this.loginClickListener()
-    }.bind(this))
     this.add(loginAnchor)
   }
+  
+  Register.prototype = Object.create(Component.prototype);
+  Register.prototype.constructor = Register;
 
-  addLoginClickListener(listener) {
-    this.loginClickListener = listener
+  Register.prototype.addLoginSubmit = function(listener) {
+    this.registerSubmitListener = listener
   }
 
-  addLoginSubmit(listener) {
-    this.loginClickListener = listener
+  Register.prototype.addLoginClickListener = function(listener) {
+    this.loginAnchor.addClickListener(listener)
   }
-}

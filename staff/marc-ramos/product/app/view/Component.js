@@ -1,20 +1,21 @@
-function Component(tagName) {
-    this.container = document.createElement(tagName);
-  }
+class Component {
+    constructor(tagName) {
+        this.container = document.createElement(tagName)
+    }
+    add(child) {
+          this.container.appendChild(child.container)
+    }    
+    remove(child) {
+          this.container.removeChild(child.container)
+    }
+        
+    addClickListener(listener) {
+          this.container.addEventListener("click", listener)
+    }
+        
+    addSubmitListener(listener) {
+          this.container.addSubmitListener('submit',listener)
+    }
+}
   
-  Component.prototype.add = function (child) {
-    this.container.appendChild(child.container)
-  };
   
-  Component.prototype.remove = function (child) {
-    this.container.removeChild(child.container);
-  };
-  
-  Component.prototype.addClickListener = function (listener) {
-    //creamos listener
-    this.container.addEventListener("click", listener);
-  };
-  
-  Component.prototype.addSubmitListener = function(listener){
-    this.container.addSubmitListener('submit',listener)
-  }
