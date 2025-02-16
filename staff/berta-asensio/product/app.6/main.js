@@ -6,6 +6,7 @@ body.container = document.body
 body.container.style.backgroundColor = '#FFD033'
 body.container.style.fontFamily = 'nunito'
 
+
 //LANDING
 var landing = new Landing
 
@@ -41,8 +42,23 @@ register.addReturnClickListener(function() {
 var login = new Login()
 
 login.addLoginSubmitListener(function() {
-    body.remove(login)
-    body.add(home)
+    try {
+        var name = logic.getUserName()
+
+        home.setWelcomeText('Hello ' + name + '!')
+
+        var posts = logic.getPosts()
+        
+        home.setPosts(posts)
+        
+        body.remove(login)
+        body.add(home)
+        
+    } catch(error) {
+        console.error(error)
+
+        alert(error.message)
+    }
 })
 
 login.addReturnClickListener(function() {

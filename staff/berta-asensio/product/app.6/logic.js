@@ -17,6 +17,11 @@ var logic = {
         minLength: function (value, minLength, explain) {
             if(value.length < minLength) throw new RangeError ('invalid ' + explain + ' minLength')
         },
+        name: function (name, explain) {
+            this.text(name, explain)
+            this.minLength(name, 2, explain)
+            this.maxLength(name, 20, explain)
+        },
         username: function (username, explain) {
             this.text(username, explain)
             this.minLength(username, 3, explain)
@@ -35,8 +40,7 @@ var logic = {
     },
     registerUser: function (name, username, password, email) {
     
-        this.validate.text(name, 'name')
-        this.validate.maxLength(name, 20, 'name')
+        this.validate.name(name, 'name')
   
         this.validate.username(username, 'username')
 
@@ -90,5 +94,24 @@ var logic = {
 
     logoutUser: function() {
         data.userId = null
+    },
+
+    getUserName: function() {
+        var found 
+            
+        for (var i = 0; i < data.users.length && !found; i++) {
+            var user = data.users[i]
+
+            if(user.id === data.userId)
+                found = user
+        }
+
+        if(!found) throw new Error ('user not found')
+
+        return found.name
+    },
+
+    getPosts: function () {
+        return data.posts 
     }
 }

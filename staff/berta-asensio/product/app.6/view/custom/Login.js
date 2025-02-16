@@ -66,6 +66,7 @@ function Login() {
     form.add(br)
 
     var passwordInput = new Input()
+    passwordInput.setType('password')
     form.add(passwordInput)
 
     var br = new Br()
