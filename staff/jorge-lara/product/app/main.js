@@ -2,7 +2,7 @@
 const body = new Body();
 document.body = body.container;
 
-let landing = new Landing();
+const landing = new Landing();
 body.add(landing);
 
 landing.addRegisterClickListener(function () {
@@ -15,8 +15,7 @@ landing.addLoginClickListener(function () {
     body.add(login);
 });
 
-let register = new Register();
-
+const register = new Register();
 register.addLoginClickListener(function () {
     body.remove(register);
     body.add(login);
@@ -27,8 +26,7 @@ register.addRegisterSubmitListener(function () {
     body.add(login);
 });
 
-let login = new Login();
-
+const login = new Login();
 login.addRegisterClickListener(function () {
     body.remove(login);
     body.add(register);
@@ -42,7 +40,7 @@ login.addLoginSubmitListener(function () {
 
         const posts = logic.getPosts()
 
-        home.setPosts(posts);
+        home.loadPosts(posts);
 
         body.remove(login);
         body.add(home);
@@ -75,6 +73,6 @@ createPost.addCreatePostSubmitListener(function (){
     body.remove(createPost);
     const posts = logic.getPosts();
 
-    home.setPosts(posts);
+    home.loadPosts(posts);
     body.add(home);
 })

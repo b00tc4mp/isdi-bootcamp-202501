@@ -1,88 +1,86 @@
-function Home() {
-    Component.call(this, 'div');
+class Home extends Component {
+    constructor() {
+        super('div');
 
-    let logoHome = new Heading(1);
-    logoHome.setText('Home');
-    this.add(logoHome);
+        const logoHome = new Heading(1);
+        logoHome.setText('Home');
+        this.add(logoHome);
 
-    let userLogged = new Heading(2);
-    this.add(userLogged);
-    this.userLogged = userLogged;
+        const userLogged = new Heading(2);
+        this.add(userLogged);
+        this.userLogged = userLogged;
 
-    let signOutButton = new Button();
-    signOutButton.setText('Sign out');
-    this.add(signOutButton);
+        const signOutButton = new Button();
+        signOutButton.setText('Sign out');
+        
+        signOutButton.addClickListener(function () {
+            try {
+                logic.logoutUser();
 
+                this.logoutClickListener();
+            } catch (error) {
+                console.error(error);
 
-    signOutButton.addClickListener(function () {
-        try {
-            logic.logoutUser();
+                alert(error.message);
+            }
+        }.bind(this))
+        this.add(signOutButton);
 
-            this.logoutClickListener();
-        } catch (error) {
-            console.error(error);
+        const addPostButton = new Button();
+        addPostButton.setText('+');
+        this.add(addPostButton);
 
-            alert(error.message);
+        addPostButton.addClickListener(function () {
+            try {
+                this.postClickListener();
+            } catch (error) {
+                console.error(error);
+
+                alert(error.message);
+            }
+        }.bind(this))
+
+        const postsSection = new Section();
+        postsSection.setOrientation('flex', 'column');
+        postsSection.container.style.width = '250px';
+        this.add(postsSection);
+        this.postsSection = postsSection;
+
+    }
+    addSignoutClickListener(listener) {
+        this.logoutClickListener = listener;
+    }
+    
+    addPostClickListener(listener) {
+        this.postClickListener = listener;
+    }
+    
+    setUserLoggedText(text) {
+        this.userLogged.setText(text);
+    }
+    
+    loadPosts(posts) {
+        this.postsSection.container.innerHTML = '';
+        for (const post of posts.slice().reverse()) {
+            const postArticle = new Article();
+    
+            const authorHeading = new Heading(3);
+            authorHeading.setText(post.author);
+            postArticle.add(authorHeading);
+    
+            const postImage = new Img();
+            postImage.setUrl(post.image);
+            postArticle.add(postImage);
+    
+            const postText = new Paragraph();
+            postText.setText(post.text);
+            postArticle.add(postText);
+    
+            const postDate = new Time();
+            postDate.setText(post.createdAt.toISOString());
+            postArticle.add(postDate);
+    
+            this.postsSection.add(postArticle);
         }
-    }.bind(this))
-
-    let addPostButton = new Button();
-    addPostButton.setText('+');
-    this.add(addPostButton);
-
-    addPostButton.addClickListener(function () {
-        try {
-            this.postClickListener();
-        } catch (error) {
-            console.error(error);
-
-            alert(error.message);
-        }
-    }.bind(this))
-
-    let postsSection = new Section();
-    postsSection.setOrientation('flex', 'column');
-    postsSection.container.style.width = '250px';
-    this.add(postsSection);
-    this.postsSection = postsSection;
-}
-
-Home.prototype = Object.create(Component.prototype);
-Home.prototype.constructor = Home;
-
-Home.prototype.addSignoutClickListener = function (listener) {
-    this.logoutClickListener = listener;
-}
-
-Home.prototype.addPostClickListener = function (listener) {
-    this.postClickListener = listener;
-}
-
-Home.prototype.setUserLoggedText = function (text) {
-    this.userLogged.setText(text);
-}
-
-Home.prototype.setPosts = function (posts) {
-    this.postsSection.container.innerHTML ='';
-    for (const post of posts) {
-        let postArticle = new Article();
-
-        let authorHeading = new Heading(3);
-        authorHeading.setText(post.author);
-        postArticle.add(authorHeading);
-
-        let postImage = new Image();
-        postImage.setUrl(post.image);
-        postArticle.add(postImage);
-
-        let postText = new Paragraph();
-        postText.setText(post.text);
-        postArticle.add(postText);
-
-        let postDate = new Time();
-        postDate.setText(post.createdAt.toISOString());
-        postArticle.add(postDate);
-
-        this.postsSection.add(postArticle);
     }
 }

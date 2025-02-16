@@ -1,13 +1,13 @@
-function Button() {
-    Component.call(this, 'button');
-}
-Button.prototype = Object.create(Component.prototype)
-Button.prototype.container = Button;
+class Button extends Component {
+    constructor() {
+        super('button')
+    }
+    
+    setText = function (text) {
+        this.container.textContent = text;
+    }
 
-Button.prototype.setText = function (text) {
-    this.container.textContent = text;
-};
-
-Button.prototype.setType = function (type) {
-    this.container.type = type
-}
+    setType = function (type) {
+        this.container.type = type
+    }
+}   

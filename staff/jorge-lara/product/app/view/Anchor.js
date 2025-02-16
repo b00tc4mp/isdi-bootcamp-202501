@@ -1,12 +1,12 @@
-function Anchor() {
-    Component.call(this, 'a');
-}
-Anchor.prototype = Object.create(Component.prototype);
-Anchor.prototype.constructor = Anchor;
+class Anchor extends Component {
+    constructor(){
+        super('a');
+    }
 
-Anchor.prototype.setText = function (text) {
+    setText( text) {
     this.container.textContent = text;
-};
-Anchor.prototype.setCursor = function (cursor) {
+    }
+    setCursor(cursor) {
     this.container.style.cursor = cursor;
+    }
 }

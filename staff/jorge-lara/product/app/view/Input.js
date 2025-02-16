@@ -1,9 +1,13 @@
-function Input() {
-    Component.call(this, 'input')
-}
-Input.prototype = Object.create(Component.prototype);
-Input.prototype.container = Input;
+class Input extends Component {
+    constructor() {
+        super('input');
+    }
 
-Input.prototype.getValue = function () {
-    return this.container.value
+    getValue() {
+        return this.container.value
+    }
+
+    setType(type){
+        this.container.type = type;
+    }
 }

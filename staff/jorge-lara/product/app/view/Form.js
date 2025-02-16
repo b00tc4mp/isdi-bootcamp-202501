@@ -1,14 +1,18 @@
-function Form() {
-    Component.call(this, 'form');
-}
-Form.prototype = Object.create(Component.prototype);
-Form.prototype.constructor = Form;
+class Form extends Component {
+    constructor() {
+        super('form')
+    }
 
-Form.prototype.setOrientation = function (type, orientation) {
-    this.container.style.display = type;
-    this.container.style.flexDirection = orientation
-}
+    setOrientation(type, orientation) {
+        this.container.style.display = type;
+        this.container.style.flexDirection = orientation
+    }
 
-Form.prototype.clear  =function (){
-    this.container.reset();
+    clear() {
+        this.container.reset();
+    }
+
+    addSubmitListener(listener) {
+        this.container.addEventListener('submit', listener)
+    }
 }

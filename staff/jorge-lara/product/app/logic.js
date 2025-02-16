@@ -1,51 +1,50 @@
-var logic = {
+const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
         EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        URL_REGEX: /(http[s]?:\/\/)?([^\/\s]+\/)(.*)/,
-        //PATH_REGEX : /^(\/|[a-zA-Z]:\\)[^:*?"<>|]+\/([^\/:*?"<>|]+\.[a-zA-Z0-9]+)$/
+        URL_REGEX: /(http[s]?:\/\/)?([^\/\s]+\/)(.*)/
     },
 
     validate: {
-        string: function (string, explain) {
+        string(string, explain) {
             if (typeof string !== 'string') {
                 throw new TypeError(`invalid ${explain} type`);
             }
         },
-        text: function (text, explain) {
+        text(text, explain) {
             this.string(text, explain);
             if (logic.constant.EMPTY_OR_BLANK_REGEX.test(text)) {
                 throw new SyntaxError(`invalid ${explain} syntax`);
             }
         },
-        email: function (email, explain) {
+        email(email, explain) {
             this.string(email, explain);
             if (!logic.constant.EMAIL_REGEX.test(email)) {
                 throw new SyntaxError(`invalid ${explain} syntax`);
             }
             this.maxLength(email, 30, explain);
         },
-        maxLength: function (value, maxLength, explain) {
+        maxLength(value, maxLength, explain) {
             if (value.length > maxLength) {
                 throw new RangeError(`invalid ${explain} maxLength`);
             }
         },
-        minLength: function (value, minLength, explain) {
+        minLength(value, minLength, explain) {
             if (value.length < minLength) {
                 throw new RangeError(`invalid ${explain} minLength`);
             }
         },
-        username: function (username, explain) {
+        username(username, explain) {
             this.text(username, explain);
             this.minLength(username, 3, explain);
             this.maxLength(username, 20, explain);
         },
-        password: function (password, explain) {
+        password(password, explain) {
             this.text(password, explain);
             this.minLength(password, 8, explain);
             this.maxLength(password, 20, explain);
         },
-        url: function (url, explain) {
+        url(url, explain) {
             this.string(url, explain);
             if (!logic.constant.URL_REGEX.test(url)) {
                 throw new SyntaxError(`invalid ${explain} syntax`);
@@ -53,7 +52,7 @@ var logic = {
         }
     },
 
-    registerUser: function (name, email, username, password) {
+    registerUser(name, email, username, password) {
         this.validate.text(name, 'name');
         this.validate.maxLength(name, 20, 'name');
         this.validate.email(email, 'email');
@@ -72,7 +71,7 @@ var logic = {
             throw new Error('user already exists');
         }
 
-        var user = {
+        const user = {
             id: data.uuid(),
             name: name,
             email: email,
@@ -85,7 +84,7 @@ var logic = {
         data.users[data.users.length] = user;
     },
 
-    loginUser: function (username, password) {
+    loginUser(username, password) {
         this.validate.username(username, 'username');
         this.validate.password(password, 'password');
 
@@ -105,27 +104,27 @@ var logic = {
         data.userlogged = found.username;
     },
 
-    logoutUser: function () {
+    logoutUser() {
         data.userId = null;
         data.userlogged = null;
     },
 
-    getLoggedUser: function () {
+    getLoggedUser() {
         return data.userlogged;
     },
 
-    getPosts: function () {
+    getPosts() {
         return data.posts;
     },
 
-    addPost: function (text, image) {
+    addPost(text, image) {
         this.validate.text(text, 'title');
         this.validate.url(image, 'url');
 
         let post = {
             id: data.uuid(),
             author: data.userlogged,
-            image : image,
+            image: image,
             text: text,
             createdAt: new Date(),
             modifiedAt: null

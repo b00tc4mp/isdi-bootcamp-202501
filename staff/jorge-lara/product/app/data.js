@@ -1,5 +1,5 @@
-let data = {
-    uuid: function () {
+const data = {
+    uuid () {
         //return crypto.randomUUID()
         return (Math.random() * 10 ** 17).toString(36);
     },

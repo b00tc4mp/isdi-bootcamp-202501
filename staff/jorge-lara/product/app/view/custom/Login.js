@@ -1,81 +1,81 @@
-function Login() {
-    Component.call(this, 'div');
+class Login extends Component {
+    constructor() {
+        super('div');
 
-    let logo = new Heading(1);
-    logo.setText('Login');
-    this.add(logo);
+        const logo = new Heading(1);
+        logo.setText('Login');
+        this.add(logo);
 
-    let loginForm = new Form();
-    loginForm.setOrientation('flex', 'column');
-    loginForm.container.style.width = '250px';
+        const loginForm = new Form();
+        loginForm.setOrientation('flex', 'column');
+        loginForm.container.style.width = '250px';
 
-    loginForm.addSubmitListener(function (e) {
-        e.preventDefault();
+        loginForm.addSubmitListener(function (e) {
+            e.preventDefault();
 
-        let username = usernameInput.getValue();
-        let password = passwordInput.getValue();
+            const username = usernameInput.getValue();
+            const password = passwordInput.getValue();
 
-        try {
-            logic.loginUser(username, password);
+            try {
+                logic.loginUser(username, password);
 
+                loginForm.clear();
+
+                this.loginSubmitListener();
+            } catch (error) {
+                console.error(error);
+
+                alert(error.message);
+            }
+        }.bind(this))
+        this.add(loginForm);
+
+        //username
+        const usernameLabel = new Label();
+        usernameLabel.setText('Username');
+        loginForm.add(usernameLabel);
+
+        const usernameInput = new Input();
+        loginForm.add(usernameInput);
+
+        //password
+        const passwordLabel = new Label();
+        passwordLabel.setText('Password');
+        loginForm.add(passwordLabel);
+
+        const passwordInput = new Input();
+        passwordInput.setType('password');
+        loginForm.add(passwordInput);
+
+        //span buttons
+        const spanButtons = new Span();
+        loginForm.add(spanButtons);
+
+        //Register
+        const registerAnchor = new Anchor();
+        registerAnchor.setText('Register');
+        registerAnchor.setCursor('pointer');
+
+        registerAnchor.addClickListener(function () {
             loginForm.clear();
 
-            this.loginSubmitListener();
-        } catch (error) {
-            console.error(error);
+            this.registerClickListener();
+        }.bind(this))
+        spanButtons.add(registerAnchor);
 
-            alert(error.message);
-        }
-    }.bind(this))
-    this.add(loginForm);
+        //Login
+        const loginButton = new Button();
+        loginButton.setText('Login');
+        loginButton.setType('submit');
+        loginButton.container.style.marginLeft = '50px';
+        spanButtons.add(loginButton);
+    }
 
-    //username
-    let usernameLabel = new Label();
-    usernameLabel.setText('Username');
-    loginForm.add(usernameLabel);
+    addRegisterClickListener(listener) {
+        this.registerClickListener = listener;
+    }
 
-    let usernameInput = new Input();
-    loginForm.add(usernameInput);
-
-    //password
-    let passwordLabel = new Label();
-    passwordLabel.setText('Password');
-    loginForm.add(passwordLabel);
-
-    let passwordInput = new Input();
-    loginForm.add(passwordInput);
-
-    //span buttons
-    let spanButtons = new Span();
-    loginForm.add(spanButtons);
-
-    //Register
-    let registerAnchor = new Anchor();
-    registerAnchor.setText('Register');
-    registerAnchor.setCursor('pointer');
-
-    registerAnchor.addClickListener(function () {
-        loginForm.clear();
-
-        this.registerClickListener();
-    }.bind(this))
-    spanButtons.add(registerAnchor);
-
-    //Login
-    let loginButton = new Button();
-    loginButton.setText('Login');
-    loginButton.setType('submit');
-    loginButton.container.style.marginLeft = '50px';
-    spanButtons.add(loginButton);
-
-}
-Login.prototype = Object.create(Component.prototype);
-Login.prototype.constructor = Login;
-
-Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerClickListener = listener;
-}
-
-Login.prototype.addLoginSubmitListener = function (listener) {
-    this.loginSubmitListener = listener;
+    addLoginSubmitListener(listener) {
+        this.loginSubmitListener = listener;
+    }
 }
