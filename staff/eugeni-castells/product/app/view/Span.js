@@ -1,6 +1,6 @@
-function Span(text) {
-  TextComponent.call(this, "span", text);
+class Span extends TextComponent {
+  constructor(text) {
+    super("span");
+    this.container.textContent = text;
+  }
 }
-
-Span.prototype = Object.create(TextComponent.prototype);
-Span.prototype.constructor = Span;

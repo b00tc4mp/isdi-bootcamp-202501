@@ -1,11 +1,10 @@
-function Image(src) {
-  Component.call(this, "img");
-  this.container.src = src;
+class Image extends Component {
+  constructor(src) {
+    super("img");
+    this.container.src = src;
+  }
+
+  setImageURL = function (src) {
+    this.container.src = src;
+  };
 }
-
-Image.prototype = Object.create(Component.prototype);
-Image.prototype.constructor = Image;
-
-Image.prototype.setImageURL = function (src) {
-  this.container.src = src;
-};

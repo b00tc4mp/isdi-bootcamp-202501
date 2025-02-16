@@ -1,6 +1,5 @@
-function Section() {
-  Component.call(this, "div");
+class Section extends Component {
+  constructor() {
+    super("div");
+  }
 }
-
-Section.prototype = Object.create(Component.prototype);
-Section.prototype.constructor = Section;

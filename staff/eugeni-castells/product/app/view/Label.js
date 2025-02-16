@@ -1,6 +1,5 @@
-function Label(text) {
-  TextComponent.call(this, "label", text);
+class Label extends TextComponent {
+  constructor(text) {
+    super("label", text);
+  }
 }
-
-Label.prototype = Object.create(TextComponent.prototype);
-Label.prototype.constructor = Label;

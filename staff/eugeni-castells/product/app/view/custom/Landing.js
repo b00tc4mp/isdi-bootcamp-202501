@@ -1,43 +1,39 @@
-function Landing() {
-  Component.call(this, "div");
+class Landing extends Component {
+  constructor() {
+    super("div");
+    this.setStyle(style.screenStyle);
 
-  this.setStyle(style.screenStyle);
+    const logo = new Header("1", "Logo");
+    this.add(logo);
 
-  var logo = new Header("1", "Logo");
-  this.add(logo);
+    //const register or login div
+    const linkDiv = new Div();
+    this.add(linkDiv);
 
-  //var register or login div
-  var linkDiv = new Div();
-  this.add(linkDiv);
+    //const link Register
+    const registerLink = new Anchor("Register");
+    registerLink.setStyle(style.links);
+    this.registerLink = registerLink;
+    linkDiv.add(registerLink);
 
-  //var link Register
-  var registerLink = new Anchor("Register");
-  registerLink.setStyle(style.links);
-  this.registerLink = registerLink;
-  linkDiv.add(registerLink);
+    //or text
+    const orText = new Span(" or ");
+    orText.setStyle(style.landingSpan);
+    linkDiv.add(orText);
 
-  //or text
-  var orText = new Span(" or ");
-  orText.setStyle(style.landingSpan);
-  linkDiv.add(orText);
+    //const link Login
+    const loginLink = new Anchor("Login");
+    loginLink.setStyle(style.links);
+    this.loginLink = loginLink;
 
-  //var link Login
-  var loginLink = new Anchor("Login");
-  loginLink.setStyle(style.links);
-  this.loginLink = loginLink;
+    linkDiv.add(loginLink);
+  }
+  addRegisterClickListener = function (listener) {
+    this.registerLink.addClickListener(listener);
+  };
 
-  linkDiv.add(loginLink);
+  //Hem d'afegir un addLoginClickListener per tal de desacoblar body i login (que està declarada a main) de landing.
+  addClickLoginListener = function (listener) {
+    this.loginLink.addClickListener(listener);
+  };
 }
-
-Landing.prototype = Object.create(Component.prototype);
-Landing.prototype.constructor = Landing;
-
-//Hem d'afegir una funció al prototip de landing que gestioni el click del botó register de landing, per desacoblar body i register de landing i que el component landing sigui agnòstic de tot el que no estigui declarat a dins seu.
-Landing.prototype.addRegisterClickListener = function (listener) {
-  this.registerLink.addClickListener(listener);
-};
-
-//Hem d'afegir un addLoginClickListener per tal de desacoblar body i login (que està declarada a main) de landing.
-Landing.prototype.addClickLoginListener = function (listener) {
-  this.loginLink.addClickListener(listener);
-};

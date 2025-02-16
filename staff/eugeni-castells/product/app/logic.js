@@ -1,4 +1,4 @@
-var logic = {
+const logic = {
   constant: {
     EMPTY_OR_BLANK_REGEX: /^\s*$/,
     EMAIL_REGEX:
@@ -46,9 +46,9 @@ var logic = {
     this.validate.username(userInfo.username, "username");
     this.validate.password(userInfo.password, "password");
 
-    var userFound;
+    let userFound;
 
-    for (var i = 0; i < data.users.length && !userFound; i++) {
+    for (let i = 0; i < data.users.length && !userFound; i++) {
       if (
         userInfo.username === data.users[i].username ||
         userInfo.email === data.users[i].email
@@ -59,7 +59,7 @@ var logic = {
 
     if (userFound) throw new Error("user already exists");
 
-    var user = {
+    const user = {
       id: data.uuid(),
       name: userInfo.name,
       email: userInfo.email,
@@ -77,15 +77,15 @@ var logic = {
     this.validate.username(username, "username");
     this.validate.password(password, "password");
 
-    var found;
+    let found;
 
-    for (var i = 0; i < data.users.length && !found; i++) {
-      var user = data.users[i];
+    for (let i = 0; i < data.users.length && !found; i++) {
+      const user = data.users[i];
 
       if (user.username === username) found = user;
     }
 
-    if (!found || user.password !== password)
+    if (!found || found.password !== password)
       throw new Error("wrong credentials");
 
     data.userId = found.id;
@@ -94,27 +94,14 @@ var logic = {
     data.userId = null;
   },
   getPosts: function () {
-    return data.posts;
-  },
-  getUserName: function () {
-    for (var i = 0; i < data.users.length && !found; i++) {
-      var user = data.users[i];
-
-      var found;
-
-      if (user.id === data.userId) found = user;
-    }
-
-    if (!found) throw new Error("user not found");
-
-    return found.name;
+    return JSON.parse(localStorage.posts);
   },
   addPost: function (image, bio) {
     this.validate.text(image, "image URL");
     this.validate.minLength(image, 10, "image URL");
     this.validate.text(bio, "bio");
 
-    var post = {
+    const post = {
       id: data.uuid(),
       author: data.userId,
       image: image,
@@ -125,5 +112,23 @@ var logic = {
     data.posts[data.posts.length] = post;
 
     localStorage.setItem("posts", JSON.stringify(data.posts));
+  },
+  getOnlineUserInfo() {
+    let found;
+
+    for (let i = 0; i < data.users.length && !found; i++) {
+      const user = data.users[i];
+
+      if (user.id === data.userId) {
+        found = user;
+      }
+    }
+
+    if (!found) throw new Error("User not found");
+    else return found;
+  },
+  getOnlineUserName() {
+    const user = this.getOnlineUserInfo();
+    return user.name;
   },
 };

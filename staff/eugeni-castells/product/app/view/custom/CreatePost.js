@@ -1,56 +1,54 @@
-function CreatePost() {
-  Component.call(this, "div");
-  this.setStyle(style.screenStyle);
+class CreatePost extends Component {
+  constructor() {
+    super("div");
+    this.setStyle(style.screenStyle);
 
-  var createPostHeader = new Header(2, "What's the post like?");
+    const createPostHeader = new Header(2, "What's the post like?");
 
-  this.add(createPostHeader);
+    this.add(createPostHeader);
 
-  var form = new Form();
+    const form = new Form();
 
-  form.setStyle(style.formStyle);
+    form.setStyle(style.formStyle);
 
-  this.add(form);
+    this.add(form);
 
-  form.addSubmitListener(
-    function (event) {
-      event.preventDefault();
-      try {
-        postImage = imageInput.getValue();
+    form.addSubmitListener(
+      function (event) {
+        event.preventDefault();
+        try {
+          const postImage = imageInput.getValue();
 
-        postBio = postBio.getValue();
+          const bio = postBio.getValue();
 
-        logic.addPost(postImage, postBio);
+          logic.addPost(postImage, bio);
 
-        alert("Post created correctly!");
+          alert("Post created correctly!");
 
-        this.addSubmitListener();
-      } catch (error) {
-        console.error(error);
+          this.addSubmitListener();
+        } catch (error) {
+          console.error(error);
 
-        alert(error.message);
-      }
-    }.bind(this)
-  );
+          alert(error.message);
+        }
+      }.bind(this)
+    );
 
-  var imageInput = new Input("text");
-  imageInput.setPlaceholder("Image URL");
-  form.add(imageInput);
+    const imageInput = new Input("text");
+    imageInput.setPlaceholder("Image URL");
+    form.add(imageInput);
 
-  var postBio = new Input("text");
-  postBio.setPlaceholder("Post bio");
-  form.add(postBio);
+    const postBio = new Input("text");
+    postBio.setPlaceholder("Post bio");
+    form.add(postBio);
 
-  var submitButton = new Button("Create post");
-  submitButton.setType("submit");
-  form.add(submitButton);
+    const submitButton = new Button("Create post");
+    submitButton.setType("submit");
+    form.add(submitButton);
 
-  this.add(form);
+    this.add(form);
+  }
+  addCreatePostSubmitListener(listener) {
+    this.addSubmitListener = listener;
+  }
 }
-
-CreatePost.prototype = Object.create(Component.prototype);
-CreatePost.prototype.constructor = CreatePost;
-
-CreatePost.prototype.addCreatePostSubmitListener = function (listener) {
-  this.addSubmitListener = listener;
-};

@@ -1,20 +1,18 @@
-function Post(postInfo) {
-  Article.call(this);
+class Post extends Article {
+  constructor(postInfo) {
+    super();
+    const postHeading = new Header(3, postInfo.author);
 
-  var postHeading = new Header(3, postInfo.author);
+    this.add(postHeading);
 
-  this.add(postHeading);
+    const postImage = new Image(postInfo.image);
+    postImage.setStyle(style.postImage);
+    this.add(postImage);
 
-  var postImage = new Image(postInfo.image);
-  postImage.setStyle(style.postImage);
-  this.add(postImage);
+    const postText = new Paragraph(postInfo.text);
+    this.add(postText);
 
-  var postText = new Paragraph(postInfo.text);
-  this.add(postText);
-
-  var postTime = new Time(postInfo.createdAt);
-  this.add(postTime);
+    const postTime = new Time(postInfo.createdAt);
+    this.add(postTime);
+  }
 }
-
-Post.prototype = Object.create(Article.prototype);
-Post.prototype.constructor = Post;

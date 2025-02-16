@@ -1,58 +1,71 @@
-function Home() {
-  Component.call(this, "div");
-  this.setStyle(style.homeContainerStyle);
-  var logo = new Header("1", "Logo");
-  this.logo = logo;
+class Home extends Component {
+  constructor() {
+    super("div");
+    this.setStyle(style.homeContainerStyle);
+    const logo = new Header("1", "Logo");
+    this.logo = logo;
 
-  this.add(logo);
+    this.add(logo);
 
-  var logoutButton = new Button("Logout");
-  logoutButton.setStyle(style.logoutButton);
-  logoutButton.addClickListener(
-    function () {
-      logic.setOfflineUser();
-      this.logoutClickListener();
-    }.bind(this)
-  );
-  this.add(logoutButton);
+    const logoutButton = new Button("Logout");
+    logoutButton.setStyle(style.logoutButton);
+    logoutButton.addClickListener(
+      function () {
+        logic.setOfflineUser();
+        this.logoutClickListener();
+      }.bind(this)
+    );
+    this.add(logoutButton);
 
-  var welcomeTextHeader = new Header(2);
-  this.welcomeTextHeader = welcomeTextHeader;
-  this.add(welcomeTextHeader);
+    const welcomeTextHeader = new Header(2);
+    this.welcomeTextHeader = welcomeTextHeader;
+    this.add(welcomeTextHeader);
 
-  var postsSection = new Section();
-  this.postsSection = postsSection;
-  this.add(postsSection);
+    const postsSection = new Section();
+    this.postsSection = postsSection;
+    this.add(postsSection);
 
-  var createPostButton = new Button("+");
-  createPostButton.setStyle(style.createPostButton);
-  this.add(createPostButton);
-  this.createPostButton = createPostButton;
-}
+    const createPostButton = new Button("+");
+    createPostButton.setStyle(style.createPostButton);
+    createPostButton.addClickListener(
+      function () {
+        const createPost = new CreatePost();
 
-Home.prototype = Object.create(Component.prototype);
-Home.prototype.constructor = Home;
+        this.add(createPost);
+        this.remove(postsSection);
+        this.remove(createPostButton);
+        createPost.addCreatePostSubmitListener(
+          function () {
+            this.setPosts(data.posts);
+            this.remove(createPost);
+            this.add(postsSection);
+            this.add(createPostButton);
+          }.bind(this)
+        );
+      }.bind(this)
+    );
 
-Home.prototype.addLogoClickListener = function (listener) {
-  this.logo.addClickListener(listener);
-};
+    this.add(createPostButton);
 
-Home.prototype.addLogoutClickListener = function (listener) {
-  this.logoutClickListener = listener;
-};
-
-Home.prototype.setWelcomeText = function (text) {
-  this.welcomeTextHeader.setText(text);
-};
-
-Home.prototype.setPosts = function (posts) {
-  for (var i = 0; i < posts.length; i++) {
-    var post = new Post(posts[i]);
-
-    this.postsSection.add(post);
+    this.createPostButton = createPostButton;
   }
-};
+  addLogoClickListener(listener) {
+    this.logo.addClickListener(listener);
+  }
 
-Home.prototype.addCreatePostClickListener = function (listener) {
-  this.createPostButton.addClickListener(listener);
-};
+  addLogoutClickListener(listener) {
+    this.logoutClickListener = listener;
+  }
+
+  setWelcomeText(text) {
+    this.welcomeTextHeader.setText(text);
+  }
+
+  setPosts(posts) {
+    for (let i = 0; i < posts.length; i++) {
+      const post = new Post(posts[i]);
+
+      this.postsSection.add(post);
+    }
+  }
+}

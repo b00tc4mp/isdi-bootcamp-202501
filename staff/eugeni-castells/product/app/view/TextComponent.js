@@ -1,12 +1,9 @@
-function TextComponent(type, textContent) {
-  Component.call(this, type);
-
-  this.container.textContent = textContent;
+class TextComponent extends Component {
+  constructor(tag, text) {
+    super(tag);
+    this.container.textContent = text;
+  }
+  setText(text) {
+    this.container.textContent = text;
+  }
 }
-
-TextComponent.prototype = Object.create(Component.prototype);
-TextComponent.prototype.constructor = TextComponent;
-
-TextComponent.prototype.setText = function (text) {
-  this.container.textContent = text;
-};

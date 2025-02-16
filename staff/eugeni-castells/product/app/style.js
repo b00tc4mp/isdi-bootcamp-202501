@@ -1,6 +1,6 @@
 document.body.style.margin = "0";
 
-var style = {
+const style = {
   screenStyle: { height: "100vh", padding: "2rem" },
 
   formStyle: { display: "flex", flexDirection: "column", gap: "1rem" },

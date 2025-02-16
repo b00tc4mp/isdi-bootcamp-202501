@@ -9,7 +9,7 @@ function removeItemAddItem(itemToRemove, itemToAdd) {
 const body = new Body();
 body.container = document.body;
 
-var landing = new Landing();
+const landing = new Landing();
 
 landing.addRegisterClickListener(function () {
   removeItemAddItem(landing, register);
@@ -20,7 +20,7 @@ landing.addClickLoginListener(function () {
 });
 body.add(landing);
 
-var register = new Register();
+const register = new Register();
 
 register.addRegisterSubmitListener(function () {
   removeItemAddItem(register, login);
@@ -30,7 +30,7 @@ register.addLoginClickListener(function () {
   removeItemAddItem(register, login);
 });
 
-var login = new Login();
+const login = new Login();
 
 login.addRegisterClickListener(function () {
   removeItemAddItem(login, register);
@@ -38,7 +38,7 @@ login.addRegisterClickListener(function () {
 
 login.addLoginSubmitListener(function () {
   try {
-    const name = logic.getUserName();
+    const name = logic.getOnlineUserName();
 
     home.setWelcomeText("Hello, " + name + "!");
 
@@ -53,7 +53,7 @@ login.addLoginSubmitListener(function () {
   }
 });
 
-var home = new Home();
+const home = new Home();
 
 home.addLogoClickListener(function () {
   removeItemAddItem(home, landing);
@@ -63,12 +63,12 @@ home.addLogoutClickListener(function () {
   removeItemAddItem(home, login);
 });
 
-home.addCreatePostClickListener(function () {
-  removeItemAddItem(home, createPost);
-});
+// home.addCreatePostClickListener(function () {
+//   removeItemAddItem(home, createPost);
+// });
 
-var createPost = new CreatePost();
+// const createPost = new CreatePost();
 
-createPost.addCreatePostSubmitListener(function () {
-  removeItemAddItem(createPost, home);
-});
+// createPost.addCreatePostSubmitListener(function () {
+//   removeItemAddItem(createPost, home);
+// });
