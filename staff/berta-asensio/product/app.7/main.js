@@ -42,23 +42,11 @@ register.addReturnClickListener(function() {
 var login = new Login()
 
 login.addLoginSubmitListener(function() {
-    try {
-        var name = logic.getUserName()
-
-        home.setWelcomeText('Hello ' + name + '!')
-
-        var posts = logic.getPosts()
+    home.loadUserName() //carga del nombre de usuario. Aqui en main doy la orden a home que le pida a logica que lo ejecute
+    home.loadPosts()  //carga de los posts
         
-        home.setPosts(posts)
-        
-        body.remove(login)
-        body.add(home)
-        
-    } catch(error) {
-        console.error(error)
-
-        alert(error.message)
-    }
+    body.remove(login)
+    body.add(home)
 })
 
 login.addReturnClickListener(function() {
