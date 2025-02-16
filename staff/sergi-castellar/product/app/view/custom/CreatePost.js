@@ -2,9 +2,9 @@ class CreatePost extends Section {
     constructor() {
         super()
 
-        const logo = new Heading(1)
-        logo.setText("Logo")
-        this.add(logo)
+        const createPostTitle = new Heading(2)
+        createPostTitle.setText("Create new post")
+        this.add(createPostTitle)
 
         const inputForm = new Form()
         inputForm.setId("create-post")
@@ -22,8 +22,7 @@ class CreatePost extends Section {
 
                 this.createPostSubmitListener()
             } catch (error) {
-                console.error(error)
-                alert(error.message)
+                logic.helper.handleError(error)
             }
         })
         inputForm.container.style.display = "flex"
@@ -55,16 +54,16 @@ class CreatePost extends Section {
             child.style.width = "300px"
         })
 
-        const bubttonsDiv = new Div()
-        bubttonsDiv.container.style.width = '310px'
-        bubttonsDiv.container.style.marginTop = '15px'
-        bubttonsDiv.container.style.display = 'flex'
-        bubttonsDiv.container.style.justifyContent = 'space-between'
-        inputForm.add(bubttonsDiv)
+        const buttonsDiv = new Div()
+        buttonsDiv.container.style.width = '310px'
+        buttonsDiv.container.style.marginTop = '15px'
+        buttonsDiv.container.style.display = 'flex'
+        buttonsDiv.container.style.justifyContent = 'space-between'
+        inputForm.add(buttonsDiv)
 
         const cancelAnchor = new Anchor()
         cancelAnchor.setText("Cancel")
-        bubttonsDiv.add(cancelAnchor)
+        buttonsDiv.add(cancelAnchor)
         cancelAnchor.addClickListener(() => {
             this.cancelClickListener()
         })
@@ -73,7 +72,7 @@ class CreatePost extends Section {
         createButton.setType("submit")
         createButton.setForm("create-post")
         createButton.setText("Create")
-        bubttonsDiv.add(createButton)
+        buttonsDiv.add(createButton)
     }
 
     addCreatePostSubmitListener(listener) {

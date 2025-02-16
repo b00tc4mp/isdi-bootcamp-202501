@@ -5,6 +5,13 @@ const logic = {
         URL_REGEX: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
     },
 
+    helper: {
+        handleError(error) {
+            console.error(error)
+            alert(error.message)
+        }
+    },
+
     validate: {
         string(string, explain) {
             if (typeof string !== 'string') throw new TypeError(`invalid ${explain} type`)
@@ -104,17 +111,20 @@ const logic = {
         return data.userId
     },
 
-    getUserUsername(userId) {
+    getUserProperty(userId, property) {
         let found
         for (let i = 0; i < data.users.length; i++) {
             let user = data.users[i]
-            if (user.id === userId)
+            if (user.id === userId) {
                 found = user
+                break
+            }
         }
 
         if (!found) throw new NotFoundError('user not found')
+        if (!found.hasOwnProperty(property)) throw new NotFoundError('property not found')
 
-        return found.username
+        return found[property]
     },
 
     getPosts() {

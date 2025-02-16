@@ -25,8 +25,7 @@ class Register extends Component {
 
                 this.registerSubmitListener()
             } catch (error) {
-                console.error(error)
-                alert(error.message)
+                logic.helper.handleError(error)
             }
         });
         inputForm.container.style.display = "flex";

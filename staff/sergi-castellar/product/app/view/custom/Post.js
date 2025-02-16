@@ -7,17 +7,15 @@ class Post extends Component {
         const header = new Header()
         this.add(header)
 
-        let authorUsername = ''
-
+        let authorName = ''
         try {
-            authorUsername = logic.getUserUsername(authorId)
+            authorName = logic.getUserProperty(authorId, 'name')
 
             const author = new Heading(2)
-            author.setText(authorUsername)
+            author.setText(authorName)
             header.add(author)
         } catch (error) {
-            console.error(error)
-            alert(error)
+            logic.helper.handleError(error)
         }
 
         const figure = new Figure()
@@ -52,9 +50,16 @@ class Post extends Component {
         likeAnchor.container.style.cursor = 'pointer'
         iconSection.add(likeAnchor)
 
-        const datePost = new Paragraph()
-        datePost.setText(`${authorUsername}, ${createdAt.toLocaleString()}: ${textDescription}`)
-        datePost.container.style.textAlign = 'justify'
-        footer.add(datePost)
+        let authorUsername
+        try {
+            authorUsername = logic.getUserProperty(authorId, 'username')
+
+            const datePost = new Paragraph()
+            datePost.setText(`${authorUsername}, ${createdAt.toLocaleString()}: ${textDescription}`)
+            datePost.container.style.textAlign = 'justify'
+            footer.add(datePost)
+        } catch (error) {
+            logic.helper.handleError()
+        }
     }
 }

@@ -19,20 +19,19 @@ class Home extends Component {
 
                 this.logoutClickListener()
             } catch (error) {
-                console.error(error)
-
-                alert(error.message)
+                logic.helper.handleError(error)
             }
         })
         this.add(logoutButton)
 
-        const postArticleDiv = new Section()
-        postArticleDiv.container.style.display = 'flex'
-        postArticleDiv.container.style.flexDirection = 'column'
-        postArticleDiv.container.style.width = '500px'
-        postArticleDiv.container.style.textAlign = 'justify'
-        this.add(postArticleDiv)
-        this.postArticleDiv = postArticleDiv
+        const postsSection = new Section()
+        postsSection.container.style.display = 'flex'
+        postsSection.container.style.alignItems = 'center'
+        postsSection.container.style.flexDirection = 'column'
+        postsSection.container.style.width = '500px'
+        postsSection.container.style.textAlign = 'justify'
+        this.add(postsSection)
+        this.postArticleDiv = postsSection
 
         const footer = new Footer()
         footer.container.style.position = 'fixed'
@@ -50,12 +49,40 @@ class Home extends Component {
         addPostButton.container.style.justifyContent = 'center'
         addPostButton.container.style.marginBottom = '10px'
         addPostButton.addClickListener(() => {
-            try {
-                this.createPostClickListener()
-            } catch (error) {
-                console.error(error)
-                alert(error)
-            }
+            const modalBackground = new Div()
+            modalBackground.container.style.position = 'fixed'
+            modalBackground.container.style.top = '0'
+            modalBackground.container.style.left = '0'
+            modalBackground.container.style.width = '100%'
+            modalBackground.container.style.height = '100%'
+            modalBackground.container.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+            modalBackground.container.style.display = 'flex'
+            modalBackground.container.style.justifyContent = 'center'
+            modalBackground.container.style.alignItems = 'center'
+            //modalBackground.container.style.zIndex = '1000'
+            this.add(modalBackground)
+
+            const createPost = new CreatePost()
+            createPost.container.style.backgroundColor = 'white'
+            createPost.container.style.padding = '20px'
+            createPost.container.style.borderRadius = '8px'
+            createPost.container.style.width = '400px'
+            createPost.container.style.display = 'flex'
+            createPost.container.style.flexDirection = 'column'
+            createPost.container.style.alignItems = 'center'
+
+
+            modalBackground.add(createPost)
+
+            createPost.addCreatePostSubmitListener(() => {
+                this.remove(modalBackground)
+
+                this.loadPosts()
+            })
+
+            createPost.addCancelClickListener(() => {
+                this.remove(modalBackground)
+            })
         })
         footer.add(addPostButton)
     }
@@ -71,12 +98,11 @@ class Home extends Component {
     loadUsername() {
         try {
             const userId = logic.getUserId()
-            const username = logic.getUserUsername(userId)
+            const username = logic.getUserProperty(userId, 'username')
 
             home.setWelcomeText(`Welcome, ${username}!`)
         } catch (error) {
-            console.error(error)
-            alert(error.message)
+            logic.helper.handleError(error)
         }
     }
 
@@ -95,8 +121,7 @@ class Home extends Component {
                 this.postArticleDiv.add(newPost)
             }
         } catch (error) {
-            console.error(error)
-            alert(error.message)
+            logic.helper.handleError(error)
         }
     }
 

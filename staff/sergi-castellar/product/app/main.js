@@ -40,8 +40,7 @@ login.addLoginSubmitListener(() => {
     body.remove(login)
     body.add(home)
   } catch (error) {
-    console.error(error)
-    alert(error.message)
+    logic.helper.handleError(error)
   }
 })
 

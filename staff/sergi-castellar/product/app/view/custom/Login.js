@@ -23,8 +23,7 @@ class Login extends Component {
 
                 this.loginSubmitListener()
             } catch (error) {
-                console.error(error)
-                alert(error.message)
+                logic.helper.handleError(error)
             }
         })
         inputForm.container.style.display = 'flex'
