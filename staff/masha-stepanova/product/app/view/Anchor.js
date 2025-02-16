@@ -1,11 +1,9 @@
-function Anchor() {
-    Component.call(this, 'a')
+class Anchor extends Component {
+    constructor() {
+        super('a')
+    }
 
-}
-
-Anchor.prototype = Object.create(Component.prototype)
-Anchor.prototype.constructor = Anchor
-
-Anchor.prototype.setText = function (text) {
-    this.container.textContent = text
+    setText(text) {
+        this.container.textContent = text
+    }
 }

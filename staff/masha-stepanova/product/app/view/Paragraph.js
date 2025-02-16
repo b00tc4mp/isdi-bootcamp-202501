@@ -1,10 +1,9 @@
-function Paragraph() {
-    Component.call(this, 'p')
-}
+class Paragraph extends Component {
+    constructor() {
+        super('p')
+    }
 
-Paragraph.prototype = Object.create(Component.prototype)
-Paragraph.prototype.constructor = Paragraph
-
-Paragraph.prototype.setText = function (description) {
-    this.container.textContent = description
+    setText = function (description) {
+        this.container.textContent = description
+    }
 }

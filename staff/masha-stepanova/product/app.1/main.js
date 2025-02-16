@@ -5,7 +5,7 @@ body.container.style.fontFamily = 'sans-serif'
 body.container.style.backgroundSize = 'cover'
 body.container.style.backgroundImage = "url('https://imgs.search.brave.com/eVpWbjn73TWzvc2fj025Cfg5iapsH_pxWBSvRjS-2IM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvaGQvbGln/aHQtZ3JlZW4tdGV4/dHVyZS1waG9uZS0x/cXh1NXl1YnM5dm03/ZXBmLmpwZw')"
 
-const landing = new Landing()
+var landing = new Landing()
 landing.container.style.display = 'flex'
 landing.container.style.flexDirection = 'column'
 landing.container.style.justifyContent = 'center'
@@ -23,7 +23,7 @@ landing.addLoginClickListener(function () {
 })
 body.add(landing)
 
-const register = new Register()
+var register = new Register()
 register.container.style.display = 'flex'
 register.container.style.flexDirection = 'column'
 register.container.style.justifyContent = 'center'
@@ -41,7 +41,7 @@ register.addRegisterSubmitListener(function () {
     body.add(login)
 })
 
-const login = new Login()
+var login = new Login()
 login.container.style.display = 'flex'
 login.container.style.flexDirection = 'column'
 login.container.style.justifyContent = 'center'
@@ -72,7 +72,7 @@ login.addLoginSubmitListener(function () {
     }
 })
 
-const home = new Home()
+var home = new Home()
 home.container.style.display = 'flex'
 home.container.style.flexDirection = 'column'
 home.container.style.justifyContent = 'center'
@@ -90,7 +90,7 @@ home.addPostSubmitListener(function () {
     body.add(addPost)
 })
 
-const addPost = new AddPost()
+var addPost = new AddPost()
 addPost.container.style.display = 'flex'
 addPost.container.style.flexDirection = 'column'
 addPost.container.style.justifyContent = 'center'
@@ -115,13 +115,4 @@ addPost.addPostSubmitListener(function () {
 
         alert(error.message)
     }
-})
-
-addPost.addCancelClickListener(function () {
-
-    const posts = logic.getPosts()
-    home.setPosts(posts)
-
-    body.remove(addPost)
-    body.add(home)
 })

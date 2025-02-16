@@ -1,6 +1,6 @@
-function Footer() {
-    Component.call(this, 'footer')
+class Footer extends Component {
+    constructor() {
+        super('footer')
+    }
 }
 
-Footer.prototype = Object.create(Component.prototype)
-Footer.prototype.constructor = Footer

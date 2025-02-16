@@ -1,15 +1,13 @@
-function Button() {
-    Component.call(this, 'button')
-    this.container.style.backgroundColor = '#00A706'
-}
+class Button extends Component {
+    constructor() {
+        super('button')
+    }
 
-Button.prototype = Object.create(Component.prototype)
-Button.prototype.constructor = Button
+    setType = function (type) {
+        this.container.type = type
+    }
 
-Button.prototype.setType = function (type) {
-    this.container.type = type
-}
-
-Button.prototype.setText = function (text) {
-    this.container.textContent = text
+    setText = function (text) {
+        this.container.textContent = text
+    }
 }

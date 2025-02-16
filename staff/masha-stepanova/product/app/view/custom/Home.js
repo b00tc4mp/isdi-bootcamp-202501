@@ -1,99 +1,115 @@
-function Home() {
-    Component.call(this, 'div')
+class Home extends Component {
+    constructor() {
+        super('div')
 
-    var logo = new Heading(1)
-    logo.setText('Logo')
-    this.add(logo)
+        const logo = new Heading(1)
+        logo.setText('Logo')
+        this.add(logo)
 
-    var welcome = new Heading(3)
-    welcome.setText('Welcome!')
-    this.welcome = welcome
-    this.add(welcome)
+        const welcome = new Heading(3)
+        welcome.setText('Welcome!')
+        this.welcome = welcome
+        this.add(welcome)
 
-    var postsSection = new Section()
-    this.add(postsSection)
-    this.postsSection = postsSection
+        const postsSection = new Section()
+        this.add(postsSection)
+        this.postsSection = postsSection
 
-    var footer = new Footer()
-    footer.container.style.display = 'flex'
-    footer.container.style.position = 'fixed'
-    footer.container.style.height = '40px'
-    footer.container.style.bottom = '0'
-    footer.container.style.width = '100%'
-    footer.container.style.justifyContent = 'center'
-    footer.container.style.backgroundColor = 'white'
+        const footer = new Footer()
+        footer.container.style.display = 'flex'
+        footer.container.style.position = 'fixed'
+        footer.container.style.height = '40px'
+        footer.container.style.bottom = '0'
+        footer.container.style.width = '100%'
+        footer.container.style.justifyContent = 'space-around'
+        footer.container.style.alignItems = 'center'
+        footer.container.style.backgroundColor = 'white'
 
-    this.add(footer)
+        this.add(footer)
 
-    var postButton = new Button()
-    postButton.setText('➕')
-    postButton.container.style.borderRadius = '50%'
-    postButton.addClickListener(function () {
-        this.addPostButton()
-    }.bind(this))
-    footer.add(postButton)
+        const postButton = new Button()
+        postButton.setText('➕')
+        postButton.container.style.borderRadius = '50%'
+        postButton.addClickListener(function () {
+            this.addPostButton()
+        }.bind(this))
+        footer.add(postButton)
 
-    var logoutButton = new Button()
-    logoutButton.setText('Logout')
-    logoutButton.addClickListener(function () {
-        try {
-            logic.logoutUser()
+        const logoutButton = new Button()
+        logoutButton.setText('Logout')
+        logoutButton.addClickListener(function () {
+            try {
+                logic.logoutUser()
 
-            this.logoutClickListener()
-        } catch (error) {
-            console.log(error)
+                this.logoutClickListener()
+            } catch (error) {
+                console.log(error)
 
-            alert(error.message)
-        }
-    }.bind(this))
-    footer.add(logoutButton)
-}
-
-Home.prototype = Object.create(Component.prototype)
-Home.prototype.constructor = Home
-
-Home.prototype.addLogoutClickListener = function (listener) {
-    this.logoutClickListener = listener
-}
-
-Home.prototype.setWelcomeText = function (text) {
-    this.welcome.setText(text)
-}
-
-Home.prototype.addPostSubmitListener = function (callback) {
-    this.addPostButton = callback
-}
-
-Home.prototype.setPosts = function (posts) {
-    this.postsSection.clear()
-    for (var i = posts.length - 1; i >= 0; i--) {
-        var post = posts[i]
-
-        var postArticle = new Article()
-
-        var authorHeading = new Heading(3)
-        authorHeading.setText(post.author)
-        postArticle.add(authorHeading)
-
-        var postImage = new Image()
-        postImage.setUrl(post.image)
-        postArticle.add(postImage)
-
-        var postText = new Paragraph()
-        postText.setText(post.text)
-        postArticle.add(postText)
-
-        var postDate = new Time()
-        postDate.setText(post.createdAt)
-        postArticle.add(postDate)
-
-        var likeAnchor = new Anchor()
-        likeAnchor.setText('🤍')
-        likeAnchor.addClickListener(function () {
-            this.innerText = (this.innerText === '🤍' ? '🩷' : '🤍')
-        })
-        postArticle.add(likeAnchor)
-
-        this.postsSection.add(postArticle)
+                alert(error.message)
+            }
+        }.bind(this))
+        footer.add(logoutButton)
     }
+
+    addLogoutClickListener = function (listener) {
+        this.logoutClickListener = listener
+    }
+
+    setWelcomeText = function (text) {
+        this.welcome.setText(text)
+    }
+
+    addPostSubmitListener = function (callback) {
+        this.addPostButton = callback
+    }
+
+    setPosts = function (posts) {
+        this.postsSection.clear()
+        for (var i = posts.length - 1; i >= 0; i--) {
+            const post = posts[i]
+
+            const postArticle = new Article()
+
+            const authorHeading = new Heading(3)
+            authorHeading.setText(post.author)
+            postArticle.add(authorHeading)
+
+            const postImage = new Image()
+            postImage.setUrl(post.image)
+            postArticle.add(postImage)
+
+            const postText = new Paragraph()
+            postText.setText(post.text)
+            postArticle.add(postText)
+
+            const postDate = new Time()
+            postDate.setText(post.createdAt)
+            postArticle.add(postDate)
+
+            const likeSection = new Section()
+
+            const numberOfLikes = new Text()
+            numberOfLikes.setText(post.likes.length)
+            likeSection.add(numberOfLikes)
+
+            const likeAnchor = new Anchor()
+            likeAnchor.setText('🤍')
+            likeAnchor.addClickListener(function () {
+                logic.likePost(post)
+
+                if (this.innerText === '🤍') {
+                    this.innerText = '🩷'
+                    numberOfLikes.setText(post.likes.length)
+                } else {
+                    this.innerText = '🤍'
+                    numberOfLikes.setText(post.likes.length)
+                }
+            })
+            likeSection.add(likeAnchor)
+            postArticle.add(likeSection)
+
+            this.postsSection.add(postArticle)
+        }
+    }
+
 }

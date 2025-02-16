@@ -1,49 +1,49 @@
-const logic = {
+var logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
         EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     },
 
     validate: {
-        string(string, explain) {
-            if (typeof string !== 'string') throw new TypeError(`invalid ${explain} type`)
+        string: function (string, explain) {
+            if (typeof string !== 'string') throw new TypeError('invalid ' + explain + ' type')
         },
-        text(text, explain) {
-            if (logic.constant.EMPTY_OR_BLANK_REGEX.test(text)) throw new SyntaxError(`invalid ${explain} syntax`)
+        text: function (text, explain) {
+            if (logic.constant.EMPTY_OR_BLANK_REGEX.test(text)) throw new SyntaxError('invalid ' + explain + ' syntax')
         },
-        email(email, explain) {
+        email: function (email, explain) {
             this.string(email, explain)
-            if (!logic.constant.EMAIL_REGEX.test(email)) throw new SyntaxError(`invalid ${explain} syntax`)
+            if (!logic.constant.EMAIL_REGEX.test(email)) throw new SyntaxError('invalid ' + explain + ' syntax')
         },
-        maxLength(value, maxLength, explain) {
-            if (value.length > maxLength) throw new RangeError(`invalid ${explain} maxLength`)
+        maxLength: function (value, maxLength, explain) {
+            if (value.length > maxLength) throw new RangeError('invalid ' + explain + ' maxLength')
         },
-        minLength(value, minLength, explain) {
-            if (value.length < minLength) throw new RangeError(`invalid ${explain} minLength`)
+        minLength: function (value, minLength, explain) {
+            if (value.length < minLength) throw new RangeError('invalid ' + explain + ' minLength')
         },
-        username(username, explain) {
+        username: function (username, explain) {
             this.text(username, explain)
             this.minLength(username, 3, explain)
             this.maxLength(username, 20, explain)
         },
-        password(password, explain) {
+        password: function (password, explain) {
             this.text(password, explain)
             this.minLength(password, 8, explain)
             this.maxLength(password, 20, explain)
         },
     },
 
-    registerUser(name, email, username, password) {
+    registerUser: function (name, email, username, password) {
         this.validate.text(name, 'name')
         this.validate.maxLength(name, 20, 'name')
         this.validate.email(email, 'email')
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        let found
+        var found
 
         for (var i = 0; i < data.users.length && !found; i++) {
-            const user = data.users[i]
+            var user = data.users[i]
 
             if (user.email === email || user.username === username)
                 found = user
@@ -51,7 +51,7 @@ const logic = {
 
         if (found) throw new Error('user already exists')
 
-        const user = {
+        var user = {
             id: data.uuid(),
             name: name,
             email: email,
@@ -61,18 +61,17 @@ const logic = {
             modifiedAt: null
         }
 
-        data.users.push(user)
-        localStorage.users = JSON.stringify(data.users)
+        data.users[data.users.length] = user
     },
 
-    loginUser(username, password) {
+    loginUser: function (username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        let found
+        var found
 
         for (var i = 0; i < data.users.length && !found; i++) {
-            const user = data.users[i]
+            var user = data.users[i]
 
             if (user.username === username)
                 found = user
@@ -83,15 +82,15 @@ const logic = {
         data.userId = found.id
     },
 
-    logoutUser() {
+    logoutUser: function () {
         data.userId = null
     },
 
-    getUserName() {
-        let found
+    getUserName: function () {
+        var found
 
         for (let i = 0; i < data.users.length; i++) {
-            const user = data.users[i]
+            var user = data.users[i]
 
             if (user.id === data.userId)
                 found = user
@@ -102,31 +101,21 @@ const logic = {
         return found.name
     },
 
-    getPosts() {
+    getPosts: function () {
         return data.posts
     },
 
-    addPost(link, text) {
-        const newPost = {
+    addPost: function (link, text) {
+        var newPost = {
             id: data.uuid(),
             author: data.userId,
             image: link,
             text: text,
             createdAt: new Date().toLocaleDateString(),
-            modifiedAt: null,
-            likes: []
+            modifiedAt: null
         }
 
         data.posts.push(newPost)
-        localStorage.posts = JSON.stringify(data.posts)
-    },
 
-    likePost(postToLike) {
-        for (var i = 0; i < postToLike.likes.length; i++) {
-            if (postToLike.likes[i] === data.userId)
-                postToLike.likes.splice(i, 1)
-            return
-        }
-        postToLike.likes[postToLike.likes.length] = data.userId
     }
 }

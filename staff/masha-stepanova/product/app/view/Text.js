@@ -1,10 +1,9 @@
-function Text() {
-    Component.call(this, 'text')
-}
+class Text extends Component {
+    constructor() {
+        super('text')
+    }
 
-Text.prototype = Object.create(Component.prototype)
-Text.prototype.constructor = Text
-
-Text.prototype.setText = function (description) {
-    this.container.innerText = description
+    setText = function (description) {
+        this.container.innerText = description
+    }
 }

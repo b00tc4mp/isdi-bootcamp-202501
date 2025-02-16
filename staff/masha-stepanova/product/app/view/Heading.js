@@ -1,10 +1,9 @@
-function Heading(level) {
-    Component.call(this, 'h' + level)
-}
+class Heading extends Component {
+    constructor(level) {
+        super('h' + level)
+    }
 
-Heading.prototype = Object.create(Component.prototype)
-Heading.prototype.constructor = Heading
-
-Heading.prototype.setText = function (text) {
-    this.container.textContent = text
+    setText = function (text) {
+        this.container.textContent = text
+    }
 }

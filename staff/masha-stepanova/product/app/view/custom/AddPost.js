@@ -1,64 +1,74 @@
-function AddPost() {
-    Component.call(this, 'div')
+class AddPost extends Section {
+    constructor() {
+        super()
 
-    var logo = new Heading(1)
-    logo.setText('Logo')
-    this.add(logo)
+        const logo = new Heading(1)
+        logo.setText('Logo')
+        this.add(logo)
 
-    var explanation = new Paragraph()
-    explanation.setText('To add new post you have to add the image link and a description to it. Try it now!')
-    this.add(explanation)
+        const explanation = new Paragraph()
+        explanation.setText('To add new post you have to add the image link and a description to it. Try it now!')
+        this.add(explanation)
 
-    var form = new Form()
-    form.container.style.display = 'flex'
-    form.container.style.flexDirection = 'column'
-    form.container.style.gap = '0.3rem'
+        const form = new Form()
+        form.container.style.display = 'flex'
+        form.container.style.flexDirection = 'column'
+        form.container.style.gap = '0.3rem'
 
-    form.addSubmitListener(function (event) {
-        event.preventDefault()
+        form.addSubmitListener(function (event) {
+            event.preventDefault()
 
-        var link = inputLink.getValue()
-        var description = inputText.getValue()
+            const link = inputLink.getValue()
+            const description = inputText.getValue()
 
-        try {
-            logic.addPost(link, description)
+            try {
+                logic.addPost(link, description)
 
-            form.clear()
+                form.clear()
 
-            this.addSubmitButton()
-        } catch (error) {
-            console.log(error)
+                this.addSubmitButton()
+            } catch (error) {
+                console.log(error)
 
-            alert(error.message)
-        }
-    }.bind(this))
-    this.add(form)
+                alert(error.message)
+            }
+        }.bind(this))
+        this.add(form)
 
-    var labelLink = new Label()
-    labelLink.setText('Add here a link to your image:')
-    form.add(labelLink)
+        const labelLink = new Label()
+        labelLink.setText('Add here a link to your image:')
+        form.add(labelLink)
 
-    var inputLink = new Input()
-    inputLink.setType('text')
-    form.add(inputLink)
+        const inputLink = new Input()
+        inputLink.setType('text')
+        form.add(inputLink)
 
-    var labelText = new Label()
-    labelText.setText('Add here a little description:')
-    form.add(labelText)
+        const labelText = new Label()
+        labelText.setText('Add here a little description:')
+        form.add(labelText)
 
-    var inputText = new Input()
-    inputText.setType('text')
-    form.add(inputText)
+        const inputText = new Input()
+        inputText.setType('text')
+        form.add(inputText)
 
-    var submitButton = new Button()
-    submitButton.setText('Add post')
-    submitButton.setType('submit')
-    form.add(submitButton)
-}
+        const submitButton = new Button()
+        submitButton.setText('Add post')
+        submitButton.setType('submit')
+        form.add(submitButton)
 
-AddPost.prototype = Object.create(Component.prototype)
-AddPost.prototype.constructor = AddPost
+        const cancelAnchor = new Anchor()
+        cancelAnchor.setText('Cancel')
+        cancelAnchor.addClickListener(function () {
+            this.cancelClickListener()
+        }.bind(this))
+        this.add(cancelAnchor)
+    }
 
-AddPost.prototype.addPostSubmitListener = function (callback) {
-    this.addSubmitButton = callback
+    addPostSubmitListener = function (callback) {
+        this.addSubmitButton = callback
+    }
+
+    addCancelClickListener = function (callback) {
+        this.cancelClickListener = callback
+    }
 }

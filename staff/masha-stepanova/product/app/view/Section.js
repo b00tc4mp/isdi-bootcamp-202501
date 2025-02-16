@@ -1,10 +1,9 @@
-function Section() {
-    Component.call(this, 'section')
-}
+class Section extends Component {
+    constructor() {
+        super('section')
+    }
 
-Section.prototype = Object.create(Component.prototype)
-Section.prototype.constructor = Section
-
-Section.prototype.clear = function () {
-    this.container.innerHTML = ''
+    clear = function () {
+        this.container.innerHTML = ''
+    }
 }
