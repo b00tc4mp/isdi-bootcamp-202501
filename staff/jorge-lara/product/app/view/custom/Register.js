@@ -10,7 +10,7 @@ class Register extends Component {
         registerForm.setOrientation('flex', 'column');
         registerForm.container.style.width = '250px';
 
-        registerForm.addSubmitListener(function (e) {
+        registerForm.addSubmitListener(e => {
             e.preventDefault();
 
             const name = nameInput.getValue();
@@ -29,7 +29,7 @@ class Register extends Component {
 
                 alert(error.message);
             }
-        }.bind(this))
+        })
         this.add(registerForm);
 
         //Name
@@ -75,11 +75,11 @@ class Register extends Component {
         loginAnchor.setCursor('pointer');
         spanButtons.add(loginAnchor);
 
-        loginAnchor.addClickListener(function () {
+        loginAnchor.addClickListener(() => {
             registerForm.clear();
 
             this.loginClickListener();
-        }.bind(this))
+        })
 
         const registerButton = new Button();
         registerButton.setText('Register');

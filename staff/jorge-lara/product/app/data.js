@@ -21,7 +21,8 @@ const data = {
         image: 'https://static.vecteezy.com/system/resources/thumbnails/008/695/917/small_2x/no-image-available-icon-simple-two-colors-template-for-no-image-or-picture-coming-soon-and-placeholder-illustration-isolated-on-white-background-vector.jpg',
         text: 'am i alive?',
         createdAt: new Date(2025, 0, 1),
-        modifiedAt: null
+        modifiedAt: null,
+        likes: []
     },
     {
         id: 'm737zabzix8',
@@ -29,6 +30,7 @@ const data = {
         image: 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg',
         text: 'eclipsed with...',
         createdAt: new Date(2025, 1, 10),
-        modifiedAt: null
+        modifiedAt: null,
+        likes: []
     }]
 }

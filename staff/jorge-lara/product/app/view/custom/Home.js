@@ -12,8 +12,8 @@ class Home extends Component {
 
         const signOutButton = new Button();
         signOutButton.setText('Sign out');
-        
-        signOutButton.addClickListener(function () {
+
+        signOutButton.addClickListener(() => {
             try {
                 logic.logoutUser();
 
@@ -23,14 +23,14 @@ class Home extends Component {
 
                 alert(error.message);
             }
-        }.bind(this))
+        })
         this.add(signOutButton);
 
         const addPostButton = new Button();
         addPostButton.setText('+');
         this.add(addPostButton);
 
-        addPostButton.addClickListener(function () {
+        addPostButton.addClickListener(() => {
             try {
                 this.postClickListener();
             } catch (error) {
@@ -38,7 +38,7 @@ class Home extends Component {
 
                 alert(error.message);
             }
-        }.bind(this))
+        })
 
         const postsSection = new Section();
         postsSection.setOrientation('flex', 'column');
@@ -50,37 +50,60 @@ class Home extends Component {
     addSignoutClickListener(listener) {
         this.logoutClickListener = listener;
     }
-    
+
     addPostClickListener(listener) {
         this.postClickListener = listener;
     }
-    
+
     setUserLoggedText(text) {
         this.userLogged.setText(text);
     }
-    
-    loadPosts(posts) {
+
+    loadPosts() {
         this.postsSection.container.innerHTML = '';
-        for (const post of posts.slice().reverse()) {
-            const postArticle = new Article();
-    
-            const authorHeading = new Heading(3);
-            authorHeading.setText(post.author);
-            postArticle.add(authorHeading);
-    
-            const postImage = new Img();
-            postImage.setUrl(post.image);
-            postArticle.add(postImage);
-    
-            const postText = new Paragraph();
-            postText.setText(post.text);
-            postArticle.add(postText);
-    
-            const postDate = new Time();
-            postDate.setText(post.createdAt.toISOString());
-            postArticle.add(postDate);
-    
-            this.postsSection.add(postArticle);
+        try {
+            const posts = logic.getPosts();
+
+            for (const post of posts.slice().reverse()) {
+                const postArticle = new Article();
+
+                const authorHeading = new Heading(3);
+                authorHeading.setText(post.author);
+                postArticle.add(authorHeading);
+
+                const postImage = new Img();
+                postImage.setUrl(post.image);
+                postArticle.add(postImage);
+
+                const postText = new Paragraph();
+                postText.setText(post.text);
+                postArticle.add(postText);
+
+                const postDate = new Time();
+                postDate.setText(post.createdAt.toISOString());
+                postArticle.add(postDate);
+
+                const likeButton = new Button();
+                likeButton.setText(`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`);
+                likeButton.addClickListener(() => {
+                    try {
+                        logic.toggleLikePost(post.id);
+
+                        this.loadPosts();
+                    } catch (error) {
+                        console.log(error);
+
+                        alert(error);
+                    }
+                })
+                postArticle.add(likeButton);
+
+                this.postsSection.add(postArticle);
+            }
+        } catch (error) {
+            console.log(error);
+
+            alert.message(error);
         }
     }
 }

@@ -10,7 +10,7 @@ class Login extends Component {
         loginForm.setOrientation('flex', 'column');
         loginForm.container.style.width = '250px';
 
-        loginForm.addSubmitListener(function (e) {
+        loginForm.addSubmitListener(e => {
             e.preventDefault();
 
             const username = usernameInput.getValue();
@@ -27,7 +27,7 @@ class Login extends Component {
 
                 alert(error.message);
             }
-        }.bind(this))
+        })
         this.add(loginForm);
 
         //username
@@ -56,11 +56,11 @@ class Login extends Component {
         registerAnchor.setText('Register');
         registerAnchor.setCursor('pointer');
 
-        registerAnchor.addClickListener(function () {
+        registerAnchor.addClickListener(() => {
             loginForm.clear();
 
             this.registerClickListener();
-        }.bind(this))
+        })
         spanButtons.add(registerAnchor);
 
         //Login

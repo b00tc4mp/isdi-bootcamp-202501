@@ -10,4 +10,8 @@ class Button extends Component {
     setType = function (type) {
         this.container.type = type
     }
+
+    getText = function (){
+        return this.container.textContent;
+    }
 }   

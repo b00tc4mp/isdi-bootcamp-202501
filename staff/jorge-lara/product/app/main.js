@@ -38,9 +38,7 @@ login.addLoginSubmitListener(function () {
 
         home.setUserLoggedText(`Current user: ${user}!`);
 
-        const posts = logic.getPosts()
-
-        home.loadPosts(posts);
+        home.loadPosts();
 
         body.remove(login);
         body.add(home);
@@ -71,8 +69,6 @@ createPost.addCancelClickListener(function (){
 
 createPost.addCreatePostSubmitListener(function (){
     body.remove(createPost);
-    const posts = logic.getPosts();
-
-    home.loadPosts(posts);
+    home.loadPosts();
     body.add(home);
 })

@@ -10,7 +10,7 @@ class CreatePost extends Component {
         postForm.setOrientation('flex', 'column');
         postForm.container.style.width = '250px';
 
-        postForm.addSubmitListener(function (e) {
+        postForm.addSubmitListener(e => {
             e.preventDefault();
             const text = titleInput.getValue();
             const imageUrl = imageInput.getValue();
@@ -26,7 +26,7 @@ class CreatePost extends Component {
                 alert(error.message);
             }
 
-        }.bind(this))
+        })
         this.add(postForm);
 
         //Title
@@ -52,11 +52,11 @@ class CreatePost extends Component {
         cancelAnchor.setText('Cancel');
         cancelAnchor.setCursor('pointer');
 
-        cancelAnchor.addClickListener(function () {
+        cancelAnchor.addClickListener(() => {
             postForm.clear();
 
             this.cancelClickListener();
-        }.bind(this))
+        })
         spanButtons.add(cancelAnchor);
 
         const postButton = new Button();
