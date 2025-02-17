@@ -132,42 +132,7 @@ const logic = {
         data.posts[data.posts.length] = post
     },
 
-    toggleLikePost(postId) {
+    toggleLikePost() {
         // TODO add userId in post.likes or remove it
-
-        let foundPost
-
-        for (let i = 0; i < data.posts.length && !foundPost; i++) {
-            const post = data.posts[i]
-
-            if (post.id === postId)
-                foundPost = post
-        }
-
-        if (!foundPost) throw new NotFoundError('post not found')
-
-        let userIdFound = false
-
-        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const userId = foundPost.likes[i]
-
-            if (userId === data.userId)
-                userIdFound = true
-        }
-
-        if (!userIdFound)
-            foundPost.likes[foundPost.likes.length] = data.userId
-        else {
-            const likes = []
-
-            for (let i = 0; i < foundPost.likes.length; i++) {
-                const userId = foundPost.likes[i]
-
-                if (userId !== data.userId)
-                    likes[likes.length] = userId
-            }
-
-            foundPost.likes = likes
-        }
     }
 }
