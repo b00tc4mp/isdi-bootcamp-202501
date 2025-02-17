@@ -58,7 +58,7 @@ var data = {
             text: "Sunshine, daisies, butter mellow, turn this stupid, fat rat yellow!",
             createdAt: new Date(2024, 9, 30),
             modifiedAt: null,
-            likes: ['m71tml17ly']
+            likes: ['m71tmfd56b']
         }
     ],
     userId: null,

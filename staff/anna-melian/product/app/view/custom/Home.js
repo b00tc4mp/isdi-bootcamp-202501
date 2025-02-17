@@ -2,19 +2,19 @@ class Home extends Component {
     constructor() {
         super('div')
 
-        var logo = new Heading(1)
+        const logo = new Heading(1)
         this.add(logo)
 
         logo.setText('Logo')
 
-        var greeting = new Heading(3)
+        const greeting = new Heading(3)
         greeting.setText('Hello User!')
         this.add(greeting)
         this.greeting = greeting
 
-        var logoutButton = new Button()
+        const logoutButton = new Button()
         logoutButton.setText('Logout')
-        logoutButton.addClickListener(function () {
+        logoutButton.addClickListener(() => {
             try {
                 logic.logoutUser()
 
@@ -24,43 +24,43 @@ class Home extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         this.add(logoutButton)
 
-        var postsSection = new Section()
+        const postsSection = new Section()
         this.add(postsSection)
         this.postsSection = postsSection
 
-        var addPostButton = new Button()
+        const addPostButton = new Button()
         addPostButton.setText('+')
-        addPostButton.addClickListener(function () {
-            var createPost = new CreatePost()
+        addPostButton.addClickListener(() => {
+            const createPost = new CreatePost()
 
-            createPost.addCreatePostSubmitListener(function () {
+            createPost.addCreatePostSubmitListener(() => {
                 this.remove(createPost)
 
                 this.loadPosts()
                 this.add(postsSection)
                 this.add(addPostButton)
-            }.bind(this))
+            })
 
-            createPost.addCancelClickListener(function () {
+            createPost.addCancelClickListener(() => {
                 this.remove(createPost)
                 this.add(postsSection)
                 this.add(addPostButton)
-            }.bind(this))
+            })
 
             this.remove(postsSection)
             this.remove(addPostButton)
             this.add(createPost)
-        }.bind(this))
+        })
         this.add(addPostButton)
     }
 
-    addLogoutClickListener = function (listener) {
+    addLogoutClickListener(listener) {
         this.logoutClickListener = listener
     }
-    loadUserName = function () {
+    loadUserName() {
         try {
             const name = logic.getUserName()
 
@@ -72,44 +72,41 @@ class Home extends Component {
         }
     }
 
-    loadPosts = function () {
+    loadPosts() {
         this.postsSection.container.innerHTML = ''
 
         try {
             const posts = logic.getPosts()
 
-            for (var i = posts.length - 1; i > -1; i--) {
-                var post = posts[i]
-                var authorUsername = logic.getAuthorUsername(post)
+            for (let i = posts.length - 1; i > -1; i--) {
+                const post = posts[i]
+                const authorUsername = logic.getAuthorUsername(post)
 
-                var postArticle = new Article()
+                const postArticle = new Article()
 
-                var authorHeading = new Heading(3)
+                const authorHeading = new Heading(3)
                 authorHeading.setText(authorUsername)
                 postArticle.add(authorHeading)
 
-                var postImage = new Image()
+                const postImage = new Image()
                 postImage.setUrl(post.image)
                 postArticle.add(postImage)
 
-                var postText = new Paragraph()
+                const postText = new Paragraph()
                 postText.setText(post.text)
                 postArticle.add(postText)
 
-                var postDate = new Time()
+                const postDate = new Time()
                 postDate.setText(post.createdAt.toISOString())
                 postArticle.add(postDate)
 
                 const likeButton = new Button()
-                likeButton.setText('🤍')
-                likeButton.addClickListener(function () {
+                likeButton.setText(`${post.liked ? '💙' : '🤍'} (${post.likesCount})`)
+                likeButton.addClickListener(() => {
                     try {
                         logic.toggleLikePost(post.id)
 
-                        if (likeButton.getText() === '🤍')
-                            likeButton.setText('💙')
-                        else
-                            likeButton.setText('🤍')
+                        this.loadPosts()
                     } catch (error) {
                         console.error(error)
                         alert(error.message)
@@ -126,10 +123,5 @@ class Home extends Component {
             alert(error.message)
         }
     }
-
-    setGreetingText = function (text) {
-        this.greeting.setText(text)
-    }
-
 
 }

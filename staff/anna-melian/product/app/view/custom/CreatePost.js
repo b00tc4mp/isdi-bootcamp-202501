@@ -2,13 +2,13 @@ class CreatePost extends Section {
     constructor() {
         super()
 
-        var form = new Form()
-        form.addSubmitListener(function (event) {
+        const form = new Form()
+        form.addSubmitListener(event => {
             event.preventDefault()
 
             try {
-                var image = imageInput.getValue()
-                var text = textInput.getValue()
+                const image = imageInput.getValue()
+                const text = textInput.getValue()
 
                 logic.createPost(image, text)
 
@@ -20,39 +20,37 @@ class CreatePost extends Section {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         this.add(form)
 
-        var imageLabel = new Label()
+        const imageLabel = new Label()
         imageLabel.setText('Image')
         form.add(imageLabel)
 
-        var imageInput = new Input()
-        imageInput.setPlaceHolder('Copy the image adress')
+        const imageInput = new Input()
         imageInput.setType('url')
         form.add(imageInput)
 
-        var textLabel = new Label()
+        const textLabel = new Label()
         textLabel.setText('Text')
         form.add(textLabel)
 
-        var textInput = new Input()
-        textInput.setPlaceHolder('Write a caption')
+        const textInput = new Input()
         textInput.setType('text')
         form.add(textInput)
 
-        var submitButton = new Button()
+        const submitButton = new Button()
         submitButton.setText('Create')
         submitButton.setType('submit')
         form.add(submitButton)
 
-        var cancelAnchor = new Anchor()
+        const cancelAnchor = new Anchor()
         cancelAnchor.setText('Cancel')
-        cancelAnchor.addClickListener(function () {
+        cancelAnchor.addClickListener(() => {
             form.clear()
 
             this.cancelClickListener()
-        }.bind(this))
+        })
         this.add(cancelAnchor)
 
     }

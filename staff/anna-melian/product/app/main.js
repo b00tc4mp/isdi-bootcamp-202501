@@ -3,34 +3,34 @@ document.body = body.container
 body.container.style.background = 'lightcyan'
 body.container.style.placeItems = 'center'
 
-var landing = new Landing()
-landing.addRegisterClickListener(function () {
+const landing = new Landing()
+landing.addRegisterClickListener(() => {
     body.remove(landing)
     body.add(register)
 })
-landing.addLoginClickListener(function () {
+landing.addLoginClickListener(() => {
     body.remove(landing)
     body.add(login)
 })
 
 body.add(landing)
 
-var register = new Register()
-register.addLoginClickListener(function () {
+const register = new Register()
+register.addLoginClickListener(() => {
     body.remove(register)
     body.add(login)
 })
-register.addRegisterSubmitListener(function () {
+register.addRegisterSubmitListener(() => {
     body.remove(register)
     body.add(login)
 })
 
-var login = new Login()
-login.addRegisterClickListener(function () {
+const login = new Login()
+login.addRegisterClickListener(() => {
     body.remove(login)
     body.add(register)
 })
-login.addLoginSubmitListener(function () {
+login.addLoginSubmitListener(() => {
     home.loadUserName()
     home.loadPosts()
 
@@ -39,8 +39,8 @@ login.addLoginSubmitListener(function () {
 })
 
 
-var home = new Home()
-home.addLogoutClickListener(function () {
+const home = new Home()
+home.addLogoutClickListener(() => {
     body.remove(home)
     body.add(landing)
 })

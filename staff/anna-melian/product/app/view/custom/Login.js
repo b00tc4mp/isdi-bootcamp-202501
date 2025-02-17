@@ -2,24 +2,24 @@ class Login extends Component {
     constructor() {
         super('div')
 
-        var logo = new Heading(1)
+        const logo = new Heading(1)
         this.add(logo)
         logo.setText('Logo')
 
-        var intructions = new Heading(4)
+        const intructions = new Heading(4)
         this.add(intructions)
         intructions.setText('To login enter your credentials.')
 
         // form
 
-        var form = new Form()
-        form.addSubmitListener(function (event) {
+        const form = new Form()
+        form.addSubmitListener(event => {
             event.preventDefault()
 
             console.log('login submit')
 
-            var username = formUsernameInput.getValue()
-            var password = formPasswordInput.getValue()
+            const username = formUsernameInput.getValue()
+            const password = formPasswordInput.getValue()
 
             try {
                 logic.loginUser(username, password)
@@ -32,55 +32,55 @@ class Login extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         this.add(form)
 
         // username
 
-        var formUsernameLabel = new Label()
+        const formUsernameLabel = new Label()
         form.add(formUsernameLabel)
         formUsernameLabel.setText('Username')
 
-        var formUsernameInput = new Input()
+        const formUsernameInput = new Input()
         formUsernameInput.setPlaceholder('Anna10')
         formUsernameInput.setType('Username')
         form.add(formUsernameInput)
 
         // password
 
-        var formPasswordLabel = new Label()
+        const formPasswordLabel = new Label()
         form.add(formPasswordLabel)
 
         formPasswordLabel.setText('Password')
 
-        var formPasswordInput = new Input()
+        const formPasswordInput = new Input()
         formPasswordInput.setType('Password')
         form.add(formPasswordInput)
 
         // submit button
 
-        var formSubmitButton = new Button()
+        const formSubmitButton = new Button()
         form.add(formSubmitButton)
         formSubmitButton.setText('Login')
         formSubmitButton.setType('submit')
 
         // anchor
 
-        var registerAnchor = new Anchor()
+        const registerAnchor = new Anchor()
         registerAnchor.setText('Register')
-        registerAnchor.addClickListener(function () {
+        registerAnchor.addClickListener(() => {
             form.clear()
 
             this.registerClickListener()
-        }.bind(this))
+        })
         this.add(registerAnchor)
     }
 
-    addRegisterClickListener = function (listener) {
+    addRegisterClickListener(listener) {
         this.registerClickListener = listener
     }
 
-    addLoginSubmitListener = function (listener) {
+    addLoginSubmitListener(listener) {
         this.loginSubmitListener = listener
     }
 

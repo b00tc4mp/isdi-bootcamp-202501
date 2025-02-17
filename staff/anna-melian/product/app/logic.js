@@ -1,4 +1,4 @@
-var logic = {
+const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
         EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
@@ -51,10 +51,10 @@ var logic = {
         this.validate.password(password, 'password')
 
 
-        var found
+        let found
 
-        for (var i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.email === email || user.username === username) {
                 found = user
@@ -63,7 +63,7 @@ var logic = {
 
         if (found) throw new Error('user already exists')
 
-        var user = {
+        const user = {
             id: data.uuid(),
             name: name,
             email: email,
@@ -81,10 +81,10 @@ var logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        var found
+        let found
 
-        for (var i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.username === username) {
                 found = user
@@ -104,9 +104,9 @@ var logic = {
     },
 
     getUserName() {
-        var found
-        for (var i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
+        let found
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.id === data.userId)
                 found = user
@@ -119,9 +119,9 @@ var logic = {
 
     getAuthorUsername(post) {
 
-        var found
-        for (var i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
+        let found
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.id === post.author)
                 found = user
@@ -133,7 +133,33 @@ var logic = {
     },
 
     getPosts() {
-        return data.posts
+        const aggregatedPosts = []
+
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
+
+            let liked = false
+
+            for (let i = 0; i < post.likes.length && !liked; i++) {
+                const userId = post.likes[i]
+
+                if (userId === data.userId)
+                    liked = true
+            }
+
+            const aggregatedPost = {
+                id: post.id,
+                author: post.author,
+                image: post.image,
+                text: post.text,
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
+                liked: liked,
+                likesCount: post.likes.length
+            }
+            aggregatedPosts[aggregatedPosts.length] = aggregatedPost
+        }
+        return aggregatedPosts
     },
 
     createPost(image, text) {
