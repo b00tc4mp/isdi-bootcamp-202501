@@ -76,10 +76,6 @@ class Home extends Component {
         );
         this.postsSection.add(post);
       }
-    } catch (error) {
-      console.error(error);
-
-      alert(error.message);
-    }
+    } catch (error) {}
   }
 }
