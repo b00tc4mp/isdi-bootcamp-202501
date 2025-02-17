@@ -13,7 +13,7 @@ class Home extends Component {
 
         const logoutButton = new Button()
         logoutButton.setText('Logout')
-        logoutButton.addClickListener(() => {
+        logoutButton.addClickListener(function () {
             try {
                 logic.logoutUser()
 
@@ -23,7 +23,7 @@ class Home extends Component {
 
                 alert(error.message)
             }
-        })
+        }.bind(this))
         this.add(logoutButton)
 
         const postsSection = new Section()
@@ -32,27 +32,27 @@ class Home extends Component {
 
         const addPostButton = new Button()
         addPostButton.setText('+')
-        addPostButton.addClickListener(() => {
+        addPostButton.addClickListener(function () {
             const createPost = new CreatePost()
 
-            createPost.addCreatePostSubmitListener(() => {
+            createPost.addCreatePostSubmitListener(function () {
                 this.remove(createPost)
 
                 this.loadPosts()
                 this.add(postsSection)
                 this.add(addPostButton)
-            })
+            }.bind(this))
 
-            createPost.addCancelClickListener(() => {
+            createPost.addCancelClickListener(function () {
                 this.remove(createPost)
                 this.add(postsSection)
                 this.add(addPostButton)
-            })
+            }.bind(this))
 
             this.remove(postsSection)
             this.remove(addPostButton)
             this.add(createPost)
-        })
+        }.bind(this))
         this.add(addPostButton)
     }
 
@@ -101,9 +101,15 @@ class Home extends Component {
 
                 const likeButton = new Button()
                 likeButton.setText(`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`)
-                likeButton.addClickListener(() => {
+                likeButton.addClickListener(function () {
                     try {
                         logic.toggleLikePost(post.id)
+
+                        // WARN
+                        // if (likeButton.getText() === '🤍')
+                        //     likeButton.setText('♥️')
+                        // else
+                        //     likeButton.setText('🤍')
 
                         this.loadPosts()
                     } catch (error) {
@@ -111,7 +117,7 @@ class Home extends Component {
 
                         alert(error.message)
                     }
-                })
+                }.bind(this))
                 postArticle.add(likeButton)
 
                 this.postsSection.add(postArticle)

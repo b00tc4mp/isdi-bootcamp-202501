@@ -3,7 +3,7 @@ class CreatePost extends Section {
         super()
 
         const form = new Form()
-        form.addSubmitListener(event => {
+        form.addSubmitListener(function (event) {
             event.preventDefault()
 
             try {
@@ -20,7 +20,7 @@ class CreatePost extends Section {
 
                 alert(error.message)
             }
-        })
+        }.bind(this))
         this.add(form)
 
         const imageLabel = new Label()
@@ -46,11 +46,11 @@ class CreatePost extends Section {
 
         const cancelAnchor = new Anchor()
         cancelAnchor.setText('Cancel')
-        cancelAnchor.addClickListener(() => {
+        cancelAnchor.addClickListener(function () {
             form.clear()
 
             this.cancelClickListener()
-        })
+        }.bind(this))
         this.add(cancelAnchor)
     }
 

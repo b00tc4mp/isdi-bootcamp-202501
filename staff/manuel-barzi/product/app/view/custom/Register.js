@@ -9,7 +9,7 @@ class Register extends Component {
         // form
 
         const form = new Form()
-        form.addSubmitListener(function (event) {
+        form.addSubmitListener(event => {
             event.preventDefault()
 
             const name = nameInput.getValue()
@@ -28,7 +28,7 @@ class Register extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         this.add(form)
 
         // name
@@ -84,11 +84,11 @@ class Register extends Component {
 
         const loginAnchor = new Anchor()
         loginAnchor.setText('Login')
-        loginAnchor.addClickListener(function () {
+        loginAnchor.addClickListener(() => {
             form.clear()
 
             this.loginClickListener()
-        }.bind(this))
+        })
         this.add(loginAnchor)
     }
 

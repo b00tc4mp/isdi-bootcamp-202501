@@ -1,4 +1,4 @@
-class Login extends Component {
+class Register extends Component {
     constructor() {
         super('div')
 
@@ -9,25 +9,47 @@ class Login extends Component {
         // form
 
         const form = new Form()
-        form.addSubmitListener(event => {
+        form.addSubmitListener(function (event) {
             event.preventDefault()
 
+            const name = nameInput.getValue()
+            const email = emailInput.getValue()
             const username = usernameInput.getValue()
             const password = passwordInput.getValue()
 
             try {
-                logic.loginUser(username, password)
+                logic.registerUser(name, email, username, password)
 
                 form.clear()
 
-                this.loginSubmitListener()
+                this.registerSubmitListener()
             } catch (error) {
                 console.error(error)
 
                 alert(error.message)
             }
-        })
+        }.bind(this))
         this.add(form)
+
+        // name
+
+        const nameLabel = new Label()
+        nameLabel.setText('Name')
+        form.add(nameLabel)
+
+        const nameInput = new Input()
+        form.add(nameInput)
+
+        // email
+
+        const emailLabel = new Label()
+        emailLabel.setText('E-mail')
+        form.add(emailLabel)
+
+
+        const emailInput = new Input()
+        emailInput.setType('email')
+        form.add(emailInput)
 
         // username
 
@@ -54,27 +76,27 @@ class Login extends Component {
         // submit
 
         const submitButton = new Button()
-        submitButton.setText('Login')
+        submitButton.setText('Register')
         submitButton.setType('submit')
         form.add(submitButton)
 
         // anchor
 
-        const registerAnchor = new Anchor()
-        registerAnchor.setText('Register')
-        registerAnchor.addClickListener(() => {
+        const loginAnchor = new Anchor()
+        loginAnchor.setText('Login')
+        loginAnchor.addClickListener(function () {
             form.clear()
 
-            this.registerClickListener()
-        })
-        this.add(registerAnchor)
+            this.loginClickListener()
+        }.bind(this))
+        this.add(loginAnchor)
     }
 
-    addRegisterClickListener(listener) {
-        this.registerClickListener = listener
+    addLoginClickListener(listener) {
+        this.loginClickListener = listener
     }
 
-    addLoginSubmitListener(listener) {
-        this.loginSubmitListener = listener
+    addRegisterSubmitListener(listener) {
+        this.registerSubmitListener = listener
     }
 }
