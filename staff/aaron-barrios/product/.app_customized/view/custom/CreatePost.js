@@ -33,7 +33,7 @@ class CreatePost extends Component {
         createPostButton.container.style.width = '80px'
         form.add(createPostButton)
 
-        form.addSubmitListener(function (event) {
+        form.addSubmitListener(event => {
             event.preventDefault()
 
             const postText = textInput.getValue()
@@ -58,6 +58,6 @@ class CreatePost extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
     }
 }

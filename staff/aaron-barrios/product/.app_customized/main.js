@@ -6,11 +6,11 @@ body.container = document.body //reemplazo el contenedor del body por el que cre
 
 // --- LANDING ---
 var landing = new Landing()
-landing.addRegisterClickListener(function () {
+landing.addRegisterClickListener(() => {
     body.remove(landing)
     body.add(register)
 })
-landing.addLoginClickListener(function () {
+landing.addLoginClickListener(() => {
     body.remove(landing)
     body.add(login)
 })
@@ -18,26 +18,26 @@ body.add(landing)
 
 //--- REGISTER ---
 var register = new Register()
-register.addLoginClickListener(function () {
+register.addLoginClickListener(() => {
     body.remove(register)
     body.add(login)
 })
-register.addRegisterSubmitListener(function () {
+register.addRegisterSubmitListener(() => {
     body.remove(register)
     body.add(login)
 })
 
 //--- LOGIN ---
 var login = new Login()
-login.addRegisterClickListener(function () {
+login.addRegisterClickListener(() => {
     body.remove(login)
     body.add(register)
 })
-login.addLoginSubmitListener(function () {
+login.addLoginSubmitListener(() => {
     try {
         const name = logic.getUsername()
 
-        home.setWelcomeText(`Hello ${name}!`)
+        home.loadPosts(`Hello ${name}!`)
 
         const posts = logic.getPosts()
 
@@ -54,7 +54,7 @@ login.addLoginSubmitListener(function () {
 
 // ---- HOME ----
 var home = new Home()
-home.addLogoutClickListener(function () {
+home.addLogoutClickListener(() => {
     body.remove(home)
     body.add(landing)
 })

@@ -36,13 +36,11 @@ class Login extends Component {
         form.add(passwordInput)
 
 
-        form.addSubmitListener(function (event) {
+        form.addSubmitListener(event => {
             event.preventDefault()
-
 
             const username = usernameInput.getValue()
             const password = passwordInput.getValue()
-
 
             try {
                 logic.loginUser(username, password)
@@ -55,7 +53,7 @@ class Login extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
 
         const lowerSpan = new Span()
         lowerSpan.container.style.margin = '10px'
@@ -68,11 +66,11 @@ class Login extends Component {
         registerAnchor.setText('Register')
         registerAnchor.container.style.textDecoration = 'underline'
         registerAnchor.container.style.cursor = 'pointer'
-        registerAnchor.addClickListener(function () {
+        registerAnchor.addClickListener(() => {
             form.clear()
 
             this.registerClickListener()
-        }.bind(this))
+        })
         lowerSpan.add(registerAnchor)
 
         const loginButton = new Button()

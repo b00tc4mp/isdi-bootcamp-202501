@@ -45,27 +45,27 @@ class Home extends Component {
 
         const createPostButton = new Button()
         createPostButton.setText('🧉')
-        createPostButton.addClickListener(function () {
+        createPostButton.addClickListener(() => {
             const createPost = new CreatePost()
 
-            createPost.addCreatePostSubmitListener(function () {
+            createPost.addCreatePostSubmitListener(() => {
                 this.remove(createPost)
 
                 this.loadPosts()
                 this.add(this.postsSection)
                 this.add(createPostButton)
-            }.bind(this))
+            })
 
-            createPost.addCancelClickListener(function () {
+            createPost.addCancelClickListener(() => {
                 this.remove(createPost)
                 this.add(this.postsSection)
                 this.add(createPostButton)
-            }.bind(this))
+            })
 
             this.remove(this.postsSection)
             this.remove(createPostButton)
             this.add(createPost)
-        }.bind(this))
+        })
         this.add(createPostButton)
     }
     addLogoutClickListener(listener) {

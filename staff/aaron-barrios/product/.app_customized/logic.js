@@ -137,7 +137,7 @@ var logic = {
             modifiedAt: null
         }
 
-        data.posts[data.posts.length] = post
+        data.push(post)
     },
 
     logoutUser: function () {
