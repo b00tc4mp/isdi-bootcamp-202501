@@ -30,14 +30,12 @@ class Home extends Component {
         const postButton = new Button()
         postButton.setText('➕')
         postButton.container.style.borderRadius = '50%'
-        postButton.addClickListener(function () {
-            this.addPostButton()
-        }.bind(this))
+        postButton.addClickListener(() => { this.addPostButton() })
         footer.add(postButton)
 
         const logoutButton = new Button()
         logoutButton.setText('Logout')
-        logoutButton.addClickListener(function () {
+        logoutButton.addClickListener(() => {
             try {
                 logic.logoutUser()
 
@@ -47,7 +45,7 @@ class Home extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         footer.add(logoutButton)
     }
 
@@ -59,7 +57,7 @@ class Home extends Component {
         this.welcome.setText(text)
     }
 
-    addPostSubmitListener = function (callback) {
+    addPostSubmitListener = callback => {
         this.addPostButton = callback
     }
 
@@ -92,23 +90,21 @@ class Home extends Component {
             numberOfLikes.setText(post.likes.length)
             likeSection.add(numberOfLikes)
 
-            const likeAnchor = new Anchor()
-            if (!logic.isPostLikedByUser(post))
-                likeAnchor.setText('🤍')
-            else
-                likeAnchor.setText('🩷')
-            likeAnchor.addClickListener(function () {
-                logic.likePost(post)
+            const likeButton = new Button()
+            likeButton.setText(logic.isPostLikedByUser(post) ? '🩷' : '🤍')
+            likeButton.addClickListener(() => {
+                try {
+                    logic.likePost(post)
 
-                if (this.innerText === '🤍') {
-                    this.innerText = '🩷'
+                    likeButton.setText(logic.isPostLikedByUser(post) ? '🩷' : '🤍')
                     numberOfLikes.setText(post.likes.length)
-                } else {
-                    this.innerText = '🤍'
-                    numberOfLikes.setText(post.likes.length)
+                } catch (error) {
+                    console.log(error)
+
+                    alert(error.message)
                 }
             })
-            likeSection.add(likeAnchor)
+            likeSection.add(likeButton)
             postArticle.add(likeSection)
 
             const postDate = new Time()

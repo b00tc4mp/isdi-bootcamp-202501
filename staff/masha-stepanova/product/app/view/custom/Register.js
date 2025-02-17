@@ -11,7 +11,7 @@ class Register extends Component {
         form.container.style.flexDirection = 'column'
         form.container.style.gap = '0.3rem'
 
-        form.addSubmitListener(function (event) {
+        form.addSubmitListener(event => {
             event.preventDefault()
 
             const name = inputName.getValue()
@@ -30,7 +30,7 @@ class Register extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         this.add(form)
 
         const labelName = new Label()
@@ -71,11 +71,11 @@ class Register extends Component {
 
         const loginAnchor = new Anchor()
         loginAnchor.setText('Login')
-        loginAnchor.addClickListener(function () {
+        loginAnchor.addClickListener(() => {
             form.clear()
 
             this.loginClickListener()
-        }.bind(this))
+        })
         this.add(loginAnchor)
     }
 

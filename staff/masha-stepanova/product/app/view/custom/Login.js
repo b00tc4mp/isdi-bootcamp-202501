@@ -33,7 +33,7 @@ class Login extends Component {
         loginButton.setType('submit')
         form.add(loginButton)
 
-        form.addSubmitListener(function (event) {
+        form.addSubmitListener(event => {
             event.preventDefault()
 
             const username = inputUsername.getValue()
@@ -50,7 +50,7 @@ class Login extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
 
         const registerAnchor = new Anchor()
         registerAnchor.setText('Register')

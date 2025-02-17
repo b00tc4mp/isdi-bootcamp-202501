@@ -15,7 +15,7 @@ class AddPost extends Section {
         form.container.style.flexDirection = 'column'
         form.container.style.gap = '0.3rem'
 
-        form.addSubmitListener(function (event) {
+        form.addSubmitListener(event => {
             event.preventDefault()
 
             const link = inputLink.getValue()
@@ -32,7 +32,7 @@ class AddPost extends Section {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         this.add(form)
 
         const labelLink = new Label()
@@ -58,9 +58,7 @@ class AddPost extends Section {
 
         const cancelAnchor = new Anchor()
         cancelAnchor.setText('Cancel')
-        cancelAnchor.addClickListener(function () {
-            this.cancelClickListener()
-        }.bind(this))
+        cancelAnchor.addClickListener(() => { this.cancelClickListener() })
         this.add(cancelAnchor)
     }
 

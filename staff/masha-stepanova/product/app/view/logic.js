@@ -125,6 +125,7 @@ const logic = {
         for (var i = 0; i < postToLike.likes.length; i++) {
             if (postToLike.likes[i] === data.userId) {
                 postToLike.likes.splice(i, 1)
+                localStorage.posts = JSON.stringify(data.posts)
                 return
             }
         }
