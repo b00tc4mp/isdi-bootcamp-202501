@@ -22,7 +22,7 @@ function Login () {
             form.clear()
     
             this.loginSubmitListener()
-        } catch (error){
+        } catch {
             console.error(error)
 
             alert(error.message)

@@ -30,9 +30,29 @@ function Home () {
         
     }.bind(this))
 
-    var postSection = new Section()
-    this.add(postSection) 
-    this.postSection = postSection
+    var postsSection = new Section()
+    this.add(postsSection) 
+    this.postsSection = postsSection
+
+    var addPostButton = new Button()
+    addPostButton.setText('+')
+    addPostButton.addClickListener(function () {
+        var createPost = new CreatePost()
+
+        createPost.addCreatePostSubmitListener(function () {
+            this.remove(createPost)
+
+            this.loadPosts()
+            this.add(postsSection)
+            this.add(addPostButton)
+        }.bind(this))
+
+        this.remove(postsSection)
+        this.remove(addPostButton)
+
+        this.add(createPost)
+    }.bind(this))
+    this.add(addPostButton) 
 }
 
 Home.prototype = Object.create(Component.prototype)
@@ -42,33 +62,52 @@ Home.prototype.addLogoutClickListener = function (listener) {
     this.logoutClickListener = listener
 }
 
-Home.prototype.setWelcomeText = function (text) {
-    this.welcome.setText(text)
-}
+Home.prototype.loadUserName = function () {
+    try {
+        const name = logic.getUserName()
 
-Home.prototype.setPosts = function (posts) {
-    for (var i = 0; i < posts.length; i++) {
-        var post = posts[i]
+        this.welcome.setText(`Hello, ${name}!`)
+    } catch (error) {
+        console.error(error)
 
-        var postArticle = new Article()
-
-        var authorHeading = new Heading(3)
-        authorHeading.setText(post.author)
-        postArticle.add(authorHeading)
-        
-        var postImage = new Image()
-        postImage.setUrl(post.image)
-        postArticle.add(postImage)
-
-        var postText = new Paragraph()
-        postText.setText(post.text)
-        postArticle.add(postText)
-
-        var postDate = new Time()
-        postDate.setText(post.createdAt.toISOString())
-        postArticle.add(postDate)
-
-        this.postSection.add(postArticle)
-        
+        alert(error.message)
     }
+    
 }
+
+Home.prototype.loadPosts = function () {
+    this.postsSection.container.innerHTML = ''
+
+    try {
+        const posts = logic.getPosts()
+
+        for (var i = posts.length - 1; i > -1; i--) {
+            var post = posts[i]
+
+            var postArticle = new Article()
+
+            var authorHeading = new Heading(3)
+            authorHeading.setText(post.author)
+            postArticle.add(authorHeading)
+
+            var postImage = new Image()
+            postImage.setUrl(post.image)
+            postArticle.add(postImage)
+
+            var postText = new Paragraph()
+            postText.setText(post.text)
+            postArticle.add(postText)
+
+            var postDate = new Time()
+            postDate.setText(post.createdAt.toISOString())
+            postArticle.add(postDate)
+
+            this.postsSection.add(postArticle)        }
+    } catch (error) {
+        console.error(error)
+
+        alert(error.message)
+    }
+    
+}
+

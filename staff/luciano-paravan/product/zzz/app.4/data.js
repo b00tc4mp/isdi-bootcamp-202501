@@ -17,14 +17,6 @@ var data = {
             email: 'ricardo@gmail.com',
             username: 'richard123',
             password: '22222222'
-        },
-        {
-            id: 'm799klr6j2',
-            name: 'Juan',
-            surname: 'Perez',
-            email: 'jp@gmail.com',
-            username: 'jp',
-            password: 'golgolgol'
         }
     ],
     posts: [
