@@ -108,7 +108,37 @@ const logic = {
     },
 
     getPosts() {
-        return data.posts
+        //comprueba los posts likeados mediante la creacion de un boolean 
+        //y la creacion de un objeto nuevo con propiedades solo para pintar
+        const aggregatedPosts = []
+
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
+
+            let liked = false
+
+            for (let i = 0; i < post.likes.length && !liked; i++) {
+                const userId = post.likes[i]
+
+                if (userId === data.userId)
+                    liked = true
+            }
+
+            const aggregatedPost = {
+                id: post.id,
+                author: post.author,
+                image: post.image,
+                text: post.text,
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
+                liked: liked,
+                likesCount: post.likes.length
+            }
+
+            aggregatedPosts[aggregatedPosts.length] = aggregatedPost
+        }
+
+        return aggregatedPosts
     },
 
     createPost(image, text) {
@@ -130,7 +160,45 @@ const logic = {
         data.posts[data.posts.length] = post
     },
 
-    toggleLikePost() {
-        //TO DO
+    toggleLikePost(postId) {
+        //paso el post Id por parametro desde loadPosts y lo busco
+        let foundPost
+
+        for (let i = 0; i < data.posts.length && !foundPost; i++) {
+            const post = data.posts[i]
+
+            if (post.id === postId)
+                foundPost = post
+        }
+
+        if (!foundPost) throw new NotFoundError('post not found')
+
+        let userIdFound = false
+
+        //en este caso lo encuentro y voy a buscar el like en concreto
+        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
+            const userId = foundPost.likes[i]
+
+            if (userId === data.userId)
+                userIdFound = true
+        }
+
+        //si no encuentro el like de ese usuario le doy like 
+        if (!userIdFound)
+            foundPost.likes[foundPost.likes.length] = data.userId
+        else {
+            //en caso de tener like lo solapo con otro array para quitarlo
+            const likes = []
+
+            for (let i = 0; i < foundPost.likes.length; i++) {
+                const userId = foundPost.likes[i]
+
+                if (userId !== data.userId)
+                    likes[likes.length] = userId
+            }
+
+            foundPost.likes = likes
+        }
+
     }
 }

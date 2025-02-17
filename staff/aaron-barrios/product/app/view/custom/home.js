@@ -22,7 +22,7 @@ class Home extends Component {
         logoutButton.container.style.width = '100px'
         logoutButton.container.style.height = '35px'
         logoutButton.container.style.marginRight = '10px'
-        logoutButton.addClickListener(function () {
+        logoutButton.addClickListener(() => {
             try {
                 logic.logoutUser()
 
@@ -32,7 +32,7 @@ class Home extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         header.add(logoutButton)
 
         //MAIN HOME
@@ -48,24 +48,24 @@ class Home extends Component {
         createPostButton.addClickListener(function () {
             const createPost = new CreatePost()
 
-            createPost.addCreatePostSubmitListener(function () {
+            createPost.addCreatePostSubmitListener(() => {
                 this.remove(createPost)
 
                 this.loadPosts()
                 this.add(this.postsSection)
                 this.add(createPostButton)
-            }.bind(this))
+            })
 
-            createPost.addCancelClickListener(function () {
+            createPost.addCancelClickListener(() => {
                 this.remove(createPost)
                 this.add(this.postsSection)
                 this.add(createPostButton)
-            }.bind(this))
+            })
 
             this.remove(this.postsSection)
             this.remove(createPostButton)
             this.add(createPost)
-        }.bind(this))
+        })
         this.add(createPostButton)
     }
     addLogoutClickListener(listener) {
@@ -95,31 +95,44 @@ class Home extends Component {
                 const post = posts[i];
 
                 const postArticle = new Article();
-                postArticle.container.style.width = '100%';
-                postArticle.container.style.padding = '10px';
-                postArticle.container.style.border = '1px solid #ccc';
-                postArticle.container.style.borderRadius = '5px';
-                postArticle.container.style.backgroundColor = '#f9f9f9';
+                postArticle.container.style.width = '100%'
+                postArticle.container.style.padding = '10px'
+                postArticle.container.style.border = '1px solid #ccc'
+                postArticle.container.style.borderRadius = '5px'
+                postArticle.container.style.backgroundColor = '#f9f9f9'
                 //PONER GAP
 
-                const authorHeading = new Heading(3);
-                authorHeading.setText(post.author);
-                postArticle.add(authorHeading);
+                const authorHeading = new Heading(3)
+                authorHeading.setText(post.author)
+                postArticle.add(authorHeading)
 
-                const postImage = new Image();
-                postImage.setUrl(post.image);
-                postImage.container.style.width = '100%';
-                postImage.container.style.height = 'auto';
-                postImage.container.style.objectFit = 'cover';
-                postArticle.add(postImage);
+                const postImage = new Image()
+                postImage.setUrl(post.image)
+                postImage.container.style.width = '100%'
+                postImage.container.style.height = 'auto'
+                postImage.container.style.objectFit = 'cover'
+                postArticle.add(postImage)
 
-                const postText = new Paragraph();
-                postText.setText(post.text);
-                postArticle.add(postText);
+                const postText = new Paragraph()
+                postText.setText(post.text)
+                postArticle.add(postText)
 
-                const postDate = new Time();
-                postDate.setText(post.createdAt.toISOString());
-                postArticle.add(postDate);
+                const postDate = new Time()
+                postDate.setText(post.createdAt.toISOString())
+                postArticle.add(postDate)
+
+                const likeButton = new Button()
+                likeButton.setText(`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`)
+                likeButton.addClickListener(() => {
+                    try {
+                        logic.toggleLikePost(post.id)
+                    } catch (error) {
+                        console.error(error)
+
+                        alert(error.message)
+                    }
+                })
+                postArticle.add(likeButton)
 
                 this.postsSection.add(postArticle);
             }

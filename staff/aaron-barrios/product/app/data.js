@@ -31,7 +31,7 @@ const data = {
             text: 'Soy el sacarino',
             createdAt: new Date(2024, 0, 10),
             modifiedAt: null,
-            likes: ['m71tm7l3l5l', 'm71tml17ly']
+            likes: []
         },
 
         {
@@ -41,7 +41,7 @@ const data = {
             text: 'Se utilizar el método reduce',
             createdAt: new Date(2024, 6, 22),
             modifiedAt: null,
-            likes: ['m71tm7l3l5l', 'm71tml17ly']
+            likes: []
         }
     ],
     userId: null

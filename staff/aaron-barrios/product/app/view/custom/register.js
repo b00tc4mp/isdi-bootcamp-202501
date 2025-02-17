@@ -68,11 +68,11 @@ class Register extends Component {
         loginAnchor.setText('Login')
         loginAnchor.container.style.textDecoration = 'underline'
         loginAnchor.container.style.cursor = 'pointer'
-        loginAnchor.addClickListener(function () {
+        loginAnchor.addClickListener(() => {
             form.clear()
 
             this.loginClickListener()
-        }.bind(this))
+        })
         lowerSpan.add(loginAnchor)
 
         const registerButton = new Button()
@@ -83,7 +83,7 @@ class Register extends Component {
 
         form.add(lowerSpan)
 
-        form.addSubmitListener(function (event) {
+        form.addSubmitListener(event => {
             event.preventDefault()
 
             const name = nameInput.getValue()
@@ -107,7 +107,7 @@ class Register extends Component {
             }
 
 
-        }.bind(this))
+        })
     }
 
     addLoginClickListener(listener) {
