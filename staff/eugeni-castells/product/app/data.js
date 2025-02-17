@@ -32,6 +32,7 @@ const data = {
       text: "castell de cardona",
       createdAt: new Date(2024, 2, 20),
       modifiedAt: null,
+      likes: [],
     },
     {
       id: "546x0cdqf5.7",
@@ -41,6 +42,7 @@ const data = {
       text: "castell de requesens",
       createdAt: new Date(2024, 8, 10),
       modifiedAt: null,
+      likes: [],
     },
   ],
 };

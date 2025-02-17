@@ -61,11 +61,21 @@ class Home extends Component {
     this.welcomeTextHeader.setText(text);
   }
 
-  setPosts(posts) {
-    for (let i = 0; i < posts.length; i++) {
-      const post = new Post(posts[i]);
+  setPosts() {
+    this.postsSection.container.innerHTML = "";
 
-      this.postsSection.add(post);
-    }
+    try {
+      const posts = logic.getPosts();
+      for (let i = 0; i < posts.length; i++) {
+        const post = new Post(posts[i]);
+
+        post.addLikeClickListener(
+          function () {
+            this.setPosts(posts);
+          }.bind(this)
+        );
+        this.postsSection.add(post);
+      }
+    } catch (error) {}
   }
 }

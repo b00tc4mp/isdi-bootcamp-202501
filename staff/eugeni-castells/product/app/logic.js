@@ -94,7 +94,34 @@ const logic = {
     data.userId = null;
   },
   getPosts: function () {
-    return JSON.parse(localStorage.posts);
+    const aggregatedPosts = [];
+
+    for (let i = 0; i < data.posts.length; i++) {
+      let post = data.posts[i];
+
+      let liked = false;
+
+      for (let i = 0; i < post.likes.length && !liked; i++) {
+        if (post.likes[i] === data.userId) {
+          liked = true;
+        }
+      }
+
+      let aggregatedPost = {
+        id: post.id,
+        author: post.author,
+        image: post.image,
+        text: post.text,
+        createdAt: post.createdAt,
+        modifiedAt: post.modifiedAt,
+        likes: post.likes,
+        liked: liked,
+      };
+
+      aggregatedPosts[aggregatedPosts.length] = aggregatedPost;
+    }
+
+    return aggregatedPosts;
   },
   addPost: function (image, bio) {
     this.validate.text(image, "image URL");
@@ -108,6 +135,7 @@ const logic = {
       text: bio,
       createdAt: new Date(),
       modifiedAt: null,
+      likes: [],
     };
     data.posts[data.posts.length] = post;
 
@@ -130,5 +158,44 @@ const logic = {
   getOnlineUserName() {
     const user = this.getOnlineUserInfo();
     return user.name;
+  },
+  updatePostLikes(postId) {
+    var postFound = false;
+
+    for (let i = 0; i < data.posts.length && !postFound; i++) {
+      const post = data.posts[i];
+
+      if (post.id === postId) {
+        postFound = post;
+
+        postFoundIndex = i;
+      }
+    }
+
+    if (!postFound) throw new Error("Post not found");
+
+    let userIdFound;
+
+    for (let i = 0; i < postFound.likes.length; i++) {
+      if (data.userId === postFound.likes[i]) userIdFound = data.userId;
+    }
+
+    if (!userIdFound) {
+      postFound.likes[postFound.likes.length] = data.userId;
+
+      localStorage.posts = JSON.stringify(data.posts);
+      // localStorage.posts[postFoundIndex].likes[likesIndex.length] = data.userId;
+    } else {
+      let likes = [];
+      for (let i = 0; i < postFound.likes.length; i++) {
+        if (postFound.likes[i] !== data.userId)
+          likes[likes.length] = postFound.likes[i];
+      }
+
+      // postFound.likes = likes;
+      postFound.likes = likes;
+      localStorage.posts = JSON.stringify(data.posts);
+      // localStorage.posts[postFoundIndex].likes = JSON.stringify(likes);
+    }
   },
 };
