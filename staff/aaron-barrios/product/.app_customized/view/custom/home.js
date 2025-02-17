@@ -86,7 +86,7 @@ class Home extends Component {
 
     loadPosts() {
         // Limpiar contenido antes de agregar nuevos posts
-        this.postsSection.container.innerHTML = '';
+        this.postsSection.container.innerHTML = ''
 
         try {
             const posts = logic.getPosts()
@@ -94,34 +94,34 @@ class Home extends Component {
             for (let i = posts.length - 1; i > -1; i--) {
                 const post = posts[i];
 
-                const postArticle = new Article();
-                postArticle.container.style.width = '100%';
-                postArticle.container.style.padding = '10px';
-                postArticle.container.style.border = '1px solid #ccc';
-                postArticle.container.style.borderRadius = '5px';
-                postArticle.container.style.backgroundColor = '#f9f9f9';
+                const postArticle = new Article()
+                postArticle.container.style.width = '100%'
+                postArticle.container.style.padding = '10px'
+                postArticle.container.style.border = '1px solid #ccc'
+                postArticle.container.style.borderRadius = '5px'
+                postArticle.container.style.backgroundColor = '#f9f9f9'
                 //PONER GAP
 
-                const authorHeading = new Heading(3);
-                authorHeading.setText(post.author);
-                postArticle.add(authorHeading);
+                const authorHeading = new Heading(3)
+                authorHeading.setText(post.author)
+                postArticle.add(authorHeading)
 
-                const postImage = new Image();
-                postImage.setUrl(post.image);
-                postImage.container.style.width = '100%';
-                postImage.container.style.height = 'auto';
-                postImage.container.style.objectFit = 'cover';
-                postArticle.add(postImage);
+                const postImage = new Image()
+                postImage.setUrl(post.image)
+                postImage.container.style.width = '100%'
+                postImage.container.style.height = 'auto'
+                postImage.container.style.objectFit = 'cover'
+                postArticle.add(postImage)
 
-                const postText = new Paragraph();
-                postText.setText(post.text);
-                postArticle.add(postText);
+                const postText = new Paragraph()
+                postText.setText(post.text)
+                postArticle.add(postText)
 
-                const postDate = new Time();
-                postDate.setText(post.createdAt.toISOString());
-                postArticle.add(postDate);
+                const postDate = new Time()
+                postDate.setText(post.createdAt.toISOString())
+                postArticle.add(postDate)
 
-                this.postsSection.add(postArticle);
+                this.postsSection.add(postArticle)
             }
         } catch (error) {
             console.error(error)

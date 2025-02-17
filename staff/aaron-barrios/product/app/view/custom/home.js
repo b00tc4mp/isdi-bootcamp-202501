@@ -126,6 +126,8 @@ class Home extends Component {
                 likeButton.addClickListener(() => {
                     try {
                         logic.toggleLikePost(post.id)
+
+                        this.loadPosts()
                     } catch (error) {
                         console.error(error)
 
