@@ -6,11 +6,11 @@ body.container = document.body //reemplazo el contenedor del body por el que cre
 
 // --- LANDING ---
 const landing = new Landing()
-landing.addRegisterClickListener(function () {
+landing.addRegisterClickListener(() => {
     body.remove(landing)
     body.add(register)
 })
-landing.addLoginClickListener(function () {
+landing.addLoginClickListener(() => {
     body.remove(landing)
     body.add(login)
 })
@@ -18,22 +18,22 @@ body.add(landing)
 
 //--- REGISTER ---
 const register = new Register()
-register.addLoginClickListener(function () {
+register.addLoginClickListener(() => {
     body.remove(register)
     body.add(login)
 })
-register.addRegisterSubmitListener(function () {
+register.addRegisterSubmitListener(() => {
     body.remove(register)
     body.add(login)
 })
 
 //--- LOGIN ---
 const login = new Login()
-login.addRegisterClickListener(function () {
+login.addRegisterClickListener(() => {
     body.remove(login)
     body.add(register)
 })
-login.addLoginSubmitListener(function () {
+login.addLoginSubmitListener(() => {
     home.loadUsername()
     home.loadPosts()
 
@@ -43,7 +43,7 @@ login.addLoginSubmitListener(function () {
 
 // ---- HOME ----
 const home = new Home()
-home.addLogoutClickListener(function () {
+home.addLogoutClickListener(() => {
     body.remove(home)
     body.add(landing)
 })

@@ -14,7 +14,7 @@ class Login extends Component {
         form.container.style.justifyContent = 'left'
         form.container.style.gap = '5px'
         this.form = form
-        form.addSubmitListener(function (event) {
+        form.addSubmitListener(event => {
             event.preventDefault()
 
 
@@ -33,7 +33,7 @@ class Login extends Component {
 
                 alert(error.message)
             }
-        }.bind(this))
+        })
         this.add(form)
 
         //USERNAME
