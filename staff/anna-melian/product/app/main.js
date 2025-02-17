@@ -52,6 +52,3 @@ home.addLogoutClickListener(function () {
     body.remove(home)
     body.add(landing)
 })
-
-
-//postsSection.innerHTML = '' para borrar los posts al hacer logout, ns donde va

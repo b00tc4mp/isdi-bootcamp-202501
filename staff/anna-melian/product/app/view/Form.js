@@ -1,17 +1,16 @@
-function Form() {
-    Component.call(this, 'form')
-    this.container.style.display = 'flex'
-    this.container.style.flexDirection = 'column'
-    this.container.style.gap = '10px'
-}
+class Form extends Component {
+    constructor() {
+        super('form')
+        this.container.style.display = 'flex'
+        this.container.style.flexDirection = 'column'
+        this.container.style.gap = '10px'
+    }
 
-Form.prototype = Object.create(Component.prototype)
-Form.prototype.constructor = Form
+    addSubmitListener(listener) {
+        this.container.addEventListener('submit', listener)
+    }
 
-Form.prototype.addSubmitListener = function (listener) {
-    this.container.addEventListener('submit', listener)
-}
-
-Form.prototype.clear = function () {
-    this.container.reset()
+    clear() {
+        this.container.reset()
+    }
 }

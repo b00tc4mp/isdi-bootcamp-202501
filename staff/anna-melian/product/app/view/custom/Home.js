@@ -1,144 +1,116 @@
-function Home() {
-    Component.call(this, 'div')
-    var logo = new Heading(1)
-    this.add(logo)
+class Home extends Component {
+    constructor() {
+        super('div')
 
-    logo.setText('Logo')
+        var logo = new Heading(1)
+        this.add(logo)
 
-    var greeting = new Heading(3)
-    greeting.setText('Hello User!')
-    this.add(greeting)
-    this.greeting = greeting
+        logo.setText('Logo')
 
-    var logoutButton = new Button()
-    logoutButton.setText('Logout')
-    logoutButton.addClickListener(function () {
+        var greeting = new Heading(3)
+        greeting.setText('Hello User!')
+        this.add(greeting)
+        this.greeting = greeting
+
+        var logoutButton = new Button()
+        logoutButton.setText('Logout')
+        logoutButton.addClickListener(function () {
+            try {
+                logic.logoutUser()
+
+                this.logoutClickListener()
+            } catch (error) {
+                console.error(error)
+
+                alert(error.message)
+            }
+        }.bind(this))
+        this.add(logoutButton)
+
+        var postsSection = new Section()
+        this.add(postsSection)
+        this.postsSection = postsSection
+
+        var addPostButton = new Button()
+        addPostButton.setText('+')
+        addPostButton.addClickListener(function () {
+            var createPost = new CreatePost()
+
+            createPost.addCreatePostSubmitListener(function () {
+                this.remove(createPost)
+
+                this.loadPosts()
+                this.add(postsSection)
+                this.add(addPostButton)
+            }.bind(this))
+
+            createPost.addCancelClickListener(function () {
+                this.remove(createPost)
+                this.add(postsSection)
+                this.add(addPostButton)
+            }.bind(this))
+
+            this.remove(postsSection)
+            this.remove(addPostButton)
+            this.add(createPost)
+        }.bind(this))
+        this.add(addPostButton)
+    }
+
+    addLogoutClickListener = function (listener) {
+        this.logoutClickListener = listener
+    }
+    loadUserName = function () {
         try {
-            logic.logoutUser()
+            const name = logic.getUserName()
 
-            this.logoutClickListener()
+            this.greeting.setText(`Hello, ${name} !`)
         } catch (error) {
             console.error(error)
 
             alert(error.message)
         }
-    }.bind(this))
-    this.add(logoutButton)
-
-    var postsSection = new Section()
-    this.add(postsSection)
-    this.postsSection = postsSection
-
-    var addPostButton = new Button()
-    addPostButton.setText('+')
-    addPostButton.addClickListener(function () {
-        var createPost = new CreatePost()
-
-        createPost.addCreatePostSubmitListener(function () {
-            this.remove(createPost)
-
-            this.loadPosts()
-            this.add(postsSection)
-            this.add(addPostButton)
-        }.bind(this))
-
-        createPost.addCancelClickListener(function () {
-            this.remove(createPost)
-            this.add(postsSection)
-            this.add(addPostButton)
-        }.bind(this))
-
-        this.remove(postsSection)
-        this.remove(addPostButton)
-        this.add(createPost)
-    }.bind(this))
-    this.add(addPostButton)
-}
-
-Home.prototype = Object.create(Component.prototype)
-Home.prototype.constructor = Home
-
-Home.prototype.addLogoutClickListener = function (listener) {
-    this.logoutClickListener = listener
-}
-
-Home.prototype.loadUserName = function () {
-    try {
-        const name = logic.getUserName()
-
-        this.greeting.setText('Hello, ' + name + '!')
-    } catch (error) {
-        console.error(error)
-
-        alert(error.message)
     }
-}
 
-Home.prototype.loadPosts = function () {
-    this.postsSection.container.innerHTML = ''
+    loadPosts = function () {
+        this.postsSection.container.innerHTML = ''
 
-    try {
-        const posts = logic.getPosts()
+        try {
+            const posts = logic.getPosts()
 
-        for (var i = posts.length - 1; i > -1; i--) {
-            var post = posts[i]
+            for (var i = posts.length - 1; i > -1; i--) {
+                var post = posts[i]
 
-            var postArticle = new Article()
+                var postArticle = new Article()
 
-            var authorHeading = new Heading(3)
-            authorHeading.setText(post.author)
-            postArticle.add(authorHeading)
+                var authorHeading = new Heading(3)
+                authorHeading.setText(post.author)
+                postArticle.add(authorHeading)
 
-            var postImage = new Image()
-            postImage.setUrl(post.image)
-            postArticle.add(postImage)
+                var postImage = new Image()
+                postImage.setUrl(post.image)
+                postArticle.add(postImage)
 
-            var postText = new Paragraph()
-            postText.setText(post.text)
-            postArticle.add(postText)
+                var postText = new Paragraph()
+                postText.setText(post.text)
+                postArticle.add(postText)
 
-            var postDate = new Time()
-            postDate.setText(post.createdAt.toISOString())
-            postArticle.add(postDate)
+                var postDate = new Time()
+                postDate.setText(post.createdAt.toISOString())
+                postArticle.add(postDate)
 
-            this.postsSection.add(postArticle)
+                this.postsSection.add(postArticle)
+            }
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
         }
-    } catch (error) {
-        console.error(error)
-
-        alert(error.message)
     }
-}
 
-Home.prototype.setGreetingText = function (text) {
-    this.greeting.setText(text)
-}
-
-Home.prototype.setPosts = function (posts) {
-    for (var i = 0; i < posts.length; i++) {
-        var post = posts[i]
-
-        var postArticle = new Article()
-
-        var authorHeading = new Heading(3)
-        authorHeading.setText(post.author)
-        postArticle.add(authorHeading)
-
-        var postImage = new Image()
-        postImage.setUrl(post.image)
-        postArticle.add(postImage)
-
-        var postText = new Paragraph()
-        postText.setText(post.text)
-        postArticle.add(postText)
-
-        var postDate = new Time()
-        postDate.setText(post.createdAt.toISOString())
-        postArticle.add(postDate)
-
-        this.postsSection.add(postArticle)
-
-
-
+    setGreetingText = function (text) {
+        this.greeting.setText(text)
     }
+
+
 }
