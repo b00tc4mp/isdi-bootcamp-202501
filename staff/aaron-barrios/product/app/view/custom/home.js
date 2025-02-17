@@ -134,7 +134,7 @@ class Home extends Component {
                 })
                 postArticle.add(likeButton)
 
-                this.postsSection.add(postArticle);
+                this.postsSection.add(postArticle)
             }
         } catch (error) {
             console.error(error)

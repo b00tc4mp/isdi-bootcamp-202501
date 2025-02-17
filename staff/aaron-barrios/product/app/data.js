@@ -26,9 +26,9 @@ const data = {
     posts: [
         {
             id: 'm71tm7l3l5l',
-            author: 'Sergi',
-            image: 'https://media.licdn.com/dms/image/v2/C4D03AQE4zK7r5gkL_w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1634638007252?e=1744848000&v=beta&t=t-0nX5tzCChxPLux8IqJHLPnglRIKTC6_pjlmHFcqCE',
-            text: 'Soy el sacarino',
+            author: 'm71tm7l3l5l',
+            image: 'https://media.giphy.com/media/vSbW8dAA1n516fYcbm/giphy.gif?cid=790b7611hu0cl161xv6ry8v3y8k3q20kfgm39htr8lqds3wt&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+            text: 'aguacate',
             createdAt: new Date(2024, 0, 10),
             modifiedAt: null,
             likes: []
@@ -36,9 +36,9 @@ const data = {
 
         {
             id: 'm71tm7l3l5l',
-            author: 'Masha',
-            image: 'https://media.licdn.com/dms/image/v2/D4E03AQHASkg49BpGBA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1670796699248?e=1744848000&v=beta&t=L3NBlqGN4Y4_5Z9Jb2iZ5CLz3r6jguqRqqLqmALqxGk',
-            text: 'Se utilizar el método reduce',
+            author: 'm71tm7l3l5l',
+            image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExczQxY2Jlb25xNWN3bWo4MWR6dmM4cTR3Y3RqYjBqOThmYWJpNTIyayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0IpXwyCXikRK9Yl2/giphy.gif',
+            text: 'orange',
             createdAt: new Date(2024, 6, 22),
             modifiedAt: null,
             likes: []
