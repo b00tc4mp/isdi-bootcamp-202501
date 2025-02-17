@@ -97,7 +97,7 @@ class Home extends Component {
 
     loadUsername() {
         try {
-            const userId = logic.getUserId()
+            const userId = logic.helper.getUserId()
             const username = logic.getUserProperty(userId, 'username')
 
             home.setWelcomeText(`Welcome, ${username}!`)
@@ -110,7 +110,7 @@ class Home extends Component {
         try {
             this.postArticleDiv.container.innerHTML = ''
 
-            const posts = logic.getPosts()
+            const posts = logic.helper.getPosts()
 
             for (let i = posts.length - 1; i > -1; i--) {
                 let post = posts[i]

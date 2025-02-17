@@ -8,7 +8,7 @@ class CreatePost extends Section {
 
         const inputForm = new Form()
         inputForm.setId("create-post")
-        inputForm.addSubmitListener((event) => {
+        inputForm.addSubmitListener(event => {
             event.preventDefault()
 
             const imageSrc = imageInput.getValue()
@@ -50,7 +50,7 @@ class CreatePost extends Section {
         descriptionInput.setPlaceholder('description')
         inputForm.add(descriptionInput)
 
-        inputForm.container.querySelectorAll("input").forEach((child) => {
+        inputForm.container.querySelectorAll("input").forEach(child => {
             child.style.width = "300px"
         })
 

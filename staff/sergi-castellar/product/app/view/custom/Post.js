@@ -50,7 +50,8 @@ class Post extends Component {
             }
 
             try {
-                logic.setLike(currentPostId)
+                logic.toggleLike(currentPostId)
+
 
             } catch (error) {
                 logic.helper.handleError()

@@ -8,7 +8,7 @@ class Login extends Component {
 
         const inputForm = new Form()
         inputForm.setId("login-form")
-        inputForm.addSubmitListener((event) => {
+        inputForm.addSubmitListener(event => {
             event.preventDefault()
 
             const username = usernameInput.getValue()

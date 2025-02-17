@@ -9,6 +9,14 @@ const logic = {
         handleError(error) {
             console.error(error)
             alert(error.message)
+        },
+
+        getPosts() {
+            return data.posts
+        },
+
+        getUserId() {
+            return data.userId
         }
     },
 
@@ -107,10 +115,6 @@ const logic = {
         data.userId = null
     },
 
-    getUserId() {
-        return data.userId
-    },
-
     getUserProperty(userId, property) {
         let found
         for (let i = 0; i < data.users.length; i++) {
@@ -125,10 +129,6 @@ const logic = {
         if (!found.hasOwnProperty(property)) throw new NotFoundError('property not found')
 
         return found[property]
-    },
-
-    getPosts() {
-        return data.posts
     },
 
     createNewPost(imageSrc, textDescription) {
@@ -148,10 +148,10 @@ const logic = {
         data.posts.push(newPost)
     },
 
-    setLike(currentPostId) {
+    toggleLike(currentPostId) {
         const currentPost = data.posts.find(post => post.id === currentPostId)
 
-        const userId = logic.getUserId()
+        const userId = logic.helper.getUserId()
         const likePosition = currentPost.likes.indexOf(userId)
         const isAlreadyLiked = likePosition !== -1
 
@@ -163,14 +163,14 @@ const logic = {
 
     },
 
-    getLikesUsernames(likesId) {
-        return likesId.map(likeId => {
+    getLikesUsernames(likeIds) {
+        return likeIds.map(likeId => {
             const user = data.users.find(user => user.id === likeId)
             return user.username
         })
     },
 
-    likesToString(likes) {
+    likesToString(likes) { // a interface
         if (likes.length === 0) {
             return ''
         } else if (likes.length < 3) {
