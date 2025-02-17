@@ -15,6 +15,7 @@ class Login extends Component {
         this.form = form
         this.add(form)
 
+
         //USERNAME
         const usernameLabel = new Label()
         usernameLabel.setText('Username')
@@ -54,6 +55,7 @@ class Login extends Component {
                 alert(error.message)
             }
         })
+
 
         const lowerSpan = new Span()
         lowerSpan.container.style.margin = '10px'

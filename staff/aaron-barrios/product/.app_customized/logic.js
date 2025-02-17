@@ -60,71 +60,57 @@ var logic = {
             password: password,
             createdAt: new Date(),
             role: username === 'god' ? 'admin' : 'user', //TEST -> ROLE
-            status: null,  // TEST -> status
+            state: null,  // TEST -> status
             modifiedAt: null,
         }
 
-        data.users[data.users.length] = user
+        data.users.push(user)
     },
 
     loginUser: function (username, password) {
         this.validate.username(username, 'name')
         this.validate.password(password, 'name')
 
-        var found
-
-        for (var i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
-
-            if (user.username === username)
-                found = user
-        }
+        var found = data.users.find(user => user.username === username)
 
         if (!found || found.password !== password) throw new Error('Wrong credentials')
 
-        data.userId = found.id
         data.currentUser = found
-        found.status = 'Online'
+        found.state = 'Online'
     },
 
     //TEST -> ONLINE USER
     getCurrentUser: function () {
-        var found
+        var foundUser = data.users.find(user => user.state === 'Online')
 
-        for (var i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
-
-            if (user.status === 'Online') {
-                found = user
-                return found
-            }
-        }
-
-        if (!found) throw new Error('Any user online')
+        if (!foundUser)
+            throw new Error('Any user online')
+        else
+            return foundUser
     },
 
     getUsername: function () {
-        var found
+        // var found
 
-        for (var i = 0; i < data.users.length && !found; i++) {
-            var user = data.users[i]
+        // for (var i = 0; i < data.users.length && !found; i++) {
+        //     var user = data.users[i]
 
-            if (user.id === data.userId)
-                found = user
-        }
+        //     if (user.id === data.userId)
+        //         found = user
+        // }
 
-        if (!found) throw new Error('Any user online')
+        // // if (!found) throw new Error('Any user online')
 
-        return found.name
+        // return found.name
     },
 
     getPosts: function () {
         return data.posts
     },
 
-    createPost: function (text, image) {
-        // this.validate.string(text, 'text')
-        // this.validate.string(image, 'text')
+    createPost: function (image, text) {
+        this.validate.string(image, 'text')
+        this.validate.string(text, 'text')
 
         var user = this.getCurrentUser()
 
@@ -142,7 +128,12 @@ var logic = {
 
     logoutUser: function () {
         data.userId = null
-        data.currentUser.status = 'Offline'
+        data.currentUser.state = 'Offline'
         data.currentUser = null
+    },
+
+    toggleLikePost(postId) {
+        var posts = data.posts
+        let foundPost = posts.map(post => post === postId)
     }
 }
