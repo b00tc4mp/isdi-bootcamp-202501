@@ -23,8 +23,18 @@ function Register(){
         var password = passwordInput.getValue()
 
         console.log(name, surname, email, username, password)
-        // UNA VEZ RECOGIDO LOS DATOS POR PARTE DE FORM LLAMO A LA FUNCION PARA AVISAR A MAIN
-        this.registerSubmitListener() //LLAMO A LA FUNCION *2
+        try{
+            // Enviar los datos a la logica.registUser
+            logic.registerUser(name, email, username, password)
+            // Limpiar formulario
+            form.clear()
+             // UNA VEZ RECOGIDO LOS DATOS POR PARTE DE FORM LLAMO A LA FUNCION PARA AVISAR A MAIN
+            this.registerSubmitListener() //LLAMO A LA FUNCION *2
+        }catch(error){
+            // Capturar e imprimir errores
+            console.log(error)
+            alert(error.message)
+        }
     }.bind(this))
     this.add(form)
 

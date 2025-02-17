@@ -19,8 +19,16 @@ function Login(){
 
         var username = inputUsername.getValue()
         var password = inputPassword.getValue()
-        console.log(username, password)
-        this.submitLoginListener()
+        try{    
+            logic.loginUser(username, password)
+            console.log(username, password)
+            
+            form.clear()
+            this.submitLoginListener()
+        }catch(error){
+            console.log(error)
+            alert(error.message)
+        }
     }.bind(this))
     this.add(form)
   
@@ -38,6 +46,7 @@ function Login(){
     form.add(password)
 
     var inputPassword = new Input()
+    inputPassword.setType('password')
     form.add(inputPassword)
    
     //BUTTON LOGIN

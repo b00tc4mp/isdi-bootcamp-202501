@@ -9,3 +9,7 @@ Form.prototype.constructor = Form // al form.prototype.constructor asignas el ti
 Form.prototype.addSubmitListener = function(callback){
     this.container.addEventListener('submit', callback)
 }
+
+Form.prototype.clear = function(){
+    this.container.reset()
+}

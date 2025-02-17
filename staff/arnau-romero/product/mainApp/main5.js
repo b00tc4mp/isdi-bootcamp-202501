@@ -3,7 +3,7 @@ console.log('Hello, App!')
 // body
 
 var body = new Body()
-document.body = body.container
+body.container = document.body
 
 // LANDING
 var landing = new Landing()
@@ -24,8 +24,21 @@ login.addAnchorListener(function(){
     body.add(register)
 })
 login.addSubmitLoginListener(function(){
-    body.remove(login)
-    body.add(home)
+    try{
+        const name = logic.getUserName() // Obtener nombre del usuario
+
+        home.setWelcomeText('Hello, ' + name + '!') // Obtener funcion de home de saludar 
+
+       const posts = logic.getPosts() // Obtener posts de logic
+
+        home.setPosts(posts) // Funcion para generar posts
+    
+        body.remove(login)
+        body.add(home)
+    }catch(error){
+
+        alert(error.message)
+    }
 })
 
 //REGISTER
