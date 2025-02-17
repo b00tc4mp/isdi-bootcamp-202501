@@ -1,10 +1,17 @@
-function Input() {
-    Component.call(this, 'input')
-}
+class Input extends Component {
+    constructor () {
+        super('input')
+    }
 
-Input.prototype = Object.create(Component.prototype)
-Input.prototype.constructor = Input
+    setType (type) {
+        this.container.type = type
+    }
 
-Input.prototype.getValue = function () {
-    return this.container.value
+    etPlaceHolder () {
+        this.container.placeholder = placeholder
+    }
+
+    getValue () {
+        return this.container.value
+    }
 }

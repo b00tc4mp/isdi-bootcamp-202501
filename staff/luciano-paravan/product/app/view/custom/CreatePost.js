@@ -1,64 +1,63 @@
-function CreatePost () {
-    Section.call(this)
+class CreatePost extends Section {
+    constructor () {
+        super ()
 
-    var form = new Form()
-    form.addSubmitListener(function (event) {
-        event.preventDefault()
-        try {
-            var image = imageInput.getValue()
-            var text = textInput.getValue()
-            
-            logic.createPost(image, text)
+        const form = new Form()
+        form.addSubmitListener(function (event) {
+            event.preventDefault()
+            try {
+                const image = imageInput.getValue()
+                const text = textInput.getValue()
+                
+                logic.createPost(image, text)
 
-            form.clear() 
+                form.clear() 
 
-            this.createPostSubmitListener()
-        } catch (error) {
-            console.error(error)
+                this.createPostSubmitListener()
+            } catch (error) {
+                console.error(error)
 
-            alert(error.message)
-        }
-    }.bind(this))
-    this.add(form)
+                alert(error.message)
+            }
+        }.bind(this))
+        this.add(form)
 
-    var imageLabel = new Label()
-    imageLabel.setText('Image')
-    form.add(imageLabel)
+        const imageLabel = new Label()
+        imageLabel.setText('Image')
+        form.add(imageLabel)
 
-    var imageInput = new Input()
-    imageInput.setType('url')
-    form.add(imageInput)
+        const imageInput = new Input()
+        imageInput.setType('url')
+        form.add(imageInput)
 
-    var textLabel = new Label()
-    textLabel.setText('text')
-    form.add(textLabel)
+        const textLabel = new Label()
+        textLabel.setText('text')
+        form.add(textLabel)
 
-    var textInput = new Input()
-    textInput.setType('text')
-    form.add(textInput)
+        const textInput = new Input()
+        textInput.setType('text')
+        form.add(textInput)
 
-    var submitButton = new Button ()
-    submitButton.setText('Create')
-    submitButton.setType('submit')
-    form.add(submitButton)
+        const submitButton = new Button ()
+        submitButton.setText('Create')
+        submitButton.setType('submit')
+        form.add(submitButton)
 
-    var cancelAnchor = new Anchor()
-    cancelAnchor.setText('Cancel')
-    cancelAnchor.addClickListener(function () {
-        form.clear()
+        const cancelAnchor = new Anchor()
+        cancelAnchor.setText('Cancel')
+        cancelAnchor.addClickListener(function () {
+            form.clear()
 
-        this.cancelClickListener()
-    }.bind(this))
-    this.add(cancelAnchor) 
-}
+            this.cancelClickListener()
+        }.bind(this))
+        this.add(cancelAnchor) 
+    }
 
-CreatePost.prototype = Object.create(Section.prototype)
-CreatePost.prototype.constructor = CreatePost
+    addCreatePostSubmitListener (listener) {
+        this.createPostSubmitListener = listener 
+    }
 
-CreatePost.prototype.addCreatePostSubmitListener = function (listener) {
-    this.createPostSubmitListener = listener 
-}
-
-CreatePost.prototype.addCancelClickListener = function (listener) {
-    this.cancelClickListener = listener
+    addCancelClickListener (listener) {
+        this.cancelClickListener = listener
+    }
 }

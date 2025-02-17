@@ -1,27 +1,29 @@
-function Component (tagName) {
-    this.container = document.createElement(tagName)
-}
+class Component {
+    constructor (tagName) {
+        this.container = document.createElement(tagName)
+    }
 
-Component.prototype.add = function (child) {
-    this.container.appendChild(child.container)
-}
+    add (child) {
+        this.container.appendChild(child.container)
+    }
 
-Component.prototype.remove = function (child) {
-    this.container.removeChild(child.container)
-}
+    remove (child) {
+        this.container.removeChild(child.container)
+    }
 
-Component.prototype.addClickListener = function (listener) {
-    this.container.addEventListener('click', listener)
-}
+    addClickListener (listener) {
+        this.container.addEventListener('click', listener)
+    }
 
-Component.prototype.addSubmitListener = function (callback) {
-    this.container.addEventListener('submit', callback)
-}
+    addSubmitListener (callback) {
+        this.container.addEventListener('submit', callback)
+    }
 
-Component.prototype.setText = function (text) {
-    this.container.textContent = text
-}
+    setText (text) {
+        this.container.textContent = text
+    }
 
-Component.prototype.setType = function (type) {
-    this.container.type = type
+    setType (type) {
+        this.container.type = type
+    }
 }

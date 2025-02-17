@@ -1,5 +1,5 @@
 
-const body = new Body()
+var body = new Body()
 body.container = document.body
 
 //body.container.style.color = '#428A82'
@@ -9,7 +9,7 @@ body.container = document.body
 // El Main es el que maneja las pantallas de la aplicacion, el apagado y encendido de las pantallas
 
 /* -------------------- Landing ------------------> */
-const landing = new Landing()
+var landing = new Landing()
 
 landing.addRegisterClickListener(function () {
     body.remove(landing)
@@ -23,7 +23,7 @@ landing.addLoginClickListener(function () {
 body.add(landing)
 
 /* ---------------- REGISTER -------------------> */
-const register = new Register
+var register = new Register
 
 register.addLoginClickListener(function () {
     body.remove(register)
@@ -35,7 +35,7 @@ register.addRegisterSubmitListener(function () {
     body.add(login)
 })
 // ------------------- Login ------------------>
-const login = new Login
+var login = new Login
 
 login.addRegisterClickListener(function () {
     home.loadUserName()
@@ -54,7 +54,7 @@ login.addLoginSubmitListener(function () {
 })
 
 // ------------------- HOME --------------------->
-const home = new Home()
+var home = new Home()
 
 home.addLogoutClickListener(function () {
     body.remove(home)

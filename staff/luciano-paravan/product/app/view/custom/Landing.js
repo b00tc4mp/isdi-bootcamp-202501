@@ -1,56 +1,54 @@
-function Landing() {
-    
-    Component.call(this, 'div')
+class Landing extends Component {
+    constructor () {
+        super('div')
 
-    // ---- LOGO ----
+        // ---- LOGO ----
 
-    var logo = new Heading(1)//document.createElement('h1')
-    logo.setText('Logo')
-    this.add(logo) //this.container.appendChild(logo)
+        const logo = new Heading(1)
+        logo.setText('Logo')
+        this.add(logo) 
 
-    // ---- WELCOME ----
+        // ---- WELCOME ----
 
-    var welcome = new Heading(3)
-    welcome.setText('Welcome!')
-    this.add(welcome)
+        const welcome = new Heading(3)
+        welcome.setText('Welcome!')
+        this.add(welcome)
 
-    // ---- LOGIN + REGISTER
+        // ---- LOGIN + REGISTER
 
-    var registerAnchor = new Anchor()
-    registerAnchor.setText('Register')
-    this.registerAnchor = registerAnchor
-    this.add(registerAnchor)
+        const registerAnchor = new Anchor()
+        registerAnchor.setText('Register')
+        this.registerAnchor = registerAnchor
+        this.add(registerAnchor)
 
-    var orText = document.createTextNode('or')
-    this.container.appendChild(orText)
+        const orText = document.createTextNode('or')
+        this.container.appendChild(orText)
 
-    var loginAnchor = new Anchor()
-    loginAnchor.setText('Login') 
-    this.loginAnchor = loginAnchor
-    this.add(loginAnchor)
+        const loginAnchor = new Anchor()
+        loginAnchor.setText('Login') 
+        this.loginAnchor = loginAnchor
+        this.add(loginAnchor)
 
+    }
+
+    addRegisterClickListener (listener) {
+        this.registerAnchor.addClickListener(listener)
+    }
+    // El Landing maneja solo el click. El comportamiento que uno decide fuera (el del main de eliminar pantalla y mostrar otra) que se recibe como parametro, se lo enviamos al click del button registerBox para que se dispare. 
+
+    addLoginClickListener (listener) {
+        this.loginAnchor.addClickListener(listener)
+    }
+
+    // ---- ESTILOS
+
+    //loginRegisterBox.container.style.display = 'flex'
+    //loginRegisterBox.container.style.flexDirection = 'column'
+    //loginRegisterBox.container.style.gap = '5px'
+
+    //loginBox.container.style.color = '#FFFFFF'
+    //loginBox.container.style.backgroundColor = '#428A82'
+
+    //registerBox.container.style.backgroundColor = '#E0EEEC'
+    //registerBox.container.style.borderColor = '#428A82'
 }
-
-Landing.prototype = Object.create(Component.prototype)
-Landing.prototype.constructor = Landing
-
-Landing.prototype.addRegisterClickListener = function (listener) {
-    this.registerAnchor.addClickListener(listener)
-}
-// El Landing maneja solo el click. El comportamiento que uno decide fuera (el del main de eliminar pantalla y mostrar otra) que se recibe como parametro, se lo enviamos al click del button registerBox para que se dispare. 
-
-Landing.prototype.addLoginClickListener = function (listener) {
-    this.loginAnchor.addClickListener(listener)
-}
-
-// ---- ESTILOS
-
-//loginRegisterBox.container.style.display = 'flex'
-//loginRegisterBox.container.style.flexDirection = 'column'
-//loginRegisterBox.container.style.gap = '5px'
-
-//loginBox.container.style.color = '#FFFFFF'
-//loginBox.container.style.backgroundColor = '#428A82'
-
-//registerBox.container.style.backgroundColor = '#E0EEEC'
-//registerBox.container.style.borderColor = '#428A82'
