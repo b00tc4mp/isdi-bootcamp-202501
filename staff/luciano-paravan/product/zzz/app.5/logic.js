@@ -129,14 +129,9 @@ var logic = {
             image: image,
             text: text,
             createdAt: new Date(),
-            modifiedAt: null,
-            likes: ''
+            modifiedAt: null
         }
 
         data.posts[data.posts.length] = post
-    },
-
-    toggleLikePost: function () {
-        
     }
 }

@@ -34,8 +34,7 @@ var data = {
             image: 'https://media.giphy.com/media/26FeZcg6jACh840dq/giphy.gif?cid=790b7611ncwkumxyi9bcgwg06xfsbtbed45ukmbhmy4btgkv&ep=v1_gifs_search&rid=giphy.gif&ct=g',
             text: 'The best',
             createdAt: new Date(2025, 0,1) ,
-            modifiedAt: null,
-            likes: []
+            modifiedAt: null
         },
         {
             id: 'qwe123rty456',
@@ -43,8 +42,7 @@ var data = {
             image: 'https://media.giphy.com/media/Lwlp1X2aC9gEU/giphy.gif?cid=ecf05e47y607uq53yx9gslpkgf2hnedutl1l8xg09g1i9rb7&ep=v1_gifs_search&rid=giphy.gif&ct=g',
             text: 'ehhhhh',
             createdAt: new Date(2025, 1,15) ,
-            modifiedAt: null,
-            likes: []
+            modifiedAt: null
         }
         
 
