@@ -1,4 +1,3 @@
-console.clear()
 const body = new Body()
 document.body = body.container
 body.container.style.background = 'lightcyan'
@@ -34,12 +33,8 @@ login.addRegisterClickListener(function () {
 login.addLoginSubmitListener(function () {
 
     try {
-        const name = logic.getUserName()
-        home.setGreetingText('Hello, ' + name + '!')
-
-        const posts = logic.getPosts()
-
-        home.setPosts(posts)
+        home.loadUserName()
+        home.loadPosts()
 
         body.remove(login)
         body.add(home)
@@ -57,3 +52,6 @@ home.addLogoutClickListener(function () {
     body.remove(home)
     body.add(landing)
 })
+
+
+//postsSection.innerHTML = '' para borrar los posts al hacer logout, ns donde va
