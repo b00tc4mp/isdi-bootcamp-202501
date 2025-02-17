@@ -25,12 +25,19 @@ function Home() {
   this.logoHomeIcon = logoHomeIcon;
   sidebar.add(logoHomeIcon);
 
-  var logoHomeIcon = new Icon();
-  logoHomeIcon.container.className = "fa-solid fa-user-secret";
-  logoHomeIcon.container.style.fontSize = "50px";
-  logoHomeIcon.container.style.color = "#00d4ff";
-  logoHomeIcon.container.style.marginBottom = "20px";
-  sidebar.add(logoHomeIcon);
+  var logoPlusIcon = new Icon();
+  logoPlusIcon.container.className = "fa-solid fa-plus";
+  logoPlusIcon.container.style.fontSize = "50px";
+  logoPlusIcon.container.style.color = "#00d4ff";
+  logoPlusIcon.container.style.marginBottom = "20px";
+  logoPlusIcon.addClickListener(function () {
+      const createPost = new CreatePost();
+  
+      createPost.addCreatePostSubmitListener(function () {
+        // Add your submit listener code here
+      });
+    });
+    sidebar.add(logoPlusIcon);
 
   var logoHeartIcon = new Icon();
   logoHeartIcon.container.className = "fa-solid fa-heart";
@@ -79,7 +86,7 @@ function Home() {
   navbar.container.style.display = "flex";
   navbar.container.style.justifyContent = "space-between";
   navbar.container.style.alignItems = "center";
-  navbar.container.style.padding = "20px";
+  navbar.container.style.padding = "10px";
   navbar.container.style.flexDirection = "row";
   navbar.container.style.backgroundColor = "#1a1a1a";
   navbar.container.style.width = "100%";
@@ -87,7 +94,7 @@ function Home() {
   navbar.container.style.marginTop = "20px";
   this.add(navbar);
 
-  for (i = 0; i < 12; i++) {
+  for (i = 0; i < 8; i++) {
     var navbarIcon = new Icon();
     navbarIcon.container.className = "fa-solid fa-user";
     navbarIcon.container.style.fontSize = "20px";
@@ -115,11 +122,53 @@ function Home() {
   var contentText = new Span();
   contentText.container.textContent = "Bienvenido a la sección de Home";
   content.add(contentText);
-}
 
-Home.prototype = Object.create(Component.prototype);
+
+  var postSection = new Div();
+  postSection.container.style.display = "flex";
+  postSection.container.style.flexDirection = "column";
+  postSection.container.style.width = "600px";
+  postSection.container.style.height = "auto";
+  postSection.container.style.backgroundColor = "#1a1a1a";
+  postSection.container.style.marginTop = "20px";
+  content.add(postSection);
+  //con esto permito acceder al contenedor desde la instancia de la clase
+this.postSection = postSection;
+};
+
+Home.prototype = Object.create(Component.prototype)
 Home.prototype.constructor = Home;
 
 Home.prototype.addHomeClickListener = function (listener) {
   this.logoHomeIcon.addClickListener(listener);
 };
+
+
+Home.prototype.setPosts = function (posts) {
+  for (var i = 0; i < posts.length; i++) {
+    var post = posts[i];
+
+    var postContainer = new Article();
+
+    var postTitle = new Heading(3);
+    postTitle.setText(post.title);
+    postContainer.add(postTitle);
+
+    var postImage = new Image()
+    postImage.setSrc(post.image);
+    postContainer.add(postImage);
+
+    var postText = new Paragraph();
+    postText.setText(post.text);
+    postContainer.add(postText);
+
+    var postDate = new Time()
+    postDate.setText(post.createdAt.toISOString());
+    postContainer.add(postDate);
+
+    this.postSection.add(postContainer);
+    
+  }
+  
+}
+

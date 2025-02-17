@@ -230,6 +230,3 @@ console.log(`Precio con 10% de descuento: $${laptop.calcularDescuento(10)}`);
 console.log(`Nuevo stock: ${laptop.actualizarStock(3)} unidades`);
 ```
 
-### extencion de constructoras
-
-*

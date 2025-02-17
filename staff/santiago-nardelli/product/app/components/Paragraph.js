@@ -1,10 +1,10 @@
 
-  class Link extends Component {
+class Paragraph extends Component {
     constructor() {
-        super("a");
+        super("p");
     }
-  
+
     setText(text) {
         this.container.textContent = text;
     }
-  }
+}

@@ -1,16 +1,14 @@
-//FORM COMPONENT
-function Form() {
-    Component.call(this, "form");
+class Form extends Component {
+  constructor() {
+    super("form");
   }
-  
-  Form.prototype = Object.create(Component.prototype);
-  Form.prototype.constructor = Form;
-  
-  Form.prototype.addSubmitListener = function (callback) {
-    this.container.addEventListener("submit", callback);
-  };
-  
 
- Form.prototype.clear = function(){
-  this.container.reset();
- }
+  //Este método me permite recibir un elemento y agregarlo al formulario, en este caso al container
+  addSubmitListener(listener) {
+    this.container.addEventListener("submit", listener);
+  }
+  //Este metodo me limpia el formulario
+  clear() {
+    this.container.reset();
+  }
+}

@@ -6,7 +6,54 @@ var data = {
         return `${timestamp}-${random}`;
     },
 
-    users: []
+    users: [
+
+        {
+            id: 'm73hzspg-cjz345t0kzr',
+            name: 'Helga Pataki',
+            email: 'Helga@pataki.com',
+            username: 'helgapataki',
+            password: '12345',
+            createdAt: new Date(2024, 0, 10),
+            modifiedAt: null
+        },
+
+        {
+            id: 'm73i0gsz-cxrxknt5klk',
+            name: 'Arnold',
+            email: 'hey@arnold.com',
+            username: 'heyarnold',
+            password: '54321',
+            createdAt: new Date(2024, 0, 30),
+            modifiedAt: null
+        }
+
+
+    ],
+
+
+    posts: [
+
+        {
+            id: 'm73i2fdx-riw6kmzv52',
+            author: 'm73i0gsz-cxrxknt5klk',
+            image: 'https://media.giphy.com/media/l4EoS4FShnTLbptOE/giphy.gif?cid=790b7611wfv00fcfuc86l5jmh9nho25hby0jdx93fghvrqpo&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+            title: 'Hey you!',
+            createdAt: new Date(2024, 0, 30),
+            modifiedAt: null
+        },
+
+
+        {
+            id: 'm73i2xu2-epai2nqwoxl',
+            author: 'm73hzspg-cjz345t0kzr',
+            image: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDVqbGoxYmduejJudmVleWVmcXRvd3dqb3pjcjR4d2JvdXpnaTdpNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0DAG7ikMKa3WCNji/giphy.gif',
+            title: 'Strike !',
+            createdAt: new Date(2024, 0, 20),
+            modifiedAt: null
+        }
+
+    ]
         
           
 

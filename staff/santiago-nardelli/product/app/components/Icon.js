@@ -1,7 +1,6 @@
 //ICON COMPONENT
-function Icon() {
-    Component.call(this, "i");
+class Icon extends Component{
+  constructor(){  
+    super("i")
   }
-  
-  Icon.prototype = Object.create(Component.prototype);
-  Icon.prototype.constructor = Icon;
+}

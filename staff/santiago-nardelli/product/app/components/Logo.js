@@ -1,5 +1,6 @@
-function Logo() {
-    Component.call(this, "div");
+
+  class  Logo extends Component {
+    constructor() {
+        super("div");
+    }
   }
-  Logo.prototype = Object.create(Component.prototype);
-  Logo.prototype.constructor = Logo;

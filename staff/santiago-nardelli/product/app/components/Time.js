@@ -1,10 +1,11 @@
 
-  class Link extends Component {
+
+class Time extends Component {
     constructor() {
-        super("a");
+        super("time");
     }
-  
+
     setText(text) {
         this.container.textContent = text;
     }
-  }
+}

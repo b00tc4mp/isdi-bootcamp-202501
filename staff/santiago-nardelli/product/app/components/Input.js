@@ -1,21 +1,17 @@
-// INPUT COMPONENT
-
-function Input() {
-    Component.call(this, "input");
+class Input extends Component {
+  constructor() {
+    super("input");
   }
-  
-  Input.prototype = Object.create(Component.prototype);
-  Input.prototype.constructor = Input;
-  
-  Input.prototype.setType = function (type) {
-    this.container.type = type;
-  };
-  
-  Input.prototype.setPlaceholder = function (placeholder) {
-    this.container.placeholder = placeholder;
-  };
-  
-  Input.prototype.getValue = function () {
+  //Este metodfo me permite obtenter el valor del input y guardarlo en el container
+  getValue() {
     return this.container.value;
-  };
-  
+  }
+
+  setType(type) {
+    this.container.type = type;
+  }
+
+  setPlaceholder(placeholder) {
+    this.container.placeholder = placeholder;
+  }
+}

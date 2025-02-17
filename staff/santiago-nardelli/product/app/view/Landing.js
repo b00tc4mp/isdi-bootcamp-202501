@@ -50,7 +50,7 @@ function Landing() {
         //limpio el formulario
         form.clear()
 
-        alert("Hi " + email + " you are logged in")
+        alert("Hi you!")
 
         //si existe un listener de submit en el form, lo ejecuto 
         this.loginSubmitListener()
