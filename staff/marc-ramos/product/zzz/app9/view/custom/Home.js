@@ -13,7 +13,7 @@ class Home extends Component {
 
     const logoutButton = new Button()
     logoutButton.setText('Logout')
-    logoutButton.addClickListener(() => {
+    logoutButton.addClickListener(function() {
       try {
         logic.logoutUser()
 
@@ -23,7 +23,7 @@ class Home extends Component {
 
         alert(error.message)
       }
-    })
+    }.bind(this))
 
     this.add(logoutButton)
 
@@ -33,27 +33,27 @@ class Home extends Component {
 
     const addPostButton = new Button()
     addPostButton.setText('+')
-    addPostButton.addClickListener(() => {
+    addPostButton.addClickListener(function() {
       const createPost = new CreatePost()
 
-      createPost.addCreatePostSubmitListener(() => {
+      createPost.addCreatePostSubmitListener(function() {
         this.remove(createPost)
 
         this.loadPosts()
         this.add(postsSection)
         this.add(addPostButton)
-      })
+      }.bind(this))
 
-      createPost.addCancelClickListener(() => {
+      createPost.addCancelClickListener(function() {
         this.remove(createPost)
         this.add(postsSection)
         this.add(addPostButton)
-      })
+      }.bind(this))
 
       this.remove(postsSection)
       this.remove(addPostButton)
       this.add(createPost)
-    })
+    }.bind(this))
     this.add(addPostButton)
   }
     addLogoutClickListener (listener) {
@@ -98,21 +98,6 @@ class Home extends Component {
         const postDate = new Time()
         postDate.setText(post.createdAt.toISOString())
         postArticle.add(postDate)
-
-        const likeButton = new Button()
-        likeButton.setText(`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`)
-        likeButton.addClickListener(() => {
-          try {
-            logic.toggleLikePost(post.id)
-
-            this.loadPosts()
-          } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-          }
-        })
-        postArticle.add(likeButton)
   
         this.postsSection.add(postArticle)
       }

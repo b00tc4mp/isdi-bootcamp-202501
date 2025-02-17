@@ -6,43 +6,43 @@ const logic = {
     },
 
     validate: {
-        string(string, explain) {
+        string: function(string, explain) {
             if(typeof string !== 'string') throw new TypeError(`invalid ${explain} type`)
 
         },
-        text(text, explain) {
+        text: function(text, explain) {
             this.string(text, explain)
             if (logic.constant.EMPTY_OR_BLANK_REGEX.test(text))
             throw new SyntaxError(`invalid ${explain} syntax`)
         },
-        email(email, explain) {
+        email: function (email, explain) {
             this.string(email, explain)
             if(!logic.constant.EMAIL_REGEX.test(email)) throw new SyntaxError(`invalid ${explain} syntax`)
             this.maxLength(email, 30, explain)
         },
-        maxLength(value, maxLength, explain) {
+        maxLength: function (value, maxLength, explain) {
             if (value.length > maxLength) throw new RangeError(`invalid ${explain} maxLength`)
         },
-        minLength(value, minLength, explain) {
+        minLength: function (value, minLength, explain) {
             if (value.length < minLength) throw new RangeError(`invalid ${explain} minLength`)
         },
-        username(username, explain) {
+        username: function (username, explain) {
             this.text(username, explain)
             this.minLength(username, 3, explain)
             this.maxLength(username, 20, explain)
         },
-        password(password, explain) {
+        password: function (password, explain) {
             this.text(password, explain)
             this.minLength(password, 8, explain)
             this.maxLength(password, 20, explain)
         },
-        url(url, explain) {
+        url: function (url, explain) {
             this.string(url, explain)
             if (!logic.constant.URL_REGEX.test(url)) throw new SyntaxError(`invalid ${explain} syntax`)
         }
     },
 
-    registerUser(name, email, username, password) {
+    registerUser: function (name, email, username, password) {
         this.validate.text(name, 'name')
         this.validate.minLength(name, 1, 'name')
         this.validate.maxLength(name, 20, 'name')
@@ -74,7 +74,7 @@ const logic = {
         data.users[data.users.length] = user
     },
 
-    loginUser(username, password) {
+    loginUser: function (username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
@@ -92,11 +92,11 @@ const logic = {
         data.userId = found.id
     },
 
-    logoutUser() {
+    logoutUser: function() {
         data.userId = null
     },
 
-    getUserName() {
+    getUserName: function() {
         let found
 
         for (let i = 0; i < data.users.length && !found; i++){
@@ -111,40 +111,11 @@ const logic = {
         return found.name
     },
 
-    getPosts() {
-        const aggregatedPosts = []
-
-        for (let i = 0; i < data.posts.length; i++) {
-            const post = data.posts[i]
-
-            let liked = false
-
-            for (let i = 0; i < post.likes.length && !liked; i++){
-                const userId = post.likes[i]
-
-                if (userId === post.likes[i])
-                    liked = true
-
-            }
-
-            const aggregatedPost = {
-                id: post.id,
-                author: post.author,
-                image: post.image,
-                text: post.text,
-                createdAt: post.createdAt,
-                modifiedAt: post.modifiedAt,
-                liked: liked,
-                likesCount: post.likes.length
-            }
-
-            aggregatedPosts[aggregatedPosts.length] = aggregatedPost
-        }
-
-        return aggregatedPosts
+    getPosts: function() {
+        return data.posts
     },
 
-    createPost(image, text) {
+    createPost: function(image, text) {
         this.validate.url(image)
         this.validate.maxLength(1000)
         this.validate.text(text)
@@ -161,42 +132,8 @@ const logic = {
         }
 
         data.posts[data.posts.length] = post
-    },
-
-    toggleLikePost(postId) {
-        let foundPost
-
-        for (let i = 0; i < data.posts.length && !foundPost; i++) {
-            const post = data.posts[i]
-
-            if (post.id === postId)
-                foundPost = post
-        }
-
-        if(!foundPost) throw new NotFoundError('post not found')
-        
-        let userIdFound = false
-
-        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const userId = foundPost.likes[i]
-
-            if (userId === data.userId)
-                userIdFound = true
-        }
-
-        if (!userIdFound)
-            foundPost.likes[foundPost.likes.length] = data.userId
-        else {
-            const likes = []
-
-            for (let i = 0; i < foundPost.likes.length; i++) {
-                const userId = foundPost.likes[i]
-
-                if (userId !== data.userId)
-                    likes[likes.length] = userId
-            }
-
-            foundPost.likes = likes
-        }
     }
+
+    //toggleLikePost: function () {
+        // TODO add userId in post.likes or remove it
 }
