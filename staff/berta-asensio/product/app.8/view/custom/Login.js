@@ -64,7 +64,6 @@ class Login extends Component {
 
         const returnAnchor = new Anchor()
         returnAnchor.setText('Return')
-
         this.add(returnAnchor)
         this.returnAnchor = returnAnchor
 

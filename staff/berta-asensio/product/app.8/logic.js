@@ -123,7 +123,9 @@ const logic = {
 
     createPost(image, text) {
         this.validate.url(image)
+        this.validate.maxLength(1000)
         this.validate.text(text)
+        this.validate.maxLength(500)
 
         const post = {
             id: data.uuid(), //crear id para post
