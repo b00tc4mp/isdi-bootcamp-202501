@@ -1,13 +1,12 @@
 // **** PARAGRAPH
 
-function Paragraph() {  // Creamos la funcion
+class Paragraph extends Component {  // Creamos la funcion
     // Preparamos parallamarla con el This
-    Component.call(this, 'p')
-}
+    constructor() {
+        super('p')
+    }
 
-Paragraph.prototype = Object.create(Component.prototype)
-Paragraph.prototype.constructor = Paragraph
-
-Paragraph.prototype.setText = function (text) {
-    this.container.textContent = text
+    setText(text) {
+        this.container.textContent = text
+    }
 }

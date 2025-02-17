@@ -1,9 +1,7 @@
 // **** BODY
 
-function Body() {
-    Component.call(this, 'body')
+class Body extends Component {
+    constructor() {
+        super('body')
+    }
 }
-
-Body.prototype = Object.create(Component.prototype)
-Body.prototype.constructor = Body
-

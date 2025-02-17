@@ -1,40 +1,41 @@
 // ****  LANDING
 
-function Landing() {
-    Component.call(this, 'div')
+class Landing extends Component {
+    constructor() {
+        super('div')
 
 
-    var logo = new Heading(1) // LLamamos al componete creado
-    logo.setText('Landing')
-    this.add(logo)  // Añadimos la variable logo al contenedor
+        const logo = new Heading(1) // LLamamos al componete creado
+        logo.setText('Landing')
+        logo.container.style.textShadow = '2px 2px 3px black'
+        this.add(logo)  // Añadimos la constiable logo al contenedor
 
-    // Login
-    var loginAnchor = new Anchor()
-    loginAnchor.setText('Login')
-    console.log(loginAnchor)
-    loginAnchor.container.style.textDecoration = 'underline'
-    this.loginAnchor = loginAnchor
-    this.add(loginAnchor)
+        // Login
+        const loginAnchor = new Anchor()
+        loginAnchor.setText('Login')
+        console.log(loginAnchor)
+        loginAnchor.container.style.textDecoration = 'underline'
+        this.loginAnchor = loginAnchor
+        this.add(loginAnchor)
 
-    // Or
-    var orText = document.createTextNode(' or ')
-    this.container.appendChild(orText)
+        // Or
+        const orText = document.createTextNode(' or ')
+        this.container.appendChild(orText)
+        // orText.container.style.textDecoration = 'underline'
 
-    // Register
-    var registerAnchor = new Anchor()
-    registerAnchor.setText('Register')
-    registerAnchor.container.style.textDecoration = 'underline'
-    this.registerAnchor = registerAnchor
-    this.add(registerAnchor)
-}
+        // Register
+        const registerAnchor = new Anchor()
+        registerAnchor.setText('Register')
+        registerAnchor.container.style.textDecoration = 'underline'
+        this.registerAnchor = registerAnchor
+        this.add(registerAnchor)
+    }
 
-Landing.prototype = Object.create(Component.prototype)
-Landing.prototype.constructor = Landing
+    addRegisterClickListener(listener) {
+        this.registerAnchor.addClickListener(listener)
+    }
 
-Landing.prototype.addRegisterClickListener = function (listener) {
-    this.registerAnchor.addClickListener(listener)
-}
-
-Landing.prototype.addLoginClickListener = function (listener) {
-    this.loginAnchor.addClickListener(listener)
+    addLoginClickListener(listener) {
+        this.loginAnchor.addClickListener(listener)
+    }
 }

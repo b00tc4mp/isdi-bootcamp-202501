@@ -1,15 +1,14 @@
 // FORM
-function Form() {
-    Component.call(this, 'form')
-}
+class Form extends Component {
+    constructor() {
+        super('form')
+    }
 
-Form.prototype = Object.create(Component.prototype)
-Form.prototype.constructor = Form
+    addSubmitListener(callback) {
+        this.container.addEventListener('submit', callback)
+    }
 
-Form.prototype.addSubmitListener = function (callback) {
-    this.container.addEventListener('submit', callback)
-}
-
-Form.prototype.clear = function () {
-    this.container.reset()
+    clear() {
+        this.container.reset()
+    }
 }
