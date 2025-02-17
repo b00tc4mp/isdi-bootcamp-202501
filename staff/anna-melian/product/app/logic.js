@@ -117,6 +117,21 @@ var logic = {
         return found.name
     },
 
+    getAuthorUsername(post) {
+
+        var found
+        for (var i = 0; i < data.users.length && !found; i++) {
+            var user = data.users[i]
+
+            if (user.id === post.author)
+                found = user
+        }
+
+        if (!found) throw new Error('invalid author')
+
+        return found.username
+    },
+
     getPosts() {
         return data.posts
     },
@@ -142,8 +157,41 @@ var logic = {
 
     },
 
-    toggleLikePost: function () {
-        // TODO add userId in post.likes or remove it
+    toggleLikePost(postId) {
+        let foundPost
+
+        for (let i = 0; i < data.posts.length && !foundPost; i++) {
+            const post = data.posts[i]
+
+            if (post.id === postId)
+                foundPost = post
+        }
+
+        if (!foundPost) throw new NotFoundError('post not found')
+
+        let userIdFound = false
+
+        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
+            const userId = foundPost.likes[i]
+
+            if (userId === data.userId)
+                userIdFound = true
+        }
+
+        if (!userIdFound)
+            foundPost.likes[foundPost.likes.length] = data.userId
+        else {
+            const likes = []
+
+            for (let i = 0; i < foundPost.likes.length; i++) {
+                const userId = foundPost.likes[i]
+
+                if (userId != data.userId)
+                    likes[likes.length] = userId
+            }
+
+            foundPost.likes = likes
+        }
 
     }
 

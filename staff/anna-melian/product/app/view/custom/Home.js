@@ -80,11 +80,12 @@ class Home extends Component {
 
             for (var i = posts.length - 1; i > -1; i--) {
                 var post = posts[i]
+                var authorUsername = logic.getAuthorUsername(post)
 
                 var postArticle = new Article()
 
                 var authorHeading = new Heading(3)
-                authorHeading.setText(post.author)
+                authorHeading.setText(authorUsername)
                 postArticle.add(authorHeading)
 
                 var postImage = new Image()
@@ -98,6 +99,24 @@ class Home extends Component {
                 var postDate = new Time()
                 postDate.setText(post.createdAt.toISOString())
                 postArticle.add(postDate)
+
+                const likeButton = new Button()
+                likeButton.setText('🤍')
+                likeButton.addClickListener(function () {
+                    try {
+                        logic.toggleLikePost(post.id)
+
+                        if (likeButton.getText() === '🤍')
+                            likeButton.setText('💙')
+                        else
+                            likeButton.setText('🤍')
+                    } catch (error) {
+                        console.error(error)
+                        alert(error.message)
+                    }
+                })
+                postArticle.add(likeButton)
+
 
                 this.postsSection.add(postArticle)
             }

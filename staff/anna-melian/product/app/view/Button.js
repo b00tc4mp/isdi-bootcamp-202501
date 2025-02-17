@@ -11,4 +11,8 @@ class Button extends Component {
         this.container.textContent = text
     }
 
+    getText() {
+        return this.container.textContent
+    }
+
 }

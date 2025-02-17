@@ -31,19 +31,11 @@ login.addRegisterClickListener(function () {
     body.add(register)
 })
 login.addLoginSubmitListener(function () {
+    home.loadUserName()
+    home.loadPosts()
 
-    try {
-        home.loadUserName()
-        home.loadPosts()
-
-        body.remove(login)
-        body.add(home)
-    } catch (error) {
-        console.error(error)
-
-        alert(error.message)
-    }
-
+    body.remove(login)
+    body.add(home)
 })
 
 
