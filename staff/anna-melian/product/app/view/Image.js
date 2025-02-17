@@ -1,5 +1,7 @@
 function Image() {
     Component.call(this, 'img')
+    //this.container.style.height = '300px'
+    this.container.style.width = '500px'
 }
 
 Image.prototype = Object.create(Component.prototype)
