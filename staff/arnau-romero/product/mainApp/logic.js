@@ -1,7 +1,8 @@
 var logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/, // reGex para comprobar que no se envia un campo vacio ni con espacios
-        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // reGex para comprobar que esta bien escrito un mail
+        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, // reGex para comprobar que esta bien escrito un mail
+        URL_REGEX: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
     },
     validate:{
         //comprobar que sea string, que el texto no este vacio, que el email este en formato mail, maximo de caracteres, mínimo de caracteres,
@@ -34,6 +35,10 @@ var logic = {
             this.string(password,explain) // Funcion para comprobar que es una string 
             this.maxLength(password, 20, explain) // Llamamos funcion para comprobar que no sobrepasemos límite de caracteres.
             this.minLength(password, 8 , explain) // Llamamos funcion para comprobar el límite de caracteres.
+        },
+        url: function(url, explain){
+            this.string(url, explain)
+            if(!logic.constant.URL_REGEX.test(url)) throw new SyntaxError('invalid' + explain + 'syntax')
         }
 
     },
@@ -102,5 +107,20 @@ var logic = {
 
     getPosts: function(){ // Crear funcion para obtener los posts de data, la llamaremos desde main
         return data.posts
+    },
+    createPost: function(image, text){ // Funcion para la logica de crear post
+        this.validate.url(image)
+        this.validate.text(text)
+
+        var post = {
+            id: data.uuid(),
+            author: data.userId,
+            image: image,
+            text: text,
+            createdAt: new Date(),
+            modifiedAt: null
+        }
+
+        data.posts[data.posts.length] = post
     }
 }

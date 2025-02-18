@@ -17,28 +17,23 @@ landing.addLandingRegisterAnchor(function(){
     body.add(register)
 })
 
+
 //LOGIN
 var login = new Login()
 login.addAnchorListener(function(){
     body.remove(login)
     body.add(register)
 })
+
 login.addSubmitLoginListener(function(){
-    try{
-        const name = logic.getUserName() // Obtener nombre del usuario
+  
+     home.loadUserName() // Orden a home de cargar usuario
+    home.loadPosts() // Orden a home de cargar posts
+     
 
-        home.setWelcomeText('Hello, ' + name + '!') // Obtener funcion de home de saludar 
-
-       const posts = logic.getPosts() // Obtener posts de logic
-
-        home.setPosts(posts) // Funcion para generar posts
-    
-        body.remove(login)
-        body.add(home)
-    }catch(error){
-
-        alert(error.message)
-    }
+    body.remove(login)
+    body.add(home)
+  
 })
 
 //REGISTER
@@ -60,3 +55,4 @@ home.addHomeLogout(function(){
     body.remove(home)
     body.add(landing)
 })
+

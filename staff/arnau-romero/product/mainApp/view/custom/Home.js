@@ -35,8 +35,33 @@ function Home(){
     // BOTON PARA IR A GENERAR POSTS
     var addPostButton = new Button()
     addPostButton.setText('+')
+    addPostButton.addClickListener(function(){
+        var createPost = new CreatePost()
+
+        createPost.addCreatePostSubmitListener(function(){
+            this.remove(createPost)
+
+            this.loadPosts()
+            this.add(logOutButton)
+            this.add(postsSection)
+            this.add(addPostButton)
+
+        }.bind(this))
+
+        createPost.addCancelClickListener(function(){
+            this.remove(createPost)
+            this.add(logOutButton)
+            this.add(postsSection)
+            this.add(addPostButton)  
+        }.bind(this))
+        this.remove(postsSection)
+        this.remove(addPostButton)
+        this.remove(logOutButton)
+        this.add(createPost)
+    }.bind(this))
     this.add(addPostButton)
     //TODO GENERAR UN BOTON '+' PARA QUE TE APAREZCA UN FORMULARIO QUE TE DE LA OPCION A GENERAR UN POST MAS.
+
 }
 
 Home.prototype = Object.create(Component.prototype)
@@ -46,14 +71,29 @@ Home.prototype.addHomeLogout = function(listener){
     this.logOutButton = listener
 }
 
-Home.prototype.setWelcomeText = function(text){
+
+Home.prototype.loadUserName = function(){
     // mensaje para dar la bienvenida al loguearse con el nombre del usuario
-    this.welcome.setText(text) // ponemos en home.welcome la funcion setText que heredamos de componentes 
+    try {
+        const name = logic.getUserName()
+
+        this.welcome.setText('Hello, ' + name + '!') // ponemos en home.welcome la funcion setText que heredamos de componentes 
+        
+    }catch(error){
+        console.log(error)
+
+        alert(error.message)
+    }
+    
 }
 
-Home.prototype.setPosts = function(posts){
+Home.prototype.loadPosts = function(){
     //TODO Funcion para generar posts iterando por el data.posts
-    for (var i = 0; i < posts.length; i++){ // Cogera cada post de data y lo metera dentrro de postSection
+    this.postsSection.container.innerHTML = '' // Limpiamos en container de postsSection para que cuando creemos una post nueva, no salgan repetidas las posts antiguas.
+    try{
+        const posts = logic.getPosts()
+
+        for (var i =  posts.length - 1; i > -1  ; i--){ // Cogera cada post de data y lo metera dentrro de postSection, empezamos contando desde el final al principio para que el ultimo post subido se visualice el primero, como el mas reciente publicado arriba
         // Obtenemos cada post
         var post = posts[i]
         // Creamos un Article par acada post.
@@ -80,4 +120,11 @@ Home.prototype.setPosts = function(posts){
         // Lo hacemos hijo de postSection
         this.postsSection.add(postArticle)
     }
+
+    }catch(error){
+        console.log(error)
+
+        alert(error.message)
+    }
+
 }
