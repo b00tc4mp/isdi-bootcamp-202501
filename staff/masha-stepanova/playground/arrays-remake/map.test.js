@@ -1,18 +1,8 @@
-delete Array.prototype.map
+require('./map')
 
-Array.prototype.map = function (callback) {
-    const modifiedArray = []
+console.info('TEST map')
 
-    for (let i = 0; i < this.length; i++) {
-        modifiedArray[modifiedArray.length] = callback(this[i])
-    }
-
-    return modifiedArray
-}
-
-// creates new array with modified elements through callback function
-// it modifies each element of an array but doesn't change the original array
-// returns new array
+console.info('CASE ')
 
 const numbers = [2, 4, 6, 8, 10]
 

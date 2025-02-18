@@ -1,37 +1,27 @@
-delete Array.prototype.join
+require('./join')
 
-Array.prototype.join = function (element) {
-    let joinedString = ''
-    let separator
-    if (!arguments[0]) {
-        separator = ','
-    } else {
-        separator = element
-    }
-    for (let i = 0; i < this.length; i++) {
-        if (i === 0)
-            joinedString += this[i]
-        else
-            joinedString += (separator + this[i])
-    }
+console.info('TEST join')
 
-    return joinedString
+console.info('CASE join elements by comma')
+
+{
+    const wordHello = ['h', 'e', 'l', 'l', 'o']
+
+    console.assert(wordHello.join() === 'h,e,l,l,o', 'wordHello.join() is h,e,l,l,o')
 }
 
-// creates new string with joined by specified separator elements of an array
-// if separator isn't specified, it joins elements by coma
-// returns new string
-// doesn't modify original array
+console.info('CASE join elements all together')
 
-const wordHello = ['h', 'e', 'l', 'l', 'o']
+{
+    const wordHello = ['h', 'e', 'l', 'l', 'o']
 
-console.log(wordHello.join())
-// Expected output: "h,e,l,l,o"
+    console.assert(wordHello.join('') === 'hello', 'wordHello.join("") is hello')
+}
 
-console.log(wordHello.join(''))
-// Expected output: "hello"
+console.info('CASE join elements by -')
 
-console.log(wordHello.join('-'))
-// Expected output: "h-e-l-l-o"
+{
+    const wordHello = ['h', 'e', 'l', 'l', 'o']
 
-console.log(wordHello)
+    console.assert(wordHello.join('-') === 'h-e-l-l-o', 'wordHello.join("-") is h-e-l-l-o')
+}

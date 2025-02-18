@@ -1,34 +1,49 @@
-delete Array.prototype.includes
+require('./includes.js')
 
-Array.prototype.includes = function (element, index) {
-    let found = false
-    let startIndex
+console.info('INFO includes')
 
-    if (index)
-        startIndex = index > -1 ? index : this.length + index
-    else
-        startIndex = 0
+console.info('CASE search for element in an array without index')
 
-    for (let i = startIndex; i < this.length && !found; i++) {
-        if (element === this[i])
-            found = true
-    }
+{
+    const numbers = [1, 2, 3];
 
-    return found
+    console.assert(numbers.includes(2) === true, 'numbers.includes(2) is true')
+    console.assert(numbers.includes(4) === false, 'numbers.includes(4) is false')
 }
 
-// search the element in the array
-// returns true or false
+console.info('CASE search for element with positive index')
 
-const array1 = [1, 2, 3];
+{
+    const numbers = [1, 2, 3];
 
-console.log(array1.includes(2));
-// Expected output: true
+    console.assert(numbers.includes(2, 1) === true, 'numbers.includes(2, 1) is true')
+    console.assert(numbers.includes(2, 2) === false, 'numbers.includes(2, 2) is false')
+    console.assert(numbers.includes(3, 4) === false, 'numbers.includes(2, 2) is false')
+}
 
-const pets = ["cat", "dog", "bat"];
+console.info('CASE search for element with negative index')
 
-console.log(pets.includes("cat"));
-// Expected output: true
+{
+    const numbers = [1, 2, 3];
 
-console.log(pets.includes("at"));
-// Expected output: false
+    console.assert(numbers.includes(2, -1) === false, 'numbers.includes(2, -1) is false')
+    console.assert(numbers.includes(2, -2) === true, 'numbers.includes(2, -2) is true')
+    console.assert(numbers.includes(2, -10) === true, 'numbers.includes(2, 2) is true')
+}
+
+console.info('CASE search for an element string compared to number')
+
+{
+    const numbers = [1, 2, 3];
+
+    console.assert(numbers.includes('1') === false, 'numbers.includes("1") is false')
+    console.assert(numbers.includes('3') === false, 'numbers.includes("3") is false')
+}
+
+console.info('CASE search for an element NaN')
+
+{
+    const numbers = [NaN, 1, 2, 3];
+
+    console.assert(numbers.includes(NaN) === true, 'numbers.includes(NaN) is true')
+}

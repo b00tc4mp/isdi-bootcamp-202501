@@ -1,38 +1,58 @@
-delete Array.prototype.indexOf
+require('./indexOf')
 
-Array.prototype.indexOf = function (element, index) {
-    let startIndex
-    let elementIndex
+console.info('TEST indexOf')
 
-    if (index)
-        startIndex = index > -1 ? index : this.length + index
-    else
-        startIndex = 0
+console.info('CASE search for element in an array')
 
-    for (let i = startIndex; i < this.length && !elementIndex; i++) {
-        if (element === this[i])
-            elementIndex = i
-    }
+{
+    const numbers = [1, 2, 3];
 
-    if (!elementIndex)
-        elementIndex = -1
-    return elementIndex
+    console.assert(numbers.indexOf(1) === 0, 'numbers.indexOf(1) is 0')
+    console.assert(numbers.indexOf(3) === 2, 'numbers.indexOf(3) is 2')
+    console.assert(numbers.indexOf(5) === -1, 'numbers.indexOf(5) is -1')
 }
 
-// search for the first index of an element
-// returns the index or -1 if it doesn't exist
-// in second position can include an index to start from
+console.info('CASE search for an element and use positive index')
 
-const animals = ["ant", "bison", "camel", "duck", "bison"];
+{
+    const numbers = [1, 2, 3];
 
-console.log(animals.indexOf("bison"));
-// Expected output: 1
+    console.assert(numbers.indexOf(1, 2) === -1, 'numbers.indexOf(1, 2) is -1')
+    console.assert(numbers.indexOf(3, 2) === 2, 'numbers.indexOf(3, 2) is 2')
+    console.assert(numbers.indexOf(2, 2) === -1, 'numbers.indexOf(2, 2) is -1')
+}
 
-// Start from index 2
-console.log(animals.indexOf("bison", 2));
-// Expected output: 4
+console.info('CASE search for an element and use negative index')
 
-console.log(animals.indexOf("giraffe"));
-// Expected output: -1
+{
+    const numbers = [1, 2, 3];
 
-console.log(animals.indexOf("bison", -2))
+    console.assert(numbers.indexOf(1, -1) === -1, 'numbers.indexOf(1, -1) is -1')
+    console.assert(numbers.indexOf(3, -2) === 2, 'numbers.indexOf(3, -2) is 2')
+    console.assert(numbers.indexOf(2, -2) === 1, 'numbers.indexOf(2, -2) is 1')
+}
+
+console.info('CASE search for an element string compared to number')
+
+{
+    const numbers = [1, 2, 3];
+
+    console.assert(numbers.indexOf('1') === -1, 'numbers.indexOf("1") is -1')
+    console.assert(numbers.indexOf('3') === -1, 'numbers.indexOf("3) is -1')
+}
+
+console.info('CASE search for an element NaN')
+
+{
+    const numbers = [NaN, 1, 2, 3];
+
+    console.assert(numbers.indexOf(NaN) === -1, 'numbers.indexOf(NaN) is -1')
+}
+
+console.info('CASE search for an element undefined')
+
+{
+    const numbers = [1, , , 2, 3];
+
+    console.assert(numbers.indexOf(undefined) === -1, 'numbers.indexOf(undefined) is -1')
+}

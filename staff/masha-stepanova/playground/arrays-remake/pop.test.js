@@ -1,25 +1,20 @@
-delete Array.prototype.pop
+require('./pop')
 
-Array.prototype.pop = function () {
-    const lastElement = this[this.length - 1]
+console.info('TEST pop')
 
-    this.length = this.length - 1
+console.info('CASE delete the las element from an array with elements')
 
-    return lastElement
+{
+    const vegetables = ['tomato', 'potato', 'carrot', 'eggplant', 'onion'];
+
+    console.assert(vegetables.pop() === 'onion', 'vegetables.pop() is onion');
+    console.assert(vegetables === Array['tomato', 'potato', 'carrot', 'eggplant'], "vegetables is Array ['tomato', 'potato', 'carrot', 'eggplant']");
 }
 
-// removes the last element from an array
-// return deleted element
+console.info('CASE delete the las element from an empty array')
 
-const vegetables = ['tomato', 'potato', 'carrot', 'eggplant', 'onion'];
+{
+    const vegetables = [];
 
-console.log(vegetables.pop());
-// Expected output: 'onion'
-
-console.log(vegetables);
-// Expected output: Array ['tomato', 'potato', 'carrot', 'eggplant']
-
-vegetables.pop();
-
-console.log(vegetables);
-// Expected output: Array ['tomato', 'potato', 'carrot']
+    console.assert(vegetables.pop() === 'undefined', 'vegetables.pop() is undefined');
+}
