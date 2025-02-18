@@ -114,6 +114,22 @@ class Home extends Component{
             const postDate = new Time()
             postDate.setText(post.createdAt.toISOString()) //La fecha es un objeto así que lo convertimsoa  string
             postArticle.add(postDate)
+            
+            // Boton de like
+            const likeButton = new Button()
+            likeButton.setText(post.liked? '❤️' : '🤍')
+            likeButton.addClickListener(function(){
+                try{
+                    logic.toggleLikePost(post.id)
+                    this.loadPosts()
+
+                }catch(error){
+                    console.log(error)
+
+                    alert(error.message)
+                }
+            }.bind(this))
+            postArticle.add(likeButton)
 
             // Lo hacemos hijo de postSection
             this.postsSection.add(postArticle)

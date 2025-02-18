@@ -106,7 +106,37 @@ const logic = {
     },
 
     getPosts(){ // Crear funcion para obtener los posts de data, la llamaremos desde main
-        return data.posts
+        const aggregatedPosts = []
+       /*
+       A partir dela array de posts de data, creamos un nuevo array de posts en logica, en el que añadiremos
+       la varuable "liked", lo que haremos es ponerla a true si nuestro id consta que le ha dado like en la 
+       publicacion o a false si no consta que le hayamos dado like, con esto podremos jugar para poner el
+       boton de corazon en rojo o blanco.
+       */
+        for(let i = 0; i < data.posts.length; i++){
+            const post = data.posts[i]
+            let liked = false
+            for (let i = 0; i < post.likes.length && !liked; i++){
+                const userId = post.likes[i]
+
+                if(userId === data.userId)
+                    liked = true
+            }
+
+            const aggregatedPost = {
+                id: post.id,
+                author: post.author,
+                image: post.image,
+                text: post.text,
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
+                liked: liked
+
+            }
+            aggregatedPosts[aggregatedPosts.length] = aggregatedPost
+        }
+
+        return aggregatedPosts
     },
     createPost(nimage, text){ // Funcion para la logica de crear post
         this.validate.url(image)
@@ -125,8 +155,37 @@ const logic = {
         data.posts[data.posts.length] = post
     },
 
-    toggleLikePost(){
+    toggleLikePost(postId){
         // TODO funcion para quitar y poner likes en los posts.
+        let foundPost
+        for(let i = 0; i < data.posts.length && !foundPost; i++){
+            const post = data.posts[i]
+
+            if(post.id === postId)
+                foundPost = post
+        }
+
+        if (!foundPost) throw new NotFoundError('post not found')
         
+        let userIdFound = false
+        for(let i = 0; i < foundPost.likes.length && !userIdFound; i++){
+            const userId = foundPost.likes[i]
+
+            if(userId === data.userId)
+                userIdFound = true  
+        }
+        if(!userIdFound)
+            foundPost.likes[foundPost.likes.length] = data.userId
+        else{
+            const likes = []
+            for(let i = 0; i < foundPost.likes.length; i++){
+                const userId = foundPost.likes[i]
+                
+                if(userId !== data.userId)
+                    likes[likes.length]  = userId
+            }
+
+            foundPost.likes =  likes
+        }
     }
 }

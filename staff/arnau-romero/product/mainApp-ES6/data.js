@@ -19,7 +19,7 @@ const data = {
             text: 'Trying to calm after debugging.',
             createdAt: new Date(2025, 1, 10),
             modifiedAt: null,
-            likes: []
+            likes: ['m71tm7l3l5l']
         },
         {
             id: 'm737zabzix8' ,
