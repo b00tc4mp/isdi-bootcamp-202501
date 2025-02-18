@@ -118,9 +118,15 @@ var logic = {
             image: image,
             text: text,
             createdAt: new Date(),
-            modifiedAt: null
+            modifiedAt: null,
+            likes: []
         }
 
         data.posts[data.posts.length] = post
+    },
+
+    toggleLikePost: function(){
+        // TODO funcion para quitar y poner likes en los posts.
+        
     }
 }
