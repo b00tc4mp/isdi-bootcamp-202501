@@ -2,49 +2,51 @@ require('./push.js')
 
 console.info('TEST push')
 
-
-console.info('CASE return the new array length')
+console.info('CASE add one argument')
 
 {
-    const fruits = ['apple', 'banana', 'strawberry', 'watermelon']
-    const count = fruits.push('kiwi')
-    console.assert(fruits.length === 5, 'return correct length')
-    //5
+    const characters = ['a', 'b']
+
+    const length = characters.push('c')
+
+    console.assert(characters[0] === 'a', 'characters[0] is a')
+    console.assert(characters[1] === 'b', 'characters[1] is b')
+    console.assert(characters[2] === 'c', 'characters[2] is c')
+    console.assert(characters.length === 3, 'characters.length is 3')
+    console.assert(length === 3, 'length is 3')
+    const charactersKeys = Object.keys(characters)
+    console.assert(charactersKeys.length === 3, 'charactersKeys.length is 3')
 }
 
+console.info('CASE add multiple arguments')
 
-
-console.info('CASE add a string element at the end')
 {
-    const fruits = ['apple', 'banana', 'strawberry', 'watermelon']
-    const count = fruits.push('kiwi')
-    console.assert(fruits.length === 5, 'return correct length')
-    console.assert(fruits[fruits.length - 1] === 'kiwi', 'add the element at the end')
-    // fruits ['apple', 'banana', 'strawberry', 'watermelon', 'kiwi']
+    const characters = ['a', 'b']
+
+    const length = characters.push('c', 'd', 'e')
+
+    console.assert(characters[0] === 'a', 'characters[0] is a')
+    console.assert(characters[1] === 'b', 'characters[1] is b')
+    console.assert(characters[2] === 'c', 'characters[2] is c')
+    console.assert(characters[3] === 'd', 'characters[3] is d')
+    console.assert(characters[4] === 'e', 'characters[4] is e')
+    console.assert(characters.length === 5, 'characters.length is 5')
+    console.assert(length === 5, 'length is 5')
+    const charactersKeys = Object.keys(characters)
+    console.assert(charactersKeys.length === 5, 'charactersKeys.length is 5')
 }
 
-console.info('CASE merge arrays')
+console.info('CASE add no arguments')
 
 {
-    const fruits = ['apple', 'banana', 'strawberry', 'watermelon']
-    const vegetable = ['tomato', 'carrot', 'lettuce']
-    fruits.push(...vegetable)
+    const characters = ['a', 'b']
 
-    for (let i = 0; i < vegetable.length; i++) {
-        console.assert(fruits[4] === 'tomato', 'add tomato')
-        console.assert(fruits[5] === 'carrot', 'add carrot')
-        console.assert(fruits[6] === 'lettuce', 'add lettuce')
-    }
+    const length = characters.push()
 
-    //console.log(fruits)
-}
-
-{
-    const fruits = ['apple', 'banana', 'strawberry', 'watermelon']
-    fruits.push()
-    console.assert(fruits.length === 4, 'no modifications')
-    console.assert(fruits[0] === 'apple', 'fruits[0] is appple')
-    console.assert(fruits[1] === 'banana', 'fruits[1] is banana')
-    console.assert(fruits[2] === 'strawberry', 'fruits[2] is strawberry')
-    console.assert(fruits[3] === 'watermelon', 'fruits[3] is watermelon')
+    console.assert(characters[0] === 'a', 'characters[0] is a')
+    console.assert(characters[1] === 'b', 'characters[1] is b')
+    console.assert(characters.length === 2, 'characters.length is 2')
+    console.assert(length === 2, 'length is 2')
+    const charactersKeys = Object.keys(characters)
+    console.assert(charactersKeys.length === 2, 'charactersKeys.length is 2')
 }
