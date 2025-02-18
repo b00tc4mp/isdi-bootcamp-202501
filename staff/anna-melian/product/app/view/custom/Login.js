@@ -16,8 +16,6 @@ class Login extends Component {
         form.addSubmitListener(event => {
             event.preventDefault()
 
-            console.log('login submit')
-
             const username = formUsernameInput.getValue()
             const password = formPasswordInput.getValue()
 

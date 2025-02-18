@@ -80,7 +80,6 @@ class Home extends Component {
 
             for (let i = posts.length - 1; i > -1; i--) {
                 const post = posts[i]
-                const name = logic.getUserName()
                 const authorUsername = logic.getAuthorUsername(post)
 
                 const postArticle = new Article()
@@ -132,11 +131,24 @@ class Home extends Component {
                 postArticle.add(commentsSection)
 
                 //comment button
+                const commentAuthor = logic.getCommentCreator()
                 const commentButton = new Button()
                 commentButton.setText('💬')
-
                 commentButton.addClickListener(() => {
-                    //logic.addComment(comments, name, 'hello')
+                    const createComment = new CreateComment(post, commentAuthor)
+
+                    createComment.addCreatePostSubmitListener(() => {
+                        postArticle.remove(createComment)
+                        this.loadPosts()
+                    })
+
+                    createComment.addCancelClickListener(() => {
+                        postArticle.remove(createComment)
+                    })
+                    postArticle.remove(commentButton)
+                    postArticle.add(createComment)
+
+
                 })
 
                 postArticle.add(commentButton)

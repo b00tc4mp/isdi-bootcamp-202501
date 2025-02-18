@@ -116,6 +116,19 @@ const logic = {
 
         return found.name
     },
+    getCommentCreator() {
+        let found
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
+
+            if (user.id === data.userId)
+                found = user
+        }
+
+        if (!found) throw new Error('user not found')
+
+        return found.username
+    },
 
     getAuthorUsername(post) {
 
@@ -232,9 +245,8 @@ const logic = {
         return aggregatedComments
 
     },
-    addComment(commentsList, author, text) {
-        //TODO add comment
-        post.comments[`comment${post.comments.length}`] = [author, text]
+    addComment(post, author, text) {
+        post.comments[post.comments.length] = author + ': ' + text
     }
 
 }
