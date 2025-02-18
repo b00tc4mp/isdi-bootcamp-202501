@@ -57,7 +57,7 @@ const logic = {
             if(user.email == user || user.username == user) 
                 found = user
         }
-           if (found) throw new Error('User already exists') // y comparamos la variable user que acabamos de crear con el username y el email que nos ha introducido para comprobar que no exista ya, si existe lanzamos error
+           if (found) throw new DuplicityError('User already exists') // y comparamos la variable user que acabamos de crear con el username y el email que nos ha introducido para comprobar que no exista ya, si existe lanzamos error
          // si no existe no lanzaremos error y saldremos del bucle for, por lo que los datos serian validos y los podemos guardar en una variable user que sera un objeto con todos los datos
         const user = { 
             id: data.uuid(), // generamos una nueva id para guardarla para este usuario, gracias a la funcion que hemos creado en data
@@ -82,7 +82,7 @@ const logic = {
             } 
            
          }
-         if (!found || found.password !== password) throw new Error('Wrong credentials')  // no emetiremos el error : si found no es undefined (pk hemos assignado user al encontrar que el username son iguales) || y si las pawsword no son iguales (que sera false si son iguales asi de paso comprobamos que la haya puesto bien) 
+         if (!found || found.password !== password) throw new CredentialsError('Wrong credentials')  // no emetiremos el error : si found no es undefined (pk hemos assignado user al encontrar que el username son iguales) || y si las pawsword no son iguales (que sera false si son iguales asi de paso comprobamos que la haya puesto bien) 
         
         // Si lo encontramos le assignamos al usuario su id, esto simula como si estuviese online
         data.userId = found.id 
@@ -100,7 +100,7 @@ const logic = {
            if(user.id === data.userId) 
             found = user
         }
-        if (!found) throw new Error (' user not found ')
+        if (!found) throw new NotFoundError(' user not found ')
         
         return found.name
     },
