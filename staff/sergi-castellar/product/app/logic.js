@@ -11,10 +11,6 @@ const logic = {
             alert(error.message)
         },
 
-        getPosts() {
-            return data.posts
-        },
-
         getUserId() {
             return data.userId
         }
@@ -129,6 +125,18 @@ const logic = {
         if (!found.hasOwnProperty(property)) throw new NotFoundError('property not found')
 
         return found[property]
+    },
+
+    getPosts() {
+        const aggregatedPost = []
+
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
+
+            let liked = false
+
+            //for () //WIP
+        }
     },
 
     createNewPost(imageSrc, textDescription) {

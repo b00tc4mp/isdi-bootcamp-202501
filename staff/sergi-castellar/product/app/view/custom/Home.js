@@ -49,39 +49,26 @@ class Home extends Component {
         addPostButton.container.style.justifyContent = 'center'
         addPostButton.container.style.marginBottom = '10px'
         addPostButton.addClickListener(() => {
-            const modalBackground = new Div()
-            modalBackground.container.style.position = 'fixed'
-            modalBackground.container.style.top = '0'
-            modalBackground.container.style.left = '0'
-            modalBackground.container.style.width = '100%'
-            modalBackground.container.style.height = '100%'
-            modalBackground.container.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            modalBackground.container.style.display = 'flex'
-            modalBackground.container.style.justifyContent = 'center'
-            modalBackground.container.style.alignItems = 'center'
-            //modalBackground.container.style.zIndex = '1000'
-            this.add(modalBackground)
-
             const createPost = new CreatePost()
-            createPost.container.style.backgroundColor = 'white'
-            createPost.container.style.padding = '20px'
-            createPost.container.style.borderRadius = '8px'
-            createPost.container.style.width = '400px'
+            createPost.container.style.position = 'fixed'
+            createPost.container.style.top = '0'
+            createPost.container.style.left = '0'
+            createPost.container.style.width = '100%'
+            createPost.container.style.height = '100%'
+            createPost.container.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
             createPost.container.style.display = 'flex'
-            createPost.container.style.flexDirection = 'column'
+            createPost.container.style.justifyContent = 'center'
             createPost.container.style.alignItems = 'center'
-
-
-            modalBackground.add(createPost)
+            this.add(createPost)
 
             createPost.addCreatePostSubmitListener(() => {
-                this.remove(modalBackground)
+                this.remove(createPost)
 
                 this.loadPosts()
             })
 
             createPost.addCancelClickListener(() => {
-                this.remove(modalBackground)
+                this.remove(createPost)
             })
         })
         footer.add(addPostButton)
@@ -100,17 +87,17 @@ class Home extends Component {
             const userId = logic.helper.getUserId()
             const username = logic.getUserProperty(userId, 'username')
 
-            home.setWelcomeText(`Welcome, ${username}!`)
+            this.setWelcomeText(`Welcome, ${username}!`)
         } catch (error) {
             logic.helper.handleError(error)
         }
     }
 
     loadPosts() {
-        try {
-            this.postArticleDiv.container.innerHTML = ''
+        this.postArticleDiv.container.innerHTML = ''
 
-            const posts = logic.helper.getPosts()
+        try {
+            const posts = logic.getPosts()
 
             for (let i = posts.length - 1; i > -1; i--) {
                 let post = posts[i]

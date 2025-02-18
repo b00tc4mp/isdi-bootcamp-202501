@@ -68,7 +68,7 @@ createPost.addCancelClickListener(() => {
 })
 
 // aplicar estilos a todos los 'a' independientemente de si estan inicialmente en el DOM o no
-const ANCHORS = [...landing.container.querySelectorAll("a"), ...register.container.querySelectorAll("a"), ...login.container.querySelectorAll("a")]
+const ANCHORS = [...landing.container.querySelectorAll("a"), ...register.container.querySelectorAll("a"), ...login.container.querySelectorAll("a"), ...home.container.querySelectorAll("a"), ...createPost.container.querySelectorAll("a")]
 
 ANCHORS.forEach((child) => {
   child.style.textDecoration = 'underline'
@@ -77,7 +77,7 @@ ANCHORS.forEach((child) => {
 })
 
 // aplicar estilos a todos los 'button' independientemente de si estan inicialmente en el DOM o no
-const BUTTONS = [...landing.container.querySelectorAll("button"), ...register.container.querySelectorAll("button"), ...login.container.querySelectorAll("button"), ...home.container.querySelectorAll("button")]
+const BUTTONS = [...landing.container.querySelectorAll("button"), ...register.container.querySelectorAll("button"), ...login.container.querySelectorAll("button"), ...home.container.querySelectorAll("button"), ...createPost.container.querySelectorAll("button")]
 
 BUTTONS.forEach((child) => {
   child.style.borderRadius = '24px'

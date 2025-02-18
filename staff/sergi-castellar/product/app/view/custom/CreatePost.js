@@ -2,9 +2,19 @@ class CreatePost extends Section {
     constructor() {
         super()
 
+        const modalContent = new Section()
+        modalContent.container.style.backgroundColor = 'white'
+        modalContent.container.style.padding = '20px'
+        modalContent.container.style.borderRadius = '8px'
+        modalContent.container.style.width = '400px'
+        modalContent.container.style.display = 'flex'
+        modalContent.container.style.flexDirection = 'column'
+        modalContent.container.style.alignItems = 'center'
+        this.add(modalContent)
+
         const createPostTitle = new Heading(2)
         createPostTitle.setText("Create new post")
-        this.add(createPostTitle)
+        modalContent.add(createPostTitle)
 
         const inputForm = new Form()
         inputForm.setId("create-post")
@@ -27,7 +37,8 @@ class CreatePost extends Section {
         })
         inputForm.container.style.display = "flex"
         inputForm.container.style.flexDirection = "column"
-        this.add(inputForm)
+        modalContent.add(inputForm)
+
         const imageLabel = new Label()
         imageLabel.setHtmlFor("image-route")
         imageLabel.setText("Image route")
