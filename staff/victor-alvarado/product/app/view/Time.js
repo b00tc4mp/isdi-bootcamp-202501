@@ -1,9 +1,9 @@
-function Time() {
-    Component.call(this, 'time')
-}
-Time.prototype = Object.create(Component.prototype)
-Time.prototype.constructor = Time
+class Time extends Component {
+    constructor() {
+        super('time')
+    }
 
-Time.prototype.setText = function (text) {
-    this.container.textContent = text
+    setText(text) {
+        this.container.textContent = text
+    }
 }

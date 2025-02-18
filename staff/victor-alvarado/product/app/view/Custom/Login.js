@@ -1,79 +1,80 @@
-  // Login 
-  function Login() {
-    Component.call(this, 'div')
-    
-    var logo = new Heading(1)
-    logo.setText('Logo')
-    this.add(logo)
-  
-      // Formulario 
-     var form = new Form()
-     form.addSubmitListener(function (event) {
-      event.preventDefault()
-  
-     var username = usernameInput.getValue()
-     var password = passwordInput.getValue()
+class Login extends Component {
+    constructor() {
+        super('div')
 
-     try {
-        logic.loginUser(username, password)
+        const logo = new Heading(1)
+        logo.setText('Logo')
+        this.add(logo)
 
-        form.clear()
+        // form
 
-        this.loginSubmitListener()
+        const form = new Form()
+        form.addSubmitListener(event => {
+            event.preventDefault()
 
-        alert('hola')
-     } catch (error) {
-       console.error(error)
+            const username = usernameInput.getValue()
+            const password = passwordInput.getValue()
 
-       alert(error.message)
-     }
+            try {
+                logic.loginUser(username, password)
 
-     }.bind(this))
-     this.add(form)
-      
-     // Username
-      var usernameLabel = new Label()
-     usernameLabel.setText('Username')
-     form.add(usernameLabel)
-      
-     var usernameInput = new Input()
-     usernameInput.setType('text')
-     form.add(usernameInput)
-  
-     //Password
-  
-     var passwordLabel = new Label()
-     passwordLabel.setText('Password')
-     form.add(passwordLabel)
-  
-     var passwordInput = new Input()
-     passwordInput.setType('password')
-     form.add(passwordInput)
-  
-     // submit
-      
-     var submitButton = new Button()
-     submitButton.setText('Login')
-     submitButton.setType('submit')
-     form.add(submitButton)
-      
-      // anchor
-      var registerAnchor = new Anchor()
-      registerAnchor.setText('Register')
-      registerAnchor.addClickListener(function () {
-        form.clear()
+                form.clear()
 
-        this.addRegisterClickListener()
-      }.bind(this))
-      this.add(registerAnchor)
-    } 
-  
-      Login.prototype = Object.create(Component.prototype)
-      Login.prototype.constructor = Login
-  
-      Login.prototype.addRegisterClickListener = function (listener) {
+                this.loginSubmitListener()
+            } catch (error) {
+                console.error(error)
+
+                alert(error.message)
+            }
+        })
+        this.add(form)
+
+        // username
+
+        const usernameLabel = new Label()
+        usernameLabel.setText('Username')
+        form.add(usernameLabel)
+
+
+        const usernameInput = new Input()
+        usernameInput.setType('text')
+        form.add(usernameInput)
+
+        // password
+
+        const passwordLabel = new Label()
+        passwordLabel.setText('Password')
+        form.add(passwordLabel)
+
+
+        const passwordInput = new Input()
+        passwordInput.setType('password')
+        form.add(passwordInput)
+
+        // submit
+
+        const submitButton = new Button()
+        submitButton.setText('Login')
+        submitButton.setType('submit')
+        form.add(submitButton)
+
+        // anchor
+
+        const registerAnchor = new Anchor()
+        registerAnchor.setText('Register')
+        registerAnchor.addClickListener(() => {
+            form.clear()
+
+            this.registerClickListener()
+        })
+        this.add(registerAnchor)
+    }
+
+    addRegisterClickListener(listener) {
         this.registerClickListener = listener
-      }
-      Login.prototype.addLoginSubmitListener = function (listener) {
+    }
+
+    addLoginSubmitListener(listener) {
         this.loginSubmitListener = listener
-      }
+    }
+}

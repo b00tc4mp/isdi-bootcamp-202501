@@ -1,18 +1,17 @@
-// Component base constructor
-function Component(tagName) {
-    this.container = document.createElement(tagName); // Crea un nuevo elemento HTML con el tagName proporcionado
-}
+class Component {
+    constructor(tagName) {
+        this.container = document.createElement(tagName)
+    }
 
-Component.prototype.add = function(child) {
-    this.container.appendChild(child.container); // Agrega un componente hijo al contenedor
-}
+    add(child) {
+        this.container.appendChild(child.container)
+    }
 
-//falta crear contuctora romeve
-Component.prototype.remove = function (child) {
-    this.container.removeChild(child.container)
-}
+    remove(child) {
+        this.container.removeChild(child.container)
+    }
 
-
-Component.prototype.addClickListener = function(callback) {
-    this.container.addEventListener('click', callback); // Agrega un listener de clic al contenedor
+    addClickListener(listener) {
+        this.container.addEventListener('click', listener)
+    }
 }

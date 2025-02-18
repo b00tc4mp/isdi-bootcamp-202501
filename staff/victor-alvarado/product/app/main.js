@@ -1,63 +1,44 @@
-console.clear()
 console.log('Hello, App!')
 
 const body = new Body()
 body.container = document.body
-    
-   var landing = new Landing()
-    landing.addRegisterClickListener(function () {
-      body.remove(landing)
-      body.add(register)
-   })
-   
-   landing.addLoginClickListener(function () {
-      body.remove(landing)
-      body.add(login)
-   })
-    body.add(landing)
 
-   var register = new Register()
-   register.addLoginClickListener(function () {
-   body.remove(register)
-   body.add(login)
-   })
+const landing = new Landing()
+landing.addRegisterClickListener(() => {
+    body.remove(landing)
+    body.add(register)
+})
+landing.addLoginClickListener(() => {
+    body.remove(landing)
+    body.add(login)
+})
+body.add(landing)
 
-   register.addRegisterSubmitListener(function () {
-      body.remove(register)
-      body.add(login)
-   })  
+const register = new Register()
+register.addLoginClickListener(() => {
+    body.remove(register)
+    body.add(login)
+})
+register.addRegisterSubmitListener(() => {
+    body.remove(register)
+    body.add(login)
+})
 
-    var login = new Login()
-    login.addRegisterClickListener(function () {
-      body.remove(login)
-      body.add(register)
-   })
-   login.addLoginSubmitListener( function () {
-      const name = logic.getUserName()
+const login = new Login()
+login.addRegisterClickListener(() => {
+    body.remove(login)
+    body.add(register)
+})
+login.addLoginSubmitListener(() => {
+    home.loadUserName()
+    home.loadPosts()
 
-        home.setWelcomeText('Hello, ' + name + '!')
+    body.remove(login)
+    body.add(home)
+})
 
-        const posts = logic.getPosts()
-
-        home.setPosts(posts)
-
-      body.remove(login)
-      body.add(home)
-   })
-    var home = new Home()
-    home.addLogoutClickListener(function () {
-     body.remove(home)
-     body.add(login)
-
-    })
-
-
-
-
-
-
-
-
- 
-
-
+const home = new Home()
+home.addLogoutClickListener(() => {
+    body.remove(home)
+    body.add(login)
+})

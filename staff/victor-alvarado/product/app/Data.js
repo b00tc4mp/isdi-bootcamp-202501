@@ -1,5 +1,5 @@
-var data = {
-    uuid: function () {
+const data = {
+    uuid() {
         return (Date.now() + Math.random()).toString(36).replace('.', '')
     },
     users: [
@@ -29,14 +29,16 @@ var data = {
             image: 'https://media1.giphy.com/media/4PUc9Vm4zW5JsX2ibu/200w.gif?cid=6c09b952x9hmim7gc8270th5sl5jg7jnkeb4ga2fc9256n7q&ep=v1_gifs_search&rid=200w.gif&ct=g',
             text: 'Bailamos?',
             createdAt: new Date(2025, 0, 1),
-            modifiedAt: null
+            modifiedAt: null,
+            likes: []
         },
         {
             id: 'm737zabzix8',
             author: 'm71tml17ly',
             image: 'https://i.pinimg.com/originals/f4/ef/59/f4ef59dffa0c42293103e6523e9abc23.gif',
             createdAt: new Date(2025, 1, 10),
-            modifiedAt: null
+            modifiedAt: null,
+            likes: ['m71tml17ly']
         }
     ],
     userId: null
