@@ -91,8 +91,7 @@ class Register extends Component {
         const submitButton = new Button()
         submitButton.setText('Register')
         submitButton.setType('submit')
-        submitButton.container.style.margin = '15px'
-        submitButton.container.style.marginInline = 'inherit'
+        submitButton.container.style.margin = '10px'
         form.add(submitButton)
     }
 

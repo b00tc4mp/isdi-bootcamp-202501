@@ -12,7 +12,7 @@ class Landing extends Component {
 
         // Login
         const loginAnchor = new Anchor()
-        loginAnchor.setText('Login ')
+        loginAnchor.setText('Login')
         console.log(loginAnchor)
         loginAnchor.container.style.textDecoration = 'underline'
         this.loginAnchor = loginAnchor
@@ -21,10 +21,11 @@ class Landing extends Component {
         // Or
         const orText = document.createTextNode(' or ')
         this.container.appendChild(orText)
+        // orText.container.style.textDecoration = 'underline'
 
         // Register
         const registerAnchor = new Anchor()
-        registerAnchor.setText(' Register')
+        registerAnchor.setText('Register')
         registerAnchor.container.style.textDecoration = 'underline'
         this.registerAnchor = registerAnchor
         this.add(registerAnchor)

@@ -67,6 +67,9 @@ class Home extends Component {
         this.postsSection = postsSection
     }
 
+
+
+
     // Creamos un metodo para el cambio de ventana
     addLogoutClickListener(listener) {
         this.logoutClickListener = listener
@@ -111,35 +114,15 @@ class Home extends Component {
                 postArticle.add(postImage)
                 postImage.container.style.maxWidth = '600px'
 
-                // Boton de Like
-                const likeButton = new Button()
-                likeButton.container.style.marginRight = '200px'
-                // ${post.liked ? 'Like 🧡' : 'Like 🤍'} = Si tienes Like pintar el corazon Rojo y si no el Blanco
-                // ${post.likesCount} = Muestra la cantidad total de Likes
-                likeButton.setText(`${post.liked ? '🧡' : '🤍'} (${post.likesCount})`)
-                likeButton.addClickListener(() => {
-                    try {
-                        // Cambiar me gusta al Post
-                        logic.toggleLikePost(post.id)
-
-                        this.loadPosts()
-                    } catch (error) {
-                        console.error(error)
-
-                        alert(error.message)
-                    }
-                })
-                postArticle.add(likeButton)
-
                 // Crea el texto escrito por el Autor del post
                 const postText = new Paragraph()
                 postText.setText(post.text)
                 postArticle.add(postText)
 
-                // Crea la fecha de subida del post con la hora local "toLocaleString()"
+
+                // Crea la fecha de subida del post
                 const postDate = new Time()
                 postDate.setText(post.createdAt.toLocaleString())
-                postDate.container.style.color = 'black'
                 postArticle.add(postDate)
 
                 // Añade el PostArticle al PostsSection

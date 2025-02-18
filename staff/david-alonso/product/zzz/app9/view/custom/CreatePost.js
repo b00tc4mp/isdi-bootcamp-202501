@@ -27,7 +27,6 @@ class CreatePost extends Section {
         }.bind(this))
         this.add(form)
 
-        // Creamos el Texto del Input
         const imageLabel = new Label()
         imageLabel.setText('Image')
         form.add(imageLabel)
@@ -47,8 +46,7 @@ class CreatePost extends Section {
         const submitButton = new Button()
         submitButton.setText(' Create ')
         submitButton.setType('submit')
-        submitButton.container.style.margin = '15px'
-        submitButton.container.style.marginInline = 'inherit'
+        submitButton.container.style.margin = '10px'
         form.add(submitButton)
 
         const cancelAnchor = new Anchor()
