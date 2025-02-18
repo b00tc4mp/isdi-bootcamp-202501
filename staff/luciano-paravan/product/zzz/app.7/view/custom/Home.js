@@ -107,18 +107,6 @@ class Home extends Component {
                 postDate.setText(post.createdAt.toISOString())
                 postArticle.add(postDate)
 
-                const likeButton = new Button()
-                likeButton.setText('🤍')
-                likeButton.addClickListener(function() {
-                    try {
-                        logic.toggleLikePost(post.id)
-                    } catch (error) {
-                        console.error(error)
-                        alert(error.message)
-                    }
-                })
-                postArticle.add(likeButton)
-
                 this.postsSection.add(postArticle)        }
         } catch (error) {
             console.error(error)

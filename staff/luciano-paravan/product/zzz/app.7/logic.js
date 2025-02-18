@@ -42,11 +42,9 @@ const logic = {
         
         this.validate.text(name, 'name')
         this.validate.maxLength(name, 20, 'name')
-        this.validate.minLength(name, 1, 'name')
 
         this.validate.text(surname, 'surname')
         this.validate.maxLength(surname, 20,'surname')
-        this.validate.minLength(surname, 1, 'surname') 
 
         this.validate.email(email, 'email')
 
@@ -123,10 +121,8 @@ const logic = {
 
     createPost (image, text) {
         this.validate.url(image)
-        this.validate.maxLength(1000)
         this.validate.text(text)
-        this.validate.maxLength(500)
-
+        
         const post = {
             id: data.uuid(),
             author: data.userId,
@@ -134,48 +130,13 @@ const logic = {
             text: text,
             createdAt: new Date(),
             modifiedAt: null,
-            likes: []
+            likes: ''
         }
 
         data.posts[data.posts.length] = post
     },
 
-    toggleLikePost (postId) {
-        let foundPost
-
-        for (let i = 0; i < data.posts.length && !foundPost; i++) {
-            const post = data.posts[i]
-
-            if (post.id === postId) {
-                foundPost = post
-            }
-        }
-        if (!foundPost) throw new NotFoundError ('post not found')
-
-        let userIdFound = false
-
-        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const userId = foundPost.likes[i]
-
-            if (userId === data.userId) {
-                userIdFound = true
-            }
-        }
-
-        if (!userIdFound) {
-            foundPost.likes[foundPost.likes.length] = data.userId
-        } else {
-            const likes = []
-
-            for (let i = 0; i < foundPost.likes.length; i++) {
-                const userId = foundPost.likes[i]
-                
-                if (userId !== data.userId) {
-                    likes[likes.length] = userId
-                }
-            }
-
-            foundPost.likes = likes
-        }
+    toggleLikePost () {
+        
     }
 }

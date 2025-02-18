@@ -35,7 +35,7 @@ const data = {
             text: 'The best',
             createdAt: new Date(2025, 0,1) ,
             modifiedAt: null,
-            likes: ['qwe123rty456', 'abc123def456']
+            likes: []
         },
         {
             id: 'qwe123rty456',
