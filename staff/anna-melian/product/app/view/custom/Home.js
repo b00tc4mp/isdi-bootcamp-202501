@@ -80,26 +80,28 @@ class Home extends Component {
 
             for (let i = posts.length - 1; i > -1; i--) {
                 const post = posts[i]
+                const name = logic.getUserName()
                 const authorUsername = logic.getAuthorUsername(post)
 
                 const postArticle = new Article()
 
+                //username author
                 const authorHeading = new Heading(3)
                 authorHeading.setText(authorUsername)
                 postArticle.add(authorHeading)
 
+                //image
                 const postImage = new Image()
                 postImage.setUrl(post.image)
                 postArticle.add(postImage)
 
+
+                //Caption
                 const postText = new Paragraph()
                 postText.setText(post.text)
                 postArticle.add(postText)
 
-                const postDate = new Time()
-                postDate.setText(post.createdAt.toISOString())
-                postArticle.add(postDate)
-
+                //like button
                 const likeButton = new Button()
                 likeButton.setText(`${post.liked ? '💙' : '🤍'} (${post.likesCount})`)
                 likeButton.addClickListener(() => {
@@ -114,6 +116,36 @@ class Home extends Component {
                 })
                 postArticle.add(likeButton)
 
+
+                // comment section
+
+                const commentsSection = new Section()
+                if (post.comments.length != 0) {
+                    const comments = logic.getComments(post)
+                    for (let i = 0; i < comments.length; i++) {
+                        const comment = new Paragraph()
+                        comment.setText(comments[i])
+                        commentsSection.add(comment)
+                    }
+                }
+
+                postArticle.add(commentsSection)
+
+                //comment button
+                const commentButton = new Button()
+                commentButton.setText('💬')
+
+                commentButton.addClickListener(() => {
+                    //logic.addComment(comments, name, 'hello')
+                })
+
+                postArticle.add(commentButton)
+
+
+                //Date
+                const postDate = new Time()
+                postDate.setText(post.createdAt.toISOString())
+                postArticle.add(postDate)
 
                 this.postsSection.add(postArticle)
             }

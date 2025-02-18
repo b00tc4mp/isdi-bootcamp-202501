@@ -40,7 +40,8 @@ var data = {
             text: 'Buying my first wand',
             createdAt: new Date(2025, 0, 1),
             modifiedAt: null,
-            likes: ['m71tm7l3l5l', 'm71tml17ly']
+            likes: ['m71tm7l3l5l', 'm71tml17ly'],
+            comments: ['QuidditchFan: Nice wand!']
         },
         {
             id: 'm737zabzix8',
@@ -49,7 +50,8 @@ var data = {
             text: "It's leviosa, not leviosaar",
             createdAt: new Date(2024, 11, 13),
             modifiedAt: null,
-            likes: ['m71tml17ly']
+            likes: ['m71tml17ly'],
+            comments: ['GryffindorSeeker: I need another feather to practice...']
         },
         {
             id: 'm737zkgn59f',
@@ -58,7 +60,8 @@ var data = {
             text: "Sunshine, daisies, butter mellow, turn this stupid, fat rat yellow!",
             createdAt: new Date(2024, 9, 30),
             modifiedAt: null,
-            likes: ['m71tmfd56b']
+            likes: ['m71tmfd56b'],
+            comments: ['theSmartestWitch: Are you sure that this spell exists?']
         }
     ],
     userId: null,

@@ -155,7 +155,8 @@ const logic = {
                 createdAt: post.createdAt,
                 modifiedAt: post.modifiedAt,
                 liked: liked,
-                likesCount: post.likes.length
+                likesCount: post.likes.length,
+                comments: post.comments
             }
             aggregatedPosts[aggregatedPosts.length] = aggregatedPost
         }
@@ -175,7 +176,8 @@ const logic = {
             text: text,
             createdAt: new Date(),
             modifiedAt: null,
-            likes: []
+            likes: [],
+            comments: []
         }
 
         data.posts[data.posts.length] = post
@@ -219,6 +221,20 @@ const logic = {
             foundPost.likes = likes
         }
 
+    },
+    getComments(postId) {
+        const aggregatedComments = []
+        const post = postId
+        for (let j = 0; j < post.comments.length; j++) {
+            const comment = post.comments[j]
+            aggregatedComments[aggregatedComments.length] = comment
+        }
+        return aggregatedComments
+
+    },
+    addComment(commentsList, author, text) {
+        //TODO add comment
+        post.comments[`comment${post.comments.length}`] = [author, text]
     }
 
 }
