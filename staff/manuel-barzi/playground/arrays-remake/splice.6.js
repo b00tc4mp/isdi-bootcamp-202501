@@ -1,17 +1,16 @@
 Array.prototype.splice = function (indexFrom, removeCount, ...elements) {
     const removedElements = []
-    const adjustedIndexFrom = indexFrom < 0 ? this.length + indexFrom : indexFrom
 
     if (elements.length !== 0) {
-        for (let i = adjustedIndexFrom; i < adjustedIndexFrom + removeCount; i++) {
+        for (let i = indexFrom; i < indexFrom + removeCount; i++) {
             const currentElement = this[i]
 
             removedElements[removedElements.length] = currentElement
 
-            this[i] = elements[i - adjustedIndexFrom]
+            this[i] = elements[i - indexFrom]
         }
     } else {
-        for (let i = adjustedIndexFrom; i < adjustedIndexFrom + removeCount; i++) {
+        for (let i = indexFrom; i < indexFrom + removeCount; i++) {
             const currentElement = this[i]
 
             removedElements[removedElements.length] = currentElement
