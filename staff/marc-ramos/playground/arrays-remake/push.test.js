@@ -1,41 +1,50 @@
-delete Array.prototype.push //eliminamos el metodo push
+require('./push.js')
 
-Array.prototype.push = function(arguments) { //creamos el metodo .push 
-    for (let i = 0; i < arguments.length; i++) { // iteramos sobre la length de arguments
-        this[this.length] = arguments[i] // añadimos los arguments al final del array
-    }
+console.info('TEST push')
+
+console.info('CASE add one argument')
+
+{
+    const characters = ['a', 'b']
+
+    const length = characters.push('c')
+
+    console.assert(characters[0] === 'a', 'characters[0] is a')
+    console.assert(characters[1] === 'b', 'characters[1] is b')
+    console.assert(characters[2] === 'c', 'characters[2] is c')
+    console.assert(characters.length === 3, 'characters.length is 3')
+    const charactersKeys = Object.keys(characters)
+    console.assert(charactersKeys.length === 3, 'charactersKeys.length is 3')
 }
 
-var array = [1, 2]
-array.push(3, 4)
+console.info('CASE add multiple arguments')
 
-// Array [1, 2, 3, 4]
+{
+    const characters = ['a', 'b']
 
-const arrayLike = {
-    length: 3,
-    unrelated: "foo",
-    2: 4,
-  }
+    const length = characters.push('c', 'd', 'e')
 
-Array.prototype.push.call(arrayLike, 1, 2)
-  console.log(arrayLike)
-
-  // { '2': 4, '3': 1, '4': 2, length: 5, unrelated: 'foo' }
-
-//------------------------------------------------------------------
-  
-delete Array.prototype.push
-
-Array.prototype.push = function (element) {
-    this[this.length] = element
-
-    return this.length
+    console.assert(characters[0] === 'a', 'characters[0] is a')
+    console.assert(characters[1] === 'b', 'characters[1] is b')
+    console.assert(characters[2] === 'c', 'characters[2] is c')
+    console.assert(characters[4] === 'd', 'characters[4] is e')
+    console.assert(characters.length === 5, 'characters.length is 5')
+    console.assert(length === 5, 'length is 5')
+    const charactersKeys = Object.keys(characters)
+    console.assert(charactersKeys.length === 5, 'charactersKeys.length is 5')
 }
 
-const characters = ['a', 'b']
+console.info('CASE add no arguments')
 
-const length = characters.push('c')
-console.log(length)
-// 3
-console.log(characters)
-// [a,b,c]
+{
+    const characters = ['a', 'b']
+
+    const length = characters.push()
+
+    console.assert(characters[0] === 'a', 'characters[0] is a')
+    console.assert(characters[1] === 'b', 'characters[1] is b')
+    console.assert(characters.length === 2, 'characters.length is 2')
+    console.assert(length === 2, 'length is 2')
+    const charactersKeys = Object.keys(characters)
+    console.assert(charactersKeys.length === 2, 'charactersKeys.length is 2')
+}

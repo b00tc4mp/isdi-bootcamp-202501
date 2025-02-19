@@ -10,3 +10,10 @@ cars.pop()
 
 console.log(cars)
 // Array ['porche', 'mercedes']
+
+const empty = []
+
+empty.pop()
+
+console.log(empty)
+// undefined
