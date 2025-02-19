@@ -28,3 +28,21 @@ console.log(
     a.join(" + "), // 'Wind + Water + Fire'
     a.join("") // 'WindWaterFire'
 )
+
+const numbers = [0, 10, 20]
+const result2 = numbers.join()
+console.log(result2)
+
+const objects = [
+    {
+
+    },
+    {
+
+    },
+    {
+
+    }
+]
+const result3 = objects.join()
+console.log(result3)
