@@ -108,18 +108,21 @@ class Home extends Component {
                 postArticle.add(postDate)
 
                 const likeButton = new Button()
-                likeButton.setText('🤍')
+                likeButton.setText(`${post.liked ? '❤️' : '🤍'}(${post.likesCount})`)
                 likeButton.addClickListener(function() {
                     try {
                         logic.toggleLikePost(post.id)
+
+                        this.loadPosts()
                     } catch (error) {
                         console.error(error)
                         alert(error.message)
                     }
-                })
+                }.bind(this))
                 postArticle.add(likeButton)
 
-                this.postsSection.add(postArticle)        }
+                this.postsSection.add(postArticle)
+            }
         } catch (error) {
             console.error(error)
 

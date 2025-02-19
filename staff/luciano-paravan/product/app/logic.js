@@ -118,7 +118,36 @@ const logic = {
     },
 
     getPosts () {
-        return data.posts
+        const aggregatedPosts = []
+
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
+
+            let liked = false
+
+            for (let i = 0; i < post.likes.length && !liked; i++) {
+                const userId = post.likes[i]
+
+                if (userId === data.userId) {
+                    liked = true
+                }
+            }
+
+            const aggregatedPost = {
+                id: post.id,
+                author: post.author,
+                image: post.image,
+                text: post.text,
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
+                liked: liked,
+                likesCount: post.likes.length
+            }
+
+            aggregatedPosts[aggregatedPosts.length] = aggregatedPost
+        }
+
+        return aggregatedPosts
     },
 
     createPost (image, text) {
