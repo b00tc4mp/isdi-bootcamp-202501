@@ -1,10 +1,10 @@
 delete Array.prototype.push
 
-Array.prototype.push = function (element) {
+Array.prototype.push = function (arguments) {
     /*
-    insert the element at the end of the array
+    insert the arguments at the end of the array
     */
-    this[this.length] = element
+    this[this.length] = arguments[i]
 
     return this.length
 }
