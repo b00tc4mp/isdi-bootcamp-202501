@@ -15,7 +15,9 @@ Array.prototype.includes = function (element, index) {
         startIndex = 0
 
     for (let i = startIndex; i < this.length; i++) {
-        if (element === this[i] || Number.isNaN(element) && Number.isNaN(this[i]))
+        const currentElement = this[i]
+
+        if (element === currentElement || isNaN(element) && isNaN(currentElement))
             return true
     }
 

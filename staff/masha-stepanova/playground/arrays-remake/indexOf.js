@@ -16,7 +16,9 @@ Array.prototype.indexOf = function (element, index) {
         startIndex = 0
 
     for (let i = startIndex; i < this.length; i++) {
-        if (element === this[i] && element !== undefined)
+        const currentElement = this[i]
+
+        if (element === currentElement && element !== undefined)
             return i
     }
 

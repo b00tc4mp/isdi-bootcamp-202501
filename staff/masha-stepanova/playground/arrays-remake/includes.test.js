@@ -41,7 +41,7 @@ console.info('CASE search for an element string compared to number')
 }
 
 console.info('CASE search for an element NaN')
-
+debugger
 {
     const numbers = [NaN, 1, 2, 3];
 
