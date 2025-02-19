@@ -1,70 +1,69 @@
-function Landing() {
-    Component.call(this, "section");
+class Landing extends Component {
+  constructor() {
+    super("section");
     this.container.style.display = "flex";
     this.container.style.flexDirection = "column";
     this.container.style.alignItems = "center";
-  
+
     //========================================== Crear contenedor para el logo=============================================================S1
-    var boxLogo = new Div();
+    const boxLogo = new Div();
     boxLogo.container.style.display = "flex";
     boxLogo.container.style.flexDirection = "column";
     boxLogo.container.style.alignItems = "center";
     boxLogo.container.style.padding = "20px";
     boxLogo.container.style.marginTop = "20px";
     this.add(boxLogo);
-  
-    var logoLink = new Link();
+
+    const logoLink = new Link();
     logoLink.container.href = "#";
     logoLink.container.style.fontSize = "50px";
     logoLink.container.style.color = "#00d4ff";
     boxLogo.add(logoLink);
-  
-    var logoIcon = new Icon();
-    logoIcon.container.className = "fa-solid fa-user-secret"; 
-    logoLink.add(logoIcon); 
-  
+
+    const logoIcon = new Icon();
+    logoIcon.container.className = "fa-solid fa-user-secret";
+    logoLink.add(logoIcon);
+
     //============================================ Crear contenedor para los inputs FORM=========================================================S1
-    var form = new Form();
+    const form = new Form();
     form.container.style.display = "flex";
     form.container.style.flexDirection = "column";
     form.container.style.alignItems = "center";
     form.container.style.marginTop = "20px";
-    form.addSubmitListener(function (event) {
-      //evito que la pagina se refresque al enviar el formulario
-      event.preventDefault()
+    form.addSubmitListener(
+      function (event) {
+        //evito que la pagina se refresque al enviar el formulario
+        event.preventDefault();
 
-      console.log("Formulario enviado")
+        console.log("Formulario enviado");
 
-      //guardo los valores de los inputs en variables, estos o=los obtengo gracias al evento que se dispara al enviar el formulario y el get value de los inputs
-      var email = inputEmail.getValue()
-      var password = inputPassword.getValue()
+        //guardo los valores de los inputs en variables, estos o=los obtengo gracias al evento que se dispara al enviar el formulario y el get value de los inputs
+        const email = inputEmail.getValue();
+        const password = inputPassword.getValue();
 
+        try {
+          //llamo a la funcion de login del logic, pasandole los valores de los inputs
+          logic.loginUser(email, password);
 
-      try {
-        
+          //limpio el formulario
+          form.clear();
 
-        //llamo a la funcion de login del logic, pasandole los valores de los inputs
-        logic.loginUser(email, password)
-        
+          alert("Hi you!");
 
-        //limpio el formulario
-        form.clear()
+          //si existe un listener de submit en el form, lo ejecuto
+          this.loginSubmitListener();
+        } catch (error) {
+          console.error(error.message);
 
-        alert("Hi you!")
+          alert(error.message);
+        }
 
-        //si existe un listener de submit en el form, lo ejecuto 
-        this.loginSubmitListener()
-      } catch (error) {
-        console.error(error.message)
-
-        alert(error.message)
-      }
-      
-      // con el bind lo que logro es que el this que se use en la funcion sea el this de la instancia de Landing no de la funcion que se esta ejecutando
-    }.bind(this))
+        // con el bind lo que logro es que el this que se use en la funcion sea el this de la instancia de Landing no de la funcion que se esta ejecutando
+      }.bind(this)
+    );
     this.add(form);
-  
-    var inputEmail = new Input();
+
+    const inputEmail = new Input();
     inputEmail.setType("email");
     inputEmail.setPlaceholder("Enter your email");
     inputEmail.container.style.margin = "10px";
@@ -72,8 +71,8 @@ function Landing() {
     inputEmail.container.style.backgroundColor = "#1a1a1a";
     inputEmail.container.style.color = "#00d4ff";
     form.add(inputEmail);
-  
-    var inputPassword = new Input();
+
+    const inputPassword = new Input();
     inputPassword.setType("password");
     inputPassword.setPlaceholder("Enter your password");
     inputPassword.container.style.margin = "10px";
@@ -81,26 +80,27 @@ function Landing() {
     inputPassword.container.style.backgroundColor = "#1a1a1a";
     inputPassword.container.style.color = "#00d4ff";
     form.add(inputPassword);
-  
-    var buttonLogin = new Button();
+
+    const buttonLogin = new Button();
     buttonLogin.setType("submit");
     buttonLogin.setText("Login");
     buttonLogin.container.style.margin = "10px";
     buttonLogin.container.style.border = "2px solid #00d4ff";
     buttonLogin.container.style.backgroundColor = "#1a1a1a";
     buttonLogin.container.style.color = "#00d4ff";
-    buttonLogin.container.style.transition = "background-color 0.3s, color 0.3s";
+    buttonLogin.container.style.transition =
+      "background-color 0.3s, color 0.3s";
     form.add(buttonLogin);
-  
+
     //========================================= Crear contenedor para REGISTER=========================================================S1
-    var boxLinks = new Div();
+    const boxLinks = new Div();
     boxLinks.container.style.display = "flex";
     boxLinks.container.style.flexDirection = "row";
     boxLinks.container.style.alignItems = "center";
     boxLinks.container.style.marginTop = "20px";
     this.add(boxLinks);
-  
-    var registerLink = new Link();
+
+    const registerLink = new Link();
     registerLink.setText("Register");
     registerLink.container.href = "#";
     registerLink.container.style.textDecoration = "none";
@@ -112,17 +112,13 @@ function Landing() {
     boxLinks.add(registerLink);
   }
 
-  //CREO el prototipo de Landing que hereda de Component, y le asigno el constructor de Landing 
-  Landing.prototype = Object.create(Component.prototype);
-  Landing.prototype.constructor = Landing;
-
-
   //agrego un listener al submit del form y que se ejecute la funcion que recibe como parametro la funcion la declaro en el constructor de Landing en el main.js
-  Landing.prototype.addRegisterClickListener = function (listener) {
+  addRegisterClickListener(listener) {
     this.registerLink.addClickListener(listener);
   }
 
   //agrego un listener al submit del form y que se ejecute la funcion que recibe como parametro la funcion la declaro en el constructor de Landing en el main.js
-  Landing.prototype.addLoginSubmitListener = function (listener) {
-    this.loginSubmitListener = listener
+  addLoginSubmitListener(listener) {
+    this.loginSubmitListener = listener;
   }
+}

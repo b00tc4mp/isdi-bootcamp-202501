@@ -1,4 +1,4 @@
-class Heading extends Componet{
+class Heading extends Component{
   constructor(level){
     super("h" + level);
   }

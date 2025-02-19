@@ -1,26 +1,26 @@
-console.clear();
 console.log("Hello, App!");
 
-var body = new Body();
+
+//AQUI MANEJO TODO LO RELACIONADO AL DOM
+
+//Remplazo el body por un contenedor
+const body = new Body();
 body.container = document.body;
 document.body.style.margin = 0;
 
-var main = new Main();
+//creo el main y lo agrego al body
+const main = new Main();
 body.add(main);
 
-var landing = new Landing();
+
+//Vista y navegaciopn de Landing&Login
+const landing = new Landing();
 landing.addLoginSubmitListener(function () {
 
-  try {
-    const posts= logic.getPosts();  
-
-    home.setPosts(posts);
-    
-  } catch (error) {
-    console.error(error);
-
-    alert(error.message)
-  }
+  
+  home.loadUserName()
+  home.setPosts()
+  
   main.remove(landing);
   main.add(home);
 });
@@ -30,7 +30,11 @@ landing.addRegisterClickListener(function () {
 });
 main.add(landing);
 
-var register = new Register();
+
+
+
+
+const register = new Register();
 register.addRegisterSubmitListener(function () {
   main.remove(register);
   main.add(landing);
@@ -40,7 +44,7 @@ register.addLandingClickListener(function () {
   main.add(landing);
 });
 
-var home = new Home();
+const home = new Home();
 home.addHomeClickListener(function () {
   main.remove(home);
   main.add(landing);

@@ -13,15 +13,15 @@ class CreatePost extends Section {
 
         try {
           //Obtener los valores del formulario
-          const image = form.getValues();
-          const title = form.getValues();
+          const image = imageInput.getValue();
+          const title = titleInput.getValue();
 
           //Crear en logic un metodo que se llame createPost
           logic.createPost(image, title);
 
           form.clear();
 
-          this.createPostClickListener();
+         this.createPostSubmitListener();
         } catch (error) {
           console.error(error);
 

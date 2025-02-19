@@ -11,7 +11,7 @@ var data = {
         {
             id: 'm73hzspg-cjz345t0kzr',
             name: 'Helga Pataki',
-            email: 'Helga@pataki.com',
+            email: 'helga@pataki.com',
             username: 'helgapataki',
             password: '12345',
             createdAt: new Date(2024, 0, 10),
@@ -40,7 +40,9 @@ var data = {
             image: 'https://media.giphy.com/media/l4EoS4FShnTLbptOE/giphy.gif?cid=790b7611wfv00fcfuc86l5jmh9nho25hby0jdx93fghvrqpo&ep=v1_gifs_search&rid=giphy.gif&ct=g',
             title: 'Hey you!',
             createdAt: new Date(2024, 0, 30),
-            modifiedAt: null
+            modifiedAt: null,
+            likes:[]
+
         },
 
 
@@ -50,12 +52,13 @@ var data = {
             image: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDVqbGoxYmduejJudmVleWVmcXRvd3dqb3pjcjR4d2JvdXpnaTdpNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0DAG7ikMKa3WCNji/giphy.gif',
             title: 'Strike !',
             createdAt: new Date(2024, 0, 20),
-            modifiedAt: null
+            modifiedAt: null,
+            likes:[]
         }
 
-    ]
+    ],
         
-          
+    userId: null
 
 }
 

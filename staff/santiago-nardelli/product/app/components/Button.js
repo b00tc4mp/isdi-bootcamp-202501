@@ -1,4 +1,4 @@
-class Buton extends Component {
+class Button extends Component {
   constructor() {
     super("button");
   }

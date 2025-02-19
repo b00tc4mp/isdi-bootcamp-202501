@@ -1,5 +1,5 @@
-class Div extends Components{
+class Div extends Component{
   constructor(){
-    super("div")
+    super("div");
   }
 }
