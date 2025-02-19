@@ -34,7 +34,7 @@ const form = React.createElement('form', {
 
         resultParagraph = React.createElement('p', { children: `Result: ${result}` })
 
-        root.render([title, form, resultParagraph]);
+        root.render([title, form, resultParagraph])
     }
 });
 
