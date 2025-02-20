@@ -28,17 +28,17 @@ class Calculator extends Component {
       value !== "-" &&
       value !== "*" &&
       value !== "/" &&
-      this.counter === 0
+      this.state.counter === 0
     ) {
-      this.setFirstNumber(this.firstNumber + value);
+      this.setState({ firstNumber: this.firstNumber + value });
     } else if (
       value === "+" ||
       value === "-" ||
       value === "*" ||
       (value === "/" && this.counter === 0)
     ) {
-      this.setCounter(this.counter + 1);
-      this.setOperation(value);
+      this.setState({ counter: this.counter + 1 });
+      this.setState({ operation: value });
     } else if (
       value !== "+" &&
       value !== "-" &&
@@ -104,21 +104,21 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                handleClick("1").bind(this);
+                this.handleClick("1");
               }}
             >
               1
             </button>
             <button
               onClick={() => {
-                handleClick("2").bind(this);
+                this.handleClick("2");
               }}
             >
               2
             </button>
             <button
               onClick={() => {
-                handleClick("3").bind(this);
+                this.handleClick("3");
               }}
             >
               3
@@ -127,21 +127,21 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                handleClick("4").bind(this);
+                this.handleClick("4");
               }}
             >
               4
             </button>
             <button
               onClick={() => {
-                handleClick("5").bind(this);
+                this.handleClick("5");
               }}
             >
               5
             </button>
             <button
               onClick={() => {
-                handleClick("6").bind(this);
+                this.handleClick("6");
               }}
             >
               6
@@ -150,21 +150,21 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                handleClick("7").bind(this);
+                this.handleClick("7");
               }}
             >
               7
             </button>
             <button
               onClick={() => {
-                handleClick("8").bind(this);
+                this.handleClick("8");
               }}
             >
               8
             </button>
             <button
               onClick={() => {
-                handleClick("9").bind(this);
+                this.handleClick("9");
               }}
             >
               9
@@ -173,21 +173,21 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                handleClick("0").bind(this);
+                this.handleClick("0");
               }}
             >
               0
             </button>
             <button
               onClick={() => {
-                handleClick(".").bind(this);
+                this.handleClick(".");
               }}
             >
               .
             </button>
             <button
               onClick={() => {
-                handleResult().bind(this);
+                this.handleResult();
               }}
             >
               =
@@ -196,28 +196,28 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                handleClick("+").bind(this);
+                this.handleClick("+");
               }}
             >
               +
             </button>
             <button
               onClick={() => {
-                handleClick("-").bind(this);
+                this.handleClick("-");
               }}
             >
               -
             </button>
             <button
               onClick={() => {
-                handleClick("*").bind(this);
+                this.handleClick("*");
               }}
             >
               *
             </button>
             <button
               onClick={() => {
-                handleClick("/").bind(this);
+                this.handleClick("/");
               }}
             >
               /
@@ -225,8 +225,8 @@ class Calculator extends Component {
           </div>
           <button
             onClick={() => {
-              reset().bind(this);
-              setDisplayResult(false);
+              this.reset();
+              this.setDisplayResult(false);
             }}
           >
             Cancel
