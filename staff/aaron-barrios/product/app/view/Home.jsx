@@ -1,8 +1,16 @@
 function Home() {
+    const handleCreatePostClick = () => {
+        root.render(<CreatePost />)
+    }
+
+    const handleLogoutClick = () => {
+        root.render(<Landing />)
+    }
+
     return <div>
         <header style={{ width: "100%", height: "50px", margin: "10px", display: "flex", justifyContent: "space-between", alignItems: " center" }}>
             <h2>Hello, Masha!</h2>
-            <button style={{ width: "100px", height: "35px", marginRight: "10px" }}>Logout</button>
+            <button style={{ width: "100px", height: "35px", marginRight: "10px" }} onClick={handleLogoutClick}>Logout</button>
         </header >
 
         <main>
@@ -23,6 +31,7 @@ function Home() {
                 </article>
             </section>
         </main>
-        <button>🧉</button>
+
+        <button onClick={handleCreatePostClick}>🧉</button>
     </div >
 }
