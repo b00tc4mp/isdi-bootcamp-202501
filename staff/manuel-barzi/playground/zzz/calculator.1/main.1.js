@@ -1,3 +1,6 @@
+const rootElement = document.querySelector('div#root')
+const root = ReactDOM.createRoot(rootElement)
+
 const title = React.createElement('h1', { children: 'Hello, Calculator! 🧮' })
 
 const number1Label = React.createElement('label', { children: 'Number 1' })
@@ -36,6 +39,4 @@ const form = React.createElement('form', {
 
 const resultParagraph = React.createElement('p')
 
-const rootElement = document.querySelector('div#root')
-const root = ReactDOM.createRoot(rootElement)
 root.render([title, form, resultParagraph])
