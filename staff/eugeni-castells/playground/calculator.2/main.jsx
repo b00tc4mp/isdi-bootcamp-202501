@@ -22,71 +22,51 @@ class Calculator extends Component {
     };
   }
 
-  handleClick = (value) => {
-    if (
-      value !== "+" &&
-      value !== "-" &&
-      value !== "*" &&
-      value !== "/" &&
-      this.state.counter === 0
-    ) {
-      this.setState({ firstNumber: this.firstNumber + value });
-    } else if (
-      value === "+" ||
-      value === "-" ||
-      value === "*" ||
-      (value === "/" && this.counter === 0)
-    ) {
-      this.setState({ counter: this.counter + 1 });
-      this.setState({ operation: value });
-    } else if (
-      value !== "+" &&
-      value !== "-" &&
-      value !== "*" &&
-      value !== "/"
-    ) {
-      this.setState({
-        secondNumber: this.secondNumber + value,
-        ...this.state,
-      });
-    }
+  handleNumberClick = (value) => {
+    this.setState((prevState) => ({
+      [prevState.counter === 0 ? "firstNumber" : "secondNumber"]:
+        (prevState.counter === 0
+          ? prevState.firstNumber
+          : prevState.secondNumber) + value,
+    }));
+  };
 
-    this.setState({
-      displayResult: false,
-      ...this.state,
-    });
+  handleOperationClick = (value) => {
+    this.setState({ operation: value, counter: this.state.counter + 1 });
   };
 
   handleResult = () => {
-    let number1 = Number(this.firstNumber);
+    let number1 = Number(this.state.firstNumber);
 
-    let number2 = Number(this.secondNumber);
+    let number2 = Number(this.state.secondNumber);
 
-    switch (this.operation) {
+    switch (this.state.operation) {
       case "+":
-        this.setResult(number1 + number2);
+        this.setState({ result: number1 + number2 });
         break;
       case "-":
-        this.setResult(number1 - number2);
+        this.setState({ result: number1 - number2 });
         break;
       case "*":
-        this.setResult(number1 * number2);
+        this.setState({ result: number1 * number2 });
         break;
       case "/":
-        this.setResult(number1 / number2);
+        this.setState({ result: number1 / number2 });
       default:
         break;
     }
 
-    this.reset();
-
-    this.setDisplayResult(true);
+    this.setState({ displayResult: true });
   };
+
   reset = () => {
-    this.setFirstNumber("");
-    this.setOperation("");
-    this.setSecondNumber("");
-    this.setCounter(0);
+    this.setState({
+      counter: 0,
+      firstNumber: "",
+      secondNumber: "",
+      operation: "",
+      result: null,
+    });
   };
 
   render() {
@@ -95,7 +75,7 @@ class Calculator extends Component {
         <div>
           <h1>"Hello, Calculator! 🧮" </h1>
           <p style={{ minHeight: "50px" }}>
-            {this.displayResult
+            {this.state.displayResult
               ? this.state.result
               : this.state.firstNumber +
                 this.state.operation +
@@ -104,21 +84,21 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                this.handleClick("1");
+                this.handleNumberClick("1");
               }}
             >
               1
             </button>
             <button
               onClick={() => {
-                this.handleClick("2");
+                this.handleNumberClick("2");
               }}
             >
               2
             </button>
             <button
               onClick={() => {
-                this.handleClick("3");
+                this.handleNumberClick("3");
               }}
             >
               3
@@ -127,21 +107,21 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                this.handleClick("4");
+                this.handleNumberClick("4");
               }}
             >
               4
             </button>
             <button
               onClick={() => {
-                this.handleClick("5");
+                this.handleNumberClick("5");
               }}
             >
               5
             </button>
             <button
               onClick={() => {
-                this.handleClick("6");
+                this.handleNumberClick("6");
               }}
             >
               6
@@ -150,21 +130,21 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                this.handleClick("7");
+                this.handleNumberClick("7");
               }}
             >
               7
             </button>
             <button
               onClick={() => {
-                this.handleClick("8");
+                this.handleNumberClick("8");
               }}
             >
               8
             </button>
             <button
               onClick={() => {
-                this.handleClick("9");
+                this.handleNumberClick("9");
               }}
             >
               9
@@ -173,14 +153,14 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                this.handleClick("0");
+                this.handleNumberClick("0");
               }}
             >
               0
             </button>
             <button
               onClick={() => {
-                this.handleClick(".");
+                this.handleNumberClick(".");
               }}
             >
               .
@@ -196,28 +176,28 @@ class Calculator extends Component {
           <div>
             <button
               onClick={() => {
-                this.handleClick("+");
+                this.handleOperationClick("+");
               }}
             >
               +
             </button>
             <button
               onClick={() => {
-                this.handleClick("-");
+                this.handleOperationClick("-");
               }}
             >
               -
             </button>
             <button
               onClick={() => {
-                this.handleClick("*");
+                this.handleOperationClick("*");
               }}
             >
               *
             </button>
             <button
               onClick={() => {
-                this.handleClick("/");
+                this.handleOperationClick("/");
               }}
             >
               /
