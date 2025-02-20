@@ -28,11 +28,6 @@ class Post extends Component {
         const image = new Image()
         image.setSrc(currentPostImageSrc)
         image.container.style.width = '300px'
-        image.container.style.height = '300px'
-        image.container.style.overflow = 'hidden'
-        image.container.style.position = 'relative'
-        image.container.style.objectFit = 'cover'
-
         figure.add(image)
 
         const postInfoSection = new Section()
@@ -65,7 +60,7 @@ class Post extends Component {
         try {
             const likesUsernames = logic.getLikesUsernames(currentPostLikes)
             const likesParagraph = new Paragraph()
-            likesParagraph.setText(`${this.likesToString(likesUsernames)}`)
+            likesParagraph.setText(`${logic.likesToString(likesUsernames)}`)
             likeSection.add(likesParagraph)
         } catch (error) {
             logic.helper.handleError()
@@ -94,19 +89,5 @@ class Post extends Component {
 
     addLoadPosts(listener) {
         this.loadPosts = listener
-    }
-
-    likesToString(likes) {
-        if (likes.length === 0) {
-            return ''
-        } else if (likes.length < 3) {
-            return `${likes.join(' and ')} liked that.`
-        } else {
-            const firstLike = likes[0]
-            const secondLike = likes[1]
-            const restLikes = likes.length - 2
-
-            return `${firstLike}, ${secondLike} and ${restLikes} more people liked that.`
-        }
     }
 }

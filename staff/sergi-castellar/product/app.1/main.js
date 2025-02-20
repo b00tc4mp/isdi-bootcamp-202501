@@ -45,6 +45,7 @@ login.addLoginSubmitListener(() => {
 })
 
 const home = new Home()
+//body.add(home)
 home.addLogoutClickListener(() => {
   body.remove(home)
   body.add(login)

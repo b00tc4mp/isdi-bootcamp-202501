@@ -67,10 +67,15 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const foundUsername = data.users.find(user => user.username === username)
-        const foundEmail = data.users.find(user => user.email === email)
+        let found
 
-        if (foundUsername || foundEmail) throw new DuplicityError('user already exists')
+        for (let i = 0; i < data.users.length && !found; i++) {
+            let user = data.users[i]
+            if (user.username === username || user.email === email)
+                found = user
+        }
+
+        if (found) throw new DuplicityError('user already exists')
 
         const user = {
             id: data.uuid('00'),
@@ -81,19 +86,25 @@ const logic = {
             createdAt: new Date() //TODO modified at?
         }
 
-        data.users(user)
+        data.users[data.users.length] = user
     },
 
     loginUser(username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const userFound = data.users.find(user => user.username === username)
+        let found
 
-        if (!userFound) throw new CredentialsError('wrong credentials')
-        if (userFound.password !== password) throw new CredentialsError('wrong password')
+        for (let i = 0; i < data.users.length && !found; i++) {
+            let user = data.users[i]
+            if (user.username === username)
+                found = user
+        }
 
-        data.userId = userFound.id
+        if (!found) throw new CredentialsError('wrong credentials')
+        if (found.password !== password) throw new CredentialsError('wrong password')
+
+        data.userId = found.id
     },
 
     logoutUser() {
@@ -101,20 +112,35 @@ const logic = {
     },
 
     getUserProperty(userId, property) {
-        const userFound = data.users.find(user => user.id === userId)
+        let found
+        for (let i = 0; i < data.users.length; i++) {
+            let user = data.users[i]
+            if (user.id === userId) {
+                found = user
+                break
+            }
+        }
 
-        if (!userFound) throw new NotFoundError('user not found')
-        if (!userFound.hasOwnProperty(property)) throw new NotFoundError('property not found')
+        if (!found) throw new NotFoundError('user not found')
+        if (!found.hasOwnProperty(property)) throw new NotFoundError('property not found')
 
-        return userFound[property]
+        return found[property]
     },
 
     getPosts() {
         const aggregatedPosts = []
 
-        data.posts.forEach(post => {
-            let liked
-            post.likes.includes(data.userId) ? liked = true : liked = false
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
+
+            let liked = false
+
+            for (let j = 0; j < post.likes.length; j++) {
+                const userId = post.likes[j]
+
+                if (userId === data.userId)
+                    liked = true
+            }
 
             const aggregatedPost = {
                 id: post.id,
@@ -128,7 +154,8 @@ const logic = {
             }
 
             aggregatedPosts.push(aggregatedPost)
-        })
+        }
+
         return aggregatedPosts
     },
 
@@ -163,6 +190,7 @@ const logic = {
         } else {
             currentPost.likes.splice(likePosition, 1)
         }
+
     },
 
     getLikesUsernames(likeIds) {
@@ -170,5 +198,19 @@ const logic = {
             const user = data.users.find(user => user.id === likeId)
             return user.username
         })
+    },
+
+    likesToString(likes) { // a interface
+        if (likes.length === 0) {
+            return ''
+        } else if (likes.length < 3) {
+            return `${likes.join(' and ')} liked that.`
+        } else {
+            const firstLike = likes[0]
+            const secondLike = likes[1]
+            const restLikes = likes.length - 2
+
+            return `${firstLike}, ${secondLike} and ${restLikes} more people liked that.`
+        }
     }
 }

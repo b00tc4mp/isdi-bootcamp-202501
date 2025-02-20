@@ -100,7 +100,9 @@ class Home extends Component {
         try {
             const posts = logic.getPosts()
 
-            posts.toReversed().forEach(post => {
+            for (let i = posts.length - 1; i > -1; i--) {
+                let post = posts[i]
+
                 const newPost = new Post(post)
                 newPost.addLoadPosts(() => {
                     try {
@@ -110,7 +112,7 @@ class Home extends Component {
                     }
                 })
                 this.postArticleDiv.add(newPost)
-            })
+            }
         } catch (error) {
             logic.helper.handleError(error)
         }
