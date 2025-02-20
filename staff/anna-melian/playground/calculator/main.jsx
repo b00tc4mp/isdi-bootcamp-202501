@@ -1,19 +1,12 @@
 const rootElement = document.querySelector('div#root')
 const root = ReactDOM.createRoot(rootElement)
 
-const Component = React.Component
+const useState = React.useState
 
-class Calculator extends Component {
-    constructor() {
-        console.log('Calculator constructor')
+function Calculator() {
+    const [result, setResult] = useState(0)
 
-        super()
-
-        this.state = { result: 0 }
-
-    }
-
-    handleSubmit = event => {
+    const handleSubmit = event => {
         event.preventDefault()
 
         const domForm = event.target
@@ -26,39 +19,28 @@ class Calculator extends Component {
 
         const result = number1 + number2
 
-        console.log('result: ', result)
+        console.log('hello submit', result)
 
-        this.setState({ result })
+        setResult(result)
     }
 
+    console.log('Calculator render')
 
-    render() {
-        console.log('calculator render')
-        const formStyle = {
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-            maxWidth: '300px'
-        }
+    return <>
+        <h1>Hello, World! 🧮</h1>
 
-        return <>
-            <h1>Hello, Calculator! 🧮</h1>
+        <form onSubmit={handleSubmit}>
+            <label>Number 1</label>
+            <input type="number" name="number1" />
+            +
+            <label>Number 2</label>
+            <input type="number" name="number2" />
+            <button type="submit">=</button>
+        </form>
 
-            <form onSubmit={this.handleSubmit} style={formStyle}>
-                <label >Number 1 </label>
-                <input type="number" name="number1" />
-                +
-                <label >Number 2</label>
-                <input type="number" name="number2" />
-                <button type="submit">=</button>
-            </form>
-
-            <p>{this.state.result}</p>
-        </>
-    }
-
+        <p>{result}</p>
+    </>
 }
 
 
-
-root.render(<Calculator />) // new Calculator()
+root.render(<Calculator />)

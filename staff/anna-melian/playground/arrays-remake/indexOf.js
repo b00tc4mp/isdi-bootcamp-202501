@@ -1,6 +1,6 @@
 Array.prototype.indexOf = function (searchElement, fromIndex) {
-    let index
     let arrayLength = this.length
+    let index
 
     if (typeof fromIndex === 'number') {
         if (fromIndex >= arrayLength || fromIndex < - arrayLength) {
@@ -20,18 +20,14 @@ Array.prototype.indexOf = function (searchElement, fromIndex) {
         return -1
 
     let found = false
-    let result = -1
     for (index; index < arrayLength; index++) {
         let actualElement = this[index]
         if (searchElement === actualElement) {
             found = true
-            result === -1 ? result = index : result += ',' + index
+            return index
 
         }
     }
-    if (found) {
-        return result
-    } else {
-        return result
-    }
+
+    return -1
 }
