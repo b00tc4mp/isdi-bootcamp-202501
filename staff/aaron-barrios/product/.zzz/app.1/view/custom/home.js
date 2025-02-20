@@ -1,155 +1,147 @@
-function Home() {
-    Component.call(this, 'div')
+class Home extends Component {
+    constructor() {
+        super('div')
 
-    //Header
-    var header = new Header()
-    header.container.style.width = '100%'
-    header.container.style.height = '50px'
-    header.container.style.margin = '10px'
-    header.container.style.display = 'flex'
-    header.container.style.justifyContent = 'space-between'
-    header.container.style.alignItems = 'center'
-    this.add(header)
+        //Header
+        const header = new Header()
+        header.container.style.width = '100%'
+        header.container.style.height = '50px'
+        header.container.style.margin = '10px'
+        header.container.style.display = 'flex'
+        header.container.style.justifyContent = 'space-between'
+        header.container.style.alignItems = 'center'
+        this.add(header)
 
-    var logoTitle = new Heading(2)
-    logoTitle.setText('Logo')
-    header.add(logoTitle)
+        const welcome = new Heading(2)
+        welcome.setText('Logo')
+        header.add(welcome)
+        this.welcome = welcome
 
-    var logoutButton = new Button()
-    logoutButton.setText('Logout')
-    logoutButton.container.style.width = '100px'
-    logoutButton.container.style.height = '35px'
-    logoutButton.container.style.marginRight = '10px'
-    this.logoutButton = logoutButton
-    header.add(logoutButton)
+        const logoutButton = new Button()
+        logoutButton.setText('Logout')
+        logoutButton.container.style.width = '100px'
+        logoutButton.container.style.height = '35px'
+        logoutButton.container.style.marginRight = '10px'
+        logoutButton.addClickListener(() => {
+            try {
+                logic.logoutUser()
 
-    //MAIN HOME
-    var main = new Main()
-    this.add(main)
+                this.logoutClickListener()
+            } catch (error) {
+                console.error(error)
 
-    var posts = new Article()
-    posts.container.style.display = 'flex'
-    posts.container.style.width = '100%'
-    posts.container.style.maxWidth = 'inherit'
-    posts.container.style.flexDirection = 'column'
-    posts.container.style.gap = '10px'
-    main.add(posts)
+                alert(error.message)
+            }
+        })
+        header.add(logoutButton)
 
+        //MAIN HOME
+        const main = new Main()
+        this.add(main)
 
-    //KIWIII POST
-    var kiwiUser = new Heading(3)
-    kiwiUser.setText('Juanpi')
-    posts.add(kiwiUser)
+        this.postsSection = new Section()
+        this.add(this.postsSection)
+        this.postsSection = this.postsSection
 
-    var kiwiPost = new Image()
-    kiwiPost.container.src = 'https://www.nutritionadvance.com/wp-content/uploads/2017/12/whole-kiwi-fruit-and-half-a-kiwi-showing-flesh.jpg'
-    kiwiPost.container.style.width = '100%'
-    kiwiPost.container.style.height = 'auto'
-    posts.add(kiwiPost)
+        const createPostButton = new Button()
+        createPostButton.setText('🧉')
+        createPostButton.addClickListener(function () {
+            const createPost = new CreatePost()
 
-    var kiwiMojis = new Span()
-    kiwiMojis.container.style.display = 'flex'
-    kiwiMojis.container.style.justifyContent = 'left'
-    kiwiMojis.container.style.gap = '5px'
-    posts.add(kiwiMojis)
+            createPost.addCreatePostSubmitListener(() => {
+                this.remove(createPost)
 
-    var kiwiLikeButton = new Button()
-    kiwiLikeButton.setText('🤍')
-    kiwiLikeButton.container.style.backgroundColor = 'transparent'
-    kiwiMojis.add(kiwiLikeButton)
+                this.loadPosts()
+                this.add(this.postsSection)
+                this.add(createPostButton)
+            })
 
-    kiwiLikeButton.addClickListener(function () {
-        this.textContent = this.textContent === '🤍' ? '❤️' : '🤍'
-    })
+            createPost.addCancelClickListener(() => {
+                this.remove(createPost)
+                this.add(this.postsSection)
+                this.add(createPostButton)
+            })
 
-    var commentEmoji = new Anchor()
-    commentEmoji.setText('📃')
-    kiwiMojis.add(commentEmoji)
+            this.remove(this.postsSection)
+            this.remove(createPostButton)
+            this.add(createPost)
+        })
+        this.add(createPostButton)
+    }
+    addLogoutClickListener(listener) {
+        this.logoutClickListener = listener
+    }
 
-    var comment = new Span()
-    comment.setText('Comment...')
-    comment.container.style.opacity = '60%'
-    comment.container.style.color = 'black'
-    kiwiMojis.add(comment)
+    loadUsername() {
+        try {
+            const name = logic.getUsername()
 
+            this.welcome.setText(`Hello, ${name}!`)
+        } catch (error) {
+            console.error(error)
 
-    // //BANANA POST
-    var bananaUser = new Heading(3)
-    bananaUser.setText('Manu')
-    posts.add(bananaUser)
+            alert(error.message)
+        }
+    }
 
-    var bananaPost = new Image()
-    bananaPost.container.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAVh4eUU6jtRS9zzlomMGLvWgpua5Xj5IcoQ&s'
-    bananaPost.container.style.width = '100%'
-    bananaPost.container.style.height = 'auto'
-    posts.add(bananaPost)
+    loadPosts() {
+        // Limpiar contenido antes de agregar nuevos posts
+        this.postsSection.container.innerHTML = '';
 
-    var nanaMojis = new Span()
-    nanaMojis.container.style.display = 'flex'
-    nanaMojis.container.style.justifyContent = 'left'
-    nanaMojis.container.style.gap = '5px'
-    posts.add(nanaMojis)
+        try {
+            const posts = logic.getPosts()
 
-    var bananaLikeButton = new Button()
-    bananaLikeButton.setText('🤍')
-    bananaLikeButton.container.style.backgroundColor = 'transparent'
-    nanaMojis.add(bananaLikeButton)
+            for (let i = posts.length - 1; i > -1; i--) {
+                const post = posts[i];
 
-    bananaLikeButton.addClickListener(function () {
-        this.textContent = this.textContent === '🤍' ? '❤️' : '🤍'
-    })
+                const postArticle = new Article();
+                postArticle.container.style.width = '100%'
+                postArticle.container.style.padding = '10px'
+                postArticle.container.style.border = '1px solid #ccc'
+                postArticle.container.style.borderRadius = '5px'
+                postArticle.container.style.backgroundColor = '#f9f9f9'
+                //PONER GAP
 
-    var commentEmoji = new Anchor()
-    commentEmoji.setText('📃')
-    nanaMojis.add(commentEmoji)
+                const authorHeading = new Heading(3)
+                authorHeading.setText(post.author)
+                postArticle.add(authorHeading)
 
-    var comment = new Span()
-    comment.setText('Comment...')
-    comment.container.style.opacity = '60%'
-    comment.container.style.color = 'black'
-    nanaMojis.add(comment)
+                const postImage = new Image()
+                postImage.setUrl(post.image)
+                postImage.container.style.width = '100%'
+                postImage.container.style.height = 'auto'
+                postImage.container.style.objectFit = 'cover'
+                postArticle.add(postImage)
 
+                const postText = new Paragraph()
+                postText.setText(post.text)
+                postArticle.add(postText)
 
-    // //ORANGE POST
-    var orangeUser = new Heading(3)
-    orangeUser.setText('Frank')
-    posts.add(orangeUser)
+                const postDate = new Time()
+                postDate.setText(post.createdAt.toISOString())
+                postArticle.add(postDate)
 
-    var orangePost = new Image()
-    orangePost.container.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgqLw4idW1IdAusBGfdZPewk0HTJyRUzPCPg&s'
-    orangePost.container.style.width = '100%'
-    orangePost.container.style.height = 'auto'
-    posts.add(orangePost)
+                const likeButton = new Button()
+                likeButton.setText(`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`)
+                likeButton.addClickListener(() => {
+                    try {
+                        logic.toggleLikePost(post.id)
 
-    var oraMojis = new Span()
-    oraMojis.container.style.display = 'flex'
-    oraMojis.container.style.justifyContent = 'left'
-    oraMojis.container.style.gap = '5px'
-    posts.add(oraMojis)
+                        this.loadPosts()
+                    } catch (error) {
+                        console.error(error)
 
-    var orangeLikeButton = new Button()
-    orangeLikeButton.setText('🤍')
-    orangeLikeButton.container.style.backgroundColor = 'transparent'
-    oraMojis.add(orangeLikeButton)
+                        alert(error.message)
+                    }
+                })
+                postArticle.add(likeButton)
 
-    orangeLikeButton.addClickListener(function () {
-        this.textContent = this.textContent === '🤍' ? '❤️' : '🤍'
-    })
+                this.postsSection.add(postArticle)
+            }
+        } catch (error) {
+            console.error(error)
 
-    var commentEmoji = new Anchor()
-    commentEmoji.setText('📃')
-    oraMojis.add(commentEmoji)
-
-    var comment = new Span()
-    comment.setText('Comment...')
-    comment.container.style.opacity = '60%'
-    comment.container.style.color = 'black'
-    oraMojis.add(comment)
-}
-
-Home.prototype = Object.create(Component.prototype)
-Home.prototype.constructor = Home
-
-Home.prototype.addLogoutClickListener = function (listener) {
-    this.logoutButton.addClickListener(listener)
+            alert(error.message)
+        }
+    }
 }

@@ -1,86 +1,96 @@
-function Login() {
-    Component.call(this, 'div')
+class Login extends Component {
+    constructor() {
+        super('div')
+        this.container.style.width = '400px'
 
-    this.container.style.width = '400px'
-
-    var title = new Heading(2)
-    title.setText('Login')
-    this.add(title)
-
-    var form = new Form()
-    form.container.style.display = 'flex'
-    form.container.style.flexDirection = 'column'
-    form.container.style.justifyContent = 'left'
-    form.container.style.gap = '5px'
-    this.form = form
-    this.add(form)
-
-    //USERNAME
-    var usernameLabel = new Label()
-    usernameLabel.setText('Username')
-    form.add(usernameLabel)
-
-    var usernameInput = new Input()
-    usernameInput.setType('text')
-    usernameInput.container.style.width = '350px'
-    form.add(usernameInput)
-
-    //PASSWORD
-    var passwordLabel = new Label()
-    passwordLabel.setText('Password')
-    form.add(passwordLabel)
-
-    var passwordInput = new Input()
-    passwordInput.setType('password')
-    passwordInput.container.style.width = '350px'
-    form.add(passwordInput)
+        const title = new Heading(2)
+        title.setText('Login')
+        this.add(title)
 
 
-    var lowerSpan = new Span()
-    lowerSpan.container.style.margin = '10px'
-    lowerSpan.container.style.marginRight = '60px'
-    lowerSpan.container.style.display = 'flex'
-    lowerSpan.container.style.justifyContent = 'space-between'
-    this.add(lowerSpan)
+        const form = new Form()
+        form.container.style.display = 'flex'
+        form.container.style.flexDirection = 'column'
+        form.container.style.justifyContent = 'left'
+        form.container.style.gap = '5px'
+        this.form = form
+        form.addSubmitListener(event => {
+            event.preventDefault()
 
-    var registerAnchor = new Anchor()
-    registerAnchor.setText('Register')
-    registerAnchor.container.style.textDecoration = 'underline'
-    registerAnchor.container.style.cursor = 'pointer'
-    this.registerAnchor = registerAnchor
-    lowerSpan.add(registerAnchor)
 
-    var loginButton = new Button()
-    loginButton.setText('Login')
-    loginButton.setType('submit')
-    loginButton.container.style.width = '80px'
-    loginButton.setType8
-    lowerSpan.add(loginButton)
+            const username = usernameInput.getValue()
+            const password = passwordInput.getValue()
 
-    form.add(lowerSpan)
 
-    form.addSubmitListener(function (event) {
-        event.preventDefault()
+            try {
+                logic.loginUser(username, password)
 
-        var userLogged = {
-            username: usernameInput.getValue(),
-            password: passwordInput.getValue()
-        }
+                form.clear()
 
-        console.log(userLogged)
+                this.loginSubmitListener()
+            } catch (error) {
+                console.error(error)
 
-        this.loginSubmitListener()
-        form.clear()
-    }.bind(this))
+                alert(error.message)
+            }
+        })
+        this.add(form)
+
+        //USERNAME
+        const usernameLabel = new Label()
+        usernameLabel.setText('Username')
+        form.add(usernameLabel)
+
+        const usernameInput = new Input()
+        usernameInput.setType('text')
+        usernameInput.container.style.width = '350px'
+        form.add(usernameInput)
+
+        //PASSWORD
+        const passwordLabel = new Label()
+        passwordLabel.setText('Password')
+        form.add(passwordLabel)
+
+        const passwordInput = new Input()
+        passwordInput.setType('password')
+        passwordInput.container.style.width = '350px'
+        form.add(passwordInput)
+
+        //LOWER SPAN
+        const lowerSpan = new Span()
+        lowerSpan.container.style.margin = '10px'
+        lowerSpan.container.style.marginRight = '60px'
+        lowerSpan.container.style.display = 'flex'
+        lowerSpan.container.style.justifyContent = 'space-between'
+        this.add(lowerSpan)
+
+        const registerAnchor = new Anchor()
+        registerAnchor.setText('Register')
+        registerAnchor.container.style.textDecoration = 'underline'
+        registerAnchor.container.style.cursor = 'pointer'
+        registerAnchor.addClickListener(function () {
+            form.clear()
+
+            this.registerClickListener()
+        }.bind(this))
+        lowerSpan.add(registerAnchor)
+
+        const loginButton = new Button()
+        loginButton.setText('Login')
+        loginButton.setType('submit')
+        loginButton.container.style.width = '80px'
+        loginButton.setType8
+        lowerSpan.add(loginButton)
+
+        form.add(lowerSpan)
+    }
+    addRegisterClickListener(listener) {
+        this.registerClickListener = listener
+    }
+
+    addLoginSubmitListener(listener) {
+        this.loginSubmitListener = listener
+    }
 }
 
-Login.prototype = Object.create(Component.prototype)
-Login.prototype.constructor = Login
 
-Login.prototype.addRegisterClickListener = function (listener) {
-    this.registerAnchor.addClickListener(listener)
-}
-
-Login.prototype.addLoginSubmitListener = function (listener) {
-    this.loginSubmitListener = listener
-}

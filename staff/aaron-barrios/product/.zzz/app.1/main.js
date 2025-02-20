@@ -5,50 +5,45 @@ const body = new Body()
 body.container = document.body //reemplazo el contenedor del body por el que creo yo
 
 // --- LANDING ---
-var landing = new Landing()
-landing.addRegisterClickListener(function () {
+const landing = new Landing()
+landing.addRegisterClickListener(() => {
     body.remove(landing)
     body.add(register)
 })
-landing.addLoginClickListener(function () {
+landing.addLoginClickListener(() => {
     body.remove(landing)
     body.add(login)
 })
 body.add(landing)
 
 //--- REGISTER ---
-var register = new Register()
-register.addLoginClickListener(function () {
+const register = new Register()
+register.addLoginClickListener(() => {
     body.remove(register)
     body.add(login)
-
-    if (register.form && typeof register.form.reset === 'function') {
-        register.form.reset();
-    }
 })
-register.addRegisterSubmitListener(function () {
+register.addRegisterSubmitListener(() => {
     body.remove(register)
     body.add(login)
 })
 
 //--- LOGIN ---
-var login = new Login()
-login.addRegisterClickListener(function () {
+const login = new Login()
+login.addRegisterClickListener(() => {
     body.remove(login)
     body.add(register)
-
-    if (login.form && typeof login.form.reset === 'function') {
-        login.form.reset();
-    }
 })
-login.addLoginSubmitListener(function () {
+login.addLoginSubmitListener(() => {
+    home.loadUsername()
+    home.loadPosts()
+
     body.remove(login)
     body.add(home)
 })
 
 // ---- HOME ----
-var home = new Home()
-home.addLogoutClickListener(function () {
+const home = new Home()
+home.addLogoutClickListener(() => {
     body.remove(home)
     body.add(landing)
 })
