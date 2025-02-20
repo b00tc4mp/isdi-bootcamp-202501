@@ -7,7 +7,7 @@ Array.prototype.pop = function () {
     for (let i = 0; i < this.length - 1; i++) {
         newArray[i] = this[i]
     }
-    characters = this[]
+    characters = newArray
 
     return lastElement
 }
