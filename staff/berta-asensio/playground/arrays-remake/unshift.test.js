@@ -1,36 +1,40 @@
-//unshift por dentro:
+require('./unshift.js')
 
-/*
--Primer for: su propósito es mover todos los elementos hacia la derecha para hacer espacio a los nuevos elementos.
-    -this.length -1: empezamos el ciclo desde el último elemento del array.
-    -i >= 0: se detendrá el bucle cuando i < 0. 
-    -i --: iterará de derecha a izquierda.
-    Dentro del bucle:
-        -this[i + elementos.length] = this[i]: nos indica que this[i] (el elemento del array original)
-        debe moverse hacia la derecha. Elementos.length es la cantidad de nuevos elementos que se van
-        a agregar. Por lo que si el i = 3, le sumamos por ejemplo 2 elementos, nos dará la posición 5.
-        Por lo que si this[i] estaba en la posición 3, ahora estará en la 5.
--El segundo for agrega los nuevos elementos al principio del array.
--
-*/
+console.info('TEST unshift')
 
-delete Array.prototype.unshift
+//el método unshift SÍ que modifica el array original
 
-Array.prototype.unshift = function (...elementos) {
-    for (let i = this.length - 1; i >= 0; i--) {
-        this[i + elementos.length] = this[i]
-    }
-    for (let i = 0; i < elementos.length; i++) {
-        this[i] = elementos[i]
-    }
-    return this.length
+console.info('CASE add elements')
 
+{
+    const frutas = ['manzana', 'pera', 'plátano']
+
+    const newLength = frutas.unshift('naranja', 'kiwi')
+
+    console.assert(frutas[0] === 'naranja', 'frutas[0] is naranja')
+    console.assert(frutas[1] === 'kiwi', 'frutas[1] is kiwi')
+    console.assert(frutas[2] === 'manzana', 'frutas[2] is manzana')
+    console.assert(frutas[3] === 'pera', 'frutas[3] is pera')
+    console.assert(frutas[4] === 'plátano', 'frutas[4] is plátano')
+    console.assert(frutas.length === 5, 'frutas.length is 5') 
+    console.assert(newLength === 5, 'newLength is 5')
+    const frutasKeys = Object.keys(frutas)
+    console.assert(frutasKeys.length === 5), 'frutasKeys.length is 5'
 }
 
-let frutas = ['manzana', 'pera', 'plátano']
+console.info('CASE add an array inside an array')
 
-let newLength = frutas.unshift('naranja', 'kiwi')
+{
+    const frutas = ['manzana', 'pera', 'plátano']
 
-console.log(frutas)  // ['naranja', 'kiwi', 'manzana', 'pera', 'plátano']
+    const newLength = frutas.unshift(["kiwi"])
 
-console.log(newLength) // 5
+    console.assert(frutas[0] === frutas[0], 'frutas[0] is ["kiwi"]') // PORQUÉ TENGO QUE PONERLO ASI
+    console.assert(frutas[1] === 'manzana', 'frutas[1] is manzana')
+    console.assert(frutas[2] === 'pera', 'frutas[2] is pera')
+    console.assert(frutas[3] === 'plátano', 'frutas[3] is plátano')
+    console.assert(frutas.length === 4, 'frutas.length is 4') 
+    console.assert(newLength === 4, 'newLength is 4')
+    const frutasKeys = Object.keys(frutas)
+    console.assert(frutasKeys.length === 4), 'frutasKeys.length is 4'
+}
