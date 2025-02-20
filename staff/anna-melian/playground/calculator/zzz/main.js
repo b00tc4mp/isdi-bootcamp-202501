@@ -1,17 +1,19 @@
-const title = React.createElement('h1', { children: 'Hello,Calculator!' })
+const jsx = React.createElement
 
-const number1Label = React.createElement('label', { children: 'Number 1' })
-const number1Input = React.createElement('input', { type: 'number', name: 'number1' })
+const title = jsx('h1', { children: 'Hello,Calculator!' })
 
-const number2Label = React.createElement('label', { children: 'Number 2' })
-const number2Input = React.createElement('input', { type: 'number', name: 'number2' })
+const number1Label = jsx('label', { children: 'Number 1' })
+const number1Input = jsx('input', { type: 'number', name: 'number1' })
 
-const submitButton = React.createElement('button', {
+const number2Label = jsx('label', { children: 'Number 2' })
+const number2Input = jsx('input', { type: 'number', name: 'number2' })
+
+const submitButton = jsx('button', {
     type: 'submit',
     children: '='
 })
 
-const form = React.createElement('form', {
+const form = jsx('form', {
     children: [
         number1Label,
         number1Input,
@@ -35,14 +37,14 @@ const form = React.createElement('form', {
 
         console.log('result:' + result)
 
-        const resultParagraph = React.createElement('p', {
+        const resultParagraph = jsx('p', {
             children: result
         })
 
         root.render([title, form, resultParagraph])
     }
 })
-const resultParagraph = React.createElement('p')
+const resultParagraph = jsx('p')
 
 
 const rootElement = document.querySelector('div#root')
