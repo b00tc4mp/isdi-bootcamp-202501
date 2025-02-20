@@ -1,35 +1,64 @@
 const rootElement = document.querySelector('div#root')
 const root = ReactDOM.createRoot(rootElement)
 
-const title = <h1>Hello, Calculator!</h1>
+const Component = React.Component
 
-const handleSubmit = event => {
-    event.preventDefault()
+class Calculator extends Component {
+    constructor() {
+        console.log('Calculator constructor')
 
-    const domForm = event.target
+        super()
 
-    const domNumber1Input = domForm.querySelector('input[name=number1]')
-    const domNumber2Input = domForm.querySelector('input[name=number2]')
+        this.state = { result: 0 }
 
-    const number1 = Number(domNumber1Input.value)
-    const number2 = Number(domNumber2Input.value)
+    }
 
-    const result = number1 + number2
+    handleSubmit = event => {
+        event.preventDefault()
 
-    console.log('result: ', result)
+        const domForm = event.target
 
-    const resultParagraph = <p>{result}</p>
-    root.render([title, form, resultParagraph])
+        const domNumber1Input = domForm.querySelector('input[name=number1]')
+        const domNumber2Input = domForm.querySelector('input[name=number2]')
+
+        const number1 = Number(domNumber1Input.value)
+        const number2 = Number(domNumber2Input.value)
+
+        const result = number1 + number2
+
+        console.log('result: ', result)
+
+        this.setState({ result })
+    }
+
+
+    render() {
+        console.log('calculator render')
+        const formStyle = {
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            maxWidth: '300px'
+        }
+
+        return <>
+            <h1>Hello, Calculator! 🧮</h1>
+
+            <form onSubmit={this.handleSubmit} style={formStyle}>
+                <label >Number 1 </label>
+                <input type="number" name="number1" />
+                +
+                <label >Number 2</label>
+                <input type="number" name="number2" />
+                <button type="submit">=</button>
+            </form>
+
+            <p>{this.state.result}</p>
+        </>
+    }
+
 }
 
-const form = <form onSubmit={handleSubmit}>
-    <label>Number 1</label>
-    <input type="number" name="number1" />
 
 
-    <label>Number 2</label>
-    <input type="number" name="number2" />
-    <button type="submit">=</button>
-</form>
-
-root.render([title, form])
+root.render(<Calculator />) // new Calculator()
