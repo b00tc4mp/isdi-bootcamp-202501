@@ -1,12 +1,20 @@
+// CAMBIOS
+
+// 1* Creamos una funcion que engloba todo el contenido de la calculadora
+// 2* Variable que permite agregar estado a los componentes funcionales
+// 3* Separamos el parrafo del resultado y retornamos los valores del nuevo renderizado
+
 const rootElement = document.querySelector('div#root')
 const root = ReactDOM.createRoot(rootElement)
 
+// 2*
 const useState = React.useState
 
-
+// 1*
 function Calculator() {
     const title = <h1>Hello Calculator! 🧮</h1>
 
+    // 2* 
     const resultState = useState(0)
     const result = resultState[0]
     const setResult = resultState[1]
@@ -39,6 +47,7 @@ function Calculator() {
 
     </form >
 
+    // 3*
     const resultParagraph = <p>{result}</p>
 
     return [title, form, resultParagraph]

@@ -20,12 +20,32 @@ function Calculator() {
         const domNumber1Input = domForm.querySelector('input[name=number1')
         const domNumber2Input = domForm.querySelector('input[name=number2')
 
+        // Tomamos el valor del selector de operacion
+        const domOperationSelect = domForm.querySelector('select[name=operation')
+
         // Guardamos los valores de los Input pasandolos de String a Number
         const number1 = Number(domNumber1Input.value)
         const number2 = Number(domNumber2Input.value)
 
-        // Sumamos los dos valores de los Input
-        const result = number1 + number2
+        // guardamos la seleccion de la operacion ha realizar
+        const operation = domOperationSelect.value
+
+        let result
+
+        switch (operation) {
+            case "sum":
+                result = number1 + number2
+                break
+            case "subtract":
+                result = number1 - number2
+                break
+            case "multiply":
+                result = number1 * number2
+                break
+            case "divide":
+                result = number1 / number2
+                break
+        }
 
         console.log(result)
 
@@ -34,19 +54,30 @@ function Calculator() {
 
     // Contenido que se muestra por pantalla
     return <>
-        <h1>Hello Calculator! 🧮</h1>
+        <h1>Hello  🧮</h1>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}
+            style={{ display: "flex", flexDirection: "column", width: "50%" }}>
+            <select name="operation"
+                style={{ background: "lightgrey", marginBottom: '10px', width: '100px' }} >
+                <option value="sum"> ➕ </option>
+                <option value="subtract"> ➖ </option>
+                <option value="multiply"> ✖️ </option>
+                <option value="divide"> ➗ </option>
+            </select>
+
             <label>Number 1</label>
-            <input type="number" name="number1" />
-            +
+            <input type="number" name="number1" style={{ marginBlock: "10px" }} />
+
             <label>Number 2</label>
             <input type="number" name="number2" />
-            <button type="submit">=</button>
+            <button type="submit"
+                style={{ background: "lightgrey", marginBlockStart: '20px', width: '100px' }}
+            >=</button>
 
         </form >
 
-        <p>{result}</p>
+        <h4>Result : {result}</h4>
     </>
 }
 
