@@ -4,7 +4,11 @@ const root = ReactDOM.createRoot(rootElement)
 const useState = React.useState
 
 function Calculator() {
-    const [result, setResult] = useState(0)
+    const title = <h1>Hello, World! 🧮</h1>
+
+    const resultState = useState(0)
+    const result = resultState[0]
+    const setResult = resultState[1]
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -24,22 +28,18 @@ function Calculator() {
         setResult(result)
     }
 
-    console.log('Calculator render')
+    const form = <form onSubmit={handleSubmit}>
+        <label>Number 1</label>
+        <input type="number" name="number1" />
+        +
+        <label>Number 2</label>
+        <input type="number" name="number2" />
+        <button type="submit">=</button>
+    </form>
 
-    return <>
-        <h1>Hello, World! 🧮</h1>
+    const resultParagraph = <p>{result}</p>
 
-        <form onSubmit={handleSubmit}>
-            <label>Number 1</label>
-            <input type="number" name="number1" />
-            +
-            <label>Number 2</label>
-            <input type="number" name="number2" />
-            <button type="submit">=</button>
-        </form>
-
-        <p>{result}</p>
-    </>
+    return [title, form, resultParagraph]
 }
 
 

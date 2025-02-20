@@ -4,6 +4,9 @@ const root = ReactDOM.createRoot(rootElement)
 const useState = React.useState
 
 function Calculator() {
+    // const resultState = useState(0)
+    // const result = resultState[0]
+    // const setResult = resultState[1]
     const [result, setResult] = useState(0)
 
     const handleSubmit = event => {
