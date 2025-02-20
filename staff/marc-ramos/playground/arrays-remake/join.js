@@ -1,4 +1,4 @@
-Array.prototype.join = function(separator) {
+Array.prototype.join = function(separator = ',') {
     let result = ''
     
     for (let i = 0; i < this.length; i++) {
@@ -12,6 +12,8 @@ Array.prototype.join = function(separator) {
     return result
 }
 
+/*
 const array = ['a', 'b', 'c']
 
 console.log(array.join(' '))
+*/
