@@ -1,6 +1,6 @@
 // implementación SPLICE
 
-// CASE 6:
+// CASE 3: 
 
 Array.prototype.splice = function (startIndex, removedCount, ...elements) {
 
@@ -8,31 +8,26 @@ Array.prototype.splice = function (startIndex, removedCount, ...elements) {
 
     if (elements.length !== 0) {
 
-        const sideStartIndex = startIndex < 0? this.length + startIndex : startIndex
-
-        for (let i = sideStartIndex; i < sideStartIndex + removedCount; i++) {
+        for (let i = startIndex; i < startIndex + removedCount; i++) {
         
             const currentElement = this[i]
     
             removedElements[removedElements.length] = currentElement // cada elemento sacado de currentElement se agrega al array de removedElements(es como hacer un push pero manualmente)
     
-            this[i] = elements[i - sideStartIndex] 
+            this[i] = elements[i - startIndex] 
         }
-
+        return removedElements
     } else {
-        const sideStartIndex = startIndex < 0? this.length + startIndex : startIndex // this.length + (-startIndex)
-
-        for (let i = sideStartIndex; i < sideStartIndex + removedCount; i++) {
+        for (let i = startIndex; i < startIndex + removedCount; i++) {
 
             const currentElement = this[i]
 
             removedElements[removedElements.length] = currentElement
-
-            this[i] = this[i + removedCount]
         }
         this.length -= removedCount
+
+        return removedElements
     }
-    return removedElements
 } 
   
 

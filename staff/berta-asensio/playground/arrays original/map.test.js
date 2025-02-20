@@ -2,7 +2,7 @@
 
 /*
 -El método map permite crear un nuevo array aplicando una función de transformación a cada elemento de éste.
--No modifica el array original, sino que crea uno de nuevo con las condiciones que yo le especifico en una función.
+-NO modifica el array original, sino que crea uno de nuevo con las condiciones que yo le especifico en una función.
 -Sintaxis:
     let newArray = array.map(function callback(elemento, indice, array)) {
         return de newArray

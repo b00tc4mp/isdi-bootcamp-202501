@@ -7,8 +7,8 @@ console.info('TEST splice')
 console.info('CASE Remove 1 element at index 2, and insert 1')
 
 {
-    const fruits = ['apple', 'banana', 'orange', 'mango'];
-    const removed = fruits.splice(2, 1, 'pear');
+    const fruits = ['apple', 'banana', 'orange', 'mango']
+    const removed = fruits.splice(2, 1, 'pear')
 
     console.assert(fruits[0] === 'apple', 'fruits[0] is apple')
     console.assert(fruits[1] === 'banana', 'fruits[1] is banana')
@@ -23,8 +23,8 @@ console.info('CASE Remove 1 element at index 2, and insert 1')
 console.info('CASE Remove 2 elements at index 1, and insert 2 elements')
 
 {
-    const fruits = ['apple', 'banana', 'orange', 'mango'];
-    const removed = fruits.splice(1, 2, 'pear', 'melon');
+    const fruits = ['apple', 'banana', 'orange', 'mango']
+    const removed = fruits.splice(1, 2, 'pear', 'melon')
 
     console.assert(fruits[0] === 'apple', 'fruits[0] is apple')
     console.assert(fruits[1] === 'pear', 'fruits[1] is pear')
@@ -38,7 +38,53 @@ console.info('CASE Remove 2 elements at index 1, and insert 2 elements')
     console.assert(removed.length === 2, 'removed.length is 2')
 }
 
+console.info('CASE Remove 1 elements, starting from index 2')
+// habrá que mover el último elemento hacia la izquierda.
+{
+    const fruits = ['apple', 'banana', 'orange', 'mango']
+    const removed = fruits.splice(2, 1)
 
+    console.assert(fruits[0] === 'apple', 'fruits[0] is apple')
+    console.assert(fruits[1] === 'banana', 'fruits[1] is banana')
+    console.assert(fruits[2] === 'mango', 'fruits[2] is mango')
+    console.assert(fruits.length === 3, 'fruits.length is 3')
+
+    console.assert(removed[0] === 'orange', 'removed[0] is orange')
+    console.assert(removed.length === 1, 'removed.length is 1')
+}
+
+console.info('CASE Remove 1 elements, from negative startIndex without elements')
+
+{
+    const fruits = ['apple', 'banana', 'orange', 'mango', 'melon']
+    const removed = fruits.splice(-2, 1)
+
+    console.assert(fruits[0] === 'apple', 'fruits[0] is apple')
+    console.assert(fruits[1] === 'banana', 'fruits[1] is banana')
+    console.assert(fruits[2] === 'orange', 'fruits[2] is orange')
+    console.assert(fruits[3] === 'melon', 'fruits[3] is melon')
+    console.assert(fruits.length === 4, 'fruits.length is 4')
+
+    console.assert(removed[0] === 'mango', 'removed[0] is mango')
+    console.assert(removed.length === 1, 'removed.length is 1')
+}
+
+console.info('CASE Remove 1 elements, from negative startIndex with elements')
+
+{
+    const fruits = ['apple', 'banana', 'orange', 'mango', 'melon']
+    const removed = fruits.splice(-2, 1, 'grapes')
+
+    console.assert(fruits[0] === 'apple', 'fruits[0] is apple')
+    console.assert(fruits[1] === 'banana', 'fruits[1] is banana')
+    console.assert(fruits[2] === 'orange', 'fruits[2] is orange')
+    console.assert(fruits[3] === 'grapes', 'fruits[3] is grapes')
+    console.assert(fruits[4] === 'melon', 'fruits[4] is melon')
+    console.assert(fruits.length === 5, 'fruits.length is 5')
+
+    console.assert(removed[0] === 'mango', 'removed[0] is mango')
+    console.assert(removed.length === 1, 'removed.length is 1')
+}
 
 
 
