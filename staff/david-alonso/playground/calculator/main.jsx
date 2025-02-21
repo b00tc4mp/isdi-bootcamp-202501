@@ -16,19 +16,19 @@ function Calculator() {
         // Captura el click del boton
         const domForm = event.target
 
+        // Tomamos el valor del selector de operacion
+        const domOperationSelect = domForm.querySelector('select[name=operation')
+
         // Tomamos los datos de los Input
         const domNumber1Input = domForm.querySelector('input[name=number1')
         const domNumber2Input = domForm.querySelector('input[name=number2')
 
-        // Tomamos el valor del selector de operacion
-        const domOperationSelect = domForm.querySelector('select[name=operation')
+        // guardamos la seleccion de la operacion ha realizar
+        const operation = domOperationSelect.value
 
         // Guardamos los valores de los Input pasandolos de String a Number
         const number1 = Number(domNumber1Input.value)
         const number2 = Number(domNumber2Input.value)
-
-        // guardamos la seleccion de la operacion ha realizar
-        const operation = domOperationSelect.value
 
         let result
 
