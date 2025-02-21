@@ -30,7 +30,7 @@ var logic = {
         },
         password: function (password, explain) {
             this.text(password, explain)
-            this.minLength(password, 6, explain)
+            this.minLength(password, 5, explain)
             this.maxLength(password, 16, explain)
         }
     },
@@ -38,9 +38,9 @@ var logic = {
     registerUser: function (name, email, username, password) {
         this.validate.text(name, 'name')
         this.validate.maxLength(name, 20, 'name')
-        this.validate.email(email, 'name')
-        this.validate.username(username, 'name')
-        this.validate.password(password, 'name')
+        this.validate.email(email, 'email')
+        this.validate.username(username, 'username')
+        this.validate.password(password, 'password')
 
         var found
         for (let i = 0; i < data.users.length && !found; i++) {
@@ -77,6 +77,8 @@ var logic = {
 
         data.currentUser = found
         found.state = 'Online'
+
+        data.userId = found.id
     },
 
     //TEST -> ONLINE USER
@@ -90,18 +92,18 @@ var logic = {
     },
 
     getUsername: function () {
-        // var found
+        let found
 
-        // for (var i = 0; i < data.users.length && !found; i++) {
-        //     var user = data.users[i]
+        for (i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
-        //     if (user.id === data.userId)
-        //         found = user
-        // }
+            if (user.id === data.userId)
+                found = user
+        }
 
-        // // if (!found) throw new Error('Any user online')
+        if (!found) throw new Error('user not found')
 
-        // return found.name
+        return found.name
     },
 
     getPosts: function () {
