@@ -19,17 +19,24 @@ function Calculator() {
 
         const result = number1 + number2
 
-        console.log('hello submit', result)
+        console.log('Submit result: ', result)
 
         setResult(result)
     }
 
     console.log('Calculator render')
 
-    return <>
-        <h1>Hello, World! 🧮</h1>
+    const formStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+        maxWidth: '300px'
+    }
 
-        <form onSubmit={handleSubmit}>
+    return <>
+        <h1>Hello, Calculator! 🧮</h1>
+
+        <form onSubmit={handleSubmit} style={formStyle}>
             <label>Number 1</label>
             <input type="number" name="number1" />
             +
