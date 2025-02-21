@@ -66,6 +66,7 @@ class Calculator extends Component {
       secondNumber: "",
       operation: "",
       result: null,
+      displayResult: false,
     });
   };
 
