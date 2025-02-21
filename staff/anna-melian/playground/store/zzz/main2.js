@@ -316,6 +316,30 @@ interface.showToReceipt = function () {
 
 }
 
+data.stillInShop = true
 
+interface.wantToKeepShooping = function () {
+    var askKeepShoping = prompt('Do you want to keep shooping? yes or no ')
+    askKeepShoping = askKeepShoping.toLowerCase()
+    if (askKeepShoping === 'yes') {
+        data.stillInShop = true
+    }
+    else if (askKeepShoping === 'no') {
+        data.stillInShop = false
+    }
+    else {
+        console.log('Invalid answer')
+        interface.wantToKeepShooping()
+    }
+}
 
-console.clear()
+interface.StartShopping = function () {
+    while (data.stillInShop === true) {
+        interface.askUser()
+        interface.wantToKeepShooping()
+    }
+}
+
+console.log('...')
+interface.StartShopping()
+
