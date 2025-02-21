@@ -31,7 +31,7 @@ const logic = {
         },
         password(password, explain) {
             this.text(password, explain)
-            this.minLength(password, 6, explain)
+            this.minLength(password, 5, explain)
             this.maxLength(password, 16, explain)
         },
         url(url, explain) {
@@ -42,10 +42,11 @@ const logic = {
 
     registerUser(name, email, username, password) {
         this.validate.text(name, 'name')
+        this.validate.minLength(name, 1, 'name')
         this.validate.maxLength(name, 20, 'name')
-        this.validate.email(email, 'name')
-        this.validate.username(username, 'name')
-        this.validate.password(password, 'name')
+        this.validate.email(email, 'email')
+        this.validate.username(username, 'username')
+        this.validate.password(password, 'password')
 
         let found
         for (let i = 0; i < data.users.length && !found; i++) {
@@ -95,7 +96,7 @@ const logic = {
     getUsername() {
         let found
 
-        for (i = 0; i < data.users.length; i++) {
+        for (i = 0; i < data.users.length && !found; i++) {
             const user = data.users[i]
 
             if (user.id === data.userId)

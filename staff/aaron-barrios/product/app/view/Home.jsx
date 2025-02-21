@@ -1,19 +1,43 @@
-function Home() {
-    const handleCreatePostClick = () => {
-        root.render(<CreatePost />)
-    }
+const { useState, useEffect } = React
+
+function Home({ onLogoutClick }) {
+    const [view, setView] = useState('posts')
+    const [username, setUsername] = useState('')
+
+    useEffect(() => {
+        try {
+            const username = logic.getUsername()
+
+            setUsername(username)
+
+            //TO DO LOAD POSTS
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }, [])
 
     const handleLogoutClick = () => {
-        root.render(<Landing />)
+        try {
+            logic.logoutUser()
+
+            onLogoutClick()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
     }
 
     return <div>
         <header style={{ width: "100%", height: "50px", margin: "10px", display: "flex", justifyContent: "space-between", alignItems: " center" }}>
-            <h2>Hello, Masha!</h2>
-            <button style={{ width: "100px", height: "35px", marginRight: "10px" }} onClick={handleLogoutClick}>Logout</button>
+            <h2>Welcome, {username}</h2>
+
+            <button onClick={handleLogoutClick} style={{ width: "100px", height: "35px", marginRight: "10px" }} >Logout</button>
         </header >
 
-        <main>
+        {view === 'posts' && <main>
             <section>
                 <article style={{ width: "100%", padding: "10px", border: "1px solid rgb(204, 204, 204)", borderRadius: "5px", backgroundColor: " rgb(249, 249, 249)" }}>
                     <h3>m71tm7l3l5l</h3>
@@ -30,8 +54,23 @@ function Home() {
                     <time>2024-01-09T23:00:00.000Z</time><button>🤍 (0)</button>
                 </article>
             </section>
-        </main>
+        </main>}
 
-        <button onClick={handleCreatePostClick}>🧉</button>
+        {view === 'create-post' && <section>
+            <h2>Create Post</h2>
+
+            <form style={{ display: "flex", flexDirection: "column", justifyContent: "left", gap: "5px" }}>
+                <label htmlFor="image">Image</label>
+                <input type="text" id="image" style={{ width: "350px" }} />
+                <label htmlFor="text">Text</label>
+                <input type="url" id="text" style={{ width: "350px" }} />
+
+                <button type="submit" style={{ width: "80px" }}>Create</button>
+            </form>
+
+            <a>Cancel</a>
+        </section>}
+
+        {view === 'posts' && <button>🧉</button>}
     </div >
 }
