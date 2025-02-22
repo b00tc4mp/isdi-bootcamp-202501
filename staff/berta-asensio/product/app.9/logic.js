@@ -118,7 +118,36 @@ const logic = {
     },
 
     getPosts() {
-        return data.posts 
+        const agregatedPosts = []
+
+        for (let i = 0; i < data.posts .length; i++)  {
+            const post = data.posts[i]
+
+            let liked = false
+
+            for (let i = 0; i < post.likes.length && !liked; i++) {
+                const userId = post.likes[i]
+
+                if( userId === data.userId)
+                    liked = true
+            }
+
+            const agregatedPost = {
+                id: post.id, 
+                author: post.author, 
+                image: post.image, 
+                text: post.text,
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
+                liked: liked,
+                totalLikes: post.likes.length
+
+            }
+
+            agregatedPosts[agregatedPosts.length] = agregatedPost
+        }
+
+        return agregatedPosts
     },
 
     createPost(image, text) {
@@ -133,9 +162,48 @@ const logic = {
             image: image, //la imagen que hemos puesto y validado
             text: text, //lo mismo que la imagen pero con el texto
             createdAt: new Date(), //fecha actual
-            modifiedAt: null
+            modifiedAt: null,
+            likes: []
         }
 
         data.posts[data.posts.length] = post
+    },
+
+    toggleLikePost(postId) {
+        
+        let foundPost
+        
+        for (let i = 0; i < data.posts.length && !foundPost; i++) {
+            const post = data.posts[i]
+
+            if(post.id === postId)
+                foundPost = post
+        }
+
+        if (!foundPost) throw new NotFoundError ('post not found') 
+
+        let userIdFound = false
+
+        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
+            const userId = foundPost.likes[i] 
+
+            if (userId === data.userId)
+                userIdFound = true
+        }
+
+        if (!userIdFound)
+            foundPost.likes[foundPost.likes.length] = data.userId
+        else {
+            const likes = []
+
+            for(let i = 0; i < foundPost.likes.length; i++) {
+                const userId = foundPost.likes[i]
+
+                if(userId !== data.userId)
+                    likes[likes.length] = userId
+            }
+
+            foundPost.likes = likes
+        }
     }
 }

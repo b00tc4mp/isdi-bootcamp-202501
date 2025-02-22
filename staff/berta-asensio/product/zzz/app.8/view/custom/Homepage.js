@@ -107,6 +107,21 @@ class Home extends Component {
                 postDate.setText(post.createdAt.toISOString())  //debemos convertirlo a String porque la fecha es un objeto
                 postArticle.add(postDate)
 
+                const likeButton = new Button()
+                likeButton.setText(`${post.liked? '❤️':'🤍'} (${post.totalLikes})`)
+                likeButton.addClickListener(function() {
+                    try {
+                        logic.toggleLikePost(post.id)
+                        
+                        this.loadPosts()
+                    } catch (error) {
+                        console.error(error)
+
+                        alert(error.message)
+                    }
+                }.bind(this))
+                postArticle.add(likeButton)
+
                 this.postSection.add(postArticle)
             }
         } catch (error) {
