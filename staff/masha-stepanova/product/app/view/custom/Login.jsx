@@ -26,7 +26,7 @@ function Login({ onRegisterClick, onLoginSubmit }) {
     return <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}>
         <h1>Logo</h1>
 
-        <form onSubmit={onLoginSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+        <form onSubmit={handleLoginSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
             <label htmlFor="username">Username</label>
             <input type="text" id="username" />
 

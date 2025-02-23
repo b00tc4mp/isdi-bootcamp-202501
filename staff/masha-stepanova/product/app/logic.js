@@ -99,7 +99,7 @@ const logic = {
 
         if (!found) throw new Error('user not found')
 
-        return found.name
+        return found.userId
     },
 
     getPosts() {
@@ -118,19 +118,16 @@ const logic = {
         }
 
         data.posts.push(newPost)
-        localStorage.posts = JSON.stringify(data.posts)
     },
 
     likePost(postToLike) {
         for (var i = 0; i < postToLike.likes.length; i++) {
             if (postToLike.likes[i] === data.userId) {
                 postToLike.likes.splice(i, 1)
-                localStorage.posts = JSON.stringify(data.posts)
                 return
             }
         }
         postToLike.likes[postToLike.likes.length] = data.userId
-        localStorage.posts = JSON.stringify(data.posts)
     },
 
     isPostLikedByUser(post) {
