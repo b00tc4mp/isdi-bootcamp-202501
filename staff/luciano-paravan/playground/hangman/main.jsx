@@ -5,13 +5,17 @@ const { useState } = React
 function App() {
     const [view, setView] = useState('intro')
     const [status, setStatus] = useState('')
+    const [feedback, setFeedback] = useState('')
+    const [gameOver, setGameOver] = useState('')
+
     const handleStartSubmit = event => {
         event.preventDefault()
 
-        const form = event.target
-        const word = form.word.value
-
         try {
+            const form = event.target
+            // const word = form.querySelector('input[name=word]').vaue
+            const word = form.word.value
+            
             logic.introduceWord(word)
 
             const status = logic.getStatus()
@@ -23,7 +27,51 @@ function App() {
 
             alert(error.message)
         }
+    }
 
+    const handleCharOrWordSubmit = event => {
+        event.preventDefault()
+
+        try {
+            const { target: form } = event
+        
+            const { charOrWord: { value: charOrWord } } = form
+
+            if (charOrWord.length === 1)
+                logic.attemptCharacter(charOrWord)
+            else if (charOrWord.length > 1)
+                logic.attemptWord(charOrWord)
+
+            const status = logic.getStatus()
+
+            setStatus(status)
+            
+            form.reset()
+
+            const gameOver = logic.isGameOver()
+
+            setFeedback(gameOver? logic.isWon()? 'You win!' : 'You lose' : 'Keep trying...')
+            setGameOver(gameOver)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handleRestartClick = () => {
+        try {
+            logic.resetGame()
+
+            setView('intro')
+            setStatus('')
+            setFeedback('')
+            setGameOver(false)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
     }
 
     return <>
@@ -36,15 +84,19 @@ function App() {
         </form>}
 
         {view === 'game' && <>
-            <p style={{fontSize: '52px'}}>{status.status}</p>
+            <p style={{ fontSize: '52px' }}>{status.status}</p>
 
             <p>Remaining attempts: {status.remainingAttemps}</p>
 
-            <form>
+            <form onSubmit={handleCharOrWordSubmit}>
                 <label htmlFor="charOrWord">Char or Word?</label>
                 <input type="text" name="charOrWord" id="charOrWord" />
                 <button type="submit">Try</button>
             </form>
+
+            <p>{ feedback }</p>
+
+            {gameOver && <button type="button" onClick={handleRestartClick}>Restart</button> }
         </>
         }
     </>

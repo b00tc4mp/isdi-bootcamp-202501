@@ -168,5 +168,9 @@ var logic = {
 
     isGameOver: function () {
         return !logic.helper.hasRemainingAttemps() || logic.helper.hasGuessedWord()
+    },
+
+    isWon: function () {
+        return logic.helper.hasGuessedWord()
     }
 }
