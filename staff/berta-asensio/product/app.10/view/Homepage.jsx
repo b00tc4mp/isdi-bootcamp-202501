@@ -1,12 +1,26 @@
-const { useState } = React
+const { useState, useEffect } = React
 
 
-function Homepage ({onCreatePostClick, onReturnClick}) {
+function Homepage ({/*onCreatePostClick, */onReturnClick}) {
     const [view, setView] = useState('posts')
+    const [userName, setUserName] = useState('')
+
+    useEffect(() => {
+        try {
+            const name = logic.getUserName()
+
+            setUserName(name)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }, [])
+
     return <div>
         <h1>Bee you</h1>
 
-        <h2>Hello Bob Esponja !</h2>
+        <h2>Hello, {userName}!</h2>
 
         {view === 'posts' && <section>
             <article>
@@ -58,7 +72,7 @@ function Homepage ({onCreatePostClick, onReturnClick}) {
         </section>
         }
 
-        {view === 'posts' && <button onClick={onCreatePostClick}>+</button>
+        {view === 'posts' && <button /*onClick={onCreatePostClick}*/>+</button>
         }
 
         <a onClick={onReturnClick}>Logout</a>

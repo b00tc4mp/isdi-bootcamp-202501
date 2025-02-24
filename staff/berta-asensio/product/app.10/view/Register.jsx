@@ -1,8 +1,38 @@
-function Register({onLoginClick, onReturnClick}) {
+function Register({/*onLoginClick, */onReturnClick, onRegisterSubmit}) {
+    const handleRegisterSubmit = event => {
+        event.preventDefault()
+
+        try {
+            const { target: form } = event
+
+            const { 
+                name: { value: name },
+                username: { value: username },
+                password: { value: password },
+                email: { value: email }
+            } = form
+
+            logic.registerUser(name, username, password, email)
+
+            form.reset()
+
+            onRegisterSubmit()
+
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+
+
     return <div>
         <h1>Bee you</h1>
+
         <h2>Create account</h2>
-        <form>
+        
+        <form onSubmit={handleRegisterSubmit}>
             <label htmlFor="name">Name</label>
             <br />
             <input type="text" id="name" />
@@ -23,7 +53,7 @@ function Register({onLoginClick, onReturnClick}) {
             <input type="email" id="email" />
             <br />
 
-            <button type="submit" onClick={onLoginClick}>Register</button>
+            <button type="submit">Register</button>
         </form>
         
         <a onClick={onReturnClick}>Return</a>
