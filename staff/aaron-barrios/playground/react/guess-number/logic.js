@@ -21,6 +21,7 @@ var logic = {
         if (!hasAttempts) {
             data.constants.END_GAME = 'lose'
             // this.checkEndGame(data.constants.END_GAME)
+            this.checkEndGame()
         }
     },
 
@@ -35,6 +36,7 @@ var logic = {
         if (randomNumber === number) {
             data.constants.END_GAME = 'win'
             // this.checkEndGame(data.constants.END_GAME)
+            this.checkEndGame()
         }
         else if (difference > 40) {
             alert(`It freezes 
@@ -80,11 +82,11 @@ var logic = {
         this.randomNumber()
     },
 
-    // checkEndGame: function (state) {
-    //     const end = false
-    //     if (data.constants.END_GAME === 'win' || data.constants.END_GAME === 'lose') {
-    //         end = true
-    //         return end
-    //     }
-    // }
+    checkEndGame: function () {
+        let finished = false
+        if (data.constants.END_GAME === 'win' || data.constants.END_GAME === 'lose') {
+            finished = true
+            return finished
+        }
+    }
 }

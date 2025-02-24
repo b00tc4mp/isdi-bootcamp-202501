@@ -21,20 +21,10 @@ function App() {
 
             form.reset()
 
-            gameChecker()
-        } catch (error) {
-            console.error(error)
+            const finished = logic.checkEndGame()
 
-            alert(error.message)
-        }
-    }
-
-    const gameChecker = function () {
-        try {
-            if (data.constants.END_GAME === 'win')
+            if (finished)
                 setView('win')
-            else if (data.constants.END_GAME === 'lose')
-                setView('lose')
         } catch (error) {
             console.error(error)
 
