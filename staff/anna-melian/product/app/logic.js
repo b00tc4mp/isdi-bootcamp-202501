@@ -153,6 +153,7 @@ const logic = {
 
             let liked = false
 
+
             for (let i = 0; i < post.likes.length && !liked; i++) {
                 const userId = post.likes[i]
 
@@ -169,7 +170,7 @@ const logic = {
                 modifiedAt: post.modifiedAt,
                 liked: liked,
                 likesCount: post.likes.length,
-                comments: post.comments
+                comments: post.comments,
             }
             aggregatedPosts[aggregatedPosts.length] = aggregatedPost
         }
@@ -219,8 +220,10 @@ const logic = {
                 userIdFound = true
         }
 
-        if (!userIdFound)
+        if (!userIdFound) {
             foundPost.likes[foundPost.likes.length] = data.userId
+
+        }
         else {
             const likes = []
 
@@ -232,19 +235,11 @@ const logic = {
             }
 
             foundPost.likes = likes
+
         }
 
     },
-    getComments(postId) {
-        const aggregatedComments = []
-        const post = postId
-        for (let j = 0; j < post.comments.length; j++) {
-            const comment = post.comments[j]
-            aggregatedComments[aggregatedComments.length] = comment
-        }
-        return aggregatedComments
 
-    },
     addComment(post, author, text) {
         post.comments[post.comments.length] = author + ': ' + text
     }

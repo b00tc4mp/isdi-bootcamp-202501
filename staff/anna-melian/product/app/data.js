@@ -16,7 +16,7 @@ var data = {
             id: 'm71tml17ly',
             name: 'Hermione Granger',
             email: 'hermione@granger.com',
-            username: 'theSmartestWitch',
+            username: 'Granger',
             password: 'hermionegranger123',
             createdAt: new Date(2024, 5, 20),
             modifiedAt: null
@@ -41,7 +41,7 @@ var data = {
             createdAt: new Date(2025, 0, 1),
             modifiedAt: null,
             likes: ['m71tm7l3l5l', 'm71tml17ly'],
-            comments: ['QuidditchFan: Nice wand!', 'Comment 2']
+            comments: ['QuidditchFan: Nice wand!', 'Granger: Congratulations!']
         },
         {
             id: 'm737zabzix8',
@@ -61,7 +61,7 @@ var data = {
             createdAt: new Date(2024, 9, 30),
             modifiedAt: null,
             likes: ['m71tmfd56b'],
-            comments: ['theSmartestWitch: Are you sure that this spell exists?']
+            comments: ['Granger: Are you sure that this spell exists?']
         }
     ],
     userId: null,

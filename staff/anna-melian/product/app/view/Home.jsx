@@ -3,17 +3,18 @@ const { useState, useEffect } = React
 function Home({ onLogoutClick }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
-    // TODO add state for posts
+    const [posts, setPosts] = useState([])
 
     useEffect(() => {
         console.debug('Home -> useEffect')
 
         try {
             const name = logic.getUserName()
+            const posts = logic.getPosts()
 
             setUserName(name)
+            setPosts(posts)
 
-            // TODO load posts by means of logic
         } catch (error) {
             console.error(error)
 
@@ -33,47 +34,20 @@ function Home({ onLogoutClick }) {
         }
     }
 
-    function Posts() {
-        const posts = logic.getPosts()
-        console.debug('Posts -> render')
-        return (<section>
-            {posts.map(post => (
-                <article key={post.id}>
-                    <h3>{logic.getAuthorUsername(post)}</h3>
-                    <img src={post.image}
-                        alt="Contenido del post"
-                        width='500px' />
-                    <p>{post.text}</p>
-                    <button>🗨️</button>
-                    <time>{new Date(post.createdAt).toISOString()}</time>
-                    <button>♥️ ({post.likesCount})</button>
-                </article>
-            ))}
-            <button onClick={onCreatePostClick}>+</button>
-        </section>
-        )
 
-
-    }
-
-    const onCommentsSectionClick = (post) => {
-        return (<section>
-            {post.map(comment => (<p>{comment}</p>))}
-
-
-        </section>)
-    }
-
-
-    const onCreatePostClick = () => {
-        console.debug('Create Post -> render')
+    const handleAddPostClick = () => {
         setView('create-post')
     }
 
     const onCancelCreatePostClick = () => {
-
         setView('posts')
     }
+
+    const onAddNewCommentClick = () => {
+        console.log('Create new comment')
+
+    }
+
 
     const handleCreatePostSubmit = event => {
         event.preventDefault()
@@ -86,6 +60,9 @@ function Home({ onLogoutClick }) {
             } = form
 
             logic.createPost(img, text)
+            const posts = logic.getPosts()
+
+            setPosts(posts)
             setView('posts')
 
 
@@ -95,22 +72,18 @@ function Home({ onLogoutClick }) {
         }
     }
 
-    function CreatePost() {
-        return <section>
-            <form onSubmit={handleCreatePostSubmit}>
-                <label>Image</label>
-                <input id='img' type="url" />
+    const handleToggleLikePostClick = postId => {
+        try {
+            logic.toggleLikePost(postId)
 
-                <label>Text</label>
-                <input id='text' type="text" />
+            const posts = logic.getPosts()
 
-                <button type="submit">Create</button>
-            </form>
-
-            <a onClick={onCancelCreatePostClick}>Cancel</a>
-        </section>
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
+            alert(error.message)
+        }
     }
-
 
 
     console.debug('Home -> render')
@@ -122,11 +95,40 @@ function Home({ onLogoutClick }) {
 
         <button type="button" onClick={handleLogoutClick}>Logout</button>
 
+        {view === 'posts' && <section>
+            {posts.map(post =>
+                <article key={post.id}>
+                    <h3>{logic.getAuthorUsername(post)}</h3>
+                    <img src={post.image}
+                        width='500px' />
+                    <p>{post.text}</p>
+                    <button onClick={() => handleToggleLikePostClick(post.id)}> {`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
+                    <button onClick={onAddNewCommentClick}>🗨️</button>
+
+                    <section>
+                        {post.comments.map((comment, index) => <p key={index}>{comment}</p>)}
+
+                    </section>
 
 
-        {view === 'posts' && <Posts />}
+                    <time style={{ display: 'block' }}>{new Date(post.createdAt).toISOString()}</time>
+                </article>
+            )}
+        </section>}
 
+        {view === 'create-post' && <section>
+            <form onSubmit={handleCreatePostSubmit}>
+                <label htmlFor="image">Image</label>
+                <input id='img' type="url" />
 
-        {view === 'create-post' && <CreatePost />}
+                <label htmlFor="text">Text</label>
+                <input id='text' type="text" />
+
+                <button type="submit">Create</button>
+            </form>
+
+            <a onClick={onCancelCreatePostClick}>Cancel</a>
+        </section>}
+        {view === 'posts' && <button onClick={handleAddPostClick}>+</button>}
     </div>
 }
