@@ -81,7 +81,7 @@ const logic = {
             createdAt: new Date() //TODO modified at?
         }
 
-        data.users(user)
+        data.users.push(user)
     },
 
     loginUser(username, password) {
@@ -170,5 +170,10 @@ const logic = {
             const user = data.users.find(user => user.id === likeId)
             return user.username
         })
+    },
+
+    getCurrentUser() {
+        const userFound = data.users.find(user => user.id === data.userId)
+        return userFound
     }
 }

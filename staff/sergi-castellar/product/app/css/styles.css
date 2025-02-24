@@ -1,0 +1,129 @@
+/* General body styles */
+body {
+    display: flex;
+    justify-content: center;
+    background-color: #e6e6e6;
+}
+
+
+/* Estilos comunes para los enlaces */
+a {
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Estilos para los botones */
+button {
+    border-radius: 24px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Hover effect for buttons */
+button:hover {
+    color: grey;
+}
+
+/* Modal content */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Form input styles */
+input {
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+/* Form container styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styles for the register/login section */
+.register-login-section {
+    width: 310px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Footer styles */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Posts section styles */
+.posts-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+/* Add post button */
+.add-post-button {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+/* Buttons in the create post form */
+.buttons-div {
+    width: 310px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Login/Register buttons */
+button[type="submit"] {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Cancel button styling */
+button.cancel-button {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#register-or-login {
+    display: flex;
+}
+
+article img {
+    width: 400px;
+}
+
+#addPostFooter {
+    position: fixed;
+    margin-bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#addPostButton {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
