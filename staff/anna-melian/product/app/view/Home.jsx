@@ -33,6 +33,86 @@ function Home({ onLogoutClick }) {
         }
     }
 
+    function Posts() {
+        const posts = logic.getPosts()
+        console.debug('Posts -> render')
+        return (<section>
+            {posts.map(post => (
+                <article key={post.id}>
+                    <h3>{logic.getAuthorUsername(post)}</h3>
+                    <img src={post.image}
+                        alt="Contenido del post"
+                        width='500px' />
+                    <p>{post.text}</p>
+                    <button>🗨️</button>
+                    <time>{new Date(post.createdAt).toISOString()}</time>
+                    <button>♥️ ({post.likesCount})</button>
+                </article>
+            ))}
+            <button onClick={onCreatePostClick}>+</button>
+        </section>
+        )
+
+
+    }
+
+    const onCommentsSectionClick = (post) => {
+        return (<section>
+            {post.map(comment => (<p>{comment}</p>))}
+
+
+        </section>)
+    }
+
+
+    const onCreatePostClick = () => {
+        console.debug('Create Post -> render')
+        setView('create-post')
+    }
+
+    const onCancelCreatePostClick = () => {
+
+        setView('posts')
+    }
+
+    const handleCreatePostSubmit = event => {
+        event.preventDefault()
+
+        try {
+            const { target: form } = event
+            const {
+                img: { value: img },
+                text: { value: text }
+            } = form
+
+            logic.createPost(img, text)
+            setView('posts')
+
+
+        } catch (error) {
+            console.error(error)
+            alert(error.message)
+        }
+    }
+
+    function CreatePost() {
+        return <section>
+            <form onSubmit={handleCreatePostSubmit}>
+                <label>Image</label>
+                <input id='img' type="url" />
+
+                <label>Text</label>
+                <input id='text' type="text" />
+
+                <button type="submit">Create</button>
+            </form>
+
+            <a onClick={onCancelCreatePostClick}>Cancel</a>
+        </section>
+    }
+
+
+
     console.debug('Home -> render')
 
     return <div>
@@ -42,48 +122,11 @@ function Home({ onLogoutClick }) {
 
         <button type="button" onClick={handleLogoutClick}>Logout</button>
 
-        {view === 'posts' && <section>
-            {/* TODO render posts from state */}
 
-            <article>
-                <h3>GryffindorSeeker</h3>
 
-                <img src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGxvbWxuNWZlYm1qa3UzM3J0ZXRpNTRwdHZ0OHQ1amxvaHc5YmRheSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/mz1kJeDVueKC4/giphy.gif' />
+        {view === 'posts' && <Posts />}
 
-                <p>Buying my first wand</p>
 
-                <time>2025-02-09T23:00:00.000Z</time>
-
-                <button>♥️ (1)</button>
-            </article>
-
-            <article>
-                <h3>theSmartestWitch</h3>
-
-                <img src='https://media.giphy.com/media/IWvuFVQICQIr6/giphy.gif?cid=790b76118lomln5febmjku33rteti54ptvt8t5jlohw9bday&ep=v1_gifs_search&rid=giphy.gif&ct=g' />
-
-                <p>It's leviosa, not leviosaar</p>
-
-                <time>2024-12-31T23:00:00.000Z</time>
-
-                <button>♥️ (2)</button>
-            </article>
-        </section>}
-
-        {view === 'create-post' && <section>
-            <form>
-                <label>Image</label>
-                <input type="url" />
-
-                <label>Text</label>
-                <input type="text" />
-
-                <button type="submit">Create</button>
-            </form>
-
-            <a>Cancel</a>
-        </section>}
-
-        {view === 'posts' && <button>+</button>}
+        {view === 'create-post' && <CreatePost />}
     </div>
 }

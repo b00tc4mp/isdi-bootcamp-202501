@@ -41,7 +41,7 @@ var data = {
             createdAt: new Date(2025, 0, 1),
             modifiedAt: null,
             likes: ['m71tm7l3l5l', 'm71tml17ly'],
-            comments: ['QuidditchFan: Nice wand!']
+            comments: ['QuidditchFan: Nice wand!', 'Comment 2']
         },
         {
             id: 'm737zabzix8',

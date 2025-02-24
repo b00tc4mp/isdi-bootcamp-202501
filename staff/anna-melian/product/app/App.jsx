@@ -9,7 +9,7 @@ function App() {
 
     const handleLoginSubmit = () => setView('home')
 
-    const handleLogoutClick = () => setView('login')
+    const handleLogoutClick = () => setView('landing')
 
     console.debug('App -> render')
 
