@@ -1,16 +1,9 @@
-function Landing() {
-    const handleClickLogin = () => {
-        root.render(<Login />)
-    }
-
-    const handleClickRegister = () => {
-        root.render(<Register />)
-    }
+function Landing({onRegisterClick, onLoginClick}) {
 
     return <div>
         <h1>Logo</h1>
-        <a style={{cursor: "pointer"}} onClick={handleClickRegister}>Register</a>
-        <a style={{ cursor: 'pointer', marginLeft: '25px' }} onClick={handleClickLogin}>Login</a>
+        <a style={{cursor: "pointer"}} onClick={onRegisterClick}>Register</a>
+        <a style={{ cursor: 'pointer', marginLeft: '25px' }} onClick={onLoginClick}>Login</a>
     </div>
 }
 
