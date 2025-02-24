@@ -56,20 +56,6 @@ function Home({ onLogoutClick }) {
         }
     }
 
-    const handleToggleLikePostClick = postId => {
-        try {
-            logic.toggleLikePost(postId)
-
-            const posts = logic.getPosts()
-
-            setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
     console.debug('Home -> render')
 
     return <div>
@@ -90,7 +76,7 @@ function Home({ onLogoutClick }) {
 
                     <time>{post.createdAt.toISOString()}</time>
 
-                    <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
+                    <button>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
                 </article>)}
         </section>}
 
