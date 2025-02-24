@@ -139,7 +139,7 @@ const logic = {
             aggregatedPosts[aggregatedPosts.length] = aggregatedPost
         }
 
-        return aggregatedPosts
+        return aggregatedPosts.reverse()
     },
 
     createPost(image, text) {
