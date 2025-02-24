@@ -1,4 +1,7 @@
-//console.clear();
+const root = ReactDOM.createRoot(document.getElementById('root'))
+root.render(<App />)
+
+/*
 
 const body = new Body();
 body.container = document.body
@@ -47,3 +50,5 @@ home.addLogoutClickListener(() => {
     body.remove(home)
     body.add(login)
 })
+
+*/
