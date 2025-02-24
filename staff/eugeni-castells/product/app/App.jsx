@@ -38,12 +38,7 @@ function App() {
           onLoginSuccess={handleHomeClick}
         />
       )}
-      {view === "home" && (
-        <Home
-          onRegisterClick={handleRegisterClick}
-          onLoginSuccess={handleHomeClick}
-        />
-      )}
+      {view === "home" && <Home onLogoutClick={handleLoginClick} />}
     </>
   );
 }

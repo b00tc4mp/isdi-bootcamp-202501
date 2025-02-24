@@ -1,4 +1,16 @@
 function Login({ onRegisterClick, onLoginSuccess }) {
+  const { useEffect } = React;
+
+  useEffect(() => {
+    console.log("Login -> useEffect(component did mount)");
+    Login.start = Date.now();
+
+    return () => {
+      console.log("Login -> useEffect(component did unmount)");
+      Login.end = Date.now();
+      console.log((Login.end - Login.start) / 1000);
+    };
+  }, []);
   const handleLoginSubmit = (event) => {
     event.preventDefault();
 
@@ -17,7 +29,7 @@ function Login({ onRegisterClick, onLoginSuccess }) {
       alert(error.message);
     }
   };
-
+  console.log("Login -> render");
   return (
     <div style={{ height: "100vh", padding: "2rem" }}>
       <h1>Logo</h1>
