@@ -3,14 +3,34 @@ const { useState, useEffect } = React
 function Home({ onLogoutClick }) {
     const [view, setView] = useState('posts')
     const [username, setUsername] = useState('')
+    const [posts, setPosts] = useState([])
+
+    //state that stores the targetPostId -> where comments shown
+    const [activeCommentPostId, setActiveCommentPostId] = useState(null)
+
 
     useEffect(() => {
+        console.debug('Home -> useEffect')
+
         try {
             const username = logic.getUsername()
 
             setUsername(username)
 
-            //TO DO LOAD POSTS
+            const posts = logic.getPosts()
+
+            //local variable w/interest properties to obtain target data from each post and paint it
+            const postsData = posts.map(post => ({
+                id: post.id,
+                author: post.author,
+                image: post.image,
+                text: post.text,
+                date: post.createdAt.toLocaleString(),
+                liked: false,
+                likes: post.likesCount
+            }))
+
+            setPosts(postsData)
         } catch (error) {
             console.error(error)
 
@@ -30,6 +50,71 @@ function Home({ onLogoutClick }) {
         }
     }
 
+    const handleCreatePostSubmit = event => {
+        event.preventDefault()
+
+        try {
+            const { target: form } = event
+
+            const {
+                image: { value: image },
+                text: { value: text }
+            } = form
+
+            logic.createPost(image, text)
+
+            form.reset()
+
+            const updatedPosts = logic.getPosts()
+
+            setPosts(updatedPosts)
+
+            setView('posts')
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const createPostClick = () => {
+        setView('create-post')
+    }
+
+    const cancelCreateClick = () => {
+        setView('posts')
+    }
+
+    const likeButtonClick = postId => {
+        try {
+            const postLiked = logic.toggleLikePost(postId)
+
+            //Go back to iterate posts and update the target post
+            setPosts(currentPosts => currentPosts.map(post => {
+                if (post.id === postId) {
+                    //update the properties I want
+                    return {
+                        ...post,
+                        liked: postLiked,
+                        likes: postLiked ? post.likes + 1 : post.likes - 1
+                    }
+                }
+                return post
+            }))
+        } catch (error) {
+            console.error(error)
+
+            alert(error)
+        }
+    }
+
+
+    const commentButtonClick = postId => {
+        setActiveCommentPostId(currentId => currentId === postId ? null : postId)
+    }
+
+    console.debug('Home -> render')
+
     return <div>
         <header style={{ width: "100%", height: "50px", margin: "10px", display: "flex", justifyContent: "space-between", alignItems: " center" }}>
             <h2>Welcome, {username}</h2>
@@ -37,40 +122,82 @@ function Home({ onLogoutClick }) {
             <button onClick={handleLogoutClick} style={{ width: "100px", height: "35px", marginRight: "10px" }} >Logout</button>
         </header >
 
-        {view === 'posts' && <main>
+        {/* --- POSTS SECTION ---     */}
+        {(posts && view === 'posts') && <main>
             <section>
-                <article style={{ width: "100%", padding: "10px", border: "1px solid rgb(204, 204, 204)", borderRadius: "5px", backgroundColor: " rgb(249, 249, 249)" }}>
-                    <h3>m71tm7l3l5l</h3>
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExczQxY2Jlb25xNWN3bWo4MWR6dmM4cTR3Y3RqYjBqOThmYWJpNTIyayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0IpXwyCXikRK9Yl2/giphy.gif" style={{ width: "100%", height: "auto", objectFit: "cover" }} />
-                    <p>orange</p>
-                    <time>2024-07-21T22:00:00.000Z</time>
-                    <button>🤍 (0)</button>
-                </article>
+                {posts.map(post => (
+                    //key -> react property that allows itself to identify each element of the list
+                    <article style={{ marginTop: '20px', marginBottom: '50px' }} key={post.id}>
+                        <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: "5px", height: '20px' }}>
+                            <h3>{post.author}</h3>
+                            <time>{post.date}</time>
+                        </span>
 
-                <article style={{ width: "100%", padding: "10px", border: "1px solid rgb(204, 204, 204)", borderRadius: "5px", backgroundColor: " rgb(249, 249, 249)" }}>
-                    <h3>m71tm7l3l5l</h3>
-                    <img src="https://media.giphy.com/media/vSbW8dAA1n516fYcbm/giphy.gif?cid=790b7611hu0cl161xv6ry8v3y8k3q20kfgm39htr8lqds3wt&amp;ep=v1_gifs_search&amp;rid=giphy.gif&amp;ct=g" style={{ width: "100%", height: "auto", objectFit: "cover" }} />
-                    <p>aguacate</p>
-                    <time>2024-01-09T23:00:00.000Z</time><button>🤍 (0)</button>
-                </article>
+                        <img src={post.image} />
+
+                        <span style={{ display: 'flex', justifyContent: "left", alignItems: 'center', gap: "5px", height: '20px' }}>
+                            <p>{post.text}</p>
+                            <button type="button"
+                                onClick={() => likeButtonClick(post.id)} >{post.liked ? '❤️' : '🤍'}</button>
+                            <h5>{post.likes}</h5>
+                            <button type="button" onClick={() => commentButtonClick(post.id)}>📃</button>
+                        </span>
+
+                        {/* --- COMMENTS SECTION ---     */}
+                        {activeCommentPostId === post.id && <section>
+                            <article style={{ marginTop: '20px', marginBottom: '20px' }}>
+                                <span style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', gap: "5px", height: '20px' }}>
+                                    <h3>Eugeni</h3>
+                                    <time>3d</time>
+                                </span>
+
+                                <span style={{ display: 'flex', justifyContent: "left", alignItems: 'center', gap: "5px", height: '20px' }}>
+                                    <p>Vinga Bouuuuusss! </p>
+                                    <button type="button">❤️</button>
+                                    <h5>14</h5>
+                                </span>
+                            </article>
+
+                            <article style={{ marginTop: '20px', marginBottom: '20px' }}>
+                                <span style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', gap: "5px", height: '20px' }}>
+                                    <h3>Lucho</h3>
+                                    <time>3d</time>
+                                </span>
+
+                                <span style={{ display: 'flex', justifyContent: "left", alignItems: 'center', gap: "5px", height: '20px' }}>
+                                    <p>Alto alzado...</p>
+                                    <button type="button">❤️</button>
+                                    <h5>8</h5>
+                                </span>
+                            </article>
+
+                            <label htmlFor="comment">Wanna comment?</label>
+                            <br />
+                            <input type="text" id="comment" />
+                        </section>}
+
+                    </article>
+                ))}
             </section>
         </main>}
 
+
+        {/* --- CREATE POST SECTION ---     */}
         {view === 'create-post' && <section>
             <h2>Create Post</h2>
 
-            <form style={{ display: "flex", flexDirection: "column", justifyContent: "left", gap: "5px" }}>
+            <form onSubmit={handleCreatePostSubmit} style={{ display: "flex", flexDirection: "column", justifyContent: "left", gap: "5px" }}>
                 <label htmlFor="image">Image</label>
-                <input type="text" id="image" style={{ width: "350px" }} />
+                <input type="url" id="image" style={{ width: "350px" }} />
                 <label htmlFor="text">Text</label>
-                <input type="url" id="text" style={{ width: "350px" }} />
+                <input type="text" id="text" style={{ width: "350px" }} />
 
                 <button type="submit" style={{ width: "80px" }}>Create</button>
             </form>
 
-            <a>Cancel</a>
+            <a onClick={cancelCreateClick}>Cancel</a>
         </section>}
 
-        {view === 'posts' && <button>🧉</button>}
+        {view === 'posts' && <button type="button" onClick={createPostClick}>🧉</button>}
     </div >
 }

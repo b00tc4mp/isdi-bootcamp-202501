@@ -1,7 +1,9 @@
 var logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
-        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        URL_REGEX: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+
     },
 
     validate: {
@@ -32,6 +34,10 @@ var logic = {
             this.text(password, explain)
             this.minLength(password, 5, explain)
             this.maxLength(password, 16, explain)
+        },
+        url(url, explain) {
+            this.string(url, explain)
+            if (!logic.constant.URL_REGEX.test(url)) throw new SyntaxError(`invalid ${explain} syntax`)
         }
     },
 
@@ -106,26 +112,68 @@ var logic = {
         return found.name
     },
 
+    getAuthorName: function (id) {
+        let targetUser
+
+        for (let i = 0; i < data.users.length; i++) {
+            const current = data.users[i]
+
+            if (current.id === id)
+                targetUser = current
+        }
+
+        return targetUser.username
+    },
+
     getPosts: function () {
-        return data.posts
+        const aggregatedPosts = []
+
+        for (let i = data.posts.length - 1; i > -1; i--) {
+            const post = data.posts[i]
+
+            let liked = false
+
+            for (let i = 0; i < post.likes.length && !liked; i++) {
+                const userId = post.likes[i]
+
+                if (userId === data.userId)
+                    liked = true
+            }
+
+            const aggregatedPost = {
+                id: post.id,
+                author: post.author,
+                image: post.image,
+                text: post.text,
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
+                liked: liked,
+                likesCount: post.likes.length
+            }
+
+            aggregatedPosts[aggregatedPosts.length] = aggregatedPost
+        }
+
+        return aggregatedPosts
     },
 
     createPost: function (image, text) {
-        this.validate.string(image, 'text')
-        this.validate.string(text, 'text')
+        this.validate.url(image)
+        this.validate.maxLength(1000)
+        this.validate.text(text)
+        this.validate.minLength(500)
 
-        var user = this.getCurrentUser()
-
-        var post = {
-            id: user.id,
-            author: user.username,
+        const post = {
+            id: data.uuid(),
+            author: data.userId,
             image: image,
             text: text,
             createdAt: new Date(),
-            modifiedAt: null
+            modifiedAt: null,
+            likes: []
         }
 
-        data.push(post)
+        data.posts[data.posts.length] = post
     },
 
     logoutUser: function () {
@@ -135,7 +183,50 @@ var logic = {
     },
 
     toggleLikePost(postId) {
-        var posts = data.posts
-        let foundPost = posts.map(post => post === postId)
+        //paso el post Id por parametro desde loadPosts y lo busco
+        let foundPost
+
+        let liked
+
+        for (let i = 0; i < data.posts.length && !foundPost; i++) {
+            const post = data.posts[i]
+
+            if (post.id === postId)
+                foundPost = post
+        }
+
+        if (!foundPost) throw new NotFoundError('post not found')
+
+        let userIdFound = false
+
+        //en este caso lo encuentro y voy a buscar el like en concreto
+        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
+            const userId = foundPost.likes[i]
+
+            if (userId === data.userId)
+                userIdFound = true
+        }
+
+        //si no encuentro el like de ese usuario le doy like 
+        if (!userIdFound) {
+            foundPost.likes[foundPost.likes.length] = data.userId
+            liked = true
+        }
+        else {
+            //en caso de tener like lo solapo con otro array para quitarlo
+            const likes = []
+
+            for (let i = 0; i < foundPost.likes.length; i++) {
+                const userId = foundPost.likes[i]
+
+                if (userId !== data.userId)
+                    likes[likes.length] = userId
+            }
+
+            foundPost.likes = likes
+            liked = false
+        }
+
+        return liked
     }
 }

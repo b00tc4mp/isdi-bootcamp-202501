@@ -61,9 +61,9 @@ function Home({ onLogoutClick }) {
 
             <form style={{ display: "flex", flexDirection: "column", justifyContent: "left", gap: "5px" }}>
                 <label htmlFor="image">Image</label>
-                <input type="text" id="image" style={{ width: "350px" }} />
+                <input type="url" id="image" style={{ width: "350px" }} />
                 <label htmlFor="text">Text</label>
-                <input type="url" id="text" style={{ width: "350px" }} />
+                <input type="text" id="text" style={{ width: "350px" }} />
 
                 <button type="submit" style={{ width: "80px" }}>Create</button>
             </form>
