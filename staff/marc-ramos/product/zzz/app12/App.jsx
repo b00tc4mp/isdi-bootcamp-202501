@@ -1,4 +1,4 @@
-//const {useState} = React
+const {useState} = React
 
 function App() {
     const [view, setView] = useState('landing')
