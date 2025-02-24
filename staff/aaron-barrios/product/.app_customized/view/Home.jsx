@@ -14,23 +14,10 @@ function Home({ onLogoutClick }) {
 
         try {
             const username = logic.getUsername()
-
-            setUsername(username)
-
             const posts = logic.getPosts()
 
-            //local variable w/interest properties to obtain target data from each post and paint it
-            const postsData = posts.map(post => ({
-                id: post.id,
-                author: post.author,
-                image: post.image,
-                text: post.text,
-                date: post.createdAt.toLocaleString(),
-                liked: false,
-                likes: post.likesCount
-            }))
-
-            setPosts(postsData)
+            setUsername(username)
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -68,7 +55,6 @@ function Home({ onLogoutClick }) {
             const updatedPosts = logic.getPosts()
 
             setPosts(updatedPosts)
-
             setView('posts')
         } catch (error) {
             console.error(error)
@@ -77,30 +63,17 @@ function Home({ onLogoutClick }) {
         }
     }
 
-    const createPostClick = () => {
-        setView('create-post')
-    }
+    const handleCreatePostClick = () => { setView('create-post') }
 
-    const cancelCreateClick = () => {
-        setView('posts')
-    }
+    const handleCancelCreateClick = () => { setView('posts') }
 
-    const likeButtonClick = postId => {
+    const handleLikeButtonClick = postId => {
         try {
-            const postLiked = logic.toggleLikePost(postId)
+            logic.toggleLikePost(postId)
 
-            //Go back to iterate posts and update the target post
-            setPosts(currentPosts => currentPosts.map(post => {
-                if (post.id === postId) {
-                    //update the properties I want
-                    return {
-                        ...post,
-                        liked: postLiked,
-                        likes: postLiked ? post.likes + 1 : post.likes - 1
-                    }
-                }
-                return post
-            }))
+            const posts = logic.getPosts()
+
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -109,9 +82,7 @@ function Home({ onLogoutClick }) {
     }
 
 
-    const commentButtonClick = postId => {
-        setActiveCommentPostId(currentId => currentId === postId ? null : postId)
-    }
+    const commentButtonClick = postId => { setActiveCommentPostId(currentId => currentId === postId ? null : postId) }
 
     console.debug('Home -> render')
 
@@ -126,11 +97,10 @@ function Home({ onLogoutClick }) {
         {(posts && view === 'posts') && <main>
             <section>
                 {posts.map(post => (
-                    //key -> react property that allows itself to identify each element of the list
-                    <article style={{ marginTop: '20px', marginBottom: '50px' }} key={post.id}>
+                    <article style={{ marginTop: '20px', marginBottom: '50px' }}>
                         <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: "5px", height: '20px' }}>
                             <h3>{post.author}</h3>
-                            <time>{post.date}</time>
+                            <time>{post.createdAt.toISOString()}</time>
                         </span>
 
                         <img src={post.image} />
@@ -138,7 +108,7 @@ function Home({ onLogoutClick }) {
                         <span style={{ display: 'flex', justifyContent: "left", alignItems: 'center', gap: "5px", height: '20px' }}>
                             <p>{post.text}</p>
                             <button type="button"
-                                onClick={() => likeButtonClick(post.id)} >{post.liked ? '❤️' : '🤍'}</button>
+                                onClick={() => handleLikeButtonClick(post.id)} >{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
                             <h5>{post.likes}</h5>
                             <button type="button" onClick={() => commentButtonClick(post.id)}>📃</button>
                         </span>
@@ -195,9 +165,9 @@ function Home({ onLogoutClick }) {
                 <button type="submit" style={{ width: "80px" }}>Create</button>
             </form>
 
-            <a onClick={cancelCreateClick}>Cancel</a>
+            <a onClick={handleCancelCreateClick}>Cancel</a>
         </section>}
 
-        {view === 'posts' && <button type="button" onClick={createPostClick}>🧉</button>}
+        {view === 'posts' && <button type="button" onClick={handleCreatePostClick}>🧉</button>}
     </div >
 }

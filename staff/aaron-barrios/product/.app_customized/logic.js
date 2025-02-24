@@ -128,7 +128,7 @@ var logic = {
     getPosts: function () {
         const aggregatedPosts = []
 
-        for (let i = data.posts.length - 1; i > -1; i--) {
+        for (let i = 0; i < data.posts.length; i++) {
             const post = data.posts[i]
 
             let liked = false
@@ -154,7 +154,7 @@ var logic = {
             aggregatedPosts[aggregatedPosts.length] = aggregatedPost
         }
 
-        return aggregatedPosts
+        return aggregatedPosts.reverse()
     },
 
     createPost: function (image, text) {
