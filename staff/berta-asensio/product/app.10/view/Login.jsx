@@ -1,4 +1,4 @@
-function Login() {
+function Login({onLoginHomepageClick, onReturnClick}) {
     return <div>
         <h1>Bee You</h1>
         <h2>Login</h2>
@@ -11,8 +11,8 @@ function Login() {
             <br />
             <input type="password" />
             <br />
-            <button type="submit">Login</button>
+            <button type="submit" onClick={onLoginHomepageClick}>Login</button>
         </form>
-        <a>Return</a>
+        <a onClick={onReturnClick}>Return</a>
         </div>
 }

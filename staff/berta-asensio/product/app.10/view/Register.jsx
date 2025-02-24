@@ -1,26 +1,31 @@
-function Register() {
+function Register({onLoginClick, onReturnClick}) {
     return <div>
         <h1>Bee you</h1>
         <h2>Create account</h2>
         <form>
-            <label>Name</label>
+            <label htmlFor="name">Name</label>
             <br />
-            <input />
+            <input type="text" id="name" />
             <br />
-            <label>Username</label>
+
+            <label htmlFor="username">Username</label>
             <br />
-            <input />
+            <input type="text" id="username" />
             <br />
-            <label>Password</label>
+
+            <label htmlFor="password">Password</label>
             <br />
-            <input type="password" />
+            <input type="password" id="password" />
             <br />
-            <label>Email</label>
+
+            <label htmlFor="email">Email</label>
             <br />
-            <input type="email" />
+            <input type="email" id="email" />
             <br />
-            <button type="submit">Register</button>
+
+            <button type="submit" onClick={onLoginClick}>Register</button>
         </form>
-        <a>Return</a>
+        
+        <a onClick={onReturnClick}>Return</a>
     </div>
 }

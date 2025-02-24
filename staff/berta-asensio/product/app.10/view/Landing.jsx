@@ -1,8 +1,8 @@
-function Landing() {
+function Landing({onRegisterClick, onLoginClick}) {
     return <div>
         <h1>Bee you</h1>
-        <button>Register</button>
+        <button onClick={onRegisterClick}>Register</button>
          or 
-         <button>Login</button>
-         </div>
+        <button onClick={onLoginClick}>Login</button>
+        </div>
 }
