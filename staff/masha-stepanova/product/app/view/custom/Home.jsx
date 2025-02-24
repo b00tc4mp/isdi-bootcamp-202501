@@ -3,14 +3,15 @@ const { useState, useEffect } = React
 function Home({ onLogoutClick, onAddPostSubmit, onCancelClick }) {
     const [view, setView] = useState('posts')
     const [userName, setUsername] = useState('')
-    const [posts, setPosts] = useState(logic.getPosts())
-    const [postLiked, setPostLiked] = useState('')
+    const [posts, setPosts] = useState([])
 
     useEffect(() => {
         try {
             const name = logic.getUserName()
+            const posts = logic.getPosts()
 
             setUsername(name)
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -51,6 +52,8 @@ function Home({ onLogoutClick, onAddPostSubmit, onCancelClick }) {
     }
 
     const handleAddPostSubmit = (event) => {
+        event.preventDefault()
+
         try {
             const { target: form } = event
 
@@ -61,10 +64,10 @@ function Home({ onLogoutClick, onAddPostSubmit, onCancelClick }) {
 
             logic.addPost(image, text)
 
+            const posts = logic.getPosts()
+
+            setPosts(posts)
             setView('posts')
-
-            onAddPostSubmit()
-
         } catch (error) {
             console.error(error)
 
@@ -72,46 +75,44 @@ function Home({ onLogoutClick, onAddPostSubmit, onCancelClick }) {
         }
     }
 
-    function printPosts() {
-        try {
-            // const posts = logic.getPosts()
+    // function printPosts() {
+    //     try {
+    //         const postsToPrint = []
 
-            const postsToPrint = []
+    //         for (let i = posts.length - 1; i > - 1; i--) {
+    //             // const likedBy = logic.isPostLikedByUser(posts[i]) ? '❤️' : '🤍'
 
-            for (let i = 0; i < posts.length; i++) {
-                const likedByUser = logic.isPostLikedByUser(posts[i]) ? '❤️' : '🤍'
+    //             postsToPrint.push(<article>
+    //                 <h3>{posts[i].author}</h3>
+    //                 <img src={posts[i].image} />
+    //                 <p>{posts[i].text}</p>
+    //                 <section>
+    //                     {posts[i].likes.length}
+    //                     <button onClick={handleLikeClick(posts[i])}>{likedByUser}</button>
+    //                 </section>
+    //                 <time>{posts[i].createdAt}</time>
+    //             </article>)
+    //         }
 
-                postsToPrint.push(<article>
-                    <h3>{posts[i].author}</h3>
-                    <img src={posts[i].image} />
-                    <p>{posts[i].text}</p>
-                    <section>
-                        {posts[i].likes.length}
-                        <button>{likedByUser}</button>
-                    </section>
-                    <time>{posts[i].createdAt}</time>
-                </article>)
-            }
+    //         return postsToPrint
 
-            return postsToPrint
+    //     } catch (error) {
+    //         console.error(error)
 
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
+    //         alert(error.message)
+    //     }
 
 
-    }
+    // }
     //poner like a un post, enviar data y pintarlo del color correspondiente
 
-    const handleLikeClick = (currentPost) => {
+    const handleLikeClick = (postId) => {
         try {
-            logic.isPostLikedByUser(currentPost)
+            logic.likePost(postId)
 
-            logic.likePost(currentPost)
+            const posts = logic.getPosts()
 
-
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -120,12 +121,26 @@ function Home({ onLogoutClick, onAddPostSubmit, onCancelClick }) {
     }
 
     return <div
-    // style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}>
-    >
+        style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}>
+        {/* > */}
         <h1>Logo</h1>
         <h3>Welcome, {userName}</h3>
-        {view === 'posts' && <section> {printPosts()}
-            <footer style={{ display: "flex", position: "fixed", height: "40px", bottom: "0px", width: "100%", justifyContent: "space-around", alignItems: "center", backgroundColor: "white" }}>
+        {view === 'posts' && <section> {posts.map(post => <article>
+            <h3>{post.author}</h3>
+
+            <img src={post.image} />
+
+            <p>{post.text}</p>
+
+            <section>
+                {/* {post.likes} */}
+                <button onClick={() => handleLikeClick(post.id)}>{`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
+            </section>
+
+            <time>{post.createdAt}</time>
+        </article>)}
+
+            <footer style={{ display: "flex", position: "fixed", height: "40px", left: "0px", bottom: "0px", width: "100%", justifyContent: "space-around", alignItems: "center", backgroundColor: "white" }}>
                 <button style={{ borderRadius: "50%" }} onClick={handleAddPostClick}>➕</button>
                 <button onClick={handleLogoutClick}>Logout</button>
             </footer>
@@ -133,12 +148,16 @@ function Home({ onLogoutClick, onAddPostSubmit, onCancelClick }) {
 
         {view === 'addPost' && <section style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}>
             <h1>Logo</h1>
+
             <p>To add new post you have to add the image link and a description to it. Try it now!</p>
+
             <form onSubmit={handleAddPostSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                 <label htmlFor="image">Add here a link to your image:</label>
                 <input type="text" id="image" />
+
                 <label htmlFor="text">Add here a little description:</label>
                 <input type="text" id="text" />
+
                 <button type="submit">Add post</button>
             </form>
             <a onClick={handleCancelClick}>Cancel</a>

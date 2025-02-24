@@ -99,11 +99,39 @@ const logic = {
 
         if (!found) throw new Error('user not found')
 
-        return found.userId
+        return found.name
     },
 
     getPosts() {
-        return data.posts
+        const aggregatedPosts = []
+
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
+
+            let liked = false
+
+            for (let i = 0; i < post.likes.length && !liked; i++) {
+                const userId = post.likes[i]
+
+                if (userId === data.userId)
+                    liked = true
+            }
+
+            const aggregatedPost = {
+                id: post.id,
+                author: post.author,
+                image: post.image,
+                text: post.text,
+                ceatedAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
+                liked: liked,
+                likesCount: post.likes.length,
+                // likes: post.likes
+            }
+
+            aggregatedPosts.push(aggregatedPost)
+        }
+        return aggregatedPosts.reverse()
     },
 
     addPost(link, text) {
@@ -120,7 +148,15 @@ const logic = {
         data.posts.push(newPost)
     },
 
-    likePost(postToLike) {
+    likePost(postId) {
+        let postToLike
+        for (let i = 0; i < data.posts.length && !postToLike; i++) {
+            let post = data.posts[i]
+
+            if (postId === post.id)
+                postToLike = post
+        }
+
         for (var i = 0; i < postToLike.likes.length; i++) {
             if (postToLike.likes[i] === data.userId) {
                 postToLike.likes.splice(i, 1)
@@ -130,8 +166,16 @@ const logic = {
         postToLike.likes[postToLike.likes.length] = data.userId
     },
 
-    isPostLikedByUser(post) {
-        for (var i = 0; i < post.likes.length; i++) {
+    isPostLikedByUser(postId) {
+        let postToLike
+        for (let i = 0; i < data.posts.length && !postToLike; i++) {
+            let post = data.posts[i]
+
+            if (postId === post.id)
+                postToLike = post
+        }
+
+        for (var i = 0; i < postToLike.likes.length; i++) {
             if (post.likes[i] === data.userId) {
                 return true
             }
