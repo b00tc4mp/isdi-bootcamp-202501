@@ -1,7 +1,7 @@
 // ***  ERRORS 
 
 class DuplicityError extends Error {
-    constructor(message) {
+    consturctor(message) {
         super(message)
     }
 }
