@@ -2,57 +2,72 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const { Component } = React
 
+// dumb
+
+function Heading(props) {
+    const { level, style, children } = props
+
+    const Heading = `h${level}`
+
+    console.debug('Heading -> render')
+
+    return <Heading style={style}>{children}</Heading>
+}
+
+// smart
+
 class Login extends Component {
     constructor() {
         super()
 
-        console.log('Login -> constructor')
+        console.debug('Login -> constructor')
     }
 
     componentDidMount() {
-        console.log('Login -> componentDidMount')
+        console.debug('Login -> componentDidMount')
     }
 
     componentWillUnmount() {
-        console.log('Login -> componentWillUnmount')
+        console.debug('Login -> componentWillUnmount')
     }
 
     componentWillReceiveProps() {
-        console.log('Login -> componentWillReceiveProps')
+        console.debug('Login -> componentWillReceiveProps')
     }
 
     render() {
-        console.log('Login -> render')
+        console.debug('Login -> render')
 
         const { mode } = this.props
 
         return <>
-            <h2 style={{ color: mode === 'light' ? 'black' : 'white' }}>Hello, Login!</h2>
+            <Heading level="2" style={{ color: mode === 'light' ? 'black' : 'white' }}>Hello, Login!</Heading>
         </>
     }
 }
-
 
 class Register extends Component {
     constructor() {
         super()
 
-        console.log('Register -> constructor')
+        console.debug('Register -> constructor')
     }
 
     componentDidMount() {
-        console.log('Register -> componentDidMount')
+        console.debug('Register -> componentDidMount')
     }
 
     componentWillUnmount() {
-        console.log('Register -> componentWillUnmount')
+        console.debug('Register -> componentWillUnmount')
     }
 
     render() {
-        console.log('Register -> render')
+        console.debug('Register -> render')
+
+        const { mode } = this.props
 
         return <>
-            <h2>Hello, Register!</h2>
+            <Heading level="2" style={{ color: mode === 'light' ? 'black' : 'white' }}>Hello, Register!</Heading>
         </>
     }
 }
@@ -61,33 +76,33 @@ class App extends Component {
     constructor() {
         super()
 
-        console.log('App -> constructor')
+        console.debug('App -> constructor')
 
         this.state = { view: '', mode: 'light' }
     }
 
     componentDidMount() {
-        console.log('App -> componentDidMount')
+        console.debug('App -> componentDidMount')
     }
 
     componentWillUnmount() {
-        console.log('App -> componentWillUnmount')
+        console.debug('App -> componentWillUnmount')
     }
 
     handleLoginClick = () => {
-        console.log('App -> handleLoginClick (setState)')
+        console.debug('App -> handleLoginClick (setState)')
 
         this.setState({ view: 'login' })
     }
 
     handleRegisterClick = () => {
-        console.log('App -> handleRegisterClick (setState)')
+        console.debug('App -> handleRegisterClick (setState)')
 
         this.setState({ view: 'register' })
     }
 
     handleToggleMode = () => {
-        console.log('App -> handleToggleMode (setState)')
+        console.debug('App -> handleToggleMode (setState)')
 
         const { mode } = this.state
 
@@ -95,12 +110,12 @@ class App extends Component {
     }
 
     render() {
-        console.log('App -> render')
+        console.debug('App -> render')
 
         const { mode } = this.state
 
         return <div style={{ height: '100%', backgroundColor: mode === 'light' ? 'white' : 'black' }}>
-            <h1 style={{ color: mode === 'light' ? 'black' : 'white' }}>Hello, App!</h1>
+            <Heading level="1" style={{ color: mode === 'light' ? 'black' : 'white' }}>Hello, App!</Heading>
 
             <button style={{ backgroundColor: mode === 'light' ? 'black' : 'white' }} onClick={this.handleToggleMode}>{mode === 'light' ? '🌚' : '🌝'}</button>
 
