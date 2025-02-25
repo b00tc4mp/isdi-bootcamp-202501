@@ -23,8 +23,19 @@ function App() {
 
             const finished = logic.checkEndGame()
 
-            if (finished)
+            if (finished === 1)
                 setView('win')
+            else if (finished === 2)
+                setView('lose')
+            else
+                console.log('keep playing')
+
+            // if (data.constants.END_GAME === 'win')
+            //     setView('win')
+            // else if (data.constants.END_GAME === 'lose')
+            //     setView('lose')
+            // else
+            //     console.log('keep playing')
         } catch (error) {
             console.error(error)
 

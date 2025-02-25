@@ -20,7 +20,6 @@ var logic = {
 
         if (!hasAttempts) {
             data.constants.END_GAME = 'lose'
-            // this.checkEndGame(data.constants.END_GAME)
             this.checkEndGame()
         }
     },
@@ -35,7 +34,6 @@ var logic = {
 
         if (randomNumber === number) {
             data.constants.END_GAME = 'win'
-            // this.checkEndGame(data.constants.END_GAME)
             this.checkEndGame()
         }
         else if (difference > 40) {
@@ -83,10 +81,14 @@ var logic = {
     },
 
     checkEndGame: function () {
-        let finished = false
-        if (data.constants.END_GAME === 'win' || data.constants.END_GAME === 'lose') {
-            finished = true
-            return finished
+        let endGame = 0
+        if (data.constants.END_GAME === 'win') {
+            endGame = 1
+            return endGame
+        }
+        else if (data.constants.END_GAME === 'lose') {
+            endGame = 2
+            return endGame
         }
     }
 }
