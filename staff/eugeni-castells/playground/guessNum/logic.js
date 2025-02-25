@@ -29,7 +29,8 @@ const logic = {
     }
   },
   checkNumber(guessedNumber) {
-    if (data.isWon) throw new Error("Game alrady over");
+    if (data.isWon) throw new Error("Game already over");
+
     if (this.isGameLost() === true) throw new Error("Game already lost");
 
     let normalizedRest = this.makePositiveNumber(guessedNumber);
@@ -94,5 +95,6 @@ const logic = {
     data.attempts = 0;
     data.secretNumber = null;
     data.maximumLevelValue = null;
+    data.isWon = false;
   },
 };

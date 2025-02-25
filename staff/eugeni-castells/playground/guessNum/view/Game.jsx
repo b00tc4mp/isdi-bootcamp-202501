@@ -11,6 +11,16 @@ const Game = ({ onGameOver, onNoRestartClick }) => {
     setMaximumLevelValue(maxValue);
   }, []);
 
+  const handleRestart = () => {
+    try {
+      logic.reset();
+      onGameOver();
+    } catch (error) {
+      console.error(error);
+
+      alert(error.message);
+    }
+  };
   const handleTry = (event) => {
     event.preventDefault();
 
@@ -54,7 +64,7 @@ const Game = ({ onGameOver, onNoRestartClick }) => {
         <>
           <h1>The game is over!</h1>
           <p>Do you want to play again?</p>
-          <button type="button" onClick={onGameOver}>
+          <button type="button" onClick={handleRestart}>
             Yes
           </button>{" "}
           &nbsp;
