@@ -1,56 +1,45 @@
-/* 
-player:
-- guess number from 0 to 100
-- 10 tries
-- difference < 50 >= 30, 'cold'
-- difference < 30 >= 20, 'tempered'
-- < 20 >= 10, 'warm'
-- < 10 >=  
- */
+const interface = {
+    start() {
+        try {
+            logic.initializeNumberToGuess()
+        } catch (error) {
+            console.error(error)
 
-var turns = 10
-var mainNumber 
-var playerGuess 
+            alert(error.message)
+        }
+    },
 
-console.log(turns)
+    askNumber() {
+        try {
+            const number = Number(prompt('Number?'))
 
-function createNumber() {
-mainNumber = Math.floor(Math.random() * 100 + 1)
-}
+            logic.tryNumber(number)
+        } catch (error) {
+            console.error(error)
 
-function chooseNumber() {
-playerGuess = prompt('Please, write a number from 0 to 100')
-}
+            alert(error.message)
+        }
+    },
 
-function win() {return mainNumber === +playerGuess}
+    viewStatus() {
+        try {
+            const { attempts, temperature, attemptedNumbers, won, lost, gameOver } = logic.getStatus()
 
-function hint() {
-    var difference = mainNumber - playerGuess
-    if (difference < 5 && difference > -5) {
-        alert(`Very hot! Try one more time, you have ${turns} turns left`)
-    } else if (difference < 10 && difference > -10) {
-        alert(`It's hot! Try one more time, you have ${turns} turns left`)
-    } else if (difference < 20 && difference > -20) {
-        alert(`It's warm! Try one more time, you have ${turns} turns left`)
-    } else if (difference < 30 && difference > -30) {
-        alert(`It's tempered! Try one more time, you have ${turns} turns left`)
-    } else if (difference < 50 && difference > -50) {
-        alert(`It's cold! Try one more time, you have ${turns} turns left`)
-    } else if (difference < 100 && difference > -100) {
-        alert(`It's very cold! Try one more time, you have ${turns} turns left`)
+            alert(`temperature ${temperature}, attempts ${attempts}, attempted numbers ${attemptedNumbers}, won ${won}, lost ${lost}, gameOver ${gameOver}`)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    },
+
+    restart() {
+        try {
+            logic.reset()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
     }
 }
-
-createNumber()
-while  (turns > 0) {
-chooseNumber()
-    if (win()) {
-        console.log(`Super! You win this game! The number was ${mainNumber}`)
-        break
-    }
-turns--
-hint()
-}
-
-if (!win()) 
-    console.log('Oh no, you\'ve lost :(')

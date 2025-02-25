@@ -8,7 +8,11 @@ Array.prototype.map = function (callback, context) {
     const modifiedArray = []
 
     for (let i = 0; i < this.length; i++) {
-        modifiedArray[modifiedArray.length] = callback.call(context, this[i], i, this)
+        const element = this[i]
+
+        result = callback.call(context, element, i, this)
+
+        modifiedArray[i] = result
     }
 
     return modifiedArray

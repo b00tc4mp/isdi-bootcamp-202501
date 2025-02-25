@@ -1,51 +1,59 @@
 const logic = {
-    createNumber: () => {
-        data.mainNumber = Math.floor(Math.random() * 100 + 1)
-    },
+    helper: {
+        isLost() {
+            return data.attempts === data.constant.MAX_ATTEMPTS && data.attemptedNumbers.length && data.attemptedNumbers[data.attemptedNumbers - 1] !== data.numberToGuess
+        },
 
-    isWon: (number) => { return data.mainNumber === number },
+        isWon() {
+            return data.attempts <= data.constant.MAX_ATTEMPTS && data.attemptedNumbers.length && data.attemptedNumbers[data.attemptedNumbers.length - 1] === data.numberToGuess
+        },
 
-    hint: (number) => {
-        var difference = data.mainNumber - number
-        if (difference < 5 && difference > -5) {
-            alert(`Very hot! Try one more time, you have ${data.turns} turns left`)
-        } else if (difference < 10 && difference > -10) {
-            alert(`It's hot! Try one more time, you have ${data.turns} turns left`)
-        } else if (difference < 20 && difference > -20) {
-            alert(`It's warm! Try one more time, you have ${data.turns} turns left`)
-        } else if (difference < 30 && difference > -30) {
-            alert(`It's tempered! Try one more time, you have ${data.turns} turns left`)
-        } else if (difference < 50 && difference > -50) {
-            alert(`It's cold! Try one more time, you have ${data.turns} turns left`)
-        } else if (difference < 100 && difference > -100) {
-            alert(`It's very cold! Try one more time, you have ${data.turns} turns left`)
+        isGameOver() {
+            return this.isLost() || this.isWon()
         }
     },
-
-    userIsAlive: () => {
-        return (data.turns > 0)
+    initializeNumberToGuess() {
+        data.numberToGuess = Math.round(Math.random() * data.constant.number.MAX)
     },
+    tryNumber(number) {
+        if (this.helper.isGameOver()) throw new Error('game over')
 
-    guessNumber: (isTurnsLeft, isWon, number) => {
-        if (isTurnsLeft && !isWon) {
-            data.turns--
-            logic.hint(number)
-        } else throw new Error("No turns left")
+        if (typeof number !== 'number') throw new TypeError('invalid number type')
+
+        const diff = Math.abs(data.numberToGuess - number)
+
+        if (diff >= data.constant.temperature.limit.VERY_COLD)
+            data.temperature = data.constant.temperature.literal.VERY_COLD
+        else if (diff >= data.constant.temperature.limit.COLD)
+            data.temperature = data.constant.temperature.literal.COLD
+        else if (diff >= data.constant.temperature.limit.TEMPERED)
+            data.temperature = data.constant.temperature.literal.TEMPERED
+        else if (diff >= data.constant.temperature.limit.WARM)
+            data.temperature = data.constant.temperature.literal.WARM
+        else if (diff >= data.constant.temperature.limit.HOT)
+            data.temperature = data.constant.temperature.literal.HOT
+        else if (diff >= data.constant.temperature.limit.VERY_HOT)
+            data.temperature = data.constant.temperature.literal.VERY_HOT
+
+        data.attempts++
+        data.attemptedNumbers.push(number)
     },
+    getStatus() {
+        const { attempts, temperature, attemptedNumbers } = data
 
-
-
-    // makeAGuess: (number) => {
-    //     if (turns > 0) {
-    //         if (number === mainNumber)
-
-    //     }
-    // }
-}
-logic.gameOver = (number) => {
-    let isOver = false
-    if (!logic.userIsAlive() || logic.isWon(number)) {
-        isOver = true
+        return {
+            attempts,
+            temperature,
+            attemptedNumbers,
+            won: this.helper.isWon(),
+            lost: this.helper.isLost(),
+            gameOver: this.helper.isGameOver()
+        }
+    },
+    reset() {
+        data.numberToGuess = -1
+        data.attempts = 0
+        data.temperature = ''
+        data.attemptedNumbers = []
     }
-    return isOver
 }
