@@ -1,79 +1,153 @@
+//NO FUNCIONA 
 
-console.clear()
-
-var Oportunidades = 0
-var oportunidadesMaximas = 10
-
-
-/*PC
--El ordenador tiene que crear un número random entre 0 y 100.
--Este número debemos guardarlo en una variable.
-Creamos una variable (numeroCreado) donde guardamos la función con los rangos.
-*/
-var numeroCreado = crearNumeroAleatorio(0, 100)
-var numeroJugador = ''
-
-function crearNumeroAleatorio(min, max) {
-    return Math.floor(Math.random() * (max - min) + min)
-}
-
-//console.log(numeroCreado)
-
-/*
--Debemos crear una función para que pregunte al usuario un número del 1 al 100
--Si el numero no está bien puesto, volveremos a preguntar.
--Si el numero está bien puesto, sumaremos contador oportunidades y pasaremos al flujo de juego.
-*/
-function preguntarNumero() {
-    numeroJugador = parseInt(prompt('Introduzca un número del 0 al 100'))
-
-    if(isNaN (numeroJugador) || numeroJugador < 0 || numeroJugador > 100) {
-        console.log('Número erróneo. Porfabor, introduzca un nuevo número.')
-        return preguntarNumero()
-        
-    }else{
-        Oportunidades++
-        flujoJuego(numeroJugador)
-    }
-}
-
-/*
-Funcion para el flujo del juego
-*/
-function flujoJuego() {
-
-    var intervaloNumeros = Math.abs(numeroCreado - numeroJugador)
-    var oportunidadesRestantes = oportunidadesMaximas - Oportunidades
+const data = {
     
-    if (intervaloNumeros <= 100 && intervaloNumeros > 50) {
-        console.log('Estás Helado. Tu número está a más de 50 números de diferencia. Te quedan ' + oportunidadesRestantes + ' oportunidades.')
-        
-    } else if (intervaloNumeros <= 50 && intervaloNumeros > 30) {
-        console.log('Estás frio. Te quedan ' + oportunidadesRestantes + ' oportunidades.')
+    oportunidades: 0,
+    oportunidadesMaximas: 10,
+    oportunidadesRestantes: '',
+    intervaloNumeros: 0,
+    min: 0,
+    max:100,
 
-    }else if (intervaloNumeros <= 30 && intervaloNumeros > 20) {
-        console.log('Estás templado. Te quedan ' + oportunidadesRestantes + ' oportunidades.')
-        
-    }else if (intervaloNumeros <= 20 && intervaloNumeros > 10) {
-        console.log('¡Caliente!. Te quedan ' + oportunidadesRestantes + ' oportunidades.')
-        
-    }else if (intervaloNumeros <= 10 && intervaloNumeros > 5) {
-        console.log('¡Muy Caliente, casi lo tienes!. Te quedan ' + Oportunidades + ' oportunidades.')
+    numeroCreado: -1,
+    numeroJugador: '',
+    numerosDichos: [],
+    temperaturaIntervalo: '',
+    temperatura: {
+        HELADO: 'Estás Helado',
+        FRIO: 'Estás frio',
+        TEMPLADO: 'Estás templado',
+        CALIENTE: '¡Caliente!',
+        MUY_CALIENTE: '¡Muy Caliente!',
+        QUEMA: '¡Te quemas!'
+    }
+}
 
-    }else if (intervaloNumeros <= 5 && intervaloNumeros >= 1) {
-        console.log('¡Te quemas!. Te quedan ' + oportunidadesRestantes + ' oportunidades.') 
+const logic = {
+    crearNumeroAleatorio() {
+        data.numeroCreado = Math.floor(Math.random() * (data.max - data.min) + data.min)
+    },
+
+    crearNumeroJugador() {
+        if(isNaN (data.numeroJugador) || data.numeroJugador < 0 || data.numeroJugador > 100) {
+            throw new Error ('Número erróneo. Porfabor, introduzca un nuevo número.') 
+        }
+    },
+
+    flujoJuego() {
+        data.intervaloNumeros = Math.abs(data.numeroCreado - data.numeroJugador)
+        data.oportunidades++
+        data.oportunidadesRestantes = data.oportunidadesMaximas - data.oportunidades
         
-    }else {
-        console.log('¡Felicidades! Has acertado el número.')
-        return
+        if (data.intervaloNumeros <= 100 && data.intervaloNumeros > 50) {
+            data.temperaturaIntervalo = data.temperatura.HELADO
+        } else if (data.intervaloNumeros <= 50 && data.intervaloNumeros > 30) {
+            data.temperaturaIntervalo = data.temperatura.FRIO   
+        }else if (data.intervaloNumeros <= 30 && data.intervaloNumeros > 20) {
+            data.temperaturaIntervalo = data.temperatura.TEMPLADO
+        }else if (data.intervaloNumeros <= 20 && data.intervaloNumeros > 10) {
+            data.temperaturaIntervalo = data.temperatura.CALIENTE           
+        }else if (data.intervaloNumeros <= 10 && data.intervaloNumeros > 5) {
+            data.temperaturaIntervalo = data.temperatura.MUY_CALIENTE  
+        }else if (data.intervaloNumeros <= 5 && data.intervaloNumeros >= 1) {
+            data.temperaturaIntervalo = data.temperatura.QUEMA
+        }else{
+            throw new Error ('Algo va mal')
+        }
+
+        
+
+        if(data.intervaloNumeros === 0) {
+            return 'Has ganado'
+        } else if (data.oportunidades >= data.oportunidadesMaximas) {
+            return 'Se acabaron las oportunidades. El número era ' + data.numeroCreado
+        } else {
+            return null
+        }
+           
+    },
+
+    reiniciarJuego() {
+
+        data.oportunidades = 0;
+        data.numerosDichos = [];
+        data.numeroCreado = -1;
+        data.numeroJugador = '';
+        data.temperaturaIntervalo = '';
+        console.log('Juego reiniciado');
+        }
     }
 
-    if(Oportunidades < oportunidadesMaximas) {
-        preguntarNumero()
 
-    } else {
-        console.log('Se acabaron las oportunidades. El número era ' + numeroCreado)
+const interface = {
+    primerPaso() {
+        try {
+            logic.crearNumeroAleatorio()
+            console.log(data.numeroCreado)
+
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message) 
+        }
+    },
+
+    segundoPaso() {
+        try {
+            data.numeroJugador = parseInt(prompt('Introduzca un número del 0 al 100'))
+            logic.crearNumeroJugador(data.numeroJugador)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+
+            this.segundoPaso()
+        }
+    },
+
+    dinamicaJuego() {
+        try {
+            const estado = logic.flujoJuego()
+
+            if(estado) {
+                alert(estado)
+                this.reinicioJuego()
+            } else {
+                alert(`${data.temperaturaIntervalo}. Te quedan ${data.oportunidadesRestantes} oportunidades.\n Números dichos: ${data.numerosDichos}, `)
+                this.segundoPaso()
+            }
+        
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    },
+
+    reinicioJuego() {
+        try {
+            var reiniciar = prompt ('Quieres volver a jugar? si (s) / no (n)')
+            reiniciar = reiniciar.toLowerCase()
+
+            if(reiniciar === 's') {
+                this.primerPaso()
+                this.segundoPaso()
+                this.dinamicaJuego()
+            } else {
+                alert('¡Adiós!. Gracias por jugar.')
+            }
+
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
     }
-}   
+}
 
-preguntarNumero()
+interface.primerPaso()
+interface.segundoPaso()
+interface.dinamicaJuego()
+
+
+
