@@ -1,6 +1,8 @@
+require('./reduce')
+
 console.info('TEST reduce')
 
-console.info('Case multiply something * 2')
+console.info('Case 1 argument')
 
 {
     // --- 1 ARG -> CALLBACK
@@ -13,8 +15,6 @@ console.info('Case multiply something * 2')
     console.assert(testRay[1] === 2, 'testRay[1] is 2')
 
     console.assert(result === 14, 'result is 14')
-
-    console.log(result)
     //expected output 14
 }
 
@@ -38,8 +38,6 @@ console.info('Case 2 arguments')
     console.assert(testRay[3] === 4, 'testRay[3] is 4')
 
     console.assert(result === 18, 'result is 18')
-
-    // console.log(sumWithInitial)
     // Expected output: 18
 }
 
