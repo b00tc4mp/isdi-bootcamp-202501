@@ -10,7 +10,8 @@ function Home({ onLogoutClick }) {
     // SetUserName guarda el nombre del usuario que este conectado
     const [userName, setUserName] = useState('')
 
-    // **** TODO add state for posts
+    // 
+    const [posts, setPosts] = useState([])
 
     // Actualiza el nombre de usuario cuando se conecta
     useEffect(() => {
@@ -21,10 +22,14 @@ function Home({ onLogoutClick }) {
             // Obtiene el numbre del usuario conectado
             const name = logic.getUserName()
 
+            // Obtiene los datos de los posts de Logig
+            const posts = logic.getPosts()
+
             // Llamamos a la variable que contiene el nombre
             setUserName(name)
 
-            // TODO load posts by means of logic
+            // 
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -45,60 +50,98 @@ function Home({ onLogoutClick }) {
         }
     }
 
-    console.debug('home -> render')
+    // 
+    const handleAddPostClick = () => setView('create-post')
+
+    const handleCreatePostSubmit = event => {
+        event.preventDefault()
+
+        try {
+            const { target: form } = event
+
+            const { image: { value: image }, text: { value: text } } = form
+
+            logic.createPost(image, text)
+
+            const posts = logic.getPosts()
+
+            setPosts(posts)
+            setView('posts')
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    // 
+    const handleToggleLikePostClick = postId => {
+        try {
+            logic.toggleLikePost(postId)
+
+            const posts = logic.getPosts()
+
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    // Cierra Create posts y muestra los posts
+    const handleCancelClick = () => setView('posts')
+
+    console.debug('Home -> render')
 
     return <div>
         <h1>Home</h1>
 
         <h3>Hello, {userName}!</h3>
 
-        <button type="button" onClick={handleLogoutClick}>Logout</button>
+        <button type="button" onClick={handleLogoutClick} style={{ marginBottom: '10px' }}>Logout</button>
 
-        {/* <button type="button" onClick={handleCreatePostClick}>➕</button> */}
+        {view === 'posts' && <button onClick={handleAddPostClick} style={{ margin: '30px' }}>NEW</button>}
 
         {view === 'posts' && <section>
-            {/* TODO render post from state */}
+            {posts.map(post =>
+                <article>
+                    <h3>{post.userName}</h3>
 
-            <article>
-                <h3>dallen</h3>
+                    <img src={post.image} style={{ maxWidth: "600px" }} />
 
-                <img src="https://cdn2.yamaha-motor.eu/prod/product-assets/2025/YZ85LW/2025-Yamaha-YZ85LW-EU-Detail-001-03_Mobile.jpg" />
+                    <button onClick={() => handleToggleLikePostClick(post.id)} style={{ backgroundColor: "rgb(71, 70, 70)" }} >{`${post.liked ? '🧡' : '🤍'} (${post.likesCount})`} </button>
 
-                <p>Yamaha YZ 85</p>
+                    <p style={{ color: 'white' }}>{post.text}</p>
 
-                <time>new Date(2024, 3, 2)</time>
+                    <br />
+                    <time style={{ color: 'white' }}>{post.createdAt.toLocaleString()}</time>
 
-                <button></button>
-            </article>
+                </article>)}
+        </section>
+        }
 
-            <article>
-                <h3></h3>
+        {
+            view === 'create-post' && <section>
 
-                <image></image>
+                <form onSubmit={handleCreatePostSubmit} style={{ display: 'inline-grid', color: 'white' }}>
 
-                <p></p>
+                    <label htmlFor="image">Image</label>
+                    <input type="url" id="image" />
 
-                <time></time>
+                    <label htmlFor="text">Text</label>
+                    <input type="text" id="text" />
 
-                <button></button>
-            </article>
+                    <button type="submit" style={{ marginTop: '10px' }}>Create</button>
+                </form>
 
-        </section>}
+                <div style={{ marginTop: '10px' }}>
+                    <a onClick={handleCancelClick} style={{ textDecoration: 'underline' }}>Cancel</a>
+                </div>
+            </section>
+        }
 
-        {view === 'create-post' && <section>
-            <form>
-                <label>Image</label>
-                <input type="url" />
 
-                <label>Text</label>
-                <input type="text" />
 
-                <button type="submit">Create</button>
-            </form>
-
-            <a>Cancel</a>
-        </section>}
-
-        {view === 'post' && <button>➕</button>}
     </div >
 }

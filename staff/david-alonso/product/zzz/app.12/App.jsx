@@ -24,7 +24,7 @@ function App() {
     console.debug('App -> render')
 
     return <>
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
+        {view === 'landing' && <Landing onRegisterClick={handleLoginClick} onLoginClick={handleLoginClick} />}
 
         {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />}
 

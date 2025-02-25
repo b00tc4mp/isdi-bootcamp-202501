@@ -159,7 +159,7 @@ const logic = {
             aggregatedPosts[aggregatedPosts.length] = aggregatedPost
         }
 
-        return aggregatedPosts.reverse()
+        return aggregatedPosts
     },
 
     // Funcion para añadir un Posts nuevo
@@ -184,7 +184,6 @@ const logic = {
         // Se asigna Post a ese índice, agregándolo al final del array
         data.posts[data.posts.length] = post
     },
-
     // Agrega o elimina el Like de los Posts
     toggleLikePost(postId) {
         // Variable Encontrar el Post

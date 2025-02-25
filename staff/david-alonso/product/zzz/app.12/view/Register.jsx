@@ -38,10 +38,10 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
     console.debug('Register -> render')
 
-    return <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    return <div>
         <h1>Register</h1>
 
-        <form onSubmit={handleRegisterSubmit} style={{ display: 'inline-grid', color: 'white' }}>
+        <form onSubmit={handleRegisterSubmit}>
             <label htmlFor="name">Name</label>
             <input type="text" id="name" />
 
@@ -54,11 +54,9 @@ function Register({ onLoginClick, onRegisterSubmit }) {
             <label htmlFor="password">Password</label>
             <input type="text" id="password" />
 
-            <button type="submit" style={{ marginTop: '10px' }}>Register</button>
+            <button type="submit">Register</button>
         </form>
 
-        <div style={{ marginTop: '10px' }}>
-            <a onClick={onLoginClick} style={{ textDecoration: 'underline' }}>Login</a>
-        </div>
+        <a onClick={onLoginClick}>Login</a>
     </div>
 }
