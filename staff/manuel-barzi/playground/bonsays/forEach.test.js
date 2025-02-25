@@ -1,4 +1,3 @@
-const Bonsay = require('./Bonsay')
 require('./forEach.js')
 
 console.info('TEST forEach')
@@ -6,18 +5,9 @@ console.info('TEST forEach')
 console.info('CASE iterate using each element argument')
 
 {
-    const characters = new Bonsay()
-    characters[0] = 'a'
-    characters[1] = 'b'
-    characters[2] = 'c'
-    characters.length = 3
-
-    const charactersCopy = new Bonsay()
-
-    characters.forEach(character => {
-        charactersCopy[charactersCopy.length] = character
-        charactersCopy.length++
-    })
+    const characters = ['a', 'b', 'c']
+    const charactersCopy = []
+    characters.forEach(character => charactersCopy[charactersCopy.length] = character)
 
     console.assert(characters[0] === 'a', 'characters[0] i a')
     console.assert(characters[1] === 'b', 'characters[1] i b')
@@ -33,14 +23,8 @@ console.info('CASE iterate using each element argument')
 console.info('CASE iterate using each element and index argument')
 
 {
-    const characters = new Bonsay()
-    characters[0] = 'a'
-    characters[1] = 'b'
-    characters[2] = 'c'
-    characters.length = 3
-
-    const charactersCopy = new Bonsay()
-
+    const characters = ['a', 'b', 'c']
+    const charactersCopy = []
     characters.forEach((character, index) => charactersCopy[index] = character)
 
     console.assert(characters[0] === 'a', 'characters[0] i a')
@@ -57,14 +41,8 @@ console.info('CASE iterate using each element and index argument')
 console.info('CASE iterate using each index and array argument')
 
 {
-    const characters = new Bonsay()
-    characters[0] = 'a'
-    characters[1] = 'b'
-    characters[2] = 'c'
-    characters.length = 3
-
-    const charactersCopy = new Bonsay()
-
+    const characters = ['a', 'b', 'c']
+    const charactersCopy = []
     characters.forEach((character, index, characters) => {
         let text = ''
 
@@ -88,12 +66,7 @@ console.info('CASE iterate using each index and array argument')
 console.info('CASE iterate using a context argument')
 
 {
-    const characters = new Bonsay()
-    characters[0] = 'a'
-    characters[1] = 'b'
-    characters[2] = 'c'
-    characters.length = 3
-
+    const characters = ['a', 'b', 'c']
     const mappedCharacters = {}
 
     characters.forEach(function (character) {
