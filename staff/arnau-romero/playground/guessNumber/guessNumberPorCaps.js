@@ -33,7 +33,9 @@ try{
     alert(checkAttempsMaxim)
     logic.playAgain()
 }catch(error){
+    alert(error.message)
 
+    console.error(error)
 }
 }
 
@@ -43,7 +45,9 @@ try{
     var messageForUsuari = logic.checkNumber()
     alert(messageForUsuari)
 }catch(error){
+    alert(error.message)
 
+    console.error(error)
 }
 }
 
@@ -76,7 +80,7 @@ logic.checkAttempts = function(){
     if (attempts >= maxAttempts){
         attempsPassed = true
         return "You've passed the max attempts, try again." + "\n"+ "The number was: " + randomNumber
-      
+    }   
 }
 
 logic.checkNumber = function(){
@@ -110,7 +114,8 @@ logic.checkNumber = function(){
 
 
 logic.playAgain = function(playAgain){
-if (!data.regexYN.test(playAgain)) { // Verificar si la entrada es válida
+
+    if (!data.regexYN.test(playAgain)) { // Verificar si la entrada es válida
         throw new Error("Only 'y' or 'n' in lower case please!"); 
     }
     else{
@@ -119,7 +124,7 @@ if (!data.regexYN.test(playAgain)) { // Verificar si la entrada es válida
             checkWin = false
             attempsPassed = false
             attempts = 0
-            randomNumber = 0
+            randomNumber = logic.generateRandomNumber()
             playerNumber = 0
             gameAutoMode()
     }else if(playAgain === 'n'){ // Si marca 'n' damos las gracias por jugar y salimos del programa.
@@ -143,7 +148,7 @@ else if (substractNumberSort > 0 ){// si devuelve numero positivo random number 
 }
 
 logic.generateRandomNumber = function (){
-    return randomNumber =  Math.floor(Math.random() * (100 + 1)) /* math.random genera una funcion decimal aleatoria entre 0 y 1, 
+    datarandomNumber =  Math.floor(Math.random() * (100 + 1)) /* math.random genera una funcion decimal aleatoria entre 0 y 1, 
                                                                     lo multiplicamos por 101 lo que dara un numero decimal entre 0 y casi 101, 
                                                                     con math.flor() arrodondeamos hacia abajo asi casi 1 dara 0 y casi 101 dara 100 */ 
 }
@@ -165,7 +170,7 @@ logic.gameAutoMode = function(){ // Funcion para que el juego vaya en automatico
         checkAttempts()
         
  }
-     playAgain()
+    interface.playAgain()
 
 }
 
