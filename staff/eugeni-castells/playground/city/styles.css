@@ -1,3 +1,7 @@
+/*box-sizing: content-box
+si volem que les proporcions tinguin en compte des de border i no des de box-content.
+*/
+
 body {
   margin: 0;
 }
