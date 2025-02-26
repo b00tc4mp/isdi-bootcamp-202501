@@ -4,11 +4,11 @@
 // Maquina
 // - generar un numero aleatorio del 0 al 100
 var randomNumber = Math.floor(Math.random() * 100 + 1)
- console.log(randomNumber)
+console.log(randomNumber)
 
 // - numero maximos de intentos 10
 var attempts = 0
-var maxAttempts = 10 
+var maxAttempts = 10
 // dar valor al numero del usuario
 var numberUser = false
 
@@ -63,8 +63,10 @@ function comprobarDiferencia(number) {
         alert('warm ♨️')
     } else if (diferencia < 10 && diferencia >= 5) {
         alert('hot 🥵')
-    } else if (diferencia < 5 && diferencia >= 1) {
-        alert('very hot 🔥🔥🔥')
+    } else if (diferencia < 5 && diferencia >= 2) {
+        alert('very hot 🔥🔥')
+    } else if (diferencia < 2 && diferencia >= 1) {
+        alert('super hot 🔥🔥🔥🔥')
     }
 
     prompt('Te quedan ' + --maxAttempts + ' intentos')
@@ -75,5 +77,5 @@ function comprobarDiferencia(number) {
         // Pedir un nuevo intento después de cada verificación
     }
 }
-
+//  TODO Crear un Restart
 startGame()
