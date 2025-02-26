@@ -26,7 +26,7 @@ class Login extends Component {
     componentDidMount() {
         console.debug('Login -> componentDidMount')
     }
-    
+
     componentWillUnmount() {
         console.debug('Login -> componentWillUnmount')
     }
@@ -34,7 +34,7 @@ class Login extends Component {
     componentWillReceiveProps() {
         console.debug('Login -> componentWillReceiveProps')
     }
-    
+
     render() {
         console.debug('Login -> render')
 
@@ -47,7 +47,7 @@ class Login extends Component {
 }
 
 class Register extends Component {
-    constructor () {
+    constructor() {
         super()
 
         console.debug('Register -> constructor')
@@ -56,15 +56,11 @@ class Register extends Component {
     componentDidMount() {
         console.debug('Register -> componentDidMount')
     }
-    
+
     componentWillUnmount() {
         console.debug('Register -> componentWillUnmount')
     }
 
-    componentWillReceiveProps() {
-        console.debug('Register -> componentWillReceiveProps')
-    }
-    
     render() {
         console.debug('Register -> render')
 
@@ -96,22 +92,21 @@ class App extends Component {
     handleLoginClick = () => {
         console.debug('App -> handleLoginClick (setState)')
 
-        this.setState({ view: 'login'})
+        this.setState({ view: 'login' })
     }
 
     handleRegisterClick = () => {
-        console.debug('App -> handleRegisterClick (setState')
+        console.debug('App -> handleRegisterClick (setState)')
 
-        this.setState({ view: 'register'}
-        )
+        this.setState({ view: 'register' })
     }
 
-    handleToggleMOde = () => {
+    handleToggleMode = () => {
         console.debug('App -> handleToggleMode (setState)')
 
         const { mode } = this.state
 
-        this.setState({ mode: mode === 'light' ? 'dark' : 'light'})
+        this.setState({ mode: mode === 'light' ? 'dark' : 'light' })
     }
 
     render() {
