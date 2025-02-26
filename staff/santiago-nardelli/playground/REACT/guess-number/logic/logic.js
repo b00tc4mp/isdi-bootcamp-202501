@@ -1,7 +1,7 @@
 const logic = {
-  constants :{
+  constants: {
     randomNumber: 0,
-    attempts : 0,
+    attempts: 0,
   },
 
   createARandomNumber() {
@@ -9,8 +9,6 @@ const logic = {
     console.log(this.constants.randomNumber);
   },
   askUser(userEntry) {
-    
-
     if (userEntry === null)
       throw new Error("El usuario ha cancelado la partida.");
 
@@ -19,9 +17,11 @@ const logic = {
     if (isNaN(userEntry) || userEntry < 1 || userEntry > 100)
       throw new Error("El número ingresado no es válido.");
 
-    
-
-    var difference = userEntry - this.constants.randomNumber
+    this.evaluateDifference(userEntry);
+    return this.constants.attempts;
+  },
+  evaluateDifference(userEntry) {
+    var difference = userEntry - this.constants.randomNumber;
     // Si la diferencia es negativa, la hago positiva
     if (difference < 0) {
       difference = -difference;
@@ -29,64 +29,70 @@ const logic = {
 
     console.log(difference);
 
+
+    //Agrego una variable que me aloje mi resultado para poder separar mis capa L de la de I 
+    
+
     if (difference === 0) {
-      alert("Felicidades, has adivinado el número");
+      this.isWon();
     } else if (difference > 0 && difference <= 10) {
       alert("Super hot");
-      attempts--;
+      this.constants.attempts--;
     } else if (difference > 10 && difference <= 20) {
       alert("Hot");
-      attempts--;
+      this.constants.attempts--;
     } else if (difference > 20 && difference <= 30) {
       alert("Warm");
-      attempts--;
+      this.constants.attempts--;
     } else if (difference > 30 && difference <= 40) {
       alert("Cold");
-      attempts--;
+      this.constants.attempts--;
     } else if (difference > 40 && difference <= 100) {
       alert("Super cold");
       this.constants.attempts--;
     }
-
-    
+    if (this.constants.attempts === 0) {
+      this.isLost();
+    }
   },
-  evaluateDifference(){},
 
-  isLOst() {
+  isLost() {
     if (attempts === 0) {
       alert(
-        "Lo siento, no te quedan más intentos. El número era " + randomNumber
+        "Lo siento, no te quedan más intentos. El número era " + this.constants.randomNumber
       );
     }
+    this.playAgain();
   },
 
-  isWon(){
-    if (userEntry === randomNumber) {
+  isWon() {
+    if (userEntry === this.constants.randomNumber) {
       alert("¡Felicidades, has adivinado el número!");
     }
+    this.playAgain();
+
   },
 
-  gameOver(){},
-
   playAgain() {
+    this.constants.randomNumber = 0;
+    this.constants.attempts = 0;
     
   },
 
   getStatus() {
-    //TODO
+    return this.constants.attempts;
   },
 
   selectDifficulty(level) {
-
     switch (level) {
       case "1":
         this.constants.attempts = 10;
         break;
       case "2":
-         this.constants.attempts= 7;
+        this.constants.attempts = 7;
         break;
       case "3":
-         this.constants.attempts= 4;
+        this.constants.attempts = 4;
         break;
 
       default:

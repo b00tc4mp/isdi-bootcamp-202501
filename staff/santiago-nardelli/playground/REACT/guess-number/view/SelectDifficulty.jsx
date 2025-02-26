@@ -1,8 +1,8 @@
-function SelectDifficulty({onClick}) {
+function SelectDifficulty({onSelectClick}) {
   const handleSelect = (level) => {
     try {
       logic.selectDifficulty(level);
-      onClick();
+      onSelectClick();
     } catch (error) {
       console.error(error.message);
 
@@ -22,3 +22,9 @@ function SelectDifficulty({onClick}) {
     </>
 )
 }
+/**
+ * Dudas al respecto de mi select:
+ * el onClick que recibo por parametro es el que traigo desde app?
+ * lo tengo que llamar dentro de mi handleSelect, para poder navegar al momento de elegir la dificultad ?
+ * y mis onClick de los botones solo estan relacionados con mi handleSelect?
+ */
