@@ -4,8 +4,8 @@ var logic = {
         if (typeof number != 'number')
             throw new TypeError('invalid typeof answer')
 
-        if (num === '' || number < 0)
-            return 'empty or negative'
+        if (num === '' || number < 0 || number > 100)
+            return 'invalid'
 
 
     },
@@ -25,7 +25,16 @@ var logic = {
                 if (data.attempts <= 0) {
                     data.isLost = true
                 }
+                data.attemptedNumbers.push(number)
             }
         }
+    },
+    reset: function () {
+        data.randomNumber = Math.floor(Math.random() * 101)
+        data.attempts = 10
+        data.attemptedNumbers = []
+        data.isWin = false
+        data.isLost = false
     }
+
 }
