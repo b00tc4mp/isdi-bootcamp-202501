@@ -7,6 +7,7 @@ function App() {
     const [gameInfo, setGameInfo] = useState([])
     const [attemptedNumbers, setAttemptedNumbers] = useState([])
     const [playAgain, setPlayAgain] = useState(false)
+    const [tryInfo, setTryInfo] = useState()
 
 
     useEffect(() => {
@@ -32,6 +33,8 @@ function App() {
         console.debug('Number try')
         if (userNumber != undefined) {
             logic.tryNumber(userNumber)
+            const guessTemperature = logic.tryState(userNumber)
+            setTryInfo(guessTemperature)
             const info = logic.showState()
             setGameInfo(info)
             setAttemptedNumbers(prev => [...prev, userNumber])
@@ -82,6 +85,7 @@ function App() {
                 <input id='number' type="number" />
                 <button type="click">Try</button>
             </form>
+            <h3>{tryInfo}</h3>
             <p>You have {gameInfo[0]} attempts left
             </p>
             <p> You already try : {attemptedNumbers.join(', ')} </p>
