@@ -1,3 +1,5 @@
+require("./join");
+
 console.info("CASE join array with no arguments");
 
 {
@@ -11,9 +13,3 @@ console.info("CASE join array with no arguments");
   console.assert(elements[2] === "Water", "elements[2] is Water");
   console.assert(universe === "Fire,Air,Water", 'universe is "Fire,Air,Water"');
 }
-
-// console.log(elements.join(""));
-// Expected output: "FireAirWater"
-
-// console.log(elements.join("-"));
-// Expected output: "Fire-Air-Water"
