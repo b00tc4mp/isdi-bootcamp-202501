@@ -1,10 +1,13 @@
-const useState = React.useState
 var logic = {
     helper: {
 
         invalidMenuOption: function (answer) {
+            if (answer === '') {
+                throw new Error('Number is need')
+            }
+            answerNumber = Number(answer)
             let valid
-            if (answer < 7 && answer >= 0) {
+            if (answerNumber < 7 && answerNumber >= 0) {
                 valid = true
             } else {
                 valid = false
@@ -74,9 +77,6 @@ var logic = {
 
     },
 
-    getProducts: function () {
-        return data.products
-    },
 
     createNewObject: function (object, objectName, objectType, objectPrice) {
         var object = {

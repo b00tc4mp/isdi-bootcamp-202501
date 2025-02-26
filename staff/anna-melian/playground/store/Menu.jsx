@@ -1,25 +1,30 @@
-//const useState = React.useState declarated in logic
-function Menu() {
-    const [option, setOption] = useState('')
-    console.log('store')
+function Menu({ handleSubmitMenu }) {
 
-    const handleSubmitMenu = event => {
+    console.log('Store ---> Menu')
+
+    const handleSubmit = (event) => {
         event.preventDefault()
 
         const domForm = event.target
 
         const domOptionInput = domForm.querySelector('input[name=userAnswer]')
-        const numberUserAnswer = Number(domOptionInput.value)
+        const userAnswer = domOptionInput.value
         try {
-            logic.helper.invalidMenuOption(numberUserAnswer);  // Llamada a la función de validación
-            console.log('Valid answer: ', numberUserAnswer);
-            setOption(numberUserAnswer); // Actualiza el estado con la respuesta del usuario
-            data.userOption = numberUserAnswer
-            logic.WhatsUserElection()
+            logic.helper.invalidMenuOption(userAnswer)
+            const optionChose = Number(userAnswer)
+
+            console.log('Valid answer: ', optionChose);
+
+            handleSubmitMenu(optionChose)
+
+            domForm.reset()
+
+
 
         } catch (error) {
-            alert(error.message);  // En caso de error, mostramos el mensaje
-            setOption('')
+            alert(error.message);
+            console.error(error)
+            setOption()
         }
 
     }
@@ -33,12 +38,11 @@ function Menu() {
     return <div>
         <h1>Menu</h1>
 
-        <form style={formStyle} onSubmit={handleSubmitMenu}>
+        <form style={formStyle} onSubmit={handleSubmit}>
             <label>What do you want to do?</label>
             <input type="number" name="userAnswer"></input>
             <button type="submit">Enter</button>
         </form>
-        <p>{option}</p>
         <div name='menuOptions'>
             <p name='0'>0: SEE PRODUCTS</p>
             <p name='1'>1: SEARCH A PRODUCT</p>
