@@ -1,86 +1,55 @@
-_*{
-    border: 1px solid red;
-}
-
-.car {
-    .interior {
-        display: flex;
-        width: 38px;
-        justify-content: space-evenly;
-
-        .motor{
-            height: 10px;
-            width: 10px;
-            background-color: gray;
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .steering{
-            display: flex;
-            align-items: center;
-
-            .h-line{
-                height: 1px;
-                width: 4px;
-                background-color: black;
-            }
-
-            .v-line{
-                height: 6px;
-                width: 1px;
-                background-color: black;
-            }
-        }
-
-        .seat{
-            display: flex;
-
-            .seat-bottom{
-                height: 3px;
-                width: 7px;
-                background-color: brown;
-                align-self: flex-end;
-            }
-
-            .seat-back{
-                height: 10px;
-                width: 3px;
-                background-color: brown;
-            }
-        }
-    }
-
-    .chassis{
-        height: 2px;
-        width: 40px;
-        background-color: gray;
-    }
+.building {
+    width: 100px;
+    height: 260px;
+    background-color: dodgerblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     
-    .wheels {
+
+    .floors {
         display: flex;
-        width: 40px;
+        flex-direction: column;
         justify-content: space-between;
+
+        gap: 10px;
+
+        .floor {
+            display: flex;
+            justify-content: space-between; 
     
-        .wheel {
-            .tire{
+            .window {
                 width: 10px;
                 height: 10px;
-                background-color: black;
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-    
-                .rim{
-                    width: 5px;
-                    height: 5px;
-                    background-color: rgb(133, 133, 133);
-                    border-radius: 50%;  
-                }
+                background-color: skyblue;
             }
         }
+    }
+
+    .ground {
+        display: flex;
+        justify-content: center;
+
+        .gate {
+            width: 10px;
+            height: 20px;
+            background-color: greenyellow;
+        }
+    }
+
+}
+
+.asphalt {
+    display: flex;
+    align-items: center;
+    
+    width: 800px;
+    height: 150px;
+    background-color: gray;
+
+    .line {
+        width: 800px;
+        height: 2px;
+        background-color: beige;
     }
 }
