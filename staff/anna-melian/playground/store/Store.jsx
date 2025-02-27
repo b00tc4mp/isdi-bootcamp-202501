@@ -3,26 +3,22 @@ const { useState, useEffect } = React
 
 function Store() {
     const [view, setView] = useState('menu')
-    const [userOption, setUserOption] = useState('')
+
 
     useEffect(() => {
         console.debug('Store start-render')
     }, [])
 
     function handleSubmitMenu(option) {
-        setUserOption(option)
+        if (option != '')
+            setView(option)
 
     }
 
     useEffect(() => {
-        if (userOption === 'seeProducts') {
-            setView('showProducts')
-            setUserOption('')
-        } else if (userOption === 'searchProduct') {
-            setView('searchProduct')
-            setUserOption('')
-        }
-    }, [userOption])
+        console.debug('Store updated-render')
+    }, [view])
+
 
     function returnClick() {
         setView('menu')
@@ -34,7 +30,7 @@ function Store() {
     return <>
         <h1>Hello Store</h1>
         {view === 'menu' && <Menu handleSubmitMenu={handleSubmitMenu} />}
-        {view === 'showProducts' && <ShowProducts returnClick={returnClick} />}
+        {view === 'seeProducts' && <ShowProducts returnClick={returnClick} />}
         {view === 'searchProduct' && <SearchProduct returnClick={returnClick} />}
     </>
 

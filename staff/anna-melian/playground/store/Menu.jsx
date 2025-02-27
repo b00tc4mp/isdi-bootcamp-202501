@@ -38,7 +38,7 @@ function Menu({ handleSubmitMenu }) {
         <form style={formStyle} onSubmit={handleSubmit}>
             <label>What do you want to do?</label>
             <select name="userAnswer">
-                <option value="" defaultValue={''}>Please choose an option</option> {/* Primera opción vacía */}
+                <option value="" defaultValue={''}>Please choose an option</option>
                 <option value="seeProducts">0: SEE THE PRODUCTS</option>
                 <option value="searchProduct">1: SEARCH A PRODUCT</option>
                 <option value="createNewProduct">2: CREATE A NEW PRODUCT</option>
