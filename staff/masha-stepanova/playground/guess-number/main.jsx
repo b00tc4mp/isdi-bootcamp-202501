@@ -4,6 +4,7 @@ const { useState } = React
 
 function App() {
     const [view, setView] = useState('start-game')
+    const [state, setState] = useState('')
 
     // const isLost = logic.helper.isLost()
     const isWon = logic.helper.isWon()
@@ -24,7 +25,7 @@ function App() {
             form.reset()
             const { attempts, temperature, attemptedNumbers, won, lost, gameOver } = logic.getStatus()
 
-            alert(`temperature ${temperature}, attempts ${attempts}, attempted numbers ${attemptedNumbers}, won ${won}, lost ${lost}, gameOver ${gameOver}`)
+            setState(`Temperature: ${temperature}, attempts: ${attempts}, attempted numbers: ${attemptedNumbers}`)
 
             if (logic.helper.isGameOver())
                 setView('game-over')
@@ -72,6 +73,8 @@ function App() {
                 <input type="number" id="number" />
 
                 <button type="submit">Try!</button>
+
+                <p>{state}</p>
             </form>
         </section>}
 
