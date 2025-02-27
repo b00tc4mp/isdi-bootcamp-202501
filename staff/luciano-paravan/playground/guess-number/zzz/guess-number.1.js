@@ -13,51 +13,6 @@ player
 - si acierta en menos de 10 intentos, win! por el contrario lost!
 */
 
-const interface = {
-    startGame() {
-        try {
-            logic.initializeNumberToGuess()
-
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-
-    },
-    askNumber() {
-        try {
-            const number = Number(prompt('Guess number: '))
-
-            logic.tryNumber(number)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    },
-    viewGameStatus() {
-        try {
-            const { attempts, temperature, attemptedNumbers, won, lost, gameOver } = logic.getStatus()
-
-            alert(`temperature: ${temperature}, \n attempts: ${attempts}, \n attempted numbers: ${attemptedNumbers}, \n won? ${won}, \n lost? ${lost}, \n Game over? ${gameOver}`)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    },
-    restart() {
-        try {
-            logic.resetGame()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-}
-/*
 var randomNumber = 0
 var attempts = 0
 var maxAttempts = 10
@@ -130,5 +85,3 @@ while (attempts < maxAttempts && winner === false) {
 if (attempts === maxAttempts && winner === false) {
     console.log('You re a LOOSER!')
 }
-
-*/
