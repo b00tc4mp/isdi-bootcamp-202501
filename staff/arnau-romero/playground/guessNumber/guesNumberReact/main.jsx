@@ -48,7 +48,7 @@ function App(){
             logic.checkAttempts()
             // 5
             logic.numbersTriedFunction(playerNumber)
-            // 
+            // 6
             form.reset()
             // 7
             const diferrence = logic.checkRest()

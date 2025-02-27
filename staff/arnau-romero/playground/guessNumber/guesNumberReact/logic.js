@@ -87,7 +87,7 @@ const logic = {
 
     // resetear juego
     resetGame(){
-                //data.arrays.numbersTried = []
+                data.arrays.numbersTried = []
                 data.booleans.checkWin = false
                 data.constant.attempsPassed = false
                 data.constant.attempts = 0

@@ -8,11 +8,14 @@ const data = {
         counterWinsPlayer: 0,
         CountersWinsMachine: 0,
         countersDraw: 0,
-        
+        playerWinRound: false,
+        machineWinRound: false,
+        playerWinGame: false,
+        machineWinGame: false,
     },
     choices:{
-    machineChoice: '',
-    playerChoice: ''
+        machineChoice: '',
+        playerChoice: ''
     }
 
 }

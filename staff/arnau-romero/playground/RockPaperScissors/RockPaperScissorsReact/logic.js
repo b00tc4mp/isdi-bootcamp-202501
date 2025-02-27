@@ -5,48 +5,57 @@ logic = {
 
     checkPlay(player1choice, machineChoice){
         data.choices.playerChoice = player1choice
-        if(player1choice == machineChoice){
+        if(data.rounds.remainingRounds === 0) throw new Error('Se ha acabado el juego!') 
+        if(player1choice === machineChoice){
             data.results.countersDraw ++
             data.rounds.currentRounds ++
+            data.results.playerWinRound = false
+            data.results.machineWinRound = false
             this.remainingRounds()
-            return "It's a draw!!"
         }
-        else if(player1choice == 'r' && machineChoice == 's'){
+        else if(player1choice === 'r' && machineChoice === 's'){
             data.results.counterWinsPlayer++
             data.rounds.currentRounds++
+            data.results.playerWinRound = true
+            data.results.machineWinRound = false
             this.remainingRounds()
-            data.results.currentPlay = "Player Win this round!! Player-> 🪨 vs ✂️ <- Machine"
+       
             
-        }else if(player1choice == 'p' && machineChoice == 'r'){
+        }else if(player1choice === 'p' && machineChoice === 'r'){
             data.results.counterWinsPlayer++
             data.rounds.currentRounds++
+            data.results.playerWinRound = true
+            data.results.machineWinRound = false
             this.remainingRounds()
-            return "Player Win this round!! Player-> 📋 vs 🪨 <- Machine"
+       
         
-        }else if(player1choice == 's' && machineChoice == 'p'){
+        }else if(player1choice === 's' && machineChoice === 'p'){
             data.results.counterWinsPlayer++
             data.rounds.currentRounds++
+            data.results.playerWinRound = true
+            data.results.machineWinRound = false
             this.remainingRounds()
-            return "Player Win this round!! Player-> ✂️ vs 📋 <- Machine"
+       
             
-        }else if(player1choice == 'r' && machineChoice == 'p'){
+        }else if(player1choice === 'r' && machineChoice === 'p'){
             data.results.CountersWinsMachine++
             data.rounds.currentRounds++
+            data.results.playerWinRound = false
+            data.results.machineWinRound = true    
             this.remainingRounds()
-            return "Machine Win this round!! Machine-> 📋 vs 🪨 <- Player "
             
-        }else if(player1choice == 'p' && machineChoice == 's'){
+        }else if(player1choice === 'p' && machineChoice === 's'){
             data.results.CountersWinsMachine++
             data.rounds.currentRounds++
+            data.results.playerWinRound = false
+            data.results.machineWinRound = true    
             this.remainingRounds()
-            return "Machine Win this round!! Machine-> ✂️ vs 📋 <- Player"
-            
-        }else if(player1choice == 's' && machineChoice == 'r'){
+        }else if(player1choice === 's' && machineChoice === 'r'){
             data.results.CountersWinsMachine++
             data.rounds.currentRounds++
+            data.results.playerWinRound = false
+            data.results.machineWinRound = true
             this.remainingRounds()
-            return "Machine Win this round!! Machine-> 🪨 vs ✂️ <- Player"
-            
         }  
     },
 
@@ -60,11 +69,14 @@ logic = {
 
     checkWin(){
             if(data.results.counterWinsPlayer > data.results.CountersWinsMachine){
-                return "Player 1 win the game! " + '\n'+ ' Player wins: ' + data.results.counterWinsPlayer + ' Machine wins: ' + data.results.CountersWinsMachine + ' Draws: ' + data.results.countersDraw
+                data.results.playerWinGame = true
+                data.results.machineWinGame = false
             }else if(data.results.counterWinsPlayer < data.results.CountersWinsMachine){
-                return "Machine win the game! " + '\n'+ ' Player wins: ' + data.results.counterWinsPlayer + ' Machine wins: ' + data.results.CountersWinsMachine + ' Draws: ' + data.results.countersDraw
-            }else if(data.results.CountersWinsMachine == data.results.counterWinsPlayer){
-                return "It's a draw! " + '\n'+ ' Player wins: ' + data.results.counterWinsPlayer + ' Machine wins: ' + data.results.CountersWinsMachine + ' Draws: ' + data.results.countersDraw
+               data.results.playerWinGame = false
+               data.results.machineWinGame = true
+            }else if(data.results.CountersWinsMachine === data.results.counterWinsPlayer){
+                data.results.playerWinGame = false
+                data.results.machineWinGame = false
             }  
     },
 
@@ -77,12 +89,20 @@ logic = {
         data.results.countersDraw= 0
     },
 
-    getPlayStatus(){
-       return {
+    getStatus(){
+        
+        return {
+            currentRounds : data.rounds.currentRounds,
             machineChoice:  data.choices.machineChoice,
             playerChoice: data.choices.playerChoice,
             remainingRounds: data.rounds.remainingRounds,
-
+            playerWinRound: data.results.playerWinRound,
+            machineWinRound: data.results.machineWinRound,
+            playerWinGame: data.results.playerWinGame,
+            machineWinGame: data.results.machineWinGame,
+            playerWins: data.results.counterWinsPlayer,
+            machineWins: data.results.CountersWinsMachine,
+            draws: data.results.countersDraw
         }
     }
 }

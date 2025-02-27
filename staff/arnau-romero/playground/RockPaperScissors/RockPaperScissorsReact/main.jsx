@@ -14,10 +14,7 @@ function App(){
     
  */
     const [view, setView] = useState('intro')
-    const [feedback, setFeedback] = useState('')
-    const [rounds, setRounds] = useState('')
-    const [gameStatus, setGameStatus] = useState(null)
-    const [gameOver, setGameOver] = useState(false)
+    const [status, setStatus] = useState(null)
 
     const handleRoundsSubmit = event => {
         /*
@@ -29,8 +26,11 @@ function App(){
 
         const { target: form } = event // const form = event.target
         const { rounds: {value: numberRounds}} = form  // const numberRounds = form.rounds.value 
+        const status = logic.getStatus()
+        setStatus(status) 
 
         data.rounds.maxRounds = numberRounds
+        logic.remainingRounds()
 
         form.reset()
 
@@ -39,63 +39,61 @@ function App(){
     }
 
     const handleClickRock = () => {
-        /*
-         1- Generamos una eleccion aleatoria de la maquina (generateRockPaperScissors)
-         2- Le pasamos a la funcion la seleccion del usuario
-         3- comparamos resultados, sumamos ronda y sumamos resultado
-         4- Mostramos las rondas que quedan
-         5- Mostramos resultado por paragraph
-         6- Comprobamos si ha ganado alguien cuando lleguemos al maximo de rondas
-        */
-        //1
-        logic.generateRockPaperScissors()
-        //2 y 3
-        const play = logic.checkPlay('r', data.machineChoice)
-        // 4
-        const gameStatus = logic.getPlayStatus()
-        setGameStatus(gameStatus)
-        // 5
-        setFeedback(play)
-        // 6
-        if(data.rounds.remainingRounds === 0) {
-            const winner = logic.checkWin()
-            setGameOver(winner)
-
+            /*
+            1- Generamos una eleccion aleatoria de la maquina (generateRockPaperScissors)
+            2- Le pasamos a la funcion la seleccion del usuario
+            3- comparamos resultados, sumamos ronda y sumamos resultado
+            4- Mostramos las rondas que quedan
+            5- Mostramos resultado por paragraph
+            6- Comprobamos si ha ganado alguien cuando lleguemos al maximo de rondas
+            */
+           try{
+            //1
+            logic.generateRockPaperScissors()
+            //2 y 3
+            logic.checkPlay('r', data.choices.machineChoice)
+            // 4
+            const status = logic.getStatus()
+            setStatus(status) 
+            // 6
+            logic.checkWin()
+           }catch(error){
+            alert(error.message)
+            console.error(error)
+           }
         }
-    }
+    
     const handleClickPaper = () => {
+        try{
         //1
         logic.generateRockPaperScissors()
         //2 y 3
-        const play = logic.checkPlay('p', data.machineChoice)
+        logic.checkPlay('p', data.choices.machineChoice)
         // 4
-        const {remainingRounds} = logic.getPlayStatus()
-        setGameStatus(remainingRounds)
-        // 5
-        setFeedback(play)
+        const status = logic.getStatus()
+        setStatus(status)
         // 6
-        if(data.rounds.remainingRounds === 0) {
-            const winner = logic.checkWin()
-            setGameOver(winner)
-
+        logic.checkWin()
+        }catch(error){
+            alert(error.message)
+            console.error(error)
         }
     }
 
     const handleClickScissors = () => {
+        try{
         //1
         logic.generateRockPaperScissors()
         //2 y 3
-        const play = logic.checkPlay('s', data.machineChoice)
+        logic.checkPlay('s', data.choices.machineChoice)
         // 4
-        const {remainingRounds} = logic.getPlayStatus()
-        setGameStatus(remainingRounds)
-        // 5
-        setFeedback(play)
+        const status = logic.getStatus()
+        setStatus(status)
         // 6
-        if(data.rounds.remainingRounds === 0) {
-            const winner = logic.checkWin()
-            setGameOver(winner)
-
+        logic.checkWin()
+        }catch(error){
+            alert(error.message)
+            console.error(error)
         }
 
     }
@@ -110,9 +108,24 @@ function App(){
         }
     }
 
-    function  evaluatedFeedback(){
-        gameStatus.remainingRounds
-    }
+    /*  QUE MOSTRAR EN DOM REAL
+        SI GANA JUGADOR LA RONDA
+        {status.playerWinRound === true && machineWinRound === false && <p>{`Player win with ${playerChoice} vs ${machineChoice} cpu `}</p>}
+        SI GANA LA MAQUINA LA RONDA
+        {status.playerWinRound === false && machineWinRound === true && <p>{`Player win with ${playerChoice} vs ${machineChoice} cpu `}</p>}
+        SI EMPATAN
+        {status.playerWinRound === false && machineWinRound === false && attempts != 0 <p>{`Player win with ${playerChoice} vs ${machineChoice} cpu `}</p>}
+        
+        SI LA PARTIDA LA GANA EL JUGADOR
+        {playerWinGame === true && machineWinRound === false && remainingRounds === 0 && <p>{`Player win the GAME!`}</p>}
+        SI LA PARTIDA LA GANA LA MAQUINA
+        {playerWinGame === false && machineWinRound === true && remainingRounds === 0 && <p>{`Player machine the GAME!`}</p>}
+        SI LA PARTIDA QUEDA EN EMPATE
+        {playerWinGame === false && machineWinRound === false && remainingRounds === 0 && <p>{`ITS A DRAW!!`}</p>}
+
+
+    */
+
     return<>
         <h1>Rock 🪨 Paper 📋 Scissors ✂️!</h1>
 
@@ -123,15 +136,25 @@ function App(){
             </form>}
 
         {view=== 'game'&& <>
-            <p>{gameStatus.remainingRounds}</p>
+            {status.remainingRounds !== 0 && <p> {status.remainingRounds}</p>}
 
             <button type="button" onClick={handleClickRock}>ROCK🪨</button> <button type="button" onClick={handleClickPaper}>PAPER📋</button> <button type="button" onClick={handleClickScissors}>SCISSORS ✂️</button>
             
-            <p>{feedback}</p>
-            
-            <p>{gameOver}</p>
+            {status.playerWinRound === true && status.machineWinRound === false && status.currentRounds !== 0 && <p>{`Player win with ${status.playerChoice} vs ${status.machineChoice} cpu `}</p>}
 
-            {data.rounds.remainingRounds === 0 && <button onClick={handleRestartClick}>RESTART</button>}
+            {status.playerWinRound === false && status.machineWinRound === true && status.currentRounds !== 0 && <p>{`Player win with ${status.playerChoice} vs ${status.machineChoice} cpu `}</p>}
+
+            {status.playerWinRound === false && status.machineWinRound === false && status.currentRounds !== 0 && <p>{`It's a draw player: ${status.playerChoice} vs ${status.machineChoice} cpu `}</p>}
+
+            {status.currentRounds !== 0 && <p>{ ` Player wins: ${status.playerWins} Machine wins: ${status.machineWins} Draws: ${status.draws} ` }</p>}
+
+            {status.playerWinGame === true && status.machineWinGame === false && status.currentRounds !== 0 && status.remainingRounds === 0 &&<p>{'Player win the GAME!'}</p>}
+
+            {status.playerWinGame === false && status.machineWinGame === true && status.currentRounds !== 0 && status.remainingRounds === 0 && <p>{`Machine the GAME!`}</p>}
+
+            {status.playerWinGame === false && status.machineWinGame === false && status.currentRounds !== 0 && status.remainingRounds === 0 &&<p>{`ITS A DRAW!!`}</p>}
+
+            {status.remainingRounds === 0 && status.currentRounds !== 0 && <button onClick={handleRestartClick}>RESTART</button>}
         </>}
     </>
 }

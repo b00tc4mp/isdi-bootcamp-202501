@@ -25,7 +25,7 @@ function App(){
         - Paso ese dato a la data 
         - Monto la view game
         */
-        // event.preventDefault()
+         event.preventDefault()
 
         const { target: form } = event // const form = event.target
         const { rounds: {value: numberRounds}} = form  // const numberRounds = form.rounds.value 
