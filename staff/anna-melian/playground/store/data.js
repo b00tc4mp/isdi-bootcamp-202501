@@ -41,6 +41,13 @@ var data = {
             type: 'Puzzle',
             price: 22,
             image: 'https://imgs.search.brave.com/kX8rsBKHwSPjOk7D6Jg0Lq-C8xDFShc8mPByT48DXbM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzYxazU3eVhLVmlM/LmpwZw'
+        },
+        {
+            id: 'toy09',
+            name: 'Remote Control Helicopter',
+            type: 'Electronic Toy',
+            price: 30,
+            image: 'https://imgs.search.brave.com/MeA7oScmGywRYgr6VMV5zftWWizWgThiSQW5VmIAMw8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFWOGU2alo3MEwu/anBn'
         }
     ],
     cart: [],

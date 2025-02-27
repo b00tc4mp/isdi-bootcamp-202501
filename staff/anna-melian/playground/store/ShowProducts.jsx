@@ -2,6 +2,8 @@
 function ShowProducts({ returnClick }) {
     const [products, setProducts] = useState([])
 
+    console.debug('Store ---> Show products')
+
     const handleReturnClick = () => {
         returnClick()
     }
@@ -24,7 +26,12 @@ function ShowProducts({ returnClick }) {
                     ) : (
                         <p>No image available</p>
                     )}
-                    <p>Price: {product.price} €</p>
+                    <details>
+                        <summary>More Information</summary>
+                        <p>Price: {product.price} €</p>
+                        <p>Type: {product.type}</p>
+                    </details>
+
                 </div>
             ))}
 

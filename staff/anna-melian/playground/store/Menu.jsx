@@ -1,21 +1,18 @@
 function Menu({ handleSubmitMenu }) {
 
-    console.log('Store ---> Menu')
+    console.debug('Store ---> Menu')
 
     const handleSubmit = (event) => {
         event.preventDefault()
 
         const domForm = event.target
 
-        const domOptionInput = domForm.querySelector('input[name=userAnswer]')
+        const domOptionInput = domForm.querySelector('select[name=userAnswer]')
         const userAnswer = domOptionInput.value
         try {
-            logic.helper.invalidMenuOption(userAnswer)
-            const optionChose = Number(userAnswer)
 
-            console.log('Valid answer: ', optionChose);
 
-            handleSubmitMenu(optionChose)
+            handleSubmitMenu(userAnswer)
 
             domForm.reset()
 
@@ -40,17 +37,17 @@ function Menu({ handleSubmitMenu }) {
 
         <form style={formStyle} onSubmit={handleSubmit}>
             <label>What do you want to do?</label>
-            <input type="number" name="userAnswer"></input>
+            <select name="userAnswer">
+                <option value="" defaultValue={''}>Please choose an option</option> {/* Primera opción vacía */}
+                <option value="seeProducts">0: SEE THE PRODUCTS</option>
+                <option value="searchProduct">1: SEARCH A PRODUCT</option>
+                <option value="createNewProduct">2: CREATE A NEW PRODUCT</option>
+                <option value="addProductToCart">3: ADD A PRODUCT TO THE CART</option>
+                <option value="seeCart">4: SEE THE CART</option>
+                <option value="generateRecipt">5: GENERATE A RECIPT</option>
+                <option value="seeBuyingHistory">6: SEE BUYING HISTORY</option>
+            </select>
             <button type="submit">Enter</button>
         </form>
-        <div name='menuOptions'>
-            <p name='0'>0: SEE PRODUCTS</p>
-            <p name='1'>1: SEARCH A PRODUCT</p>
-            <p name='2'>2: CREATE A NEW PRODUCT</p>
-            <p name='3'>3: ADD PRODUCT TO THE CART</p>
-            <p name='4'>4: SEE CART</p>
-            <p name='5'>5: GENERATE RECIPT</p>
-            <p name='6'>6: SEE BUYING HISTORY</p>
-        </div>
     </div>
 }

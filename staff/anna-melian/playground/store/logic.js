@@ -34,18 +34,8 @@ var logic = {
         },
 
         invalidText: function (answer) {
-            var validCharacters = 'abcdefghijklmnopqrstuvxyz-ABCDEFGHIJKLMNOPQRSTUVWXY'
-            var valid = false
-            for (var i = 0; i < validCharacters.length; i++) {
-                for (var j = 0; j < answer.length; j++) {
-                    if (answer[j] === validCharacters[i]) {
-                        valid = true
-                    }
-                }
-
-            }
-            if (!valid) {
-                throw new Error('Invalid option')
+            if (!/^[a-zA-Z\s]*$/.test(answer)) {
+                throw new TypeError('Invalid type answer')
             }
         },
 
@@ -138,5 +128,18 @@ var logic = {
 
     resetCart: function () {
         data.cart = []
+    },
+
+    searchResults: function (search) {
+        const results = data.products.filter(product =>
+            product.name.toLowerCase().includes(search.toLowerCase()) ||
+            product.type.toLowerCase().includes(search.toLowerCase())
+
+        ) //return an array
+
+        return results
+
+
+
     }
 }
