@@ -1,12 +1,6 @@
 var data = {
-    constants: {
-        MAX_ATTEMPTS: 10,
-        MAX_NUMBER: 100,
-        END_GAME: ''
-    },
-
-    number: '',
-    progress: []
+    numberToGuess: -1,
+    attempts: 0,
+    temperature: '',
+    attemptedNumbers: []
 }
-
-data.remainingAttempts = data.constants.MAX_ATTEMPTS

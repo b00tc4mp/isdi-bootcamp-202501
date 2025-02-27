@@ -1,11 +1,12 @@
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
-const { useState, useEffect } = React
+const { useState } = React
 
 const randomNumber = logic.randomNumber()
 
 function App() {
     const [view, setView] = useState('game')
+    const [status, setStatus] = useState(null)
 
     const handleGuessNumberSubmit = event => {
         event.preventDefault()
@@ -13,29 +14,14 @@ function App() {
         try {
             const { target: form } = event
 
-            const number = Number(form.number.value)
+            const { number: { value: number } } = form
 
-            logic.validateInput(number)
+            logic.sentNumber(Number(number))
 
-            logic.sentNumber(randomNumber, number)
+            const status = logic.getStatus()
+            setStatus(status)
 
             form.reset()
-
-            const finished = logic.checkEndGame()
-
-            if (finished === 1)
-                setView('win')
-            else if (finished === 2)
-                setView('lose')
-            else
-                console.log('keep playing')
-
-            // if (data.constants.END_GAME === 'win')
-            //     setView('win')
-            // else if (data.constants.END_GAME === 'lose')
-            //     setView('lose')
-            // else
-            //     console.log('keep playing')
         } catch (error) {
             console.error(error)
 
@@ -48,6 +34,7 @@ function App() {
             logic.restart()
 
             setView('game')
+            setStatus(null)
         } catch (error) {
             console.error(error)
 
@@ -69,45 +56,26 @@ function App() {
             </form>
 
             <br />
-            <p>Need some help?</p>
+
+            {status && <>
+                <p>Data</p>
+                <span style={{ display: 'flex', flexDirection: 'column' }}>
+                    <>{`temperature: ${status.temperature}`}</>
+                    <>{`attempts: ${status.attempts}`}</>
+                    <> {`attemptedNumbers: [${status.attemptedNumbers}]`}</>
+                    <>{`won: ${status.won}`}</>
+                    <>{`lost: ${status.lost}`}</>
+                    <>{`gameOver: ${status.gameOver}`}</>
+
+                </span>
+
+                {status.won && <h2>You won!</h2>}
+
+                {status.lost && <h2>You lost!</h2>}
+
+                {status.gameOver && <button onClick={handleRestartClick}>Restart</button>}
+            </>}
         </main>}
-
-
-        {view === 'game' && <section>
-            <p>
-                Here's a little bit of info about the correct number and your guess.
-            </p>
-            <p>
-                {`- It freezes ( >40)`}
-            </p>
-            <p>
-                {` - So cooold ( > 30 <= 40)`}
-            </p>
-            <p>
-                {`- Meh ( > 20 <= 30)`}
-            </p>
-            <p>
-                {`- Hot, hot ( > 10 <= 20)`}
-            </p>
-            <p>
-                {`- So hot ( > 5 <= 10)`}
-            </p>
-            <p>
-                {`- It burns ( <= 5)`}
-            </p>
-        </section>}
-
-        {view === 'win' && <section>
-            <h1>You won, congratulations!!</h1>
-
-            <button onClick={handleRestartClick}>Restart</button>
-        </section>}
-
-        {view === 'lose' && <section>
-            <h1>You have lost... You do not have any attempts left...</h1>
-
-            <button onClick={handleRestartClick}>Restart</button>
-        </section>}
     </>
 }
 root.render(<App />)
