@@ -1,131 +1,102 @@
-var player1
-var player2
+const logic = {
+    constant: {
+        moves: ['r', 'p', 's']
+    },
+    helper: {
+        playerWon() {
+            return data.playerWins === 3 && data.cpuWins === 0 || data.playerWins === 2 && data.cpuWins === 1
+        },
+        cpuWon() {
+            return data.playerWins === 0 && data.cpuWins === 3 || data.playerWins === 1 && data.cpuWins === 2
+        },
+        isGameOver() {
+            return this.playerWon() || this.cpuWon()
+        }
+    },
 
-console.clear()
+    cpuElection() {
+        randomIndex = Math.floor(Math.random() * logic.constant.moves.length)
+        data.cpuInput = logic.constant.moves[randomIndex]
+    },
 
-var p1target
-var p2target
+    checkPlayerMove(playerMove) {
+        if (this.helper.isGameOver()) throw new Error('game Over')
+        if (typeof playerMove !== 'string') throw new SyntaxErrorError('invalid syntax')
+        if (playerMove !== "r" && playerMove !== "s" && playerMove !== "s") throw new Error('please choose wisely')
+    },
 
-var moves = ['r', 'p', 's']
+    playerMove(playerMove) {
+        data.playerInput = playerMove
 
-var isGameOver = false
+        if (data.playerInput === logic.constant.moves[0] && data.cpuInput === logic.constant.moves[2] ||
+            data.playerInput === logic.constant.moves[1] && data.cpuInput === logic.constant.moves[0] ||
+            data.playerInput === logic.constant.moves[2] && data.cpuInput === moves[1]) {
+            data.playerWins++
+            alert('PLAYER wins! 🏆')
+        }
+        else if (data.cpuInput === data.playerInput) {
+            alert('IT IS A DRAW!!!')
+        }
+        else {
+            data.cpuWins++
+            alert(' CPU wins! 🏆')
+        }
+    },
 
-//--- LOGIC --- 
-function isGameFinished() {
-    if (p1target === moves[0] && p2target === moves[2] ||
-        p1target === moves[1] && p2target === moves[0] ||
-        p1target === moves[2] && p2target === moves[1]) {
-        isGameOver = true
-        icons()
-        alert(`${player1}: ${p1target} vs ${p2target} :${player2}
-                        ${player1} wins! 🏆`)
-        restartGame()
-    }
-    else if (p2target === p1target) {
-        icons()
-        alert(` ${player1}: ${p1target} vs ${p2target} :${player2}
-            IT IS A DRAW!!!`)
-        isGameOver = false
-        restartGame()
-    }
-    else {
-        isGameOver = true
-        icons()
-        alert(` ${player1}: ${p1target} vs ${p2target} :${player2}
-                        ${player2} wins! 🏆`)
-        restartGame()
-    }
-}
+    icons() {
+        if (data.playerInput === moves[0])
+            data.playerInput = data.playerInput + ' 👊'
+        else if (data.playerInput === moves[1])
+            data.playerInput = data.playerInput + ' ✋'
+        else
+            data.playerInput = data.playerInput + ' ✌️'
+    },
 
-function icons() {
-    if (p2target === moves[0])
-        p2target = '👊 ' + p2target
-    else if (p2target === moves[1])
-        p2target = '✋ ' + p2target
-    else if (p2target === moves[2])
-        p2target = '✌️ ' + p2target
+    restart(res) {
+        if (res === 'y' || res === 'yes') {
+            startGame()
+        }
+        else {
+            alert('Ciao')
+        }
+    },
 
-    if (p1target === moves[0])
-        p1target = p1target + ' 👊'
-    else if (p1target === moves[1])
-        p1target = p1target + ' ✋'
-    else
-        p1target = p1target + ' ✌️'
-}
+    playerMoves() {
+        if (!isGameOver) {
+            do {
+                data.playerInput = prompt(`${player1}, choose your move`).toLowerCase();
+                if (!moves.includes(data.playerInput)) alert("Choose correctly, please");
+            } while (!moves.includes(data.playerInput));
 
-function restart(res) {
-    if (res === 'y' || res === 'yes') {
-        isGameOver = false
-        startGame()
-    }
-    else {
-        isGameOver = true
-        alert('Ciao')
-    }
-}
+            do {
+                data.cpuInput = prompt(`${player2}, choose your move`).toLowerCase();
+                if (!moves.includes(data.cpuInput)) alert("Choose correctly, please");
+            } while (!moves.includes(data.cpuInput));
 
-function playerMoves() {
-    if (!isGameOver) {
-        do {
-            p1target = prompt(`${player1}, choose your move`).toLowerCase();
-            if (!moves.includes(p1target)) alert("Choose correctly, please");
-        } while (!moves.includes(p1target));
+            checkGameStatus()
+        }
+    },
 
-        do {
-            p2target = prompt(`${player2}, choose your move`).toLowerCase();
-            if (!moves.includes(p2target)) alert("Choose correctly, please");
-        } while (!moves.includes(p2target));
 
-        checkGameStatus()
-    }
-}
+    gameStatus() {
+        const { cpuWins, playerWins } = data
 
-//--- PRESENTATION ---
-function startGame() {
-    try {
-        var info = confirm('You can choose between rock(r), paper(p)and scissors(s)')
+        return {
+            cpuWins,
+            playerWins,
+            playerWon: this.helper.playerWon(),
+            cpuWon: this.helper.cpuWon(),
+            gameOver: this.helper.isGameOver()
+        }
+    },
 
-        player1 = prompt('Player 1 name') || 'Player 1'
-        player2 = prompt('Player 2 name') || 'Player 2'
+    restartGame() {
+        player = ''
 
-        gameSet()
-    } catch (error) {
-        alert(error.message)
+        playerInput = ''
+        cpuInput = ''
 
-        console.error(error)
-    }
-}
-
-function gameSet() {
-    try {
-        playerMoves()
-    } catch (error) {
-        alert(error.message)
-
-        console.error(error)
+        cpuWins = 0
+        playerWins = 0
     }
 }
-
-function checkGameStatus() {
-    try {
-        isGameFinished()
-    } catch (error) {
-        alert(error.message)
-
-        console.error(error)
-    }
-}
-
-function restartGame() {
-    var res = prompt('Do you want to restart the Game? Please type yes (y) or no (n)')
-
-    try {
-        restart(res)
-    } catch (error) {
-        alert(error.message)
-
-        console.error(error)
-    }
-}
-
-startGame()
