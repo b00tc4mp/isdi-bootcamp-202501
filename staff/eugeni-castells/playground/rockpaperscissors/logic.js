@@ -45,15 +45,22 @@ logic = {
     if (data.winner !== 0) throw new Error("Game is already over");
   },
   updateMove(move, p1Turn) {
-    const gameOver = this.isGameOver();
+    this.isGameOver();
 
     p1Turn ? (data.lastMove[0] = move) : (data.lastMove[1] = move);
+  },
+  generateMachineMove() {
+    const { lastMove } = data;
+
+    const choiceNum = Math.floor(Math.random() * 3);
+
+    lastMove[1] = choiceNum;
   },
   restart() {
     data.lastMove = [];
     data.p1Wins = 0;
     data.p2Wins = 0;
-    data.round = 0;
+    data.rounds = 0;
     data.winner = 0;
   },
 };

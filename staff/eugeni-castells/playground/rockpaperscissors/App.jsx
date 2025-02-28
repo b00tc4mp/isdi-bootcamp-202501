@@ -15,7 +15,7 @@ function App() {
 
   const handleError = (error) => {
     console.error(error);
-    setError(error);
+    setError(error.message);
   };
 
   const handleLandingNavigation = () => {
@@ -27,22 +27,23 @@ function App() {
       <h1>Rock, Paper, Scissors!</h1>
       {view === "landing" && (
         <Landing
-          onRobotCLick={handleRobotClick}
+          onRobotClick={handleRobotClick}
           onPlayerClick={handlePlayerClick}
         />
       )}
       {view === "game/cp" && (
-        <Game
+        <GameVsCp
           onError={() => {
             handleError();
           }}
+          onLandingNavigation={handleLandingNavigation}
         />
       )}
       {view === "game/player" && (
-        <Game
-          onError={() => {
-            handleError;
-          }}
+        <GameVsPlayer
+          // onError={() => {
+          //   handleError;
+          // }}
           onLandingNavigation={handleLandingNavigation}
         />
       )}

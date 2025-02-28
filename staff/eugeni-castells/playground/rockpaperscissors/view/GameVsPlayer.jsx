@@ -1,4 +1,4 @@
-const Game = ({ onError, onLandingNavigation }) => {
+const GameVsPlayer = ({ onError, onLandingNavigation }) => {
   const { useState, useEffect } = React;
 
   const [p1Turn, setP1Turn] = useState(true);
@@ -18,24 +18,32 @@ const Game = ({ onError, onLandingNavigation }) => {
   const handleChoiceClick = (move) => {
     try {
       logic.isGameOver();
+
       logic.updateMove(move, p1Turn);
 
       if (!p1Turn) {
         logic.checkRound();
+
         logic.checkWinGame();
       }
 
       setP1Turn(!p1Turn);
     } catch (error) {
-      onError(error.message);
+      alert(error.message);
+
+      console.error(error);
+      // onError(error);
     }
   };
 
   const handleRestart = () => {
     try {
       logic.restart();
+
       onLandingNavigation();
-    } catch (error) {}
+    } catch (error) {
+      onError(error);
+    }
   };
   return (
     <div>

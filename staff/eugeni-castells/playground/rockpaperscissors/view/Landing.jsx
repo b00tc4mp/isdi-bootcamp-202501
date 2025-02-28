@@ -1,7 +1,7 @@
-function Landing({ onPlayerClick }) {
+function Landing({ onPlayerClick, onRobotClick }) {
   return (
     <>
-      <h3>What mode do you want to play?</h3>;
+      <h3>What mode do you want to play?</h3>
       <div
         style={{
           width: "150px",
@@ -9,7 +9,9 @@ function Landing({ onPlayerClick }) {
           justifyContent: "space-between",
         }}
       >
-        <button style={{ fontSize: "30px" }}>🤖</button>
+        <button style={{ fontSize: "30px" }} onClick={onRobotClick}>
+          🤖
+        </button>
         <button style={{ fontSize: "30px" }} onClick={onPlayerClick}>
           🧍
         </button>
