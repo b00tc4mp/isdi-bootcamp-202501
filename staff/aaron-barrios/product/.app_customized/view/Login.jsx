@@ -22,31 +22,23 @@ function Login({ onRegisterClick, onLoginSubmit }) {
         }
     }
 
-    return <div style={{ width: "400px" }}>
+    return <div className="login">
         <h2>Login</h2>
 
-        <form onSubmit={handleLoginSubmit}
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "left",
-                gap: "5px"
-            }}>
+        <form onSubmit={handleLoginSubmit} style={{ marginTop: '1rem' }}>
+            <div className="field">
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" />
+            </div>
 
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" style={{ width: "350px" }} />
+            <div className="field">
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" />
+            </div>
 
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" style={{ width: "350px" }} />
-
-            <span
-                style={{
-                    margin: "10px 60px 10px 10px",
-                    display: "flex",
-                    justifyContent: "space-between"
-                }}>
-                <a onClick={onRegisterClick} style={{ textDecoration: "underline", cursor: "pointer" }}>Register</a>
-                <button type="submit" style={{ width: "80px" }}>Login</button>
+            <span style={{ justifyContent: 'space-between' }}>
+                <a onClick={onRegisterClick}>Register</a>
+                <button type="submit">Login</button>
             </span>
         </form>
     </div>

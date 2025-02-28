@@ -86,55 +86,54 @@ function Home({ onLogoutClick }) {
 
     console.debug('Home -> render')
 
-    return <div>
-        <header style={{ width: "100%", height: "50px", margin: "10px", display: "flex", justifyContent: "space-between", alignItems: " center" }}>
+    return <div >
+        {view === 'posts' && <header>
             <h2>Welcome, {username}</h2>
 
-            <button onClick={handleLogoutClick} style={{ width: "100px", height: "35px", marginRight: "10px" }} >Logout</button>
-        </header >
+            <button onClick={handleLogoutClick}>Logout</button>
+        </header >}
 
-        {/* --- POSTS SECTION ---     */}
-        {(posts && view === 'posts') && <main>
-            <section>
+        <main>
+            {/* --- POSTS SECTION ---     */}
+            {view === 'posts' && <section>
                 {posts.map(post => (
-                    <article style={{ marginTop: '20px', marginBottom: '50px' }}>
-                        <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: "5px", height: '20px' }}>
+                    <article>
+                        <div className="post-header">
                             <h3>{post.author}</h3>
                             <time>{post.createdAt.toISOString()}</time>
-                        </span>
-
+                        </div>
                         <img src={post.image} />
 
-                        <span style={{ display: 'flex', justifyContent: "left", alignItems: 'center', gap: "5px", height: '20px' }}>
+                        <div className="post-footer">
                             <p>{post.text}</p>
                             <button type="button"
                                 onClick={() => handleLikeButtonClick(post.id)} >{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
                             <h5>{post.likes}</h5>
                             <button type="button" onClick={() => commentButtonClick(post.id)}>📃</button>
-                        </span>
+                        </div>
 
                         {/* --- COMMENTS SECTION ---     */}
                         {activeCommentPostId === post.id && <section>
-                            <article style={{ marginTop: '20px', marginBottom: '20px' }}>
-                                <span style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', gap: "5px", height: '20px' }}>
+                            <article >
+                                <span>
                                     <h3>Eugeni</h3>
                                     <time>3d</time>
                                 </span>
 
-                                <span style={{ display: 'flex', justifyContent: "left", alignItems: 'center', gap: "5px", height: '20px' }}>
+                                <span >
                                     <p>Vinga Bouuuuusss! </p>
                                     <button type="button">❤️</button>
                                     <h5>14</h5>
                                 </span>
                             </article>
 
-                            <article style={{ marginTop: '20px', marginBottom: '20px' }}>
-                                <span style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', gap: "5px", height: '20px' }}>
+                            <article>
+                                <span >
                                     <h3>Lucho</h3>
                                     <time>3d</time>
                                 </span>
 
-                                <span style={{ display: 'flex', justifyContent: "left", alignItems: 'center', gap: "5px", height: '20px' }}>
+                                <span >
                                     <p>Alto alzado...</p>
                                     <button type="button">❤️</button>
                                     <h5>8</h5>
@@ -145,29 +144,31 @@ function Home({ onLogoutClick }) {
                             <br />
                             <input type="text" id="comment" />
                         </section>}
-
                     </article>
                 ))}
-            </section>
-        </main>}
+            </section>}
 
 
-        {/* --- CREATE POST SECTION ---     */}
-        {view === 'create-post' && <section>
-            <h2>Create Post</h2>
+            {/* --- CREATE POST SECTION ---     */}
+            {view === 'create-post' && <section>
+                <h2>Create Post</h2>
 
-            <form onSubmit={handleCreatePostSubmit} style={{ display: "flex", flexDirection: "column", justifyContent: "left", gap: "5px" }}>
-                <label htmlFor="image">Image</label>
-                <input type="url" id="image" style={{ width: "350px" }} />
-                <label htmlFor="text">Text</label>
-                <input type="text" id="text" style={{ width: "350px" }} />
+                <form onSubmit={handleCreatePostSubmit} >
+                    <label htmlFor="image">Image</label>
+                    <input type="url" id="image" />
+                    <label htmlFor="text">Text</label>
+                    <input type="text" id="text" />
 
-                <button type="submit" style={{ width: "80px" }}>Create</button>
-            </form>
+                    <button type="submit">Create</button>
+                </form>
 
-            <a onClick={handleCancelCreateClick}>Cancel</a>
-        </section>}
+                <a onClick={handleCancelCreateClick}>Cancel</a>
+            </section>}
 
-        {view === 'posts' && <button type="button" onClick={handleCreatePostClick}>🧉</button>}
+        </main>
+
+        <footer>
+            {view === 'posts' && <button onClick={handleCreatePostClick}>🧉</button>}
+        </footer>
     </div >
 }
