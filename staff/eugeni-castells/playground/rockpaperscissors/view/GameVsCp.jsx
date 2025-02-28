@@ -5,8 +5,6 @@ const GameVsCp = ({ onError, onLandingNavigation }) => {
 
   const [feedback, setFeedback] = useState({});
 
-  const [displayDots, setDisplayDots] = useState(false);
-
   useEffect(() => {
     try {
       const status = logic.getStatus();
@@ -15,7 +13,6 @@ const GameVsCp = ({ onError, onLandingNavigation }) => {
         setTimeout(() => {
           setP1Turn(!p1Turn);
           setFeedback(status);
-          setDisplayDots(false);
         }, 1500);
       } else setFeedback(status);
     } catch (error) {
@@ -31,18 +28,16 @@ const GameVsCp = ({ onError, onLandingNavigation }) => {
 
       setP1Turn(!p1Turn);
 
-      setDisplayDots(true);
-
       logic.generateMachineMove();
 
       logic.checkRound();
 
       logic.checkWinGame();
     } catch (error) {
-      // alert(error.message);
+      alert(error.message);
 
-      // console.error(error);
-      onError(error);
+      console.error(error);
+      // onError(error);
     }
   };
 
@@ -58,7 +53,14 @@ const GameVsCp = ({ onError, onLandingNavigation }) => {
   return (
     <div>
       <h1>
-        {p1Turn ? "Player's " : "Machine's"} turn {displayDots && "..."}
+        {p1Turn ? (
+          "Player's turn"
+        ) : (
+          <div className="playerTurn-info">
+            <span>Machine's turn</span>
+            <div className="loading-animation"></div>
+          </div>
+        )}
       </h1>
       <div
         style={{

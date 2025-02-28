@@ -34,7 +34,7 @@ logic = {
     }
   },
   checkWinGame() {
-    let { p1Wins, constants, p2Wins, winner } = data;
+    let { p1Wins, constants, p2Wins } = data;
 
     const { NEEDED_ROUNDS } = constants;
 
