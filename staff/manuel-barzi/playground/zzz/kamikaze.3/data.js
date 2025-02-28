@@ -13,20 +13,8 @@ const data = {
     warship: {
         x: 500,
         y: 500,
-        boxes: [
-            {
-                x: 60,
-                y: 0,
-                width: 50,
-                height: 180
-            },
-            {
-                x: 0,
-                y: 110,
-                width: 195,
-                height: 80
-            }
-        ]
+        width: constant.warship.WIDTH,
+        height: constant.warship.HEIGHT
     },
     kamikazes: [
         // {

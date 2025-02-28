@@ -1,6 +1,7 @@
 const logic = {
     constant: {
-        STEP: 20
+        STEP: 20,
+        INTERSECTION_OFFSET: 0
     },
     helper: {
         isIntersecting() {
@@ -11,26 +12,38 @@ const logic = {
             for (let i = 0; i < kamikazes.length && !intersecting; i++) {
                 const kamikaze = kamikazes[i]
 
-                const { x: o1x, y: o1y } = kamikaze
+                for (let i = 0; i < kamikaze.boxes.length && !intersecting; i++) {
+                    const kb = kamikaze.boxes[i]
 
-                const o2x = o1x + kamikaze.width
-                const o2y = o1y + kamikaze.height
+                    const k1x = kamikaze.x + kb.x + logic.constant.INTERSECTION_OFFSET
+                    const k1y = kamikaze.y + kb.y + logic.constant.INTERSECTION_OFFSET
 
-                const { x: p1x, y: p1y } = warship
+                    const k2x = k1x + kb.width - logic.constant.INTERSECTION_OFFSET
+                    const k2y = k1y + kb.height - logic.constant.INTERSECTION_OFFSET
 
-                const p2x = p1x + warship.width
-                const p2y = p1y + warship.height
+                    for (let i = 0; i < warship.boxes.length && !intersecting; i++) {
+                        const wb = warship.boxes[i]
 
-                if (
-                    o2x >= p1x && o2y >= p1y && o2x <= p2x && o2y <= p2y
-                    ||
-                    o1x >= p1x && o1y >= p1y && o1x <= p2x && o1y <= p2y
-                    ||
-                    o1x >= p1x && o2y >= p1y && o1x <= p2x && o2y <= p2y
-                    ||
-                    o2x >= p1x && o1y >= p1y && o2x <= p2x && o1y <= p2y
-                )
-                    intersecting = true
+                        const w1x = warship.x + wb.x + logic.constant.INTERSECTION_OFFSET
+                        const w1y = warship.y + wb.y + logic.constant.INTERSECTION_OFFSET
+
+                        const w2x = w1x + wb.width - logic.constant.INTERSECTION_OFFSET
+                        const w2y = w1y + wb.height - logic.constant.INTERSECTION_OFFSET
+
+                        console.log({ k1x, k1y, k2x, k2y }, { w1x, w1y, w2x, w2y })
+
+                        if (
+                            k2x >= w1x && k2y >= w1y && k2x <= w2x && k2y <= w2y
+                            ||
+                            k1x >= w1x && k1y >= w1y && k1x <= w2x && k1y <= w2y
+                            ||
+                            k1x >= w1x && k2y >= w1y && k1x <= w2x && k2y <= w2y
+                            ||
+                            k2x >= w1x && k1y >= w1y && k2x <= w2x && k1y <= w2y
+                        )
+                            intersecting = true
+                    }
+                }
             }
 
             return intersecting
@@ -38,15 +51,16 @@ const logic = {
     },
 
     getStatus() {
-        const { warship: { x, y }, kamikazes, lost } = data
+        const { warship: { x, y, boxes }, kamikazes, lost } = data
 
 
         const status = {
             warship: {
                 x,
-                y
+                y,
+                boxes
             },
-            kamikazes: kamikazes.map(({ x, y }) => ({ x, y })),
+            kamikazes: kamikazes.map(({ x, y, boxes }) => ({ x, y, boxes })),
             lost
         }
 
@@ -54,30 +68,40 @@ const logic = {
     },
 
     goRight() {
+        if (data.lost) throw new Error('game over')
+
         data.warship.x += logic.constant.STEP
 
         data.lost = logic.helper.isIntersecting()
     },
 
     goLeft() {
+        if (data.lost) throw new Error('game over')
+
         data.warship.x -= logic.constant.STEP
 
         data.lost = logic.helper.isIntersecting()
     },
 
     goDown() {
+        if (data.lost) throw new Error('game over')
+
         data.warship.y += logic.constant.STEP
 
         data.lost = logic.helper.isIntersecting()
     },
 
     goUp() {
+        if (data.lost) throw new Error('game over')
+
         data.warship.y -= logic.constant.STEP
 
         data.lost = logic.helper.isIntersecting()
     },
 
     updateKamikazes() {
+        if (data.lost) throw new Error('game over')
+
         const now = Date.now()
         const before = data.time
 
@@ -90,13 +114,27 @@ const logic = {
             const kamikaze = {
                 x: Math.round(1000 * Math.random()),
                 y: 0,
-                width: constant.kamikaze.WIDTH,
-                height: constant.kamikaze.HEIGHT
+                boxes: [
+                    {
+                        x: 30,
+                        y: 0,
+                        width: 40,
+                        height: 100
+                    },
+                    {
+                        x: 0,
+                        y: 35,
+                        width: 75,
+                        height: 40
+                    }
+                ]
             }
 
             data.kamikazes.push(kamikaze)
 
             data.time = now
         }
+
+        data.lost = logic.helper.isIntersecting()
     }
 }

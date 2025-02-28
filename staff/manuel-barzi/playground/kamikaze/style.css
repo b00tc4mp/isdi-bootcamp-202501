@@ -1,10 +1,63 @@
 .kamikaze {
+    /* border: 1px solid green; */
     position: absolute;
     width: 100px;
+    height: 100px;
+}
+
+.kamikaze-image {
+    position: absolute;
+    width: 100px;
+    height: 100px;
     transform: rotateZ(55deg);
 }
 
+.kamikaze-detection-box-1 {
+    /* border: 1px solid red; */
+    position: absolute;
+    /* left: 30px;
+    top: 0px;
+    width: 40px;
+    height: 100px; */
+}
+
+.kamikaze-detection-box-2 {
+    /* border: 1px solid blue; */
+    position: absolute;
+    /* left: 0px;
+    top: 35px;
+    width: 75px;
+    height: 40px; */
+}
+
 .warship {
+    /* border: 1px solid green; */
     position: absolute;
     width: 200px;
+    height: 200px;
+}
+
+.warship-image {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 200px;
+}
+
+.warship-detection-box-1 {
+    /* border: 1px solid red; */
+    position: absolute;
+    /* left: 60px;
+    top: 0px;
+    width: 50px;
+    height: 180px; */
+}
+
+.warship-detection-box-2 {
+    /* border: 1px solid blue; */
+    position: absolute;
+    /* left: 0px;
+    top: 110px;
+    width: 195px;
+    height: 80px; */
 }

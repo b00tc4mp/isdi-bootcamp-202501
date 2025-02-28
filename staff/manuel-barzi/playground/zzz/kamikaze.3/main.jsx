@@ -60,9 +60,9 @@ function App() {
 
     return <>
         {status && <>
-            <Warship x={status.warship.x} y={status.warship.y} boxes={status.warship.boxes} />
+            <Warship x={status.warship.x} y={status.warship.y} />
 
-            {status.kamikazes.map(({ x, y, boxes }) => <Kamikaze x={x} y={y} boxes={boxes} />)}
+            {status.kamikazes.map(({ x, y }) => <Kamikaze x={x} y={y} />)}
 
             {status.lost && <h1>YOU LOSE!</h1>}
         </>}
