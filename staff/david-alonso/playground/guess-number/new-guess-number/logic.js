@@ -1,17 +1,4 @@
-// Usuario 
-// - introducir un numero a adivinar del 0 al 100 
-const data = {
-
-    // - generar un numero aleatorio del 0 al 100
-    RANDOM_NUMBER: Math.floor(Math.random() * 100 + 1),
-    // console.log(data.randomNumber)
-
-    // - numero maximos de intentos 10
-    ATTEMPS: 0,
-
-    MAX_ATTEMPS: 10,
-
-}
+// LOGIC
 
 const logic = {
 
@@ -56,29 +43,3 @@ const logic = {
         // Pedir un nuevo intento después de cada verificación
     }
 }
-
-const interface = {
-
-    // - comenzar el juego 
-    startGame() {
-        // Solicitar el primer intento
-        interface.askNumber()
-        // llamamos a la funcion para pedir el numero al usuario
-    },
-
-    // - pedir el numero al usuario 
-    askNumber() {
-
-        // - si los intentos son menores que el numero maximo de intentos y si no es 
-        // el numero del usuario 
-        if (data.ATTEMPS < data.MAX_ATTEMPS) {
-            const number = parseInt(prompt('ADIVINA EL NUMERO DEL 0 AL 100 ❓❓'))
-
-            logic.guessNumber(number)
-        } else {
-            alert('Perdiste. El número era ' + data.RANDOM_NUMBER)
-        }
-    }
-}
-
-interface.startGame()
