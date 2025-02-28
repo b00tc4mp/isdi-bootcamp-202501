@@ -73,49 +73,41 @@ function Home({ onLogoutClick }) {
     console.debug('Home -> render')
 
     return <div>
-        <header>
-            <h1>Logo</h1>
+        <h1>Logo</h1>
 
-            <h2>Hello, {userName}!</h2>
+        <h2>Hello, {userName}!</h2>
 
-            <button type="button" onClick={handleLogoutClick}>Logout</button>
-        </header>
+        <button type="button" onClick={handleLogoutClick}>Logout</button>
 
-        <main>
-            {view === 'posts' && <section>
-                {posts.map(post =>
-                    <article>
-                        <h3>{post.author}</h3>
+        {view === 'posts' && <section>
+            {posts.map(post =>
+                <article>
+                    <h3>{post.author}</h3>
 
-                        <img src={post.image} />
+                    <img src={post.image} />
 
-                        <p>{post.text}</p>
+                    <p>{post.text}</p>
 
-                        <div className="post-footer">
-                            <time>{post.createdAt.toISOString()}</time>
+                    <time>{post.createdAt.toISOString()}</time>
 
-                            <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
-                        </div>
-                    </article>)}
-            </section>}
+                    <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
+                </article>)}
+        </section>}
 
-            {view === 'create-post' && <section>
-                <form onSubmit={handleCreatePostSubmit}>
-                    <label htmlFor="image">Image</label>
-                    <input type="url" id="image" />
+        {view === 'create-post' && <section>
+            <form onSubmit={handleCreatePostSubmit}>
+                <label htmlFor="image">Image</label>
+                <input type="url" id="image" />
 
-                    <label htmlFor="text">Text</label>
-                    <input type="text" id="text" />
+                <label htmlFor="text">Text</label>
+                <input type="text" id="text" />
 
-                    <button type="submit">Create</button>
-                </form>
+                <button type="submit">Create</button>
+            </form>
 
-                <a>Cancel</a>
-            </section>}
-        </main>
+            <a>Cancel</a>
+        </section>}
 
-        <footer>
-            {view === 'posts' && <button onClick={handleAddPostClick}>+</button>}
-        </footer>
+        {view === 'posts' && <button onClick={handleAddPostClick}>+</button>}
     </div>
 }

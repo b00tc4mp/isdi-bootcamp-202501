@@ -30,25 +30,17 @@ function Register({ onLoginClick, onRegisterSubmit }) {
         <h1>Logo</h1>
 
         <form onSubmit={handleRegisterSubmit}>
-            <div className="field">
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" placeholder="name" />
-            </div>
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" />
 
-            <div className="field">
-                <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" />
-            </div>
+            <label htmlFor="email">E-mail</label>
+            <input type="email" id="email" />
 
-            <div className="field">
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" />
-            </div>
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" />
 
-            <div className="field">
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" />
-            </div>
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" />
 
             <button type="submit">Register</button>
         </form>
