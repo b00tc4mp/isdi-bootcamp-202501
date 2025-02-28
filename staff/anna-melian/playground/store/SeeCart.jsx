@@ -1,32 +1,32 @@
+function SeeCart({ returnClick }) {
+    const [cart, setCart] = useState([])
 
-function ShowProducts({ returnClick }) {
-    const [products, setProducts] = useState([])
 
-
-    console.debug('Store ---> Show products')
+    console.debug('Store ---> See cart')
 
     const handleReturnClick = () => {
         returnClick()
     }
 
 
-    const handleAddCartClick = (product, name) => {
-        logic.addProductToCart(product)
-        //alert(`${name} add to the cart`)
+    const handleRemoveCartClick = (product, name) => {
+        logic.removeProductCart(product)
+        setCart(data.cart)
+        //alert(`${name} remove form the cart`)
 
     }
 
 
     useEffect(() => {
-        setProducts(data.products)
+        setCart(data.cart)
 
-    }, [])
+    }, [cart])
 
     return <>
-        <h1>Products</h1>
+        <h1>Cart</h1>
         <button onClick={handleReturnClick}>Return</button>
         <section>
-            {products.map((product, index) => (
+            {cart.map((product, index) => (
                 <div key={index}>
                     <h3>{product.name}</h3>
                     {/* Comprobamos si el producto tiene imagen antes de mostrarla */}
@@ -35,13 +35,13 @@ function ShowProducts({ returnClick }) {
                     ) : (
                         <p>No image available</p>
                     )}
-                    <button onClick={() => handleAddCartClick(product, product.name)}>Add product to the cart</button>
                     <details>
                         <summary>More Information</summary>
                         <p>Price: {product.price} €</p>
                         <p>Type: {product.type}</p>
 
                     </details>
+                    <button onClick={() => handleRemoveCartClick(product, product.name)}>Remove product from the cart</button>
 
                 </div>
             ))}

@@ -32,6 +32,7 @@ function Store() {
         {view === 'menu' && <Menu handleSubmitMenu={handleSubmitMenu} />}
         {view === 'seeProducts' && <ShowProducts returnClick={returnClick} />}
         {view === 'searchProduct' && <SearchProduct returnClick={returnClick} />}
+        {view === 'seeCart' && <SeeCart returnClick={returnClick} />}
     </>
 
 }

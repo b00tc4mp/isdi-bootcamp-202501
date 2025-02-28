@@ -36,14 +36,14 @@ var data = {
             image: 'https://imgs.search.brave.com/gGemZjNdRXYEknamBxDQf95UnZW4P-Q91_pq6ij2mcA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTFyQ0xhK2xqV0wu/anBn'
         },
         {
-            id: 'toy08',
+            id: 'toy06',
             name: 'Puzzle for Kids',
             type: 'Puzzle',
             price: 22,
             image: 'https://imgs.search.brave.com/kX8rsBKHwSPjOk7D6Jg0Lq-C8xDFShc8mPByT48DXbM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzYxazU3eVhLVmlM/LmpwZw'
         },
         {
-            id: 'toy09',
+            id: 'toy07',
             name: 'Remote Control Helicopter',
             type: 'Electronic Toy',
             price: 30,

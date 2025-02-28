@@ -38,6 +38,13 @@ function SearchProduct({ returnClick }) {
     }
 
 
+    const handleAddCartClick = (product, name) => {
+        logic.addProductToCart(product)
+        //alert(`${name} add to the cart`)
+
+    }
+
+
     return <>
         <h2>Search a product</h2>
         <form onSubmit={handleSubmit}>
@@ -56,10 +63,12 @@ function SearchProduct({ returnClick }) {
                     ) : (
                         <p>No image available</p>
                     )}
+                    <button onClick={() => handleAddCartClick(product, product.name)}>Add product to the cart</button>
                     <details>
                         <summary>More Information</summary>
                         <p>Price: {product.price} €</p>
                         <p>Type: {product.type}</p>
+
                     </details>
                 </div>
             ))}

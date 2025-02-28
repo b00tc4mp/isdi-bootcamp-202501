@@ -79,12 +79,15 @@ var logic = {
 
     },
 
-    addProductToCart: function (id) {
-        for (var i = 0; i < data.products.length; i++) {
-            if (id === data.products[i].id) {
-                data.cart[data.cart.length] = data.products[i]
-            }
-        }
+    addProductToCart: function (product) {
+        data.cart.push(product)
+
+
+    },
+
+    removeProductCart: function (product) {
+        const productIndex = data.cart.indexOf(product)
+        data.cart.splice(productIndex)
     },
 
     cartStatus: function () {
