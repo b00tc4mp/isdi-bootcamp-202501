@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+html {
+    font-family: "Oswald", serif;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+
+    --bg-color: rgb(255, 205, 238);
+    --primary-color: rgb(31, 31, 31);
+    --secondary-color: rgb(143, 107, 125);
+    --padding-x: 1rem;
+    --padding-y: .25rem;
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: var(--bg-color);
+    border: 0;
+    font-family: inherit;
+    /* font-size: 1rem; */
+}
+
+form {
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-size: 1.5rem;
+}
+
+input {
+    width: 25rem;
+    height: 1.5rem;
+}
+
+h3 {
+    width: 30rem;
+}
+
+#game-buttons button {
+    padding: 1rem;
+    margin: 1rem
+}
