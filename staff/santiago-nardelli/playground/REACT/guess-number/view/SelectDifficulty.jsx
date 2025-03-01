@@ -9,7 +9,7 @@ function SelectDifficulty({onSelectClick}) {
       alert("Ha ocurrido un error. Por favor, vuelva a intentarlo.");
     }
   };
-//CUANDO QUIERO CAPTURAR UN VALOR DE UN MEOTODO LO DECLARO () =>  
+  
   return (
     <>
    
@@ -22,9 +22,3 @@ function SelectDifficulty({onSelectClick}) {
     </>
 )
 }
-/**
- * Dudas al respecto de mi select:
- * el onClick que recibo por parametro es el que traigo desde app?
- * lo tengo que llamar dentro de mi handleSelect, para poder navegar al momento de elegir la dificultad ?
- * y mis onClick de los botones solo estan relacionados con mi handleSelect?
- */

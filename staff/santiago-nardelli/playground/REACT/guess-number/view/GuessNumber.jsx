@@ -2,17 +2,23 @@ function GuessNumber({onResetGame}) {
   const useEffect = React.useEffect;
   const [userEntry, setUserEntry] = React.useState("");
   const [attempts, setAttempts] = React.useState(logic.getStatus());
+  const [message , setMessage] = React.useState("");  
 
+
+
+  //Capturo el valor del input
   const handleChange = (event) => {
     setUserEntry(event.target.value);
   };
 
   const handleSubmitNumber = (event) => {
     event.preventDefault();
+
     try {
-      const remainingAttempts = logic.askUser(userEntry);
-      setAttempts(remainingAttempts);
-      setUserEntry(""); // Reset the input field
+      const result = logic.tryNumber(userEntry);
+      setAttempts(result.attempts);
+      setMessage(result.message)
+      setUserEntry(""); 
     } catch (error) {
       console.error(error.message);
       alert("Error: " + error.message);
@@ -22,7 +28,7 @@ function GuessNumber({onResetGame}) {
   const handleResetGame = () => {
     try {
       logic.playAgain();
-      // logic.createARandomNumber();
+      
       setAttempts(logic.getStatus());
       setUserEntry("");
       onResetGame();
@@ -50,6 +56,8 @@ function GuessNumber({onResetGame}) {
         <button type="submit">Try your luck</button>
       </form>
       <p>Attempts: {attempts}</p>
+      <p>{message}</p>
+      <br />
       <button onClick={handleResetGame}>Reset Game</button>
     </div>
   );

@@ -136,3 +136,17 @@ git clone "name repository github (link)"
 ```sh 
 git reset 374ff61eef829d3af47e65d693fc7599933a818b
 ```
+
+
+## Git 
+
+* El comando git checkout HEAD~1 es una forma de navegar en el historial de commits de Git. Veamos en detalle qué hace y cómo funciona:
+
+```sh 
+Explicación Básica
+Este comando realiza dos operaciones principales:
+
+Navegación: Se mueve al commit inmediatamente anterior al actual (HEAD)
+Checkout: Actualiza el directorio de trabajo para reflejar ese estado
+```
+

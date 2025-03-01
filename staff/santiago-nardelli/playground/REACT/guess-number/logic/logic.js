@@ -1,105 +1,110 @@
 const logic = {
-  constants: {
-    randomNumber: 0,
-    attempts: 0,
-  },
+  helpers: {
+    isEmpty(userEntry) {
+      if (userEntry === null || userEntry === "")
+        throw new Error("El campo no puede estar vacío.");
+      if (userEntry === "exit")
+        throw new Error("El usuario ha cancelado la partida.");
+    },
 
+    isNumber(userEntry) {
+      if (isNaN(userEntry))
+        throw new TypeError("El valor ingresado no es un número.");
+    },
+
+    isInRange(userEntry) {
+      if (userEntry < 1 || userEntry > 100)
+        throw new RangeError("El número ingresado está fuera de rango.");
+    },
+  },
   createARandomNumber() {
-    this.constants.randomNumber = Math.floor(Math.random() * 100 + 1);
-    console.log(this.constants.randomNumber);
+    data.constants.randomNumber = Math.floor(Math.random() * 100 + 1);
+    console.log(data.constants.randomNumber);
   },
-  askUser(userEntry) {
-    if (userEntry === null)
-      throw new Error("El usuario ha cancelado la partida.");
-
+  tryNumber(userEntry) {
+    
+    this.helpers.isEmpty(userEntry);
     userEntry = parseInt(userEntry);
+    this.helpers.isNumber(userEntry);
+    this.helpers.isInRange(userEntry);
 
-    if (isNaN(userEntry) || userEntry < 1 || userEntry > 100)
-      throw new Error("El número ingresado no es válido.");
-
-    this.evaluateDifference(userEntry);
-    return this.constants.attempts;
+    const difference = this.evaluateDifference(userEntry);
+    
+    const result = this.sendMessage(difference);
+    return result;
   },
   evaluateDifference(userEntry) {
-    var difference = userEntry - this.constants.randomNumber;
-    // Si la diferencia es negativa, la hago positiva
+    let difference = userEntry - data.constants.randomNumber;
     if (difference < 0) {
       difference = -difference;
     }
 
-    console.log(difference);
-
-
-    //Agrego una variable que me aloje mi resultado para poder separar mis capa L de la de I 
-    
-
-    if (difference === 0) {
-      this.isWon();
-    } else if (difference > 0 && difference <= 10) {
-      alert("Super hot");
-      this.constants.attempts--;
-    } else if (difference > 10 && difference <= 20) {
-      alert("Hot");
-      this.constants.attempts--;
-    } else if (difference > 20 && difference <= 30) {
-      alert("Warm");
-      this.constants.attempts--;
-    } else if (difference > 30 && difference <= 40) {
-      alert("Cold");
-      this.constants.attempts--;
-    } else if (difference > 40 && difference <= 100) {
-      alert("Super cold");
-      this.constants.attempts--;
-    }
-    if (this.constants.attempts === 0) {
-      this.isLost();
-    }
-  },
-
-  isLost() {
-    if (attempts === 0) {
-      alert(
-        "Lo siento, no te quedan más intentos. El número era " + this.constants.randomNumber
-      );
-    }
-    this.playAgain();
-  },
-
-  isWon() {
-    if (userEntry === this.constants.randomNumber) {
-      alert("¡Felicidades, has adivinado el número!");
-    }
-    this.playAgain();
-
+    return difference;
   },
 
   playAgain() {
-    this.constants.randomNumber = 0;
-    this.constants.attempts = 0;
-    
+    data.constants.randomNumber = 0;
+    data.constants.attempts = 0;
   },
 
   getStatus() {
-    return this.constants.attempts;
+    return data.constants.attempts;
   },
 
   selectDifficulty(level) {
     switch (level) {
       case "1":
-        this.constants.attempts = 10;
+        data.constants.attempts = 10;
         break;
       case "2":
-        this.constants.attempts = 7;
+        data.constants.attempts = 7;
         break;
       case "3":
-        this.constants.attempts = 4;
+        data.constants.attempts = 4;
         break;
 
       default:
-        alert(
-          "Selección no válida. Se establecerá el nivel de dificultad en Fácil."
-        );
-        attempts = 10;
+        data.constants.attempts = 10;
     }
+  },
+
+
+  //puedo hacer destructuring de data en lugar de data.constants
+  sendMessage(difference) {
+    let result = {
+      message: "",
+      attempts: data.constants.attempts,
+      isWon: false,
+      isLost: false,
+      randomNumber: data.constants.randomNumber,
+    };
+
+    if (difference === 0) {
+      result.message = "¡Felicidades, has adivinado el número!";
+      result.isWon = true;
+    } else if (difference > 0 && difference <= 10) {
+      result.message = data.temperature.literal.VERY_HOT;
+      data.constants.attempts--;
+    } else if (difference > 10 && difference <= 20) {
+      result.message = data.temperature.literal.HOT;
+      data.constants.attempts--;
+    } else if (difference > 20 && difference <= 30) {
+      result.message = data.temperature.literal.WARM;
+      data.constants.attempts--;
+    } else if (difference > 30 && difference <= 40) {
+      result.message = data.temperature.literal.TEMPERED;
+      data.constants.attempts--;
+    } else if (difference > 40 && difference <= 100) {
+      result.message = data.temperature.literal.COLD;
+      data.constants.attempts--;
+    }
+    if (data.constants.attempts === 0 && !result.isWon) {
+      result.message =
+        "Lo siento, no te quedan más intentos. El número era " +
+        data.constants.randomNumber;
+      result.isLost = true;
+    }
+    result.attempts = data.constants.attempts;
+    return result;
   },
 };
