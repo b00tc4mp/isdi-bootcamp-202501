@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
+function Home({ onLogoutClick, onAddPostSubmit, onCancelClick }) {
     const [view, setView] = useState('posts')
     const [userName, setUsername] = useState('')
     const [posts, setPosts] = useState([])
@@ -110,17 +110,13 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
         }
     }
 
-    const handleProfileClick = () => {
-        onProfileClick()
-    }
-
     return <div class="posts">
         {/* // style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}> */}
         {/* > */}
         <section class="header">
             <h1>Logo</h1>
             <h3>Welcome, {userName}</h3>
-            <button onClick={handleProfileClick}>🤴🏻</button>
+            <button onClick={handleLogoutClick}>Logout</button>
         </section>
 
         {view === 'posts' && <section> {posts.map(post => <article>
@@ -141,6 +137,12 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
 
             <time>{post.createdAt}</time>
         </article>)}
+
+            <footer >
+                {/* style={{ display: "flex", position: "fixed", height: "40px", left: "0px", bottom: "0px", width: "100%", justifyContent: "space-around", alignItems: "center", backgroundColor: "white" }}> */}
+                <button onClick={handleAddPostClick}>➕</button>
+
+            </footer>
         </section>}
 
         {view === 'addPost' && <section >
@@ -161,10 +163,6 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
             </form>
             <a onClick={handleCancelClick}>Cancel</a>
         </section>}
-
-        <footer>
-            <button onClick={handleLogoutClick}>Logout</button>
-        </footer>
 
     </div >
 }

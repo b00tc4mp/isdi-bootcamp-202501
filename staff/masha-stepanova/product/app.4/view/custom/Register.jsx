@@ -24,7 +24,7 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
     }
 
-    return <div class="form">
+    return <div >
         {/* style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}> */}
         <h1>Logo</h1>
         <form onSubmit={handleRegisterSubmit} >

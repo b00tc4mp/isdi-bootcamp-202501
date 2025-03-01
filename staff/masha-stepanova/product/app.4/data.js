@@ -39,12 +39,7 @@ var data = {
             text: 'My beautifull new dress',
             createdAt: new Date(2025, 1, 10).toLocaleDateString(),
             modifiedAt: null,
-            likes: [],
-            comments: [
-                {
-                    commentUserId: 'm7i1ignrq9r',
-                    commentText: 'You are so beautifull to me'
-                }]
+            likes: []
         },
         {
             id: 'm739lfj0o5t',
@@ -53,8 +48,7 @@ var data = {
             text: 'Finally could see those ligths...',
             createdAt: new Date(2025, 1, 9).toLocaleDateString(),
             modifiedAt: null,
-            likes: [],
-            comments: []
+            likes: []
         }
     ],
     userId: null,

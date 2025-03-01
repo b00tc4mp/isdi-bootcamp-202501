@@ -13,7 +13,7 @@ function App() {
 
     const handleLogoutClick = () => setView('login')
 
-    const handleProfileClick = () => setView('profile')
+    const handleAddPostClick = () => setView('addPost')
 
     const handleCancelClick = () => setView('home')
 
@@ -26,8 +26,8 @@ function App() {
 
         {view === 'login' && <Login onLoginSubmit={handleLoginSubmit} onRegisterClick={handleRegisterClick} />}
 
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick} onProfileClick={handleProfileClick} onCancelClick={handleCancelClick} onAddPostSubmit={handleAddPostSubmit} />}
+        {view === 'home' && <Home onLogoutClick={handleLogoutClick} onAddPostClick={handleAddPostClick} onCancelClick={handleCancelClick} onAddPostSubmit={handleAddPostSubmit} />}
 
-        {view === 'profile' && <Profile onLogoutClick={handleLogoutClick} />}
+        {/* {view === 'addPost' && <AddPost onCancelClick={handleCancelClick} onAddPostSubmit={handleAddPostSubmit} />} */}
     </>
 }

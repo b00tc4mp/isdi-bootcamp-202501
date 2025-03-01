@@ -126,7 +126,7 @@ const logic = {
                 modifiedAt: post.modifiedAt,
                 liked: liked,
                 likesCount: post.likes.length,
-                comments: post.comments
+                // likes: post.likes
             }
 
             aggregatedPosts.push(aggregatedPost)
@@ -134,7 +134,7 @@ const logic = {
         return aggregatedPosts.reverse()
     },
 
-    addPost(link, text, comments) {
+    addPost(link, text) {
         const newPost = {
             id: data.uuid(),
             author: data.userId,
@@ -142,10 +142,7 @@ const logic = {
             text: text,
             createdAt: new Date().toLocaleDateString(),
             modifiedAt: null,
-            likes: [],
-            comments: []
-            // commentUserId: comments.commentUserId,
-            // commentText: comments.commentText
+            likes: []
         }
 
         data.posts.push(newPost)
@@ -184,58 +181,5 @@ const logic = {
             }
         }
         return false
-    },
-
-    commentPost(postId) {
-
-    },
-
-    getUserPosts() {
-        const userId = data.userId
-        const aggregatedPosts = []
-
-        for (let i = 0; i < data.posts.length; i++) {
-            const post = data.posts[i]
-
-            if (post.author === userId) {
-
-                let liked = false
-
-                for (let i = 0; i < post.likes.length && !liked; i++) {
-                    const userId = post.likes[i]
-
-                    if (userId === data.userId)
-                        liked = true
-                }
-
-                const aggregatedPost = {
-                    id: post.id,
-                    author: post.author,
-                    image: post.image,
-                    text: post.text,
-                    ceatedAt: post.createdAt,
-                    modifiedAt: post.modifiedAt,
-                    liked: liked,
-                    likesCount: post.likes.length,
-                    comments: post.comments
-                }
-
-                aggregatedPosts.push(aggregatedPost)
-            }
-        }
-        return aggregatedPosts.reverse()
-    },
-
-    deletePost(postId) {
-        for (let i = 0; i < data.posts.length; i++) {
-            const post = data.posts[i]
-
-            if (postId === post.id) {
-                data.posts.splice(i, 1)
-            }
-
-        }
-
-        return data.posts
     }
 }

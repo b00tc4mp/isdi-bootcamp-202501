@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
+function Home({ onLogoutClick, onAddPostSubmit, onCancelClick }) {
     const [view, setView] = useState('posts')
     const [userName, setUsername] = useState('')
     const [posts, setPosts] = useState([])
@@ -75,6 +75,37 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
         }
     }
 
+    // function printPosts() {
+    //     try {
+    //         const postsToPrint = []
+
+    //         for (let i = posts.length - 1; i > - 1; i--) {
+    //             // const likedBy = logic.isPostLikedByUser(posts[i]) ? '❤️' : '🤍'
+
+    //             postsToPrint.push(<article>
+    //                 <h3>{posts[i].author}</h3>
+    //                 <img src={posts[i].image} />
+    //                 <p>{posts[i].text}</p>
+    //                 <section>
+    //                     {posts[i].likes.length}
+    //                     <button onClick={handleLikeClick(posts[i])}>{likedByUser}</button>
+    //                 </section>
+    //                 <time>{posts[i].createdAt}</time>
+    //             </article>)
+    //         }
+
+    //         return postsToPrint
+
+    //     } catch (error) {
+    //         console.error(error)
+
+    //         alert(error.message)
+    //     }
+
+
+    // }
+    //poner like a un post, enviar data y pintarlo del color correspondiente
+
     const handleLikeClick = (postId) => {
         try {
             logic.likePost(postId)
@@ -89,58 +120,31 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
         }
     }
 
-    const handleCommentSubmit = (event) => {
-        try {
-            // const name = logic.getUserName()
-            const { target: form } = event
-
-            const {
-                commentText: { value: commentText }
-            } = form
-
-            logic.commentPost(postId, commentText)
-
-            const posts = logic.getPosts()
-
-            setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    const handleProfileClick = () => {
-        onProfileClick()
-    }
-
-    return <div class="posts">
+    return <div>
         {/* // style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}> */}
         {/* > */}
-        <section class="header">
-            <h1>Logo</h1>
-            <h3>Welcome, {userName}</h3>
-            <button onClick={handleProfileClick}>🤴🏻</button>
-        </section>
-
+        <h1>Logo</h1>
+        <h3>Welcome, {userName}</h3>
         {view === 'posts' && <section> {posts.map(post => <article>
             <h3>{post.author}</h3>
 
             <img src={post.image} />
 
-            <section className="post-underline">
-                <p>{post.text}</p>
+            <p>{post.text}</p>
+
+            <section>
+                {/* {post.likes} */}
                 <button onClick={() => handleLikeClick(post.id)}>{`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
-                {/* <form onSubmit={handleCommentSubmit}>
-
-                    <button type="submit">📋</button>
-                </form> */}
-
             </section>
-            {/* <p>{post.comments}</p> */}
 
             <time>{post.createdAt}</time>
         </article>)}
+
+            <footer >
+                {/* style={{ display: "flex", position: "fixed", height: "40px", left: "0px", bottom: "0px", width: "100%", justifyContent: "space-around", alignItems: "center", backgroundColor: "white" }}> */}
+                <button onClick={handleAddPostClick}>➕</button>
+                <button onClick={handleLogoutClick}>Logout</button>
+            </footer>
         </section>}
 
         {view === 'addPost' && <section >
@@ -161,10 +165,6 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
             </form>
             <a onClick={handleCancelClick}>Cancel</a>
         </section>}
-
-        <footer>
-            <button onClick={handleLogoutClick}>Logout</button>
-        </footer>
 
     </div >
 }
