@@ -1,8 +1,10 @@
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const { useState } = React
-//TODO sale alerta cada vez que se introduce un número aunque lo registra bien
-//TODO no verifica bien el ganador o el perdedor.
+//TODO ponerlo bonito
+//TODO no poder repetir número
+//TODO fallo en el mensaje del perdedor
+
 
 //INPUT:
 
@@ -36,12 +38,17 @@ const { useState } = React
             const numeroJugador = form.numeroJugador.value
 
             logic.crearNumeroJugador(Number(numeroJugador))
+
             const status = logic.getStatus()
             setStatus(status)
-            temperatura = ''
+
             setTemperatura(status.temperatura)
 
             event.target.numeroJugador.value = ""
+
+            if (logic.helper.ganado() || logic.helper.perdido())
+                setView('game-over')
+
             
         } catch (error) {
             console.error(error)
@@ -67,27 +74,32 @@ const { useState } = React
      //OUTPUT:
 
     return <>
-    {view === 'start' && <button onClick= {handleStartClick}>CREAR NÚMERO ALEATORIO</button>}
-    {view === 'play' && <>
-        <form onSubmit={handlePutNumberSubmit}>
-            <label htmlFor="number">Introduzca un número</label>
-            <input type="number" id="number" name="numeroJugador"/>
+        {view === 'start' && <button onClick= {handleStartClick}>CREAR NÚMERO ALEATORIO</button>}
+        {view === 'play' && <>
+            <form onSubmit={handlePutNumberSubmit}>
+                <label htmlFor="number">Introduzca un número</label>
+                <input type="number" id="number" name="numeroJugador"/>
+ 
+                <button type="submit">Enter</button>
+            </form>
+ 
+            {status && <>
+                <p>{`${status.temperatura}, te quedan ${status.oportunidadesRestantes} oportunidades. Números dichos: ${status.numerosDichos}.`}</p>
+   
+            </>}
+ 
+            <button onClick={handleReiniciarClick}>Reiniciar Juego</button>
+         </>}
 
-            <button type="submit">Enter</button>
-        </form>
-
-        {status && <>
-            <p>{`${status.temperatura}, te quedan ${status.oportunidadesRestantes} oportunidades. Números dichos: ${status.numerosDichos}.`}</p>
-
-            {status.hasGanado && <h2>FELICIDADES, HAS GANADO!</h2>}
-            
-            {status.hasPerdido && <h2>HAS PERDIDO, EL NÚMERO ERA ${numeroCreado}.</h2>}
+        {view === 'game-over' && <>
+            <p>
+                {status.hasGanado && <h2>FELICIDADES, HAS GANADO!</h2>}
+                {status.hasPerdido && <h2>HAS PERDIDO, EL NÚMERO ERA ${numeroCreado}.</h2>}
+            </p>
+            <button onClick={handleReiniciarClick}>Reiniciar Juego</button>
         </>}
-
-        <button onClick={handleReiniciarClick}>Reiniciar Juego</button>
-    </>}
-
-    </>
+     </>
 }
+ 
 
  root.render(<App />)

@@ -2,11 +2,11 @@ const logic = {
 
     helper: {
         ganado() {
-            return (data.intervaloNumeros === 0)
+            return (data.numeroJugador === data.numeroCreado)
         },
 
         perdido() {
-            return (data.oportunidades >= data.oportunidadesMaximas)
+            return (data.oportunidades >= data.oportunidadesMaximas && data.numeroJugador !== data.numeroCreado)
         }
     },
 
@@ -19,12 +19,11 @@ const logic = {
         if(isNaN (numeroJugador) || numeroJugador < 0 || numeroJugador > 100) {
             throw new Error ('error.message') 
         }
+
         data.numeroJugador = numeroJugador
         data.intervaloNumeros = Math.abs(data.numeroCreado - data.numeroJugador)
         data.numerosDichos.push(data.numeroJugador)
 
-
-        
         data.oportunidades++
         data.oportunidadesRestantes = data.oportunidadesMaximas - data.oportunidades
 
@@ -40,12 +39,9 @@ const logic = {
             data.temperatura = '¡Muy Caliente!'//data.temperatura.MUY_CALIENTE  
         }else if (data.intervaloNumeros <= 5 && data.intervaloNumeros >= 1) {
             data.temperatura = '¡Te quemas!'// data.temperatura.QUEMA
-        }else{
-            throw new Error ('Algo va mal')
+        /*}else{
+            throw new Error ('Algo va mal')*/
         }
-
-        if(this.helper.ganado() || this.helper.perdido()) throw new Error ('Se acabó el juego.')
-
     },
 
     getStatus() {
@@ -69,5 +65,6 @@ const logic = {
         data.numeroCreado = -1;
         data.numeroJugador = '';
         data.temperatura = '';
-        }
     }
+}
+    
