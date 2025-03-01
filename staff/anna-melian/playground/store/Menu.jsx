@@ -39,12 +39,12 @@ function Menu({ handleSubmitMenu }) {
             <label>What do you want to do?</label>
             <select name="userAnswer">
                 <option value="" defaultValue={''}>Please choose an option</option>
-                <option value="seeProducts">0: SEE THE PRODUCTS</option>
-                <option value="searchProduct">1: SEARCH A PRODUCT</option>
-                <option value="createNewProduct">2: CREATE A NEW PRODUCT</option>
-                <option value="seeCart">3: SEE THE CART</option>
-                <option value="generateRecipt">4: GENERATE A RECIPT</option>
-                <option value="seeBuyingHistory">5: SEE BUYING HISTORY</option>
+                <option value="seeProducts">SEE THE PRODUCTS</option>
+                <option value="searchProduct">SEARCH A PRODUCT</option>
+                <option value="createNewProduct">CREATE A NEW PRODUCT</option>
+                <option value="seeCart">SEE THE CART</option>
+                <option value="generateRecipt">GENERATE A RECIPT</option>
+                <option value="seeBuyingHistory">SEE BUYING HISTORY</option>
             </select>
             <button type="submit">Enter</button>
         </form>

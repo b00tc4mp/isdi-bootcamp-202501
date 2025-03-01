@@ -87,7 +87,7 @@ var logic = {
 
     removeProductCart: function (product) {
         const productIndex = data.cart.indexOf(product)
-        data.cart.splice(productIndex)
+        data.cart.splice(productIndex, 1)
     },
 
     cartStatus: function () {

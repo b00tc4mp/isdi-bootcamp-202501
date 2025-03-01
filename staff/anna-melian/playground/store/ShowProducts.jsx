@@ -10,7 +10,7 @@ function ShowProducts({ returnClick }) {
     }
 
 
-    const handleAddCartClick = (product, name) => {
+    const handleAddCartClick = (product) => {
         logic.addProductToCart(product)
         //alert(`${name} add to the cart`)
 
@@ -35,7 +35,7 @@ function ShowProducts({ returnClick }) {
                     ) : (
                         <p>No image available</p>
                     )}
-                    <button onClick={() => handleAddCartClick(product, product.name)}>Add product to the cart</button>
+                    <button onClick={() => handleAddCartClick(product)}>Add product to the cart</button>
                     <details>
                         <summary>More Information</summary>
                         <p>Price: {product.price} €</p>
