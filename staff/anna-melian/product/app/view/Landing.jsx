@@ -3,6 +3,6 @@ function Landing({ onRegisterClick, onLoginClick }) {
 
     return <div>
         <h1>Logo</h1>
-        <a onClick={onRegisterClick}>Register</a>or<a onClick={onLoginClick}>Login</a>
+        <a onClick={onRegisterClick}>Register</a> or <a onClick={onLoginClick}>Login</a>
     </div>
 }
