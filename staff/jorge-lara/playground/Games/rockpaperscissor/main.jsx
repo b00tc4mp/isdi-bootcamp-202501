@@ -3,38 +3,51 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 const { useState } = React;
 
 function App() {
-    const [view, setView] = useState('gamemode');
-    const [gamemode, setGamemode] = useState(null);
+    const [view, setView] = useState('game');
     const [result, setResult] = useState(null);
 
-    const handleGamemodeClick = (mode) => {
-        setGamemode(mode);
-        
+    const handleStartGameClick = () => {
         setView('game');
     }
 
-    const handlePlaySubmit = event =>{
-        event.preventDefault();
-
-        setResult(logic.startGame(gamemode,'r'));
+    const handlePlayClick = (playerMove) => {
+        setResult(logic.startGame(playerMove));
     }
 
     return <>
-        <h1>Rock-paper-scissor</h1>
-        {view === 'gamemode' && <section>
-            <p>Select gamemode</p>
-            <button onClick={() => handleGamemodeClick('machine')} id="machine">Vs Machine</button>
-            <button onClick={() => handleGamemodeClick('player')} id="player">Vs Player</button>
-        </section>}
+        <h1>Rock🪨Paper📋Scissor✂️</h1>
+        {view === 'landing' &&
+            <section className="landing-section">
+                <p>Press start</p>
+                <button onClick={handleStartGameClick} id="start">Start</button>
+            </section>}
 
-        {view === 'game' && <> <form onSubmit={handlePlaySubmit}>
-            <label htmlFor="move">Choose rock (r) paper (p) scissor(s) </label>
-            <input type="text" id="move" />
-            <button type="submit">Play</button>
-        </form>
-        {result !== null && (<p>Result: {result === 'true' ? 'You won' : result === 'false' ? 'You lose': 'Draw'}</p>)}
-        </>}
+        {view === 'game' && (
+            <div className="game-container">
+                <div className="game-header">
+                    {result && <p className="marker">Player wins {result.playerWins}</p>}
+                    <div className="game-content">
+                        <h2>Choose rock, paper or scissor</h2>
+                        <span className="game-buttons">
+                            <button type="button" onClick={() => handlePlayClick('r')}>🪨</button>
+                            <button type="button" onClick={() => handlePlayClick('p')}>📄</button>
+                            <button type="button" onClick={() => handlePlayClick('s')}>✂️</button>
+                        </span>
+                        {result !== null && (
+                            <p>Result: {result.won === true ? `You win with ${result.playerMove} vs ${result.cpuMove}` : result.draw === true ? 'Draw' : `You lose with ${result.playerMove} vs ${result.cpuMove}`}</p>
+                        )}
+                    </div>
+                    {result && <p className="marker">CPU wins {result.cpuWins}</p>}
+                </div>
+                <h2>Logs</h2>
+                <section className="logs-section">
+                    {result !== null && result.logs.map(log =>
+                        <p key={log.round}>Round: {log.round} | Player {log.playerMove} vs {log.cpuMove} Machine</p>
+                    )}
+                </section>
+            </div>
+        )}
     </>
 }
 
-root.render(<App/>)
+root.render(<App />)
