@@ -23,7 +23,7 @@ function Register({onLoginClick, onRegisterSubmit}) {
 
 
     return <div>
-        <h1>Logo</h1>
+        <Logo />
         <form id="register-form" onSubmit={handleRegisterSubmit}>
             <label htmlFor="register-name">Name</label>
             <input type="text" id="register-name" placeholder="name"/>
@@ -33,7 +33,7 @@ function Register({onLoginClick, onRegisterSubmit}) {
             <input type="text" id="register-username" placeholder="username"/>
             <label htmlFor="register-password">Password</label>
             <input type="password" id="register-password" placeholder="********"/>
-            <div>
+            <div className="buttons-div">
                 <a onClick={onLoginClick}>Login</a>
                 <button type="submit" form="register-form">Register</button>
             </div>

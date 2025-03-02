@@ -39,11 +39,9 @@ function Post({post, reloadPosts}) {
         }
 
     return <article>
-        <header>
             <h2>{authorName}</h2>
-        </header>
         <figure>
-            <img src={currentPostImageSrc}/>
+            <img src={currentPostImageSrc} style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'cover' }}/>
         </figure>
         <section>
             <section>

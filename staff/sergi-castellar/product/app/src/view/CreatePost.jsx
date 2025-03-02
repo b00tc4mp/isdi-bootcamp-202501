@@ -28,7 +28,7 @@ function CreatePost({onCancelClick, onCreatePostSubmit, reloadPosts}) {
                 <input type="url" id="imageRoute" placeholder="image route"/>
                 <label htmlFor="description">Description</label>
                 <input type="text" id="description" placeholder="description"/>
-                <div>
+                <div className="buttons-div">
                     <a onClick={onCancelClick}>Cancel</a>
                     <button type="submit" form="create-post">Create</button>
                 </div>

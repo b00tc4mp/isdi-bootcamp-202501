@@ -20,13 +20,13 @@ function Login({onRegisterClick, onLoginSubmit}) {
     }
 
     return <div>
-        <h1>Logo</h1>
+        <Logo />
         <form id="login-form" onSubmit={handleLoginSubmit}>
             <label htmlFor="login-username">Username</label>
             <input type="text" id="login-username" placeholder="username"/>
             <label htmlFor="login-password">Password</label>
             <input type="password" id="login-password" placeholder="********" />
-            <div>
+            <div className="buttons-div">
                 <a onClick={onRegisterClick}>Register</a>
                 <button type="submit" form="login-form">Login</button>
             </div>

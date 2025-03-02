@@ -1,9 +1,9 @@
 function Landing({ onLoginClick, onRegisterClick }) {
     return <div>
-        <h1>Logo</h1>
+        <Logo />
         <div id="register-or-login">
             <a onClick={onRegisterClick}>Register</a>
-            or 
+            <span> or </span>
             <a onClick={onLoginClick}>Login</a>
         </div>
     </div>

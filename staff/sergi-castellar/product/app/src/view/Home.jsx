@@ -42,16 +42,18 @@ function Home({onLogoutClick}) {
     }
 
     return <>
-        {view === 'posts' && <div>
-            <h1>Logo</h1>
-            <h3>Welcome, {user ? user.username : ''}</h3>
-            <button onClick={handleLogoutClick}>Logout</button>
+        {view === 'posts' && <div id="home">
+            <header>
+                <h3>Welcome, {user ? user.username : ''}</h3>
+                <Logo />
+                <button onClick={handleLogoutClick}>Logout</button>
+            </header>
             
-            <section>
+            <section id="posts-section" style={{ paddingTop: '80px' }}>
                 {posts.toReversed().map(post => <Post key={post.id} post={post} reloadPosts={handleReloadPosts}/>)}
             </section>
-            <footer id='addPostFooter'>
-                <button id='addPostButton' onClick={handleCreatePostClick}>+</button>
+            <footer id='add-post-footer'>
+                <button id='add-post-button' onClick={handleCreatePostClick}>+</button>
             </footer>
         </div>}
             
