@@ -111,7 +111,7 @@ function Home({ onLogoutClick }) {
                     </section>
 
 
-                    <time style={{ display: 'block' }}>{new Date(post.createdAt).toISOString()}</time>
+                    <time style={{ display: 'block' }}>{new Date(post.createdAt).toLocaleDateString('es-ES')}</time>
                 </article>
             )}
         </section>}

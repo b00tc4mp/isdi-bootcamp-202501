@@ -1,16 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap');
 
 html {
-    font-family: "Bubblegum Sans", serif;
+    background-image: url('https://imgs.search.brave.com/p5nNF0QC2l1lZJF-kr6eEENeuYjY2JC8WBBxnMGgbmI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvaGQvaG9n/d2FydHMtY2FzdGxl/LWF0LW5pZ2h0LWlz/YXJiYXRqNnRlb3J6/MTkuanBn');
+    background-size: cover;
+    /* Hace que la imagen cubra toda la pantalla */
+    background-position: center center;
+    /* Centra la imagen */
+    background-attachment: fixed;
+    font-family: "Euphoria Script", serif;
     background-color: var(--bg-color);
     color: var(--color);
 
-    --bg-color: rgb(112, 14, 96);
+    --bg-color: rgb(201, 195, 195);
     --color: rgb(253, 255, 120);
     --color-high: rgb(255, 145, 0);
     --color-low: rgb(201, 191, 55);
+    --color-contrast: rgb(255, 123, 0);
     --padding-x: 1rem;
     --padding-y: .25rem;
+
+    font-size: 1.5rem;
 }
 
 body {
@@ -20,14 +29,15 @@ body {
 a {
     cursor: pointer;
     transition: font-size .2s;
+    color: var(--color-contrast);
 
 }
 
 
 @media (min-width: 1024px) {
     a:hover {
-        color: var(--color-high);
-        font-size: 2rem;
+        color: var(--color);
+
 
     }
 }
@@ -35,10 +45,11 @@ a {
 
 button {
     background-color: var(--color);
-    color: var(--bg-color);
+    color: var(--color-contrast);
     border: 0;
     font-family: inherit;
     font-size: 1rem;
+    font-weight: bold;
 }
 
 form {
@@ -83,12 +94,13 @@ input:-webkit-autofill:focus {
 }
 
 article {
-    background-color: rgb(123, 90, 136);
+    background-color: rgb(99, 99, 99);
 
     h3,
     p,
     .post-footer {
         padding: var(--padding-y) var(--padding-x);
+        margin: 0.25rem;
     }
 
     img {
@@ -115,6 +127,7 @@ header {
 }
 
 h1,
+
 h2 {
     margin: 0;
 }
@@ -133,4 +146,22 @@ footer {
     background-color: var(--bg-color);
     padding: var(--padding-y) var(--padding-x);
     box-sizing: border-box;
+}
+
+.landing {
+    justify-self: center;
+}
+
+
+.logo {
+    width: 120px;
+    /* Tamaño pequeño */
+    height: 120px;
+    background-image: url('https://gimgs2.nohat.cc/thumb/f/350/hogwarts-logo-by-shadopro-on-deviantart--comdlpng6952102.jpg');
+    background-size: contain;
+    /* Ajusta la imagen sin recortar */
+    background-repeat: no-repeat;
+    /* Para que no se repita */
+
+
 }
