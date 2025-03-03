@@ -9,10 +9,6 @@ const logic = {
         handleError(error) {
             console.error(error)
             alert(error.message)
-        },
-
-        getUserId() {
-            return data.userId
         }
     },
 
@@ -67,8 +63,10 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const foundUsername = data.users.find(user => user.username === username)
-        const foundEmail = data.users.find(user => user.email === email)
+        const { users } = data
+
+        const foundUsername = users.find(user => user.username === username)
+        const foundEmail = users.find(user => user.email === email)
 
         if (foundUsername || foundEmail) throw new DuplicityError('user already exists')
 
@@ -81,7 +79,8 @@ const logic = {
             createdAt: new Date() //TODO modified at?
         }
 
-        data.users.push(user)
+        users.push(user)
+        data.users = users
     },
 
     loginUser(username, password) {
@@ -98,6 +97,10 @@ const logic = {
 
     logoutUser() {
         data.userId = null
+    },
+
+    isUserLoggedIn() {
+        return !!data.userId
     },
 
     getUserProperty(userId, property) {
@@ -136,9 +139,11 @@ const logic = {
         this.validate.url(imageSrc, 'url')
         this.validate.description(textDescription, 'description')
 
+        const { uuid, userId, posts } = data
+
         const newPost = {
-            id: data.uuid('01'),
-            authorId: data.userId,
+            id: uuid('01'),
+            authorId: userId,
             imageSrc: imageSrc,
             textDescription: textDescription,
             createdAt: new Date(),
@@ -146,23 +151,28 @@ const logic = {
             likes: []
         }
 
-        data.posts.push(newPost)
+        posts.push(newPost)
+
+        data.posts = posts
     },
 
     toggleLike(currentPostId) {
-        const currentPost = data.posts.find(post => post.id === currentPostId)
+        const { posts, userId } = data
+
+        const currentPost = posts.find(post => post.id === currentPostId)
 
         if (!currentPost) throw new NotFoundError('post not found')
 
-        const userId = logic.helper.getUserId()
         const likePosition = currentPost.likes.indexOf(userId)
         const isAlreadyLiked = likePosition !== -1
 
         if (!isAlreadyLiked) {
-            currentPost.likes.push(data.userId)
+            currentPost.likes.push(userId)
         } else {
             currentPost.likes.splice(likePosition, 1)
         }
+
+        data.posts = posts
     },
 
     getLikesUsernames(likeIds) {

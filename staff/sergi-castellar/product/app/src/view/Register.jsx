@@ -21,7 +21,6 @@ function Register({onLoginClick, onRegisterSubmit}) {
         }
     }
 
-
     return <div>
         <Logo />
         <form id="register-form" onSubmit={handleRegisterSubmit}>

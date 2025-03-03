@@ -14,6 +14,27 @@ function Post({post, reloadPosts}) {
             return `${firstLike}, ${secondLike} and ${restLikes} more people liked that.`
         }
     }
+    
+    const dateToFormat = postDate => {
+        const date = new Date(postDate)
+        
+        const options = {
+            day: 'numeric',
+            month: 'short',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: false
+        }
+        
+        const formatedDate = date.toLocaleString('en-EN', options)
+
+        // const [calendar, time] = formatedDate.split(', ')
+        // const [ month, day ] = calendar.split(' ')
+        // const [ hours, minutes ] = time.split(':')
+
+        // return `${day} ${month}, ${hours}:${minutes}`
+        return formatedDate
+    }
 
     const handleToggleLikePostClick = (currentPostId) => {
         try {
@@ -28,12 +49,15 @@ function Post({post, reloadPosts}) {
     let authorName = ''
     let authorUsername = ''
     let likesString = ''
+    let formattedDate = ''
         try {
             authorName = logic.getUserProperty(currentPostAuthorId, 'name')
             authorUsername = logic.getUserProperty(currentPostAuthorId, 'username')
 
             const likesUsernames = logic.getLikesUsernames(currentPostLikes)
             likesString = likesToString(likesUsernames)
+
+            formattedDate = dateToFormat(currentPostCreatedAt)
         } catch (error) {
             logic.helper.handleError(error)
         }
@@ -44,15 +68,19 @@ function Post({post, reloadPosts}) {
             <img src={currentPostImageSrc} style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'cover' }}/>
         </figure>
         <section>
-            <section>
+            <section className="like-date">
                 <button onClick={() => handleToggleLikePostClick(currentPostId)}>{currentPostLikes.length} {isCurrentPostLiked ? '❤️' : '🤍'}</button>
+                <span>{formattedDate}</span>
             </section>
             <section>
                 <p>{likesString}</p>
             </section>
             <section>
-                <p>{authorUsername}</p>
-                <p>{currentPostTextDescription}</p>
+                <p>
+                    <span className="post-username" style={{fontWeight: 'bold'}}>{authorUsername}</span>
+                    {': '}
+                    <span className="post-description">{currentPostTextDescription}</span>
+                </p>
             </section>
         </section>
     </article>

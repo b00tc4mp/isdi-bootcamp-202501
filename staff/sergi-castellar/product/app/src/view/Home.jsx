@@ -4,15 +4,13 @@ function Home({onLogoutClick}) {
     const [view, setView] = useState('posts')
     const [user, setUser] = useState(null)
     const [posts, setPosts] = useState([])
-    
+
     useEffect(() => {
         try {
             const currentUser = logic.getCurrentUser()
-            
             const posts = logic.getPosts()
-            
-            setUser(currentUser)
 
+            setUser(currentUser)
             setPosts(posts)
         } catch (error) {
             logic.helper.handleError(error)

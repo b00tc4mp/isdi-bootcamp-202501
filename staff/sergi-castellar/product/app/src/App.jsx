@@ -2,6 +2,19 @@ const { useState } = React
 
 function App() {
     const [view, setView] = useState('landing')
+    
+    useEffect(() => {
+        try {
+            // const loggedIn = logic.isUserLoggedIn()
+
+            // loggedIn && setView('home')
+
+
+            if (logic.isUserLoggedIn()) setView('home')
+        } catch (error) {
+            logic.helper.handleError(error)
+        }
+    }, [])
 
     const handleRegisterClick = () => setView('register')
     
