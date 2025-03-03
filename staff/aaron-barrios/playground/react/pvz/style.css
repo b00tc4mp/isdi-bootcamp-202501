@@ -1,0 +1,25 @@
+.zombie {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+.zombie-image {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+.plant {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+.plant-image {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
