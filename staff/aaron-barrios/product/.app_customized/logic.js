@@ -197,8 +197,8 @@ const logic = {
 
     logoutUser() {
         data.userId = null
-        data.currentUser.state = 'Offline'
-        data.currentUser = null
+        // data.currentUser.state = 'Offline'
+        // data.currentUser = null
     },
 
     toggleLikePost(postId) {
@@ -245,5 +245,31 @@ const logic = {
         }
 
         data.posts = posts
+    },
+
+    isCurrentAuthor(author) {
+        const { userId } = data
+
+        if (author === userId)
+            return true
+        else
+            return false
+    },
+
+    deletePost(postId) {
+        const { posts } = data
+
+        let found
+
+        for (let i = 0; i < posts.length && !found; i++) {
+            const post = posts[i]
+
+            if (postId === post.id) {
+                posts.splice(i, 1)
+                found = post
+            }
+        }
+
+        return data.posts = posts
     }
 }

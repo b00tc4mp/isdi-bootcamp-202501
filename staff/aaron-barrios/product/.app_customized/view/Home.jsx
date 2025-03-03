@@ -81,6 +81,20 @@ function Home({ onLogoutClick }) {
         }
     }
 
+    const handleDeleteButtonClick = postId => {
+        try {
+            logic.deletePost(postId)
+
+            const posts = logic.getPosts()
+
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
 
     const commentButtonClick = postId => { setActiveCommentPostId(currentId => currentId === postId ? null : postId) }
 
@@ -110,6 +124,7 @@ function Home({ onLogoutClick }) {
                                 onClick={() => handleLikeButtonClick(post.id)} >{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
                             <h5>{post.likes}</h5>
                             <button type="button" onClick={() => commentButtonClick(post.id)}>📃</button>
+                            {logic.isCurrentAuthor(post.author) && <button type="button" onClick={() => handleDeleteButtonClick(post.id)}>X</button>}
                         </div>
 
                         {/* --- COMMENTS SECTION ---     */}
