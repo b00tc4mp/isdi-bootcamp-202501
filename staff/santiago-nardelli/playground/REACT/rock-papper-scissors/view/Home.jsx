@@ -1,9 +1,10 @@
-function Home({ onSelectionClick }) {
+function Home({ onSelectClick }) {
  const handleStartClick = () => {
     try {
-      onSelectionClick();
+      onSelectClick();
     } catch (error) {
-      console.log(error);
+      console.error(error.message);
+      alert("Error");
     }
   };
 

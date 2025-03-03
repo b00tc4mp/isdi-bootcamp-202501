@@ -1,7 +1,12 @@
 function SelectionView({ onPlayGame }) {
+
+ const [mode, setMode] = React.useState('');
+  const [rounds, setRounds] = React.useState('');
+
   const handleSelectMode = (mode) => {
     try {
       logic.selectMode(mode);
+      setMode(mode);
     } catch (error) {
       console.error(error.message);
       alert("Ha ocurrido un error. Por favor, vuelva a intentarlo.");
@@ -11,11 +16,21 @@ function SelectionView({ onPlayGame }) {
   const handleSelectRounds = (rounds) => {
     try {
       logic.selectRounds(rounds);
+      setRounds(rounds);
     } catch (error) {
       console.error(error.message);
       alert("Ha ocurrido un error. Por favor, vuelva a intentarlo.");
     }
   };
+
+  const handlePlayGame = () => {
+    try {
+      onPlayGame();
+    } catch (error) {
+      console.error(error.message);
+      alert("Ha ocurrido un error. Por favor, vuelva a intentarlo.");
+    }
+  }
 
   return (
     <>
@@ -26,9 +41,7 @@ function SelectionView({ onPlayGame }) {
       <button onClick={() => handleSelectRounds("1")}>1</button>
       <button onClick={() => handleSelectRounds("3")}>3</button>
       <button onClick={() => handleSelectRounds("5")}>5</button>
-      {/* boton que se habilita cuando ya tengo el mode y el level select */}
-      //TODO
-      <button onClick={onPlayGame}>Play</button>
+      <button onClick={handlePlayGame} disabled={!mode || !rounds}>Play</button>
     </>
   );
 }
