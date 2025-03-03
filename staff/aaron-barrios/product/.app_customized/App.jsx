@@ -25,6 +25,10 @@ function App() {
 
     const handleLogoutClick = () => setView('login')
 
+    const handleProfileClick = () => setView('profile')
+
+    const handleHomeClick = () => setView('home')
+
     return <>
         {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
 
@@ -32,6 +36,8 @@ function App() {
 
         {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />}
 
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick} />}
+        {view === 'home' && <Home onLogoutClick={handleLogoutClick} onProfileClick={handleProfileClick} />}
+
+        {view === 'profile' && <Profile onHomeClick={handleHomeClick} />}
     </>
 }

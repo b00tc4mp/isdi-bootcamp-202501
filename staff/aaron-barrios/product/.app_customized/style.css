@@ -33,6 +33,10 @@ body {
     margin: 0 1rem;
 }
 
+.profile {
+    margin: 0 1rem;
+}
+
 button {
     background-color: var(--color);
     color: var(--bg-color);
@@ -137,6 +141,12 @@ header {
     background-color: var(--bg-color);
     padding: var(--padding-y) var(--padding-x);
     box-sizing: border-box;
+}
+
+.profPic {
+    border-radius: 50%;
+    width: 35%;
+    margin-left: 35%;
 }
 
 h1,

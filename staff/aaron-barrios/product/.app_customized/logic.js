@@ -79,17 +79,32 @@ const logic = {
     },
 
     loginUser(username, password) {
+        const { users } = data
+
         this.validate.username(username, 'name')
         this.validate.password(password, 'name')
 
-        let found = data.users.find(user => user.username === username)
+        // let found = users.find(user => user.username === username)
+
+        let found
+
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.username === username) {
+                found = user
+                user.state = 'Online'
+            }
+        }
 
         if (!found || found.password !== password) throw new Error('Wrong credentials')
 
         data.currentUser = found
-        found.state = 'Online'
+        // found.state = 'Online'
 
         data.userId = found.id
+
+        data.users = users
     },
 
     isUserLoggedIn() {

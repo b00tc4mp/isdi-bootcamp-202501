@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Home({ onLogoutClick }) {
+function Home({ onLogoutClick, onProfileClick }) {
     const [view, setView] = useState('posts')
     const [username, setUsername] = useState('')
     const [posts, setPosts] = useState([])
@@ -30,6 +30,16 @@ function Home({ onLogoutClick }) {
             logic.logoutUser()
 
             onLogoutClick()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handleProfileClick = () => {
+        try {
+            onProfileClick()
         } catch (error) {
             console.error(error)
 
@@ -103,6 +113,8 @@ function Home({ onLogoutClick }) {
     return <div >
         {view === 'posts' && <header>
             <h2>Welcome, {username}</h2>
+
+            <button onClick={handleProfileClick}>🥸</button>
 
             <button onClick={handleLogoutClick}>Logout</button>
         </header >}
