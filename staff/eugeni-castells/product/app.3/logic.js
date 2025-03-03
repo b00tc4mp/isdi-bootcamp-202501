@@ -39,23 +39,19 @@ const logic = {
     },
   },
   registerUser: function (userInfo) {
-    const { validate } = this;
-
-    validate.text(userInfo.name, "name");
-    validate.minLength(userInfo.name, 1, "name");
-    validate.maxLength(userInfo.name, 20, "name");
-    validate.email(userInfo.email, "email");
-    validate.username(userInfo.username, "username");
-    validate.password(userInfo.password, "password");
+    this.validate.text(userInfo.name, "name");
+    this.validate.minLength(userInfo.name, 1, "name");
+    this.validate.maxLength(userInfo.name, 20, "name");
+    this.validate.email(userInfo.email, "email");
+    this.validate.username(userInfo.username, "username");
+    this.validate.password(userInfo.password, "password");
 
     let userFound;
 
-    const { users } = data;
-
-    for (let i = 0; i < users.length && !userFound; i++) {
+    for (let i = 0; i < data.users.length && !userFound; i++) {
       if (
-        userInfo.username === users[i].username ||
-        userInfo.email === users[i].email
+        userInfo.username === data.users[i].username ||
+        userInfo.email === data.users[i].email
       ) {
         userFound = userInfo;
       }
@@ -73,13 +69,9 @@ const logic = {
       modifiedAt: null,
     };
 
-    // data.users[data.users.length] = user;
-    // Can't write a getter and a setter in the same line.
-    // data.users = users;
+    data.users[data.users.length] = user;
 
-    users[users.length] = user;
-
-    data.users = users;
+    localStorage.setItem("users", JSON.stringify(data.users));
   },
   loginUser: function (username, password) {
     this.validate.username(username, "username");
@@ -87,10 +79,8 @@ const logic = {
 
     let found;
 
-    const { users } = data;
-
-    for (let i = 0; i < users.length && !found; i++) {
-      const user = users[i];
+    for (let i = 0; i < data.users.length && !found; i++) {
+      const user = data.users[i];
 
       if (user.username === username) found = user;
     }
@@ -103,34 +93,28 @@ const logic = {
   setOfflineUser: function () {
     data.userId = null;
   },
-  isUserConnected() {
-    return !!data.userId;
-  },
   getPosts: function () {
     const aggregatedPosts = [];
 
-    const { posts, userId } = data;
-
-    for (let i = 0; i < posts.length; i++) {
-      let post = posts[i];
+    for (let i = 0; i < data.posts.length; i++) {
+      let post = data.posts[i];
 
       let liked = false;
 
       for (let i = 0; i < post.likes.length && !liked; i++) {
-        if (post.likes[i] === userId) {
+        if (post.likes[i] === data.userId) {
           liked = true;
         }
       }
-      const { id, author, image, text, createdAt, modifiedAt, likes } = post;
 
       let aggregatedPost = {
-        id: id,
-        author: author,
-        image: image,
-        text: text,
-        createdAt: createdAt,
-        modifiedAt: modifiedAt,
-        likes: likes,
+        id: post.id,
+        author: post.author,
+        image: post.image,
+        text: post.text,
+        createdAt: post.createdAt,
+        modifiedAt: post.modifiedAt,
+        likes: post.likes,
         liked: liked,
       };
 
@@ -139,45 +123,31 @@ const logic = {
 
     return aggregatedPosts;
   },
-  addPost: function (post) {
-    const { image, name, year, location, bio } = post;
-
+  addPost: function (image, bio) {
     this.validate.text(image, "image URL");
     this.validate.minLength(image, 10, "image URL");
     this.validate.text(bio, "bio");
-    this.validate.text(name, "name");
-    this.validate.text(year, "year");
-    this.validate.text(location, "location");
-    this.validate.text(bio, "bio");
 
-    const newPost = {
+    const post = {
       id: data.uuid(),
       author: data.userId,
-      name: name,
-      year: year,
-      location: location,
       image: image,
       text: bio,
       createdAt: new Date(),
       modifiedAt: null,
       likes: [],
     };
+    data.posts[data.posts.length] = post;
 
-    const { posts } = data;
-
-    posts[posts.length] = newPost;
-
-    data.posts = posts;
+    localStorage.setItem("posts", JSON.stringify(data.posts));
   },
   getOnlineUserInfo() {
     let found;
 
-    const { users, userId } = data;
+    for (let i = 0; i < data.users.length && !found; i++) {
+      const user = data.users[i];
 
-    for (let i = 0; i < users.length && !found; i++) {
-      const user = users[i];
-
-      if (user.id === userId) {
+      if (user.id === data.userId) {
         found = user;
       }
     }
@@ -192,10 +162,8 @@ const logic = {
   updatePostLikes(postId) {
     var postFound = false;
 
-    const { posts, userId } = data;
-
-    for (let i = 0; i < posts.length && !postFound; i++) {
-      const post = posts[i];
+    for (let i = 0; i < data.posts.length && !postFound; i++) {
+      const post = data.posts[i];
 
       if (post.id === postId) {
         postFound = post;
@@ -209,21 +177,25 @@ const logic = {
     let userIdFound;
 
     for (let i = 0; i < postFound.likes.length; i++) {
-      if (userId === postFound.likes[i]) userIdFound = userId;
+      if (data.userId === postFound.likes[i]) userIdFound = data.userId;
     }
 
     if (!userIdFound) {
-      postFound.likes[postFound.likes.length] = userId;
+      postFound.likes[postFound.likes.length] = data.userId;
 
-      data.posts = posts;
+      localStorage.posts = JSON.stringify(data.posts);
+      // localStorage.posts[postFoundIndex].likes[likesIndex.length] = data.userId;
     } else {
       let likes = [];
       for (let i = 0; i < postFound.likes.length; i++) {
-        if (postFound.likes[i] !== userId)
+        if (postFound.likes[i] !== data.userId)
           likes[likes.length] = postFound.likes[i];
       }
+
+      // postFound.likes = likes;
       postFound.likes = likes;
-      data.posts = posts;
+      localStorage.posts = JSON.stringify(data.posts);
+      // localStorage.posts[postFoundIndex].likes = JSON.stringify(likes);
     }
   },
 };

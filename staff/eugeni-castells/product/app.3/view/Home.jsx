@@ -1,29 +1,9 @@
-function Home({ onLogoutClick, onCancelClick }) {
+function Home({ onLogoutClick }) {
   const { useState, useEffect } = React;
 
   const [currentUserName, setCurrentUserName] = useState("");
-  const [displayCreatePost, setDisplayCreatePost] = useState(false);
   const [posts, setPosts] = useState([]);
 
-  const handleSetPosts = function (posts) {
-    setPosts(posts);
-  };
-
-  const handlePostCreation = (post) => {
-    try {
-      logic.addPost(post);
-
-      const posts = data.posts;
-
-      setPosts(posts);
-
-      setDisplayCreatePost(false);
-    } catch (error) {
-      console.error(error);
-
-      alert(error.message);
-    }
-  };
   useEffect(() => {
     let userName = logic.getOnlineUserName();
 
@@ -51,7 +31,7 @@ function Home({ onLogoutClick, onCancelClick }) {
       </button>
       <h2>Hello, {currentUserName}!</h2>
       {posts &&
-        !displayCreatePost &&
+        posts.length > 0 &&
         posts.map((item) => {
           return (
             <Post
@@ -63,26 +43,10 @@ function Home({ onLogoutClick, onCancelClick }) {
               liked={item.liked}
               likes={item.likes}
               id={item.id}
-              onSetPosts={handleSetPosts}
+              setPosts={setPosts}
             />
           );
         })}
-      {!displayCreatePost && (
-        <div
-          className="create-post-button"
-          onClick={() => {
-            setDisplayCreatePost(true);
-          }}
-        >
-          +
-        </div>
-      )}
-      {displayCreatePost && (
-        <CreatePost
-          onCancelClick={onCancelClick}
-          onPostCreation={handlePostCreation}
-        />
-      )}
     </div>
   );
 }

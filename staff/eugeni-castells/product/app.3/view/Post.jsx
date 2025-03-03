@@ -1,11 +1,11 @@
-function Post({ author, image, bio, date, id, liked, onSetPosts, likes }) {
+function Post({ author, image, bio, date, id, liked, setPosts, likes }) {
   const handleToggleClick = (id) => {
     try {
       logic.updatePostLikes(id);
 
       let posts = logic.getPosts();
 
-      onSetPosts(posts);
+      setPosts(posts);
     } catch (error) {
       console.error(error);
 

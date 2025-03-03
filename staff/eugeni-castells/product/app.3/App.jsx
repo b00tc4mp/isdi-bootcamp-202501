@@ -1,13 +1,11 @@
+data.users = JSON.parse(localStorage.getItem("users"));
+data.posts = JSON.parse(localStorage.getItem("posts"));
+
 function App() {
-  const { useState, useEffect } = React;
+  const { useState } = React;
 
   const [view, setView] = useState("landing");
 
-  useEffect(() => {
-    const isUserConnected = logic.isUserConnected();
-
-    isUserConnected ? setView("home") : setView("landing");
-  }, []);
   const handleRegisterClick = () => {
     setView("register");
   };
@@ -40,12 +38,7 @@ function App() {
           onLoginSuccess={handleHomeClick}
         />
       )}
-      {view === "home" && (
-        <Home
-          onLogoutClick={handleLoginClick}
-          onCancelClick={handleHomeClick}
-        />
-      )}
+      {view === "home" && <Home onLogoutClick={handleLoginClick} />}
     </>
   );
 }
