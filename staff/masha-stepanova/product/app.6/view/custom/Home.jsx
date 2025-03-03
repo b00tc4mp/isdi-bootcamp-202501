@@ -114,10 +114,10 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
         onProfileClick()
     }
 
-    return <div className="posts">
+    return <div class="posts">
         {/* // style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}> */}
         {/* > */}
-        <section className="header">
+        <section class="header">
             <h1>Logo</h1>
             <h3>Welcome, {userName}</h3>
             <button onClick={handleProfileClick}>🤴🏻</button>
@@ -130,14 +130,16 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
 
             <section className="post-underline">
                 <p>{post.text}</p>
-                <button className="like" onClick={() => handleLikeClick(post.id)}>{`${post.liked ? '❤️' : '🤍'} ${post.likesCount}`}</button>
-            </section>
-            <p>{post.createdAt}</p>
-            {/* <p>{post.comments}</p> */}
-            {/* <form onSubmit={handleCommentSubmit}>
+                <button onClick={() => handleLikeClick(post.id)}>{`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
+                {/* <form onSubmit={handleCommentSubmit}>
 
                     <button type="submit">📋</button>
                 </form> */}
+
+            </section>
+            {/* <p>{post.comments}</p> */}
+
+            <time>{post.createdAt}</time>
         </article>)}
         </section>}
 

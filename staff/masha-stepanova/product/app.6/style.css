@@ -3,7 +3,6 @@
 html {
     /* font-family: 'Major Mono Display'; */
     background-color: var(--bg-color);
-    background-image: url("https://img.freepik.com/premium-photo/there-is-castle-sky-with-many-balloons-floating-around-it-generative-ai_1035763-29879.jpg?semt=ais_hybrid");
     color: var(--color);
     justify-content: center;
     align-items: center;
@@ -16,14 +15,6 @@ html {
     --color-low: #00A706;
     /* --padding-x: 1rem;
     --padding-y: .25rem; */
-}
-
-div {
-    background-color: rgba(255, 255, 255, 0.278);
-    /* width: 80%;
-    display: flex;
-    flex-direction: column; */
-
 }
 
 /* h1 {
@@ -226,9 +217,4 @@ section {
 
 .register-login {
     display: inline;
-}
-
-.like {
-    background-color: transparent;
-    color: black
 }

@@ -1,6 +1,6 @@
 const { useState } = React
 
-function Profile({ onLogoutClick, onHomeClick }) {
+function Profile({ onLogoutClick }) {
     const [view, setView] = useState('profile')
     const [posts, setPosts] = useState([])
 
@@ -102,16 +102,6 @@ function Profile({ onLogoutClick, onHomeClick }) {
         }
     }
 
-    const handleHomeClick = () => {
-        try {
-            onHomeClick()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
     return <div class="posts">
         <section class="header">
             <h1>Logo</h1>
@@ -144,7 +134,6 @@ function Profile({ onLogoutClick, onHomeClick }) {
         }
 
         < footer >
-            <button onClick={handleHomeClick}>🏠</button>
             <button onClick={handleAddPostClick}>➕</button>
         </footer>
 
