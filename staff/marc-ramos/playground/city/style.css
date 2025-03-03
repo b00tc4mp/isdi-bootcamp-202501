@@ -40,3 +40,41 @@ _* {
         }
     }
 }
+.building {
+    width: 100px;
+    height: 220px;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .floors {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        .floor {
+            display: flex;
+            justify-content: space-between;
+
+            .window {
+                width: 10px;
+                height: 10px;
+                background-color: skyblue;
+            }
+        }
+    }
+
+    .ground {
+        display: flex;
+        justify-content: center;
+
+        .gate {
+            width: 10px;
+            height: 20px;
+            background-color: red;
+        }
+    }
+}
