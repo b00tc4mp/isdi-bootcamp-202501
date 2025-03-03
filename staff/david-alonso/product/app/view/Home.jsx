@@ -94,49 +94,54 @@ function Home({ onLogoutClick }) {
 
     console.debug('Home -> render')
 
-    return <div>
-        <h1>Home</h1>
+    return <div >
 
-        <h3>Hello, {userName}!</h3>
+        <img src="./view/images/home.jpg" className="home" />
 
-        <button type="button" onClick={handleLogoutClick} style={{ marginBottom: '10px' }}>Logout</button>
+        <h3 className="hello">Hello, {userName} !</h3>
 
-        {view === 'posts' && <button onClick={handleAddPostClick} style={{ margin: '30px' }}>NEW</button>}
+        <div className="homeButons">
+            <button type="button" onClick={handleLogoutClick} className="logout">LOGOUT</button>
+
+            {view === 'posts' && <button onClick={handleAddPostClick} className="new">NEW</button>}
+        </div>
 
         {view === 'posts' && <section>
             {posts.map(post =>
                 <article>
-                    <h3>{post.userName}</h3>
+                    <h3 className="userName">{post.userName}</h3>
 
-                    <img src={post.image} style={{ maxWidth: "600px" }} />
+                    <img src={post.image} />
 
-                    <button onClick={() => handleToggleLikePostClick(post.id)} style={{ backgroundColor: "rgb(71, 70, 70)" }} >{`${post.liked ? '🧡' : '🤍'} (${post.likesCount})`} </button>
+                    <div className="data">
+                        <p className="postText">{post.text}</p>
 
-                    <p style={{ color: 'white' }}>{post.text}</p>
-
-                    <br />
-                    <time style={{ color: 'white' }}>{post.createdAt.toLocaleString()}</time>
+                        <button onClick={() => handleToggleLikePostClick(post.id)} className="like" >{`${post.liked ? '🧡' : '🤍'} (${post.likesCount})`} </button>
+                    </div>
+                    <time className="time">{post.createdAt.toLocaleString()}</time>
 
                 </article>)}
+            <div className="end"></div>
         </section>
         }
 
         {
             view === 'create-post' && <section>
+                <div className="ddd">
+                    <h1>NEW POST</h1>
 
-                <form onSubmit={handleCreatePostSubmit} style={{ display: 'inline-grid', color: 'white' }}>
+                    <form onSubmit={handleCreatePostSubmit} >
 
-                    <label htmlFor="image">Image</label>
-                    <input type="url" id="image" />
+                        <input type="url" id="image" placeholder="Image" className="input" />
 
-                    <label htmlFor="text">Text</label>
-                    <input type="text" id="text" />
+                        <input type="text" id="text" placeholder="Text" className="input" />
 
-                    <button type="submit" style={{ marginTop: '10px' }}>Create</button>
-                </form>
+                        <button type="submit" >CREATE</button>
+                    </form>
+                </div>
 
-                <div style={{ marginTop: '10px' }}>
-                    <a onClick={handleCancelClick} style={{ textDecoration: 'underline' }}>Cancel</a>
+                <div >
+                    <a onClick={handleCancelClick} className="anchorCancel">CANCEL</a>
                 </div>
             </section>
         }

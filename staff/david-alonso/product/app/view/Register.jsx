@@ -38,27 +38,29 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
     console.debug('Register -> render')
 
-    return <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h1>Register</h1>
+    return <div >
 
-        <form onSubmit={handleRegisterSubmit} style={{ display: 'inline-grid', color: 'white' }}>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" />
+        <img src="./view/images/fondo1.jpg" className="fondo" />
 
-            <label htmlFor="email">E-mail</label>
-            <input type="text" id="email" />
+        <div className="ddd">
+            <h1>CREATE ACCOUNT</h1>
 
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" />
+            <form onSubmit={handleRegisterSubmit} >
 
-            <label htmlFor="password">Password</label>
-            <input type="text" id="password" />
+                <input type="text" id="name" placeholder="NAME" className="input" />
 
-            <button type="submit" style={{ marginTop: '10px' }}>Register</button>
-        </form>
+                <input type="text" id="email" placeholder="E-MAIL" className="input" />
 
-        <div style={{ marginTop: '10px' }}>
-            <a onClick={onLoginClick} style={{ textDecoration: 'underline' }}>Login</a>
+                <input type="text" id="username" placeholder="USERNAME" className="input" />
+
+                <input type="text" id="password" placeholder="PASSWORD" className="input" />
+
+                <button type="submit" >REGISTER</button>
+            </form>
+
+            <div >
+                <a onClick={onLoginClick} className="anchorLogin">LOGIN</a>
+            </div>
         </div>
     </div>
 }

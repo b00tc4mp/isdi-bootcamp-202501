@@ -29,6 +29,7 @@ const data = {
     ],
 
     posts: [
+
         {
             id: 'm73e37hz47',
             userName: 'dallen',
@@ -56,6 +57,16 @@ const data = {
             image: 'https://www.motorbikemag.es/wp-content/uploads/2018/06/KTM-125-SX-2019-01-760x507.jpg',
             text: 'Ktm SX 125 R',
             createdAt: new Date(2025, 0, 18),
+            modifiedAt: null,
+            likes: []
+        },
+        {
+            id: 'm7sqycwro9m',
+            userName: 'luna',
+            author: 'm7a771ui2b',
+            image: './view/images/Logo1.jpg',
+            text: 'Vintage',
+            createdAt: new Date(2025, 3, 21),
             modifiedAt: null,
             likes: []
         }
