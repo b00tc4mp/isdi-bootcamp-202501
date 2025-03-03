@@ -2,56 +2,77 @@
     border: 1px solid red
 }
 
-.car {
-    .wheels {
-        display: flex;
-        justify-content: space-between;
-        width: 40px;
-    }
+body {
+    background-color: aqua;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
 
-    .tire {
-        width: 50px;
-        height: 50px;
-        background-color: black;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .rim {
-        width: 25px;
-        height: 25px;
-        background-color: grey;
-        border-radius: 50%;
-    }
-
-    .chassis {
-        height: 2px;
-        width: 40px;
-        background-color: gray;
-    }
-
-    .engine {
-        height: 10px;
-        width: 10px;
-        background-color: darkgray;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .seat {
-
-    }
-
-    .seat-bottom {
-        height: 3px;
-        width: 3px;
-        background-color: brown;
-    }
+.buildings {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding-left: 5rem;
+    background-color: moccasin;
 }
 
 .building {
+    background-color: rgb(69, 64, 42);
+    width: 200px;
+    height: 500px;
+    padding-top: .5rem;
+
+    .bottom-floor {
+        display: flex;
+        align-items: flex-start;
+        background-color: lemonchiffon;
+        height: 3.5rem;
+    }
+
+    .floor {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+        position: relative;
     
+            .window {
+                width: 2rem;
+                height: 2rem;
+                background-color: red;
+                margin: 1px;
+                border: .2rem solid green;
+            }
+            
+            .door {
+                width: 2rem;
+                height: 4rem;
+                background-color: red;
+                position: absolute;
+                bottom: 0;
+            }
+    }
 }
+
+
+
+
+
+/* .rooftop {
+    background-color: grey;
+    height: 20px;
+    width: 200px;
+    transform: skew(-50deg);
+    margin-left: 10px;
+}
+
+.aside {
+    background-color: grey;
+    height: 500px;
+    width: 20px;
+    transform: skew(0deg);
+    margin-left: 10px;
+} */
