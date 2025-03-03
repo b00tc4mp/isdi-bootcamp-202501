@@ -24,6 +24,14 @@ body {
 
 .landing-buttons {
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bee-logo {
+    width: 100px;
+    height: auto;
+    display: block;
 }
 
 button {
