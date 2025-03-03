@@ -28,12 +28,12 @@ function Login({ onRegisterClick, onLoginSubmit }) {
         <form onSubmit={handleLoginSubmit} style={{ marginTop: '1rem' }}>
             <div className="field">
                 <label htmlFor="username">Username</label>
-                <input type="text" id="username" />
+                <input type="text" id="username" placeholder="Type name..." />
             </div>
 
             <div className="field">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" />
+                <input type="password" id="password" placeholder="Type password..." />
             </div>
 
             <span style={{ justifyContent: 'space-between' }}>

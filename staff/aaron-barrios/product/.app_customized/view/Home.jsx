@@ -113,8 +113,8 @@ function Home({ onLogoutClick }) {
                 {posts.map(post => (
                     <article>
                         <div className="post-header">
-                            <h3>{post.author}</h3>
-                            <time>{post.createdAt.toISOString()}</time>
+                            <h3>{logic.getAuthorName(post.author)}</h3>
+                            <time>{formatedDate(post.createdAt)}</time>
                         </div>
                         <img src={post.image} />
 
