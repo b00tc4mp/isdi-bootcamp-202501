@@ -48,13 +48,10 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        // const users = data.users
-        const { users } = data
-
         let found
 
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.email === email || user.username === username)
                 found = user
@@ -72,21 +69,17 @@ const logic = {
             modifiedAt: null
         }
 
-        users[users.length] = user
-
-        data.users = users
+        data.users[data.users.length] = user
     },
 
     loginUser(username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const { users } = data
-
         let found
 
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.username === username)
                 found = user
@@ -102,16 +95,12 @@ const logic = {
     },
 
     getUserName() {
-        // const users = data.users
-        // const userId = data.userId
-        const { users, userId } = data
-
         let found
 
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
-            if (user.id === userId)
+            if (user.id === data.userId)
                 found = user
         }
 
@@ -119,24 +108,19 @@ const logic = {
 
         return found.name
     },
-    isUserLoggedIn() {
-        return !!data.userId
-    },
 
     getPosts() {
-        const { userId, posts } = data
-
         const aggregatedPosts = []
 
-        for (let i = 0; i < posts.length; i++) {
-            const post = posts[i]
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
 
             let liked = false
 
             for (let i = 0; i < post.likes.length && !liked; i++) {
-                const id = post.likes[i]
+                const userId = post.likes[i]
 
-                if (id === userId)
+                if (userId === data.userId)
                     liked = true
             }
 
@@ -145,8 +129,8 @@ const logic = {
                 author: post.author,
                 image: post.image,
                 text: post.text,
-                createdAt: new Date(post.createdAt),
-                modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
                 liked: liked,
                 likesCount: post.likes.length
             }
@@ -163,11 +147,9 @@ const logic = {
         this.validate.text(text)
         this.validate.maxLength(500)
 
-        const { uuid, userId, posts } = data
-
         const post = {
-            id: uuid(),
-            author: userId,
+            id: data.uuid(),
+            author: data.userId,
             image: image,
             text: text,
             createdAt: new Date(),
@@ -175,18 +157,14 @@ const logic = {
             likes: []
         }
 
-        posts[posts.length] = post
-
-        data.posts = posts
+        data.posts[data.posts.length] = post
     },
 
     toggleLikePost(postId) {
-        const { posts, userId } = data
-
         let foundPost
 
-        for (let i = 0; i < posts.length && !foundPost; i++) {
-            const post = posts[i]
+        for (let i = 0; i < data.posts.length && !foundPost; i++) {
+            const post = data.posts[i]
 
             if (post.id === postId)
                 foundPost = post
@@ -197,27 +175,25 @@ const logic = {
         let userIdFound = false
 
         for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const id = foundPost.likes[i]
+            const userId = foundPost.likes[i]
 
-            if (id === userId)
+            if (userId === data.userId)
                 userIdFound = true
         }
 
         if (!userIdFound)
-            foundPost.likes[foundPost.likes.length] = userId
+            foundPost.likes[foundPost.likes.length] = data.userId
         else {
             const likes = []
 
             for (let i = 0; i < foundPost.likes.length; i++) {
-                const id = foundPost.likes[i]
+                const userId = foundPost.likes[i]
 
-                if (id !== userId)
-                    likes[likes.length] = id
+                if (userId !== data.userId)
+                    likes[likes.length] = userId
             }
 
             foundPost.likes = likes
         }
-
-        data.posts = posts
     }
 }

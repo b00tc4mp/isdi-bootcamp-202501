@@ -7,8 +7,8 @@ html {
 
     --bg-color: black;
     --color: red;
-    --color-high: magenta;
-    --color-low: firebrick;
+    --color-high: white;
+    --color-low: rgb(181, 0, 0);
     --padding-x: 1rem;
     --padding-y: .25rem;
 }
