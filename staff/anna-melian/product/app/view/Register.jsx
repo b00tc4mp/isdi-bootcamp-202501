@@ -26,25 +26,31 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
     console.debug('Register -> render')
 
-    return <div>
-        <h1>Logo</h1>
+    return <>
+        <h1 className="logo"></h1>
 
-        <form onSubmit={handleRegisterSubmit}>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" />
+        <div className="register">
+            <h2>Register</h2>
+            <form onSubmit={handleRegisterSubmit}>
+                <label htmlFor="name">Name</label>
+                <input type="text" id="name" />
 
-            <label htmlFor="email">E-mail</label>
-            <input type="email" id="email" />
+                <label htmlFor="email">E-mail</label>
+                <input type="email" id="email" />
 
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" />
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" />
 
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" />
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" />
 
-            <button type="submit">Register</button>
-        </form>
+                <button type="submit">Register</button>
+            </form>
 
-        <a onClick={onLoginClick}>Login</a>
-    </div>
+            <a onClick={onLoginClick}>Login</a>
+
+        </div>
+
+
+    </>
 }

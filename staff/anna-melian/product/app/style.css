@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap');
 
 html {
-    background-image: url('https://imgs.search.brave.com/p5nNF0QC2l1lZJF-kr6eEENeuYjY2JC8WBBxnMGgbmI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvaGQvaG9n/d2FydHMtY2FzdGxl/LWF0LW5pZ2h0LWlz/YXJiYXRqNnRlb3J6/MTkuanBn');
+    background-image: url('https://imgs.search.brave.com/Qn_rtXIEShd49tCDEHQFlk3EAfbgAYdDq5ER7haksuw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvOTk2/NTYzODMyL2VzL2Zv/dG8vZWwtcGFwZWwt/dmllam8uanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPTV5VWgw/UWMtOFpEV3hRM2Z5/U0NCMDh0Sm9Dd1Z4/azVRQ0N4ekF2NTNM/QXc9');
     background-size: cover;
     /* Hace que la imagen cubra toda la pantalla */
     background-position: center center;
@@ -11,11 +11,11 @@ html {
     background-color: var(--bg-color);
     color: var(--color);
 
-    --bg-color: rgb(201, 195, 195);
-    --color: rgb(253, 255, 120);
-    --color-high: rgb(255, 145, 0);
+    --bg-color: #f8f4c1;
+    --color: #7B0000;
+    --color-high: #FFD700;
     --color-low: rgb(201, 191, 55);
-    --color-contrast: rgb(255, 123, 0);
+    --color-contrast: rgb(251, 255, 0);
     --padding-x: 1rem;
     --padding-y: .25rem;
 
@@ -27,35 +27,50 @@ body {
 }
 
 a {
+    font-size: 1.5rem;
     cursor: pointer;
-    transition: font-size .2s;
-    color: var(--color-contrast);
+    transition: font-size .2s, transform 0.3s ease, box-shadow 0.3s ease;
+    color: var(--color);
+    font-weight: bold;
 
 }
 
 
-@media (min-width: 1024px) {
-    a:hover {
-        color: var(--color);
+a:hover {
+    font-size: 1.7rem;
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(255, 223, 0, 1), 0 0 20px rgba(255, 145, 0, 1), 0 0 30px rgba(255, 100, 0, 1);
 
 
-    }
 }
+
 
 
 button {
-    background-color: var(--color);
-    color: var(--color-contrast);
-    border: 0;
     font-family: inherit;
+    background-color: var(--color);
+    color: var(--color-high);
+    padding: 5px 10px;
+    border: none;
     font-size: 1rem;
-    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgb(243, 237, 151);
+}
+
+
 
 form {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    padding: var(--padding-x);
+    background-color: #FFC107;
 
     .field {
         display: flex;
@@ -94,7 +109,16 @@ input:-webkit-autofill:focus {
 }
 
 article {
-    background-color: rgb(99, 99, 99);
+    background-color: #FFC107;
+    width: 600px;
+    /* Ancho fijo */
+    max-width: 90%;
+    /* Para que se adapte en pantallas pequeñas */
+    border-radius: 20px;
+    /* Bordes redondeados */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    /* Sombra */
+    margin: 1rem;
 
     h3,
     p,
@@ -110,6 +134,7 @@ article {
     .post-footer {
         display: flex;
         justify-content: space-between;
+
     }
 }
 
@@ -128,19 +153,37 @@ header {
 
 h1,
 
+
 h2 {
     margin: 0;
+    color: #7B0000;
+    font-size: 2rem;
+    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFC107;
+
 }
+
+
+
+
 
 main {
     margin: 3rem 0;
+    display: flex;
+    /* Para alinear elementos */
+    flex-direction: column;
+    /* Los posts uno debajo del otro */
+    align-items: center;
+    /* Centra los posts horizontalmente */
+    gap: 1rem;
+    /* Espacio entre posts */
+    padding: 2rem;
+    /* Espacio alrededor */
 }
 
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: aqua;
     display: flex;
     justify-content: center;
     background-color: var(--bg-color);
@@ -152,16 +195,33 @@ footer {
     justify-self: center;
 }
 
+.login {
+    justify-self: center;
+
+}
+
+.register {
+    justify-self: center;
+}
+
 
 .logo {
-    width: 120px;
+    width: 100px;
     /* Tamaño pequeño */
-    height: 120px;
-    background-image: url('https://gimgs2.nohat.cc/thumb/f/350/hogwarts-logo-by-shadopro-on-deviantart--comdlpng6952102.jpg');
+    height: 100px;
+    background-image: url('logo-app.jpg');
     background-size: contain;
     /* Ajusta la imagen sin recortar */
     background-repeat: no-repeat;
     /* Para que no se repita */
 
 
+}
+
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: var(--padding-x);
 }
