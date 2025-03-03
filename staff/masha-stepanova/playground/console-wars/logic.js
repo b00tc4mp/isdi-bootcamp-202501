@@ -9,7 +9,7 @@ const logic = {
 
             const { player, fallingObjects } = data
 
-            for (let i = 0; i < fallingObjects.lenght && !intersecting; i++) {
+            for (let i = 0; i < fallingObjects.length && !intersecting; i++) {
                 const fallingObject = fallingObjects[i]
 
                 const { x: o1x, y: o1y } = fallingObject
@@ -22,6 +22,16 @@ const logic = {
                 const p2x = p1x + player.width
                 const p2y = p1y + player.height
 
+                // if (
+                //     o2x >= p1x && o2y >= p1y && o2x <= p2x && o2y <= p2y
+                //     ||
+                //     o1x >= p1x && o1y >= p1y && o1x <= p2x && o1y <= p2y
+                //     ||
+                //     o1x >= p1x && o2y >= p1y && o1x <= p2x && o2y <= p2y
+                //     ||
+                //     o2x >= p1x && o1y >= p1y && o2x <= p2x && o1y <= p2y
+                // )
+
                 if (
                     o2x >= p1x && o2y >= p1y && o2x <= p2x && o2y <= p2y
                     ||
@@ -32,7 +42,7 @@ const logic = {
                     o2x >= p1x && o1y >= p1y && o2x <= p2x && o1y <= p2y
                 ) {
                     intersecting = true
-                    catchedObjects++
+                    data.catchedObjects++
                 }
             }
             return intersecting
