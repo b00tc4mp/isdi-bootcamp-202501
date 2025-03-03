@@ -11,10 +11,10 @@ function App(){
         - si falla , checkear diferencia y cambiar el feedback, sumar attempts
         -
         */ 
+    
     const [view, setView] = useState('game')
     const [feedback, setFeedback] = useState('')
-    const [status, setStatus] = useState(logic.getStatus())
-    // const [numbers, setNumbers] = useState([])
+    const [diferrence, setDiferrence] = useState('')
     const [gameOver, setGameOver] = useState(false)
    
     // generamos numero aleatorio si no hay intentos
@@ -51,11 +51,9 @@ function App(){
             // 6
             form.reset()
             // 7
-            const status = logic.getStatus()
-            setStatus(status)
-            // const numbers = logic.numbersTriedFunction()
-            // setNumbers(numbers)
-                        // 8
+            const diferrence = logic.checkRest()
+            setDiferrence(diferrence)
+            // 8
             const gameOver = logic.isGameOver()
             setFeedback(gameOver ? logic.isWon() ? 'You win! 😊🏆' : 'You loose! ☹️' : 'Keep trying... 🤔')
             // 9
@@ -93,15 +91,10 @@ function App(){
             <label htmlFor="number">Guess number?  </label>
             <input type="number" name="number" id="number" />
             <button type="submit">TRY!</button>
-            
             </form>}
 
             <p>{feedback}</p>
-            {status.checkWin !== true && status.currentAttempts !== 0 && <p>{ ` Your number is, ${status.temperature} near the number to guess.` }</p>}
-            {status.checkWin !== true && status.currentAttempts !== 0 && <p>{ ` Numbers tried: ${status.numbersTried}. ` }</p>}
-            {status.checkWin !== true && status.currentAttempts !== 0 && <p>{ `Attempts: ${status.currentAttempts} ` }</p>}
-
-            
+            <p>{diferrence}</p>
 
             
             {gameOver && <button onClick={handleRestartClick}>Restart</button>}

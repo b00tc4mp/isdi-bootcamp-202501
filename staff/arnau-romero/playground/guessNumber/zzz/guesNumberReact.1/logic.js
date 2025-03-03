@@ -1,15 +1,6 @@
 // LOGICA
 const logic = {
-    temperature: {
-        VERY_HOT: 'very hot 🫠🔥',
-        COLD: 'cold 🧊',
-        VERY_COLD: 'very cold ❄️❄️',
-        TEMPERED: 'tempered ☀️',
-        WARM: 'warm 🤔',
-        HOT: 'hot 🔥',
-    },
-    
-    // generar numero aleatorio
+   // generar numero aleatorio
     generateRandomNumber (){
         data.randomNumber = Math.floor(Math.random() * (100 + 1)) /* math.random genera una funcion decimal aleatoria entre 0 y 1, 
                                                                     lo multiplicamos por 101 lo que dara un numero decimal entre 0 y casi 101, 
@@ -53,25 +44,25 @@ const logic = {
 
         //COMPROBAR DIFERENCIA 
         if (number1 == number2){ // Si hemos ganado se felicita
-            data.booleans.checkWin = true
+            return "Congrats!"
         }
         else if (substractNumbers >= 50 ){ //- si intento (numero) tiene una diferencia >= 50 con el random, entonces "very cold"
-           data.temperature = logic.temperature.VERY_COLD
+            return "Very Cold! 🥶" + "\n" + "you tried: " + data.arrays.numbersTried  
         }
         else if ( substractNumbers < 50 && substractNumbers >= 30 ){ // - si intento tiene una diferencia < 50 y >= 30, entonces "cold"
-            data.temperature = logic.temperature.COLD
+            return "Cold 🧊" + "\n" + "you tried: " + data.arrays.numbersTried
         }
         else if ( substractNumbers < 30 && substractNumbers >= 20 ){ // - si intento tiene una diferencia < 30 y >= 20, entonces "tempered"
-            data.temperature = logic.temperature.TEMPERED
+            return "tempered ☀️" + "\n" + "you tried: " + data.arrays.numbersTried 
         }
         else if ( substractNumbers < 20 && substractNumbers >= 10 ){ // - si intento tiene una diferencia < 20 y >= 10, entonces "warm"
-            data.temperature = logic.temperature.WARM
+            return "warm🤔" + "\n" + "you tried: " + data.arrays.numbersTried 
         }
         else if ( substractNumbers < 10 && substractNumbers >= 5 ){ // - si intento tiene una diferencia < 10 y >= 5, entonces "hot"
-            data.temperature = logic.temperature.HOT   
+            return "hot🔥" + "\n" + "you tried: " + data.arrays.numbersTried   
         }
         else if ( substractNumbers < 5 && substractNumbers >= 1 ){ // - si intento tiene una diferencia < 5 y >= 1, entonces "very hot"
-            data.temperature = logic.temperature.VERY_HOT
+            return "very hot 🫠🔥" + "\n" + "you tried: " + data.arrays.numbersTried
         }
     },
 
@@ -111,16 +102,5 @@ const logic = {
         data.arrays.numbersTried[data.constant.attempts-1] = playerNumber //Aprovechando el contador de intentos vamos insertando los numeros probados en el array.
         }
     },
-
-    getStatus(){
-        return{
-           temperature : data.temperature,
-           numbersTried : data.arrays.numbersTried,
-           win : data.booleans.checkWin,
-           attempsPassed: data.booleans.attempsPassed,
-           currentAttempts: data.constant.attempts
-        }
-
-    }
 }
 // logic.gameAutoMode()

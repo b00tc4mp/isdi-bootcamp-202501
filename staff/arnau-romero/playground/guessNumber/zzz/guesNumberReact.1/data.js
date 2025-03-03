@@ -16,7 +16,6 @@ const data = {
         regexNumber : /\d/,
         regexYN : /[y||n]/
     },
-    temperature: ' ',
     randomNumber : 0 , // variable para almacenar el numero aleatorio generado por la funcion generateRandomNumber()
     playerNumber : '' ,// Preguntar numero al usuario
 }

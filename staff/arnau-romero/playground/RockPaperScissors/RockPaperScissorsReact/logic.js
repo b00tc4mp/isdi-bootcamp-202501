@@ -11,6 +11,8 @@ logic = {
             data.rounds.currentRounds ++
             data.results.playerWinRound = false
             data.results.machineWinRound = false
+            this.changeMachineEmoji()
+            this.changePlayerEmoji()
             this.remainingRounds()
         }
         else if(player1choice === 'r' && machineChoice === 's'){
@@ -18,6 +20,8 @@ logic = {
             data.rounds.currentRounds++
             data.results.playerWinRound = true
             data.results.machineWinRound = false
+            this.changeMachineEmoji()
+            this.changePlayerEmoji()
             this.remainingRounds()
        
             
@@ -26,6 +30,8 @@ logic = {
             data.rounds.currentRounds++
             data.results.playerWinRound = true
             data.results.machineWinRound = false
+            this.changeMachineEmoji()
+            this.changePlayerEmoji()
             this.remainingRounds()
        
         
@@ -34,6 +40,8 @@ logic = {
             data.rounds.currentRounds++
             data.results.playerWinRound = true
             data.results.machineWinRound = false
+            this.changeMachineEmoji()
+            this.changePlayerEmoji()
             this.remainingRounds()
        
             
@@ -41,20 +49,26 @@ logic = {
             data.results.CountersWinsMachine++
             data.rounds.currentRounds++
             data.results.playerWinRound = false
-            data.results.machineWinRound = true    
+            data.results.machineWinRound = true
+            this.changeMachineEmoji()
+            this.changePlayerEmoji()    
             this.remainingRounds()
             
         }else if(player1choice === 'p' && machineChoice === 's'){
             data.results.CountersWinsMachine++
             data.rounds.currentRounds++
             data.results.playerWinRound = false
-            data.results.machineWinRound = true    
+            data.results.machineWinRound = true
+            this.changeMachineEmoji()   
+            this.changePlayerEmoji() 
             this.remainingRounds()
         }else if(player1choice === 's' && machineChoice === 'r'){
             data.results.CountersWinsMachine++
             data.rounds.currentRounds++
             data.results.playerWinRound = false
             data.results.machineWinRound = true
+            this.changeMachineEmoji()
+            this.changePlayerEmoji()
             this.remainingRounds()
         }  
     },
@@ -88,9 +102,28 @@ logic = {
         data.results.CountersWinsMachine= 0
         data.results.countersDraw= 0
     },
-
+    changeMachineEmoji(){
+        const choices = ['✂️','📋','🪨']
+        if (data.choices.machineChoice === 's')
+            data.choices.machineChoice = choices[0]
+        else if(data.choices.machineChoice === 'p')
+            data.choices.machineChoice = choices[1]
+        else if (data.choices.machineChoice === 'r')
+            data.choices.machineChoice = choices[2]
+ 
+    },
+    changePlayerEmoji(){
+        const choices = ['✂️','📋','🪨']
+        if (data.choices.playerChoice === 's')
+            data.choices.playerChoice = choices[0]
+        else if(data.choices.playerChoice === 'p')
+            data.choices.playerChoice = choices[1]
+        else if (data.choices.playerChoice === 'r')
+            data.choices.playerChoice = choices[2]
+    },
     getStatus(){
         
+       
         return {
             currentRounds : data.rounds.currentRounds,
             machineChoice:  data.choices.machineChoice,

@@ -140,11 +140,11 @@ function App(){
 
             <button type="button" onClick={handleClickRock}>ROCK🪨</button> <button type="button" onClick={handleClickPaper}>PAPER📋</button> <button type="button" onClick={handleClickScissors}>SCISSORS ✂️</button>
             
-            {status.playerWinRound === true && status.machineWinRound === false && status.currentRounds !== 0 && <p>{`Player win with ${status.playerChoice} vs ${status.machineChoice} cpu `}</p>}
+            {status.playerWinRound === true && status.machineWinRound === false && status.currentRounds !== 0 && <p>{`Player win with ${status.playerChoice} vs ${status.machineChoice} `}</p>}
 
-            {status.playerWinRound === false && status.machineWinRound === true && status.currentRounds !== 0 && <p>{`Player win with ${status.playerChoice} vs ${status.machineChoice} cpu `}</p>}
+            {status.playerWinRound === false && status.machineWinRound === true && status.currentRounds !== 0 && <p>{`Machine win with ${status.machineChoice} vs ${status.playerChoice} `}</p>}
 
-            {status.playerWinRound === false && status.machineWinRound === false && status.currentRounds !== 0 && <p>{`It's a draw player: ${status.playerChoice} vs ${status.machineChoice} cpu `}</p>}
+            {status.playerWinRound === false && status.machineWinRound === false && status.currentRounds !== 0 && <p>{`It's a draw, player: ${status.playerChoice} vs ${status.machineChoice} cpu `}</p>}
 
             {status.currentRounds !== 0 && <p>{ ` Player wins: ${status.playerWins} Machine wins: ${status.machineWins} Draws: ${status.draws} ` }</p>}
 
