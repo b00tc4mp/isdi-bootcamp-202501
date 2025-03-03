@@ -1,6 +1,6 @@
 const { useState } = React
 
-function App(){
+function App() {
     const [view, setView] = useState('landing');
 
     const handleRegisterClick = () => setView('register');
@@ -19,15 +19,15 @@ function App(){
     const handleCreatePostSubmit = () => setView('home');
 
     return <>
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick}/>}
+        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
 
-        {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit ={handleRegisterSubmit}/>}
+        {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />}
 
         {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />}
 
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick} onAddPostClick={handleAddPostClick}/>}
+        {view === 'home' && <Home onLogoutClick={handleLogoutClick} onAddPostClick={handleAddPostClick} />}
 
-        {view === 'createPost' &&<CreatePost onCancelClick={handleCancelPostSubmit} onAddPostSubmit={handleCreatePostSubmit}/>}
+        {view === 'createPost' && <CreatePost onCancelClick={handleCancelPostSubmit} onAddPostSubmit={handleCreatePostSubmit} />}
 
     </>
 }

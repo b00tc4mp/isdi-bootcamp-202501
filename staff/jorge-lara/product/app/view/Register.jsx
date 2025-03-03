@@ -1,18 +1,18 @@
-function Register({onLoginClick, onRegisterSubmit}) {
-    const handleRegisterSubmit = event =>{
+function Register({ onLoginClick, onRegisterSubmit }) {
+    const handleRegisterSubmit = event => {
         event.preventDefault();
 
         try {
-            const {target : form } = event;
+            const { target: form } = event;
 
             const {
-                name: {value: name},
-                email: { value: email},
-                username: {value: username},
-                password: {value: password}
+                name: { value: name },
+                email: { value: email },
+                username: { value: username },
+                password: { value: password }
             } = form;
 
-            logic.registerUser(name,email,username,password);
+            logic.registerUser(name, email, username, password);
 
             form.reset();
 
@@ -24,24 +24,35 @@ function Register({onLoginClick, onRegisterSubmit}) {
         }
     }
 
-    return <div>
+    return <div className="register">
         <h1>Register</h1>
-        <form style={{ display: 'flex', flexDirection: 'column', width: '250px' }} onSubmit={handleRegisterSubmit}>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name"/>
+        <form onSubmit={handleRegisterSubmit}>
+            <div className="field">
+                <input type="text" id="name" placeholder="Name" />
+            </div>
 
-            <label htmlFor="email">E-mail</label>
-            <input type="email" id="email"/>
+            <div className="field">
+                <input type="email" id="email" placeholder="Email address" />
+            </div>
 
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username"/>
+            <div className="field">
+                <input type="text" id="username" placeholder="Username" />
+            </div>
 
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password"/>
-            <span>
-                <a style={{ cursor: "pointer" }} onClick={onLoginClick}>Login</a>
-                <button type="submit" style={{ marginLeft: "50px" }}>Register</button>
-            </span>
+            <div className="field">
+                <input type="password" id="password" placeholder="Password" />
+            </div>
+
+            <div>
+                <button type="submit">Register</button>
+            </div>
         </form>
+        <div className="bottom-form">
+            <span>
+                Already have an account?
+                <a onClick={onLoginClick}>Login</a>
+            </span>
+        </div>
+
     </div>
 }

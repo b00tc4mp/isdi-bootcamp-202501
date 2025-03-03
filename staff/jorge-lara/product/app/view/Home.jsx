@@ -1,6 +1,6 @@
 const { useState, useEffect } = React;
 
-function Home({ onLogoutClick , onAddPostClick}) {
+function Home({ onLogoutClick, onAddPostClick }) {
     const [view, setView] = useState('posts');
     const [username, setUserName] = useState('');
     const [posts, setPosts] = useState([]);
@@ -48,24 +48,32 @@ function Home({ onLogoutClick , onAddPostClick}) {
         }
     }
     return <div>
-        <h1>Home</h1>
-        <h2>Current user: {username}</h2>
+        <header>
+            <h1>Home</h1>
+            <h2>Current user: {username}</h2>
 
-        <button type="button" onClick={handleLogoutClick}>Sign out</button>
+            <button type="button" onClick={handleLogoutClick}>Sign out</button>
+        </header>
 
-        {view === 'posts' && <button onClick={handleAddPostClick} type="button">+</button>}
+        <main>
+            {view === 'posts' &&
+                <section style={{ display: 'flex', flexDirection: 'column', width: '250px' }}>
 
-        {view === 'posts' &&
-            <section style={{ display: 'flex', flexDirection: 'column', width: '250px' }}>
+                    {posts.map(post =>
+                        <article>
+                            <h3>{post.author}</h3>
+                            <img src={post.image} />
+                            <p>{post.text}</p>
 
-                {posts.map(post =>
-                    <article>
-                        <h3>{post.author}</h3>
-                        <img src={post.image} />
-                        <p>{post.text}</p>
-                        <time>{post.createdAt.toISOString()}</time>
-                        <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
-                    </article>)}
-            </section>}
+                            <div className="post-footer">
+                                <time>{post.createdAt.toISOString()}</time>
+                                <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
+                            </div>
+                        </article>)}
+                </section>}
+        </main>
+        <footer>
+            {view === 'posts' && <button className="floating-button" onClick={handleAddPostClick} type="button">+</button>}
+        </footer>
     </div>
 }

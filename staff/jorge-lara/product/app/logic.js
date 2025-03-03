@@ -59,9 +59,11 @@ const logic = {
         this.validate.username(username, 'username');
         this.validate.password(password, 'password');
 
+        const { users } = data;
+
         let found;
 
-        for (const user of data.users) {
+        for (const user of users) {
             if (user.email === email || user.username === username) {
                 found = user;
             }
@@ -81,16 +83,20 @@ const logic = {
             modifiedAt: null
         }
 
-        data.users[data.users.length] = user;
+        users.push(user);
+
+        data.users = users
     },
 
     loginUser(username, password) {
         this.validate.username(username, 'username');
         this.validate.password(password, 'password');
 
+        const { users } = data;
+
         let found;
 
-        for (const user of data.users) {
+        for (const user of users) {
             if (user.username === username) {
                 found = user;
             }
@@ -118,13 +124,13 @@ const logic = {
 
         for (let i = 0; i < data.posts.length; i++) {
             const post = data.posts[i];
-            
+
             let liked = false;
 
             for (let i = 0; i < post.likes.length && !liked; i++) {
                 const userId = post.likes[i];
-                
-                if (userId === data.userId){
+
+                if (userId === data.userId) {
                     liked = true;
                 }
             }
