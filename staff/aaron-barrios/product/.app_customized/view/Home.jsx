@@ -150,14 +150,20 @@ function Home({ onLogoutClick }) {
 
 
             {/* --- CREATE POST SECTION ---     */}
-            {view === 'create-post' && <section>
-                <h2>Create Post</h2>
+            {view === 'create-post' && <section className="create-post">
+                <h2 style={{ marginBottom: '1rem' }}>Create Post</h2>
 
                 <form onSubmit={handleCreatePostSubmit} >
-                    <label htmlFor="image">Image</label>
-                    <input type="url" id="image" />
-                    <label htmlFor="text">Text</label>
-                    <input type="text" id="text" />
+
+                    <div className="field">
+                        <label htmlFor="image">Image</label>
+                        <input type="url" id="image" />
+                    </div>
+
+                    <div className="field">
+                        <label htmlFor="text">Text</label>
+                        <input type="text" id="text" />
+                    </div>
 
                     <button type="submit">Create</button>
                 </form>
