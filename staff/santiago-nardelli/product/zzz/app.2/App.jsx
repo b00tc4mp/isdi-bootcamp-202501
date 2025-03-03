@@ -5,22 +5,9 @@
 function App() {
     // Importo React y useState
     const useState = React.useState
-    const useEffect = React.useEffect
     // Manejo el estado de las vistas con useState y seteo la vista inicial en 'landing' 
     const [view, setView] = useState('landing')
 
-
-    useEffect(() => {
-        try {
-            const loggedIn = logic.isUserLoggedIn()
-
-            loggedIn && setView('home')
-        } catch (error) {
-            console.error(error)
-
-            alert(error.messsage)
-        }
-    }, [])
 
     // Creo las funciones que manejan los eventos de los botones de Register, Login y Logout
     // Cambiando la vista a 'register', 'login' y 'home' respectivamente

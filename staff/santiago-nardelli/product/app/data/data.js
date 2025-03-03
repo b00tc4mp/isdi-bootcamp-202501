@@ -5,60 +5,59 @@ var data = {
         const random = Math.random().toString(36).substr(2);
         return `${timestamp}-${random}`;
     },
+    /**
+     * Modifico mi data estatica a data localStorage para que los datos persistan getter y setter 
+     */
 
-    users: [
+    // esta funcion me permite obtener los usuarios del localStorage y si no hay ninguno me devuelve un array vacio
+    //JSON.parse convierte un string en un objeto
+    //localStorage.getItem obtiene el valor del item del localStorage
+    get users() {
+        const users = JSON.parse(localStorage.users || '[]') 
 
-        {
-            id: 'm73hzspg-cjz345t0kzr',
-            name: 'Helga Pataki',
-            email: 'helga@pataki.com',
-            username: 'helgapataki',
-            password: '12345',
-            createdAt: new Date(2024, 0, 10),
-            modifiedAt: null
-        },
+        return users
 
-        {
-            id: 'm73i0gsz-cxrxknt5klk',
-            name: 'Arnold',
-            email: 'hey@arnold.com',
-            username: 'heyarnold',
-            password: '54321',
-            createdAt: new Date(2024, 0, 30),
-            modifiedAt: null
-        }
+    },
 
+    // esta funcion me permite guardar los usuarios en el localStorage
+    //JSON.stringify convierte un objeto en un string
+    set users(users) {
+        const json = JSON.stringify(users)
 
-    ],
+        localStorage.users = json
+    },
 
+    // esta funcion A DIFERENCIA DE LOCAL/SESSION STORAGE,es para obtener el id del usuario y devuelvo null sino hay ninguno 
 
-    posts: [
+    get userId(){
+        const id = JSON.parse(sessionStorage.userId || 'null')
 
-        {
-            id: 'm73i2fdx-riw6kmzv52',
-            author: 'm73i0gsz-cxrxknt5klk',
-            image: 'https://media.giphy.com/media/l4EoS4FShnTLbptOE/giphy.gif?cid=790b7611wfv00fcfuc86l5jmh9nho25hby0jdx93fghvrqpo&ep=v1_gifs_search&rid=giphy.gif&ct=g',
-            title: 'Hey you!',
-            createdAt: new Date(2024, 0, 30),
-            modifiedAt: null,
-            likes:[]
+        return id
+    },
 
-        },
+    // esta funcion me permite guardar el id del usuario en el sessionStorage
+    set userId(id){
+        const json = JSON.stringify(id)
 
+        sessionStorage.userId = json
+    },
 
-        {
-            id: 'm73i2xu2-epai2nqwoxl',
-            author: 'm73hzspg-cjz345t0kzr',
-            image: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDVqbGoxYmduejJudmVleWVmcXRvd3dqb3pjcjR4d2JvdXpnaTdpNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0DAG7ikMKa3WCNji/giphy.gif',
-            title: 'Strike !',
-            createdAt: new Date(2024, 0, 20),
-            modifiedAt: null,
-            likes:[]
-        }
+    get posts(){
 
-    ],
+        const posts = JSON.parse(localStorage.posts || '[]')
+
+        return posts
+    },
+    
+    // cuando hago set por parametros tengo que pasar algo para que se guarde en el localStorage
+    set posts(post){
+
+        const json = JSON.stringify(post)
+
+        localStorage.posts = json
+    }
         
-    userId: null
+    
 
 }
 

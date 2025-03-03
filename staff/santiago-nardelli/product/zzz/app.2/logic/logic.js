@@ -69,16 +69,12 @@ var logic = {
     this.validate.email(email, "email");
     this.validate.password(password, "password");
 
-
-
-    // destructuro para utilizar mi getter y setter de data
-    const { users } = data;
     //declaro una variable para guardar el usuario encontrado, la inicializo null, para que si no se encuentra el usuario, no se guarde nada
     let found;
     // recorro el array de usuarios para buscar si el usuario ya existe
-    for (i = 0; i < users.length && !found; i++) {
+    for (i = 0; i < data.users.length && !found; i++) {
       // guardo el usuario en una variable para compararlo con el usuario que se quiere registrar
-      const user = users[i];
+      const user = data.users[i];
 
       // si el usuario ya existe lo guardo en la variable found
       if (user.name === name || user.email === email) found = user;
@@ -98,10 +94,7 @@ var logic = {
       modifiedAt: null,
     };
 
-    users[users.length] = user;
-
-    //aqui declaro para usar mi setting de data
-    data.users = users;
+    data.users[data.users.length] = user;
   },
 
   // funcion para loguear un usuario con su validasion
@@ -109,12 +102,10 @@ var logic = {
     this.validate.email(email, "email");
     this.validate.password(password, "password");
 
-const { users } = data;
-
     let found;
 
-    for (i = 0; i < users.length && !found; i++) {
-      const user = users[i];
+    for (i = 0; i < data.users.length && !found; i++) {
+      const user = data.users[i];
 
       if (user.email === email) found = user;
     }
@@ -133,11 +124,11 @@ const { users } = data;
   //funcion para reconocer el user de la sesion
   getUserName: function () {
     let found;
-     const { users , userId} = data;
-    for (let i = 0; i < users.length && !found; i++) {
-      const user = users[i];
 
-      if (user.id === userId) found = user;
+    for (let i = 0; i < data.users.length && !found; i++) {
+      const user = data.users[i];
+
+      if (user.id === data.userId) found = user;
     }
 
     if (!found) throw new Error("user not found");
@@ -145,30 +136,24 @@ const { users } = data;
     return found.name;
   },
 
-  //funcion para saber si el user esta logueado la doble !! convierte el valor en booleano
-  isUserLoggedIn() {
-    return !!data.userId
-},
   //funcion para traer todos los posts
   getPosts: function () {
 
-
-    const{ userId, posts} = data;
     // creo un array vacio para guardar los posts
     const aggregatedPosts = [];
 
 
     // recorro el array de posts
-    for (let i = 0; i < posts.length; i++) {
+    for (let i = 0; i < data.posts.length; i++) {
       
-      const post = posts[i];
+      const post = data.posts[i];
 
       let liked = false;
 
       for (let i = 0; i < post.likes.length && !liked; i++) {
-        const id= post.likes[i];
+        const userId = post.likes[i];
 
-        if (id === userId) liked = true;
+        if (userId === data.userId) liked = true;
       }
 
       const aggregatedPost = {
@@ -176,8 +161,8 @@ const { users } = data;
         author: post.author,
         image: post.image,
         text: post.text,
-        createdAt:  new Date(post.createdAt),
-        modifiedAt:  post.modifiedAt && new Date(post.modifiedAt),
+        createdAt: post.createdAt,
+        modifiedAt: post.modifiedAt,
         liked: liked,
         likesCount: post.likes.length,
       };
@@ -196,28 +181,22 @@ const { users } = data;
     this.validate.text(title, "title");
     this.validate.maxLength(500);
 
-
-    const{uuid, userId, posts} = data;
     //creo un objeto post con los datos que recibo
     const post = {
-      id: uuid(),
+      id: data.uuid(),
       image: image,
       title: title,
-      userId: userId,
+      userId: data.userId,
       createdAt: new Date(),
       modifiedAt: null,
       likes: [],
     };
     // guardo el post en el array de posts y lo agrego al final
-    posts[posts.length] = post;
-
-    data.posts = posts;
+    data.posts[data.posts.length] = post;
   },
 
   //Funcion para los likes de los POSTS--> recibe como parametro el id del post para trabajar sobre el mismo
   toggleLikePost(postId) {
-
-    const { userId, posts} = data;
     //declaro variable vacia de found, que el caso del postId que recibo por parametros sea igual a algun ID de mi array de ID`s la igualo a ese ID en consecuente a ese POST
     let foundPost;
 
@@ -225,9 +204,9 @@ const { users } = data;
     recorro mi array de posts para ver si existe y lo encuentro--> tengo dos parametros en mi for de condiciones
     la longitud de mi array y la variable declarada anteriormente negada--> si es que no reasigno el valor dentro de mi for 
     */
-    for (let i = 0; i < posts.length && !foundPost; i++) {
+    for (let i = 0; i < data.posts.length && !foundPost; i++) {
       //manejo cada posicion de mi array de posts como un unico elemento POST--> esto mediante la iteracion del for y el incremnto de la posicion [I]
-      const post = posts[i];
+      const post = data.posts[i];
       //Condicinale de encuentro de busqueda--> Si el post unitario.id es exactamente igual a el valor que le paso por parametro a la funcion que se origina desde mi componente al hacerle click al Like button--> reasigno el valor de la variable foundPost a la del POST unitario
       if (post.id === postId) foundPost = post;
     }
@@ -248,10 +227,10 @@ const { users } = data;
     for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
       //Trabajo dentro del post encontrado--> dentro de el array de likes dentro de el
       //BUSCO LOS ID y lo declaro en una nueva variable
-      const id = foundPost.likes[i];
+      const userId = foundPost.likes[i];
 
       //Condicinal de encuentro del ID dentro del array de LIKES
-      if (id === userId) userIdFound = true;
+      if (userId === data.userId) userIdFound = true;
     }
 
     // Si userIdFound es false: agrega el ID del usuario al final del array de likes
@@ -271,18 +250,17 @@ const { users } = data;
 
       Esta lógica booleana es la que determina si agregamos o removemos el like del post. Es como un interruptor que cambia entre dos estados: dar like y quitar like.
       */
-    if (!userIdFound) foundPost.likes[foundPost.likes.length] = userId;
+    if (!userIdFound) foundPost.likes[foundPost.likes.length] = data.userId;
     else {
       const likes = [];
 
       for (let i = 0; i < foundPost.likes.length; i++) {
-        const id = foundPost.likes[i];
+        const userId = foundPost.likes[i];
 
-        if (id !== userId) likes[likes.length] = userId;
+        if (userId !== data.userId) likes[likes.length] = userId;
       }
 
       foundPost.likes = likes;
     }
-    data.posts = posts
   },
 };
