@@ -31,24 +31,35 @@ function Register ({ onLoginClick, onRegisterSubmit }) {
             <h1>Logo</h1>
             <h3>Register</h3>
             <form onSubmit={handleRegisterSubmit}>
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name"/>
+                <div className="field">
+                    <label htmlFor="name">Name</label>
+                    <input type="text" id="name"/>
+                </div>
 
-                <label htmlFor="surname">Surname</label>
-                <input type="text" id="surname"/>
+                <div className="field">
+                    <label htmlFor="surname">Surname</label>
+                    <input type="text" id="surname"/>                    
+                </div>
 
-                <label htmlFor="email">E-mail</label>
-                <input type="text" id="email"/>
-
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username"/>
-
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password"/>
-
-                <button type="submit">Register</button>
+                <div className="field">
+                    <label htmlFor="email">E-mail</label>
+                    <input type="text" id="email"/>                    
+                </div>
                 
-                <a onClick={onLoginClick}>Login</a>
+                <div className="field">
+                    <label htmlFor="username">Username</label>
+                    <input type="text" id="username"/>
+                </div>
+                
+                <div className="field">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password"/>
+                </div>
+
+
+                <button type="submit" className="registerSubmitButton">Register</button>
+            
             </form>
+                <a onClick={onLoginClick} className="anchorLoginOfRegister">Login</a>
         </div>
 }

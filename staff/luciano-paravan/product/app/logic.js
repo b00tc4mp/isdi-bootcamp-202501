@@ -39,24 +39,22 @@ const logic = {
         }
     },
     registerUser(name, surname, email, username, password) {
-
         this.validate.text(name, 'name')
         this.validate.maxLength(name, 20, 'name')
         this.validate.minLength(name, 1, 'name')
-
         this.validate.text(surname, 'surname')
         this.validate.maxLength(surname, 20, 'surname')
         this.validate.minLength(surname, 1, 'surname')
-
         this.validate.email(email, 'email')
-
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
+        const { users } = data
+
         let found
 
-        for (let i = 0; i < data.users.length && !found; i++) {
-            const user = data.users[i]
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
 
             if (user.username === username || user.email === email) {
                 found = user
@@ -77,17 +75,23 @@ const logic = {
             savedPosts: []
         }
 
-        data.users[data.users.length] = user
+        //data.users[data.users.length] = user
+
+        users[users.length] = user
+
+        data.users = users
     },
 
     loginUser(username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
+        const { users } = data
+
         let found
 
-        for (let i = 0; i < data.users.length && !found; i++) {
-            const user = data.users[i]
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
 
             if (username === user.username) {
                 found = user
@@ -104,12 +108,14 @@ const logic = {
     },
 
     getUserName() {
+        const { users, userId } = data
+
         let found
 
-        for (let i = 0; i < data.users.length && !found; i++) {
-            const user = data.users[i]
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
 
-            if (user.id === data.userId) {
+            if (user.id === userId) {
                 found = user
             }
         }
@@ -119,17 +125,19 @@ const logic = {
     },
 
     getPosts() {
+        const { posts, userId } = data
+
         const aggregatedPosts = []
 
-        for (let i = 0; i < data.posts.length; i++) {
-            const post = data.posts[i]
+        for (let i = 0; i < posts.length; i++) {
+            const post = posts[i]
 
             let liked = false
 
             for (let i = 0; i < post.likes.length && !liked; i++) {
                 const userId = post.likes[i]
 
-                if (userId === data.userId) {
+                if (userId === userId) {
                     liked = true
                 }
             }
@@ -152,14 +160,16 @@ const logic = {
     },
 
     createPost(image, text) {
+        const { uuid, userId, posts } = data
+
         this.validate.url(image)
         this.validate.maxLength(1000)
         this.validate.text(text)
         this.validate.maxLength(500)
 
         const post = {
-            id: data.uuid(),
-            author: data.userId,
+            id: uuid(),
+            author: userId,
             image: image,
             text: text,
             createdAt: new Date(),
@@ -167,14 +177,17 @@ const logic = {
             likes: []
         }
 
-        data.posts[data.posts.length] = post
+        posts[posts.length] = post
+
+        data.posts = posts
     },
 
     toggleLikePost(postId) {
+        const { posts, userId } = data
         let foundPost
 
-        for (let i = 0; i < data.posts.length && !foundPost; i++) {
-            const post = data.posts[i]
+        for (let i = 0; i < posts.length && !foundPost; i++) {
+            const post = posts[i]
 
             if (post.id === postId) {
                 foundPost = post
@@ -185,30 +198,33 @@ const logic = {
         let userIdFound = false
 
         for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const userId = foundPost.likes[i]
+            const id = foundPost.likes[i]
 
-            if (userId === data.userId) {
+            if (id === userId) {
                 userIdFound = true
             }
         }
 
         if (!userIdFound) {
-            foundPost.likes[foundPost.likes.length] = data.userId
+            foundPost.likes[foundPost.likes.length] = userId
         } else {
             const likes = []
 
             for (let i = 0; i < foundPost.likes.length; i++) {
-                const userId = foundPost.likes[i]
+                const id = foundPost.likes[i]
 
-                if (userId !== data.userId) {
-                    likes[likes.length] = userId
+                if (id !== userId) {
+                    likes[likes.length] = id
                 }
             }
 
             foundPost.likes = likes
         }
+
+        data.posts = posts
     },
     toggleSavePost(postId) {
+        const { users, userId } = data
         let foundUser
 
         for (let i = 0; i < data.users.length && !foundUser; i++) {
@@ -231,7 +247,7 @@ const logic = {
 
         let newSavedPosts = []
         if (!savedPostFound) {
-            foundUser.savedPosts.push(postId)
+            data.foundUser.savedPosts.push(postId)
         } else {
             for (let i = 0; i < foundUser.savedPosts.length; i++) {
                 const post = foundUser.savedPosts[i]
@@ -240,8 +256,8 @@ const logic = {
                     newSavedPosts[newSavedPosts.length] = post
                 }
             }
-            foundUser.savedPosts = newSavedPosts
+            //foundUser.savedPosts = newSavedPosts
+            data.foundUser.savedPost = newSavedPosts
         }
-
     }
 }

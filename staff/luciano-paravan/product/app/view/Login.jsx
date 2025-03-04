@@ -29,13 +29,18 @@ function Login ({ onRegisterClick, onLoginSubmit }) {
             <h1>Logo</h1>
             <h3>Login</h3>
             <form onSubmit={handleLoginSubmit}>
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" />
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password"/>
-                <button type="submit">Login</button>
+                <div className="field">
+                    <label htmlFor="username">Username</label>
+                    <input type="text" id="username" />
+                </div>
+                <div className="field">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password"/>
+                </div>
+                    
+                <button type="submit" className="loginSubmitButton">Login</button>
             </form>
-            <a onClick={onRegisterClick}>Register</a>
+            <a onClick={onRegisterClick} className="anchorRegisterOfLogin">Register</a>
         </div>
     </>
 }
