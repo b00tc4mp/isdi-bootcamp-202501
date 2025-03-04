@@ -10,7 +10,6 @@ function Register({ onRegisterSubmit, onLoginClick }) {
       // Extraigo el formulario del evento
       const { target: form } = event;
 
-
       // Extraigo los valores de los inputs del formulario
       const {
         name: { value: name },
@@ -34,16 +33,23 @@ function Register({ onRegisterSubmit, onLoginClick }) {
   console.debug("Register -> render");
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleRegisterSubmit}>
-        <input type="text" placeholder="Username"name="name"   id= 'name'/>
-        <input type="email" placeholder="E-mail"name="email"  id= 'email' />
-        <input type="password" placeholder="Password" name="password" id= 'password' />
+    <div className="landing-page">
+      <div className="landing-page__icon">
+        <h1 className="fa-solid fa-user-secret"></h1>
+      </div>
+      <form className="form-container" onSubmit={handleRegisterSubmit}>
+        <input type="text" placeholder="Username" name="name" id="name" />
+        <input type="email" placeholder="E-mail" name="email" id="email" />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          id="password"
+        />
         <button type="submit">Register</button>
       </form>
-      <p>or</p>
-      <a onClick={onLoginClick}>Login</a>
+      
+      <a className="landing-page__button" onClick={onLoginClick}>Login</a>
     </div>
   );
 }

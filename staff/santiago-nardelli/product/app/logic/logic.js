@@ -63,7 +63,7 @@ var logic = {
   },
 
   // funcion para registrar un usuario con su validasion
-  registerUser: function (name, email, password) {
+  registerUser(name, email, password) {
     this.validate.text(name, "name");
     this.validate.maxLength(name, 20, "name");
     this.validate.email(email, "email");
@@ -105,7 +105,7 @@ var logic = {
   },
 
   // funcion para loguear un usuario con su validasion
-  loginUser: function (email, password) {
+  loginUser(email, password) {
     this.validate.email(email, "email");
     this.validate.password(password, "password");
 
@@ -126,12 +126,12 @@ const { users } = data;
   },
 
   // funcion para desloguear un usuario
-  logoutUser: function () {
+  logoutUser() {
     data.userId = null;
   },
 
   //funcion para reconocer el user de la sesion
-  getUserName: function () {
+  getUserName() {
     let found;
      const { users , userId} = data;
     for (let i = 0; i < users.length && !found; i++) {
@@ -150,7 +150,7 @@ const { users } = data;
     return !!data.userId
 },
   //funcion para traer todos los posts
-  getPosts: function () {
+  getPosts() {
 
 
     const{ userId, posts} = data;
@@ -189,7 +189,7 @@ const { users } = data;
   },
 
   // funcion para crear un post con su validasion
-  createPost: function (image, title) {
+  createPost(image, title) {
     //valido que la imagen y el titulo sean de tipo string
     this.validate.text(image, "image");
     this.validate.maxLength(1000);

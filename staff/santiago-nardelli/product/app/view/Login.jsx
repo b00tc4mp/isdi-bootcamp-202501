@@ -24,15 +24,16 @@ function Login({ onRegisterClick, onLoginSubmit }) {
   console.debug("Login -> render");
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLoginSubmit}>
+    <div className="landing-page">
+      <div className="landing-page__icon">
+        <h1 className="fa-solid fa-user-secret"></h1>
+      </div>
+      <form className="form-container" onSubmit={handleLoginSubmit}>
         <input type="email" name="email" placeholder="Email" />
         <input type="password" name="password" placeholder="Password" />
         <button type="submit">Login</button>
       </form>
-      <p>or</p>
-      <a onClick={onRegisterClick}>Register</a>
+      <a className='landing-page__button' onClick={onRegisterClick}>Register</a>
     </div>
   );
 }
