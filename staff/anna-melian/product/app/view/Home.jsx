@@ -22,6 +22,23 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
         }
     }, [])
 
+
+    useEffect(() => {
+        if (view === 'home-profile') {
+            const { users, userId } = data
+            const user = users.find(user => user.id === userId)
+
+            if (user) {
+                document.querySelector('#name').value = user.name
+                document.querySelector('#username').value = user.username
+                document.querySelector('#email').value = user.email
+
+            }
+        }
+    }, [view])
+
+
+
     const handleLogoutClick = () => {
         try {
             logic.logoutUser()
@@ -43,14 +60,12 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
     }
 
     const handleDeleteProfileClick = () => {
-        const confirmation = confirm('This acction is permenent, do you want to continue?')
-        //TODO create a logic to delate the user
+        const confirmation = confirm('This action is permanent, do you want to continue?')
         if (confirmation) {
-            alert('Profile Delete')
-            logic.logoutUser()
+            logic.deleteProfile()
             onDeleteProfileClick()
         } else {
-            alert('Canceled')
+            alert('Cancelled')
         }
 
     }
@@ -60,11 +75,6 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
     const onBackHomeClick = () => {
         setView('posts')
-    }
-
-    const onAddNewCommentClick = () => {
-        console.log('Create new comment')
-
     }
 
 
@@ -111,14 +121,21 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
             const {
                 name: { value: name },
                 username: { value: username },
-                password: { value: password },
                 email: { value: email },
 
             } = form
-            console.log({ name }, { username }, { password }, { email })
 
+            const updated = logic.updateUserProfile(name, username, email)
+
+            if (!updated) {
+                alert('No modifications')
+            }
+
+            setUserName(name)
 
             alert('Profile successfully updated 🧙‍♀️')
+
+            setView('posts')
 
         } catch (error) {
             console.error(error)
@@ -179,6 +196,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
             {view === 'home-profile' && <section className="profile">
                 <h2>My Profile</h2>
+                <h4>Change personal information</h4>
                 <form onSubmit={handleUpdateProfileSubmit}>
                     <label htmlFor="text">Name</label>
                     <input id='name' type="text" />
@@ -189,10 +207,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
                     <label htmlFor="text">E-mail</label>
                     <input id='email' type="email" />
 
-                    <label htmlFor="text">Password</label>
-                    <input id='password' type="password" />
-
-                    <button type="submit">Update information</button>
+                    <button type="submit">Update profile</button>
                 </form>
                 <button onClick={handleDeleteProfileClick}>Delete Profile</button>
                 <a onClick={onBackHomeClick}>Back</a>
@@ -202,12 +217,11 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
         <footer>
             {view === 'posts' && <section>
-                <button onClick={handleAddPostClick}>➕</button>
-                <button onClick={handleProfileClick}>🧙‍♀️</button>
+                <button title="Create a post" onClick={handleAddPostClick}>➕</button>
+                <button title="Profile" onClick={handleProfileClick}>🧙‍♀️</button>
             </section>}
         </footer>
     </div>
 }
 
 //TODO Change the profile information when update profile submit
-// TODO Delete the user when the botton delete profile is click

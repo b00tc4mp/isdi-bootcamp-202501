@@ -80,6 +80,12 @@ form {
 
 }
 
+label {
+    font-weight: bold;
+}
+
+
+
 input {
 
     background-color: var(--bg-color);
@@ -163,7 +169,11 @@ h2 {
 }
 
 
+h4 {
+    margin: 0;
+    font-size: 1.2rem;
 
+}
 
 
 main {

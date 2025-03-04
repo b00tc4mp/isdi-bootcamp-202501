@@ -109,6 +109,27 @@ const logic = {
         data.userId = null
     },
 
+
+    deleteProfile() {
+        const { users, userId, posts } = data
+
+        const indexDeleteUser = users.findIndex(user => user.id === userId)
+        if (indexDeleteUser === -1) throw new Error('user not found')
+
+        users.splice(indexDeleteUser, 1)
+
+        const updatedPosts = posts.map(post => {
+            const updatedLikes = post.likes.filter(id => id !== userId)
+            return { ...post, likes: updatedLikes }
+        })
+
+        data.users = users
+        data.posts = updatedPosts
+        data.userId = null
+
+    },
+
+
     getUserName() {
 
         const { users, userId } = data
@@ -264,8 +285,30 @@ const logic = {
 
     },
 
-    addComment(post, author, text) {
-        post.comments[post.comments.length] = author + ': ' + text
+    updateUserProfile(name, username, email) {
+        this.validate.text(name, 'name')
+        this.validate.username(username, 'username')
+        this.validate.email(email, 'email')
+
+        const { users, userId } = data
+
+        const user = users.find(user => user.id === userId)
+
+        if (!user) throw new Error('User not found')
+
+        if (user.name === name && user.username === username && user.email === email) {
+            return false
+        }
+
+        user.name = name
+        user.username = username
+        user.email = email
+        user.modifiedAt = new Date()
+
+        data.users = users
+
+        return true
+
     }
 
 }
