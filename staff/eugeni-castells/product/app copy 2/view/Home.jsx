@@ -58,10 +58,9 @@ function Home({ onLogoutClick, onCancelClick }) {
       {posts &&
         !displayCreatePost &&
         posts.map((item) => {
-          console.log(item);
           return (
             <Post
-              author={item.author.username}
+              author={item.author}
               image={item.image}
               text={item.text}
               createdAt={item.createdAt}

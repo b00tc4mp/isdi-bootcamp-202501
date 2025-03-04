@@ -87,7 +87,15 @@ const logic = {
     this.validate.username(username, "username");
     this.validate.password(password, "password");
 
-    let found = data.users.findOne((user) => user.username === username);
+    let found;
+
+    const { users } = data;
+
+    for (let i = 0; i < users.length && !found; i++) {
+      const user = users[i];
+
+      if (user.username === username) found = user;
+    }
 
     if (!found || found.password !== password)
       throw new Error("wrong credentials");
@@ -103,9 +111,7 @@ const logic = {
   getPosts: function () {
     const aggregatedPosts = [];
 
-    const { userId } = data;
-
-    const posts = data.posts.getAll();
+    const { posts, userId } = data;
 
     for (let i = 0; i < posts.length; i++) {
       let post = posts[i];
@@ -119,13 +125,9 @@ const logic = {
       }
       const { id, author, image, text, createdAt, modifiedAt, likes } = post;
 
-      const user = data.users.getById(author);
-
-      const username = user.username;
-
       let aggregatedPost = {
         id: id,
-        author: { author: author, username: username },
+        author: author,
         image: image,
         text: text,
         createdAt: createdAt,
@@ -147,6 +149,7 @@ const logic = {
     this.validate.text(text, "text");
 
     const newPost = {
+      id: data.uuid(),
       author: data.userId,
       image: image,
       text: text,
@@ -155,46 +158,67 @@ const logic = {
       likes: [],
     };
 
-    data.posts.insertOne(newPost);
+    const { posts } = data;
+
+    posts[posts.length] = newPost;
+
+    data.posts = posts;
   },
   getOnlineUserInfo() {
     let found;
 
-    found = data.users.getById(data.userId);
+    const { users, userId } = data;
+
+    for (let i = 0; i < users.length && !found; i++) {
+      const user = users[i];
+
+      if (user.id === userId) {
+        found = user;
+      }
+    }
 
     if (!found) throw new Error("User not found");
     else return found;
   },
   getOnlineUserName() {
     const user = this.getOnlineUserInfo();
-
     return user.name;
   },
   updatePostLikes(postId) {
-    const postFound = data.posts.getById(postId);
+    let postFound = false;
+
+    const { posts, userId } = data;
+
+    for (let i = 0; i < posts.length && !postFound; i++) {
+      const post = posts[i];
+
+      if (post.id === postId) {
+        postFound = post;
+
+        // postFoundIndex = i;
+      }
+    }
 
     if (!postFound) throw new Error("Post not found");
 
     let userIdFound;
 
     for (let i = 0; i < postFound.likes.length; i++) {
-      if (data.userId === postFound.likes[i]) userIdFound = data.userId;
+      if (userId === postFound.likes[i]) userIdFound = userId;
     }
 
     if (!userIdFound) {
-      postFound.likes[postFound.likes.length] = data.userId;
+      postFound.likes[postFound.likes.length] = userId;
 
-      data.posts.updateOne(postFound);
+      data.posts = posts;
     } else {
       let likes = [];
-
       for (let i = 0; i < postFound.likes.length; i++) {
-        if (postFound.likes[i] !== data.userId)
+        if (postFound.likes[i] !== userId)
           likes[likes.length] = postFound.likes[i];
       }
       postFound.likes = likes;
-
-      data.posts.updateOne(postFound);
+      data.posts = posts;
     }
   },
 };
