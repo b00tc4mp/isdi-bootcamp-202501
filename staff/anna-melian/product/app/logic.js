@@ -349,6 +349,15 @@ const logic = {
 
 
 
+    },
+
+    getOwnPosts() {
+        const { posts, userId } = data
+
+        const ownPosts = posts.filter(post => post.author === userId)
+
+        return ownPosts
+
     }
 
 }

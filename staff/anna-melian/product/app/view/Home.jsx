@@ -233,29 +233,42 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
                 </form>
             </section>}
 
-            {view === 'home-profile' && <section className="options">
-                <h2>My Profile</h2>
-                {posts.map(post => {
-                    const { userId } = data
-                    if (post.author === userId) {
-                        return (
-                            <article key={post.id}>
+            {view === 'home-profile' && (
+                <section className="options">
+                    <h2>My Profile</h2>
 
-                                <h3>{logic.getAuthorUsername(post)}</h3>
+                    {(() => {
+                        const { userId } = data
+                        const userPosts = posts.filter(post => post.author === userId)
 
-                                <img src={post.image} />
+                        return userPosts.length > 0 ? (
+                            userPosts.map(post => (
+                                <article key={post.id}>
+                                    <h3>{logic.getAuthorUsername(post)}</h3>
 
-                                <p>{post.text}</p>
+                                    <img src={post.image} alt="Post image" />
 
-                                <div className="post-footer">
-                                    <button onClick={() => handleToggleLikePostClick(post.id)}> {`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
+                                    <p>{post.text}</p>
 
-                                    <time style={{ display: 'block' }}>{new Date(post.createdAt).toLocaleDateString('es-ES')}</time>
-                                </div>
-                            </article>)
-                    }
-                })}
-            </section>}
+                                    <div className="post-footer">
+                                        <button onClick={() => handleToggleLikePostClick(post.id)}>
+                                            {`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}
+                                        </button>
+
+                                        <time >
+                                            {new Date(post.createdAt).toLocaleDateString('es-ES')}
+                                        </time>
+                                    </div>
+                                </article>
+                            ))
+                        ) : (
+                            <h4 className="no-posts-message">You haven't created any post.</h4>
+
+                        )
+                    })()}
+                </section>
+            )}
+
 
 
             {view === 'home-settings' && <section className="options">
