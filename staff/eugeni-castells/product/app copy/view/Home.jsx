@@ -1,11 +1,6 @@
-// import { useState, useEffect } from "react";
-const { useState, useEffect } = React;
-
-import logic from "../logic.js";
-import Post from "./Post.jsx";
-import CreatePost from "./CreatePost.jsx";
-
 function Home({ onLogoutClick, onCancelClick }) {
+  const { useState, useEffect } = React;
+
   const [currentUserName, setCurrentUserName] = useState("");
   const [displayCreatePost, setDisplayCreatePost] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -18,7 +13,7 @@ function Home({ onLogoutClick, onCancelClick }) {
     try {
       logic.addPost(post);
 
-      const posts = logic.getPosts();
+      const posts = data.posts;
 
       setPosts(posts);
 
@@ -91,5 +86,3 @@ function Home({ onLogoutClick, onCancelClick }) {
     </div>
   );
 }
-
-export default Home;

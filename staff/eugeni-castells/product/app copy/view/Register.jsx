@@ -77,5 +77,3 @@ function Register({ onLoginClick, onRegisterSuccess }) {
     </>
   );
 }
-
-export default Register;

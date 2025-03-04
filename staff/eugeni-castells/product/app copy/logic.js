@@ -1,5 +1,3 @@
-import data from "./data.js";
-
 const logic = {
   constant: {
     EMPTY_OR_BLANK_REGEX: /^\s*$/,
@@ -142,17 +140,24 @@ const logic = {
     return aggregatedPosts;
   },
   addPost: function (post) {
-    const { image, text } = post;
+    const { image, name, year, location, bio } = post;
 
     this.validate.text(image, "image URL");
     this.validate.minLength(image, 10, "image URL");
-    this.validate.text(text, "text");
+    this.validate.text(bio, "bio");
+    this.validate.text(name, "name");
+    this.validate.text(year, "year");
+    this.validate.text(location, "location");
+    this.validate.text(bio, "bio");
 
     const newPost = {
       id: data.uuid(),
       author: data.userId,
+      name: name,
+      year: year,
+      location: location,
       image: image,
-      text: text,
+      text: bio,
       createdAt: new Date(),
       modifiedAt: null,
       likes: [],
@@ -185,7 +190,7 @@ const logic = {
     return user.name;
   },
   updatePostLikes(postId) {
-    let postFound = false;
+    var postFound = false;
 
     const { posts, userId } = data;
 
@@ -195,7 +200,7 @@ const logic = {
       if (post.id === postId) {
         postFound = post;
 
-        // postFoundIndex = i;
+        postFoundIndex = i;
       }
     }
 
@@ -222,5 +227,3 @@ const logic = {
     }
   },
 };
-
-export default logic;

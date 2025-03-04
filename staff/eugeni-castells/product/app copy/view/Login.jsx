@@ -1,7 +1,16 @@
-// import { useEffect } from "react";
-import logic from "../logic";
-
 function Login({ onRegisterClick, onLoginSuccess }) {
+  const { useEffect } = React;
+
+  useEffect(() => {
+    console.log("Login -> useEffect(component did mount)");
+    Login.start = Date.now();
+
+    return () => {
+      console.log("Login -> useEffect(component did unmount)");
+      Login.end = Date.now();
+      console.log((Login.end - Login.start) / 1000);
+    };
+  }, []);
   const handleLoginSubmit = (event) => {
     event.preventDefault();
 
@@ -56,5 +65,3 @@ function Login({ onRegisterClick, onLoginSuccess }) {
     </div>
   );
 }
-
-export default Login;

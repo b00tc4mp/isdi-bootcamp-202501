@@ -33,5 +33,3 @@ const data = {
     localStorage.posts = json;
   },
 };
-
-export default data;

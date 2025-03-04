@@ -1,5 +1,3 @@
-import logic from "../logic";
-
 function Post({ author, image, bio, date, id, liked, onSetPosts, likes }) {
   const handleToggleClick = (id) => {
     try {
@@ -32,5 +30,3 @@ function Post({ author, image, bio, date, id, liked, onSetPosts, likes }) {
     </article>
   );
 }
-
-export default Post;
