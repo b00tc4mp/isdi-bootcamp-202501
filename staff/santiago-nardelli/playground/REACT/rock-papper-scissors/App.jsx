@@ -16,7 +16,7 @@ function App() {
       {view === "select" && (
         <SelectionView onPlayGame={handlePlayClick} />
       )}
-      {view === "game" && <GameView onResetGame={handleResetClick} />}
+      {view === "game" && <Game onResetGame={handleResetClick} />}
     </>
   );
 }

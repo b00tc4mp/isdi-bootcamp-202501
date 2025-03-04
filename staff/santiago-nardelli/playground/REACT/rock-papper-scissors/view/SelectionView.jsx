@@ -6,6 +6,7 @@ function SelectionView({ onPlayGame }) {
   const handleSelectMode = (mode) => {
     try {
       logic.selectMode(mode);
+      alert("Modo seleccionado correctamente");
       setMode(mode);
     } catch (error) {
       console.error(error.message);
@@ -15,7 +16,9 @@ function SelectionView({ onPlayGame }) {
 
   const handleSelectRounds = (rounds) => {
     try {
-      logic.selectRounds(rounds);
+      const roundsNumber= parseInt(rounds)
+      logic.selectRounds(roundsNumber);
+      alert("Rondas seleccionadas correctamente");
       setRounds(rounds);
     } catch (error) {
       console.error(error.message);
@@ -24,11 +27,14 @@ function SelectionView({ onPlayGame }) {
   };
 
   const handlePlayGame = () => {
-    try {
-      onPlayGame();
-    } catch (error) {
-      console.error(error.message);
-      alert("Ha ocurrido un error. Por favor, vuelva a intentarlo.");
+    if(mode && rounds){
+
+      try {
+        onPlayGame();
+      } catch (error) {
+        console.error(error.message);
+        alert("Ha ocurrido un error. Por favor, vuelva a intentarlo.");
+      }
     }
   }
 
