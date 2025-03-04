@@ -12,10 +12,13 @@ function Register({ onLoginClick, onRegisterSubmit }) {
                 name: { value: name },
                 email: { value: email },
                 username: { value: username },
+                house: { value: house },
                 password: { value: password }
             } = form
 
-            logic.registerUser(name, email, username, password)
+            if (house === '') throw new Error('Choose your house')
+
+            logic.registerUser(name, email, username, house, password)
 
             form.reset()
 
@@ -33,7 +36,7 @@ function Register({ onLoginClick, onRegisterSubmit }) {
     console.debug('Register -> render')
 
     return <>
-        <h1 className="logo"></h1>
+        <h1 className="logo-hogwarts"></h1>
 
         <div className="register">
             <h2>Register</h2>
@@ -46,6 +49,15 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
                 <label htmlFor="username">Username</label>
                 <input type="text" id="username" />
+
+                <label htmlFor="houses">Your house</label>
+                <select id="house">
+                    <option value="">Choose your house 🔥✨</option>
+                    <option value="gryffindor">🦁 Gryffindor</option>
+                    <option value="ravenclaw">🦅 Ravenclaw</option>
+                    <option value="slytherin">🐍 Slytherin</option>
+                    <option value="hufflepuff">🦡 Hufflepuff</option>
+                </select>
 
                 <label htmlFor="password">Password</label>
                 <div>

@@ -39,16 +39,18 @@ const logic = {
                 throw new SyntaxError('invalid' + explain + 'syntax')
         }
 
+
     },
 
 
-    registerUser(name, email, username, password) {
+    registerUser(name, email, username, house, password) {
         this.validate.text(name, 'name')
         this.validate.minLength(name, 1, 'name')
         this.validate.maxLength(name, 20, 'name')
         this.validate.email(email, 'email')
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
+
 
         const { users } = data
 
@@ -69,6 +71,7 @@ const logic = {
             name: name,
             email: email,
             username: username,
+            house: house,
             password: password,
             createdAt: new Date(),
             modifiedAt: null
@@ -118,13 +121,16 @@ const logic = {
 
         users.splice(indexDeleteUser, 1)
 
-        const updatedPosts = posts.map(post => {
+        const updatedPosts = posts.filter(post => post.author !== userId)
+
+        const newPosts = updatedPosts.map(post => {
             const updatedLikes = post.likes.filter(id => id !== userId)
             return { ...post, likes: updatedLikes }
+
         })
 
         data.users = users
-        data.posts = updatedPosts
+        data.posts = newPosts
         data.userId = null
 
     },
@@ -146,9 +152,9 @@ const logic = {
 
         return found.name
     },
-    getCommentCreator() {
-        const { users, userId } = data
 
+    getUserHouse() {
+        const { users, userId } = data
         let found
         for (let i = 0; i < users.length && !found; i++) {
             const user = users[i]
@@ -159,8 +165,11 @@ const logic = {
 
         if (!found) throw new Error('user not found')
 
-        return found.username
+        return found.house
+
+
     },
+
     isUserLoggedIn() {
         return !!data.userId
     },

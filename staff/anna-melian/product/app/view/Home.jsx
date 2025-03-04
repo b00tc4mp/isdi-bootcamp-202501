@@ -12,6 +12,12 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
         try {
             const name = logic.getUserName()
             const posts = logic.getPosts()
+            const house = logic.getUserHouse()
+
+            document.body.className = ''
+            document.body.classList.add(house)
+            document.querySelector('h1').classList.add(`logo-${house}`)
+
 
             setUserName(name)
             setPosts(posts)
@@ -43,6 +49,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
     const handleLogoutClick = () => {
         try {
             logic.logoutUser()
+            document.body.className = ''
 
             onLogoutClick()
         } catch (error) {
@@ -67,6 +74,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
         const confirmation = confirm('This action is permanent, do you want to continue?')
         if (confirmation) {
             logic.deleteProfile()
+            document.body.className = ''
             onDeleteProfileClick()
         } else {
             alert('Cancelled')
@@ -182,7 +190,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
     return <div>
         <header>
-            <h1 className="logo"></h1>
+            <h1 className="logo-gryffindor"></h1>
 
             <h2>Hello, {userName}!</h2>
 
@@ -212,7 +220,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
                 )}
             </section>}
 
-            {view === 'create-post' && <section>
+            {view === 'create-post' && <section className="options">
                 <h2>Create a new post</h2>
                 <form onSubmit={handleCreatePostSubmit}>
                     <label htmlFor="image">Image</label>
@@ -225,7 +233,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
                 </form>
             </section>}
 
-            {view === 'home-profile' && <section>
+            {view === 'home-profile' && <section className="options">
                 <h2>My Profile</h2>
                 {posts.map(post => {
                     const { userId } = data
@@ -244,19 +252,13 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
                                     <time style={{ display: 'block' }}>{new Date(post.createdAt).toLocaleDateString('es-ES')}</time>
                                 </div>
-
                             </article>)
                     }
-
                 })}
-
-
-
-
             </section>}
 
 
-            {view === 'home-settings' && <section className="settings">
+            {view === 'home-settings' && <section className="options">
                 <h2>Settings</h2>
                 <h4>Change personal information</h4>
                 <form onSubmit={handleUpdateProfileSubmit}>
@@ -302,5 +304,5 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
     </div>
 }
 
-
+//TODO button in profile to delete a post
 

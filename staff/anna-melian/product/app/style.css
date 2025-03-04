@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap');
 
 html {
-    background-image: url('https://imgs.search.brave.com/Qn_rtXIEShd49tCDEHQFlk3EAfbgAYdDq5ER7haksuw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvOTk2/NTYzODMyL2VzL2Zv/dG8vZWwtcGFwZWwt/dmllam8uanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPTV5VWgw/UWMtOFpEV3hRM2Z5/U0NCMDh0Sm9Dd1Z4/azVRQ0N4ekF2NTNM/QXc9');
+    background-image: url('https://imgs.search.brave.com/EYbqZ18nhr7ABPXOAFnhYuAJwjVoOXJphlQt9mF9p1U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvZm9uZG9zLWRl/LXBhcGVsLXBlcmdh/bWluby12cmtrb2xz/djZ3dXpvdmcwLmpw/Zw');
     background-size: cover;
     /* Hace que la imagen cubra toda la pantalla */
     background-position: center center;
@@ -12,10 +12,7 @@ html {
     color: var(--color);
 
     --bg-color: #f8f4c1;
-    --color: #7B0000;
-    --color-high: #FFD700;
-    --color-low: rgb(201, 191, 55);
-    --color-contrast: rgb(251, 255, 0);
+    --color: #000000;
     --padding-x: 1rem;
     --padding-y: .25rem;
 
@@ -35,21 +32,18 @@ a {
 
 }
 
-
 a:hover {
     font-size: 1.7rem;
     transform: scale(1.1);
-    text-shadow: 0 0 10px rgba(255, 223, 0, 1), 0 0 20px rgba(255, 145, 0, 1), 0 0 30px rgba(255, 100, 0, 1);
+    text-shadow: 0 0 10px rgb(255, 230, 0), 0 0 20px rgb(255, 255, 255), 0 0 30px rgb(250, 239, 145);
 
 
 }
 
-
-
 button {
     font-family: inherit;
     background-color: var(--color);
-    color: var(--color-high);
+    color: white;
     padding: 5px 10px;
     border: none;
     font-size: 1rem;
@@ -60,10 +54,8 @@ button {
 
 button:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 15px rgb(243, 237, 151);
+    box-shadow: 0 0 15px var(--bg-color);
 }
-
-
 
 form {
     display: flex;
@@ -71,26 +63,23 @@ form {
     gap: .5rem;
     border-radius: 10px;
     padding: var(--padding-x);
-    background-color: #FFC107;
+    background-color: var(--bg-color);
 
     .field {
         display: flex;
         flex-direction: column;
         gap: var(--padding-y)
     }
-
 }
 
 label {
     font-weight: bold;
 }
 
-
-
 input {
 
-    background-color: var(--bg-color);
-    color: var(--color);
+    background-color: white;
+    color: black;
     border: 2px solid var(--color);
     outline: none;
     font-family: inherit;
@@ -98,12 +87,12 @@ input {
 }
 
 input:focus {
-    background-color: var(--bg-color);
-    border-color: var(--color-high);
+    background-color: silver;
+    border-color: var(--color);
 }
 
 input::placeholder {
-    color: var(--color-low);
+    color: var(--bg-color);
 }
 
 input:-webkit-autofill,
@@ -116,15 +105,11 @@ input:-webkit-autofill:focus {
 }
 
 article {
-    background-color: #FFC107;
+    background-color: var(--bg-color);
     width: 600px;
-    /* Ancho fijo */
     max-width: 90%;
-    /* Para que se adapte en pantallas pequeñas */
     border-radius: 20px;
-    /* Bordes redondeados */
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    /* Sombra */
     margin: 1rem;
 
     h3,
@@ -160,35 +145,25 @@ header {
 
 h1,
 
-
 h2 {
     margin: 0;
-    color: #7B0000;
+    color: var(--color);
     font-size: 2rem;
     text-shadow: 0 0 10px #FFD700, 0 0 20px #FFC107;
-
 }
-
 
 h4 {
     margin: 0;
     font-size: 1.2rem;
-
 }
-
 
 main {
     margin: 3rem 0;
     display: flex;
-    /* Para alinear elementos */
     flex-direction: column;
-    /* Los posts uno debajo del otro */
     align-items: center;
-    /* Centra los posts horizontalmente */
     gap: 1rem;
-    /* Espacio entre posts */
     padding: 2rem;
-    /* Espacio alrededor */
 }
 
 footer {
@@ -208,7 +183,6 @@ footer {
 
 .login {
     justify-self: center;
-
 }
 
 .register {
@@ -216,40 +190,82 @@ footer {
 }
 
 
-.logo {
+.logo-hogwarts,
+.logo-gryffindor,
+.logo-ravenclaw,
+.logo-hufflepuff,
+.logo-slytherin {
     width: 100px;
-
     height: 100px;
-    background-image: url('logo-app.jpg');
     background-size: contain;
-
     background-repeat: no-repeat;
-
     background-position: center;
-
     border-radius: 50%;
-
+    margin: 7px;
     overflow: hidden;
-
     transition: transform 0.5s ease, box-shadow 0.5s ease;
-    box-shadow: 0 0 15px #000000;
-
-
 
 }
 
-.logo:hover {
+.logo-hogwarts {
+    background-image: url('logo-app.jpg');
+    box-shadow: 0 0 15px #000000;
+}
+
+.logo-gryffindor {
+    background-image: url('https://imgs.search.brave.com/eIxTnOzXuw6u3srH5x9S8CS7OKe1tu7XTuDM0DP_hSI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5teWthcmFtZWxs/aS5jb20vZ2FsZXJp/YS9hcnRpY3Vsb3Mv/ZGVjb3JhY2lvbi1k/ZS1wYXJlZC1lbWJs/ZW1hLWdyeWZmaW5k/b3ItaGFycnktcG90/dGVyLTYxY21fMTI0/MjJfMS5qcGc');
+    box-shadow: 0 0 15px var(--color);
+}
+
+.logo-slytherin {
+    background-image: url('https://imgs.search.brave.com/DCzHwpWrtvfV7FMvOQGQeeMzkiESwQYcwEujBq5EgvE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c2hvcGlmeS5jb20v/cy9maWxlcy8xLzE1/NDEvODU3OS9maWxl/cy9TbHl0aGVyaW4t/aGFycnktcG90dGVy/X2xhcmdlLmpwZz92/PTE0OTE1MzgzNDk');
+    box-shadow: 0 0 15px var(--color);
+}
+
+
+.logo-hufflepuff {
+    background-image: url('https://hogwartssantafe.wordpress.com/wp-content/uploads/2011/10/hufflepuffcrest.jpg');
+    box-shadow: 0 0 15px var(--color);
+}
+
+
+.logo-ravenclaw {
+    background-image: url('https://imgs.search.brave.com/QWyT_XZ79Mt8kIOdbm8lRITPQ21SptHfxKbb8AZVYZI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5teWthcmFtZWxs/aS5jb20vZ2FsZXJp/YS9hcnRpY3Vsb3Mv/ZGVjb3JhY2lvbi1k/ZS1wYXJlZC1lbWJs/ZW1hLXJhdmVuY2xh/dy1oYXJyeS1wb3R0/ZXItNjFjbV8xMjQy/MF8xLmpwZw');
+    box-shadow: 0 0 15px var(--color);
+}
+
+.logo-hogwarts,
+.logo-gryffindor,
+.logo-ravenclaw,
+.logo-hufflepuff,
+.logo-slytherin:hover {
     transform: translateY(-2px) scale(1.05);
     filter: hue-rotate(10deg) saturate(1.3);
-
-
 }
 
-
-
-.settings {
+.options {
     display: flex;
     flex-direction: column;
     gap: .5rem;
     padding: var(--padding-x);
+}
+
+.gryffindor {
+    --color: #740001;
+    --bg-color: #FFC107;
+}
+
+.slytherin {
+    --color: #1A472A;
+    --bg-color: #AAAAAA;
+}
+
+.hufflepuff {
+    --bg-color: #F5E6A3;
+    --color: #000000;
+}
+
+.ravenclaw {
+    --color: #0A3D91;
+    --bg-color: #C0C0C0;
 }

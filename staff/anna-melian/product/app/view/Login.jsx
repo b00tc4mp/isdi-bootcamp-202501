@@ -32,7 +32,7 @@ function Login({ onRegisterClick, onLoginSubmit }) {
     console.debug('Login -> render')
 
     return <>
-        <h1 className="logo"></h1>
+        <h1 className="logo-hogwarts"></h1>
 
         <div className="login">
             <h2>Login</h2>
