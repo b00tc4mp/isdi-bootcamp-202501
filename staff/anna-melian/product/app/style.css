@@ -69,6 +69,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    border-radius: 10px;
     padding: var(--padding-x);
     background-color: #FFC107;
 
@@ -195,7 +196,7 @@ footer {
     bottom: 0;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     background-color: var(--bg-color);
     padding: var(--padding-y) var(--padding-x);
     box-sizing: border-box;
@@ -217,19 +218,36 @@ footer {
 
 .logo {
     width: 100px;
-    /* Tamaño pequeño */
+
     height: 100px;
     background-image: url('logo-app.jpg');
     background-size: contain;
-    /* Ajusta la imagen sin recortar */
+
     background-repeat: no-repeat;
-    /* Para que no se repita */
+
+    background-position: center;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    box-shadow: 0 0 15px #000000;
+
+
+
+}
+
+.logo:hover {
+    transform: translateY(-2px) scale(1.05);
+    filter: hue-rotate(10deg) saturate(1.3);
 
 
 }
 
 
-.profile {
+
+.settings {
     display: flex;
     flex-direction: column;
     gap: .5rem;

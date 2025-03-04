@@ -1,4 +1,7 @@
+const { useState } = React
+
 function Login({ onRegisterClick, onLoginSubmit }) {
+    const [showPassword, setShowPassword] = useState(false)
     const handleLoginSubmit = event => {
         event.preventDefault()
 
@@ -22,6 +25,10 @@ function Login({ onRegisterClick, onLoginSubmit }) {
         }
     }
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword)
+    }
+
     console.debug('Login -> render')
 
     return <>
@@ -34,7 +41,13 @@ function Login({ onRegisterClick, onLoginSubmit }) {
                 <input type="text" id="username" />
 
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" />
+                <div>
+                    <input type={showPassword ? 'text' : 'password'} id="password" />
+                    <button type="button" onClick={togglePasswordVisibility}>
+                        {showPassword ? '🙈' : '👁️'}
+                    </button>
+                </div>
+
 
                 <button type="submit">Login</button>
             </form>

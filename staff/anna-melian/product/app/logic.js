@@ -309,6 +309,37 @@ const logic = {
 
         return true
 
+    },
+
+    changePassword(actualPassword, newPassword) {
+        this.validate.password(actualPassword)
+        this.validate.password(newPassword)
+
+        const { users, userId } = data
+
+        const user = users.find(user => user.id === userId)
+
+        if (!user) throw new Error('User not found')
+
+        const correctActualPassword = (user.password === actualPassword ? true : false)
+
+        if (!correctActualPassword) throw new Error('Wrong password')
+
+        const equalPasswords = (actualPassword === newPassword ? true : false)
+
+        if (equalPasswords) throw new Error('Equal passwords')
+
+        console.debug({ newPassword })
+
+        user.password = newPassword
+        user.modifiedAt = new Date()
+
+        data.users = users
+
+
+
+
+
     }
 
 }

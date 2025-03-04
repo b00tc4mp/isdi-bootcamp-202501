@@ -4,6 +4,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
     const [posts, setPosts] = useState([])
+    const [showPassword, setShowPassword] = useState(false)
 
     useEffect(() => {
         console.debug('Home -> useEffect')
@@ -24,7 +25,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
 
     useEffect(() => {
-        if (view === 'home-profile') {
+        if (view === 'home-settings') {
             const { users, userId } = data
             const user = users.find(user => user.id === userId)
 
@@ -51,11 +52,14 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
         }
     }
 
-
     const handleAddPostClick = () => {
         setView('create-post')
     }
-    const handleProfileClick = () => {
+    const handleSettingsClick = () => {
+        setView('home-settings')
+    }
+
+    const handleProfileCLick = () => {
         setView('home-profile')
     }
 
@@ -129,18 +133,48 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
             if (!updated) {
                 alert('No modifications')
+            } else {
+                setUserName(name)
+
+                alert('Profile successfully updated 🧙‍♀️')
+
+                setView('posts')
             }
 
-            setUserName(name)
 
-            alert('Profile successfully updated 🧙‍♀️')
-
-            setView('posts')
 
         } catch (error) {
             console.error(error)
             alert(error.message)
         }
+    }
+
+    const handleChangePasswordSubmit = event => {
+        event.preventDefault()
+        try {
+
+            const { target: form } = event
+            const {
+                actualPassword: { value: actualPassword },
+                newPassword: { value: newPassword },
+
+            } = form
+
+            logic.changePassword(actualPassword, newPassword)
+
+
+            alert('Password successfully changed 🧙‍♀️')
+            setView('posts')
+
+
+        } catch (error) {
+            console.error(error)
+            alert(error.message)
+        }
+    }
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword)
     }
 
 
@@ -189,13 +223,41 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
                     <button type="submit">Create</button>
                 </form>
+            </section>}
 
-                <a onClick={onBackHomeClick}>Cancel</a>
+            {view === 'home-profile' && <section>
+                <h2>My Profile</h2>
+                {posts.map(post => {
+                    const { userId } = data
+                    if (post.author === userId) {
+                        return (
+                            <article key={post.id}>
+
+                                <h3>{logic.getAuthorUsername(post)}</h3>
+
+                                <img src={post.image} />
+
+                                <p>{post.text}</p>
+
+                                <div className="post-footer">
+                                    <button onClick={() => handleToggleLikePostClick(post.id)}> {`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
+
+                                    <time style={{ display: 'block' }}>{new Date(post.createdAt).toLocaleDateString('es-ES')}</time>
+                                </div>
+
+                            </article>)
+                    }
+
+                })}
+
+
+
+
             </section>}
 
 
-            {view === 'home-profile' && <section className="profile">
-                <h2>My Profile</h2>
+            {view === 'home-settings' && <section className="settings">
+                <h2>Settings</h2>
                 <h4>Change personal information</h4>
                 <form onSubmit={handleUpdateProfileSubmit}>
                     <label htmlFor="text">Name</label>
@@ -209,19 +271,36 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
                     <button type="submit">Update profile</button>
                 </form>
+                <h4>Change your password</h4>
+                <form onSubmit={handleChangePasswordSubmit}>
+                    <label htmlFor="text">Actual password</label>
+                    <input type={showPassword ? 'text' : 'password'} id="actualPassword" />
+
+                    <label htmlFor="text">New password</label>
+
+                    <input type={showPassword ? 'text' : 'password'} id="newPassword" />
+                    <button type="button" onClick={togglePasswordVisibility}>
+                        {showPassword ? '🙈' : '👁️'}
+                    </button>
+                    <button type="submit">Change password</button>
+
+                </form>
+                <h4>Delete your acount</h4>
                 <button onClick={handleDeleteProfileClick}>Delete Profile</button>
-                <a onClick={onBackHomeClick}>Back</a>
             </section>}
 
         </main>
 
         <footer>
-            {view === 'posts' && <section>
-                <button title="Create a post" onClick={handleAddPostClick}>➕</button>
-                <button title="Profile" onClick={handleProfileClick}>🧙‍♀️</button>
-            </section>}
+
+            <button title="Home" onClick={onBackHomeClick} >🏰</button>
+            <button title="Create a post" onClick={handleAddPostClick}>➕</button>
+            <button title='Profile' onClick={handleProfileCLick}>🧙‍♀️</button>
+            <button title="Settings" onClick={handleSettingsClick}>⚙️</button>
+
         </footer>
     </div>
 }
 
-//TODO Change the profile information when update profile submit
+
+
