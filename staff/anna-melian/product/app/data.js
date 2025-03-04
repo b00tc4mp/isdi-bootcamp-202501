@@ -38,3 +38,10 @@ var data = {
     }
 
 }
+
+
+
+/*
+Si es borra el local storage esta en el port 5500, tmb les contrasenyes
+
+*/
