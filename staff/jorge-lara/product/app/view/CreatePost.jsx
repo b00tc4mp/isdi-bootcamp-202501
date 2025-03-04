@@ -1,14 +1,16 @@
-function CreatePost({onCancelClick, onAddPostSubmit}) {
+import logic from '../logic.js'
+
+function CreatePost({ onCancelClick, onAddPostSubmit }) {
 
     const handleAddSubmit = event => {
         event.preventDefault();
 
         try {
-            const {target : form } = event
+            const { target: form } = event
 
-            const {image: {value:image}, title: {value: title}} = form
+            const { image: { value: image }, title: { value: title } } = form
 
-            logic.addPost(title,image);
+            logic.addPost(title, image);
 
             form.reset();
 
@@ -19,20 +21,23 @@ function CreatePost({onCancelClick, onAddPostSubmit}) {
             alert(error.message);
         }
     }
-     
-    return <div>
-        <h1>Create a post</h1>
-        <form onSubmit={handleAddSubmit} style={{ display: 'flex', flexDirection: 'column', width: '250px' }}>
-            <label htmlFor="title">Title</label>
-            <input type="text" id="title"/>
 
-            <label htmlFor="image">Enter image url</label>
-            <input type="url" id="image"/>
+    return <div className="createpost">
+        <h1>Create a post</h1>
+        <form onSubmit={handleAddSubmit}>
+            <div className="field">
+                <input type="text" id="title" placeholder="Type a title" />
+            </div>
+            <div className="field">
+                <input type="url" id="image" placeholder="Enter an url" />
+            </div>
             <span>
-                <a style={{ cursor: 'pointer' }} onClick={onCancelClick}>Cancel</a>
-                <button type="submit" style={{ marginLeft: '50px' }}>Post</button>
+                <a onClick={onCancelClick}>Cancel</a>
+                <button type="submit">Post</button>
             </span>
         </form>
     </div>
 
 }
+
+export default CreatePost;

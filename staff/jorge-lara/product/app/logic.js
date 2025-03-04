@@ -59,22 +59,13 @@ const logic = {
         this.validate.username(username, 'username');
         this.validate.password(password, 'password');
 
-        const { users } = data;
-
-        let found;
-
-        for (const user of users) {
-            if (user.email === email || user.username === username) {
-                found = user;
-            }
-        }
+        const found = data.users.findOne(user = user.email === email || user.username === username);
 
         if (found) {
             throw new Error('user already exists');
         }
 
         const user = {
-            id: data.uuid(),
             name: name,
             email: email,
             username: username,
@@ -83,64 +74,72 @@ const logic = {
             modifiedAt: null
         }
 
-        users.push(user);
-
-        data.users = users
+        data.users.insertOne(user)
     },
 
     loginUser(username, password) {
         this.validate.username(username, 'username');
         this.validate.password(password, 'password');
 
-        const { users } = data;
-
-        let found;
-
-        for (const user of users) {
-            if (user.username === username) {
-                found = user;
-            }
-        }
+        const found = data.users.findOne(user => user.username === username);
 
         if (!found || found.password !== password) {
             throw new Error('Wrong credentials');
         }
 
         data.userId = found.id;
-        data.userlogged = found.username;
     },
 
     logoutUser() {
         data.userId = null;
-        data.userlogged = null;
     },
 
     getLoggedUser() {
-        return data.userlogged;
+        const users = data.users.getAll();
+
+        const { userId } = data;
+
+        const found = data.users.getById(userId);
+
+        if (!found) {
+            throw new Error('user not found');
+        }
+
+        return found.name
+    },
+
+    isUserLoggedIn() {
+        return !!data.userId;
     },
 
     getPosts() {
+        const posts = data.posts.getAll();
+
+        const { userId } = data;
+
         const addedPosts = [];
 
-        for (let i = 0; i < data.posts.length; i++) {
-            const post = data.posts[i];
+        for (let i = 0; i < posts.length; i++) {
+            const post = posts[i];
 
             let liked = false;
 
             for (let i = 0; i < post.likes.length && !liked; i++) {
-                const userId = post.likes[i];
+                const id = post.likes[i];
 
-                if (userId === data.userId) {
+                if (id === userId) {
                     liked = true;
                 }
             }
 
+            const user = data.users.getById(post.author);
+
             const addedPost = {
                 id: post.id,
-                author: post.author,
+                author: { id: post.author, username: user.username },
                 image: post.image,
                 text: post.text,
-                createdAt: post.createdAt,
+                createdAt: new Date(post.createdAt),
                 modifiedAt: post.modifiedAt,
                 liked: liked,
                 likesCount: post.likes.length
@@ -149,16 +148,17 @@ const logic = {
             addedPosts.push(addedPost);
         }
 
-        return addedPosts;
+        return addedPosts.reverse();
     },
 
     addPost(text, image) {
         this.validate.text(text, 'title');
         this.validate.url(image, 'url');
 
+        const { userId } = data;
+
         let post = {
-            id: data.uuid(),
-            author: data.userlogged,
+            author: userId,
             image: image,
             text: text,
             createdAt: new Date(),
@@ -166,18 +166,13 @@ const logic = {
             likes: []
         }
 
-        data.posts[data.posts.length] = post;
+        data.posts.insertOne(post);
     },
 
     toggleLikePost(postId) {
-        let foundPost;
+        const { userId } = data;
 
-        for (let i = 0; i < data.posts.length && !foundPost; i++) {
-            const post = data.posts[i];
-            if (post.id === postId) {
-                foundPost = post;
-            }
-        }
+        const foundPost = data.posts.findOne(post => post.id === postId);
 
         if (!foundPost) {
             throw new Error("post not found");
@@ -186,28 +181,29 @@ const logic = {
         let userIdFound = false;
 
         for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const userId = foundPost.likes[i];
+            const id = foundPost.likes[i];
 
-            if (userId === data.userId) {
+            if (id === userId) {
                 userIdFound = true
             }
         }
 
 
         if (!userIdFound) {
-            foundPost.likes[foundPost.likes.length] = data.userId;
+            foundPost.likes.push(userId);
         } else {
             const likes = [];
 
             for (let i = 0; i < foundPost.likes.length; i++) {
-                const userId = foundPost.likes[i];
+                const id = foundPost.likes[i];
 
-                if (userId === data.userId) {
-                    likes.push(userId)
+                if (id !== userId) {
+                    likes.push(id);
                 }
             }
 
             foundPost.likes = likes;
         }
+        data.posts.updateOne(foundPost);
     }
 }

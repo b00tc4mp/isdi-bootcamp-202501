@@ -1,3 +1,5 @@
+import logic from '../logic'
+
 function Register({ onLoginClick, onRegisterSubmit }) {
     const handleRegisterSubmit = event => {
         event.preventDefault();
@@ -56,3 +58,5 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
     </div>
 }
+
+export default Register;

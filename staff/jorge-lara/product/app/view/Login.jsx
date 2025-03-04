@@ -1,3 +1,5 @@
+import logic from '../logic.js'
+
 function Login({ onRegisterClick, onLoginSubmit }) {
 
     const handleLoginSubmit = event => {
@@ -43,3 +45,5 @@ function Login({ onRegisterClick, onLoginSubmit }) {
         </div>
     </div>
 }
+
+export default Login;

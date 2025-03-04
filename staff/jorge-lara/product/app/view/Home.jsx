@@ -1,5 +1,7 @@
 const { useState, useEffect } = React;
 
+import logic from '../logic.js'
+
 function Home({ onLogoutClick, onAddPostClick }) {
     const [view, setView] = useState('posts');
     const [username, setUserName] = useState('');
@@ -57,18 +59,20 @@ function Home({ onLogoutClick, onAddPostClick }) {
 
         <main>
             {view === 'posts' &&
-                <section style={{ display: 'flex', flexDirection: 'column', width: '250px' }}>
+                <section>
 
                     {posts.map(post =>
                         <article>
                             <h3>{post.author}</h3>
                             <img src={post.image} />
-                            <p>{post.text}</p>
+
 
                             <div className="post-footer">
-                                <time>{post.createdAt.toISOString()}</time>
-                                <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
+                                <p>{post.text}</p>
+
+                                <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
                             </div>
+                            <time>{post.createdAt.toISOString()}</time>
                         </article>)}
                 </section>}
         </main>
@@ -77,3 +81,5 @@ function Home({ onLogoutClick, onAddPostClick }) {
         </footer>
     </div>
 }
+
+export default Home;
