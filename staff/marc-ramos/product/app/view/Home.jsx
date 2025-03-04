@@ -1,5 +1,7 @@
 const { useState, useEffect } = React
 
+import logic from '../logic.js'
+
 function Home({ onLogoutClick }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
@@ -119,3 +121,5 @@ function Home({ onLogoutClick }) {
         </footer>
     </div>
 }
+// exportamos home
+export default Home

@@ -1,3 +1,7 @@
+import { DuplicityError, NotFoundError, CredentialsError } from "./errors.js"
+
+import data from './data.js'
+
 const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
@@ -224,3 +228,5 @@ const logic = {
         data.posts = posts
     }
 }
+
+export default logic
