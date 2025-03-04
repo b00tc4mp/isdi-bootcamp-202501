@@ -56,18 +56,15 @@ const logic = {
     // Funcion para Registrar al usuario
     registerUser(name, email, username, password) {
         this.validate.text(name, 'name')
-        this.validate.maxLength(name, 30, 'name')
+        this.validate.maxLength(name, 20, 'name')
         this.validate.email(email, 'email')
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        // ****
-        const { users } = data
-
         let found
 
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.email === email || user.username === username)
                 found = user
@@ -85,10 +82,7 @@ const logic = {
             modifiedAt: null
         }
 
-        users[users.length] = user
-
-        // ****
-        data.users = users
+        data.users[data.users.length] = user
     },
 
     // Funcion para Iniciar sesion
@@ -96,12 +90,10 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const { users } = data
-
         let found
 
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
             if (user.username === username)
                 found = user
@@ -119,15 +111,12 @@ const logic = {
 
     // Funcion para Obtener nombre de usuario
     getUserName() {
-
-        const { users, userId } = data
-
         let found
 
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
-            if (user.id === userId)
+            if (user.id === data.userId)
                 found = user
         }
 
@@ -136,26 +125,19 @@ const logic = {
         return found.username
     },
 
-    // ****
-    isUserLoggedIn() {
-        return !!data.userId
-    },
-
     // Funcion para Obtener los Posts
     getPosts() {
-        const { userId, posts } = data
-
         const aggregatedPosts = []
 
-        for (let i = 0; i < posts.length; i++) {
-            const post = posts[i]
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
 
             let liked = false
 
             for (let i = 0; i < post.likes.length && !liked; i++) {
-                const id = post.likes[i]
+                const userId = post.likes[i]
 
-                if (id === userId)
+                if (userId === data.userId)
                     liked = true
             }
 
@@ -185,7 +167,6 @@ const logic = {
         this.validate.url(image)
         this.validate.text(text)
 
-        const { uuid, userId, posts } = data
         // Datos que usara
         const post = {
             id: data.uuid(),
@@ -193,7 +174,7 @@ const logic = {
             userName: this.getUserName(),
             image: image,
             text: text,
-            createdAt: new Date().toLocaleString(),
+            createdAt: new Date(),
             modifiedAt: null,
             likes: []
         }
@@ -201,21 +182,18 @@ const logic = {
         // "data.posts.length" devuelve la cantidad de elementos en el array
         // "data.posts[data.posts.length]" accede al índice justo después del último elemento del array
         // Se asigna Post a ese índice, agregándolo al final del array
-        posts[posts.length] = post
-
-        data.posts = posts
+        data.posts[data.posts.length] = post
     },
 
     // Agrega o elimina el Like de los Posts
     toggleLikePost(postId) {
-        const { posts, userId } = data
         // Variable Encontrar el Post
         let foundPost
 
         // Bucle que recorre los Post de Data
         // Si la Id del Post coincide con PostId se guarda en FoundPost y se detiene porque se ejecuta " && !foundPost "", si no es Undefined
-        for (let i = 0; i < posts.length && !foundPost; i++) {
-            const post = posts[i]
+        for (let i = 0; i < data.posts.length && !foundPost; i++) {
+            const post = data.posts[i]
 
             if (post.id === postId)
                 foundPost = post
@@ -230,10 +208,10 @@ const logic = {
 
         // Bucle que recorre la lista de Likes de "foundPost.likes"
         for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const Id = foundPost.likes[i]
+            const userId = foundPost.likes[i]
 
             // Si el usuario ya está en la lista (userId === data.userId), se cambia userIdFound a true y se detiene el bucle.
-            if (Id === userId)
+            if (userId === data.userId)
                 userIdFound = true
         }
 
@@ -247,18 +225,16 @@ const logic = {
 
             // Bucle que recorre la lista de "likes" del Post
             for (let i = 0; i < foundPost.likes.length; i++) {
-                const id = foundPost.likes[i]
+                const userId = foundPost.likes[i]
 
                 // // Se copian todos los userId, excepto data.userId, al nuevo array
-                if (id !== data.userId)
-                    likes[likes.length] = id
+                if (userId !== data.userId)
+                    likes[likes.length] = userId
             }
 
             // Se actualiza foundPost.likes con este nuevo array, eliminando así el "like" del usuario
             foundPost.likes = likes
         }
-
-        data.posts = posts
 
     }
 

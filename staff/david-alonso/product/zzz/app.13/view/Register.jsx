@@ -47,13 +47,13 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
             <form onSubmit={handleRegisterSubmit} >
 
-                <input type="text" id="name" placeholder=". ❓ NAME" className="input" />
+                <input type="text" id="name" placeholder="NAME" className="input" />
 
-                <input type="text" id="email" placeholder=". 📧 E-MAIL" className="input" />
+                <input type="text" id="email" placeholder="E-MAIL" className="input" />
 
-                <input type="text" id="username" placeholder=". 👤 USERNAME" className="input" />
+                <input type="text" id="username" placeholder="USERNAME" className="input" />
 
-                <input type="text" id="password" placeholder=". *️ PASSWORD" className="input" />
+                <input type="text" id="password" placeholder="PASSWORD" className="input" />
 
                 <button type="submit" >REGISTER</button>
             </form>

@@ -1,24 +1,10 @@
 // APP
 
-const { useState, useEffect } = React
-
 // Maneja la navegacion entre las diverentes ventanas de la pagina
 function App() {
 
     // Muestra la pagina principal
     const [view, setView] = useState('landing')
-
-    useEffect(() => {
-        try {
-            const loggedIn = logic.isUserLoggedIn()
-
-            loggedIn && setView('home')
-        } catch (error) {
-            console.error(error)
-
-            alert(error.messsage)
-        }
-    }, [])
 
     // Cambia hacia la pagina de Registro para rgistrarse
     const handleRegisterClick = () => setView('register')

@@ -23,12 +23,10 @@ form {
     .input {
         height: 35px;
         font-size: large;
-        border-radius: 12px;
     }
 
     .input:is(:focus, :valid) {
         outline-color: #eb0e0e;
-        box-shadow: 5px 5px 5px grey;
 
     }
 
@@ -124,15 +122,14 @@ button {
     border: none;
     border-radius: 6px;
     position: relative;
-    height: 40px;
+    height: 30px;
     font-family: 'Permanent Marker';
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-top: 5px;
     padding: 0 2em;
     cursor: pointer;
     transition: 300ms ease all;
     outline: none;
-    box-shadow: 5px 5px 5px rgb(192, 52, 52);
 }
 
 button:hover {
@@ -148,7 +145,7 @@ button:after {
     right: 0;
     height: 2px;
     width: 0;
-    background: #eb0e0e;
+    background: #dd3f0f;
     transition: 300ms ease all;
 }
 
@@ -165,27 +162,28 @@ button:hover:after {
     transition: 300ms ease all;
 }
 
-footer {
+.homeButons {
     position: fixed;
     width: 100%;
     background-color: rgb(37, 35, 35);
-    padding: 12px;
+    padding: 10px;
     bottom: 0px;
     right: 0;
     z-index: 1000;
 
     .new {
-        margin-left: 300px;
+        margin-left: 70px;
         border-radius: 6px;
-        box-shadow: none;
     }
 }
+
+
 
 .like {
     font-size: 1rem;
     background: rgba(0, 0, 0, 0);
+    margin-left: 25px;
     top: -20px;
-    box-shadow: none;
 
 }
 
@@ -228,13 +226,15 @@ footer {
     font-size: 0.7rem;
 }
 
+/* ****** CREAR UN CONTENEDOR DONDE CENTRALIZAR EL FOOTER ***** */
+
 header {
     position: relative;
     display: flex;
 
     .home {
         /* position: relative; */
-        height: 130px;
+        height: 100px;
         width: 200px;
     }
 
@@ -242,19 +242,18 @@ header {
 
         color: white;
         position: relative;
-        top: 70px;
-        left: 30px;
+        top: 40px;
+        left: -0px;
+    }
+
+    .logout {
+
+        border-radius: 6px;
     }
 }
 
-.logout {
-    position: relative;
-    margin-left: 60px;
-    border-radius: 6px;
-    top: -120px;
-    left: 230px;
-    box-shadow: none;
-}
+
+/* **************** */
 
 .end {
     height: 60px;

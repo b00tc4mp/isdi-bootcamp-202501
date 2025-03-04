@@ -97,16 +97,16 @@ function Home({ onLogoutClick }) {
     return <div >
 
         <header>
+            <h3 className="hello">Hello, {userName} !</h3>
+
             <img src="./view/images/home.jpg" className="home" />
 
-            <h3 className="hello">Hello, {userName} !</h3>
+            <button type="button" onClick={handleLogoutClick} className="logout">LOGOUT</button>
         </header>
+        <div className="homeButons">
 
-        <button type="button" onClick={handleLogoutClick} className="logout">EXIT</button>
-
-        <footer>
             {view === 'posts' && <button onClick={handleAddPostClick} className="new">NEW</button>}
-        </footer>
+        </div>
 
         {view === 'posts' && <section>
             {posts.map(post =>
@@ -134,9 +134,9 @@ function Home({ onLogoutClick }) {
 
                     <form onSubmit={handleCreatePostSubmit} >
 
-                        <input type="url" id="image" placeholder=". 📷 Image" className="input" />
+                        <input type="url" id="image" placeholder="Image" className="input" />
 
-                        <input type="text" id="text" placeholder=". 🔤 Text" className="input" />
+                        <input type="text" id="text" placeholder="Text" className="input" />
 
                         <button type="submit" >CREATE</button>
                     </form>

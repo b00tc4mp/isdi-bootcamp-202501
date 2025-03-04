@@ -45,9 +45,9 @@ function Login({ onRegisterClick, onLoginSubmit }) {
 
             <form onSubmit={handleLoginSubmit} >
 
-                <input type="text" id="username" placeholder="USERNAME" className="input" />
+                <input type="text" id="username" placeholder=". 👤 USERNAME" className="input" />
 
-                <input type="password" id="password" placeholder="PASSWORD" className="input" />
+                <input type="password" id="password" placeholder=". *️ PASSWORD" className="input" />
 
                 <button type="submit" >LOGIN</button>
             </form>
