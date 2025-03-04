@@ -88,7 +88,7 @@ function Home({ onLogoutClick }) {
             {view === 'posts' && <section>
                 {posts.map(post =>
                     <article>
-                        <h3>{post.author.username}</h3>
+                        <h3>{post.author}</h3>
 
                         <img src={post.image} />
 

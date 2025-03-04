@@ -1,7 +1,3 @@
-import { DuplicityError, NotFoundError, CredentialsError } from './errors.js'
-
-import data from './data.js'
-
 const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
@@ -52,11 +48,22 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const found = data.users.findOne(user => user.email === email || user.username === username)
+        // const users = data.users
+        const { users } = data
+
+        let found
+
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.email === email || user.username === username)
+                found = user
+        }
 
         if (found) throw new DuplicityError('user already exists')
 
         const user = {
+            id: data.uuid(),
             name: name,
             email: email,
             username: username,
@@ -65,14 +72,25 @@ const logic = {
             modifiedAt: null
         }
 
-        data.users.insertOne(user)
+        users[users.length] = user
+
+        data.users = users
     },
 
     loginUser(username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const found = data.users.findOne(user => user.username === username)
+        const { users } = data
+
+        let found
+
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.username === username)
+                found = user
+        }
 
         if (!found || found.password !== password) throw new CredentialsError('wrong credentials')
 
@@ -84,25 +102,29 @@ const logic = {
     },
 
     getUserName() {
-        const users = data.users.getAll()
+        // const users = data.users
+        // const userId = data.userId
+        const { users, userId } = data
 
-        const { userId } = data
+        let found
 
-        const found = data.users.getById(userId)
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.id === userId)
+                found = user
+        }
 
         if (!found) throw new NotFoundError('user not found')
 
         return found.name
     },
-
     isUserLoggedIn() {
         return !!data.userId
     },
 
     getPosts() {
-        const posts = data.posts.getAll()
-
-        const { userId } = data
+        const { userId, posts } = data
 
         const aggregatedPosts = []
 
@@ -118,11 +140,9 @@ const logic = {
                     liked = true
             }
 
-            const user = data.users.getById(post.author)
-
             const aggregatedPost = {
                 id: post.id,
-                author: { id: post.author, username: user.username },
+                author: post.author,
                 image: post.image,
                 text: post.text,
                 createdAt: new Date(post.createdAt),
@@ -143,9 +163,10 @@ const logic = {
         this.validate.text(text)
         this.validate.maxLength(500)
 
-        const { userId } = data
+        const { uuid, userId, posts } = data
 
         const post = {
+            id: uuid(),
             author: userId,
             image: image,
             text: text,
@@ -154,13 +175,22 @@ const logic = {
             likes: []
         }
 
-        data.posts.insertOne(post)
+        posts[posts.length] = post
+
+        data.posts = posts
     },
 
     toggleLikePost(postId) {
-        const { userId } = data
+        const { posts, userId } = data
 
-        const foundPost = data.posts.findOne(post => post.id === postId)
+        let foundPost
+
+        for (let i = 0; i < posts.length && !foundPost; i++) {
+            const post = posts[i]
+
+            if (post.id === postId)
+                foundPost = post
+        }
 
         if (!foundPost) throw new NotFoundError('post not found')
 
@@ -188,8 +218,6 @@ const logic = {
             foundPost.likes = likes
         }
 
-        data.posts.updateOne(foundPost)
+        data.posts = posts
     }
 }
-
-export default logic

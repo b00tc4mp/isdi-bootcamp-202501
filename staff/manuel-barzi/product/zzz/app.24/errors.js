@@ -14,9 +14,3 @@ class NotFoundError extends Error {
         super(message)
     }
 }
-
-export {
-    DuplicityError,
-    CredentialsError,
-    NotFoundError
-}
