@@ -48,27 +48,27 @@ class Collection{
 
     findOne(condition){
         const collection = JSON.parse(localStorage[this.name] || '[]')
-
+        // iteramos por los post o usuarios que hemos traido de la localStorage
         for (let i = 0; i < collection.length; i++){
             const document = collection[i]
-
+            // buscamos si coincide mediante la callback (post => post.id === postId) llamada desde logic en toggleLike, o en loginUser con (user => user.username === username)
             const matches = condition(document)
-
+            // si devuelve tru , devolvemos el documento
             if (matches) return document
         }
-
+        // si no lo encontramos devolvemos un true
         return null
     }
 
     updateOne(document){
         const collection = JSON.parse(localStorage[this.name] || '[]')
-
+        // buscamos en que index de nuestros datos en la store (ya que sera un array podemos iterar) esta el post que coincide con el post que hemos traido desde togglelike mediante la id.
         const index = collection.findIndex(doc => doc.id === document.id)
-
+        // al tener el index en el que se encuentra el post podemos machacarlo con el mismo post pero con los likes actualizados.
         collection[index] = document
-
+        // lo llevamos a tipo stringify para poder guardarlo luego en la localStorage otra vez.
         const json = JSON.stringify(collection)
-
+        // lo guardamos en la localStorage
         localStorage[this.name] = json
     }
 }
