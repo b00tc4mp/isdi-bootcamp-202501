@@ -1,3 +1,7 @@
+import { DuplicityError, NotFoundError, CredentialsError } from './errors.js'
+
+import data from './data.js'
+
 const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
@@ -48,21 +52,11 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const { users } = data
+        const found = data.users.findOne(user => user.email === email || user.username === username)
 
-        let found
-
-        for (let i = 0; i < users.length && !found; i++) {
-            var user = users[i]
-
-            if (user.email === email || user.username === username)
-                found = user
-        }
-
-        if (found) throw new Error('User already exists')
+        if (found) throw new DuplicityError('User already exists')
 
         var user = {
-            id: data.uuid(),
             name: name,
             email: email,
             username: username,
@@ -73,9 +67,7 @@ const logic = {
             modifiedAt: null,
         }
 
-        users.push(user)
-
-        data.users = users
+        data.users.insertOne(user)
     },
 
     loginUser(username, password) {
@@ -84,20 +76,9 @@ const logic = {
         this.validate.username(username, 'name')
         this.validate.password(password, 'name')
 
-        // let found = users.find(user => user.username === username)
+        const found = data.users.findOne(user => user.username === username)
 
-        let found
-
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
-
-            if (user.username === username) {
-                found = user
-                user.state = 'Online'
-            }
-        }
-
-        if (!found || found.password !== password) throw new Error('Wrong credentials')
+        if (!found || found.password !== password) throw new CredentialsError('Wrong credentials')
 
         data.currentUser = found
         // found.state = 'Online'
@@ -122,39 +103,21 @@ const logic = {
     },
 
     getUsername() {
-        const { users, userId } = data
+        const users = data.users.getAll()
 
-        let found
+        const { userId } = data
 
-        for (i = 0; i < users.length && !found; i++) {
-            const user = users[i]
-
-            if (user.id === userId)
-                found = user
-        }
+        const found = data.users.getById(userId)
 
         if (!found) throw new Error('user not found')
 
         return found.name
     },
 
-    getAuthorName(id) {
-        const { users } = data
-
-        let targetUser
-
-        for (let i = 0; i < users.length; i++) {
-            const current = users[i]
-
-            if (current.id === id)
-                targetUser = current
-        }
-
-        return targetUser.username
-    },
-
     getPosts() {
-        const { userId, posts } = data
+        const posts = data.posts.getAll()
+
+        const { userId } = data
 
         const aggregatedPosts = []
 
@@ -170,9 +133,11 @@ const logic = {
                     liked = true
             }
 
+            const user = data.users.getById(post.author)
+
             const aggregatedPost = {
                 id: post.id,
-                author: post.author,
+                author: { id: post.author, username: user.username },
                 image: post.image,
                 text: post.text,
                 createdAt: new Date(post.createdAt),
@@ -193,10 +158,9 @@ const logic = {
         this.validate.text(text)
         this.validate.minLength(500)
 
-        const { uuid, userId, posts } = data
+        const { userId } = data
 
         const post = {
-            id: uuid(),
             author: userId,
             image: image,
             text: text,
@@ -205,9 +169,7 @@ const logic = {
             likes: []
         }
 
-        posts[posts.length] = post
-
-        data.posts = posts
+        data.posts.insertOne(post)
     },
 
     logoutUser() {
@@ -218,16 +180,9 @@ const logic = {
 
     toggleLikePost(postId) {
         //paso el post Id por parametro desde loadPosts y lo busco
-        const { posts, userId } = data
+        const { userId } = data
 
-        let foundPost
-
-        for (let i = 0; i < posts.length && !foundPost; i++) {
-            const post = posts[i]
-
-            if (post.id === postId)
-                foundPost = post
-        }
+        const foundPost = data.posts.findOne(post => post.id === postId)
 
         if (!foundPost) throw new NotFoundError('post not found')
 
@@ -259,20 +214,11 @@ const logic = {
             foundPost.likes = likes
         }
 
-        data.posts = posts
-    },
-
-    isCurrentAuthor(author) {
-        const { userId } = data
-
-        if (author === userId)
-            return true
-        else
-            return false
+        data.posts.updateOne(foundPost)
     },
 
     deletePost(postId) {
-        const { posts } = data
+        const posts = data.posts.getAll()
 
         let found
 
@@ -285,6 +231,21 @@ const logic = {
             }
         }
 
-        return data.posts = posts
+        data.posts.setAll(posts)
+    },
+
+    isCurrentAuthor(author) {
+        const { userId } = data
+
+        if (author === userId)
+            return true
+        else
+            return false
+    },
+
+    formatedDate(date) {
+        return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
     }
 }
+
+export default logic

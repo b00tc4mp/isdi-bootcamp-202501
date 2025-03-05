@@ -1,3 +1,5 @@
+import logic from '../logic.js'
+
 function Login({ onRegisterClick, onLoginSubmit }) {
     const handleLoginSubmit = event => {
         event.preventDefault()
@@ -36,10 +38,12 @@ function Login({ onRegisterClick, onLoginSubmit }) {
                 <input type="password" id="password" placeholder="Type password..." />
             </div>
 
-            <span style={{ justifyContent: 'space-between' }}>
+            <span style={{ justifyContent: "space-between" }}>
                 <a onClick={onRegisterClick}>Register</a>
                 <button type="submit">Login</button>
             </span>
         </form>
     </div>
 }
+
+export default Login

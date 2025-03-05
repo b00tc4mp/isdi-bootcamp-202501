@@ -1,7 +1,19 @@
 const { useState } = React
 
-function Profile({ onLoginClick }) {
-    const user = logic.getCurrentUser()
+import logic from '../logic.js'
+
+function Profile({ onHomeClick }) {
+    // const user = logic.getCurrentUser()
+
+    const handleHomeClick = () => {
+        try {
+            onHomeClick()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
 
     return < div className="profile">
         <h1>Profile</h1>
@@ -30,9 +42,11 @@ function Profile({ onLoginClick }) {
             </div>
 
             <span style={{ justifyContent: "space-between" }}>
-                <a onClick={onLoginClick}>Home</a>
+                <a onClick={handleHomeClick}>Home</a>
                 <button type="submit">Change</button>
             </span>
         </form>
     </div>
 }
+
+export default Profile
