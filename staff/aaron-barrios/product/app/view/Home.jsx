@@ -1,5 +1,7 @@
 const { useState, useEffect } = React
 
+import logic from '../logic.js'
+
 function Home({ onLogoutClick }) {
     const [view, setView] = useState('posts')
     const [username, setUsername] = useState('')
@@ -79,7 +81,7 @@ function Home({ onLogoutClick }) {
             <section>
                 {posts.map(post =>
                     <article>
-                        <h3>{post.author}</h3>
+                        <h3>{post.author.username}</h3>
 
                         <img src={post.image} />
 
@@ -111,3 +113,5 @@ function Home({ onLogoutClick }) {
         {view === 'posts' && <button onClick={handleCreatePostClick}>🧉</button>}
     </div >
 }
+
+export default Home

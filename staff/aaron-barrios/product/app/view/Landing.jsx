@@ -7,3 +7,5 @@ function Landing({ onRegisterClick, onLoginClick }) {
         </span>
     </div>
 }
+
+export default Landing
