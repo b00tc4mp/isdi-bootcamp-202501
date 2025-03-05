@@ -1,5 +1,6 @@
 function Landing({ onRegisterClick, onLoginClick }) {
     return <div class="landing-page" >
+        {/* style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "50px" }}> */}
 
         <h1>Logo</h1>
 
@@ -9,7 +10,6 @@ function Landing({ onRegisterClick, onLoginClick }) {
             <a onClick={onLoginClick}>Login</a>
         </section>
 
+
     </div>
 }
-
-export default Landing

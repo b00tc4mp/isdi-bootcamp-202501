@@ -1,6 +1,4 @@
-import logic from '../logic.js'
-
-const { useState, useEffect } = React
+const { useState } = React
 
 function Profile({ onLogoutClick, onHomeClick }) {
     const [view, setView] = useState('profile')
@@ -139,7 +137,7 @@ function Profile({ onLogoutClick, onHomeClick }) {
                 </section>
                 {/* <p>{post.comments}</p> */}
 
-                <p>{post.createdAt}</p>
+                <time>{post.createdAt}</time>
             </article>)}
         </section>
 
@@ -174,5 +172,3 @@ function Profile({ onLogoutClick, onHomeClick }) {
 
     </div >
 }
-
-export default Profile

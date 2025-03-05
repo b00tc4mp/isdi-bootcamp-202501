@@ -1,10 +1,7 @@
-import data from './data.js'
-
 const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
-        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        URL_REGEX: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     },
 
     validate: {
@@ -44,11 +41,21 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const found = data.users.findOne(user => user.email === email || user.username === username)
+        const { users, uuid } = data
+
+        let found
+
+        for (var i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.email === email || user.username === username)
+                found = user
+        }
 
         if (found) throw new DuplicityError('user already exists')
 
         const user = {
+            id: uuid(),
             name: name,
             email: email,
             username: username,
@@ -57,14 +64,26 @@ const logic = {
             modifiedAt: null
         }
 
-        data.users.insertOne(user)
+        users.push(user)
+
+        data.users = users
+        // localStorage.users = JSON.stringify(users)
     },
 
     loginUser(username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const found = data.users.findOne(user => user.username === username)
+        const { users } = data
+
+        let found
+
+        for (var i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.username === username)
+                found = user
+        }
 
         if (!found || found.password !== password) throw new CredentialsError('wrong credentials')
 
@@ -76,11 +95,16 @@ const logic = {
     },
 
     getUserName() {
-        const users = data.users.getAll()
+        const { users, userId } = data
 
-        const { userId } = data
+        let found
 
-        const found = data.users.getById(userId)
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.id === userId)
+                found = user
+        }
 
         if (!found) throw new Error('user not found')
 
@@ -92,9 +116,7 @@ const logic = {
     },
 
     getPosts() {
-        const posts = data.posts.getAll()
-
-        const { userId } = data
+        const { userId, posts } = data
 
         const aggregatedPosts = []
 
@@ -110,77 +132,83 @@ const logic = {
                     liked = true
             }
 
-            const user = data.users.getById(post.author)
-
             const aggregatedPost = {
                 id: post.id,
-                author: { id: post.author, username: user.username },
+                author: post.author,
                 image: post.image,
                 text: post.text,
                 createdAt: post.createdAt,
                 modifiedAt: post.modifiedAt,
                 liked: liked,
                 likesCount: post.likes.length,
-                // comments: post.comments
+                comments: post.comments
             }
 
             aggregatedPosts.push(aggregatedPost)
         }
-
+        // posts = aggregatedPosts
         return aggregatedPosts.reverse()
     },
 
     addPost(link, text, comments) {
-        //this.validate.url(link)
-        this.validate.maxLength(1000)
-        this.validate.text(text)
-        this.validate.maxLength(500)
-
-        const { userId } = data
+        const { uuid, userId, posts } = data
 
         const newPost = {
+            id: uuid(),
             author: userId,
             image: link,
             text: text,
             createdAt: new Date().toLocaleDateString(),
             modifiedAt: null,
-            likes: []
-            // comments: []
+            likes: [],
+            comments: []
             // commentUserId: comments.commentUserId,
             // commentText: comments.commentText
         }
 
-        data.posts.insertOne(newPost)
+        posts.push(newPost)
+
+        data.posts = posts
     },
 
     likePost(postId) {
-        const { userId } = data
+        const { posts, userId } = data
 
-        let postToLike = data.posts.findOne(post => post.id === postId)
+        let postToLike
 
-        if (!postToLike) throw new NotFoundError('post not found')
+        for (let i = 0; i < posts.length && !postToLike; i++) {
+            let post = posts[i]
+
+            if (postId === post.id)
+                postToLike = post
+        }
 
         for (var i = 0; i < postToLike.likes.length; i++) {
             if (postToLike.likes[i] === userId) {
                 postToLike.likes.splice(i, 1)
-                data.posts.updateOne(postToLike)
+                data.posts = posts
                 return
             }
         }
         postToLike.likes[postToLike.likes.length] = userId
 
-        data.posts.updateOne(postToLike)
+        data.posts = posts
     },
 
     isPostLikedByUser(postId) {
-        const posts = data.posts.getAll()
+        const { posts, userId } = data
 
-        const { userId } = data
+        let postToLike
 
-        let postToLike = posts.findOne(post => post.id === postId)
+        for (let i = 0; i < posts.length && !postToLike; i++) {
+            let post = posts[i]
+
+            if (postId === post.id)
+                postToLike = post
+        }
 
         for (var i = 0; i < postToLike.likes.length; i++) {
-            if (postToLike.likes[i] === userId) {
+            if (post.likes[i] === userId) {
                 return true
             }
         }
@@ -192,9 +220,7 @@ const logic = {
     },
 
     getUserPosts() {
-        const posts = data.posts.getAll()
-
-        const { userId } = data
+        const { userId, posts } = data
 
         const aggregatedPosts = []
 
@@ -212,20 +238,16 @@ const logic = {
                         liked = true
                 }
 
-                const user = data.users.getById(post.author)
-
                 const aggregatedPost = {
                     id: post.id,
-                    author: { id: post.author, username: user.username },
+                    author: post.author,
                     image: post.image,
                     text: post.text,
                     createdAt: post.createdAt,
-                    // createdAt: new Date(post.createdAt),
                     modifiedAt: post.modifiedAt,
-                    //modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
                     liked: liked,
                     likesCount: post.likes.length,
-                    // comments: post.comments
+                    comments: post.comments
                 }
 
                 aggregatedPosts.push(aggregatedPost)
@@ -235,7 +257,7 @@ const logic = {
     },
 
     deletePost(postId) {
-        const posts = data.users.getAll()
+        const { posts } = data
 
         let found
 
@@ -252,5 +274,3 @@ const logic = {
         return data.posts
     }
 }
-
-export default logic

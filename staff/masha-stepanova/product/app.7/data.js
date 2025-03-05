@@ -62,7 +62,7 @@ class Collection {
     }
 }
 
-const data = {
+var data = {
     uuid() {
         return (Date.now() + Math.random()).toString(36).replace('.', '')
     },
@@ -70,6 +70,17 @@ const data = {
     users: new Collection('users'),
     posts: new Collection('posts'),
 
+
+    get users() {
+        const users = JSON.parse(localStorage.users || '[]')
+
+        return users
+    },
+    set users(users) {
+        const json = JSON.stringify(users)
+
+        localStorage.user = json
+    },
     get userId() {
         const id = JSON.parse(sessionStorage.userId || 'null')
 
@@ -79,6 +90,16 @@ const data = {
         const json = JSON.stringify(id)
 
         sessionStorage.userId = json
+    },
+    get posts() {
+        const posts = JSON.parse(localStorage.posts || '[]')
+
+        return posts
+    },
+    set posts(posts) {
+        const json = JSON.stringify(posts)
+
+        localStorage.posts = json
     }
 }
 
