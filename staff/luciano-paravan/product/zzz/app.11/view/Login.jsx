@@ -46,3 +46,5 @@ function Login ({ onRegisterClick, onLoginSubmit }) {
         </div>
     </>
 }
+
+export default Login

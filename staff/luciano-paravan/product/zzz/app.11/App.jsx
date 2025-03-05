@@ -1,4 +1,9 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
+import logic from './logic.js'
+import Landing from '../../app.1/view/Landing.jsx'
+import Login from './view/Login.jsx'
+import Register from './view/Register.jsx'
+import Home from './view/Home.jsx'
 
 function App () {
     const[view, setView] = useState('landing')
@@ -36,3 +41,5 @@ function App () {
     {view === 'home' && <Home onLogoutClick={handleLogoutClick}/>}
     </>
 }
+
+export default App

@@ -1,5 +1,3 @@
-import logic from '../logic.js'
-
 function Login ({ onRegisterClick, onLoginSubmit }) {
     const handleLoginSubmit = event => {
         event.preventDefault()
@@ -31,18 +29,13 @@ function Login ({ onRegisterClick, onLoginSubmit }) {
             <h1>Logo</h1>
             <h3>Login</h3>
             <form onSubmit={handleLoginSubmit}>
-                <div className="field">
-                    <label htmlFor="username">Username</label>
-                    <input type="text" id="username" />
-                </div>
-                <div className="field">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password"/>
-                </div>
-                    
-                <button type="submit" className="loginSubmitButton">Login</button>
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" />
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password"/>
+                <button type="submit">Login</button>
             </form>
-            <a onClick={onRegisterClick} className="anchorRegisterOfLogin">Register</a>
+            <a onClick={onRegisterClick}>Register</a>
         </div>
     </>
 }

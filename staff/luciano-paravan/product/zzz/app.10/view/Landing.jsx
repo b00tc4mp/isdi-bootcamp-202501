@@ -1,6 +1,6 @@
 function Landing ({ onRegisterClick, onLoginClick }) {
+    //const { onRegisterClick } = props desestructuro directamente en lo que paso como parametro
     console.debug('Landing -> render')
-    
     return <div>
         <h1>Logo</h1>
         <div className="landingAnchors">
@@ -9,5 +9,3 @@ function Landing ({ onRegisterClick, onLoginClick }) {
         </div>
     </div>
 }
-
-export default Landing

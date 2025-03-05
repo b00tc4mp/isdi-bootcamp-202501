@@ -1,7 +1,3 @@
-import { DuplicityError, NotFoundError, CredentialsError } from './errors.js'
-
-import data from './data.js'
-
 const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
@@ -43,21 +39,34 @@ const logic = {
         }
     },
     registerUser(name, surname, email, username, password) {
+
         this.validate.text(name, 'name')
         this.validate.maxLength(name, 20, 'name')
         this.validate.minLength(name, 1, 'name')
+
         this.validate.text(surname, 'surname')
         this.validate.maxLength(surname, 20, 'surname')
         this.validate.minLength(surname, 1, 'surname')
+
         this.validate.email(email, 'email')
+
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const found = data.users.findOne(user => user.username === username || user.email === email)
+        let found
+
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
+
+            if (user.username === username || user.email === email) {
+                found = user
+            }
+        }
 
         if (found) throw new DuplicityError('user already exists')
 
         const user = {
+            id: data.uuid(),
             name: name,
             surname: surname,
             email: email,
@@ -67,14 +76,23 @@ const logic = {
             modifiedAt: null,
             savedPosts: []
         }
-        data.users.insertOne(user)
+
+        data.users[data.users.length] = user
     },
 
     loginUser(username, password) {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const found = data.users.findOne(user => user.username === username)
+        let found
+
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
+
+            if (username === user.username) {
+                found = user
+            }
+        }
 
         if (!found || password !== found.password) throw new CredentialsError('wrong credentials')
 
@@ -86,42 +104,43 @@ const logic = {
     },
 
     getUserName() {
-        const users = data.users.getAll()
-        const { userId } = data
+        let found
 
-        const found = data.users.getById(userId)
+        for (let i = 0; i < data.users.length && !found; i++) {
+            const user = data.users[i]
 
+            if (user.id === data.userId) {
+                found = user
+            }
+        }
         if (!found) throw new NotFoundError('user not found')
 
         return found.name
     },
 
     getPosts() {
-        const posts = data.posts.getAll()
-        const { userId } = data
-
         const aggregatedPosts = []
 
-        for (let i = 0; i < posts.length; i++) {
-            const post = posts[i]
+        for (let i = 0; i < data.posts.length; i++) {
+            const post = data.posts[i]
 
             let liked = false
 
             for (let i = 0; i < post.likes.length && !liked; i++) {
-                const id = post.likes[i]
+                const userId = post.likes[i]
 
-                if (id === userId) {
+                if (userId === data.userId) {
                     liked = true
                 }
             }
 
             const aggregatedPost = {
                 id: post.id,
-                author: { id: post.author, username: user.username },
+                author: post.author,
                 image: post.image,
                 text: post.text,
-                createdAt: new Date(post.createdAt),
-                modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
                 liked: liked,
                 likesCount: post.likes.length
             }
@@ -133,15 +152,14 @@ const logic = {
     },
 
     createPost(image, text) {
-        const { userId } = data
-
         this.validate.url(image)
         this.validate.maxLength(1000)
         this.validate.text(text)
         this.validate.maxLength(500)
 
         const post = {
-            author: userId,
+            id: data.uuid(),
+            author: data.userId,
             image: image,
             text: text,
             createdAt: new Date(),
@@ -149,46 +167,48 @@ const logic = {
             likes: []
         }
 
-        data.posts.insertOne(post)
+        data.posts[data.posts.length] = post
     },
 
     toggleLikePost(postId) {
-        const { userId } = data
+        let foundPost
 
-        const foundPost = data.posts.findOne(post => post.id === postId)
+        for (let i = 0; i < data.posts.length && !foundPost; i++) {
+            const post = data.posts[i]
 
+            if (post.id === postId) {
+                foundPost = post
+            }
+        }
         if (!foundPost) throw new NotFoundError('post not found')
 
         let userIdFound = false
 
         for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const id = foundPost.likes[i]
+            const userId = foundPost.likes[i]
 
-            if (id === userId) {
+            if (userId === data.userId) {
                 userIdFound = true
             }
         }
 
         if (!userIdFound) {
-            foundPost.likes[foundPost.likes.length] = userId
+            foundPost.likes[foundPost.likes.length] = data.userId
         } else {
             const likes = []
 
             for (let i = 0; i < foundPost.likes.length; i++) {
-                const id = foundPost.likes[i]
+                const userId = foundPost.likes[i]
 
-                if (id !== userId) {
-                    likes[likes.length] = id
+                if (userId !== data.userId) {
+                    likes[likes.length] = userId
                 }
             }
 
             foundPost.likes = likes
         }
-
-        data.posts.uptdateOne(foundPost)
     },
     toggleSavePost(postId) {
-        const { users, userId } = data
         let foundUser
 
         for (let i = 0; i < data.users.length && !foundUser; i++) {
@@ -211,7 +231,7 @@ const logic = {
 
         let newSavedPosts = []
         if (!savedPostFound) {
-            data.foundUser.savedPosts.push(postId)
+            foundUser.savedPosts.push(postId)
         } else {
             for (let i = 0; i < foundUser.savedPosts.length; i++) {
                 const post = foundUser.savedPosts[i]
@@ -220,8 +240,8 @@ const logic = {
                     newSavedPosts[newSavedPosts.length] = post
                 }
             }
-            //foundUser.savedPosts = newSavedPosts
-            data.foundUser.savedPost = newSavedPosts
+            foundUser.savedPosts = newSavedPosts
         }
+
     }
 }
