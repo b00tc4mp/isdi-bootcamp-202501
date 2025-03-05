@@ -1,4 +1,4 @@
-import logic from '../logic'
+import logic from '../logic.js'
 
 function Register({ onLoginClick, onRegisterSubmit }) {
     const handleRegisterSubmit = event => {

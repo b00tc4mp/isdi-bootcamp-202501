@@ -1,20 +1,19 @@
 const { useState, useEffect } = React;
 
+import Posts from './components/Posts.jsx'
+import CreatePost from './components/CreatePost.jsx';
+
 import logic from '../logic.js'
 
-function Home({ onLogoutClick, onAddPostClick }) {
+function Home({ onLogoutClick }) {
     const [view, setView] = useState('posts');
     const [username, setUserName] = useState('');
-    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         try {
             const user = logic.getLoggedUser();
-            const posts = logic.getPosts();
 
             setUserName(user);
-            setPosts(posts);
-
         } catch (error) {
             console.error(error);
 
@@ -34,21 +33,12 @@ function Home({ onLogoutClick, onAddPostClick }) {
         }
     }
 
-    const handleAddPostClick = () => onAddPostClick()
+    const handleAddPostClick = () => setView('create-post');
 
-    const handleToggleLikePostClick = postId => {
-        try {
-            logic.toggleLikePost(postId);
+    const handleCancelPostSubmit = () => setView('posts');
 
-            const posts = logic.getPosts();
+    const handleCreatePostSubmit = () => setView('posts');
 
-            setPosts(posts);
-        } catch (error) {
-            console.error(error);
-
-            alert(error.message);
-        }
-    }
     return <div>
         <header>
             <h1>Home</h1>
@@ -58,23 +48,9 @@ function Home({ onLogoutClick, onAddPostClick }) {
         </header>
 
         <main>
-            {view === 'posts' &&
-                <section>
+            {view === 'posts' && <Posts />}
 
-                    {posts.map(post =>
-                        <article>
-                            <h3>{post.author}</h3>
-                            <img src={post.image} />
-
-
-                            <div className="post-footer">
-                                <p>{post.text}</p>
-
-                                <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
-                            </div>
-                            <time>{post.createdAt.toISOString()}</time>
-                        </article>)}
-                </section>}
+            {view === 'create-post' && <CreatePost onCancelClick={handleCancelPostSubmit} onAddPostSubmit={handleCreatePostSubmit} />}
         </main>
         <footer>
             {view === 'posts' && <button className="floating-button" onClick={handleAddPostClick} type="button">+</button>}

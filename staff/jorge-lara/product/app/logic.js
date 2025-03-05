@@ -1,3 +1,5 @@
+import data from './data.js'
+
 const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
@@ -59,7 +61,7 @@ const logic = {
         this.validate.username(username, 'username');
         this.validate.password(password, 'password');
 
-        const found = data.users.findOne(user = user.email === email || user.username === username);
+        const found = data.users.findOne(user => user.email === email || user.username === username);
 
         if (found) {
             throw new Error('user already exists');
@@ -207,3 +209,5 @@ const logic = {
         data.posts.updateOne(foundPost);
     }
 }
+
+export default logic;

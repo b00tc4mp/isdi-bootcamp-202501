@@ -82,29 +82,6 @@ const data = {
 
         sessionStorage.userId = json
     },
-
-    // get users() {
-    //     const users = JSON.parse(localStorage.users || '[]')
-
-    //     return users;
-    // },
-
-    // set users(users) {
-    //     const json = JSON.stringify(users)
-
-    //     localStorage.users = json
-    // },
-
-
-    // get posts() {
-    //     const posts = JSON.parse(localStorage.posts || '[]');
-
-    //     return posts;
-    // },
-
-    // set posts(posts) {
-    //     const json = JSON.stringify(posts);
-
-    //     localStorage.posts = json;
-    // }
 }
+
+export default data;
