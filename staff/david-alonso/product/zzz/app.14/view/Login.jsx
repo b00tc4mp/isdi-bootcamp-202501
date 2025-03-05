@@ -1,9 +1,9 @@
-// REGISTRO
+// lOGIN
 
-function Register({ onLoginClick, onRegisterSubmit }) {
+function Login({ onRegisterClick, onLoginSubmit }) {
 
-    //  Para manejar el evento de envío del formulario del Registro
-    const handleRegisterSubmit = event => {
+    //  Para manejar el evento de envío del formulario del Login
+    const handleLoginSubmit = event => {
         // Evita recargar la pagina al enviar el formulario
         event.preventDefault()
 
@@ -14,20 +14,18 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
             // Se extraen los valores ingresados en el formulario
             const {
-                name: { value: name },
-                email: { value: email },
                 username: { value: username },
                 password: { value: password }
             } = form
 
             // Llamamos a la funcion para validar los valores del formulario
-            onLoginClick.RegisterUser(name, email, username, password)
+            logic.loginUser(username, password)
 
             // Reseteamos el formulario
             form.reset()
 
             // Llamamos a la funcion para actualizar la pagina
-            onRegisterSubmit()
+            onLoginSubmit()
         } catch (error) {
             // Muestra si hay errores
             console.error(error)
@@ -36,31 +34,28 @@ function Register({ onLoginClick, onRegisterSubmit }) {
         }
     }
 
-    console.debug('Register -> render')
+    console.debug('Login -> render')
 
-    return <div className="loginRegister">
+    return <div >
 
         <img src="./view/images/fondo1.jpg" className="fondo" />
 
-        <div className="formRegister">
-            <h1>CREATE ACCOUNT</h1>
+        <div className="ddd">
+            <h1>SIGN IN</h1>
 
-            <form onSubmit={handleRegisterSubmit} >
-
-                <input type="text" id="name" placeholder=". ❓ NAME" className="input" />
-
-                <input type="text" id="email" placeholder=". 📧 E-MAIL" className="input" />
+            <form onSubmit={handleLoginSubmit} >
 
                 <input type="text" id="username" placeholder=". 👤 USERNAME" className="input" />
 
-                <input type="text" id="password" placeholder=". *️ PASSWORD" className="input" />
+                <input type="password" id="password" placeholder=". *️ PASSWORD" className="input" />
 
-                <button type="submit" >REGISTER</button>
+                <button type="submit" >LOGIN</button>
             </form>
 
             <div >
-                <a onClick={onLoginClick} className="anchorLogin">LOGIN</a>
+                <a onClick={onRegisterClick} className="anchorRegister">REGISTER</a>
             </div>
         </div>
+
     </div>
 }

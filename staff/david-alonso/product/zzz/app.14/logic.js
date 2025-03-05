@@ -81,7 +81,7 @@ const logic = {
             email: email,
             username: username,
             password: password,
-            createdAt: new Date().toLocaleString(),
+            createdAt: new Date(),
             modifiedAt: null
         }
 

@@ -1,7 +1,7 @@
 function Landing({ onRegisterClick, onLoginClick }) {
     console.debug('Landing -> render')
 
-    return <div className="landing">
+    return <div >
         <img src="./view/images/Logo.jpg" className="logo" />
         <div className="anchor">
             <div >

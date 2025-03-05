@@ -38,11 +38,11 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
     console.debug('Register -> render')
 
-    return <div className="loginRegister">
+    return <div >
 
         <img src="./view/images/fondo1.jpg" className="fondo" />
 
-        <div className="formRegister">
+        <div className="ddd">
             <h1>CREATE ACCOUNT</h1>
 
             <form onSubmit={handleRegisterSubmit} >

@@ -56,55 +56,65 @@ h1 {
 }
 
 /* LANDING */
-.logo {
-    width: 100%;
-    height: 700px;
+.landing {
+    .logo {
+        width: 100%;
+        height: 700px;
 
-}
+    }
 
-.anchor {
-    display: flex;
-    justify-content: space-evenly;
-    font-size: x-large;
-    position: relative;
-    top: -60px;
-    color: white;
-    text-decoration: underline;
-    text-underline-offset: 5px;
+    .anchor {
+        display: flex;
+        justify-content: space-evenly;
+        font-size: x-large;
+        position: relative;
+        top: -60px;
+        color: white;
+        text-decoration: underline;
+        text-underline-offset: 5px;
+    }
 }
 
 /* LOGIN */
-.fondo {
-    width: 100%;
-    height: 950px;
-    position: fixed;
-    top: -20px;
-}
+.loginRegister {
+    .fondo {
+        width: 100%;
+        height: 950px;
+        position: fixed;
+        top: -20px;
+    }
 
-.ddd {
-    width: 300px;
-    position: relative;
-    left: 65px;
-}
+    .formLogin {
+        width: 300px;
+        position: relative;
+        left: 65px;
+    }
 
-.anchorRegister {
-    color: white;
-    text-decoration: underline;
-    font-size: 1.2rem;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    top: 30px;
-}
+    .formRegister {
+        width: 300px;
+        position: relative;
+        left: 65px;
+    }
 
-.anchorLogin {
-    color: white;
-    text-decoration: underline;
-    font-size: 1.2rem;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    top: 30px;
+    .anchorRegister {
+        color: white;
+        text-decoration: underline;
+        font-size: 1.2rem;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        top: 30px;
+    }
+
+    .anchorLogin {
+        color: white;
+        text-decoration: underline;
+        font-size: 1.2rem;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        top: 30px;
+    }
 }
 
 .anchorCancel {
@@ -119,7 +129,7 @@ h1 {
 
 /* BUTONS */
 button {
-    background: #ffffff34;
+    background: #747474;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -162,100 +172,254 @@ button:after {
 button:hover:before,
 button:hover:after {
     width: 100%;
-    transition: 300ms ease all;
+    transition: 1000ms ease all;
 }
 
-footer {
-    position: fixed;
-    width: 100%;
-    background-color: rgb(37, 35, 35);
-    padding: 12px;
-    bottom: 0px;
-    right: 0;
-    z-index: 1000;
+/* HOME */
 
-    .new {
-        margin-left: 300px;
-        border-radius: 6px;
-        box-shadow: none;
+.home {
+    header {
+        position: relative;
+        display: flex;
+
+        .logoHome {
+            /* position: relative; */
+            height: 130px;
+            width: 250px;
+        }
+
+        .user {
+            color: white;
+            position: relative;
+            top: 70px;
+            left: 75px;
+        }
+
+        .logout {
+            position: relative;
+            margin-left: 60px;
+            border-radius: 6px;
+            top: 10px;
+            left: -70px;
+            box-shadow: none;
+        }
     }
+
+    .like {
+        font-size: 1rem;
+        background: rgba(0, 0, 0, 0);
+        margin-left: 5px;
+        top: -25px;
+        box-shadow: none;
+
+    }
+
+    .like:before,
+    .like:after {
+        content: none !important;
+        display: none !important;
+    }
+
+    .data {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .userName {
+        margin: 0;
+        margin-left: 20px;
+        color: #eb0e0e;
+        position: relative;
+        top: 12px;
+        font-size: 1.5rem;
+        text-shadow:
+            -1px -1px 0 white,
+            1px -1px 0 white,
+            -1px 1px 0 white,
+            1px 1px 0 white;
+    }
+
+    .postText {
+        margin-top: -9px;
+    }
+
+    .time {
+        position: relative;
+        top: -15px;
+        margin-left: 20px;
+        text-decoration: overline;
+        font-size: 0.8rem;
+    }
+
+    .end {
+        height: 60px;
+    }
+
+    footer {
+        position: fixed;
+        display: inline;
+        width: 100%;
+        height: 35px;
+        background-color: rgb(37, 35, 35);
+        padding: 12px;
+        bottom: 0px;
+        right: 0;
+        z-index: 1000;
+
+        .new {
+            top: -45px;
+            margin-left: 300px;
+            border-radius: 6px;
+            box-shadow: none;
+        }
+
+        .nvLogo {
+            width: 20px;
+            position: relative;
+            top: 2px;
+            left: 30px;
+        }
+    }
+
 }
 
-.like {
-    font-size: 1rem;
-    background: rgba(0, 0, 0, 0);
-    top: -20px;
-    box-shadow: none;
 
-}
+/* MEDIA QUERIES */
 
-.like:before,
-.like:after {
-    content: none !important;
-    display: none !important;
-}
+@media screen and (min-width: 768px) {
 
-.data {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-left: 20px;
-}
+    .landing {
+        margin: auto;
+        width: 80%;
 
-.userName {
-    margin: 0;
-    margin-left: 20px;
-    color: #eb0e0e;
-    position: relative;
-    top: 10px;
-    text-shadow:
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px 1px 0 white;
-}
+        .anchor {
+            top: 200px;
+        }
+    }
 
-.postText {
-    margin-top: -9px;
+    .login {
+        margin: auto;
+        width: 80%;
+        display: flex;
+        align-items: center;
+    }
 
-}
+    .loginRegister {
+        margin: auto;
+        width: 80%;
 
-.time {
-    position: relative;
-    top: -15px;
-    margin-left: 20px;
-    text-decoration: overline;
-    font-size: 0.7rem;
-}
+        .fondo {
+            width: 80%;
+            height: 100%;
+        }
 
-header {
-    position: relative;
-    display: flex;
+        .formLogin {
+            width: 550px;
+            left: 140px;
+            top: 100px;
+        }
+
+        .formRegister {
+            width: 550px;
+            left: 140px;
+            top: 100px;
+        }
+    }
 
     .home {
-        /* position: relative; */
-        height: 130px;
-        width: 200px;
-    }
+        margin: auto;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-    .hello {
+        .logoHome {
+            height: 200px !important;
+            width: 530px !important;
+        }
 
-        color: white;
-        position: relative;
-        top: 70px;
-        left: 30px;
+        .user {
+            font-size: xx-large;
+        }
+
+        .new {
+            position: relative;
+            display: flex;
+            left: 460px;
+        }
+
+        .nvLogo {
+            margin-left: 110px;
+        }
     }
 }
 
-.logout {
-    position: relative;
-    margin-left: 60px;
-    border-radius: 6px;
-    top: -120px;
-    left: 230px;
-    box-shadow: none;
-}
+@media screen and (min-width: 1024px) {
 
-.end {
-    height: 60px;
+    .landing {
+        margin: auto;
+        width: 65%;
+
+        .anchor {
+            top: -140px;
+        }
+    }
+
+    .login {
+        margin: auto;
+        width: 65%;
+        display: flex;
+        align-items: center;
+    }
+
+    .loginRegister {
+        margin: auto;
+        width: 65%;
+
+        .fondo {
+            width: 65%;
+            height: 105%;
+        }
+
+        .formRegister {
+            width: 350px;
+            left: 80px;
+            top: -50px;
+        }
+
+        .formLogin {
+            width: 350px;
+            left: 460px;
+            top: -50px;
+        }
+    }
+
+    .home {
+        margin: auto;
+        width: 65%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .logoHome {
+            height: 250px !important;
+            width: 600px !important;
+        }
+
+        .user {
+            font-size: xx-large;
+        }
+
+        .new {
+            position: relative;
+            display: flex;
+            left: 630px;
+        }
+
+        .nvLogo {
+            margin-left: 270px;
+        }
+    }
 }

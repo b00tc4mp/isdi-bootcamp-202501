@@ -94,15 +94,19 @@ function Home({ onLogoutClick }) {
 
     console.debug('Home -> render')
 
-    return <div className="home">
+    return <div >
 
         <header>
-            <img src="./view/images/home.jpg" className="logoHome" />
+            <img src="./view/images/home.jpg" className="home" />
 
-            <h3 className="user">{userName}</h3>
-
-            <button type="button" onClick={handleLogoutClick} className="logout">EXIT</button>
+            <h3 className="hello">Hello, {userName} !</h3>
         </header>
+
+        <button type="button" onClick={handleLogoutClick} className="logout">EXIT</button>
+
+        <footer>
+            {view === 'posts' && <button onClick={handleAddPostClick} className="new">NEW</button>}
+        </footer>
 
         {view === 'posts' && <section>
             {posts.map(post =>
@@ -120,32 +124,29 @@ function Home({ onLogoutClick }) {
 
                 </article>)}
             <div className="end"></div>
-        </section>}
+        </section>
+        }
 
-        {view === 'create-post' && <section>
-            <div className="ddd">
-                <h1>NEW POST</h1>
+        {
+            view === 'create-post' && <section>
+                <div className="ddd">
+                    <h1>NEW POST</h1>
 
-                <form onSubmit={handleCreatePostSubmit} >
+                    <form onSubmit={handleCreatePostSubmit} >
 
-                    <input type="url" id="image" placeholder=". 📷 Image" className="input" />
+                        <input type="url" id="image" placeholder=". 📷 Image" className="input" />
 
-                    <input type="text" id="text" placeholder=". 🔤 Text" className="input" />
+                        <input type="text" id="text" placeholder=". 🔤 Text" className="input" />
 
-                    <button type="submit" >CREATE</button>
-                </form>
-            </div>
+                        <button type="submit" >CREATE</button>
+                    </form>
+                </div>
 
-            <div >
-                <a onClick={handleCancelClick} className="anchorCancel">CANCEL</a>
-            </div>
-        </section>}
-
-        <footer>
-            <img src="./view/images/NV.jpg" className="nvLogo" />
-
-            {view === 'posts' && <button onClick={handleAddPostClick} className="new">NEW</button>}
-        </footer>
+                <div >
+                    <a onClick={handleCancelClick} className="anchorCancel">CANCEL</a>
+                </div>
+            </section>
+        }
 
 
 

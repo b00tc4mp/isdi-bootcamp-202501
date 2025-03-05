@@ -36,11 +36,11 @@ function Login({ onRegisterClick, onLoginSubmit }) {
 
     console.debug('Login -> render')
 
-    return <div >
+    return <div className="loginRegister">
 
         <img src="./view/images/fondo1.jpg" className="fondo" />
 
-        <div className="ddd">
+        <div className="formLogin">
             <h1>SIGN IN</h1>
 
             <form onSubmit={handleLoginSubmit} >
