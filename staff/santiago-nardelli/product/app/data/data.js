@@ -1,65 +1,119 @@
-var data = {
-    // genero un unico id por user
-    uuid: function generarIdUsuario() {
-        const timestamp = Date.now().toString(36);
-        const random = Math.random().toString(36).substr(2);
-        return `${timestamp}-${random}`;
-    },
-    /**
-     * Modifico mi data estatica a data localStorage para que los datos persistan getter y setter 
-     */
+/*
+Creo una clase que me permite manejar la data de mi aplicacion
+ dentro de ella creo un constructor que recibe un nombre y un objeto data 
+ con las propiedades users, posts y userId
+ dentro de la clase creo metodos que me permiten obtener todos los usuarios,
+ guardar todos los usuarios, obtener un usuario por id, insertar un post,
+ encontrar un usuario por id y actualizar un usuario por id
 
-    // esta funcion me permite obtener los usuarios del localStorage y si no hay ninguno me devuelve un array vacio
-    //JSON.parse convierte un string en un objeto
-    //localStorage.getItem obtiene el valor del item del localStorage
-    get users() {
-        const users = JSON.parse(localStorage.users || '[]') 
 
-        return users
 
-    },
-
-    // esta funcion me permite guardar los usuarios en el localStorage
-    //JSON.stringify convierte un objeto en un string
-    set users(users) {
-        const json = JSON.stringify(users)
-
-        localStorage.users = json
-    },
-
-    // esta funcion A DIFERENCIA DE LOCAL/SESSION STORAGE,es para obtener el id del usuario y devuelvo null sino hay ninguno 
-
-    get userId(){
-        const id = JSON.parse(sessionStorage.userId || 'null')
-
-        return id
-    },
-
-    // esta funcion me permite guardar el id del usuario en el sessionStorage
-    set userId(id){
-        const json = JSON.stringify(id)
-
-        sessionStorage.userId = json
-    },
-
-    get posts(){
-
-        const posts = JSON.parse(localStorage.posts || '[]')
-
-        return posts
-    },
     
-    // cuando hago set por parametros tengo que pasar algo para que se guarde en el localStorage
-    set posts(post){
+ */
 
-        const json = JSON.stringify(post)
+class DataManagger {
+  constructor(name) {
+    this.name = name;
+  }
 
-        localStorage.posts = json
+  getAll() {
+    //JSON.parse() convierte un string JSON en un objeto JavaScript--> de JSON a JS -->PARSE(solo obj, arr, primitivos)
+    const collection = JSON.parse(localStorage[this.name] || "[]");
+
+    return collection;
+  }
+
+  setAll(collection) {
+    //JSON.stringify() convierte un objeto JavaScript en un string JSON --> de JS a JSON -->STRINGIFY(solo obj, arr, primitivos)
+    const json = JSON.stringify(collection);
+
+    localStorage[this.name] = json;
+  }
+
+  getById(id) {
+    //accedo a la coleccion de usuarios
+    const collection = JSON.parse(localStorage[this.name] || "[]");
+
+    //busco el usuario por id con el metodo find que por parametros le paso un callback que recibe un usuario y me devuelve el usuario que coincida con el id o null si no hay ninguno
+    // a todo esto yo este meotod cuando lo utilizo le paso el id del usuario que quiero buscar
+    const document = collection.find(document => document.id === id) || null;
+
+    return document
+  }
+
+  insertOne(document) {
+    // cuando quierta usar este metodo le paso un objeto usuario/documento que quiero insertar
+    //obtengo la coleccion de usuarios accediendo a la funcion getAll
+    const collection = JSON.parse(localStorage[this.name] || "[]");
+
+    //le asigno un id unico al usuario/documento
+    document.id = data.uuid();
+
+    //inserto el usuario/documento en la coleccion
+    collection.push(document);
+
+    //guardo la coleccion en el localStorage
+    const json = JSON.stringify(collection);
+    
+    localStorage[this.name] = json;
+  }
+
+  findeOne(condition) {
+    //por parametros le paso un callback que recibe un usuario y me devuelve el usuario que coincida con la condicion o null si no hay ninguno
+    const collection =JSON.parse(localStorage[this.name] || "[]");
+
+    for (let i = 0; i < collection.length; i++) {
+        const document = collection[i]
+
+        const matches = condition(document)
+
+        if (matches) return document
     }
-        
-    
 
+    return null
+  }
+
+  updateOne(document) {
+
+    const collection = JSON.parse(localStorage[this.name] || "[]");
+
+    const index = collection.findIndex(doc => doc.id === document.id)
+
+    collection[index] = document
+
+    const json = JSON.stringify(collection);
+
+    localStorage[this.name] = json;
+  }
 }
+
+var data = {
+  // genero un unico id por user
+  uuid() {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substr(2);
+    return `${timestamp}-${random}`;
+  },
+
+  // creo un objeto data que tiene como propiedades collection, posts
+  users: new DataManagger("users"),
+  posts: new DataManagger("posts"),
+
+  // esta funcion A DIFERENCIA DE LOCAL/SESSION STORAGE,es para obtener el id del usuario y devuelvo null sino hay ninguno
+
+  get userId() {
+    const id = JSON.parse(sessionStorage.userId || "null");
+
+    return id;
+  },
+
+  // esta funcion me permite guardar el id del usuario en el sessionStorage
+  set userId(id) {
+    const json = JSON.stringify(id);
+
+    sessionStorage.userId = json;
+  },
+};
 
 /*
 Hosting

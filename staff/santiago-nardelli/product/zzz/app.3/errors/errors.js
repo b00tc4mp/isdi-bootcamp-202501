@@ -14,4 +14,3 @@ class NotFoundError extends Error {
         super(message)
     }
 }
-

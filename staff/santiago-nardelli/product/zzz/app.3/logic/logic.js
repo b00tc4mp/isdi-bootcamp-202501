@@ -1,6 +1,4 @@
-
-
-const logic = {
+var logic = {
   constant: {
     // regex para validar si un string esta vacio o tiene solo espacios en blanco
     EMPTY_OR_BLANK_REGEX: /^\s*$/,
@@ -71,24 +69,39 @@ const logic = {
     this.validate.email(email, "email");
     this.validate.password(password, "password");
 
-    //meotodo de data para buscar un usuario
-    const found = data.users.findOne(
-      (user) => user.email === email || user.name === name
-    );
+
+
+    // destructuro para utilizar mi getter y setter de data
+    const { users } = data;
+    //declaro una variable para guardar el usuario encontrado, la inicializo null, para que si no se encuentra el usuario, no se guarde nada
+    let found;
+    // recorro el array de usuarios para buscar si el usuario ya existe
+    for (i = 0; i < users.length && !found; i++) {
+      // guardo el usuario en una variable para compararlo con el usuario que se quiere registrar
+      const user = users[i];
+
+      // si el usuario ya existe lo guardo en la variable found
+      if (user.name === name || user.email === email) found = user;
+    }
 
     if (found) throw new DuplicityError("user already exists");
 
     const user = {
+      id: data.uuid(),
       name: name,
       email: email,
+      // username: username,
       password: password,
       createdAt: new Date(),
       status: "active",
       role: "user",
       modifiedAt: null,
     };
-    //metodo de data para insertar un usuario
-    data.users.insertOne(user);
+
+    users[users.length] = user;
+
+    //aqui declaro para usar mi setting de data
+    data.users = users;
   },
 
   // funcion para loguear un usuario con su validasion
@@ -96,8 +109,15 @@ const logic = {
     this.validate.email(email, "email");
     this.validate.password(password, "password");
 
-    //metodo de data para buscar un usuario ya logueado
-    const found = data.users.findOne((user) => user.email === email);
+const { users } = data;
+
+    let found;
+
+    for (i = 0; i < users.length && !found; i++) {
+      const user = users[i];
+
+      if (user.email === email) found = user;
+    }
 
     if (!found || found.password !== password)
       throw new CredentialsError("invalid credentials");
@@ -112,56 +132,54 @@ const logic = {
 
   //funcion para reconocer el user de la sesion
   getUserName() {
-    const users = data.users.getAll();
+    let found;
+     const { users , userId} = data;
+    for (let i = 0; i < users.length && !found; i++) {
+      const user = users[i];
 
-    const { userId } = data;
+      if (user.id === userId) found = user;
+    }
 
-    const found = data.users.getById(userId);
-
-    if (!found) throw new NotFoundError("user not found");
+    if (!found) throw new Error("user not found");
 
     return found.name;
   },
 
   //funcion para saber si el user esta logueado la doble !! convierte el valor en booleano
   isUserLoggedIn() {
-    return !!data.userId;
-  },
+    return !!data.userId
+},
   //funcion para traer todos los posts
   getPosts() {
-    const posts = data.posts.getAll();
 
-    const { userId } = data;
 
+    const{ userId, posts} = data;
     // creo un array vacio para guardar los posts
     const aggregatedPosts = [];
 
+
     // recorro el array de posts
     for (let i = 0; i < posts.length; i++) {
+      
       const post = posts[i];
 
       let liked = false;
 
-      //recorro el array de likes
       for (let i = 0; i < post.likes.length && !liked; i++) {
-        const id = post.likes[i];
+        const id= post.likes[i];
 
         if (id === userId) liked = true;
       }
-      //DESTRUCTURING
-      const {id, author, image, text, createdAt, modifiedAt, likes} = post;
-      //metodo de data para buscar un usuario
-      const user = data.user.getById(post.author);
 
       const aggregatedPost = {
-        id: id,
-        author: { id: user.id, name: user.name },
-        image: image,
-        text: text,
-        createdAt: createdAt && new Date(createdAt),
-        modifiedAt: modifiedAt && new Date(modifiedAt),
+        id: post.id,
+        author: post.author,
+        image: post.image,
+        text: post.text,
+        createdAt:  new Date(post.createdAt),
+        modifiedAt:  post.modifiedAt && new Date(post.modifiedAt),
         liked: liked,
-        likesCount: likes.length,
+        likesCount: post.likes.length,
       };
 
       aggregatedPosts[aggregatedPosts.length] = aggregatedPost;
@@ -178,9 +196,11 @@ const logic = {
     this.validate.text(title, "title");
     this.validate.maxLength(500);
 
-    const { userId } = data;
+
+    const{uuid, userId, posts} = data;
     //creo un objeto post con los datos que recibo
     const post = {
+      id: uuid(),
       image: image,
       title: title,
       userId: userId,
@@ -188,47 +208,81 @@ const logic = {
       modifiedAt: null,
       likes: [],
     };
+    // guardo el post en el array de posts y lo agrego al final
+    posts[posts.length] = post;
 
-    data.posts.insertOne(post);
+    data.posts = posts;
   },
 
   //Funcion para los likes de los POSTS--> recibe como parametro el id del post para trabajar sobre el mismo
   toggleLikePost(postId) {
-    // me traigo el user id de la data
-    const { userId } = data;
 
-    // me traigo los posts de la data para trabajar sobre ellos
-    let foundPost = data.posts.findOne((post) => post.id === postId);
+    const { userId, posts} = data;
+    //declaro variable vacia de found, que el caso del postId que recibo por parametros sea igual a algun ID de mi array de ID`s la igualo a ese ID en consecuente a ese POST
+    let foundPost;
 
-    // si no encuentra el post tira un error
+    /*
+    recorro mi array de posts para ver si existe y lo encuentro--> tengo dos parametros en mi for de condiciones
+    la longitud de mi array y la variable declarada anteriormente negada--> si es que no reasigno el valor dentro de mi for 
+    */
+    for (let i = 0; i < posts.length && !foundPost; i++) {
+      //manejo cada posicion de mi array de posts como un unico elemento POST--> esto mediante la iteracion del for y el incremnto de la posicion [I]
+      const post = posts[i];
+      //Condicinale de encuentro de busqueda--> Si el post unitario.id es exactamente igual a el valor que le paso por parametro a la funcion que se origina desde mi componente al hacerle click al Like button--> reasigno el valor de la variable foundPost a la del POST unitario
+      if (post.id === postId) foundPost = post;
+    }
+    //Si la variable no muta de su valor original-->underfine lanzamos error , seria que no engtra en el caso anterior
     if (!foundPost) throw new NotFoundError("post not found");
+    /*Esta parte corresponde al primer nodo del diagrama ("¿Existe el Post?"). Si el post no existe, lanza un error.
+     */
 
-    // declaro una variable booleana para saber si el user ya le dio like al post y la inicializo en false
+    //declaro una nueva variable de ayuda booleana
     let userIdFound = false;
-    //recorro el array de likes del post
+    /*
+      Itero sobre el post ENCONTADO(por su ID), y utilizo la variable booleana como condicinal tambien 
+      Aqui lo que trabajo es el array de likes y los id de usuarios dentro de ese array[usuarios que han dado like a un post ]-->me sirve para poder agregar un like solamente por user y permitir es des-like 
+      
+  
+     Esta sección corresponde al nodo "¿Ya dio Like?" del diagrama. Aquí es donde el usuario se pierde en la explicación. La variable userIdFound actúa como un indicador booleano que determinará qué acción tomar después.
+     */
     for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
+      //Trabajo dentro del post encontrado--> dentro de el array de likes dentro de el
+      //BUSCO LOS ID y lo declaro en una nueva variable
       const id = foundPost.likes[i];
 
+      //Condicinal de encuentro del ID dentro del array de LIKES
       if (id === userId) userIdFound = true;
     }
-    // Si el usuario no ha dado like, se añade su id al array de likes
+
+    // Si userIdFound es false: agrega el ID del usuario al final del array de likes
+    //Si userIdFound es true: crea un nuevo array sin el ID del usuario actual
+
+    /*
+      Aquí está la clave para entenderlo:
+
+
+      Cuando userIdFound es false significa que el usuario NO ha dado like antes
+
+      El signo ! niega esta condición
+
+      Por lo tanto, !userIdFound será true cuando el usuario NO ha dado like
+
+      Y será false cuando el usuario YA ha dado like
+
+      Esta lógica booleana es la que determina si agregamos o removemos el like del post. Es como un interruptor que cambia entre dos estados: dar like y quitar like.
+      */
     if (!userIdFound) foundPost.likes[foundPost.likes.length] = userId;
     else {
-          // Si el usuario ya ha dado like, se elimina su id del array de likes
-      //Si userIdFound es true, se crea un nuevo array likes y se recorre el array de likes del post. Se añaden todos los id al nuevo array excepto el userId del usuario actual. Luego, se actualiza el array de likes del post con el nuevo array likes.
       const likes = [];
 
       for (let i = 0; i < foundPost.likes.length; i++) {
         const id = foundPost.likes[i];
 
-        if (id !== userId) likes[likes.length] = id;
+        if (id !== userId) likes[likes.length] = userId;
       }
 
       foundPost.likes = likes;
     }
-      // Actualizo el post en la data
-
-    data.posts.updateOne(foundPost);
+    data.posts = posts
   },
 };
-
