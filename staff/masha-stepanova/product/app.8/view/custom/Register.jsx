@@ -1,4 +1,4 @@
-import logic from '../../logic.js'
+import logic from '/..logic.js'
 
 function Register({ onLoginClick, onRegisterSubmit }) {
 

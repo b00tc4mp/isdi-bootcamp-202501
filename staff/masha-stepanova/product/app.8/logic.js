@@ -1,5 +1,4 @@
 import data from './data.js'
-import { CredentialsError, DuplicityError, NotFoundError } from './errors.js'
 
 const logic = {
     constant: {
@@ -122,7 +121,6 @@ const logic = {
                 modifiedAt: post.modifiedAt,
                 liked: liked,
                 likesCount: post.likes.length,
-                likes: post.likes
                 // comments: post.comments
             }
 
@@ -189,6 +187,10 @@ const logic = {
         return false
     },
 
+    commentPost(postId) {
+
+    },
+
     getUserPosts() {
         const posts = data.posts.getAll()
 
@@ -223,7 +225,6 @@ const logic = {
                     //modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
                     liked: liked,
                     likesCount: post.likes.length,
-                    likes: post.likes
                     // comments: post.comments
                 }
 
@@ -234,7 +235,7 @@ const logic = {
     },
 
     deletePost(postId) {
-        const posts = data.posts.getAll()
+        const posts = data.users.getAll()
 
         let found
 
@@ -247,8 +248,8 @@ const logic = {
             }
 
         }
-        data.posts.setAll(posts)
-        // return data.posts.getAll()
+        data.posts = posts
+        return data.posts
     }
 }
 
