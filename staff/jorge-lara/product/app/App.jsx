@@ -22,23 +22,24 @@ function App() {
         }
     }, [])
 
-    const handleRegisterClick = () => setView('register');
-    const handleRegisterSubmit = () => setView('login');
+    const handleNavigateToRegister = () => setView('register');
 
-    const handleLoginClick = () => setView('login');
+    const handleUserRegistered = () => setView('login');
 
-    const handleLoginSubmit = () => setView('home');
+    const handleNavigateToLogin = () => setView('login');
 
-    const handleLogoutClick = () => setView('landing');
+    const handleUserLoggedIn = () => setView('home');
+
+    const handleUserLoggedOut = () => setView('landing');
 
     return <>
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
+        {view === 'landing' && <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />}
 
-        {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />}
+        {view === 'register' && <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />}
 
-        {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />}
+        {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />}
 
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick} />}
+        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut} />}
 
     </>
 }

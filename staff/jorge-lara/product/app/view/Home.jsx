@@ -5,7 +5,7 @@ import CreatePost from './components/CreatePost.jsx';
 
 import logic from '../logic.js'
 
-function Home({ onLogoutClick }) {
+function Home({ onUserLoggedOut }) {
     const [view, setView] = useState('posts');
     const [username, setUserName] = useState('');
 
@@ -25,7 +25,7 @@ function Home({ onLogoutClick }) {
         try {
             logic.logoutUser();
 
-            onLogoutClick();
+            onUserLoggedOut();
         } catch (error) {
             console.error(message);
 
@@ -35,9 +35,9 @@ function Home({ onLogoutClick }) {
 
     const handleAddPostClick = () => setView('create-post');
 
-    const handleCancelPostSubmit = () => setView('posts');
+    const handlePostCreated = () => setView('posts');
 
-    const handleCreatePostSubmit = () => setView('posts');
+    const handlePostCreateCancelled = () => setView('posts');
 
     return <div>
         <header>
@@ -50,10 +50,10 @@ function Home({ onLogoutClick }) {
         <main>
             {view === 'posts' && <Posts />}
 
-            {view === 'create-post' && <CreatePost onCancelClick={handleCancelPostSubmit} onAddPostSubmit={handleCreatePostSubmit} />}
+            {view === 'create-post' && <CreatePost onPostCreateCancelled={handlePostCreateCancelled} onPostCreated={handlePostCreated} />}
         </main>
         <footer>
-            {view === 'posts' && <button className="floating-button" onClick={handleAddPostClick} type="button">+</button>}
+            {view === 'posts' && <button className="floating-button" onClick={handleAddPostClick}>+</button>}
         </footer>
     </div>
 }

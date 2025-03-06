@@ -1,6 +1,6 @@
 import logic from '../../logic.js'
 
-function CreatePost({ onCancelClick, onAddPostSubmit }) {
+function CreatePost({ onPostCreateCancelled, onPostCreated }) {
 
     const handleAddSubmit = event => {
         event.preventDefault();
@@ -14,7 +14,7 @@ function CreatePost({ onCancelClick, onAddPostSubmit }) {
 
             form.reset();
 
-            onAddPostSubmit();
+            onPostCreated();
         } catch (error) {
             console.error(error);
 
@@ -32,7 +32,7 @@ function CreatePost({ onCancelClick, onAddPostSubmit }) {
                 <input type="url" id="image" placeholder="Enter an url" />
             </div>
             <span>
-                <a onClick={onCancelClick}>Cancel</a>
+                <a onClick={onPostCreateCancelled}>Cancel</a>
                 <button type="submit">Post</button>
             </span>
         </form>

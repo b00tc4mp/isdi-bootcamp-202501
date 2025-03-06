@@ -144,7 +144,8 @@ const logic = {
                 createdAt: new Date(post.createdAt),
                 modifiedAt: post.modifiedAt,
                 liked: liked,
-                likesCount: post.likes.length
+                likesCount: post.likes.length,
+                own: post.author === userId
             }
 
             addedPosts.push(addedPost);
@@ -207,6 +208,24 @@ const logic = {
             foundPost.likes = likes;
         }
         data.posts.updateOne(foundPost);
+    },
+
+    deletePost(postId) {
+
+        const { userId } = data;
+
+        const foundPost = data.posts.findOne(post => post.id === postId)
+
+        if (!foundPost) {
+            throw new Error("post not found");
+        }
+
+        if (foundPost.author !== userId) {
+            throw new Error("user is not author of the post");
+        }
+
+        data.posts.deleteOne(post => post.id === postId)
+
     }
 }
 

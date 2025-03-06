@@ -1,9 +1,9 @@
-function Landing({ onRegisterClick, onLoginClick }) {
+function Landing({ onNavigateToRegister, onNavigateToLogin }) {
 
     return <div className="landing">
         <h1>Logo</h1>
-        <a onClick={onRegisterClick}>Register</a>
-        <a onClick={onLoginClick}>Login</a>
+        <a onClick={onNavigateToRegister}>Register</a>
+        <a onClick={onNavigateToLogin}>Login</a>
     </div>
 }
 
