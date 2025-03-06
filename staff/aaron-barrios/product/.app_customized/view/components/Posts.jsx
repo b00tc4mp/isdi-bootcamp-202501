@@ -21,7 +21,7 @@ function Posts() {
         }
     }, [])
 
-    const handlePostLikeToggled = postId => {
+    const handlePostLikeToggled = () => {
         try {
             const posts = logic.getPosts()
 
@@ -33,7 +33,7 @@ function Posts() {
         }
     }
 
-    const handlePostDeleted = postId => {
+    const handlePostDeleted = () => {
         try {
             const posts = logic.getPosts()
 
@@ -45,7 +45,7 @@ function Posts() {
         }
     }
 
-    const handlePostTextEdited = postId => {
+    const handlePostTextEdited = () => {
         try {
             const posts = logic.getPosts()
 

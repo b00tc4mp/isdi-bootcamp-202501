@@ -13,6 +13,8 @@ html {
     --padding-y: .25rem;
 }
 
+
+
 body {
     margin: 0;
 }
@@ -135,6 +137,27 @@ article {
     }
 }
 
+
+.profPic {
+    border-radius: 50%;
+    width: 35%;
+    margin-left: 35%;
+}
+
+.comPic {
+    border-radius: 50%;
+    width: 10%;
+}
+
+h1,
+h2 {
+    margin: 0;
+}
+
+main {
+    margin: 3rem 0rem;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -145,21 +168,6 @@ header {
     background-color: var(--primary-color);
     padding: var(--padding-y) var(--padding-x);
     box-sizing: border-box;
-}
-
-.profPic {
-    border-radius: 50%;
-    width: 35%;
-    margin-left: 35%;
-}
-
-h1,
-h2 {
-    margin: 0;
-}
-
-main {
-    margin: 3rem 0rem;
 }
 
 footer {
