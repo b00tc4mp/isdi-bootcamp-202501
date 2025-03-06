@@ -42,8 +42,20 @@ function Posts() {
         }
     }
 
+    const handlePostTextEdited = () => {
+        try {
+            const posts = logic.getPosts();
+
+            setPosts(posts);
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
     return <section>
-        {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} />)}
+        {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onPostTextEdited={handlePostTextEdited} />)}
     </section>
 }
 
