@@ -1,7 +1,14 @@
-// import { useEffect } from "react";
 import logic from "../logic";
 
-function Login({ onRegisterClick, onLoginSuccess }) {
+function Login({ onRegisterNavigation, onLoginSuccess }) {
+  const handleLoginSuccess = () => {
+    onLoginSuccess();
+  };
+
+  const handleRegisterClick = () => {
+    onRegisterNavigation();
+  };
+
   const handleLoginSubmit = (event) => {
     event.preventDefault();
 
@@ -13,7 +20,7 @@ function Login({ onRegisterClick, onLoginSuccess }) {
 
       logic.loginUser(username, password);
 
-      onLoginSuccess();
+      handleLoginSuccess();
     } catch (error) {
       console.error(error);
 
@@ -22,7 +29,7 @@ function Login({ onRegisterClick, onLoginSuccess }) {
   };
   console.log("Login -> render");
   return (
-    <div style={{ height: "100vh", padding: "2rem" }}>
+    <div className="screen-container">
       <form
         style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
         onSubmit={handleLoginSubmit}
@@ -36,7 +43,7 @@ function Login({ onRegisterClick, onLoginSuccess }) {
           <input type="password" id="password" />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <button type="button" onClick={onRegisterClick}>
+          <button type="button" onClick={handleRegisterClick}>
             Register
           </button>
           <button

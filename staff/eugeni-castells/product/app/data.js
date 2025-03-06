@@ -59,6 +59,18 @@ class Collection {
 
     localStorage[this.name] = json;
   }
+
+  deleteOne(condition) {
+    const collection = JSON.parse(localStorage[this.name] || "[]");
+
+    const index = collection.findIndex(condition);
+
+    if (index > -1) collection.splice(index, 1);
+
+    const json = JSON.stringify(collection);
+
+    localStorage[this.name] = json;
+  }
 }
 
 const data = {

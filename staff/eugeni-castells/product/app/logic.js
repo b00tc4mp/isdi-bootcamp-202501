@@ -39,6 +39,11 @@ const logic = {
       if (value.length < minLength)
         throw new RangeError("invalid " + explain + " range error");
     },
+    id(id, explain) {
+      this.text(id, explain);
+      if (id.length < 10 || id.length > 14)
+        throw new RangeError(`invalid ${explain} length`);
+    },
   },
   registerUser: function (userInfo) {
     const { validate } = this;
@@ -54,17 +59,6 @@ const logic = {
       (user) =>
         user.username === userInfo.username || user.email === userInfo.email
     );
-
-    const { users } = data;
-
-    // for (let i = 0; i < users.length && !userFound; i++) {
-    //   if (
-    //     userInfo.username === users[i].username ||
-    //     userInfo.email === users[i].email
-    //   ) {
-    //     userFound = userInfo;
-    //   }
-    // }
 
     if (userFound) throw new Error("user already exists");
 
@@ -128,6 +122,7 @@ const logic = {
         modifiedAt: modifiedAt && new Date(modifiedAt),
         likes: likes,
         liked: liked,
+        own: post.author === userId,
       };
 
       aggregatedPosts[aggregatedPosts.length] = aggregatedPost;
@@ -189,6 +184,29 @@ const logic = {
       postFound.likes = likes;
     }
     data.posts.updateOne(postFound);
+  },
+  deletePost(postId) {
+    this.validate.id(postId, "id");
+
+    const { userId } = data;
+
+    const foundPost = data.posts.findOne((post) => post.id === postId);
+
+    if (!foundPost) throw new NotFoundError("post not found");
+
+    if (foundPost.author !== userId)
+      throw new OwnershipError("user is not author of post");
+
+    data.posts.deleteOne((post) => post.id === postId);
+  },
+  updatePostText(postId, text) {
+    this.validate.id(postId, "post id");
+
+    const post = data.posts.getById(postId);
+
+    post.text = text;
+
+    data.posts.updateOne(post);
   },
 };
 

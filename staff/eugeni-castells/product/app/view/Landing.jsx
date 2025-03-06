@@ -1,6 +1,10 @@
-function Landing({ onRegisterClick, onLoginClick }) {
+function Landing({ onRegisterNavigation, onLoginNavigation }) {
+  const handleRegisterClick = () => onRegisterNavigation();
+
+  const handleLoginClick = () => onLoginNavigation();
+
   return (
-    <div style={{ height: "100vh", padding: "2rem" }}>
+    <div className="screen-container">
       <div>
         <a
           style={{
@@ -8,7 +12,7 @@ function Landing({ onRegisterClick, onLoginClick }) {
             color: "black",
             fontSize: "30px",
           }}
-          onClick={onRegisterClick}
+          onClick={handleRegisterClick}
         >
           Register
         </a>
@@ -19,7 +23,7 @@ function Landing({ onRegisterClick, onLoginClick }) {
             color: "black",
             fontSize: "30px",
           }}
-          onClick={onLoginClick}
+          onClick={handleLoginClick}
         >
           Login
         </a>

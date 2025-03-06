@@ -5,7 +5,7 @@ import CreatePost from "./CreatePost.jsx";
 
 import logic from "../logic.js";
 
-function Home({ onLogoutClick }) {
+function Home({ onLogoutSuccess }) {
   const [view, setView] = useState("posts");
 
   const handleCancelClick = () => {
@@ -15,11 +15,13 @@ function Home({ onLogoutClick }) {
     setView("posts");
   };
 
-  const handleLogoutButton = () => {
+  const handleLogoutSuccess = () => onLogoutSuccess();
+
+  const handleLogoutButtonClick = () => {
     try {
       logic.logoutUser();
 
-      onLogoutClick();
+      handleLogoutSuccess();
     } catch (error) {
       console.error(error);
 
@@ -27,7 +29,7 @@ function Home({ onLogoutClick }) {
     }
   };
   return (
-    <div style={{ padding: "1rem" }}>
+    <div>
       {view === "posts" && <Posts />}
 
       {view === "create-post" && (
@@ -55,7 +57,7 @@ function Home({ onLogoutClick }) {
             height: "60px",
             padding: "5px",
           }}
-          onClick={handleLogoutButton}
+          onClick={handleLogoutButtonClick}
         >
           Logout
         </button>

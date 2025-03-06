@@ -30,20 +30,20 @@ function App() {
     }
   }, [view]);
 
-  const handleLogoutClick = () => {
-    setView("login");
-  };
-
-  const handleRegisterClick = () => {
+  const handleRegisterNavigation = () => {
     setView("register");
   };
 
-  const handleLoginClick = () => {
+  const handleLoginNavigation = () => {
     setView("login");
   };
 
-  const handleHomeClick = () => {
+  const handleLoginSuccess = () => {
     setView("home");
+  };
+
+  const handleLogoutSuccess = () => {
+    setView("login");
   };
 
   return (
@@ -51,28 +51,23 @@ function App() {
       <Header currentUser={currentUser} />
       {view === "landing" && (
         <Landing
-          onRegisterClick={handleRegisterClick}
-          onLoginClick={handleLoginClick}
+          onRegisterNavigation={handleRegisterNavigation}
+          onLoginNavigation={handleLoginNavigation}
         />
       )}
       {view === "register" && (
         <Register
-          onLoginClick={handleLoginClick}
-          onRegisterSuccess={handleLoginClick}
+          onLoginNavigation={handleLoginNavigation}
+          onRegisterSuccess={handleRegisterNavigation}
         />
       )}
       {view === "login" && (
         <Login
-          onRegisterClick={handleRegisterClick}
-          onLoginSuccess={handleHomeClick}
+          onRegisterNavigation={handleRegisterNavigation}
+          onLoginSuccess={handleLoginSuccess}
         />
       )}
-      {view === "home" && (
-        <Home
-          onLogoutClick={handleLoginClick}
-          onCancelClick={handleHomeClick}
-        />
-      )}
+      {view === "home" && <Home onLogoutSuccess={handleLogoutSuccess} />}
     </>
   );
 }

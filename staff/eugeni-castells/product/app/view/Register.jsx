@@ -1,6 +1,6 @@
 import logic from "../logic";
 
-function Register({ onLoginClick, onRegisterSuccess }) {
+function Register({ onLoginNavigation, onRegisterSuccess }) {
   const handleRegisterSUbmit = (event) => {
     event.preventDefault();
 
@@ -23,13 +23,18 @@ function Register({ onLoginClick, onRegisterSuccess }) {
 
       form.reset();
 
-      onRegisterSuccess();
+      handleRegisterSuccess();
     } catch (error) {
       console.error(error);
 
       alert(error.message);
     }
   };
+
+  const handleLoginNavigation = () => onLoginNavigation();
+
+  const handleRegisterSuccess = () => onRegisterSuccess();
+
   return (
     <>
       <div style={{ height: "100vh", padding: "2rem" }}>
@@ -57,7 +62,7 @@ function Register({ onLoginClick, onRegisterSuccess }) {
             <button
               type="button"
               style={{ width: "auto", padding: "5px" }}
-              onClick={onLoginClick}
+              onClick={handleLoginNavigation}
             >
               Login
             </button>

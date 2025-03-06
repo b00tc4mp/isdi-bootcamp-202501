@@ -3,6 +3,7 @@ html {
   --primary-color: #fe8c00;
   --secondary-color: #6e8aa3;
   --color: #fffff3;
+  --screen-padding: 2rem;
 }
 
 body {
@@ -12,6 +13,9 @@ body {
   padding-top: 100px;
 }
 
+.screen-container {
+  padding: var(--screen-padding);
+}
 .post {
   color: var(--primary-color);
   display: flex;
@@ -34,6 +38,26 @@ body {
 
 .post-content-wrapper {
   align-self: flex-start;
+}
+
+.edit-text-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.edit-text-button-wrapper {
+  display: flex;
+  gap: 5px;
+}
+
+.edit-text-form-button-wrapper {
+  button {
+    width: 50%;
+    padding: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--color);
+  }
 }
 
 .create-post-button {
@@ -92,4 +116,23 @@ body {
 }
 
 .home-footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  background-color: var(--primary-color);
+  padding: 0.5rem;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-post-button {
+  padding: 1rem;
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
 }
