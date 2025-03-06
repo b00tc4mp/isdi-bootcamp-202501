@@ -1,12 +1,12 @@
-function Landing({ onRegisterClick, onLoginClick }) {
+function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     return <div class="landing-page" >
 
         <h1>Logo</h1>
 
         <section class="register-login">
-            <a onClick={onRegisterClick}>Register</a>
+            <a onClick={onNavigateToRegister}>Register</a>
             <> or </>
-            <a onClick={onLoginClick}>Login</a>
+            <a onClick={onNavigateToLogin}>Login</a>
         </section>
 
     </div>

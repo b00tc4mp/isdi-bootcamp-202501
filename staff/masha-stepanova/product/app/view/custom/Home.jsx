@@ -6,7 +6,7 @@ import Posts from '../components/Posts.jsx'
 import CreatePost from '../components/CreatePost.jsx'
 
 
-function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
+function Home({ onUserLoggedOut, onNavigateToProfile }) {
     const [view, setView] = useState('posts')
     const [userName, setUsername] = useState('')
 
@@ -28,7 +28,7 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
         try {
             logic.logoutUser()
 
-            onLogoutClick()
+            onUserLoggedOut()
         } catch (error) {
             console.error(error)
 
@@ -36,9 +36,9 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
         }
     }
 
-    const handleAddPostSubmit = () => {
+    const handleCreatedPost = () => {
         try {
-            setView('addPost')
+            setView('posts')
         } catch (error) {
             console.error(error)
 
@@ -46,8 +46,12 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
         }
     }
 
-    const handleProfileClick = () => {
-        onProfileClick()
+    const handleNavigateToProfile = () => {
+        onNavigateToProfile()
+    }
+
+    const handleCreatePostCanceled = () => {
+        setView('posts')
     }
 
     console.debug('Home -> render')
@@ -57,13 +61,13 @@ function Home({ onLogoutClick, onProfileClick, onCancelClick }) {
         <section className="header">
             <h1>Logo</h1>
             <h3>Welcome, {userName}</h3>
-            <button type="button" onClick={handleProfileClick}>🤴🏻</button>
+            <button type="button" onClick={handleNavigateToProfile}>🤴🏻</button>
         </section>
 
         <main>
             {view === 'posts' && <Posts />}
 
-            {view === 'addPost' && <CreatePost onAddPostSubmit={handleAddPostSubmit} />}
+            {view === 'addPost' && <CreatePost onCreatedPost={handleCreatedPost} onCreatePostCanceled={handleCreatePostCanceled} />}
         </main>
 
         <footer>

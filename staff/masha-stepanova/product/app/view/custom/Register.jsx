@@ -1,8 +1,8 @@
 import logic from '../../logic.js'
 
-function Register({ onLoginClick, onRegisterSubmit }) {
+function Register({ onNavigateToLogin, onUserRegistered }) {
 
-    const handleRegisterSubmit = event => {
+    const handleUserRegistered = event => {
         event.preventDefault()
 
         try {
@@ -17,7 +17,7 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
             logic.registerUser(name, email, username, password)
 
-            onRegisterSubmit()
+            onUserRegistered()
         } catch (error) {
             console.error(error)
 
@@ -29,7 +29,7 @@ function Register({ onLoginClick, onRegisterSubmit }) {
     return <div class="form">
         {/* style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}> */}
         <h1>Logo</h1>
-        <form onSubmit={handleRegisterSubmit} >
+        <form onSubmit={handleUserRegistered} >
             {/* style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}> */}
             <label htmlFor="name">Name</label>
             <input type="text" id="name" />
@@ -41,7 +41,7 @@ function Register({ onLoginClick, onRegisterSubmit }) {
             <input type="password" id="password" />
             <button type="submit">Submit</button>
         </form>
-        <a onClick={onLoginClick}>Login</a>
+        <a onClick={onNavigateToLogin}>Login</a>
     </div>
 }
 

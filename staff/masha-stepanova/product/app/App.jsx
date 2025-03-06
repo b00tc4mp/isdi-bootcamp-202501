@@ -23,34 +23,34 @@ function App() {
         }
     }, [])
 
-    const handleRegisterClick = () => setView('register')
+    const handleNavigateToRegister = () => setView('register')
 
-    const handleLoginClick = () => setView('login')
+    const handleNavigateToLogin = () => setView('login')
 
-    const handleRegisterSubmit = () => setView('login')
+    const handleUserRegistered = () => setView('login')
 
-    const handleLoginSubmit = () => setView('home')
+    const handleUserLoggedIn = () => setView('home')
 
-    const handleLogoutClick = () => setView('login')
+    const handleUserLoggedOut = () => setView('login')
 
-    const handleProfileClick = () => setView('profile')
+    const handleNavigateToProfile = () => setView('profile')
 
-    const handleCancelClick = () => setView('home')
+    const handleCreatePostCanceled = () => setView('home')
 
-    const handleAddPostSubmit = () => setView('home')
+    // const handleCreatedPost = () => setView('home')
 
-    const handleHomeClick = () => setView('home')
+    const handleNavigateToHome = () => setView('home')
 
     return <>
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
+        {view === 'landing' && <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />}
 
-        {view === 'register' && <Register onRegisterSubmit={handleRegisterSubmit} onLoginClick={handleLoginClick} />}
+        {view === 'register' && <Register onUserRegistered={handleUserRegistered} onNavigateToLogin={handleNavigateToLogin} />}
 
-        {view === 'login' && <Login onLoginSubmit={handleLoginSubmit} onRegisterClick={handleRegisterClick} />}
+        {view === 'login' && <Login onUserLoggedIn={handleUserLoggedIn} onNavigateToRegister={handleNavigateToRegister} />}
 
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick} onProfileClick={handleProfileClick} onCancelClick={handleCancelClick} onAddPostSubmit={handleAddPostSubmit} />}
+        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut} onNavigateToProfile={handleNavigateToProfile} />}
 
-        {view === 'profile' && <Profile onLogoutClick={handleLogoutClick} onHomeClick={handleHomeClick} />}
+        {view === 'profile' && <Profile onUserLoggedOut={handleUserLoggedOut} onNavigateToHome={handleNavigateToHome} onCreatePostCanceled={handleCreatePostCanceled} />}
     </>
 }
 

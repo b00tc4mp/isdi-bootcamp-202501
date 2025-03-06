@@ -1,8 +1,10 @@
 import logic from '../../logic.js'
 
+import Post from '../components/Post.jsx'
+
 const { useState, useEffect } = React
 
-function Profile({ onLogoutClick, onHomeClick }) {
+function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCanceled }) {
     const [view, setView] = useState('profile')
     const [posts, setPosts] = useState([])
 
@@ -20,11 +22,11 @@ function Profile({ onLogoutClick, onHomeClick }) {
         }
     }, [])
 
-    const handleLogoutClick = () => {
+    const handleUserLoggedOut = () => {
         try {
             logic.logoutUser()
 
-            onLogoutClick()
+            onUserLoggedOut()
         } catch (error) {
             console.error(error)
 
@@ -32,10 +34,8 @@ function Profile({ onLogoutClick, onHomeClick }) {
         }
     }
 
-    const handleLikeClick = (postId) => {
+    const handlePostLikeToggled = (postId) => {
         try {
-            logic.likePost(postId)
-
             const posts = logic.getUserPosts()
 
             setPosts(posts)
@@ -46,10 +46,20 @@ function Profile({ onLogoutClick, onHomeClick }) {
         }
     }
 
-    const handleRemovePostClick = (postId) => {
+    const handlePostDeleted = () => {
         try {
-            logic.deletePost(postId)
+            const posts = logic.getUserPosts()
 
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handlePostTextEdited = () => {
+        try {
             const posts = logic.getUserPosts()
 
             setPosts(posts)
@@ -70,7 +80,7 @@ function Profile({ onLogoutClick, onHomeClick }) {
         }
     }
 
-    const handleAddPostSubmit = (event) => {
+    const handleCreatePostSubmit = (event) => {
         event.preventDefault()
 
         try {
@@ -94,9 +104,9 @@ function Profile({ onLogoutClick, onHomeClick }) {
         }
     }
 
-    const handleCancelClick = () => {
+    const handleCreatePostCancelClick = () => {
         try {
-            onCancelClick()
+            onCreatePostCanceled()
         } catch (error) {
             console.error(error)
 
@@ -104,9 +114,9 @@ function Profile({ onLogoutClick, onHomeClick }) {
         }
     }
 
-    const handleHomeClick = () => {
+    const handleNavigateToHome = () => {
         try {
-            onHomeClick()
+            onNavigateToHome()
         } catch (error) {
             console.error(error)
 
@@ -118,35 +128,17 @@ function Profile({ onLogoutClick, onHomeClick }) {
         <section class="header">
             <h1>Logo</h1>
             <h3>{userName}</h3>
-            <button onClick={handleLogoutClick}>Logout</button>
+            <button onClick={handleUserLoggedOut}>Logout</button>
         </section>
 
         {view === 'profile' && <section> {
-            posts.map(post => <article>
-                {/* <h3>{post.author}</h3> */}
-
-                <img src={post.image} />
-
-                <section className="post-underline">
-                    <p>{post.text}</p>
-                    <button onClick={() => handleLikeClick(post.id)}>{`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
-                    <button onClick={() => handleRemovePostClick(post.id)}>❌</button>
-                    {/* <form onSubmit={handleCommentSubmit}>
-
-                    <button type="submit">📋</button>
-                </form> */}
-
-                </section>
-                {/* <p>{post.comments}</p> */}
-
-                <p>{post.createdAt}</p>
-            </article>)}
+            posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onPostTextEdited={handlePostTextEdited} />)}
         </section>
 
         }
 
         < footer >
-            <button onClick={handleHomeClick}>🏠</button>
+            <button onClick={handleNavigateToHome}>🏠</button>
             <button onClick={handleAddPostClick}>➕</button>
         </footer>
 
@@ -157,8 +149,8 @@ function Profile({ onLogoutClick, onHomeClick }) {
 
                 <p>To add new post you have to add the image link and a description to it. Try it now!</p>
 
-                <form onSubmit={handleAddPostSubmit} >
-                    {/* style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}> */}
+                <form onSubmit={handleCreatePostSubmit} >
+
                     <label htmlFor="image">Add here a link to your image:</label>
                     <input type="text" id="image" />
 
@@ -167,7 +159,7 @@ function Profile({ onLogoutClick, onHomeClick }) {
 
                     <button type="submit">Add post</button>
                 </form>
-                <a onClick={handleCancelClick}>Cancel</a>
+                <a onClick={handleCreatePostCancelClick}>Cancel</a>
             </section>
         }
 

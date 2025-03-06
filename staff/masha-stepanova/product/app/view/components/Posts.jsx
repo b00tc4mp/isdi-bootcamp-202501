@@ -2,6 +2,8 @@ const { useState, useEffect } = React
 
 import logic from '../../logic.js'
 
+import Post from './Post.jsx'
+
 function Posts() {
     const [posts, setPosts] = useState([])
 
@@ -19,10 +21,32 @@ function Posts() {
         }
     }, [])
 
-    const handleLikeClick = (postId) => {
+    const handlePostLikeToggled = () => {
         try {
-            logic.likePost(postId)
+            const posts = logic.getPosts()
 
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handlePostDeleted = () => {
+        try {
+            const posts = logic.getPosts()
+
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handlePostTextEdited = () => {
+        try {
             const posts = logic.getPosts()
 
             setPosts(posts)
@@ -36,18 +60,7 @@ function Posts() {
     console.debug('Posts -> render')
 
     return <section>
-        {posts.map(post =>
-            <article>
-                <h3>{post.author.userName}</h3>
-
-                <img src={post.image} />
-
-                <section className="post-underline">
-                    <p>{post.text}</p>
-                    <button className="like" onClick={() => handleLikeClick(post.id)}>{`${post.liked ? '❤️' : '🤍'} ${post.likesCount}`}</button>
-                </section>
-                <p>{post.createdAt}</p>
-            </article>)}
+        {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onPostTextEdited={handlePostTextEdited} />)}
     </section>
 }
 

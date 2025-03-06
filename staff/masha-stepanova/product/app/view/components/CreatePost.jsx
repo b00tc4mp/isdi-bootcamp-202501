@@ -1,10 +1,10 @@
 import logic from '../../logic.js'
 
-function CreatePost({ onAddPostSubmit }) {
+function CreatePost({ onCreatedPost, onCreatePostCanceled }) {
 
     const handleCancelClick = () => {
         try {
-            onCancelClick()
+            onCreatePostCanceled()
         } catch (error) {
             console.error(error)
 
@@ -12,7 +12,7 @@ function CreatePost({ onAddPostSubmit }) {
         }
     }
 
-    const handleAddPostSubmit = (event) => {
+    const handleCreatedPost = (event) => {
         event.preventDefault()
 
         try {
@@ -25,10 +25,7 @@ function CreatePost({ onAddPostSubmit }) {
 
             logic.addPost(image, text)
 
-            // const posts = logic.getPosts()
-
-            // setPosts(posts)
-            onAddPostSubmit()
+            onCreatedPost()
         } catch (error) {
             console.error(error)
 
@@ -42,7 +39,7 @@ function CreatePost({ onAddPostSubmit }) {
 
         <p>To add new post you have to add the image link and a description to it. Try it now!</p>
 
-        <form onSubmit={handleAddPostSubmit} >
+        <form onSubmit={handleCreatedPost} >
 
             <label htmlFor="image">Add here a link to your image:</label>
             <input type="text" id="image" />
