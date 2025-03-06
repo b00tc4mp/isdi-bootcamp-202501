@@ -2,6 +2,11 @@
 
 const { useState, useEffect } = React
 
+import Posts from "./components/Posts.jsx"
+import CreatePost from "./components/CreatePosts.jsx"
+
+import logic from "../logic.js"
+
 function Home({ onLogoutClick }) {
 
     // View se utiliza para actualizar el estado de la pagina
@@ -11,25 +16,13 @@ function Home({ onLogoutClick }) {
     const [userName, setUserName] = useState('')
 
     // 
-    const [posts, setPosts] = useState([])
-
-    // Actualiza el nombre de usuario cuando se conecta
     useEffect(() => {
         console.debug('Home -> useEffect')
 
         try {
-
-            // Obtiene el numbre del usuario conectado
             const name = logic.getUserName()
 
-            // Obtiene los datos de los posts de Logig
-            const posts = logic.getPosts()
-
-            // Llamamos a la variable que contiene el nombre
             setUserName(name)
-
-            // 
-            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -53,41 +46,8 @@ function Home({ onLogoutClick }) {
     // 
     const handleAddPostClick = () => setView('create-post')
 
-    const handleCreatePostSubmit = event => {
-        event.preventDefault()
-
-        try {
-            const { target: form } = event
-
-            const { image: { value: image }, text: { value: text } } = form
-
-            logic.createPost(image, text)
-
-            const posts = logic.getPosts()
-
-            setPosts(posts)
-            setView('posts')
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    // 
-    const handleToggleLikePostClick = postId => {
-        try {
-            logic.toggleLikePost(postId)
-
-            const posts = logic.getPosts()
-
-            setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
+    // Despues de publicar
+    const handleAfterPostsClick = () => setView('posts')
 
     // Cierra Create posts y muestra los posts
     const handleCancelClick = () => setView('posts')
@@ -104,50 +64,22 @@ function Home({ onLogoutClick }) {
             <button type="button" onClick={handleLogoutClick} className="logout">EXIT</button>
         </header>
 
-        {view === 'posts' && <section>
-            {posts.map(post =>
-                <article>
-                    <h3 className="userName">{post.userName}</h3>
 
-                    <img src={post.image} />
+        <main>
+            {view === 'posts' && <Posts />}
 
-                    <div className="data">
-                        <p className="postText">{post.text}</p>
+            {view === 'create-post' && <CreatePost onPostCreateSubmit={handleAfterPostsClick}
+                onCancelClick={handleCancelClick} />}
+        </main>
 
-                        <button onClick={() => handleToggleLikePostClick(post.id)} className="like" >{`${post.liked ? '🧡' : '🤍'} (${post.likesCount})`} </button>
-                    </div>
-                    <time className="time">{post.createdAt.toLocaleString()}</time>
 
-                </article>)}
-            <div className="end"></div>
-        </section>}
-
-        {view === 'create-post' && <section>
-            <div className="ddd">
-                <h1>NEW POST</h1>
-
-                <form onSubmit={handleCreatePostSubmit} >
-
-                    <input type="url" id="image" placeholder=". 📷 Image" className="input" />
-
-                    <input type="text" id="text" placeholder=". 🔤 Text" className="input" />
-
-                    <button type="submit" >CREATE</button>
-                </form>
-            </div>
-
-            <div >
-                <a onClick={handleCancelClick} className="anchorCancel">CANCEL</a>
-            </div>
-        </section>}
-
-        <footer>
+        <footer className="footer">
             <img src="./view/images/NV.jpg" className="nvLogo" />
 
             {view === 'posts' && <button onClick={handleAddPostClick} className="new">NEW</button>}
         </footer>
 
-
-
     </div >
 }
+
+export default Home

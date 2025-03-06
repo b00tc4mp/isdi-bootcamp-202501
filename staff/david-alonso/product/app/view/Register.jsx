@@ -64,3 +64,5 @@ function Register({ onLoginClick, onRegisterSubmit }) {
         </div>
     </div>
 }
+
+export default Register

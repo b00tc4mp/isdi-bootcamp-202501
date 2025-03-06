@@ -1,13 +1,6 @@
 // APP
 
-
 const { useState, useEffect } = React
-
-import Login from "./view/Login.jsx"
-import Register from "./view/Register.jsx"
-import logic from "./logic.js"
-import Home from "./view/Home.jsx"
-import Landing from "./view/Landing.jsx"
 
 // Maneja la navegacion entre las diverentes ventanas de la pagina
 function App() {
@@ -55,5 +48,3 @@ function App() {
 
     </>
 }
-
-export default App

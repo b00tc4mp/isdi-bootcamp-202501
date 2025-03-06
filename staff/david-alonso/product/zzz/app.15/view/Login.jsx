@@ -1,5 +1,5 @@
 // lOGIN
-import logic from "../logic"
+
 function Login({ onRegisterClick, onLoginSubmit }) {
 
     //  Para manejar el evento de envío del formulario del Login
@@ -59,5 +59,3 @@ function Login({ onRegisterClick, onLoginSubmit }) {
 
     </div>
 }
-
-export default Login

@@ -13,5 +13,3 @@ function Landing({ onRegisterClick, onLoginClick }) {
         </div>
     </div>
 }
-
-export default Landing

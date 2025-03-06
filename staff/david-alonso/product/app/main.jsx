@@ -1,4 +1,6 @@
 // MAIN
+const { createRoot } = ReactDOM
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(<App />)
+import App from '.App.jsx'
+
+createRoot(document.getElementById('root')).render(<App />)

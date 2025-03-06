@@ -1,12 +1,5 @@
 //  ****  LOGIC
 
-// *****
-import { DuplicityError, NotFoundError, CredentialsError }
-    from '.errors.js'
-
-import data from './data.js'
-// *****
-
 const logic = {
 
     // Variable que quenera los Regex para comprobar datos 
@@ -69,9 +62,18 @@ const logic = {
         this.validate.password(password, 'password')
 
         // ****
-        const found = data.users.findOne(user => user.email === email || user.username === username)
+        const { users } = data
 
-        if (found) throw new DuplicityError('user already exists')
+        let found
+
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.email === email || user.username === username)
+                found = user
+        }
+
+        if (found) throw new Error('user already exists')
 
         const user = {
             id: data.uuid(),
@@ -83,8 +85,10 @@ const logic = {
             modifiedAt: null
         }
 
+        users[users.length] = user
+
         // ****
-        data.users.insertOne(user)
+        data.users = users
     },
 
     // Funcion para Iniciar sesion
@@ -92,11 +96,18 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        // Buscamos un único elemento en la Colección
-        // Buscamos que coincida el UserName
-        const found = data.users.findOne(user => user.username === username)
+        const { users } = data
 
-        if (!found || found.password !== password) throw new CredentialsError('wrong credentials')
+        let found
+
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
+
+            if (user.username === username)
+                found = user
+        }
+
+        if (!found || found.password !== password) throw new credentialsError('wrong credentials')
 
         data.userId = found.id
     },
@@ -109,15 +120,20 @@ const logic = {
     // Funcion para Obtener nombre de usuario
     getUserName() {
 
-        const users = data.users.getAll()
+        const { users, userId } = data
 
-        const { userId } = data
+        let found
 
-        const found = data.users.getById(userId)
+        for (let i = 0; i < users.length && !found; i++) {
+            const user = users[i]
 
-        if (!found) throw new NotFoundError('user not found')
+            if (user.id === userId)
+                found = user
+        }
 
-        return found.username  //**** */
+        if (!found) throw new Error('user not found')
+
+        return found.username
     },
 
     // ****
@@ -127,9 +143,7 @@ const logic = {
 
     // Funcion para Obtener los Posts
     getPosts() {
-        const posts = data.posts.getAll()
-
-        const { userId } = data
+        const { userId, posts } = data
 
         const aggregatedPosts = []
 
@@ -145,18 +159,16 @@ const logic = {
                     liked = true
             }
 
-            const user = data.users.getById(post.author)
-
             // Publicacion agregada
             const aggregatedPost = {
 
                 id: post.id,
-                author: { id: post.author, username: user.username },
+                author: post.author,
                 userName: post.userName,
                 image: post.image,
                 text: post.text,
-                createdAt: new Date(post.createdAt), //*****
-                modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
+                createdAt: post.createdAt,
+                modifiedAt: post.modifiedAt,
                 liked: liked,
                 likesCount: post.likes.length
             }
@@ -173,12 +185,11 @@ const logic = {
         this.validate.url(image)
         this.validate.text(text)
 
-        const { userId, uuid } = data  //***** 
-
+        const { uuid, userId, posts } = data
         // Datos que usara
         const post = {
-            id: uuid(),
-            author: userId,
+            id: data.uuid(),
+            author: data.userId,
             userName: this.getUserName(),
             image: image,
             text: text,
@@ -187,14 +198,28 @@ const logic = {
             likes: []
         }
 
-        data.posts.insertOne(post)
+        // "data.posts.length" devuelve la cantidad de elementos en el array
+        // "data.posts[data.posts.length]" accede al índice justo después del último elemento del array
+        // Se asigna Post a ese índice, agregándolo al final del array
+        posts[posts.length] = post
+
+        data.posts = posts
     },
 
     // Agrega o elimina el Like de los Posts
     toggleLikePost(postId) {
-        const { userId } = data
+        const { posts, userId } = data
         // Variable Encontrar el Post
-        const foundPost = data.posts.findOne(post => post.id === postId)
+        let foundPost
+
+        // Bucle que recorre los Post de Data
+        // Si la Id del Post coincide con PostId se guarda en FoundPost y se detiene porque se ejecuta " && !foundPost "", si no es Undefined
+        for (let i = 0; i < posts.length && !foundPost; i++) {
+            const post = posts[i]
+
+            if (post.id === postId)
+                foundPost = post
+        }
 
         // Si foundPost es undefined o null, lanza un error NotFoundError y detiene la ejecución
         if (!foundPost) throw new NotFoundError('post not found')
@@ -215,7 +240,7 @@ const logic = {
         // Si el usuario NO ha dado "like" se lo añade
         if (!userIdFound)
             // Si userIdFound es false, se añade "data.userId" al final de foundPost.likes
-            foundPost.likes[foundPost.likes.length] = userId
+            foundPost.likes[foundPost.likes.length] = data.userId
 
         else { // Si el usuario Si ha dado "like" se lo elimina
             const likes = []  // Se crea un nuevo array vacío likes
@@ -233,10 +258,8 @@ const logic = {
             foundPost.likes = likes
         }
 
-        data.posts.updateOne(foundPost)
+        data.posts = posts
 
     }
 
 }
-
-export default logic
