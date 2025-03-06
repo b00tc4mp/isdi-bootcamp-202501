@@ -36,9 +36,9 @@ class DataManagger {
 
     //busco el usuario por id con el metodo find que por parametros le paso un callback que recibe un usuario y me devuelve el usuario que coincida con el id o null si no hay ninguno
     // a todo esto yo este meotod cuando lo utilizo le paso el id del usuario que quiero buscar
-    const document = collection.find((document) => document.id === id) || null;
+    const document = collection.find(document => document.id === id) || null;
 
-    return document;
+    return document
   }
 
   insertOne(document) {
@@ -54,44 +54,32 @@ class DataManagger {
 
     //guardo la coleccion en el localStorage
     const json = JSON.stringify(collection);
-
+    
     localStorage[this.name] = json;
   }
 
   findOne(condition) {
     //por parametros le paso un callback que recibe un usuario y me devuelve el usuario que coincida con la condicion o null si no hay ninguno
-    const collection = JSON.parse(localStorage[this.name] || "[]");
+    const collection =JSON.parse(localStorage[this.name] || "[]");
 
     for (let i = 0; i < collection.length; i++) {
-      const document = collection[i];
+        const document = collection[i]
 
-      const matches = condition(document);
+        const matches = condition(document)
 
-      if (matches) return document;
+        if (matches) return document
     }
 
-    return null;
+    return null
   }
 
   updateOne(document) {
+
     const collection = JSON.parse(localStorage[this.name] || "[]");
 
-    const index = collection.findIndex((doc) => doc.id === document.id);
+    const index = collection.findIndex(doc => doc.id === document.id)
 
-    collection[index] = document;
-
-    const json = JSON.stringify(collection);
-
-    localStorage[this.name] = json;
-  }
-  deleteOne(condition) {
-    const collection = JSON.parse(localStorage[this.name] || "[]");
-
-    const index = collection.findIndex(condition);
-
-    if(index > -1){
-      collection.splice(index, 1);
-    }
+    collection[index] = document
 
     const json = JSON.stringify(collection);
 
@@ -126,7 +114,7 @@ var data = {
     sessionStorage.userId = json;
   },
 };
-export default data;
+export default data
 /*
 Hosting
 1- en consola de gitbash --> npm i -g surge

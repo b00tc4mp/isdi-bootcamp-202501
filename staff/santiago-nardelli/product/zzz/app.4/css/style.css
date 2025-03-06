@@ -6,9 +6,6 @@
     --margin-bottom-large: 20px;
     --header-height: 60px;
     --footer-height: 60px;
-    --footer-background: #333;
-    --footer-text-color: #fff;
-    --footer-hover-color: #00bfff;
 }
 
 * {
@@ -40,8 +37,7 @@ body {
     color: var(--primary-color);
     margin-bottom: var(--margin-bottom-large);
 }
-
-.landing-page__content {
+.landing-page__content{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,8 +47,8 @@ body {
     font-family: var(--font-family);
 }
 
-.landing-page__button {
-
+.landing-page__button{
+    
     color: var(--primary-color);
     padding: 10px 20px;
     border: none;
@@ -63,8 +59,8 @@ body {
     margin-top: 20px;
 }
 
-.landing-page__button:hover {
-    background-color: var(--primary-color);
+.landing-page__button:hover{
+    background-color:var(--primary-color);
     color: var(--secondary-color);
 }
 
@@ -115,7 +111,7 @@ body {
 =========HOME PAGE INIT=========
 */
 
-.home-header {
+.home-header{
     height: var(--header-height);
     display: flex;
     align-items: center;
@@ -125,150 +121,28 @@ body {
     color: #fff;
 }
 
-.home-main {
+.home-main{
     flex: 1;
     padding: 20px;
     overflow-y: auto;
-    position: relative;
 }
 
-.home-footer {
+.home-footer{
     height: var(--footer-height);
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: var(--footer-background);
-    color: var(--footer-text-color);
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease;
+    background-color: var(--secondary-color);
+    color: #fff;
 }
 
-.home-footer a {
+.home-footer a{
     font-size: 24px;
-    color: var(--footer-text-color);
+    color: var(--primary-color);
     text-decoration: none;
     cursor: pointer;
-    transition: color 0.3s ease;
 }
 
-.home-footer a:hover {
-    color: var(--footer-hover-color);
-}
-
-.home-footer .fa-user-secret {
-    font-size: 28px;
-    margin-right: 20px;
-}
-
-.home-footer .add-post {
-    font-size: 38px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-}
-
-/*
-
-=========CARD-CONTAINER COMPONENT INIT=========
-*/
-
-.posts-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-}
-
-
-
-
-/*
-
-=========CARD COMPONENT INIT=========
-*/
-
-.post-card {
-    width: 600px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.post-author {
-    color: #333;
-    margin-bottom: 8px;
-}
-
-.post-image {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    margin: 8px 0;
-}
-
-.post-title {
-    color: #444;
-    margin-bottom: 16px;
-}
-
-.post-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 16px;
-    border-top: 1px solid #eee;
-}
-
-.post-date {
-    color: #666;
-    font-size: 0.9em;
-}
-
-.post-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.like-button {
-    background: none;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 4px 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.like-button:hover {
-    background-color: #f0f0f0;
-}
-
-.like-button.liked {
-    border-color: #ff4444;
-    color: #ff4444;
-}
-
-.delete-button {
-    background: none;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 4px 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.delete-button:hover {
-    background-color: #ffe6e6;
-    border-color: #ff4444;
-    color: #ff4444;
+.home-footer a:hover{
+    color: #007bff;
 }

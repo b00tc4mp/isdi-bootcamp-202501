@@ -2,7 +2,6 @@ import data from "../data/data.js";
 import DuplicityError from "../errors/DuplicityError.js";
 import CredentialsError from "../errors/CredentialsError.js";
 import NotFoundError from "../errors/NotFoundError.js";
-import { OwnershipError } from "../errors/errors.js";
 
 const logic = {
   constant: {
@@ -65,10 +64,6 @@ const logic = {
       this.string(url, explain);
       if (!logic.constant.URL_REGEX.test(url))
         throw new SyntaxError(`Invalid ${explain} ${url}`);
-    },
-    id(id, explain) {
-      this.text(id, explain);
-      if (id.length !== 20) throw new RangeError(`Invalid ${explain} ${id}`);
     },
   },
 
@@ -141,31 +136,35 @@ const logic = {
 
     const { userId } = data;
 
+    // creo un array vacio para guardar los posts
     const aggregatedPosts = [];
 
+    // recorro el array de posts
     for (let i = 0; i < posts.length; i++) {
       const post = posts[i];
 
       let liked = false;
 
+      //recorro el array de likes
       for (let i = 0; i < post.likes.length && !liked; i++) {
         const id = post.likes[i];
 
         if (id === userId) liked = true;
       }
-
-      const user = data.users.getById(post.author);
+      //DESTRUCTURING
+      const {id,name, author, image, text, createdAt, modifiedAt, likes} = post;
+      //metodo de data para buscar un usuario
+      const user = data.users.getById(author);
 
       const aggregatedPost = {
-        id: post.id,
-        author: { id: post.author, name: user.name },
-        image: post.image,
-        title: post.title,
-        createdAt: new Date(post.createdAt),
-        modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
+        id: id,
+        author: { id: id, name: name },
+        image: image,
+        text: text,
+        createdAt: createdAt && new Date(createdAt),
+        modifiedAt: modifiedAt && new Date(modifiedAt),
         liked: liked,
-        likesCount: post.likes.length,
-        own: post.author === userId,
+        likesCount: likes.length,
       };
 
       aggregatedPosts[aggregatedPosts.length] = aggregatedPost;
@@ -199,7 +198,6 @@ const logic = {
 
   //Funcion para los likes de los POSTS--> recibe como parametro el id del post para trabajar sobre el mismo
   toggleLikePost(postId) {
-    this.validate.id(postId, "postId");
     // me traigo el user id de la data
     const { userId } = data;
 
@@ -220,7 +218,7 @@ const logic = {
     // Si el usuario no ha dado like, se añade su id al array de likes
     if (!userIdFound) foundPost.likes[foundPost.likes.length] = userId;
     else {
-      // Si el usuario ya ha dado like, se elimina su id del array de likes
+          // Si el usuario ya ha dado like, se elimina su id del array de likes
       //Si userIdFound es true, se crea un nuevo array likes y se recorre el array de likes del post. Se añaden todos los id al nuevo array excepto el userId del usuario actual. Luego, se actualiza el array de likes del post con el nuevo array likes.
       const likes = [];
 
@@ -232,24 +230,10 @@ const logic = {
 
       foundPost.likes = likes;
     }
-    // Actualizo el post en la data
+      // Actualizo el post en la data
 
     data.posts.updateOne(foundPost);
   },
-  deletePost(postId) {
-    this.validate.id(postId, "postId");
-
-    const { userId } = data;
-
-    const foundPost = data.posts.findOne((post) => post.id === postId);
-
-    if (!foundPost) throw new NotFoundError("post not found");
-
-    if (foundPost.author !== userId)
-      throw new OwnershipError("user is not author of post");
-
-    data.posts.deleteOne((post) => post.id === postId);
-  },
 };
 
-export default logic;
+export default logic
