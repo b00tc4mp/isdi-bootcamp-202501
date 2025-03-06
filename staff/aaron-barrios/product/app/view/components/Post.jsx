@@ -74,9 +74,9 @@ function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
 
             <button onClick={() => handleToggleLikeClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
 
-            <button onClick={handleEditTextClick}>✏️</button>
+            {post.own && <button onClick={handleEditTextClick}>✏️</button>}
 
-            <button onClick={handleDeleteClick}>🗑️</button>
+            {post.own && <button onClick={handleDeleteClick}>🗑️</button>}
         </div>
     </article>
 }

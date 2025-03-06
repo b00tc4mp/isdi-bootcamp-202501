@@ -76,7 +76,7 @@ const logic = {
 
     loginUser(username, password) {
         this.validate.username(username, 'name')
-        this.validate.password(password, 'name')
+        this.validate.password(password, 'password')
 
         const found = data.users.findOne(user => user.username === username)
 
@@ -134,7 +134,8 @@ const logic = {
                 createdAt: new Date(post.createdAt),
                 modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
                 liked: liked,
-                likesCount: post.likes.length
+                likesCount: post.likes.length,
+                own: post.author === userId
             }
 
             aggregatedPosts[aggregatedPosts.length] = aggregatedPost

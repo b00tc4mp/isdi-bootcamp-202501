@@ -1,6 +1,6 @@
 import logic from '../logic.js'
 
-function Register({ onLoginClick, onRegisterSubmit }) {
+function Register({ onNavigateToLogin, onUserRegistered }) {
     const handleRegisterSubmit = event => {
         event.preventDefault()
 
@@ -18,13 +18,16 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
             form.reset()
 
-            onRegisterSubmit()
+            onUserRegistered()
         } catch (error) {
             console.error(error)
 
             alert(error.message)
         }
     }
+
+    const handleLoginClick = () => onNavigateToLogin()
+
     return <div className="register">
         <h1>Register</h1>
         <form onSubmit={handleRegisterSubmit} style={{ marginTop: '1rem' }}>
@@ -49,7 +52,7 @@ function Register({ onLoginClick, onRegisterSubmit }) {
             </div>
 
             <span style={{ justifyContent: "space-between" }}>
-                <a onClick={onLoginClick}>Login</a>
+                <a onClick={handleLoginClick}>Login</a>
                 <button type="submit">Register</button>
             </span>
         </form>

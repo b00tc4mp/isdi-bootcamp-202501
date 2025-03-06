@@ -1,8 +1,6 @@
-const { useState, useEffect } = React
-
 import logic from '../../logic.js'
 
-function CreatePost({ onPostCreateSubmit, onCreatePostCancel }) {
+function CreatePost({ onPostCreated, onPostCreateCancelled }) {
     const handleCreatePostSubmit = event => {
         event.preventDefault()
 
@@ -18,7 +16,7 @@ function CreatePost({ onPostCreateSubmit, onCreatePostCancel }) {
 
             form.reset()
 
-            onPostCreateSubmit()
+            onPostCreated()
         } catch (error) {
             console.error(error)
 
@@ -26,15 +24,7 @@ function CreatePost({ onPostCreateSubmit, onCreatePostCancel }) {
         }
     }
 
-    const handleCancelClick = () => {
-        try {
-            onCreatePostCancel()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
+    const handleCancelClick = () => onPostCreateCancelled()
 
 
     return <section className="create-post">

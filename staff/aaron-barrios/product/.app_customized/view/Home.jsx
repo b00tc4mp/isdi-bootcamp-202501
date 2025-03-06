@@ -5,21 +5,20 @@ import CreatePost from './components/CreatePost.jsx'
 
 import logic from '../logic.js'
 
-function Home({ onLogoutClick, onProfileClick }) {
+function Home({ onUserLoggedOut, onProfileClick }) {
     const [view, setView] = useState('posts')
     const [username, setUsername] = useState('')
 
     //state that stores the targetPostId -> where comments shown
     // const [activeCommentPostId, setActiveCommentPostId] = useState(null)
 
-
     useEffect(() => {
         console.debug('Home -> useEffect')
 
         try {
-            const username = logic.getUsername()
+            const name = logic.getUsername()
 
-            setUsername(username)
+            setUsername(name)
         } catch (error) {
             console.error(error)
 
@@ -31,7 +30,7 @@ function Home({ onLogoutClick, onProfileClick }) {
         try {
             logic.logoutUser()
 
-            onLogoutClick()
+            onUserLoggedOut()
         } catch (error) {
             console.error(error)
 
@@ -39,21 +38,15 @@ function Home({ onLogoutClick, onProfileClick }) {
         }
     }
 
-    const handleProfileClick = () => {
-        try {
-            onProfileClick()
-        } catch (error) {
-            console.error(error)
+    const handleProfileClick = () => onProfileClick()
 
-            alert(error.message)
-        }
-    }
+
 
     const handleCreatePostClick = () => setView('create-post')
 
-    const handleCreatePostSubmit = () => setView('posts')
+    const handlePostCreated = () => setView('posts')
 
-    const handleCancelCreateClick = () => setView('posts')
+    const handlePostCreateCancelled = () => setView('posts')
 
     const handleHomeClick = () => setView('posts')
 
@@ -73,7 +66,9 @@ function Home({ onLogoutClick, onProfileClick }) {
 
         <main>
             {view === 'posts' && <Posts />}
-            {view === 'create-post' && <CreatePost onPostCreateSubmit={handleCreatePostSubmit} onCreatePostCancel={handleCancelCreateClick} />}
+
+            {view === 'create-post' && <CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />}
+
             {view === 'profile' && <Profile onHomeClick={handleHomeClick} />}
         </main>
 

@@ -1,9 +1,13 @@
-function Landing({ onRegisterClick, onLoginClick }) {
+function Landing({ onNavigateToRegister, onNavigateToLogin }) {
+    const handleRegisterClick = () => onNavigateToRegister()
+
+    const handleLoginClick = () => onNavigateToLogin()
+
     return <div className="landing">
         <h1>Logo</h1>
         <span style={{ marginTop: '1rem' }}>
-            <a onClick={onRegisterClick}>Register</a> or
-            <a onClick={onLoginClick}>Login</a>
+            <a onClick={handleRegisterClick}>Register</a> or
+            <a onClick={handleLoginClick}>Login</a>
         </span>
     </div>
 }
