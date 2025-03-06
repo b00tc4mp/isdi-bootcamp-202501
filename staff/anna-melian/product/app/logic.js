@@ -1,3 +1,8 @@
+import { DuplicityError, NotFoundError, CredentialsError } from './errors.js'
+
+import data from './data.js'
+
+
 const logic = {
     constant: {
         EMPTY_OR_BLANK_REGEX: /^\s*$/,
@@ -51,23 +56,12 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
+        const found = data.users.findOne(user => user.email === email || user.username === username)
 
-        const { users } = data
 
-        let found
-
-        for (let i = 0; i < data.users.length && !found; i++) {
-            const user = data.users[i]
-
-            if (user.email === email || user.username === username) {
-                found = user
-            }
-        }
-
-        if (found) throw new Error('user already exists')
+        if (found) throw new DuplicityError('user already exists')
 
         const user = {
-            id: data.uuid(),
             name: name,
             email: email,
             username: username,
@@ -77,9 +71,7 @@ const logic = {
             modifiedAt: null
         }
 
-        users[users.length] = user
-
-        data.users = users
+        data.users.insertOne(user)
 
     },
 
@@ -87,21 +79,10 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        const { users } = data
-
-
-        let found
-
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
-
-            if (user.username === username) {
-                found = user
-            }
-        }
+        const found = data.users.findOne(user => user.username === username)
 
         if (!found || found.password !== password)
-            throw new Error('wrong credentails')
+            throw new CredentialsError('wrong credentails')
 
         data.userId = found.id
 
@@ -112,61 +93,28 @@ const logic = {
         data.userId = null
     },
 
-
-    deleteProfile() {
-        const { users, userId, posts } = data
-
-        const indexDeleteUser = users.findIndex(user => user.id === userId)
-        if (indexDeleteUser === -1) throw new Error('user not found')
-
-        users.splice(indexDeleteUser, 1)
-
-        const updatedPosts = posts.filter(post => post.author !== userId)
-
-        const newPosts = updatedPosts.map(post => {
-            const updatedLikes = post.likes.filter(id => id !== userId)
-            return { ...post, likes: updatedLikes }
-
-        })
-
-        data.users = users
-        data.posts = newPosts
-        data.userId = null
-
-    },
-
-
     getUserName() {
+        const users = data.users.getAll()
 
-        const { users, userId } = data
+        const { userId } = data
 
-        let found
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
+        const found = data.users.getById(userId)
 
-            if (user.id === userId)
-                found = user
-        }
-
-        if (!found) throw new Error('user not found')
+        if (!found) throw new NotFoundError('user not found')
 
         return found.name
     },
 
     getUserHouse() {
-        const { users, userId } = data
-        let found
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
+        const users = data.users.getAll()
 
-            if (user.id === userId)
-                found = user
-        }
+        const { userId } = data
 
-        if (!found) throw new Error('user not found')
+        const found = data.users.getById(userId)
+
+        if (!found) throw new NotFoundError('user not found')
 
         return found.house
-
 
     },
 
@@ -174,24 +122,10 @@ const logic = {
         return !!data.userId
     },
 
-    getAuthorUsername(post) {
-        const { users } = data
-
-        let found
-        for (let i = 0; i < users.length && !found; i++) {
-            const user = users[i]
-
-            if (user.id === post.author)
-                found = user
-        }
-
-        if (!found) throw new Error('invalid author')
-
-        return found.username
-    },
-
     getPosts() {
-        const { userId, posts } = data
+        const posts = data.posts.getAll()
+
+        const { userId } = data
 
         const aggregatedPosts = []
 
@@ -200,7 +134,6 @@ const logic = {
 
             let liked = false
 
-
             for (let i = 0; i < post.likes.length && !liked; i++) {
                 const id = post.likes[i]
 
@@ -208,16 +141,17 @@ const logic = {
                     liked = true
             }
 
+            const user = data.users.getById(post.author)
+
             const aggregatedPost = {
                 id: post.id,
-                author: post.author,
+                author: { id: post.author, username: user.username },
                 image: post.image,
                 text: post.text,
                 createdAt: new Date(post.createdAt),
                 modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
                 liked: liked,
                 likesCount: post.likes.length,
-                comments: post.comments,
             }
             aggregatedPosts[aggregatedPosts.length] = aggregatedPost
         }
@@ -230,36 +164,25 @@ const logic = {
         this.validate.text(text)
         this.validate.maxLength(500)
 
-        const { uuid, userId, posts } = data
+        const { userId } = data
 
         var post = {
-            id: uuid(),
             author: userId,
             image: image,
             text: text,
             createdAt: new Date(),
             modifiedAt: null,
             likes: [],
-            comments: []
         }
 
-        posts[posts.length] = post
-
-        data.posts = posts
-
+        data.posts.insertOne(post)
 
     },
 
     toggleLikePost(postId) {
-        const { posts, userId } = data
-        let foundPost
+        const { userId } = data
 
-        for (let i = 0; i < posts.length && !foundPost; i++) {
-            const post = posts[i]
-
-            if (post.id === postId)
-                foundPost = post
-        }
+        const foundPost = data.posts.findOne(post => post.id === postId)
 
         if (!foundPost) throw new NotFoundError('post not found')
 
@@ -287,77 +210,98 @@ const logic = {
             }
 
             foundPost.likes = likes
-
         }
 
-        data.posts = posts
-
-    },
-
-    updateUserProfile(name, username, email) {
-        this.validate.text(name, 'name')
-        this.validate.username(username, 'username')
-        this.validate.email(email, 'email')
-
-        const { users, userId } = data
-
-        const user = users.find(user => user.id === userId)
-
-        if (!user) throw new Error('User not found')
-
-        if (user.name === name && user.username === username && user.email === email) {
-            return false
-        }
-
-        user.name = name
-        user.username = username
-        user.email = email
-        user.modifiedAt = new Date()
-
-        data.users = users
-
-        return true
-
-    },
-
-    changePassword(actualPassword, newPassword) {
-        this.validate.password(actualPassword)
-        this.validate.password(newPassword)
-
-        const { users, userId } = data
-
-        const user = users.find(user => user.id === userId)
-
-        if (!user) throw new Error('User not found')
-
-        const correctActualPassword = (user.password === actualPassword ? true : false)
-
-        if (!correctActualPassword) throw new Error('Wrong password')
-
-        const equalPasswords = (actualPassword === newPassword ? true : false)
-
-        if (equalPasswords) throw new Error('Equal passwords')
-
-        console.debug({ newPassword })
-
-        user.password = newPassword
-        user.modifiedAt = new Date()
-
-        data.users = users
-
-
-
-
-
-    },
-
-    getOwnPosts() {
-        const { posts, userId } = data
-
-        const ownPosts = posts.filter(post => post.author === userId)
-
-        return ownPosts
-
+        data.posts.updateOne(foundPost)
     }
 
+    /*
+        updateUserProfile(name, username, email) {
+            this.validate.text(name, 'name')
+            this.validate.username(username, 'username')
+            this.validate.email(email, 'email')
+    
+            const { users, userId } = data
+    
+            const user = users.find(user => user.id === userId)
+    
+            if (!user) throw new Error('User not found')
+    
+            if (user.name === name && user.username === username && user.email === email) {
+                return false
+            }
+    
+            user.name = name
+            user.username = username
+            user.email = email
+            user.modifiedAt = new Date()
+    
+            data.users = users
+    
+            return true
+    
+        },
+    
+        changePassword(actualPassword, newPassword) {
+            this.validate.password(actualPassword)
+            this.validate.password(newPassword)
+    
+            const { users, userId } = data
+    
+            const user = users.find(user => user.id === userId)
+    
+            if (!user) throw new Error('User not found')
+    
+            const correctActualPassword = (user.password === actualPassword ? true : false)
+    
+            if (!correctActualPassword) throw new Error('Wrong password')
+    
+            const equalPasswords = (actualPassword === newPassword ? true : false)
+    
+            if (equalPasswords) throw new Error('Equal passwords')
+    
+            console.debug({ newPassword })
+    
+            user.password = newPassword
+            user.modifiedAt = new Date()
+    
+            data.users = users
+    
+        },
+
+        deleteProfile() {
+        const { users, userId, posts } = data
+
+        const indexDeleteUser = users.findIndex(user => user.id === userId)
+        if (indexDeleteUser === -1) throw new Error('user not found')
+
+        users.splice(indexDeleteUser, 1)
+
+        const updatedPosts = posts.filter(post => post.author !== userId)
+
+        const newPosts = updatedPosts.map(post => {
+            const updatedLikes = post.likes.filter(id => id !== userId)
+            return { ...post, likes: updatedLikes }
+
+        })
+
+        data.users = users
+        data.posts = newPosts
+        data.userId = null
+
+    },
+    
+        getOwnPosts() {
+            const { posts, userId } = data
+    
+            const ownPosts = posts.filter(post => post.author === userId)
+    
+            return ownPosts
+    
+        }
+    
+    
+        */
 }
+
+export default logic

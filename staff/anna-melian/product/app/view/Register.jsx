@@ -1,7 +1,10 @@
+import logic from '../logic.js'
+
 const { useState } = React
 
 function Register({ onLoginClick, onRegisterSubmit }) {
     const [showPassword, setShowPassword] = useState(false)
+
     const handleRegisterSubmit = event => {
         event.preventDefault()
 
@@ -41,30 +44,40 @@ function Register({ onLoginClick, onRegisterSubmit }) {
         <div className="register">
             <h2>Register</h2>
             <form onSubmit={handleRegisterSubmit}>
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" />
+                <div className="field">
+                    <label htmlFor="name">Name</label>
+                    <input type="text" id="name" />
+                </div>
 
-                <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" />
+                <div className="field">
+                    <label htmlFor="email">E-mail</label>
+                    <input type="email" id="email" />
+                </div>
 
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" />
+                <div className="field">
+                    <label htmlFor="username">Username</label>
+                    <input type="text" id="username" />
+                </div>
 
-                <label htmlFor="houses">Your house</label>
-                <select id="house">
-                    <option value="">Choose your house 🔥✨</option>
-                    <option value="gryffindor">🦁 Gryffindor</option>
-                    <option value="ravenclaw">🦅 Ravenclaw</option>
-                    <option value="slytherin">🐍 Slytherin</option>
-                    <option value="hufflepuff">🦡 Hufflepuff</option>
-                </select>
+                <div className="field">
+                    <label htmlFor="houses">Your house</label>
+                    <select id="house">
+                        <option value="">Choose your house 🔥✨</option>
+                        <option value="gryffindor">🦁 Gryffindor</option>
+                        <option value="ravenclaw">🦅 Ravenclaw</option>
+                        <option value="slytherin">🐍 Slytherin</option>
+                        <option value="hufflepuff">🦡 Hufflepuff</option>
+                    </select>
+                </div>
 
-                <label htmlFor="password">Password</label>
-                <div>
-                    <input type={showPassword ? 'text' : 'password'} id="password" />
-                    <button type="button" onClick={togglePasswordVisibility}>
-                        {showPassword ? '🙈' : '👁️'}
-                    </button>
+                <div className="field">
+                    <label htmlFor="password">Password</label>
+                    <div>
+                        <input type={showPassword ? 'text' : 'password'} id="password" />
+                        <button type="button" onClick={togglePasswordVisibility}>
+                            {showPassword ? '🙈' : '👁️'}
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit">Register</button>
@@ -77,3 +90,5 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
     </>
 }
+
+export default Register

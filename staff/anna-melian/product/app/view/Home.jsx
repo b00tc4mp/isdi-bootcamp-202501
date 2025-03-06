@@ -1,5 +1,7 @@
 const { useState, useEffect } = React
 
+import logic from '../logic.js'
+
 function Home({ onLogoutClick, onDeleteProfileClick }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
@@ -59,21 +61,18 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
         }
     }
 
-    const handleAddPostClick = () => {
-        setView('create-post')
-    }
-    const handleSettingsClick = () => {
-        setView('home-settings')
-    }
+    const handleAddPostClick = () => setView('create-post')
 
-    const handleProfileCLick = () => {
-        setView('home-profile')
-    }
+    const handleSettingsClick = () => setView('home-settings')
+
+
+    const handleProfileCLick = () => setView('home-profile')
+
 
     const handleDeleteProfileClick = () => {
         const confirmation = confirm('This action is permanent, do you want to continue?')
         if (confirmation) {
-            logic.deleteProfile()
+            //logic.deleteProfile()
             document.body.className = ''
             onDeleteProfileClick()
         } else {
@@ -81,9 +80,6 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
         }
 
     }
-
-
-
 
     const onBackHomeClick = () => {
         setView('posts')
@@ -136,6 +132,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
                 email: { value: email },
 
             } = form
+            /*
 
             const updated = logic.updateUserProfile(name, username, email)
 
@@ -148,7 +145,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
                 setView('posts')
             }
-
+            */
 
 
         } catch (error) {
@@ -168,7 +165,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
             } = form
 
-            logic.changePassword(actualPassword, newPassword)
+            //logic.changePassword(actualPassword, newPassword)
 
 
             alert('Password successfully changed 🧙‍♀️')
@@ -204,7 +201,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
                 {posts.map(post =>
                     <article key={post.id}>
 
-                        <h3>{logic.getAuthorUsername(post)}</h3>
+                        <h3>{post.author.username}</h3>
 
                         <img src={post.image} />
 
@@ -316,6 +313,9 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
         </footer>
     </div>
 }
+
+export default Home
+
 
 //TODO button in profile to delete a post
 

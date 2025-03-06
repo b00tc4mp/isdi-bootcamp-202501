@@ -1,3 +1,5 @@
+import logic from '../logic.js'
+
 const { useState } = React
 
 function Login({ onRegisterClick, onLoginSubmit }) {
@@ -54,7 +56,7 @@ function Login({ onRegisterClick, onLoginSubmit }) {
 
             <a onClick={onRegisterClick}>Register</a>
         </div>
-
-
     </>
 }
+
+export default Login
