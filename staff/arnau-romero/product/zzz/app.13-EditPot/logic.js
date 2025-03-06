@@ -1,4 +1,4 @@
-import { DuplicityError, NotFoundError, CredentialsError } from "./errors"
+import { DuplicityError, NotFoundError, CredentialsError } from "./errors.js"
 
 import data from './data.js'
 

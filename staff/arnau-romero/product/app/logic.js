@@ -43,8 +43,11 @@ const logic = {
         url(url, explain){
             this.string(url, explain)
             if(!logic.constant.URL_REGEX.test(url)) throw new SyntaxError(`invalid ${explain} syntax`)
+        },
+        id(id, explain) {
+            this.text(id, explain)
+            if (id.length < 10 || id.length > 11) throw new RangeError(`invalid ${explain} length`)
         }
-
     },
 
     registerUser(name, email, username, password){
@@ -138,7 +141,8 @@ const logic = {
                 createdAt: new Date(post.createdAt),
                 modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
                 liked: liked,
-                likesCount: post.likes.length
+                likesCount: post.likes.length,
+                own: post.author === userId
 
             }
             aggregatedPosts[aggregatedPosts.length] = aggregatedPost
@@ -200,6 +204,37 @@ const logic = {
             foundPost.likes =  likes
         }
         // seteamos el nuevo foundPost para el localStore
+        data.posts.updateOne(foundPost)
+    },
+
+    deletePost(postId) {
+        this.validate.id(postId, 'postId')
+
+        const { userId } = data
+
+        const foundPost = data.posts.findOne(post => post.id === postId)
+
+        if(!foundPost) throw new NotFoundError('post not found')
+        
+        if(foundPost.author !== userId) throw new OwnershipError('user is not author od post')
+        
+        data.posts.deletedOne(post => post.id === postId)
+    },
+
+    updatePostText(postId, text) {
+        this.validate.id(postId, 'postId')
+
+        const { userId } = data
+
+        const foundPost = data.posts.findOne(post => post.id === postId)
+
+        if (!foundPost) throw new NotFoundError('post not found')
+
+        if (foundPost.author !== userId) throw new OwnershipError('user is not author of post')
+
+        foundPost.text = text
+        foundPost.modifiedAt = new Date // same as -> new Date()
+
         data.posts.updateOne(foundPost)
     }
 }

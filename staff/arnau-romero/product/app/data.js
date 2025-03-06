@@ -71,6 +71,20 @@ class Collection{
         // lo guardamos en la localStorage
         localStorage[this.name] = json
     }
+
+    deletedOne(condition){
+        const collection = JSON.parse(localStorage[this.name] || '[]')
+
+        const index = collection.findIndex(condition)
+
+        // cuando encontremos el index eliminamos el post con el metodo splice(desde el index, un elemento)
+        if(index > -1)
+            collection.splice(index,1)
+
+        const json = JSON.stringify(collection)
+
+        localStorage[this.name] = json
+    }
 }
 
 const data = {

@@ -5,9 +5,10 @@ import CreatePost from './components/CreatePost.jsx'
 
 import logic from '../logic.js'
 
-function Home({ onLogoutClick }) {
+function Home({ onLogoutClick}) {
     const[view, setView] = useState('posts')
     const[userName, setUserName] = useState('')
+  
 
     // Funcion flecha para generar el saludo al entrar en home
     useEffect(() => {
@@ -16,13 +17,11 @@ function Home({ onLogoutClick }) {
         try{
             // lamamos a la logica de obtener el nombre y la guardamos en la variable name.
             const name = logic.getUserName()
-            // llamamos a la logica para obtener los posts
-            const posts = logic.getPosts()
+          
 
             //llamamos a setUserName declarado en la línea 5 para cambiar el useState a la nueva variable name.
             setUserName(name)
-            // lo mismo con posts
-            setPosts(posts)
+          
 
         }catch(error){
             console.error(error)
@@ -51,7 +50,7 @@ function Home({ onLogoutClick }) {
 
    const handlePostCreateSubmit = () => setView('posts')
    
-
+   const handleCancelClick = () => setView('posts')
     console.debug('Home -> render')
 
     return <div>
@@ -66,7 +65,7 @@ function Home({ onLogoutClick }) {
         <main>
             {view === 'posts' && <Posts />}
 
-            {view === 'create-post' && <CreatePost onPostCreateSubmit = {handlePostCreateSubmit} />}
+            {view === 'create-post' && <CreatePost onPostCreateSubmit = {handlePostCreateSubmit}  onCancelClick={handleCancelClick}/>}
         </main>
 
     <footer>

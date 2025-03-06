@@ -16,8 +16,15 @@ class NotFoundError extends Error{
     }
 }
 
+class OwnershipError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
 export {
     DuplicityError,
     CredentialsError,
-    NotFoundError
+    NotFoundError,
+    OwnershipError
 }
