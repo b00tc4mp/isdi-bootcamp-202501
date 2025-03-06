@@ -165,3 +165,7 @@ footer {
     padding: var(--padding-y) var(--padding-x);
     box-sizing: border-box;
 }
+
+.createPostForm {
+    margin-top: 2rem;
+}

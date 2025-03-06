@@ -67,6 +67,7 @@ const logic = {
             modifiedAt: null,
             savedPosts: []
         }
+
         data.users.insertOne(user)
     },
 
@@ -96,6 +97,10 @@ const logic = {
         return found.name
     },
 
+    isUserLoggedIn() {
+        return !!data.userId
+    },
+
     getPosts() {
         const posts = data.posts.getAll()
         const { userId } = data
@@ -115,6 +120,8 @@ const logic = {
                 }
             }
 
+            const user = data.users.getById(post.author)
+
             const aggregatedPost = {
                 id: post.id,
                 author: { id: post.author, username: user.username },
@@ -133,12 +140,12 @@ const logic = {
     },
 
     createPost(image, text) {
-        const { userId } = data
-
         this.validate.url(image)
         this.validate.maxLength(1000)
         this.validate.text(text)
         this.validate.maxLength(500)
+
+        const { userId } = data
 
         const post = {
             author: userId,
@@ -225,3 +232,5 @@ const logic = {
         }
     }
 }
+
+export default logic

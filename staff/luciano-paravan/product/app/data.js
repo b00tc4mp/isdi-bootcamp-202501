@@ -5,6 +5,8 @@ class Collection {
 
     getAll() {
         const collection = JSON.parse(localStorage[this.name] || '[]')
+
+        return collection
     }
 
     setAll(collection) {
@@ -35,7 +37,7 @@ class Collection {
     }
 
     findOne(condition) {
-        const collection = JSON.parse(localStorage[this.name] || [])
+        const collection = JSON.parse(localStorage[this.name] || '[]')
 
         for (let i = 0; i < collection.length; i++) {
             const document = collection[i]
@@ -78,7 +80,7 @@ const data = {
     set userId(id) {
         const json = JSON.stringify(id)
 
-        sessionStorage.id = json
+        sessionStorage.userId = json
     }
 }
 

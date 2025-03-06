@@ -1,3 +1,5 @@
+import logic from '../logic.js'
+
 function Register ({ onLoginClick, onRegisterSubmit }) {
     const handleRegisterSubmit = event => {
         event.preventDefault()
@@ -30,6 +32,7 @@ function Register ({ onLoginClick, onRegisterSubmit }) {
     return <div>
             <h1>Logo</h1>
             <h3>Register</h3>
+            
             <form onSubmit={handleRegisterSubmit}>
                 <div className="field">
                     <label htmlFor="name">Name</label>
@@ -63,3 +66,5 @@ function Register ({ onLoginClick, onRegisterSubmit }) {
                 <a onClick={onLoginClick} className="anchorLoginOfRegister">Login</a>
         </div>
 }
+
+export default Register
