@@ -5,12 +5,13 @@ import Register from "./view/Register.jsx";
 import Login from "./view/Login.jsx";
 import Home from "./view/Home.jsx";
 import Header from "./view/Header.jsx";
-
+import HamburgerMenu from "./view/HamburgerMenu.jsx";
 import logic from "./logic.js";
 
 function App() {
   const [view, setView] = useState("landing");
   const [currentUser, setCurrentUser] = useState(null);
+  const [displayMenu, setDisplayMenu] = useState(false);
 
   useEffect(() => {
     const isUserConnected = logic.isUserConnected();
@@ -46,9 +47,15 @@ function App() {
     setView("login");
   };
 
+  const handleMenuDisplay = () => {
+    setDisplayMenu(!displayMenu);
+  };
+
   return (
     <>
-      <Header currentUser={currentUser} />
+      <Header currentUser={currentUser} onMenuDisplay={handleMenuDisplay} />
+
+      {displayMenu && <HamburgerMenu />}
       {view === "landing" && (
         <Landing
           onRegisterNavigation={handleRegisterNavigation}

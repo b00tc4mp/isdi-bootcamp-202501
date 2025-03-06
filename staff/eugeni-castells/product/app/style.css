@@ -16,16 +16,20 @@ body {
 .screen-container {
   padding: var(--screen-padding);
 }
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding-bottom: 100px;
+}
+
 .post {
   color: var(--primary-color);
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.post-wrapper img {
-  width: 100%;
-  object-fit: cover;
+  margin-bottom: 20px;
 }
 
 .post-wrapper {
@@ -34,10 +38,45 @@ body {
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  box-shadow: 2px 5px 5px 2px var(--secondary-color);
+
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
 }
 
 .post-content-wrapper {
   align-self: flex-start;
+
+  p {
+    font-size: 18px;
+  }
+}
+
+.post-button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 26px;
+}
+
+.post-action-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 20%;
+  gap: 1rem;
+
+  span {
+    float: right;
+  }
+
+  span:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
 }
 
 .edit-text-form {
@@ -135,4 +174,43 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 20px;
+}
+
+.hamburger-button-container {
+  width: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.5rem;
+
+  div {
+    width: 100%;
+
+    height: 2px;
+    background-color: var(--bg-color);
+  }
+}
+
+.hamburger-menu-container {
+  /* width: 40%;
+  height: 35%; */
+  background-color: var(--primary-color);
+  position: fixed;
+  top: 80px;
+  right: 0px;
+  box-sizing: border-box;
+  padding: 1.5rem;
+
+  div {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    font-size: 20px;
+    color: var(--bg-color);
+
+    span:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
 }

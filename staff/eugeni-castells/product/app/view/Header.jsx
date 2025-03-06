@@ -1,4 +1,6 @@
-const Header = ({ currentUser }) => {
+import HamburgerButton from "./HamburgerButton";
+
+const Header = ({ currentUser, onMenuDisplay }) => {
   return (
     <header
       className="header"
@@ -11,7 +13,10 @@ const Header = ({ currentUser }) => {
         alt="logo"
         className="header-logo"
       />
+
       {currentUser !== null && <h2>Hello, {currentUser}!</h2>}
+
+      <HamburgerButton onMenuDisplay={onMenuDisplay} />
     </header>
   );
 };

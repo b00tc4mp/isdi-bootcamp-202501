@@ -47,25 +47,29 @@ const Posts = () => {
       alert(error.message);
     }
   };
-  return posts.toReversed().map((post) => {
-    return (
-      <Post
-        author={post.author.username}
-        key={post.id}
-        image={post.image}
-        text={post.text}
-        createdAt={post.createdAt}
-        modifiedAt={post.modifiedAt}
-        liked={post.liked}
-        likes={post.likes}
-        id={post.id}
-        onPostLikeUpdate={handleLikeUpdate}
-        onDeletedPostSuccess={handleDeletedPostSuccess}
-        onUpdatedTextSuccess={handleUpdateTextSuccess}
-        own={post.own}
-      />
-    );
-  });
+  return (
+    <div className="posts-container">
+      {posts.toReversed().map((post) => {
+        return (
+          <Post
+            author={post.author.username}
+            key={post.id}
+            image={post.image}
+            text={post.text}
+            createdAt={post.createdAt}
+            modifiedAt={post.modifiedAt}
+            liked={post.liked}
+            likes={post.likes}
+            id={post.id}
+            onPostLikeUpdate={handleLikeUpdate}
+            onDeletedPostSuccess={handleDeletedPostSuccess}
+            onUpdatedTextSuccess={handleUpdateTextSuccess}
+            own={post.own}
+          />
+        );
+      })}
+    </div>
+  );
 };
 
 export default Posts;

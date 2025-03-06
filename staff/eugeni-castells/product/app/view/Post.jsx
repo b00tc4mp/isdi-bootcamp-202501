@@ -33,9 +33,11 @@ function Post({
 
   const handleDeleteClick = () => {
     try {
-      logic.deletePost(id);
+      if (confirm("Do you want to delete?")) {
+        logic.deletePost(id);
 
-      handleDeletedPostSuccess();
+        handleDeletedPostSuccess();
+      }
     } catch (error) {
       console.error(error);
 
@@ -75,6 +77,20 @@ function Post({
       <h3>{author}</h3>
       <div className="post-wrapper">
         <img src={image} />
+        <div className="post-button-wrapper">
+          <span
+            onClick={() => {
+              handleToggleClick(id);
+            }}
+          >
+            {liked ? "❤️" : "🤍"}
+            {likes.length}
+          </span>
+          <div className="post-action-button-wrapper">
+            {own && <span onClick={handleDeleteClick}>🗑️</span>}
+            {own && <span onClick={handleEditClick}>✒️</span>}
+          </div>
+        </div>
         <div className="post-content-wrapper">
           {view === "" && <p>{text}</p>}
           {view === "edit-post" && (
@@ -90,17 +106,6 @@ function Post({
             </form>
           )}
           <time>{createdAt.toISOString()}</time>
-          <button
-            onClick={() => {
-              handleToggleClick(id);
-            }}
-            style={{ backgroundColor: liked ? "red" : "" }}
-          >
-            {"🤍"}
-            {likes.length}
-          </button>
-          {own && <span onClick={handleDeleteClick}>🗑️</span>}
-          {own && <span onClick={handleEditClick}>✒️</span>}
         </div>
       </div>
     </article>
