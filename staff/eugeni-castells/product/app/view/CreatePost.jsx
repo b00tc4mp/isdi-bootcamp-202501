@@ -1,4 +1,6 @@
-function CreatePost({ onPostCreation, onCancelClick }) {
+import logic from "../logic";
+
+function CreatePost({ onPostCreationSubmit, onCancelClick }) {
   return (
     <div className="create-post-container">
       <form
@@ -17,8 +19,8 @@ function CreatePost({ onPostCreation, onCancelClick }) {
             image: image,
             text: text,
           };
-
-          onPostCreation(post);
+          logic.addPost(post);
+          onPostCreationSubmit();
         }.bind(this)}
       >
         <input type="text" name="image" placeholder="Image URL" />

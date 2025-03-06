@@ -50,23 +50,25 @@ const logic = {
     validate.username(userInfo.username, "username");
     validate.password(userInfo.password, "password");
 
-    let userFound;
+    const userFound = data.users.findOne(
+      (user) =>
+        user.username === userInfo.username || user.email === userInfo.email
+    );
 
     const { users } = data;
 
-    for (let i = 0; i < users.length && !userFound; i++) {
-      if (
-        userInfo.username === users[i].username ||
-        userInfo.email === users[i].email
-      ) {
-        userFound = userInfo;
-      }
-    }
+    // for (let i = 0; i < users.length && !userFound; i++) {
+    //   if (
+    //     userInfo.username === users[i].username ||
+    //     userInfo.email === users[i].email
+    //   ) {
+    //     userFound = userInfo;
+    //   }
+    // }
 
     if (userFound) throw new Error("user already exists");
 
     const user = {
-      id: data.uuid(),
       name: userInfo.name,
       email: userInfo.email,
       username: userInfo.username,
@@ -75,13 +77,7 @@ const logic = {
       modifiedAt: null,
     };
 
-    // data.users[data.users.length] = user;
-    // Can't write a getter and a setter in the same line.
-    // data.users = users;
-
-    users[users.length] = user;
-
-    data.users = users;
+    data.users.insertOne(user);
   },
   loginUser: function (username, password) {
     this.validate.username(username, "username");
@@ -94,7 +90,7 @@ const logic = {
 
     data.userId = found.id;
   },
-  setOfflineUser: function () {
+  logoutUser: function () {
     data.userId = null;
   },
   isUserConnected() {
@@ -128,8 +124,8 @@ const logic = {
         author: { author: author, username: username },
         image: image,
         text: text,
-        createdAt: createdAt,
-        modifiedAt: modifiedAt,
+        createdAt: createdAt && new Date(createdAt),
+        modifiedAt: modifiedAt && new Date(modifiedAt),
         likes: likes,
         liked: liked,
       };
@@ -183,8 +179,6 @@ const logic = {
 
     if (!userIdFound) {
       postFound.likes[postFound.likes.length] = data.userId;
-
-      data.posts.updateOne(postFound);
     } else {
       let likes = [];
 
@@ -193,9 +187,8 @@ const logic = {
           likes[likes.length] = postFound.likes[i];
       }
       postFound.likes = likes;
-
-      data.posts.updateOne(postFound);
     }
+    data.posts.updateOne(postFound);
   },
 };
 

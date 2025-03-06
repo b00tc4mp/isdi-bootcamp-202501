@@ -1,7 +1,6 @@
 function Landing({ onRegisterClick, onLoginClick }) {
   return (
     <div style={{ height: "100vh", padding: "2rem" }}>
-      <h1>Logo</h1>
       <div>
         <a
           style={{

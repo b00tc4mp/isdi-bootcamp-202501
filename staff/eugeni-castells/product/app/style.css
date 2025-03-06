@@ -1,5 +1,39 @@
+html {
+  --bg-color: #11365b;
+  --primary-color: #fe8c00;
+  --secondary-color: #6e8aa3;
+  --color: #fffff3;
+}
+
 body {
   box-sizing: border-box;
+  background-color: var(--bg-color);
+  background-color: var(--bg-color);
+  padding-top: 100px;
+}
+
+.post {
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-wrapper img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.post-wrapper {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.post-content-wrapper {
+  align-self: flex-start;
 }
 
 .create-post-button {
@@ -33,4 +67,29 @@ body {
 
 .create-post-button-wrapper button {
   padding: 0.5rem;
+}
+
+.header-logo {
+  width: 80px;
+}
+
+.header {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--primary-color);
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--bg-color);
+  display: flex;
+  align-items: center;
+}
+
+.home-footer {
 }

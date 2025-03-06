@@ -1,94 +1,65 @@
-// import { useState, useEffect } from "react";
-const { useState, useEffect } = React;
+const { useState } = React;
 
-import logic from "../logic.js";
-import Post from "./Post.jsx";
+import Posts from "./Posts.jsx";
 import CreatePost from "./CreatePost.jsx";
 
-function Home({ onLogoutClick, onCancelClick }) {
-  const [currentUserName, setCurrentUserName] = useState("");
-  const [displayCreatePost, setDisplayCreatePost] = useState(false);
-  const [posts, setPosts] = useState([]);
+import logic from "../logic.js";
 
-  const handleSetPosts = function (posts) {
-    setPosts(posts);
+function Home({ onLogoutClick }) {
+  const [view, setView] = useState("posts");
+
+  const handleCancelClick = () => {
+    setView("posts");
+  };
+  const handlePostCreationSubmit = () => {
+    setView("posts");
   };
 
-  const handlePostCreation = (post) => {
+  const handleLogoutButton = () => {
     try {
-      logic.addPost(post);
+      logic.logoutUser();
 
-      const posts = logic.getPosts();
-
-      setPosts(posts);
-
-      setDisplayCreatePost(false);
+      onLogoutClick();
     } catch (error) {
       console.error(error);
 
       alert(error.message);
     }
   };
-  useEffect(() => {
-    let userName = logic.getOnlineUserName();
-
-    setCurrentUserName(userName);
-
-    let posts = logic.getPosts();
-
-    setPosts(posts);
-  }, []);
-
   return (
     <div style={{ padding: "1rem" }}>
-      <h1>Logo</h1>
-      <button
-        style={{
-          backgroundColor: "red",
-          borderRadius: "50%",
-          width: "60px",
-          height: "60px",
-          padding: "5px",
-        }}
-        onClick={onLogoutClick}
-      >
-        Logout
-      </button>
-      <h2>Hello, {currentUserName}!</h2>
-      {posts &&
-        !displayCreatePost &&
-        posts.map((item) => {
-          console.log(item);
-          return (
-            <Post
-              author={item.author.username}
-              image={item.image}
-              text={item.text}
-              createdAt={item.createdAt}
-              modifiedAt={item.modifiedAt}
-              liked={item.liked}
-              likes={item.likes}
-              id={item.id}
-              onSetPosts={handleSetPosts}
-            />
-          );
-        })}
-      {!displayCreatePost && (
-        <div
-          className="create-post-button"
-          onClick={() => {
-            setDisplayCreatePost(true);
-          }}
-        >
-          +
-        </div>
-      )}
-      {displayCreatePost && (
+      {view === "posts" && <Posts />}
+
+      {view === "create-post" && (
         <CreatePost
-          onCancelClick={onCancelClick}
-          onPostCreation={handlePostCreation}
+          onCancelClick={handleCancelClick}
+          onPostCreationSubmit={handlePostCreationSubmit}
         />
       )}
+      <footer className="home-footer">
+        {view === "posts" && (
+          <div
+            className="create-post-button"
+            onClick={() => {
+              setView("create-post");
+            }}
+          >
+            +
+          </div>
+        )}
+        <button
+          style={{
+            backgroundColor: "red",
+            borderRadius: "50%",
+            width: "60px",
+            height: "60px",
+            padding: "5px",
+          }}
+          onClick={handleLogoutButton}
+        >
+          Logout
+        </button>
+      </footer>
     </div>
   );
 }

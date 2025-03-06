@@ -1,13 +1,20 @@
 import logic from "../logic";
 
-function Post({ author, image, bio, date, id, liked, onSetPosts, likes }) {
+function Post({
+  author,
+  image,
+  text,
+  createdAt,
+  id,
+  liked,
+  onPostLikeUpdate,
+  likes,
+}) {
   const handleToggleClick = (id) => {
     try {
       logic.updatePostLikes(id);
 
-      let posts = logic.getPosts();
-
-      onSetPosts(posts);
+      onPostLikeUpdate();
     } catch (error) {
       console.error(error);
 
@@ -15,20 +22,24 @@ function Post({ author, image, bio, date, id, liked, onSetPosts, likes }) {
     }
   };
   return (
-    <article>
+    <article className="post">
       <h3>{author}</h3>
-      <img src={image} style={{ width: "80%" }} />
-      <p>{bio}</p>
-      <time>{date}</time>
-      <button
-        onClick={() => {
-          handleToggleClick(id);
-        }}
-        style={{ backgroundColor: liked ? "red" : "" }}
-      >
-        {"🤍"}
-        {likes.length}
-      </button>
+      <div className="post-wrapper">
+        <img src={image} />
+        <div className="post-content-wrapper">
+          <p>{text}</p>
+          <time>{createdAt.toISOString()}</time>
+          <button
+            onClick={() => {
+              handleToggleClick(id);
+            }}
+            style={{ backgroundColor: liked ? "red" : "" }}
+          >
+            {"🤍"}
+            {likes.length}
+          </button>
+        </div>
+      </div>
     </article>
   );
 }

@@ -23,7 +23,6 @@ function Login({ onRegisterClick, onLoginSuccess }) {
   console.log("Login -> render");
   return (
     <div style={{ height: "100vh", padding: "2rem" }}>
-      <h1>Logo</h1>
       <form
         style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
         onSubmit={handleLoginSubmit}

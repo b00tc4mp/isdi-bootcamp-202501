@@ -1,7 +1,6 @@
 class Collection {
   constructor(name) {
     this.name = name;
-    // this.items = JSON.parse(localStorage[this.name] || "[]");
   }
   getAll() {
     const collection = JSON.parse(localStorage[this.name] || "[]");
