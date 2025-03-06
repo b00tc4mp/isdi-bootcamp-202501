@@ -21,7 +21,7 @@ function Posts() {
         }
     }, [])
 
-    const handlePostLikeToggled = () => {
+    const handleToggleLikeClick = () => {
         try {
             const posts = logic.getPosts()
 
@@ -33,19 +33,7 @@ function Posts() {
         }
     }
 
-    const handlePostDeleted = () => {
-        try {
-            const posts = logic.getPosts()
-
-            setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    const handlePostTextEdited = () => {
+    const handleDeleteClick = () => {
         try {
             const posts = logic.getPosts()
 
@@ -60,7 +48,7 @@ function Posts() {
     console.debug('Posts -> render')
 
     return <section>
-        {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onPostTextEdited={handlePostTextEdited} />)}
+        {posts.map(post => <Post key={post.id} post={post} onToggleLikeClick={handleToggleLikeClick} onDeleteClick={handleDeleteClick} />)}
     </section>
 }
 

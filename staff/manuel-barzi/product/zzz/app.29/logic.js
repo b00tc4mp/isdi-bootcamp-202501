@@ -143,9 +143,9 @@ const logic = {
     },
 
     createPost(image, text) {
-        this.validate.url(image, 'image')
+        this.validate.url(image)
         this.validate.maxLength(1000)
-        this.validate.text(text, 'text')
+        this.validate.text(text)
         this.validate.maxLength(500)
 
         const { userId } = data
@@ -210,23 +210,6 @@ const logic = {
         if (foundPost.author !== userId) throw new OwnershipError('user is not author of post')
 
         data.posts.deleteOne(post => post.id === postId)
-    },
-
-    updatePostText(postId, text) {
-        this.validate.id(postId, 'postId')
-
-        const { userId } = data
-
-        const foundPost = data.posts.findOne(post => post.id === postId)
-
-        if (!foundPost) throw new NotFoundError('post not found')
-
-        if (foundPost.author !== userId) throw new OwnershipError('user is not author of post')
-
-        foundPost.text = text
-        foundPost.modifiedAt = new Date // same as -> new Date()
-
-        data.posts.updateOne(foundPost)
     }
 }
 
