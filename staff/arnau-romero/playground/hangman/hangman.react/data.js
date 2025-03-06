@@ -1,6 +1,6 @@
 var data = {
     constants: {
-        MAX_ATTEMPS: 2
+        MAX_ATTEMPS: 6
     },
 
     word: '',
