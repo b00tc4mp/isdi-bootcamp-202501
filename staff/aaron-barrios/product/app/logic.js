@@ -1,4 +1,4 @@
-import { DuplicityError, NotFoundError, CredentialsError } from './errors.js'
+import { DuplicityError, NotFoundError, CredentialsError, OwnershipError } from './errors.js'
 
 import data from './data.js'
 
@@ -41,6 +41,10 @@ const logic = {
         url(url, explain) {
             this.string(url, explain)
             if (!logic.constant.URL_REGEX.test(url)) throw new SyntaxError(`invalid ${explain} syntax`)
+        },
+        id(id, explain) {
+            this.text(id, explain)
+            if (id.length < 11 || id.length > 12) throw new RangeError(`invalid ${explain} length`)
         }
     },
 
@@ -140,9 +144,9 @@ const logic = {
     },
 
     createPost(image, text) {
-        this.validate.url(image)
+        this.validate.url(image, 'image')
         this.validate.maxLength(1000)
-        this.validate.text(text)
+        this.validate.text(text, 'text')
         this.validate.minLength(500)
 
         const { userId } = data
@@ -160,6 +164,8 @@ const logic = {
     },
 
     toggleLikePost(postId) {
+        this.validate.id(postId, 'postId')
+
         //paso el post Id por parametro desde loadPosts y lo busco
         const { userId } = data
 
@@ -193,6 +199,37 @@ const logic = {
 
             foundPost.likes = likes
         }
+
+        data.posts.updateOne(foundPost)
+    },
+
+    deletePost(postId) {
+        this.validate.id(postId, 'postId')
+
+        const { userId } = data
+
+        const foundPost = data.posts.findOne(post => post.id === postId)
+
+        if (!foundPost) throw new NotFoundError('post not found')
+
+        if (foundPost.author !== userId) throw new OwnershipError('user is not author of post')
+
+        data.posts.deleteOne(post => post.id === postId)
+    },
+
+    updatePostText(postId, text) {
+        this.validate.id(postId, 'postId')
+
+        const { userId } = data
+
+        const foundPost = data.posts.findOne(post => post.id === postId)
+
+        if (!foundPost) throw new NotFoundError('post not found')
+
+        if (foundPost.author !== userId) throw new OwnershipError('user is not author of post')
+
+        foundPost.text = text
+        foundPost.modifiedAt = new Date
 
         data.posts.updateOne(foundPost)
     }
