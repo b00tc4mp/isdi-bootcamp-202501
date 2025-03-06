@@ -33,22 +33,10 @@ function Posts() {
         }
     }
 
-    const handleDeleteClick = () => {
-        try {
-            const posts = logic.getPosts()
-
-            setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
     console.debug('Posts -> render')
 
     return <section>
-        {posts.map(post => <Post key={post.id} post={post} onToggleLikeClick={handleToggleLikeClick} onDeleteClick={handleDeleteClick} />)}
+        {posts.map(post => <Post key={post.id} post={post} onToggleLikeClick={handleToggleLikeClick} />)}
     </section>
 }
 

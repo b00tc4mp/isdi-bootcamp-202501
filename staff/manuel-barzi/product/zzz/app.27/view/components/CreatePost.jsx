@@ -1,7 +1,7 @@
 import logic from '../../logic.js'
 
 function CreatePost({ onPostCreateSubmit }) {
-    const handleFormSubmit = event => {
+    const handleCreatePostSubmit = event => {
         event.preventDefault()
 
         try {
@@ -22,7 +22,7 @@ function CreatePost({ onPostCreateSubmit }) {
     console.debug('CreatePost -> render')
 
     return <section>
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleCreatePostSubmit}>
             <label htmlFor="image">Image</label>
             <input type="url" id="image" />
 

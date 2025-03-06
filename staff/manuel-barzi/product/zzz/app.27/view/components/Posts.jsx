@@ -1,7 +1,5 @@
 const { useState, useEffect } = React
 
-import Post from './Post.jsx'
-
 import logic from '../../logic.js'
 
 function Posts() {
@@ -21,20 +19,10 @@ function Posts() {
         }
     }, [])
 
-    const handleToggleLikeClick = () => {
+    const handleToggleLikePostClick = postId => {
         try {
-            const posts = logic.getPosts()
+            logic.toggleLikePost(postId)
 
-            setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    const handleDeleteClick = () => {
-        try {
             const posts = logic.getPosts()
 
             setPosts(posts)
@@ -48,7 +36,20 @@ function Posts() {
     console.debug('Posts -> render')
 
     return <section>
-        {posts.map(post => <Post key={post.id} post={post} onToggleLikeClick={handleToggleLikeClick} onDeleteClick={handleDeleteClick} />)}
+        {posts.map(post =>
+            <article key={post.id}>
+                <h3>{post.author.username}</h3>
+
+                <img src={post.image} />
+
+                <p>{post.text}</p>
+
+                <div className="post-footer">
+                    <time>{post.createdAt.toISOString()}</time>
+
+                    <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
+                </div>
+            </article>)}
     </section>
 }
 

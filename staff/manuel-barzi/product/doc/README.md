@@ -16,6 +16,9 @@ User
 - logout
 - view posts
 - create post
+- toggle like post
+- delete post
+- edit post text
 
 ![](./images/use-cases-diagram.png)
 
