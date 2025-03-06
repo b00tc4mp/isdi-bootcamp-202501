@@ -72,19 +72,6 @@ class Collection {
 
         localStorage[this.name] = json // y lo metemos en la localStore
     }
-
-    deleteOne(condition) {
-        const collection = JSON.parse(localStorage[this.name] || '[]')
-
-        const index = collection.findIndex(condition) // buscamos la posicion en la que esta lo que estamos trayendo
-
-        if (index > -1)
-            collection.splice(index, 1) // quitamos el dato de la posicion(index) cogida antes y 1 de un elemento
-
-        const json = JSON.stringify(collection) // lo volvemos a transformar el objeto a string 
-
-        localStorage[this.name] = json // insertamos el string en la localStorage
-    }
 }
 
 const data = {
