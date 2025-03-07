@@ -1,11 +1,11 @@
-const { useState, useEffect } = React
+import {useState, useEffect} from 'react'
 
-import Posts from './components/Posts.jsx'
-import CreatePost from './components/CreatePost.jsx'
+import {Posts} from './Posts.jsx'
+import {CreatePost} from './CreatePost.jsx'
 
-import logic from '../logic.js'
+import {logic} from '../../logic/index.js'
 
-function Home({ onUserLoggedOut }) {
+export function Home({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')
     const [username, setUsername] = useState('')
 
@@ -54,5 +54,3 @@ function Home({ onUserLoggedOut }) {
         {view === 'posts' && <button onClick={handleCreatePostClick}>🧉</button>}
     </div >
 }
-
-export default Home

@@ -1,38 +1,32 @@
-class Collection {
+import {uuid} from './uuid.js'
+
+export class Collection {
     constructor(name) {
         this.name = name
     }
 
     getAll() {
-        const collection = JSON.parse(localStorage[this.name] || '[]')
-
-        return collection
+        return JSON.parse(localStorage[this.name] || '[]')
     }
 
     setAll(collection) {
-        const json = JSON.stringify(collection)
-
-        localStorage[this.name] = json
+        localStorage[this.name] = JSON.stringify(collection)
     }
 
     getById(id) {
         const collection = JSON.parse(localStorage[this.name] || '[]')
 
-        const document = collection.find(document => document.id === id) || null
-
-        return document
+        return collection.find(document => document.id === id) || null
     }
 
     insertOne(document) {
         const collection = JSON.parse(localStorage[this.name] || '[]')
 
-        document.id = data.uuid()
+        document.id = uuid()
 
         collection.push(document)
 
-        const json = JSON.stringify(collection)
-
-        localStorage[this.name] = json
+        localStorage[this.name] = JSON.stringify(collection)
     }
 
     findOne(callback) {
@@ -56,9 +50,7 @@ class Collection {
 
         collection[index] = document
 
-        const json = JSON.stringify(collection)
-
-        localStorage[this.name] = json
+        localStorage[this.name] = JSON.stringify(collection)
     }
 
     deleteOne(condition) {
@@ -69,31 +61,6 @@ class Collection {
         if (index > -1)
             collection.splice(index, 1)
 
-        const json = JSON.stringify(collection)
-
-        localStorage[this.name] = json
+        localStorage[this.name] = JSON.stringify(collection)
     }
 }
-
-const data = {
-    uuid: function () {
-        return (Date.now() + Math.random()).toString(36).replace('.', '')
-    },
-
-    users: new Collection('users'),
-    posts: new Collection('posts'),
-
-    get userId() {
-        const id = JSON.parse(sessionStorage.userId || 'null')
-
-        return id
-    },
-
-    set userId(id) {
-        const json = JSON.stringify(id)
-
-        sessionStorage.userId = json
-    }
-}
-
-export default data

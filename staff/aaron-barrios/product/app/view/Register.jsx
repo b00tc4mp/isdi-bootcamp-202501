@@ -1,6 +1,6 @@
-import logic from '../logic.js'
+import {logic} from '../logic/index.js'
 
-function Register({ onNavigateToLogin, onUserRegistered }) {
+export function Register({ onNavigateToLogin, onUserRegistered }) {
     const handleRegisterSubmit = event => {
         event.preventDefault()
 
@@ -62,5 +62,3 @@ function Register({ onNavigateToLogin, onUserRegistered }) {
         </form>
     </div >
 }
-
-export default Register

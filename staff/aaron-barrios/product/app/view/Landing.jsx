@@ -1,4 +1,4 @@
-function Landing({ onNavigateToRegister, onNavigateToLogin }) {
+export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     const handleRegisterClick = () => onNavigateToRegister()
 
     const handleLoginClick = () => onNavigateToLogin()
@@ -11,5 +11,3 @@ function Landing({ onNavigateToRegister, onNavigateToLogin }) {
         </span>
     </div>
 }
-
-export default Landing
