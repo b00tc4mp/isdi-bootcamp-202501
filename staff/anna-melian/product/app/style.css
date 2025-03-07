@@ -262,7 +262,7 @@ footer {
     --color: #740001;
     --bg-color: #FFC107;
     --shadow1-color: #db4f51;
-    --shadow2-color: #e41c20;
+    --shadow2-color: #920709;
 
 
 }
@@ -294,4 +294,23 @@ time {
 
 .no-posts-message {
     background-color: var(--bg-color);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-buttons {
+    margin: 10px;
+
+    button {
+        margin: 7px;
+    }
+
+    .delete-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgb(255, 113, 113), 0 0 20px rgb(255, 0, 0);
+    }
 }

@@ -79,6 +79,8 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
+        const users = data.users.getAll()
+
         const found = data.users.findOne(user => user.username === username)
 
         if (!found || found.password !== password)
@@ -116,6 +118,11 @@ const logic = {
 
         return found.house
 
+    },
+
+    getUsers() {
+        const users = data.users.getAll()
+        return users
     },
 
     isUserLoggedIn() {
@@ -213,95 +220,112 @@ const logic = {
         }
 
         data.posts.updateOne(foundPost)
-    }
+    },
 
-    /*
-        updateUserProfile(name, username, email) {
-            this.validate.text(name, 'name')
-            this.validate.username(username, 'username')
-            this.validate.email(email, 'email')
-    
-            const { users, userId } = data
-    
-            const user = users.find(user => user.id === userId)
-    
-            if (!user) throw new Error('User not found')
-    
-            if (user.name === name && user.username === username && user.email === email) {
-                return false
-            }
-    
-            user.name = name
-            user.username = username
-            user.email = email
-            user.modifiedAt = new Date()
-    
-            data.users = users
-    
-            return true
-    
-        },
-    
-        changePassword(actualPassword, newPassword) {
-            this.validate.password(actualPassword)
-            this.validate.password(newPassword)
-    
-            const { users, userId } = data
-    
-            const user = users.find(user => user.id === userId)
-    
-            if (!user) throw new Error('User not found')
-    
-            const correctActualPassword = (user.password === actualPassword ? true : false)
-    
-            if (!correctActualPassword) throw new Error('Wrong password')
-    
-            const equalPasswords = (actualPassword === newPassword ? true : false)
-    
-            if (equalPasswords) throw new Error('Equal passwords')
-    
-            console.debug({ newPassword })
-    
-            user.password = newPassword
-            user.modifiedAt = new Date()
-    
-            data.users = users
-    
-        },
+    getOwnPosts() {
+        const { userId } = data
 
-        deleteProfile() {
-        const { users, userId, posts } = data
+        const posts = logic.getPosts()
+        let ownPosts = []
 
-        const indexDeleteUser = users.findIndex(user => user.id === userId)
-        if (indexDeleteUser === -1) throw new Error('user not found')
+        for (let i = 0; i < posts.length; i++) {
+            const post = posts[i]
+            if (post.author.id === userId)
+                ownPosts.push(post)
+        }
 
-        users.splice(indexDeleteUser, 1)
+        return ownPosts
 
-        const updatedPosts = posts.filter(post => post.author !== userId)
+    },
 
-        const newPosts = updatedPosts.map(post => {
+
+    updateUserProfile(name, username, email) {
+        this.validate.text(name, 'name')
+        this.validate.username(username, 'username')
+        this.validate.email(email, 'email')
+
+        const { userId } = data
+
+        const users = data.users.getAll()
+
+        const user = data.users.getById(userId)
+
+        if (!user) throw new Error('User not found')
+
+        if (user.name === name && user.username === username && user.email === email) {
+            return false
+        }
+
+        user.name = name
+        user.username = username
+        user.email = email
+        user.modifiedAt = new Date()
+
+        data.users.updateOne(user)
+
+        return true
+
+    },
+
+    changePassword(actualPassword, newPassword) {
+        this.validate.password(actualPassword)
+        this.validate.password(newPassword)
+
+        const { userId } = data
+
+        const users = data.users.getAll()
+
+        const user = data.users.getById(userId)
+
+        if (!user) throw new Error('User not found')
+
+        const correctActualPassword = (user.password === actualPassword ? true : false)
+
+        if (!correctActualPassword) throw new Error('Wrong password')
+
+        const equalPasswords = (actualPassword === newPassword ? true : false)
+
+        if (equalPasswords) throw new Error('Equal passwords')
+
+        user.password = newPassword
+        user.modifiedAt = new Date()
+
+        data.users.updateOne(user)
+
+    },
+
+
+    deleteProfile() {
+        const { userId } = data
+
+        const posts = data.posts.getAll()
+        const users = data.users.getAll()
+
+        const user = data.users.getById(userId)
+
+        if (!user) throw new Error('user not found')
+
+        data.users.deleteOne(user => user.id === userId)
+
+
+        for (let i = 0; i < posts; i++) {
+            const post = posts[i]
+            if (post.author.id === userId)
+                data.posts.deleteOne(post => post.author.id === userId)
+        }
+
+
+        const newPosts = posts.map(post => {
             const updatedLikes = post.likes.filter(id => id !== userId)
             return { ...post, likes: updatedLikes }
 
         })
-
-        data.users = users
-        data.posts = newPosts
+        data.posts.setAll(newPosts)
         data.userId = null
 
     },
-    
-        getOwnPosts() {
-            const { posts, userId } = data
-    
-            const ownPosts = posts.filter(post => post.author === userId)
-    
-            return ownPosts
-    
-        }
-    
-    
-        */
+
+
 }
 
 export default logic
