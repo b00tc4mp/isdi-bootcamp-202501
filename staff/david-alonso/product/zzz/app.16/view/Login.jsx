@@ -1,7 +1,6 @@
 // lOGIN
-import logic from "../logic.js"
-
-function Login({ onNavigateToRegister, onUserLoggedIn }) {
+import logic from "../logic"
+function Login({ onRegisterClick, onLoginSubmit }) {
 
     //  Para manejar el evento de envío del formulario del Login
     const handleLoginSubmit = event => {
@@ -26,7 +25,7 @@ function Login({ onNavigateToRegister, onUserLoggedIn }) {
             form.reset()
 
             // Llamamos a la funcion para actualizar la pagina
-            onUserLoggedIn()
+            onLoginSubmit()
         } catch (error) {
             // Muestra si hay errores
             console.error(error)
@@ -35,11 +34,11 @@ function Login({ onNavigateToRegister, onUserLoggedIn }) {
         }
     }
 
-    const handleRegisterClick = () => onNavigateToRegister()
-
     console.debug('Login -> render')
 
     return <div className="loginRegister">
+
+        <img src="./view/images/fondo1.jpg" className="fondo" />
 
         <div className="formLogin">
             <h1>SIGN IN</h1>
@@ -54,11 +53,9 @@ function Login({ onNavigateToRegister, onUserLoggedIn }) {
             </form>
 
             <div >
-                <a onClick={handleRegisterClick} className="anchorRegister">REGISTER</a>
+                <a onClick={onRegisterClick} className="anchorRegister">REGISTER</a>
             </div>
         </div>
-
-        <img src="./view/images/fondo1.jpg" className="fondo" />
 
     </div>
 }

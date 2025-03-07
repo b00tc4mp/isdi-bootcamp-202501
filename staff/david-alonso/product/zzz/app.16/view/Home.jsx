@@ -7,7 +7,7 @@ import CreatePost from "./components/CreatePosts.jsx"
 
 import logic from "../logic.js"
 
-function Home({ onUserLoggedOut }) {
+function Home({ onLogoutClick }) {
 
     // View se utiliza para actualizar el estado de la pagina
     const [view, setView] = useState('posts')
@@ -35,7 +35,7 @@ function Home({ onUserLoggedOut }) {
         try {
             logic.logoutUser()
 
-            onUserLoggedOut()
+            onLogoutClick()
         } catch (error) {
             console.error(error)
 
@@ -47,11 +47,10 @@ function Home({ onUserLoggedOut }) {
     const handleAddPostClick = () => setView('create-post')
 
     // Despues de publicar
-    // const handleAfterPostsClick = () => setView('posts')
-    const handlePostCreated = () => setView('posts')
+    const handleAfterPostsClick = () => setView('posts')
 
     // Cierra Create posts y muestra los posts
-    const handlePostCreateCancelled = () => setView('posts')
+    const handleCancelClick = () => setView('posts')
 
     console.debug('Home -> render')
 
@@ -69,8 +68,8 @@ function Home({ onUserLoggedOut }) {
         <main>
             {view === 'posts' && <Posts />}
 
-            {view === 'create-post' && <CreatePost onPostCreated={handlePostCreated}
-                onPostCreateCancelled={handlePostCreateCancelled} />}
+            {view === 'create-post' && <CreatePost onPostCreateSubmit={handleAfterPostsClick}
+                onCancelClick={handleCancelClick} />}
         </main>
 
 

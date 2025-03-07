@@ -1,8 +1,8 @@
 import logic from '../../logic.js'
 
-function CreatePost({ onPostCreated, onPostCreateCancelled }) {
+function CreatePost({ onPostCreateSubmit, onCancelClick }) {
 
-    const handleFormSubmit = event => {
+    const handleCreatePostSubmit = event => {
         event.preventDefault()
 
         try {
@@ -12,7 +12,7 @@ function CreatePost({ onPostCreated, onPostCreateCancelled }) {
 
             logic.createPost(image, text)
 
-            onPostCreated()
+            onPostCreateSubmit()
         } catch (error) {
             console.error(error)
 
@@ -20,15 +20,13 @@ function CreatePost({ onPostCreated, onPostCreateCancelled }) {
         }
     }
 
-    const handleCancelClick = () => onPostCreateCancelled()
-
     console.debug('CreatePost -> render')
 
     return <section>
         <div className="loginRegister">
             <h1>NEW POST</h1>
 
-            <form onSubmit={handleFormSubmit} className='formRegister'>
+            <form onSubmit={handleCreatePostSubmit} className='formRegister'>
 
                 <input type="url" id="image" placeholder=". 📷 Image" className="input" />
 
@@ -39,7 +37,7 @@ function CreatePost({ onPostCreated, onPostCreateCancelled }) {
         </div>
 
         <div >
-            <a onClick={handleCancelClick} className="anchorCancel">CANCEL</a>
+            <a onClick={onCancelClick} className="anchorCancel">CANCEL</a>
         </div>
     </section>
 }

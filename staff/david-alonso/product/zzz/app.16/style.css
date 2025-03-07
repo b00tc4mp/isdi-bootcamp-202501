@@ -39,17 +39,7 @@ article {
     width: 100%;
     margin: 0;
     padding-bottom: 0px;
-    /* object-fit: cover;
-    position: sticky;
-    top: 0; */
 }
-
-/* .container-posts {
-    width: 100%;
-    margin-block: 150px;
-    background-color: rgb(32, 32, 32);
-
-} */
 
 img {
     width: 100%;
@@ -89,9 +79,8 @@ h1 {
 /* LOGIN */
 .loginRegister {
     .fondo {
-        width: 80%;
-        margin-top: 70px;
-        margin-left: 40px;
+        width: 100%;
+        position: fixed;
         z-index: -1;
     }
 
@@ -213,6 +202,28 @@ button:hover:after {
         }
     }
 
+    .like {
+        font-size: 1rem;
+        background: rgba(0, 0, 0, 0);
+        margin-left: 5px;
+        top: -25px;
+        box-shadow: none;
+
+    }
+
+    .like:before,
+    .like:after {
+        content: none !important;
+        display: none !important;
+    }
+
+    .data {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
     .userName {
         margin: 0;
         margin-left: 20px;
@@ -228,53 +239,19 @@ button:hover:after {
     }
 
     .postText {
-        margin: 0;
+        margin-top: -9px;
     }
 
-    .data {
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
-        padding: 10px;
+    .time {
+        position: relative;
+        top: -15px;
+        margin-left: 20px;
+        text-decoration: overline;
+        font-size: 0.8rem;
     }
-
-    .post-data {
-        width: auto;
-        display: flex;
-        justify-content: space-evenly;
-        margin-top: auto;
-        padding: 15px;
-        padding-bottom: 30px;
-
-        .delete,
-        .edit,
-        .like {
-            font-size: 1rem;
-            background: rgba(0, 0, 0, 0);
-            box-shadow: none;
-            margin: 0;
-        }
-
-        .like:before,
-        .like:after,
-        .delete:before,
-        .delete:after,
-        .edit:before,
-        .edit:after {
-            content: none !important;
-            display: none !important;
-        }
-
-        .time {
-            margin-top: 15px;
-            text-decoration: overline;
-            font-size: 0.8rem;
-        }
-    }
-
 
     .end {
-        height: 80px;
+        height: 60px;
     }
 
     footer {
@@ -294,7 +271,7 @@ button:hover:after {
         }
 
         .nvLogo {
-            width: 30px;
+            width: 20px;
             margin-left: 40px;
         }
     }
@@ -311,36 +288,36 @@ button:hover:after {
         width: 80%;
 
         .anchor {
-            margin-top: 100px;
+            top: 200px;
         }
     }
 
     .login {
         margin: auto;
-        width: 60%;
+        width: 80%;
         display: flex;
         align-items: center;
     }
 
     .loginRegister {
         margin: auto;
-        width: 60%;
-        margin-top: 100px;
+        width: 80%;
 
         .fondo {
             width: 80%;
-            margin-top: 70px;
-            margin-left: 50px;
 
         }
 
         .formLogin {
-            width: 80%;
-
+            width: 550px;
+            left: 140px;
+            top: 100px;
         }
 
         .formRegister {
-            width: 80%
+            width: 550px;
+            left: 140px;
+            top: 100px;
         }
     }
 
@@ -373,7 +350,7 @@ button:hover:after {
         width: 60%;
 
         .anchor {
-            margin-top: 70px;
+            top: -140px;
         }
     }
 
@@ -389,8 +366,7 @@ button:hover:after {
         width: 60%;
 
         .fondo {
-            width: 40%;
-            margin-left: 270px;
+            width: 60%;
 
         }
 
@@ -409,7 +385,7 @@ button:hover:after {
 
     .home {
         margin: auto;
-        width: 50%;
+        width: 60%;
         display: flex;
         flex-direction: column;
         align-items: center;

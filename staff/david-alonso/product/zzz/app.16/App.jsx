@@ -1,13 +1,13 @@
 // APP
 
+
 const { useState, useEffect } = React
 
-import Landing from "./view/Landing.jsx"
-import Register from "./view/Register.jsx"
 import Login from "./view/Login.jsx"
-import Home from "./view/Home.jsx"
-
+import Register from "./view/Register.jsx"
 import logic from "./logic.js"
+import Home from "./view/Home.jsx"
+import Landing from "./view/Landing.jsx"
 
 // Maneja la navegacion entre las diverentes ventanas de la pagina
 function App() {
@@ -28,30 +28,30 @@ function App() {
     }, [])
 
     // Cambia hacia la pagina de Registro para rgistrarse
-    const handleNavigateToRegister = () => setView('register')
+    const handleRegisterClick = () => setView('register')
 
     // Cambia hacia la pagina de Login para iniciar sesion
-    const handleNavigateToLogin = () => setView('login')
+    const handleLoginClick = () => setView('login')
 
     // Cambia hacia la pagina de Login despues de haberse registrado
-    const handleUserRegistered = () => setView('login')
+    const handleRegisterSubmit = () => setView('login')
 
     // Cambia hacia la pagina de Home despues de hacer login
-    const handleUserLoggedIn = () => setView('home')
+    const handleLoginSubmit = () => setView('home')
 
     // Cambia hacia la pagina de Login al cerrar sesion
-    const handleUserLoggedOut = () => setView('login')
+    const handleLogoutClick = () => setView('login')
 
     console.debug('App -> render')
 
     return <>
-        {view === 'landing' && <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />}
+        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
 
-        {view === 'register' && <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />}
+        {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />}
 
-        {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />}
+        {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />}
 
-        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut} />}
+        {view === 'home' && <Home onLogoutClick={handleLogoutClick} />}
 
     </>
 }

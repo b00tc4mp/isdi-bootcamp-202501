@@ -1,14 +1,19 @@
-function Landing({ onRegisterClick, onLoginClick }) {
+function Landing({ onNavigateToRegister, onNavigateToLogin }) {
+
+    const handleRegisterClick = () => onNavigateToRegister()
+
+    const handleLoginClick = () => onNavigateToLogin()
+
     console.debug('Landing -> render')
 
     return <div className="landing">
         <img src="./view/images/Logo.jpg" className="logo" />
         <div className="anchor">
             <div >
-                <a onClick={onRegisterClick} >REGISTER</a>
+                <a onClick={handleRegisterClick} >REGISTER</a>
             </div>
             <div >
-                <a onClick={onLoginClick} >LOGIN</a>
+                <a onClick={handleLoginClick} >LOGIN</a>
             </div>
         </div>
     </div>
