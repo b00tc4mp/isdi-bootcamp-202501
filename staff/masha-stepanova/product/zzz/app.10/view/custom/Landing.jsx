@@ -1,9 +1,9 @@
-export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
-    return <div className="landing-page" >
+function Landing({ onNavigateToRegister, onNavigateToLogin }) {
+    return <div class="landing-page" >
 
         <h1>Logo</h1>
 
-        <section className="register-login">
+        <section class="register-login">
             <a onClick={onNavigateToRegister}>Register</a>
             <> or </>
             <a onClick={onNavigateToLogin}>Login</a>
@@ -11,3 +11,5 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
 
     </div>
 }
+
+export default Landing

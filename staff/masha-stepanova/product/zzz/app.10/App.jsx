@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 
-import { Landing } from './view/custom/Landing.jsx'
-import { Register } from './view/custom/Register.jsx'
-import { Login } from './view/custom/Login.jsx'
-import { Home } from './view/Home/index.jsx'
-import { Profile } from './view/custom/Profile.jsx'
+import Landing from './view/custom/Landing.jsx'
+import Register from './view/custom/Register.jsx'
+import Login from './view/custom/Login.jsx'
+import Home from './view/custom/Home.jsx'
+import Profile from './view/custom/Profile.jsx'
 
-import { logic } from './logic/index.js'
+import logic from './logic.js'
 
-export function App() {
+function App() {
     const [view, setView] = useState('landing')
 
     useEffect(() => {
@@ -53,3 +53,5 @@ export function App() {
         {view === 'profile' && <Profile onUserLoggedOut={handleUserLoggedOut} onNavigateToHome={handleNavigateToHome} onCreatePostCanceled={handleCreatePostCanceled} />}
     </>
 }
+
+export default App

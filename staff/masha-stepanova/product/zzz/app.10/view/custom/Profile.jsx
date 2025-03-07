@@ -1,10 +1,10 @@
-import { logic } from '../../logic/index.js'
+import logic from '../../logic.js'
 
-import { Post } from '../Home/components/Post.jsx'
+import Post from '../components/Post.jsx'
 
 import { useState, useEffect } from 'react'
 
-export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCanceled }) {
+function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCanceled }) {
     const [view, setView] = useState('profile')
     const [posts, setPosts] = useState([])
 
@@ -91,7 +91,7 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
                 text: { value: text }
             } = form
 
-            logic.createPost(image, text)
+            logic.addPost(image, text)
 
             const posts = logic.getUserPosts()
 
@@ -166,3 +166,5 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
 
     </div >
 }
+
+export default Profile
