@@ -1,113 +1,68 @@
 const { useState, useEffect } = React
 
-function Home({ onLogoutClick }) {
+import Posts from './components/Posts.jsx'
+import CreatePost from './components/CreatePost.jsx'
+
+import logic from '../logic.js'
+
+function Home({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
-    const [posts, setPosts] = useState([])
 
- useEffect(() => {
-  console.debug('Home -> useEfect')
+    useEffect(() => {
+        console.debug('Home -> useEfect')
 
-  try {
-    const name = logic.getUserName()
-    const posts = logic.getPosts()
+        try {
+            const name = logic.getUserName()
 
-    setUserName(name)
-    setPosts(posts)
-  } catch (error) {
-    console.error(error)
+            setUserName(name)
+        } catch (error) {
+            console.error(error)
 
-    alert(error.message)
-  }
+            alert(error.message)
+        }
 
- }, [])
+    }, [])
 
- const handleLogoutClick = () => {
-    try {
-        logic.logoutUser()
+    const handleLogoutClick = () => {
+        try {
+            logic.logoutUser()
 
-        onLogoutClick()
-    } catch (error) {
-        console.error(error)
+            onUserLoggedOut()
+        } catch (error) {
+            console.error(error)
 
-        alert(error.message)
+            alert(error.message)
 
+        }
     }
- }
-  const handleAddPostClick = () => setView('create-post')
+    const handleAddPostClick = () => setView('create-post')
 
-  const handleCreatePostSubmit = event => {
-    event.preventDefault()
-  
-try {
-    const { target: form } = event 
+    const handlePostCreated = () => setView('posts')
 
-    const { image: { value: image }, text: { value: text} } = form
-    
-    logic.createPost(image, text)
+    const handlePostCreateCancelled = () => setView('posts')
 
-    const posts = logic.getPosts()
-
-    setPosts(posts)
-    setView('posts')
-} catch (error) {
-    console.error(error)
-
-    alert(error.message)
-}
-  }
-
-  const handleToggleLikePostClick = postId => {
-    try {
-        logic.toggleLikePost(postId)
-
-        const posts = logic.getPosts()
-
-        setPosts(posts)
-    } catch (error) {
-        console.error(error)
-
-        alert(error.message)
-    }
-  }
-   console.debug('Home -> render')
+    console.debug('Home -> render')
 
     return <div>
-        <h1>Logo</h1>
+        <header>
+            <h1>Logo</h1>
 
-        <h2>Hello, {userName}!</h2>
+            <h2>Hello, {userName}!</h2>
 
-        <button type="button" onClick={handleLogoutClick}>Logout</button>
+            <button type="button" onClick={handleLogoutClick}>Logout</button>
+        </header>
 
-        {view === 'posts' && <section>
-            {posts.map(post =>
-                <article>
-                    <h3>{post.author}</h3>
+        <main>
+            {view === 'posts' && <Posts />}
+            {view === 'create-post' && <CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />}
 
-                    <img src={post.image} />
+        </main>
 
-                    <p>{post.text}</p>
+        <footer>
+            {view === 'posts' && <button onClick={handleAddPostClick}>+</button>}
+        </footer>
 
-                    <time>{post.createdAt.toISOString()}</time>
-
-                    <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked ? '♥️' : '🤍'} (${post.likesCount})`}</button>
-                </article>)}
-        </section>}
-
-        {view === 'create-post' && <section>
-            <form onSubmit={handleCreatePostSubmit}>
-                <label htmlFor="image">Image</label>
-                <input type="url" id="image" />
-
-                <label htmlFor="text">Text</label>
-                <input type="text" id="text" />
-
-                <button type="submit">Create</button>
-            </form>
-
-            <a>Cancel</a>
-        </section>}
-
-        {view === 'posts' && <button onClick={handleAddPostClick}>+</button>}
     </div>
 }
+export default Home

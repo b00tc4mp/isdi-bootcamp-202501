@@ -1,46 +1,56 @@
-function Login({ onRegisterClick, onLoginSubmit }) {
-const handleLoginSubmit = event => {
-    event.preventDefault()
-  
-    try {
-        const { target: form } = event 
+import logic from '../logic.js'
 
-        const {
-            username: { value: username },
-            password: { value: password}
-        } = form
-     
-     logic.loginUser(username, password)
+function Login({ onNavigateToRegister, onUserLoggedIn }) {
+    const handleLoginSubmit = event => {
+        event.preventDefault()
 
-     form.reset()
+        try {
+            const { target: form } = event
 
-     onLoginSubmit()
-    } catch (error) {
-        console.error(error)
+            const {
+                username: { value: username },
+                password: { value: password }
+            } = form
 
-        alert(error.message)
+            logic.loginUser(username, password)
+
+            form.reset()
+
+            onUserLoggedIn()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
     }
-    }
-       console.debug('Login -> render')
+
+    const handleRegisterClick = () => onNavigateToRegister()
+
+    console.debug('Login -> render')
 
 
 
-       return <div>
-       <h1>Logo</h1>
+    return <div>
+        <img src="https://elpingo.com/wp-content/uploads/2023/02/hombre-arana-logo-negro.png" className="logo2" />
 
-       <form onSubmit={handleLoginSubmit}>
-           <label htmlFor="username">Username</label>
-           <input type="text" id="username" />
 
-           <label htmlFor="password">Password</label>
-           <input type="password" id="password" />
+        <form onSubmit={handleLoginSubmit}>
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" />
 
-           <button type="submit">Login</button>
-       </form>
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" />
 
-       <a onClick={onRegisterClick}>Register</a>
-   </div>
+            <button type="submit">Login</button>
+
+            <a onClick={handleRegisterClick}>Register</a>
+
+        </form>
+
+
+    </div>
 }
 
+export default Login
 
 

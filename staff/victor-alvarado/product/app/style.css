@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+html {
+    font-family: 'Jersey 15';
+    background-color: var(--bg-color);
+    color: var(--color);
+
+    --bg-color: white;
+    --color: white;
+    --color-high: white;
+    --color-low: rgb(181, 0, 0);
+    --padding-x: 1rem;
+    --padding-y: .25rem;
+}
+
+h1 {
+    font-family: 'Bangers', sans-serif;
+    font-size: 50px;
+    color: yellow;
+    text-shadow: 3px 3px 0 black;
+
+}
+
+form {
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid black;
+    padding: 1.5rem;
+    border-radius: 12px;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 5px 5px 0 black, 10px 10px 0 red;
+
+}
+
+a {
+    cursor: pointer;
+    transition: font-size .2s;
+
+
+}
+
+@media (min-width: 1024px) {
+    a:hover {
+        color: var(--color-high);
+        font-size: 3rem;
+    }
+}
+
+body {
+    background-image: url("./view/images/fondo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100dvh;
+    width: 100vw;
+    margin: 0;
+
+
+
+
+}
+
+input {
+    font-family: 'Bangers', sans-serif;
+    font-size: 1.2rem;
+    color: black;
+    background: yellow;
+    border: 3px solid black;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: 3px 3px 0 black;
+
+}
+
+input:focus {
+    background: yellow;
+    border-color: red;
+}
+
+input:-webkit-autofill {
+    /* -webkit-background-color: blue; */
+    -webkit-text-fill-color: black;
+    -webkit-box-shadow: 0 0 0px 1000px yellow inset;
+    /* transition: background-color 5000s ease-in-out 1s; */
+}
+
+article {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    background-color: transparent !important;
+
+    h3,
+    p,
+    .post-footer {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+
+        margin-bottom: 0;
+
+        padding-bottom: 0;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+
+    width: 100%;
+    background-color: var(--bg-color);
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
+h1,
+h2 {
+    margin: 0;
+}
+
+main {
+    margin: 3rem 0;
+    background-color: transparent !important;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
+button {
+    font-family: 'Bangers', sans-serif;
+    font-size: 1.2rem;
+    background: red;
+    color: yellow;
+    padding: 12px 20px;
+    border: 3px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 5px 5px 0 black, 10px 10px 0 yellow;
+    transition: all 0.2s;
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+button:hover {
+    background: yellow;
+    color: red;
+    box-shadow: 3px 3px 0 black;
+}
+
+
+button:active {
+    transform: scale(0.95);
+}
+
+.post-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+
+    margin-bottom: 0;
+
+    padding-bottom: 0;
+}
+
+.logo2 {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    display: flex;
+    left: 145px;
+
+
+}
+
+.div1 {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    top: -50px;
+    font-size: 1.8rem;
+
+
+}

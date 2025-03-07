@@ -1,4 +1,6 @@
-function Register({ onLoginClick, onRegisterSubmit }) {
+import logic from '..logic/'
+
+function Register({ onNavigateToLogin, onUserRegistered }) {
     const handleRegisterSubmit = event => {
         event.preventDefault()
 
@@ -16,13 +18,14 @@ function Register({ onLoginClick, onRegisterSubmit }) {
 
             form.reset()
 
-            onRegisterSubmit()
+            onUserRegistered()
         } catch (error) {
             console.error(error)
 
             alert(error.message)
         }
     }
+    const handleLoginClick = () => onNavigateToLogin()
 
     console.debug('Register -> render')
 
@@ -43,8 +46,12 @@ function Register({ onLoginClick, onRegisterSubmit }) {
             <input type="password" id="password" />
 
             <button type="submit">Register</button>
+
+            <a onClick={handleLoginClick}>Login</a>
+
         </form>
 
-        <a onClick={onLoginClick}>Login</a>
     </div>
 }
+
+export default Register

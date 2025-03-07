@@ -1,45 +1,97 @@
+class Collection {
+    constructor(name) {
+        this.name = name
+    }
+
+    getAll() {
+        const collection = JSON.parse(localStorage[this.name] || '[]')
+
+        return collection
+    }
+
+    setAll(collection) {
+        const json = JSON.stringify(collection)
+
+        localStorage[this.name] = json
+    }
+    getById(id) {
+        const collection = JSON.parse(localStorage[this.name] || '[]')
+
+        const document = collection.find(document => document.id === id) || null
+
+        return document
+
+    }
+
+    insertOne(document) {
+        const collection = JSON.parse(localStorage[this.name] || '[]')
+        document.id = data.uuid()
+
+        collection.push(document)
+
+        const json = JSON.stringify(collection)
+
+        localStorage[this.name] = json
+    }
+
+    findOne(condition) {
+        const collection = JSON.parse(localStorage[this.name] || '[]')
+
+        for (let i = 0; i < collection.length; i++) {
+            const document = collection[i]
+
+            const matches = condition(document)
+
+            if (matches) return document
+        }
+        return null
+    }
+    updateOne(document) {
+        const collection = JSON.parse(localStorage[this.name] || '[]')
+
+        const index = collection.findIndex(doc => doc.id === document.id)
+
+        collection[index] = document
+
+        const json = JSON.stringify(collection)
+
+        localStorage[this.name] = json
+
+    }
+    deleteOne(condition) {
+        const collection = JSON.parse(localStorage[this.name] || '[]')
+
+        const index = collection.findIndex(condition)
+
+        if (index > -1)
+            collection.splice(index, 1)
+
+        const json = JSON.stringify(collection)
+
+        localStorage[this.name] = json
+    }
+
+}
+
+
 const data = {
     uuid() {
         return (Date.now() + Math.random()).toString(36).replace('.', '')
     },
-    users: [
-        {
-            id: 'm71tm7l3l5l',
-            name: 'Spider-man',
-            email: 'spider@.com',
-            username: 'spider_man',
-            password: '123123123',
-            createdAt: new Date(2024, 0, 10),
-            modifiedAt: null
-        },
-        {
-            id: 'm71tml17ly',
-            name: 'iron-man',
-            email: 'iron@.com',
-            username: 'iron_man',
-            password: '123123123',
-            createdAt: new Date(2024, 5, 20),
-            modifiedAt: null
-        }
-    ], // { name: ..., }
-    posts: [
-        {
-            id: 'm737z98ciyt',
-            author: 'm71tm7l3l5l',
-            image: 'https://media1.giphy.com/media/4PUc9Vm4zW5JsX2ibu/200w.gif?cid=6c09b952x9hmim7gc8270th5sl5jg7jnkeb4ga2fc9256n7q&ep=v1_gifs_search&rid=200w.gif&ct=g',
-            text: 'Bailamos?',
-            createdAt: new Date(2025, 0, 1),
-            modifiedAt: null,
-            likes: []
-        },
-        {
-            id: 'm737zabzix8',
-            author: 'm71tml17ly',
-            image: 'https://i.pinimg.com/originals/f4/ef/59/f4ef59dffa0c42293103e6523e9abc23.gif',
-            createdAt: new Date(2025, 1, 10),
-            modifiedAt: null,
-            likes: ['m71tml17ly']
-        }
-    ],
-    userId: null
+
+    users: new Collection('users'),
+    posts: new Collection('posts'),
+
+    get userId() {
+        const id = JSON.parse(sessionStorage.userId || 'null')
+
+        return id
+    },
+    set userId(id) {
+        const json = JSON.stringify(id)
+
+        sessionStorage.userId = json
+    }
 }
+
+export default data

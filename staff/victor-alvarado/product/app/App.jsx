@@ -1,25 +1,51 @@
+const { useState, useEffect } = React
+
+import Landing from '/view/Landing.jsx'
+import Register from '/view/Register.jsx'
+import Login from '/view/Login.jsx'
+import Home from './view/Home'
+
+import logic from '.logic.js'
+
+
 function App() {
     const [view, setView] = useState('landing')
 
-    const handleRegisterClick = () => setView('register')
+    useEffect(() => {
+        try {
+            const loggedIn = logic.isUserLoggedIn()
 
-    const handleLoginClick = () => setView('login')
+            loggedIn && setView('home')
+        } catch (error) {
+            console.error(error)
 
-    const handleRegisterSubmit = () => setView('login')
+            alert(error.message)
+        }
 
-    const handleLoginSubmit = () => setView('home')
+    }, [])
 
-    const handleLogoutClick = () => setView('login')
+    const handleNavigateToRegister = () => setView('register')
+
+    const handleNavigateToLogin = () => setView('login')
+
+    const handleUserRegistered = () => setView('login')
+
+    const handleUserLoggedIn = () => setView('home')
+
+    const handleUserLoggedOut = () => setView('login')
 
     console.debug('App -> render')
 
     return <>
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
+        {view === 'landing' && <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />}
 
-        {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />}
+        {view === 'register' && <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />}
 
-        {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />}
+        {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />}
 
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick} />}
+        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut} />}
     </>
+
 }
+
+export default App
