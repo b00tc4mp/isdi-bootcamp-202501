@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
+const { useState, useEffect } = React
 
 import Landing from './view/Landing.jsx'
 import Register from './view/Register.jsx'
 import Login from './view/Login.jsx'
-import Index from './view/Home/index.jsx'
+import Home from './view/Home.jsx'
 
 import logic from './logic.js'
 
@@ -41,7 +42,7 @@ function App() {
 
         {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />}
 
-        {view === 'home' && <Index onUserLoggedOut={handleUserLoggedOut} />}
+        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut} />}
     </>
 }
 

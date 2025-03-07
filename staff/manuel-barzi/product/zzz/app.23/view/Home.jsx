@@ -6,7 +6,7 @@ function Home({ onLogoutClick }) {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        console.debug('Home -> useEffect')
+        console.debug('Index -> useEffect')
 
         try {
             const name = logic.getUserName()
@@ -70,7 +70,7 @@ function Home({ onLogoutClick }) {
         }
     }
 
-    console.debug('Home -> render')
+    console.debug('Index -> render')
 
     return <div>
         <header>

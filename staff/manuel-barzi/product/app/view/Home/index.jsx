@@ -1,17 +1,16 @@
-// import { useState, useEffect } from 'react'
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
-import Posts from './components/Posts.jsx'
-import CreatePost from './components/CreatePost.jsx'
+import Posts from './Posts.jsx'
+import CreatePost from './CreatePost.jsx'
 
-import logic from '../logic.js'
+import logic from '../../logic.js'
 
-function Home({ onUserLoggedOut }) {
+function Index({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
 
     useEffect(() => {
-        console.debug('Home -> useEffect')
+        console.debug('Index -> useEffect')
 
         try {
             const name = logic.getUserName()
@@ -42,9 +41,9 @@ function Home({ onUserLoggedOut }) {
 
     const handlePostCreateCancelled = () => setView('posts')
 
-    console.debug('Home -> render')
+    console.debug('Index -> render')
 
-    return <div>
+    return <div className="Home">
         <header>
             <h1>Logo</h1>
 
@@ -65,4 +64,4 @@ function Home({ onUserLoggedOut }) {
     </div>
 }
 
-export default Home
+export default Index

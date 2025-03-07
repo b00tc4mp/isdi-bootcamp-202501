@@ -11,7 +11,7 @@ function Home({ onLogoutClick }) {
     const [userName, setUserName] = useState('')
 
     useEffect(() => {
-        console.debug('Home -> useEffect')
+        console.debug('Index -> useEffect')
 
         try {
             const name = logic.getUserName()
@@ -40,7 +40,7 @@ function Home({ onLogoutClick }) {
 
     const handlePostCreateSubmit = () => setView('posts')
 
-    console.debug('Home -> render')
+    console.debug('Index -> render')
 
     return <div>
         <header>

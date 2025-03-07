@@ -6,7 +6,7 @@ function Home({ onLogoutClick }) {
     // TODO add state for posts
 
     useEffect(() => {
-        console.debug('Home -> useEffect')
+        console.debug('Index -> useEffect')
 
         try {
             const name = logic.getUserName()
@@ -33,7 +33,7 @@ function Home({ onLogoutClick }) {
         }
     }
 
-    console.debug('Home -> render')
+    console.debug('Index -> render')
 
     return <div>
         <h1>Logo</h1>
