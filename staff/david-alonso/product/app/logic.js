@@ -240,12 +240,13 @@ const logic = {
         data.posts.updateOne(foundPost)
     },
 
+
     deletePost(postId) {
         this.validate.id(postId, 'postId')
 
         const { userId } = data
 
-        const foundPost = data.posts.findOne(post => post.Id === postId)
+        const foundPost = data.posts.findOne(post => post.id === postId)
 
         if (!foundPost) throw new NotFoundError('post not found')
 
