@@ -178,8 +178,8 @@ const logic = {
 
     logoutUser() {
         data.userId = null
-        // data.currentUser.state = 'Offline'
-        // data.currentUser = null
+        // index.currentUser.state = 'Offline'
+        // index.currentUser = null
     },
 
     toggleLikePost(postId) {

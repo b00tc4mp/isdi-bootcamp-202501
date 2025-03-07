@@ -8,7 +8,7 @@ function Posts() {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        console.debug('Home -> useEffect')
+        console.debug('Index -> useEffect')
 
         try {
             const posts = logic.getPosts()

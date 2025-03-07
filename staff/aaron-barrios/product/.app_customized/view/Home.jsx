@@ -13,7 +13,7 @@ function Home({ onUserLoggedOut, onProfileClick }) {
     // const [activeCommentPostId, setActiveCommentPostId] = useState(null)
 
     useEffect(() => {
-        console.debug('Home -> useEffect')
+        console.debug('Index -> useEffect')
 
         try {
             const name = logic.getUsername()
@@ -53,7 +53,7 @@ function Home({ onUserLoggedOut, onProfileClick }) {
 
     // const commentButtonClick = postId => { setActiveCommentPostId(currentId => currentId === postId ? null : postId) }
 
-    console.debug('Home -> render')
+    console.debug('Index -> render')
 
     return <div >
         {view === 'posts' && <header>

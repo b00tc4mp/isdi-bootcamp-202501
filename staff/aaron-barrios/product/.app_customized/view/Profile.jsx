@@ -3,7 +3,7 @@ const { useState } = React
 import logic from '../logic.js'
 
 function Profile({ onHomeClick }) {
-    // const user = logic.getCurrentUser()
+    // const user = index.getCurrentUser()
 
     const handleHomeClick = () => {
         try {
