@@ -1,5 +1,4 @@
-const { useState, useEffect } = React;
-
+import { useState, useEffect } from "react";
 import Post from "./Post.jsx";
 
 import logic from "../../logic/logic.js";
@@ -45,6 +44,18 @@ function Posts() {
     }
   };
 
+  const handleModifyClick = () => {
+    try {
+      const posts = logic.getPosts();
+
+      setPosts(posts);
+    } catch (error) {
+      console.error(error);
+
+      alert(error.message);
+    }
+  }
+
   console.debug("Posts -> render");
 
   return (
@@ -55,6 +66,8 @@ function Posts() {
           post={post}
           onToggleLikeClick={handleToggleLikeClick}
           onDeleteClick={handleDeleteClick}
+          onModifyClick={handleModifyClick}
+
         />
       ))}
     </section>

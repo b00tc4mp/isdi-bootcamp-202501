@@ -1,6 +1,8 @@
 import data from "../data/data.js";
-
-import { DuplicityError, CredentialsError, NotFoundError, OwnershipError } from "../errors/errors.js";
+import DuplicityError from "../errors/DuplicityError.js";
+import CredentialsError from "../errors/CredentialsError.js";
+import NotFoundError from "../errors/NotFoundError.js";
+import { OwnershipError } from "../errors/errors.js";
 
 const logic = {
   constant: {

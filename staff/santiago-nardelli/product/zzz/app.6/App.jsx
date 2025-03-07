@@ -2,12 +2,12 @@
 /**
  * Este componente va a manejar mis vistas y navegacion en consecuente con los eventos de los botones de Register, Login y Logout
  */
-import { useState, useEffect } from 'react'
+const { useState, useEffect } = React
 import logic from './logic/logic.js'
-import  Landing  from './view/Landing.jsx'
-import  Register  from './view/Register.jsx'
-import  Login  from './view/Login.jsx'
-import  Home  from './view/Home.jsx'
+import  Landing  from './view/Landing.js'
+import  Register  from './view/Register.js'
+import  Login  from './view/Login.js'
+import  Home  from './view/Home.js'
 
 function App() {
   

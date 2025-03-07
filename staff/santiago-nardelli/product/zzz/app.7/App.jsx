@@ -4,10 +4,10 @@
  */
 import { useState, useEffect } from 'react'
 import logic from './logic/logic.js'
-import  Landing  from './view/Landing.jsx'
-import  Register  from './view/Register.jsx'
-import  Login  from './view/Login.jsx'
-import  Home  from './view/Home.jsx'
+import  Landing  from './view/Landing.js'
+import  Register  from './view/Register.js'
+import  Login  from './view/Login.js'
+import  Home  from './view/Home.js'
 
 function App() {
   

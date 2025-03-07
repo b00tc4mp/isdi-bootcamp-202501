@@ -24,8 +24,6 @@ function CreatePost({onPostCreateSubmit, onCancelClick}) {
     }
   };
 
-
-
   const handleCancelClick = () => {
     onCancelClick();
   }

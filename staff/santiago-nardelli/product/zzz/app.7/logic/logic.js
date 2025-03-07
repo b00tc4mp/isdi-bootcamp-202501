@@ -1,5 +1,4 @@
 import data from "../data/data.js";
-
 import { DuplicityError, CredentialsError, NotFoundError, OwnershipError } from "../errors/errors.js";
 
 const logic = {

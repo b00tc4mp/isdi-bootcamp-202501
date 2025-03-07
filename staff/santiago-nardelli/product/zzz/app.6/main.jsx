@@ -3,7 +3,7 @@
 /**
  * Capturo el elemento con id root del DOM y renderizo el componente App en el root con ReactDOM.createRoot y root.render 
  */
-import { createRoot } from 'react-dom/client'
+const { createRoot } = ReactDOM
 
 import App from './App.jsx'
 

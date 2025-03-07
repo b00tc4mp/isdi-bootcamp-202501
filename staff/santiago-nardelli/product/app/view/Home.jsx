@@ -1,9 +1,9 @@
-const { useState, useEffect } = React;
-
+import { useState, useEffect } from "react";
+import logic from "../logic/logic.js";
 import Posts from "./components/Posts.jsx";
 import CreatePost from "./components/CreatePost.jsx";
+import NavBar from "./components/NavBar.jsx";
 
-import logic from "../logic/logic.js";
 
 function Home({ onLogoutClick }) {
   const [view, setView] = useState("posts");
@@ -34,13 +34,9 @@ function Home({ onLogoutClick }) {
       alert(error.message);
     }
   };
-
   const handleAddPostClick = () => setView("create-post");
-
   const handlePostCreateSubmit = () => setView("posts");
-  const handleCancelClick = () => {
-    setView("posts");
-  };
+  const handleCancelClick = () => setView("posts");
 
   console.debug("Home -> render");
 
@@ -50,18 +46,24 @@ function Home({ onLogoutClick }) {
         {/* TODO  perfiles de usuarios */}
       </header>
       <main className="home-main">
-        <h2>Welcome {userName}</h2>
+        <div className="home-user">
+
+        <h2 >Welcome {userName}</h2>
+
+        </div>
         {view === "posts" && <Posts />}
 
         {view === "create-post" && (
-          <CreatePost onPostCreateSubmit={handlePostCreateSubmit} onCancelClick={handleCancelClick} />
+          <CreatePost
+            onPostCreateSubmit={handlePostCreateSubmit}
+            onCancelClick={handleCancelClick}
+          />
         )}
       </main>
-
-      <footer className="home-footer">
-        <a onClick={handleLogoutClick} className="fa-solid fa-user-secret"></a>
-        {view === "posts" && <a className="add-post" onClick={handleAddPostClick}>+</a>}
-      </footer>
+      {view === 'posts' && (<NavBar
+        onLogoutClick={handleLogoutClick}
+        onAddPostClick={handleAddPostClick}
+      />)}
     </div>
   );
 }
