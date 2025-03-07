@@ -35,7 +35,7 @@ class Collection {
   }
 
   findOne(callback) {
-    const collection = JSON.parse(localStorage[this.name] || "[]");
+    const collection = JSON.parse(localStorage[this.name]);
 
     for (let i = 0; i < collection.length; i++) {
       const document = collection[i];
@@ -49,7 +49,7 @@ class Collection {
   }
 
   updateOne(document) {
-    const collection = JSON.parse(localStorage[this.name] || "[]");
+    const collection = JSON.parse(localStorage[this.name]);
 
     const index = collection.findIndex((doc) => doc.id === document.id);
 

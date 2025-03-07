@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+const { useState, useEffect } = React;
 
-import logic from "./logic.js";
-import HamburgerMenu from "./view/Home/HamburgerMenu.jsx";
-import Header from "./view/Home/Header.jsx";
-import Home from "./view/Home/index.jsx";
 import Landing from "./view/Landing.jsx";
-import Login from "./view/Login.jsx";
 import Register from "./view/Register.jsx";
+import Login from "./view/Login.jsx";
+import Home from "./view/Home.jsx";
+import Header from "./view/Header.jsx";
+import HamburgerMenu from "./view/HamburgerMenu.jsx";
+import logic from "./logic.js";
 
 function App() {
   const [view, setView] = useState("landing");
@@ -47,9 +47,6 @@ function App() {
     setView("login");
   };
 
-  const handleRegisterSuccess = () => {
-    setView("login");
-  };
   const handleMenuDisplay = () => {
     setDisplayMenu(!displayMenu);
   };
@@ -68,7 +65,7 @@ function App() {
       {view === "register" && (
         <Register
           onLoginNavigation={handleLoginNavigation}
-          onRegisterSuccess={handleRegisterSuccess}
+          onRegisterSuccess={handleRegisterNavigation}
         />
       )}
       {view === "login" && (
