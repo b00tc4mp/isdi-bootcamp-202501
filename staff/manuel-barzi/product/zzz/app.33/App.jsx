@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 
-import { Landing } from './view/Landing.jsx'
-import { Register } from './view/Register.jsx'
-import { Login } from './view/Login.jsx'
-import { Home } from './view/Home/index.jsx'
+import Landing from './view/Landing.jsx'
+import Register from './view/Register.jsx'
+import Login from './view/Login.jsx'
+import Index from './view/Home/index.jsx'
 
-
-import { logic } from './logic/index.js'
+import logic from './logic.js'
 
 function App() {
     const [view, setView] = useState('landing')
@@ -42,7 +41,7 @@ function App() {
 
         {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />}
 
-        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut} />}
+        {view === 'home' && <Index onUserLoggedOut={handleUserLoggedOut} />}
     </>
 }
 

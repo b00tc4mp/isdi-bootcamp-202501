@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { logic } from '../../logic/index.js'
+import logic from '../../logic.js'
 
-export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
+function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('')
 
     const handleToggleLikeClick = () => {
@@ -81,3 +81,5 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
         </div>
     </article>
 }
+
+export default Post

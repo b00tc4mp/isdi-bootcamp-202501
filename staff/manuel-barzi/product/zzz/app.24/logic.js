@@ -48,7 +48,7 @@ const logic = {
         this.validate.username(username, 'username')
         this.validate.password(password, 'password')
 
-        // const users = data.users
+        // const users = index.users
         const { users } = data
 
         let found
@@ -102,8 +102,8 @@ const logic = {
     },
 
     getUserName() {
-        // const users = data.users
-        // const userId = data.userId
+        // const users = index.users
+        // const userId = index.userId
         const { users, userId } = data
 
         let found
