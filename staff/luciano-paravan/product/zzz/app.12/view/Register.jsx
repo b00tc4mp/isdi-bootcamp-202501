@@ -1,6 +1,6 @@
 import logic from '../logic.js'
 
-function Register ({ onNavigateToLogin, onUserRegistered }) {
+function Register ({ onLoginClick, onRegisterSubmit }) {
     const handleRegisterSubmit = event => {
         event.preventDefault()
 
@@ -19,15 +19,13 @@ function Register ({ onNavigateToLogin, onUserRegistered }) {
 
             form.reset()
 
-            onUserRegistered()
+            onRegisterSubmit()
         } catch (error) {
             console.error(error)
 
             alert(error.message)
         }
     }
-
-    const handleLoginClick = () => onNavigateToLogin()
 
     console.debug('Register -> render')
 
@@ -65,7 +63,7 @@ function Register ({ onNavigateToLogin, onUserRegistered }) {
                 <button type="submit" className="registerSubmitButton">Register</button>
             
             </form>
-                <a onClick={handleLoginClick} className="anchorLoginOfRegister">Login</a>
+                <a onClick={onLoginClick} className="anchorLoginOfRegister">Login</a>
         </div>
 }
 

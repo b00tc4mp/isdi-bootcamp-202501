@@ -2,9 +2,9 @@ const { useState } = React
 
 import logic from '../../logic.js'
 
-function CreatePost ({ onPostCreated, onPostCreateCancelled }) {
+function CreatePost ({ onPostCreateSubmit }) {
     
-    const handleFormSubmit = event => {
+    const handleCreatePostSubmit = event => {
         event.preventDefault()
         
         try {
@@ -17,7 +17,7 @@ function CreatePost ({ onPostCreated, onPostCreateCancelled }) {
             
             logic.createPost(image, text)
             
-            onPostCreated()
+            onPostCreateSubmit()
         } catch (error) {
             console.error(error)
             
@@ -25,20 +25,18 @@ function CreatePost ({ onPostCreated, onPostCreateCancelled }) {
         }
         
     }
-
-    const handleCancelClick = () => onPostCreateCancelled()
     
     console.debug('CreatePost -> render')
     
     return <section>
-    <form className='createPostForm' onSubmit={handleFormSubmit}>
+    <form className='createPostForm' onSubmit={handleCreatePostSubmit}>
         <label htmlFor="image">url image</label>
         <input type="url" id="image" />
         <label htmlFor="text">Text:</label>
         <input type="text" id="text"/>
         <button type="submit">Create</button>
     </form>
-    <a onClick={handleCancelClick}>Cancel</a>
+    <a>Cancel</a>
 </section>
 }
 

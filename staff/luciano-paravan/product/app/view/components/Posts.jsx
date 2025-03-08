@@ -1,5 +1,7 @@
 const { useState, useEffect } = React
 
+import Post from './Post.jsx'
+
 import logic from '../../logic.js'
 
 function Posts() {
@@ -18,10 +20,8 @@ function Posts() {
         }
     },[])
 
-    const handleToggleLikePostClick = postId => {
+    const handlePostLikeToggled = () => {
         try {
-            logic.toggleLikePost(postId)
-
             const posts = logic.getPosts()
 
             setPosts(posts)
@@ -31,14 +31,36 @@ function Posts() {
             alert(error.message)
         }
     }
-    
-    const handleToggleSavePostClick = postId => {
-        try {
-            logic.toggleSavePost(postId)
 
-            const updatedPosts = logic.getPosts()
+    const handlePostDeleted = () => {
+        try {
+            const posts = logic.getPosts()
+
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
             
-            setPosts(updatedPosts)
+            alert(error.message)
+        }
+    }
+
+    const handlePostTextEdited = () => {
+        try {
+            const posts = logic.getPosts()
+
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handleSavePost = () => {
+        try {
+            const posts = logic.getPosts()
+
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -49,24 +71,7 @@ function Posts() {
     console.debug('Posts -> render')
 
     return <section>
-    {posts.map(post => 
-        <article className="post">
-            <h3>{post.author.username}</h3>
-
-            <img src={post.image} />
-
-            <p>{post.text}</p>
-
-            
-            <div className="post-footer">
-                <time>{post.createdAt.toISOString()}</time>
-                
-                <button onClick={() => handleToggleLikePostClick(post.id)}>{`${post.liked? '❤️' : '🤍'}(${post.likesCount})`}</button>
-                
-                <button onClick={() => handleToggleSavePostClick(post.id)}>Save Post 🏷️</button>
-            </div>
-
-    </article>)}
+    {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onSavePost={handleSavePost} onPostTextEdited={handlePostTextEdited}/>)}
 </section>
 }
 
