@@ -11,26 +11,12 @@ import Register from "./view/Register.jsx";
 
 function App() {
   const [view, setView] = useState("landing");
-  const [currentUser, setCurrentUser] = useState(null);
-  const [displayMenu, setDisplayMenu] = useState(false);
 
   useEffect(() => {
     const isUserLoggedIn = isUserConnected();
 
     isUserLoggedIn && setView("home");
   }, []);
-
-  useEffect(() => {
-    const isOnline = isUserConnected();
-
-    if (isOnline) {
-      const user = getOnlineUserName();
-
-      setCurrentUser(user);
-    } else {
-      setCurrentUser(null);
-    }
-  }, [view]);
 
   const handleRegisterNavigation = () => {
     setView("register");
@@ -51,15 +37,9 @@ function App() {
   const handleRegisterSuccess = () => {
     setView("login");
   };
-  const handleMenuDisplay = () => {
-    setDisplayMenu(!displayMenu);
-  };
 
   return (
     <>
-      <Header currentUser={currentUser} onMenuDisplay={handleMenuDisplay} />
-
-      {displayMenu && <HamburgerMenu />}
       {view === "landing" && (
         <Landing
           onRegisterNavigation={handleRegisterNavigation}

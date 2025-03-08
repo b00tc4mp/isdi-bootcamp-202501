@@ -1,22 +1,33 @@
-import HamburgerButton from "./HamburgerButton";
+import { useState, useEffect } from "react";
 
-const Header = ({ currentUser, onMenuDisplay }) => {
+import HamburgerButton from "./HamburgerButton";
+import getOnlineUserName from "../../logic/getOnlineUserName";
+
+const Header = ({ onMenuNavigation }) => {
+  const [loggedInUserName, setLoggedInUserName] = useState("");
+
+  const handleMenuNavigation = () => {
+    onMenuNavigation();
+  };
+  useEffect(() => {
+    try {
+      const name = getOnlineUserName();
+
+      setLoggedInUserName(name);
+    } catch (error) {}
+  }, []);
+
   return (
-    <header
-      className="header"
-      onClick={() => {
-        console.log(currentUser);
-      }}
-    >
+    <header className="header">
       <img
         src="https://www.shutterstock.com/image-vector/castle-logo-design-template-emblem-600nw-2483948833.jpg"
         alt="logo"
         className="header-logo"
       />
 
-      {currentUser !== null && <h2>Hello, {currentUser}!</h2>}
+      <h2>Hello, {loggedInUserName}!</h2>
 
-      <HamburgerButton onMenuDisplay={onMenuDisplay} />
+      <HamburgerButton onMenuNavigation={handleMenuNavigation} />
     </header>
   );
 };

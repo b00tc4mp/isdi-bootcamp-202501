@@ -1,6 +1,6 @@
-function HamburgerButton({ onMenuDisplay }) {
+function HamburgerButton({ onMenuNavigation }) {
   const handleHamburgerButtonClick = () => {
-    onMenuDisplay();
+    onMenuNavigation();
   };
   return (
     <div

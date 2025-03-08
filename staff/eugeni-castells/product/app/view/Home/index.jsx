@@ -2,10 +2,17 @@ import { useState } from "react";
 
 import Posts from "./Posts.jsx";
 import CreatePost from "./CreatePost.jsx";
-import { logoutUser } from "../../logic/logoutUser.js";
+import Header from "./Header.jsx";
+import HamburgerMenu from "./HamburgerMenu.jsx";
+import ChangeUserInfo from "./ChangeUserInfo.jsx";
 
 function Home({ onLogoutSuccess }) {
   const [view, setView] = useState("posts");
+  const [displayMenu, setDisplayMenu] = useState(false);
+
+  const handleMenuNavigation = () => {
+    setDisplayMenu(!displayMenu);
+  };
 
   const handleCancelClick = () => {
     setView("posts");
@@ -14,21 +21,31 @@ function Home({ onLogoutSuccess }) {
     setView("posts");
   };
 
+  const handleChangeUserInfoNavigation = () => {
+    setDisplayMenu(false);
+    setView("change-user-info");
+  };
+
   const handleLogoutSuccess = () => onLogoutSuccess();
 
-  const handleLogoutButtonClick = () => {
-    try {
-      logoutUser();
-
-      handleLogoutSuccess();
-    } catch (error) {
-      console.error(error);
-
-      alert(error.message);
-    }
+  const handleHomeNavigation = () => {
+    setView("posts");
   };
   return (
-    <div>
+    <>
+      <Header onMenuNavigation={handleMenuNavigation} />
+
+      {displayMenu && (
+        <HamburgerMenu
+          onLogoutSuccess={handleLogoutSuccess}
+          onChangeUserInfoNavigation={handleChangeUserInfoNavigation}
+        />
+      )}
+
+      {view === "change-user-info" && (
+        <ChangeUserInfo onHomeNavigation={handleHomeNavigation} />
+      )}
+
       {view === "posts" && <Posts />}
 
       {view === "create-post" && (
@@ -48,20 +65,8 @@ function Home({ onLogoutSuccess }) {
             +
           </div>
         )}
-        <button
-          style={{
-            backgroundColor: "red",
-            borderRadius: "50%",
-            width: "60px",
-            height: "60px",
-            padding: "5px",
-          }}
-          onClick={handleLogoutButtonClick}
-        >
-          Logout
-        </button>
       </footer>
-    </div>
+    </>
   );
 }
 

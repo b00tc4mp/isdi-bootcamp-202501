@@ -1,5 +1,7 @@
 import data from "../data";
 
-export const logoutUser = () => {
+const logoutUser = () => {
   data.userId = null;
 };
+
+export default logoutUser;

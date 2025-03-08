@@ -12,3 +12,7 @@
     background-color: var(--bg-color);
   }
 }
+
+.hamburger-button-container:hover {
+  cursor: pointer;
+}
