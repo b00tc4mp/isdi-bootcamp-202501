@@ -1,7 +1,8 @@
-const { useState } = React;
-import logic from '../../logic.js'
+import { useState } from 'react';
 
-function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
+import { logic } from '../../logic/index.js';
+
+export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('');
 
     const handleToggleLikeClick = () => {
@@ -72,5 +73,3 @@ function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
         <time>{post.createdAt.toISOString()}</time>
     </article>
 }
-
-export default Post;
