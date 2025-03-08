@@ -17,6 +17,9 @@ User
 -logout
 -view posts
 -create posts
+-Toggle like post
+-delete post
+-edit post text
 
 *por ejemplo podemos poner una imagen de un diagrama de lo que hace el usuario
 
