@@ -148,11 +148,10 @@ const logic = {
                     liked = true
             }
 
-            const user = data.users.getById(post.author)
 
             const aggregatedPost = {
                 id: post.id,
-                author: { id: post.author, username: user.username },
+                author: post.author,
                 image: post.image,
                 text: post.text,
                 createdAt: new Date(post.createdAt),
@@ -172,9 +171,10 @@ const logic = {
         this.validate.maxLength(500)
 
         const { userId } = data
+        const user = data.users.getById(userId)
 
         var post = {
-            author: userId,
+            author: { id: userId, username: user.username },
             image: image,
             text: text,
             createdAt: new Date(),
@@ -308,14 +308,12 @@ const logic = {
         data.users.deleteOne(user => user.id === userId)
 
 
-        for (let i = 0; i < posts; i++) {
-            const post = posts[i]
-            if (post.author.id === userId)
-                data.posts.deleteOne(post => post.author.id === userId)
-        }
+        const remainingPosts = posts.filter(post => post.author.id !== userId)
 
 
-        const newPosts = posts.map(post => {
+
+
+        const newPosts = remainingPosts.map(post => {
             const updatedLikes = post.likes.filter(id => id !== userId)
             return { ...post, likes: updatedLikes }
 

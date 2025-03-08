@@ -40,8 +40,8 @@ function Profile() {
                 <div className='post-header'>
                     <h3>{post.author.username}</h3>
                     <div className='post-buttons'>
-                        <button>edit</button>
-                        <button className="delete-button">delete</button>
+                        <button>🪶</button>
+                        <button className="delete-button">🗑️</button>
                     </div>
                 </div>
 
