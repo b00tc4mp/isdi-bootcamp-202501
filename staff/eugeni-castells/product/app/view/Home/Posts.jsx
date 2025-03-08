@@ -1,20 +1,21 @@
 import Post from "./Post";
-import logic from "../../logic";
 
 import { useState, useEffect } from "react";
+
+import getPosts from "../../logic/getPosts";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    let posts = logic.getPosts();
+    let posts = getPosts();
 
     setPosts(posts);
   }, []);
 
   const handleLikeUpdate = function () {
     try {
-      const newPosts = logic.getPosts();
+      const newPosts = getPosts();
 
       setPosts(newPosts);
     } catch (error) {
@@ -26,7 +27,7 @@ const Posts = () => {
 
   const handleDeletedPostSuccess = () => {
     try {
-      const newPosts = logic.getPosts();
+      const newPosts = getPosts();
 
       setPosts(newPosts);
     } catch (error) {
@@ -38,7 +39,7 @@ const Posts = () => {
 
   const handleUpdateTextSuccess = () => {
     try {
-      const newPosts = logic.getPosts();
+      const newPosts = getPosts();
 
       setPosts(newPosts);
     } catch (error) {

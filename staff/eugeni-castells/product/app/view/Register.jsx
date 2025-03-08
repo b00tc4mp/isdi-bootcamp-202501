@@ -1,4 +1,4 @@
-import logic from "../logic";
+import { registerUser } from "../logic/registerUser";
 
 function Register({ onLoginNavigation, onRegisterSuccess }) {
   const handleRegisterSUbmit = (event) => {
@@ -14,7 +14,7 @@ function Register({ onLoginNavigation, onRegisterSuccess }) {
         password: { value: password },
       } = form;
 
-      logic.registerUser({
+      registerUser({
         name: name,
         email: email,
         username: username,

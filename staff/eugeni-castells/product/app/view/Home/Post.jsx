@@ -1,5 +1,7 @@
 import { useState } from "react";
-import logic from "../../logic";
+import updatePostLikes from "../../logic/updatePostLikes";
+import deletePost from "../../logic/deletePostId";
+import updatePostText from "../../logic/updatePostText";
 
 function Post({
   author,
@@ -18,7 +20,7 @@ function Post({
 
   const handleToggleClick = (id) => {
     try {
-      logic.updatePostLikes(id);
+      updatePostLikes(id);
 
       onPostLikeUpdate();
     } catch (error) {
@@ -33,7 +35,7 @@ function Post({
   const handleDeleteClick = () => {
     try {
       if (confirm("Do you want to delete?")) {
-        logic.deletePost(id);
+        deletePost(id);
 
         handleDeletedPostSuccess();
       }
@@ -58,7 +60,7 @@ function Post({
         text: { value: text },
       } = e.target;
 
-      logic.updatePostText(id, text);
+      updatePostText(id, text);
 
       setView("");
 

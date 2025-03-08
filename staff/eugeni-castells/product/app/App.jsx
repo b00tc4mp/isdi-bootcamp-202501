@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import isUserConnected from "./logic/isUserConnected.js";
+import getOnlineUserName from "./logic/getOnlineUserName.js";
 
-import logic from "./logic.js";
 import HamburgerMenu from "./view/Home/HamburgerMenu.jsx";
 import Header from "./view/Home/Header.jsx";
 import Home from "./view/Home/index.jsx";
@@ -14,16 +15,16 @@ function App() {
   const [displayMenu, setDisplayMenu] = useState(false);
 
   useEffect(() => {
-    const isUserConnected = logic.isUserConnected();
+    const isUserLoggedIn = isUserConnected();
 
-    isUserConnected && setView("home");
+    isUserLoggedIn && setView("home");
   }, []);
 
   useEffect(() => {
-    const isOnline = logic.isUserConnected();
+    const isOnline = isUserConnected();
 
     if (isOnline) {
-      const user = logic.getOnlineUserName();
+      const user = getOnlineUserName();
 
       setCurrentUser(user);
     } else {

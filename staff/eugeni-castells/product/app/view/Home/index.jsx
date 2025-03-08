@@ -2,8 +2,7 @@ import { useState } from "react";
 
 import Posts from "./Posts.jsx";
 import CreatePost from "./CreatePost.jsx";
-
-import logic from "../../logic.js";
+import { logoutUser } from "../../logic/logoutUser.js";
 
 function Home({ onLogoutSuccess }) {
   const [view, setView] = useState("posts");
@@ -19,7 +18,7 @@ function Home({ onLogoutSuccess }) {
 
   const handleLogoutButtonClick = () => {
     try {
-      logic.logoutUser();
+      logoutUser();
 
       handleLogoutSuccess();
     } catch (error) {

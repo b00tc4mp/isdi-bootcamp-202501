@@ -1,4 +1,4 @@
-import logic from "../../logic";
+import addPost from "../../logic/addPost";
 
 function CreatePost({ onPostCreationSubmit, onCancelClick }) {
   return (
@@ -19,7 +19,8 @@ function CreatePost({ onPostCreationSubmit, onCancelClick }) {
             image: image,
             text: text,
           };
-          logic.addPost(post);
+          addPost(post);
+
           onPostCreationSubmit();
         }.bind(this)}
       >

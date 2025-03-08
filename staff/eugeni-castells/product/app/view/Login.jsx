@@ -1,4 +1,4 @@
-import logic from "../logic";
+import loginUser from "../logic/logInUser";
 
 function Login({ onRegisterNavigation, onLoginSuccess }) {
   const handleLoginSuccess = () => {
@@ -18,7 +18,7 @@ function Login({ onRegisterNavigation, onLoginSuccess }) {
         password: { value: password },
       } = event.target.elements;
 
-      logic.loginUser(username, password);
+      loginUser(username, password);
 
       handleLoginSuccess();
     } catch (error) {
