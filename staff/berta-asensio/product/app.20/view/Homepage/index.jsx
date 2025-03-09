@@ -1,9 +1,11 @@
-const { useState, useEffect } = React
+//const { useState, useEffect } = React
 
-import Posts from './components/Posts.js'
-import CreatePost from './components/CreatePost.js'
+import { useState, useEffect } from 'react'
 
-import logic from '../logic.js'
+import Posts from './Posts.jsx'
+import CreatePost from './CreatePost.jsx'
+
+import logic from '../../logic.js'
 
 function Homepage ({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')

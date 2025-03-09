@@ -1,4 +1,6 @@
-const { useState, useEffect } = React
+// const { useState, useEffect } = React
+
+import { useState, useEffect } from 'react'
 
 import Landing from './view/Landing.jsx'
 import Register from './view/Register.jsx'

@@ -1,4 +1,6 @@
-const { useState, useEffect } = React
+//const { useState, useEffect } = React
+
+import { useState, useEffect } from 'react'
 
 import Post from './Post.jsx'
 import logic from '../../logic.js'
