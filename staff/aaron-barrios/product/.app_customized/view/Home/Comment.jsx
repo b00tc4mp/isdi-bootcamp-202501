@@ -1,6 +1,6 @@
 const { useState } = React
 
-import logic from '../../logic.js'
+import logic from '../../logic/index.js'
 
 function Comment({ comment }) {
     const [view, setView] = useState('')

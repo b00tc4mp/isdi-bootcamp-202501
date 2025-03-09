@@ -2,7 +2,7 @@ const { useState, useEffect } = React
 
 import Comment from './Comment.jsx'
 
-import logic from '../../logic.js'
+import logic from '../../logic/index.js'
 
 function Comments() {
     const [comments, setComments] = useState([])

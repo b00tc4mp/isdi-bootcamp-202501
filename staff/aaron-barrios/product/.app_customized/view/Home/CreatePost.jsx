@@ -1,4 +1,4 @@
-import logic from '../../logic.js'
+import logic from '../../logic/index.js'
 
 function CreatePost({ onPostCreated, onPostCreateCancelled }) {
     const handleCreatePostSubmit = event => {

@@ -21,8 +21,6 @@ export function Posts() {
 
     const handlePostLikeToggled = postId => {
         try {
-            logic.toggleLikePost(postId)
-
             const posts = logic.getPosts()
 
             setPosts(posts)

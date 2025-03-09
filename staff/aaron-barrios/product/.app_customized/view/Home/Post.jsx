@@ -2,7 +2,7 @@ const { useState } = React
 
 import Comment from './Comment.jsx'
 
-import logic from '../../logic.js'
+import logic from '../../logic/index.js'
 
 function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('')

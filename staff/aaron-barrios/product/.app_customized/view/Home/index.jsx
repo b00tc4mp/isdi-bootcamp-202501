@@ -1,9 +1,9 @@
 const { useState, useEffect } = React
 
-import Posts from './components/Posts.jsx'
-import CreatePost from './components/CreatePost.jsx'
+import Posts from './Posts.jsx'
+import CreatePost from './CreatePost.jsx'
 
-import logic from '../logic.js'
+import logic from '../../logic/index.js'
 
 function Home({ onUserLoggedOut, onProfileClick }) {
     const [view, setView] = useState('posts')

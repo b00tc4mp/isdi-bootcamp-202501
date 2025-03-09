@@ -2,7 +2,7 @@ const { useState, useEffect } = React
 
 import Post from './Post.jsx'
 
-import logic from '../../logic.js'
+import logic from '../../logic/index.js'
 
 function Posts() {
     const [posts, setPosts] = useState([])
