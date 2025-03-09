@@ -1,4 +1,4 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
 import Posts from './Posts.jsx'
 import CreatePost from './CreatePost.jsx'
