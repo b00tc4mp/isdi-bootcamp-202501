@@ -8,8 +8,7 @@ html {
 
     --bg-color: #1E1E1E;
     --color:#E0EEEC;
-    --color2:#FD8061;
-    --color3:#307DFB;
+    --color2:#78f9e5;
     --color-high:#428A82;
     --padding-x: 1rem;
     --padding-y: 0.25rem;
@@ -122,11 +121,51 @@ input {
     margin: 1rem;
 }
 
+article {
+    h3, p, .post-footer {
+        padding: var(--padding-y) var(--padding-x);
+    }
+    img {
+        width: 100%;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: var(--bg-color);
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
 h1, h2 {
     margin: 0;
 }
 
 main {
-    margin: 4rem 0rem;
+    margin-top: 3rem 0;
 }
 
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
+.createPostForm {
+    margin-top: 2rem;
+}

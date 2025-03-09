@@ -267,7 +267,7 @@ const logic = {
         foundPost.text = text
         foundPost.modifiedAt = new Date()
 
-        data.posts.updateOne(foundPost)
+        data.posts.uptdateOne(foundPost)
     }
 }
 

@@ -50,7 +50,7 @@ class Collection {
         return null
     }
 
-    updateOne(document) {
+    uptdateOne(document) {
         const collection = JSON.parse(localStorage[this.name] || '[]')
 
         const index = collection.findIndex(doc => doc.id === document.id)
