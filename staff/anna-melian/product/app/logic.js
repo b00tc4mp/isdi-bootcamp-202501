@@ -42,6 +42,12 @@ const logic = {
             this.string(url, explain)
             if (!logic.constant.URL_REGEX.test(url))
                 throw new SyntaxError('invalid' + explain + 'syntax')
+        },
+        id(id, explain) {
+            this.text(id, explain)
+            this.minLength(id, 8, explain)
+            this.maxLength(id, 11, explain)
+
         }
 
 
@@ -266,6 +272,26 @@ const logic = {
         return true
 
     },
+    editMyPost(myPost, text) {
+        this.validate.text(text, 'text')
+
+        const posts = data.posts.getAll()
+
+        const post = data.posts.getById(myPost.id)
+
+        if (!post) throw new Error('Post not found')
+
+        if (post.text === text) {
+            return false
+        }
+
+        post.text = text
+
+        data.posts.updateOne(post)
+
+        return true
+
+    },
 
     changePassword(actualPassword, newPassword) {
         this.validate.password(actualPassword)
@@ -322,6 +348,21 @@ const logic = {
         data.userId = null
 
     },
+
+    deletePost(postId) {
+
+        this.validate.id(postId, 'postId invalid length')
+
+        const { userId } = data
+        const foundPost = data.posts.findOne(post => post.id === postId)
+
+        if (!foundPost) throw new NotFoundError('post not found')
+
+        if (foundPost.author.id !== userId) throw new OwnershipError('user is not author of post')
+
+        data.posts.deleteOne(post => post.id === postId)
+
+    }
 
 
 }

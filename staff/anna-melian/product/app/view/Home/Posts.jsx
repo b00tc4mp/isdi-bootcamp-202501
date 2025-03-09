@@ -1,6 +1,7 @@
 const { useState, useEffect } = React
 
 import logic from "../../logic";
+import Post from "./Post";
 
 function Posts() {
     const [posts, setPosts] = useState([])
@@ -21,8 +22,6 @@ function Posts() {
 
     const handleToggleLikePostClick = postId => {
         try {
-            logic.toggleLikePost(postId)
-
             const posts = logic.getPosts()
 
             setPosts(posts)
@@ -34,21 +33,8 @@ function Posts() {
 
     return <section>
         {posts.map(post =>
-            <article key={post.id}>
+            <Post key={post.id} post={post} onPostLikeToggled={handleToggleLikePostClick} />
 
-                <h3>{post.author.username}</h3>
-
-                <img src={post.image} />
-
-                <p>{post.text}</p>
-
-                <div className="post-footer">
-                    <button onClick={() => handleToggleLikePostClick(post.id)}> {`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
-
-                    <time style={{ display: 'block' }}>{new Date(post.createdAt).toLocaleDateString('es-ES')}</time>
-                </div>
-
-            </article>
         )}
     </section>
 

@@ -314,3 +314,23 @@ time {
         box-shadow: 0 0 10px rgb(255, 113, 113), 0 0 20px rgb(255, 0, 0);
     }
 }
+
+.submit-edit {
+    transition: box-shadow 0.3s ease;
+}
+
+.submit-edit:hover {
+    transform: none;
+    box-shadow: 0 0 10px var(--shadow1-color), 0 0 20px var(--shadow2-color);
+}
+
+.cancel-edit {
+    font-size: 1.1rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.cancel-edit:hover {
+    font-size: 1.1rem;
+    transform: none;
+    text-shadow: 0 0 10px rgb(255, 113, 113), 0 0 20px rgb(255, 0, 0);
+}
