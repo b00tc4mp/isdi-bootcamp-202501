@@ -1,3 +1,7 @@
+const uuid = () => {
+    return (Date.now() + Math.random()).toString(36).replace('.', '')
+}
+
 class Collection {
     constructor(name) {
         this.name = name
@@ -26,7 +30,7 @@ class Collection {
     insertOne(document) {
         const collection = JSON.parse(localStorage[this.name] || '[]')
 
-        document.id = data.uuid()
+        document.id = uuid()
 
         collection.push(document)
 
@@ -82,11 +86,6 @@ class Collection {
 
 
 var data = {
-    uuid: function () {
-        return (Date.now() + Math.random()).toString(36).replace('.', '')
-    },
-
-
     users: new Collection('users'),
     posts: new Collection('posts'),
 

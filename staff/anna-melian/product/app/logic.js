@@ -171,9 +171,9 @@ const logic = {
     },
 
     createPost(image, text) {
-        this.validate.url(image)
+        this.validate.url(image, 'image')
         this.validate.maxLength(1000)
-        this.validate.text(text)
+        this.validate.text(text, 'text')
         this.validate.maxLength(500)
 
         const { userId } = data
@@ -193,6 +193,8 @@ const logic = {
     },
 
     toggleLikePost(postId) {
+        this.validate.id(postId, 'postId')
+
         const { userId } = data
 
         const foundPost = data.posts.findOne(post => post.id === postId)
@@ -273,19 +275,27 @@ const logic = {
 
     },
     editMyPost(myPost, text) {
+        this.validate.id(myPost.id, 'postId')
+
         this.validate.text(text, 'text')
 
         const posts = data.posts.getAll()
+        const { userId } = data
+
 
         const post = data.posts.getById(myPost.id)
 
         if (!post) throw new Error('Post not found')
+
+        if (post.author.id !== userId) throw new OwnershipError('user is not author of post')
+
 
         if (post.text === text) {
             return false
         }
 
         post.text = text
+        post.modifiedAt = new Date
 
         data.posts.updateOne(post)
 

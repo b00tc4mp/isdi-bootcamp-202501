@@ -1,6 +1,7 @@
 import logic from '../logic.js'
 
-const { useState } = React
+import { useState, useEffect } from 'react'
+
 
 function Login({ onRegisterClick, onLoginSubmit }) {
     const [showPassword, setShowPassword] = useState(false)
@@ -31,6 +32,8 @@ function Login({ onRegisterClick, onLoginSubmit }) {
         setShowPassword(!showPassword)
     }
 
+    const handleRegisterClick = () => onRegisterClick()
+
     console.debug('Login -> render')
 
     return <>
@@ -54,7 +57,7 @@ function Login({ onRegisterClick, onLoginSubmit }) {
                 <button type="submit">Login</button>
             </form>
 
-            <a onClick={onRegisterClick}>Register</a>
+            <a onClick={handleRegisterClick}>Register</a>
         </div>
     </>
 }

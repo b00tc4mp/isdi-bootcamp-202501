@@ -1,4 +1,4 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
 import logic from "../../logic";
 

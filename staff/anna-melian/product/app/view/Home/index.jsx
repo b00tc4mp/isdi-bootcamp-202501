@@ -1,4 +1,4 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
 import logic from '../../logic.js'
 import Posts from './Posts.jsx'
@@ -71,7 +71,7 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 
     return <div>
         <header>
-            <h1 className="logo-gryffindor"></h1>
+            <h1 className="logo-hogwarts"></h1>
 
             <h2>Hello, {userName}!</h2>
 
@@ -105,6 +105,3 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
 }
 
 export default Home
-
-
-//TODO button in profile to delete a post

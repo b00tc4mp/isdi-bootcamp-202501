@@ -1,4 +1,4 @@
-const { createRoot } = ReactDOM
+import { createRoot } from 'react-dom/client'
 
 
 if (!sessionStorage.getItem('userId')) {

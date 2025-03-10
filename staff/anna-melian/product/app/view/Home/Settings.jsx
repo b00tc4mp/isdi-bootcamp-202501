@@ -1,4 +1,4 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
 import logic from "../../logic";
 import data from '../../data.js'
@@ -90,11 +90,6 @@ function Settings({ onDeleteProfileClick, onSubmitChanges }) {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
     }
-
-
-
-
-
 
 
     return <section className="options">

@@ -1,4 +1,4 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
 import logic from "../../logic";
 import Post from "./Post";
@@ -20,7 +20,7 @@ function Posts() {
     }, [])
 
 
-    const handleToggleLikePostClick = postId => {
+    const handleToggleLikePostClick = () => {
         try {
             const posts = logic.getPosts()
 
