@@ -1,7 +1,7 @@
 // lOGIN
-import logic from "../logic.js"
+import { logic } from "../logic/index.js"
 
-function Login({ onNavigateToRegister, onUserLoggedIn }) {
+export function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
     //  Para manejar el evento de envío del formulario del Login
     const handleLoginSubmit = event => {
@@ -62,5 +62,3 @@ function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
     </div>
 }
-
-export default Login

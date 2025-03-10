@@ -1,8 +1,8 @@
 // REGISTRO
 
-import logic from "../logic.js"
+import { logic } from "../logic/index.js"
 
-function Register({ onNavigateToLogin, onUserRegistered }) {
+export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     //  Para manejar el evento de envío del formulario del Registro
     const handleRegisterSubmit = event => {
@@ -69,5 +69,3 @@ function Register({ onNavigateToLogin, onUserRegistered }) {
 
     </div>
 }
-
-export default Register

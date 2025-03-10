@@ -1,8 +1,8 @@
-const { useState } = React
+import { useState } from 'react'
 
-import logic from "../../logic.js"
+import { logic } from "../../logic/index.js"
 
-function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
+export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
 
     const [view, setView] = useState('')
 
@@ -62,13 +62,11 @@ function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
 
         <div className="container-posts">
 
-            <h3 className="userName">{post.userName}</h3>
+            <h3 className="userName">{post.author.username}</h3>
 
             <img src={post.image} />
 
-            {/* {view === '' && <p>{post.text}</p>} */}
-
-            {view === 'edit-text' && <form onSubmit={handleEditTextSubmit}>
+            {view === 'edit-text' && <form className='form-text' onSubmit={handleEditTextSubmit}>
                 <label htmlFor="text">Text Post</label>
                 <input type="text" id="text" defaultValue={post.text} />
 
@@ -93,5 +91,3 @@ function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
         </div>
     </article>
 }
-
-export default Post

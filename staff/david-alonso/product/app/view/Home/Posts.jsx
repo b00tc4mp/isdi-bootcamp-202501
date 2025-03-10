@@ -1,11 +1,11 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
 // import Post from './Post.jsx'
-import Post from './Post.jsx'
+import { Post } from './Post.jsx'
 
-import logic from '../../logic.js'
+import { logic } from '../../logic/index.js'
 
-function Posts() {
+export function Posts() {
     const [posts, setPosts] = useState([])
 
     // Actualiza el nombre de usuario cuando se conecta
@@ -14,10 +14,10 @@ function Posts() {
 
         try {
             // Obtiene los datos de los posts de Logig
-            const posts = logic.getPosts()
+            const allPosts = logic.getPosts()
 
             // 
-            setPosts(posts)
+            setPosts(allPosts)
         } catch (error) {
             console.error(error)
 
@@ -27,9 +27,9 @@ function Posts() {
 
     const handlePostLikeToggled = () => {
         try {
-            const posts = logic.getPosts()
+            const allPosts = logic.getPosts()
 
-            setPosts(posts)
+            setPosts(allPosts)
         } catch (error) {
             console.error(error)
 
@@ -69,5 +69,3 @@ function Posts() {
         <div className="end"></div>
     </section>
 }
-
-export default Posts

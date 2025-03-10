@@ -1,21 +1,14 @@
-// HOME
+import { useState, useEffect } from 'react'
 
-const { useState, useEffect } = React
+import { Posts } from './Posts.jsx'
+import { CreatePost } from './CreatePost.jsx'
 
-import Posts from "./components/Posts.jsx"
-import CreatePost from "./components/CreatePosts.jsx"
+import { logic } from '../../logic/index.js'
 
-import logic from "../logic.js"
-
-function Home({ onUserLoggedOut }) {
-
-    // View se utiliza para actualizar el estado de la pagina
+export function Home({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')
-
-    // SetUserName guarda el nombre del usuario que este conectado
     const [userName, setUserName] = useState('')
 
-    // 
     useEffect(() => {
         console.debug('Home -> useEffect')
 
@@ -30,7 +23,6 @@ function Home({ onUserLoggedOut }) {
         }
     }, [])
 
-    // Cierra la sesion y actualiza la pagina
     const handleLogoutClick = () => {
         try {
             logic.logoutUser()
@@ -43,14 +35,10 @@ function Home({ onUserLoggedOut }) {
         }
     }
 
-    // 
     const handleAddPostClick = () => setView('create-post')
 
-    // Despues de publicar
-    // const handleAfterPostsClick = () => setView('posts')
     const handlePostCreated = () => setView('posts')
 
-    // Cierra Create posts y muestra los posts
     const handlePostCreateCancelled = () => setView('posts')
 
     console.debug('Home -> render')
@@ -82,5 +70,3 @@ function Home({ onUserLoggedOut }) {
 
     </div >
 }
-
-export default Home

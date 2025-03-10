@@ -1,6 +1,6 @@
-// DATA
+import { uuid } from "./uuid.js"
 
-class Collection {
+export class Collection {
     constructor(name) {
         this.name = name
     }
@@ -28,7 +28,7 @@ class Collection {
     insertOne(document) {
         const collection = JSON.parse(localStorage[this.name] || '[]')
 
-        document.id = data.uuid()
+        document.id = uuid()
 
         collection.push(document)
 
@@ -81,35 +81,3 @@ class Collection {
         localStorage[this.name] = json
     }
 }
-
-
-// 
-const data = {
-
-    //  Creamos una Id de usuario aleatoria
-    uuid() {
-        return (Date.now() + Math.random()).toString(36).replace('.', '')
-    },
-
-    // USERS
-    //  Llamamos a los datos de los Usuarios de LocalStorage
-    users: new Collection('users'),
-
-    // POSTS
-    //  Llamamos a los datos de los Posts de LocalStorage
-    posts: new Collection('posts'),
-
-    // USER ID
-    get userId() {
-        const id = JSON.parse(sessionStorage.userId || 'null')
-
-        return id
-    },
-    set userId(id) {
-        const json = JSON.stringify(id)
-
-        sessionStorage.userId = json
-    },
-}
-
-export default data

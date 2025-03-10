@@ -299,6 +299,9 @@ button:hover:after {
         }
     }
 
+    .form-text {
+        width: 70%;
+    }
 }
 
 
