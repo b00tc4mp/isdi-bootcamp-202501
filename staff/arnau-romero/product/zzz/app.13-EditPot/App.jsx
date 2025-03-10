@@ -15,7 +15,7 @@ function App(){
             //llamamos a la funcion que nos devuelve un true si el usuario esta loggeado
             const loggedIn = logic.isUserLoggedIn()
 
-            // si esta loggeado montamos la view Home.
+            // si esta loggeado montamos la view Index.
             loggedIn && setView('home')
         } catch(error){
             console.error(error)

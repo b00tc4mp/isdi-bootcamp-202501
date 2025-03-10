@@ -1,4 +1,5 @@
-function Landing({ onLoginClick, onRegisterClick }){
+
+export function Landing({ onLoginClick, onRegisterClick }){
     return <div className="landing"> 
         <h1>s📷ts</h1>
         <a onClick={onLoginClick}>Login </a>
@@ -6,7 +7,3 @@ function Landing({ onLoginClick, onRegisterClick }){
         <a onClick={onRegisterClick}> Register</a>
     </div>
 }
-//<a onClick={onRegisterClick}>Register</a>or<a onClick={onLoginClick}>Login</a>
-
-// exportamos Landing
-export default Landing

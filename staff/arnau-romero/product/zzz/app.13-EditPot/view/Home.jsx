@@ -12,7 +12,7 @@ function Home({ onLogoutClick}) {
 
     // Funcion flecha para generar el saludo al entrar en home
     useEffect(() => {
-        console.debug('Home -> useEffect')
+        console.debug('Index -> useEffect')
 
         try{
             // lamamos a la logica de obtener el nombre y la guardamos en la variable name.
@@ -51,7 +51,7 @@ function Home({ onLogoutClick}) {
    const handlePostCreateSubmit = () => setView('posts')
    
    const handleCancelClick = () => setView('posts')
-    console.debug('Home -> render')
+    console.debug('Index -> render')
 
     return <div>
         <header>

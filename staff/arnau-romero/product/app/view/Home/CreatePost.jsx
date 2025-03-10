@@ -1,6 +1,6 @@
-import logic from '../../logic.js'
+import { logic } from '../../logic/index'
 
-function CreatePost({ onPostCreateSubmit , onCancelClick }) {
+export function CreatePost({ onPostCreateSubmit , onCancelClick }) {
     const handleCreatePostSubmit = event => {
         event.preventDefault()
 
@@ -25,17 +25,15 @@ function CreatePost({ onPostCreateSubmit , onCancelClick }) {
         console.debug('CreatePost -> render')
 
         return <section>
-        <form onSubmit = {handleCreatePostSubmit}>
-            <label htmlFor="image">Image</label>
-            <input type="url" id="image" />
+            <form onSubmit = {handleCreatePostSubmit}>
+                <label htmlFor="image">Image</label>
+                <input type="url" id="image" />
 
-            <label htmlFor="text">Text</label>
-            <input type="text" id="text" />
+                <label htmlFor="text">Text</label>
+                <input type="text" id="text" />
 
-            <button type="submit">Create</button>    
-        </form>
-        <a onClick={handleCancelClick} >Cancel</a> 
+                <button type="submit">Create</button>
+            </form>
+            <a onClick={handleCancelClick} >Cancel</a>
         </section>
-    
 }
-export default CreatePost

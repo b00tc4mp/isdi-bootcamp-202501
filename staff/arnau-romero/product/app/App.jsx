@@ -1,11 +1,12 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
-import Landing from './view/Landing.jsx'
-import Register from './view/Register.jsx'
-import Login from './view/Login.jsx'
-import Home from './view/Home.jsx'
+import { Landing } from './view/Landing.jsx'
+import { Register } from './view/Register.jsx'
+import { Login } from './view/Login.jsx'
+import { Home } from './view/Home/index'
 
-import logic from './logic.js'
+import { logic } from './logic/index'
+
 function App(){
     // Estado inicial del usestate en landing.
     const [view, setView] = useState('landing')
@@ -15,7 +16,7 @@ function App(){
             //llamamos a la funcion que nos devuelve un true si el usuario esta loggeado
             const loggedIn = logic.isUserLoggedIn()
 
-            // si esta loggeado montamos la view Home.
+            // si esta loggeado montamos la view Index.
             loggedIn && setView('home')
         } catch(error){
             console.error(error)

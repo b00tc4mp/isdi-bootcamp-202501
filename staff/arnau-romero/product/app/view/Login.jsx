@@ -1,5 +1,6 @@
-import logic from '../logic.js'
-function Login({ onRegisterClick, onLoginSubmit }){
+import {logic} from '../logic/index'
+
+export function Login({ onRegisterClick, onLoginSubmit }){
     // creo el submit para el login
     const handleLoginSubmit = event =>{
         event.preventDefault()
@@ -26,26 +27,9 @@ function Login({ onRegisterClick, onLoginSubmit }){
             alert(error.message)
         }
     }
-    
-    // Chivato para saber que montamos login
-    console.debug('login -> render')
-    
-    
-    
-    /*Creo el div
-    Dentro monto el logo
-    monto un form, dentro:
-    {
-    Etiqueta username
-    Input typo texto para el username
-    Etiqueta password
-    Input typo texto para el password
-    Boton tipo Submit para enviar los datos
-    }
 
-    Creo anchor con onClick=(addClickListener), le asigno el argumento onRegisterClick,
-    este anchor llevara a la pagina de Register
-    */
+    console.debug('login -> render')
+
     return <div> 
         <h1>Login</h1>
         <form onSubmit = {handleLoginSubmit}>
@@ -61,5 +45,3 @@ function Login({ onRegisterClick, onLoginSubmit }){
         <a onClick={onRegisterClick}>Register</a>
     </div>
 }
-
-export default Login

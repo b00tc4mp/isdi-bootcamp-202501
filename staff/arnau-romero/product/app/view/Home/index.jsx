@@ -1,18 +1,17 @@
-const { useState, useEffect } = React
-//importamos logica
-import Posts from './components/Posts.jsx'
-import CreatePost from './components/CreatePost.jsx'
+import { useState, useEffect } from 'react'
 
-import logic from '../logic.js'
+import { Posts } from './Posts'
+import { CreatePost } from './CreatePost'
 
-function Home({ onLogoutClick}) {
+import { logic } from '../../Logic/index'
+
+export function Home({ onLogoutClick}) {
     const[view, setView] = useState('posts')
     const[userName, setUserName] = useState('')
-  
 
     // Funcion flecha para generar el saludo al entrar en home
     useEffect(() => {
-        console.debug('Home -> useEffect')
+        console.debug('Index -> useEffect')
 
         try{
             // lamamos a la logica de obtener el nombre y la guardamos en la variable name.
@@ -51,7 +50,7 @@ function Home({ onLogoutClick}) {
    const handlePostCreateSubmit = () => setView('posts')
    
    const handleCancelClick = () => setView('posts')
-    console.debug('Home -> render')
+    console.debug('Index -> render')
 
     return <div>
         <header>
@@ -65,7 +64,7 @@ function Home({ onLogoutClick}) {
         <main>
             {view === 'posts' && <Posts />}
 
-            {view === 'create-post' && <CreatePost onPostCreateSubmit = {handlePostCreateSubmit}  onCancelClick={handleCancelClick}/>}
+            {view === 'create-post' && <CreatePost onPostCreateSubmit = {handlePostCreateSubmit} onCancelClick={handleCancelClick}/>}
         </main>
 
     <footer>
@@ -74,6 +73,3 @@ function Home({ onLogoutClick}) {
     
     </div>     
 }
-
-// exportamos home
-export default Home

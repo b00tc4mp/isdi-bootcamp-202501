@@ -1,10 +1,10 @@
-const { useState, useEffect} = React 
+import { useState, useEffect} from 'react'
 
-import Post from './Post.jsx'
+import  { Post } from './Post.jsx'
 
-import logic from '../../logic.js'
+import  { logic } from '../../logic/index'
 
-function Posts() {
+export function Posts() {
     const[posts, setPosts] = useState([])
     useEffect(() => {
         try{
@@ -62,5 +62,3 @@ function Posts() {
     {posts.map(post =><Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onPostTextEdited={handlePostTextEdited} />)}           
     </section>
 }
-
-export default Posts
