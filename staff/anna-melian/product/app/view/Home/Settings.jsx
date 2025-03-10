@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 
-import logic from "../../logic";
-import data from '../../data.js'
+import { logic } from "../../logic";
+import { data } from '../../data/index.js'
 
 
-function Settings({ onDeleteProfileClick, onSubmitChanges }) {
+export function Settings({ onDeleteProfileClick, onSubmitChanges }) {
     const [showPassword, setShowPassword] = useState(false)
 
     useEffect(() => {
@@ -126,4 +126,3 @@ function Settings({ onDeleteProfileClick, onSubmitChanges }) {
     </section>
 }
 
-export default Settings

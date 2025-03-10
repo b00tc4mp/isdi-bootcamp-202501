@@ -1,8 +1,7 @@
-const uuid = () => {
-    return (Date.now() + Math.random()).toString(36).replace('.', '')
-}
+import { uuid } from './uuid.js'
 
-class Collection {
+
+export class Collection {
     constructor(name) {
         this.name = name
     }
@@ -81,25 +80,3 @@ class Collection {
 
 
 }
-
-
-
-
-var data = {
-    users: new Collection('users'),
-    posts: new Collection('posts'),
-
-    get userId() {
-        const id = JSON.parse(sessionStorage.userId || 'null')
-
-        return id
-    },
-    set userId(id) {
-        const json = JSON.stringify(id)
-
-        sessionStorage.userId = json
-    }
-
-}
-
-export default data

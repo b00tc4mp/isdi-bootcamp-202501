@@ -1,9 +1,9 @@
-import logic from '../logic.js'
+import { logic } from '../logic.js'
 
 import { useState, useEffect } from 'react'
 
 
-function Login({ onRegisterClick, onLoginSubmit }) {
+export function Login({ onRegisterClick, onLoginSubmit }) {
     const [showPassword, setShowPassword] = useState(false)
     const handleLoginSubmit = event => {
         event.preventDefault()
@@ -62,4 +62,3 @@ function Login({ onRegisterClick, onLoginSubmit }) {
     </>
 }
 
-export default Login

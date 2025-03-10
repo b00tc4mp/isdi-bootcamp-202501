@@ -1,4 +1,4 @@
-function Landing({ onRegisterClick, onLoginClick }) {
+export function Landing({ onRegisterClick, onLoginClick }) {
 
     const handleRegisterClick = () => onRegisterClick()
 
@@ -16,4 +16,3 @@ function Landing({ onRegisterClick, onLoginClick }) {
     </div>
 }
 
-export default Landing

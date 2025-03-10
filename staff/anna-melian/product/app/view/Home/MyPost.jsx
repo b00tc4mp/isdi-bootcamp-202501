@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
-import logic from "../../logic";
+import { logic } from "../../logic";
 
-function MyPost({ post, onPostLikeToggled, onPostDeleted, onPostEdited }) {
+export function MyPost({ post, onPostLikeToggled, onPostDeleted, onPostEdited }) {
     const [view, setView] = useState('')
 
     useEffect(() => {
@@ -112,4 +112,3 @@ function MyPost({ post, onPostLikeToggled, onPostDeleted, onPostEdited }) {
 
 }
 
-export default MyPost

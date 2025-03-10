@@ -1,6 +1,6 @@
-import logic from "../../logic";
+import { logic } from "../../logic";
 
-function Post({ post, onPostLikeToggled }) {
+export function Post({ post, onPostLikeToggled }) {
 
 
     const handleToggleLikeClick = () => {
@@ -36,4 +36,3 @@ function Post({ post, onPostLikeToggled }) {
 
 }
 
-export default Post

@@ -1,380 +1,44 @@
 import { DuplicityError, NotFoundError, CredentialsError } from './errors.js'
 
-import data from './data.js'
-
-
-const logic = {
-    constant: {
-        EMPTY_OR_BLANK_REGEX: /^\s*$/,
-        EMAIL_REGEX: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-        URL_REGEX: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-    },
-    validate: {
-        string(string, explain) {
-            if (typeof string !== 'string') throw new TypeError(`invalid ${explain} type`)
-        },
-        text(text, explain) {
-            this.string(text, explain)
-            if (logic.constant.EMPTY_OR_BLANK_REGEX.test(text)) throw new SyntaxError(`invalid ${explain} syntax`)
-        },
-        email(email, explain) {
-            this.string(email, explain)
-            if (!logic.constant.EMAIL_REGEX.test(email)) throw new SyntaxError(`invalid ${explain} syntax`)
-            this.maxLength(email, 30, explain)
-        },
-        maxLength(value, maxLength, explain) {
-            if (value.length > maxLength) throw new RangeError(`invalid ${explain} maxLength`)
-        },
-        minLength(value, minLength, explain) {
-            if (value.length < minLength) throw new RangeError(`invalid ${explain} minLength`)
-        },
-        username(username, explain) {
-            this.text(username, explain)
-            this.minLength(username, 3, explain)
-            this.maxLength(username, 25, explain)
-        },
-        password(password, explain) {
-            this.text(password, explain)
-            this.minLength(password, 6, explain)
-            this.maxLength(password, 25, explain)
-        },
-        url(url, explain) {
-            this.string(url, explain)
-            if (!logic.constant.URL_REGEX.test(url))
-                throw new SyntaxError('invalid' + explain + 'syntax')
-        },
-        id(id, explain) {
-            this.text(id, explain)
-            this.minLength(id, 8, explain)
-            this.maxLength(id, 11, explain)
-
-        }
-
-
-    },
-
-
-    registerUser(name, email, username, house, password) {
-        this.validate.text(name, 'name')
-        this.validate.minLength(name, 1, 'name')
-        this.validate.maxLength(name, 20, 'name')
-        this.validate.email(email, 'email')
-        this.validate.username(username, 'username')
-        this.validate.password(password, 'password')
-
-        const found = data.users.findOne(user => user.email === email || user.username === username)
-
-
-        if (found) throw new DuplicityError('user already exists')
-
-        const user = {
-            name: name,
-            email: email,
-            username: username,
-            house: house,
-            password: password,
-            createdAt: new Date(),
-            modifiedAt: null
-        }
-
-        data.users.insertOne(user)
-
-    },
-
-    loginUser(username, password) {
-        this.validate.username(username, 'username')
-        this.validate.password(password, 'password')
-
-        const users = data.users.getAll()
-
-        const found = data.users.findOne(user => user.username === username)
-
-        if (!found || found.password !== password)
-            throw new CredentialsError('wrong credentails')
-
-        data.userId = found.id
-
-
-    },
-
-    logoutUser() {
-        data.userId = null
-    },
-
-    getUserName() {
-        const users = data.users.getAll()
-
-        const { userId } = data
-
-        const found = data.users.getById(userId)
-
-        if (!found) throw new NotFoundError('user not found')
-
-        return found.name
-    },
-
-    getUserHouse() {
-        const users = data.users.getAll()
-
-        const { userId } = data
-
-        const found = data.users.getById(userId)
-
-        if (!found) throw new NotFoundError('user not found')
-
-        return found.house
-
-    },
-
-    getUsers() {
-        const users = data.users.getAll()
-        return users
-    },
-
-    isUserLoggedIn() {
-        return !!data.userId
-    },
-
-    getPosts() {
-        const posts = data.posts.getAll()
-
-        const { userId } = data
-
-        const aggregatedPosts = []
-
-        for (let i = 0; i < posts.length; i++) {
-            const post = posts[i]
-
-            let liked = false
-
-            for (let i = 0; i < post.likes.length && !liked; i++) {
-                const id = post.likes[i]
-
-                if (id === userId)
-                    liked = true
-            }
-
-
-            const aggregatedPost = {
-                id: post.id,
-                author: post.author,
-                image: post.image,
-                text: post.text,
-                createdAt: new Date(post.createdAt),
-                modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
-                liked: liked,
-                likesCount: post.likes.length,
-            }
-            aggregatedPosts[aggregatedPosts.length] = aggregatedPost
-        }
-        return aggregatedPosts.reverse()
-    },
-
-    createPost(image, text) {
-        this.validate.url(image, 'image')
-        this.validate.maxLength(1000)
-        this.validate.text(text, 'text')
-        this.validate.maxLength(500)
-
-        const { userId } = data
-        const user = data.users.getById(userId)
-
-        var post = {
-            author: { id: userId, username: user.username },
-            image: image,
-            text: text,
-            createdAt: new Date(),
-            modifiedAt: null,
-            likes: [],
-        }
-
-        data.posts.insertOne(post)
-
-    },
-
-    toggleLikePost(postId) {
-        this.validate.id(postId, 'postId')
-
-        const { userId } = data
-
-        const foundPost = data.posts.findOne(post => post.id === postId)
-
-        if (!foundPost) throw new NotFoundError('post not found')
-
-        let userIdFound = false
-
-        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const id = foundPost.likes[i]
-
-            if (id === userId)
-                userIdFound = true
-        }
-
-        if (!userIdFound) {
-            foundPost.likes[foundPost.likes.length] = userId
-
-        }
-        else {
-            const likes = []
-
-            for (let i = 0; i < foundPost.likes.length; i++) {
-                const id = foundPost.likes[i]
-
-                if (id != userId)
-                    likes[likes.length] = id
-            }
-
-            foundPost.likes = likes
-        }
-
-        data.posts.updateOne(foundPost)
-    },
-
-    getOwnPosts() {
-        const { userId } = data
-
-        const posts = logic.getPosts()
-        let ownPosts = []
-
-        for (let i = 0; i < posts.length; i++) {
-            const post = posts[i]
-            if (post.author.id === userId)
-                ownPosts.push(post)
-        }
-
-        return ownPosts
-
-    },
-
-
-    updateUserProfile(name, username, email) {
-        this.validate.text(name, 'name')
-        this.validate.username(username, 'username')
-        this.validate.email(email, 'email')
-
-        const { userId } = data
-
-        const users = data.users.getAll()
-
-        const user = data.users.getById(userId)
-
-        if (!user) throw new Error('User not found')
-
-        if (user.name === name && user.username === username && user.email === email) {
-            return false
-        }
-
-        user.name = name
-        user.username = username
-        user.email = email
-        user.modifiedAt = new Date()
-
-        data.users.updateOne(user)
-
-        return true
-
-    },
-    editMyPost(myPost, text) {
-        this.validate.id(myPost.id, 'postId')
-
-        this.validate.text(text, 'text')
-
-        const posts = data.posts.getAll()
-        const { userId } = data
-
-
-        const post = data.posts.getById(myPost.id)
-
-        if (!post) throw new Error('Post not found')
-
-        if (post.author.id !== userId) throw new OwnershipError('user is not author of post')
-
-
-        if (post.text === text) {
-            return false
-        }
-
-        post.text = text
-        post.modifiedAt = new Date
-
-        data.posts.updateOne(post)
-
-        return true
-
-    },
-
-    changePassword(actualPassword, newPassword) {
-        this.validate.password(actualPassword)
-        this.validate.password(newPassword)
-
-        const { userId } = data
-
-        const users = data.users.getAll()
-
-        const user = data.users.getById(userId)
-
-        if (!user) throw new Error('User not found')
-
-        const correctActualPassword = (user.password === actualPassword ? true : false)
-
-        if (!correctActualPassword) throw new Error('Wrong password')
-
-        const equalPasswords = (actualPassword === newPassword ? true : false)
-
-        if (equalPasswords) throw new Error('Equal passwords')
-
-        user.password = newPassword
-        user.modifiedAt = new Date()
-
-        data.users.updateOne(user)
-
-    },
-
-
-    deleteProfile() {
-        const { userId } = data
-
-        const posts = data.posts.getAll()
-        const users = data.users.getAll()
-
-        const user = data.users.getById(userId)
-
-        if (!user) throw new Error('user not found')
-
-        data.users.deleteOne(user => user.id === userId)
-
-
-        const remainingPosts = posts.filter(post => post.author.id !== userId)
-
-
-
-
-        const newPosts = remainingPosts.map(post => {
-            const updatedLikes = post.likes.filter(id => id !== userId)
-            return { ...post, likes: updatedLikes }
-
-        })
-        data.posts.setAll(newPosts)
-        data.userId = null
-
-    },
-
-    deletePost(postId) {
-
-        this.validate.id(postId, 'postId invalid length')
-
-        const { userId } = data
-        const foundPost = data.posts.findOne(post => post.id === postId)
-
-        if (!foundPost) throw new NotFoundError('post not found')
-
-        if (foundPost.author.id !== userId) throw new OwnershipError('user is not author of post')
-
-        data.posts.deleteOne(post => post.id === postId)
-
-    }
+import { data } from '../app/data/index.js'
+
+import { registerUser } from './logic/registerUser.js'
+import { loginUser } from './logic/loginUser.js'
+import { getUserName } from './logic/getUserName.js'
+import { logoutUser } from './logic/logoutUser.js'
+import { getUserHouse } from './logic/getUserHouse.js'
+import { isUserLoggedIn } from './logic/isUserLoggedIn.js'
+
+import { getPosts } from './logic/getPosts.js'
+import { createPost } from './logic/createPost.js'
+import { toggleLikePost } from './logic/toggleLikePost.js'
+import { getOwnPosts } from './logic/getOwnPosts.js'
+import { updateUserProfile } from './logic/updateUserProfile.js'
+import { editMyPost } from './logic/editMyPost.js'
+import { changePassword } from './logic/changePassword.js'
+import { deletePost } from './logic/deletePost.js'
+import { deleteProfile } from './logic/deleteProfile.js'
+
+export const logic = {
+    registerUser,
+    loginUser,
+    logoutUser,
+    getUserName,
+    getUserHouse,
+    isUserLoggedIn,
+
+    getPosts,
+    createPost,
+    toggleLikePost,
+    getOwnPosts,
+    updateUserProfile,
+    editMyPost,
+    changePassword,
+
+
+    deleteProfile,
+    deletePost
 
 
 }
 
-export default logic

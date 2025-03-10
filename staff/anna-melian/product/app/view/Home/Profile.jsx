@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 
-import logic from "../../logic";
-import MyPost from "../Home/MyPost.jsx";
+import { logic } from "../../logic";
+import { MyPost } from "../Home/MyPost.jsx";
 
-function Profile() {
+export function Profile() {
     const [myPosts, setPosts] = useState([])
 
 
@@ -67,5 +67,4 @@ function Profile() {
     </section >
 }
 
-export default Profile
 

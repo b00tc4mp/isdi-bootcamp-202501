@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 
-import logic from '../../logic.js'
-import Posts from './Posts.jsx'
-import Profile from './Profile.jsx'
-import CreatePost from './CreatePost.jsx'
-import Settings from './Settings.jsx'
+import { logic } from '../../logic.js'
+import { Posts } from './Posts.jsx'
+import { Profile } from './Profile.jsx'
+import { CreatePost } from './CreatePost.jsx'
+import { Settings } from './Settings.jsx'
 
-function Home({ onLogoutClick, onDeleteProfileClick }) {
+export function Home({ onLogoutClick, onDeleteProfileClick }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
 
@@ -104,4 +104,3 @@ function Home({ onLogoutClick, onDeleteProfileClick }) {
     </div>
 }
 
-export default Home

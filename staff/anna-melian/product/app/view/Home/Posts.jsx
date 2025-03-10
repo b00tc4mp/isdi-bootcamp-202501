@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 
-import logic from "../../logic";
-import Post from "./Post";
+import { logic } from "../../logic";
+import { Post } from "./Post";
 
-function Posts() {
+export function Posts() {
     const [posts, setPosts] = useState([])
 
 
@@ -40,4 +40,3 @@ function Posts() {
 
 }
 
-export default Posts
