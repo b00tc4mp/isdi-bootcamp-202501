@@ -1,0 +1,1 @@
+curl -X POST -d '{"name":"aaron","age":"5"}' -H 'Content-Type: application/json' -v http://localhost:1717/users
