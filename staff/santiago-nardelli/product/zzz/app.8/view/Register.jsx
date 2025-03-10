@@ -1,5 +1,5 @@
-import {logic }from "../logic/logic.js";
-export function Register({ onRegisterSubmit, onLoginClick }) {
+import logic from "../logic/logic.js";
+function Register({ onRegisterSubmit, onLoginClick }) {
   /*Creo mifuncion que maneja el evento de submit del formulario de registro
   y evito que se ejecute el submit por defecto y refresh de la pagina
   */
@@ -54,3 +54,4 @@ export function Register({ onRegisterSubmit, onLoginClick }) {
     </div>
   );
 }
+export default Register;

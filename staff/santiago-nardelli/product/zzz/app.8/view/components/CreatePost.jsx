@@ -1,22 +1,23 @@
-import {logic} from "../../logic/logic.js";
-export function CreatePost({ onPostCreateSubmit, onCancelClick }) {
+import logic from '../../logic/logic.js';
+function CreatePost({onPostCreateSubmit, onCancelClick}) {
+
   const handleCreatePostSubmit = (event) => {
     event.preventDefault();
 
     try {
-      //destructuring del formulario
-      const { target: form } = event;
-      //destructuring de los valores del formulario
-      const {
-        image: { value: image },
-        title: { value: title },
-      } = form;
-      //llamo a mi logica de creacion de posts
-      logic.createPost(image, title);
-      //limpio el formulario
-      form.reset();
-
-      onPostCreateSubmit();
+        //destructuring del formulario
+        const { target: form } = event;
+        //destructuring de los valores del formulario
+        const {
+            image: { value: image },
+            title: { value: title },
+        } = form;
+        //llamo a mi logica de creacion de posts
+        logic.createPost(image, title);
+        //limpio el formulario
+        form.reset();
+    
+        onPostCreateSubmit();
     } catch (error) {
       console.error(error);
       alert(error.message);
@@ -25,9 +26,9 @@ export function CreatePost({ onPostCreateSubmit, onCancelClick }) {
 
   const handleCancelClick = () => {
     onCancelClick();
-  };
+  }
 
-  console.debug("CreatePost --> render");
+  console.debug('CreatePost --> render');
   return (
     <div className="create-post">
       <form onSubmit={handleCreatePostSubmit} className="create-post__form">
@@ -48,11 +49,11 @@ export function CreatePost({ onPostCreateSubmit, onCancelClick }) {
         <button type="submit" className="create-post__form__button">
           Create Post
         </button>
-
-        <a onClick={handleCancelClick}>Cancel</a>
+        
+         <a onClick={handleCancelClick}>Cancel</a> 
       </form>
     </div>
   );
 }
 
-
+export default CreatePost

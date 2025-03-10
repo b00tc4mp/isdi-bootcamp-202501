@@ -1,4 +1,4 @@
-export function Landing({ onRegisterClick, onLoginClick }) {
+function Landing({ onRegisterClick, onLoginClick }) {
   console.debug("Landing -> render");
 
   return (
@@ -8,14 +8,11 @@ export function Landing({ onRegisterClick, onLoginClick }) {
       </div>
       <div className="landing-page__content">
         <h1>Secret Stories</h1>
-        <a className="landing-page__button" onClick={onRegisterClick}>
-          Register
-        </a>
+        <a className="landing-page__button" onClick={onRegisterClick}>Register</a>
         <span> or </span>
-        <a className="landing-page__button" onClick={onLoginClick}>
-          Login
-        </a>
+        <a className="landing-page__button" onClick={onLoginClick}>Login</a>
       </div>
     </div>
   );
 }
+export default Landing;

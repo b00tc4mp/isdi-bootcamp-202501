@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import {Posts} from "./components/Posts.jsx";
-import {CreatePost} from "./components/CreatePost.jsx";
-import {NavBar} from "./components/NavBar.jsx";
+import logic from "../logic/logic.js";
+import Posts from "./components/Posts.jsx";
+import CreatePost from "./components/CreatePost.jsx";
+import NavBar from "./components/NavBar.jsx";
 
-import {logic} from "../logic/logic.js";
 
-export function Home({ onLogoutClick }) {
+function Home({ onLogoutClick }) {
   const [view, setView] = useState("posts");
   const [userName, setUserName] = useState("");
 
@@ -68,3 +68,4 @@ export function Home({ onLogoutClick }) {
   );
 }
 
+export default Home;

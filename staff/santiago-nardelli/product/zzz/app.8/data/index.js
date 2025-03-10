@@ -1,5 +1,4 @@
-import { DataManagger } from "./DataManagger.js";
-export const data = {
+const data = {
    
     // creo un objeto data que tiene como propiedades collection, posts
     users: new DataManagger("users"),
@@ -20,4 +19,4 @@ export const data = {
       sessionStorage.userId = json;
     },
   };
- 
+  export default data;

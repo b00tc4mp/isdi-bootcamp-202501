@@ -1,5 +1,5 @@
- import {logic} from '../logic/logic.js';
-export function Login({ onRegisterClick, onLoginSubmit }) {
+ import logic from '../logic/logic.js';
+function Login({ onRegisterClick, onLoginSubmit }) {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
 
@@ -38,3 +38,4 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
     </div>
   );
 }
+export default Login;

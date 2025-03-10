@@ -1,7 +1,7 @@
 import { useState } from "react";
-import {logic} from "../../logic/logic.js";
+import logic from "../../logic/logic.js";
 
-export function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) {
+function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(post.title);
   const [newImage, setNewImage] = useState(post.image);
@@ -130,7 +130,7 @@ export function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) 
   );
 }
 
-
+export default Post;
 
 //==== DESCRIPTION OF MY CODE ====
 

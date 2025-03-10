@@ -1,4 +1,4 @@
-export function NavBar({ onLogoutClick, onAddPostClick }) {
+function NavBar({ onLogoutClick, onAddPostClick }) {
   
   const handleLogoutClick = () => {
     onLogoutClick();
@@ -20,4 +20,4 @@ export function NavBar({ onLogoutClick, onAddPostClick }) {
     </section>
   );
 }
-
+export default NavBar;
