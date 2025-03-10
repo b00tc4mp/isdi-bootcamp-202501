@@ -1,26 +1,36 @@
+
+
 const { useState, useEffect } = React
 
 function App() {
     const [view, setView] = useState('landing')
 
-    function chooseShoppingOption() {
-        var action = prompt(`Please, choose what you would like to do:
-            1 - see all products
-            2 - search for products
-            3 - add product to the cart
-            4 - see total of the cart
-            5 - cart placeOrder
-            6 - see shopping history`)
+    // function chooseShoppingOption() {
+    //     var action = prompt(`Please, choose what you would like to do:
+    //         1 - see all products
+    //         2 - search for products
+    //         3 - add product to the cart
+    //         4 - see total of the cart
+    //         5 - cart placeOrder
+    //         6 - see shopping history`)
 
-        try {
-            logic.validateShoppingOption(action)
-            logic.chooseShoppingOption(action)
-        } catch (error) {
-            alert(error.message)
-            console.log(error)
-            interface.chooseShoppingOption()
-        }
-    }
+    //     try {
+    //         logic.validateShoppingOption(action)
+    //         logic.chooseShoppingOption(action)
+    //     } catch (error) {
+    //         alert(error.message)
+    //         console.log(error)
+    //         // interface.chooseShoppingOption()
+    //     }
+    // }
+
+    const handleNavigateToRegister = () => setView('register')
+
+    const handleNavigateToLogin = () => setView('login')
+
+    const handleUserRegistered = () => setView('login')
+
+    const handleUserLoggedIn = () => setView('home')
 
     // showProductsList() {
     //     try {
@@ -105,8 +115,27 @@ function App() {
     // }
 
     return <div>
-        {view === 'landing' && <section>
-            <p>Hello Store</p>
-        </section>}
+        {view === 'landing' && <div>
+
+            <header>
+                <h1>Store Logo</h1>
+            </header>
+
+            <main>
+                <section>
+                    <a onClick={handleNavigateToRegister}>Register</a>
+                    <p> or </p>
+                    <a onClick={handleNavigateToLogin}>Login</a>
+                </section>
+
+            </main>
+        </div>}
+
+        {view === 'register' && <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />}
+
+        {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />}
+
+        {view === 'home' && <Home />}
+
     </div>
 }
