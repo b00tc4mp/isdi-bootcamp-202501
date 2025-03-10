@@ -38,7 +38,7 @@ api.post('/user', jsonParse, (req, res) => {
 
     users.push(newUser)
 
-    res.status(201).json({ message: 'User created!' })
+    res.status(201).json({ newUser, message: 'User created!' })
 })
 
 api.listen(port, () => {
