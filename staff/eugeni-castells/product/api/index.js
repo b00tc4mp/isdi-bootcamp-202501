@@ -6,22 +6,22 @@ const app = express();
 //defineix una variable amb el port
 const port = 1717;
 
+const uuid = () => {
+  return (Math.random() * 15 + 1 ** 15).toString(36);
+};
+
 const data = {
   users: [
-    { name: "frank", age: 25, id: "123abc" },
-    { name: "mashenka", age: 20, id: "456def" },
+    { name: "frank", age: 25, id: uuid() },
+    { name: "mashenka", age: 20, id: uuid() },
   ],
   posts: [
     {
-      id: "123abc",
+      id: uuid(),
       text: "Hey mundo",
-      author: "123abc",
+      author: uuid(),
     },
   ],
-};
-
-const uuid = () => {
-  return (Math.random() * 15 + 1 ** 15).toString(36);
 };
 
 // iguales una variable a la funció express.json()
