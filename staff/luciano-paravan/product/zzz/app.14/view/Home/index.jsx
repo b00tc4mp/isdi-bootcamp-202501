@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 
-import { Posts } from '../../view/Home/Posts.jsx'
-import { CreatePost } from '../../view/Home/CreatePost.jsx'
+import Posts from './Posts.jsx'
+import CreatePost from './CreatePost.jsx'
+//import CreatePost from './components/CreatePosts.jsx'
 
-import { logic } from '../../logic/index.js'
+import logic from '../../logic.js'
 
-export function Home ({ onUserLoggedOut }) {
+function Home ({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
     
+
     useEffect(() => {
         console.debug('Home -> useEffect')
         try {
@@ -62,3 +64,5 @@ export function Home ({ onUserLoggedOut }) {
             </footer>
         </div>
 }
+
+export default Home

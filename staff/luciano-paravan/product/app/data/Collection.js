@@ -1,4 +1,6 @@
-class Collection {
+import { uuid } from './uuid'
+
+export class Collection {
     constructor(name) {
         this.name = name
     }
@@ -6,7 +8,7 @@ class Collection {
     getAll() {
         const collection = JSON.parse(localStorage[this.name] || '[]')
 
-        return collection
+        return collection;
     }
 
     setAll(collection) {
@@ -27,7 +29,7 @@ class Collection {
     insertOne(document) {
         const collection = JSON.parse(localStorage[this.name] || '[]')
 
-        document.id = data.uuid()
+        document.id = uuid()
 
         collection.push(document)
 
@@ -40,7 +42,7 @@ class Collection {
         const collection = JSON.parse(localStorage[this.name] || '[]')
 
         for (let i = 0; i < collection.length; i++) {
-            const document = collection[i]
+            const document = collection[i];
 
             const matches = condition(document)
 
@@ -76,26 +78,3 @@ class Collection {
         localStorage[this.name] = json
     }
 }
-
-const data = {
-    uuid() {
-        return (Date.now() + Math.random()).toString(36).replace('.', '')
-    },
-
-    users: new Collection('users'),
-    posts: new Collection('posts'),
-
-    get userId() {
-        const id = JSON.parse(sessionStorage.userId || 'null')
-
-        return id
-    },
-
-    set userId(id) {
-        const json = JSON.stringify(id)
-
-        sessionStorage.userId = json
-    }
-}
-
-export default data
