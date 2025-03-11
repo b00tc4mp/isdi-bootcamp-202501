@@ -1,0 +1,1 @@
+curl -X GET http://localhost:2121/files/6f4b6cf3-2237-4998-9b67-f42aa90de2c2 -v

@@ -1,0 +1,1 @@
+ curl -X GET http://localhost:2121/files -v
