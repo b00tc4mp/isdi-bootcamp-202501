@@ -1,11 +1,17 @@
-function Login({onRegisterClick, onLoginSubmit}) {
+import {logic} from '../logic/index'
+
+import {Logo} from './components/Logo.jsx'
+
+export function Login({onNavigateToRegister, onUserLoggedIn}) {
     const handleLoginSubmit = event => {
         event.preventDefault()
 
         try {
             const form = event.target
-            const username = form[0].value
-            const password = form[1].value
+            const {
+                username: {value: username},
+                password: {value: password}
+            } = form
                 
             logic.loginUser(username, password)
 
@@ -13,22 +19,25 @@ function Login({onRegisterClick, onLoginSubmit}) {
 
             alert(`Welcome again, ${username}`)
 
-            onLoginSubmit()
+            onUserLoggedIn()
         } catch (error) {
-            logic.helper.handleError(error)
+            console.error(error)
+            alert(error.message)
         }
     }
 
+    const handleRegisterClick = () => onNavigateToRegister()
+
     return <div>
         <Logo />
-        <form id="login-form" onSubmit={handleLoginSubmit}>
-            <label htmlFor="login-username">Username</label>
-            <input type="text" id="login-username" placeholder="username"/>
-            <label htmlFor="login-password">Password</label>
-            <input type="password" id="login-password" placeholder="********" />
+        <form id="form" onSubmit={handleLoginSubmit}>
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" placeholder="username"/>
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" placeholder="********" />
             <div className="buttons-div">
-                <a onClick={onRegisterClick}>Register</a>
-                <button type="submit" form="login-form">Login</button>
+                <a onClick={handleRegisterClick}>Register</a>
+                <button type="submit" form="form">Login</button>
             </div>
         </form>
     </div>

@@ -1,4 +1,6 @@
-function CreatePost({onCancelClick, onCreatePostSubmit, reloadPosts}) {
+import {logic} from '../../logic/index'
+
+export function CreatePost({onCreatePostCancelled, onPostCreated}) {
     const handleCreatePostSubmit = event => {
         event.preventDefault()
 
@@ -13,13 +15,15 @@ function CreatePost({onCancelClick, onCreatePostSubmit, reloadPosts}) {
 
             alert('Post created')
 
-            reloadPosts()
-
-            onCreatePostSubmit()
+            onPostCreated()
         } catch (error) {
-            logic.helpers.handleError(error)
+            console.error(error)
+            alert(error.message)
         }
     }
+
+    const handleCancelClick = () => onCreatePostCancelled()
+
     return <section>
         <section>
             <h2>Create new post</h2>
@@ -29,7 +33,7 @@ function CreatePost({onCancelClick, onCreatePostSubmit, reloadPosts}) {
                 <label htmlFor="description">Description</label>
                 <input type="text" id="description" placeholder="description"/>
                 <div className="buttons-div">
-                    <a onClick={onCancelClick}>Cancel</a>
+                    <a onClick={handleCancelClick}>Cancel</a>
                     <button type="submit" form="create-post">Create</button>
                 </div>
             </form>

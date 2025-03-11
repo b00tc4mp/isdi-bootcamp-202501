@@ -1,38 +1,43 @@
-const { useState } = React
+import { useState, useEffect } from 'react'
 
-function App() {
+import {logic} from './logic/index'
+import {Landing} from './view/Landing.jsx'
+import {Login} from './view/Login.jsx'
+import {Register} from './view/Register.jsx'
+import {Home} from './view/Home/index.jsx'
+
+
+export function App() {
     const [view, setView] = useState('landing')
     
     useEffect(() => {
         try {
-            // const loggedIn = logic.isUserLoggedIn()
-
-            // loggedIn && setView('home')
-
-
-            if (logic.isUserLoggedIn()) setView('home')
+            const loggedIn = logic.isUserLoggedIn()
+            
+            if (loggedIn) setView('home')
         } catch (error) {
-            logic.helper.handleError(error)
+            console.error(error)
+            alert(error.message)
         }
     }, [])
 
-    const handleRegisterClick = () => setView('register')
+    const handleNavigateToRegister = () => setView('register')
     
-    const handleLoginClick = () => setView('login')
+    const handleNavigateToLogin = () => setView('login')
     
-    const handleRegisterSubmit = () => setView('login')
+    const handleUserRegistered = () => setView('login')
     
-    const handleLoginSubmit = () => setView('home')
+    const handleUserLoggedIn = () => setView('home')
     
-    const handleLogoutClick = () => setView('login')
+    const handleUserLoggedOut = () => setView('login')
 
     return <>
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick}/>}
+        {view === 'landing' && <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin}/>}
 
-        {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit}/>}
+        {view === 'register' && <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered}/>}
 
-        {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit}/>}
+        {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn}/>}
 
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick}/>}
+        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut}/>}
     </>
 }

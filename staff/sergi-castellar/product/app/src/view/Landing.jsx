@@ -1,10 +1,15 @@
-function Landing({ onLoginClick, onRegisterClick }) {
+import {Logo} from './components/Logo.jsx'
+
+export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
+    const handleRegisterClick = () => onNavigateToRegister()
+    const handleLoginClick = () => onNavigateToLogin()
+    
     return <div>
         <Logo />
         <div id="register-or-login">
-            <a onClick={onRegisterClick}>Register</a>
+            <a onClick={handleRegisterClick}>Register</a>
             <span> or </span>
-            <a onClick={onLoginClick}>Login</a>
+            <a onClick={handleLoginClick}>Login</a>
         </div>
     </div>
 }

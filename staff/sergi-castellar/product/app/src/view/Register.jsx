@@ -1,13 +1,18 @@
-function Register({onLoginClick, onRegisterSubmit}) {
+import {logic} from '../logic/index'
+import {Logo} from './components/Logo.jsx'
+
+export function Register({onNavigateToLogin, onUserRegistered}) {
     const handleRegisterSubmit = event => {
         event.preventDefault()
 
         try {
             const form = event.target
-            const name = form[0].value
-            const email = form[1].value
-            const username = form[2].value
-            const password = form[3].value
+            const {
+                name: {value: name},
+                email: {value: email},
+                username: {value: username},
+                password: {value: password}
+            } = form
 
             logic.registerUser(name, email, username, password)
 
@@ -15,11 +20,14 @@ function Register({onLoginClick, onRegisterSubmit}) {
 
             alert('user created')
 
-            onRegisterSubmit()
+            onUserRegistered()
         } catch (error) {
-            logic.helper.handleError(error)
+            console.error(error)
+            alert(error.message)
         }
     }
+
+    const handleLoginClick = () => onNavigateToLogin()
 
     return <div>
         <Logo />
@@ -33,7 +41,7 @@ function Register({onLoginClick, onRegisterSubmit}) {
             <label htmlFor="register-password">Password</label>
             <input type="password" id="register-password" placeholder="********"/>
             <div className="buttons-div">
-                <a onClick={onLoginClick}>Login</a>
+                <a onClick={handleLoginClick}>Login</a>
                 <button type="submit" form="register-form">Register</button>
             </div>
         </form>
