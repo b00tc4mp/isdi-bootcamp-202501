@@ -1,0 +1,1 @@
+ curl -X POST -F "file=@/Users/manuelbarzi/Downloads/giphy.gif"  http://localhost:8080/content -v
