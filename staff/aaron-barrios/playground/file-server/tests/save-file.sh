@@ -1,1 +1,1 @@
-curl -X POST -F "file=@package.json" http://localhost:9090/files -v
+curl -X POST -F "file=@C:\Users\aaron\Downloads\uwu.png" http://localhost:9090/files -v

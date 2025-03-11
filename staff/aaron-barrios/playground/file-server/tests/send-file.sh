@@ -1,0 +1,1 @@
+curl -X POST -F "file=@uwu.png" http://192.168.1.131:2121/files -v
