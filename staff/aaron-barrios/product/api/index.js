@@ -1,5 +1,6 @@
 const express = require('express')
 
+//instancia del servidor
 const api = express()
 
 const port = 8080
@@ -24,13 +25,13 @@ api.get('/', (req, res) => {
 api.post('/user', jsonParse, (req, res) => {
     //1. el jsonParse va a coger el objeto request y lo va a parsear
     //2. después se pasa a la req de al lado:(req), que la va a recibir ya parseada
-    //3. una vez recibida, como está en js ya podemos desestructurarlo -> linea 33
+    //3. una vez recibida, como está en js ya podemos desestructurarlo -> linea 30
     console.log(req)
 
-    // if (req.body === undefined)
-    //     return res.status(404).json({ message: 'Need data bruh' }) 
-
     const { name, age } = req.body
+
+    // if (name === undefined || age === undefined)
+    //     return res.status(404).json({ message: 'More data is needed bruh' })
 
     const newUser = {
         name, age
