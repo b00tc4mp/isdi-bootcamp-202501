@@ -1,4 +1,4 @@
-import {logic} from '../logic/index.js'
+import { logic } from '../logic/index.js'
 
 export function Register({ onNavigateToLogin, onUserRegistered }) {
     const handleRegisterSubmit = event => {
