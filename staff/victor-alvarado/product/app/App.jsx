@@ -1,11 +1,11 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
-import Landing from '/view/Landing.jsx'
-import Register from '/view/Register.jsx'
-import Login from '/view/Login.jsx'
-import Home from './view/Home'
+import { Landing } from '/view/Landing.jsx'
+import { Register } from '/view/Register.jsx'
+import { Login } from '/view/Login.jsx'
+import { Home } from './view/Home/index.jsx'
 
-import logic from '.logic.js'
+import { logic } from './logic/index.js'
 
 
 function App() {

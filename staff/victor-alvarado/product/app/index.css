@@ -86,46 +86,8 @@ input:-webkit-autofill {
     /* transition: background-color 5000s ease-in-out 1s; */
 }
 
-article {
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    background-color: transparent !important;
 
-    h3,
-    p,
-    .post-footer {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 5px;
 
-        margin-bottom: 0;
-
-        padding-bottom: 0;
-    }
-
-    img {
-        width: 100%;
-    }
-
-    .post-footer {
-        display: flex;
-        justify-content: space-between;
-    }
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-
-    width: 100%;
-    background-color: var(--bg-color);
-    padding: var(--padding-y) var(--padding-x);
-    box-sizing: border-box;
-}
 
 h1,
 h2 {
@@ -137,17 +99,7 @@ main {
     background-color: transparent !important;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: aqua;
-    display: flex;
-    justify-content: center;
-    background-color: var(--bg-color);
-    padding: var(--padding-y) var(--padding-x);
-    box-sizing: border-box;
-}
+
 
 button {
     font-family: 'Bangers', sans-serif;

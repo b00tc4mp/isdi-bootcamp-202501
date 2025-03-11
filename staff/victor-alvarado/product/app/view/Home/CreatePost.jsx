@@ -1,6 +1,6 @@
-import logic from '../../logic.js'
+import { logic } from '../../logic/index.js'
 
-function CreatePost({ onPostCreated, onPostCreateCancelled }) {
+export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
     const handleFormSubmit = event => {
         event.preventDefault()
 
@@ -38,4 +38,3 @@ function CreatePost({ onPostCreated, onPostCreateCancelled }) {
     </section>
 }
 
-export default CreatePost

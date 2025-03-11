@@ -1,10 +1,10 @@
-const { useState, useEffect } = React
+import { useState, useEffect } from 'react'
 
-import Post from './Post.jsx'
+import { Post } from './Post.jsx'
 
-import logic from '../../logic.js'
+import { logic } from '../../logic/index.js'
 
-function Posts() {
+export function Posts() {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
@@ -64,5 +64,3 @@ function Posts() {
 
     </section>
 }
-
-export default Posts

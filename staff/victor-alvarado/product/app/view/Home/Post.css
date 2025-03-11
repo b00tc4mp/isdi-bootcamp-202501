@@ -1,0 +1,27 @@
+article {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    background-color: transparent !important;
+
+    h3,
+    p,
+    .post-footer {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+
+        margin-bottom: 0;
+
+        padding-bottom: 0;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+    }
+}
