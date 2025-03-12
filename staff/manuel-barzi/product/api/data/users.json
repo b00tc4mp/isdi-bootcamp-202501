@@ -1,0 +1,56 @@
+[
+    {
+        "name": "Peter Pan",
+        "email": "peter@pan.com",
+        "username": "peterpan",
+        "password": "123123123",
+        "createdAt": "2025-03-07T11:31:12.786Z",
+        "modifiedAt": null,
+        "id": "m7yp34lurs6"
+    },
+    {
+        "name": "Wendy Darling",
+        "email": "wendy@darling.com",
+        "username": "wendydarling",
+        "password": "123123123",
+        "createdAt": "2025-03-07T11:49:28.393Z",
+        "modifiedAt": null,
+        "id": "m7ypqlzdwy"
+    },
+    {
+        "name": "James Hook",
+        "email": "james@hook.com",
+        "username": "jameshook",
+        "password": "123123123",
+        "createdAt": "2025-03-07T12:40:05.416Z",
+        "modifiedAt": null,
+        "id": "m7yrjpd4jp"
+    },
+    {
+        "name": "Campa Nilla",
+        "email": "campa@nilla.com",
+        "username": "campanilla",
+        "password": "123123123",
+        "createdAt": "2025-03-12T10:58:28.116Z",
+        "modifiedAt": null,
+        "id": "m85t49zona"
+    },
+    {
+        "name": "Pepito Griilo",
+        "email": "pepito@grillo.com",
+        "username": "pepitogrillo",
+        "password": "123123123",
+        "createdAt": "2025-03-12T11:11:25.192Z",
+        "modifiedAt": null,
+        "id": "m85tkxl42rd"
+    },
+    {
+        "name": "Pe Dorro",
+        "email": "pe@dorro.com",
+        "username": "pedorro",
+        "password": "123123123",
+        "createdAt": "2025-03-12T11:44:54.628Z",
+        "modifiedAt": null,
+        "id": "m85us02s8bc"
+    }
+]
