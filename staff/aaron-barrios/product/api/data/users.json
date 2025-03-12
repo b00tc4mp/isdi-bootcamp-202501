@@ -1,0 +1,31 @@
+[
+    {
+        "name": "ma",
+        "email": "ma@sha.com",
+        "username": "ma",
+        "password": "mamama",
+        "createdAt": "2025-03-07T15:11:51.678Z",
+        "modifiedAt": null,
+        "id": "m7ywyvsuze6"
+    },
+    {
+        "name": "alba",
+        "email": "al@ba.com",
+        "username": "al",
+        "password": "alalal",
+        "createdAt": "2025-03-09T16:16:46.923Z",
+        "role": "user",
+        "state": null,
+        "modifiedAt": null,
+        "id": "nbe04yghwog"
+    },
+    {
+        "name": "PeDorro",
+        "email": "pe@dorro.com",
+        "username": "pe",
+        "password": "pepepe",
+        "createdAt": "2025-03-12T14:47:06.466Z",
+        "modifiedAt": null,
+        "id": "m861ab4yxg"
+    }
+]

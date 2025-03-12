@@ -1,17 +1,16 @@
-const express = require('express')
+import express, { json } from 'express'
+
+import { logic } from './logic/index.js'
+
+import { CredentialsError, DuplicityError, NotFoundError, SystemError } from './errors.js'
 
 //instancia del servidor
 const api = express()
 
-const port = 8080
-
-const users = [
-    { name: 'euge', age: 33 },
-    { name: 'masha', age: 25 }
-]
-
 //se crea una función para guardar la llamada de este middleware
-const jsonParse = express.json()
+const jsonBodyParser = json()
+
+const port = 8080
 
 //se ejecuta el metodo get cuando tiramos curl -> http://localhost:8080 y te devuelve (res) el objeto json de users
 api.get('/', (req, res) => {
@@ -22,24 +21,29 @@ api.get('/', (req, res) => {
 
 //como hay un -d identificamos el método como post
 // body request -> '{"name":"aaron", "age": "26"}'
-api.post('/user', jsonParse, (req, res) => {
+api.post('/users', jsonBodyParser, (req, res) => {
     //1. el jsonParse va a coger el objeto request y lo va a parsear
     //2. después se pasa a la req de al lado:(req), que la va a recibir ya parseada
     //3. una vez recibida, como está en js ya podemos desestructurarlo -> linea 30
-    console.log(req)
+    try {
+        const { name, email, username, password } = req.body
 
-    const { name, age } = req.body
+        logic.registerUser(name, email, username, password)
 
-    // if (name === undefined || age === undefined)
-    //     return res.status(404).json({ message: 'More data is needed bruh' })
+        res.status(201).send()
+    } catch (error) {
+        console.error(error)
 
-    const newUser = {
-        name, age
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof DuplicityError) {
+            status = 409
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
     }
-
-    users.push(newUser)
-
-    res.status(201).json({ newUser, message: 'User created!' })
 })
 
 api.listen(port, () => {
