@@ -1,0 +1,1 @@
+curl -X GET http://localhost:8080/files/636a11a7-2025-4975-b57b-b1ebc1f91d35 -v
