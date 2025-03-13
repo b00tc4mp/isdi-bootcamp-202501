@@ -2,7 +2,7 @@ import express, { json } from 'express'
 
 import { logic } from './logic/index.js'
 
-import { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError } from './errors.js'
+import { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } from './errors.js'
 
 //instancia del servidor
 const api = express()
@@ -19,7 +19,8 @@ api.get('/', (req, res) => {
 
 //se ejecuta el metodo post cuando tiramos -> curl -X POST -d '{"name":"aaron", "age": "26"}' -H 'Content-Type: 'application/json' - v http://localhost:8080
 
-// body request -> '{"name":"aaron", "age": "26"}'
+// request body -> '{"name":"aaron", "age": "26"}'
+
 //  ----- REGISTER METHOD -----
 api.post('/users', jsonBodyParser, (req, res) => {
     //1. el jsonParse va a coger el objeto request y lo va a parsear
@@ -37,7 +38,10 @@ api.post('/users', jsonBodyParser, (req, res) => {
         let status = 500
         let errorName = SystemError.name
 
-        if (error instanceof DuplicityError) {
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof DuplicityError) {
             status = 409
             errorName = error.constructor.name
         }
@@ -61,7 +65,10 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
         let status = 500
         let errorName = SystemError.name
 
-        if (error instanceof CredentialsError) {
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof CredentialsError) {
             status = 401
             errorName = error.constructor.name
         } else if (error instanceof NotFoundError) {
@@ -75,18 +82,28 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
 
 
 //  ----- GET USERNAME METHOD -----
-api.get('/users/:userId', jsonBodyParser, (req, res) => {
+api.get('/users/self/name', jsonBodyParser, (req, res) => {
     try {
-        const { userId } = req.params
+        const { authorization } = req.headers
 
-        const username = logic.getUsername(userId)
+        const userId = authorization.slice(6)
 
-        res.status(201).send({ username })
+        const name = logic.getUsername(userId)
+
+        res.json(name)
     } catch (error) {
         console.error(error)
 
         let status = 500
         let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
 
         res.status(status).json({ error: errorName, message: error.message })
     }
@@ -94,9 +111,11 @@ api.get('/users/:userId', jsonBodyParser, (req, res) => {
 
 
 //  ----- GET POSTS METHOD -----
-api.get('/posts/:userId', jsonBodyParser, (req, res) => {
+api.get('/posts', jsonBodyParser, (req, res) => {
     try {
-        const { userId } = req.params
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
 
         const posts = logic.getPosts(userId)
 
@@ -107,6 +126,14 @@ api.get('/posts/:userId', jsonBodyParser, (req, res) => {
         let status = 500
         let errorName = SystemError.name
 
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
         res.status(status).json({ error: errorName, message: error.message })
     }
 })
@@ -115,7 +142,11 @@ api.get('/posts/:userId', jsonBodyParser, (req, res) => {
 //  ----- CREATEPOST METHOD -----
 api.post('/posts', jsonBodyParser, (req, res) => {
     try {
-        const { userId, image, text } = req.body
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const { image, text } = req.body
 
         logic.createPost(userId, image, text)
 
@@ -126,7 +157,10 @@ api.post('/posts', jsonBodyParser, (req, res) => {
         let status = 500
         let errorName = SystemError.name
 
-        if (error instanceof DuplicityError) {
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof DuplicityError) {
             status = 409
             errorName = error.constructor.name
         }
@@ -139,7 +173,11 @@ api.post('/posts', jsonBodyParser, (req, res) => {
 //  ----- DELETE POST METHOD-----
 api.delete('/posts/:postId', jsonBodyParser, (req, res) => {
     try {
-        const { body: { userId }, params: { postId } } = req
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const { postId } = req.params
 
         logic.deletePost(userId, postId)
 
@@ -150,7 +188,10 @@ api.delete('/posts/:postId', jsonBodyParser, (req, res) => {
         let status = 500
         let errorName = SystemError.name
 
-        if (error instanceof OwnershipError) {
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof OwnershipError) {
             status = 401
             errorName = error.constructor.name
         } else if (error instanceof NotFoundError) {
@@ -164,9 +205,13 @@ api.delete('/posts/:postId', jsonBodyParser, (req, res) => {
 
 
 //  ----- TOGGLE LIKE POST METHOD-----
-api.patch('/posts/:postId', jsonBodyParser, (req, res) => {
+api.patch('/posts/:postId/likes', jsonBodyParser, (req, res) => {
     try {
-        const { body: { userId }, params: { postId } } = req
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const { postId } = req.params
 
         logic.toggleLikePost(userId, postId)
 
@@ -177,7 +222,11 @@ api.patch('/posts/:postId', jsonBodyParser, (req, res) => {
         let status = 500
         let errorName = SystemError.name
 
-        if (error instanceof NotFoundError) {
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
             status = 404
             errorName = error.constructor.name
         }
@@ -188,10 +237,14 @@ api.patch('/posts/:postId', jsonBodyParser, (req, res) => {
 
 
 //  ----- UPDATE POST TEXT METHOD-----
-// * pongo el userId en params porque sino al tener la misma que el toggle no llega hasta aqui y no ejecuta el metodo
-api.patch('/posts/:userId/:postId', jsonBodyParser, (req, res) => {
+// * pongo la ruta self para que no colapse con el toggle
+api.patch('/posts/:postId', jsonBodyParser, (req, res) => {
     try {
-        const { body: { text }, params: { userId, postId } } = req
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const { params: { postId }, body: { text } } = req
 
         logic.updatePostText(userId, postId, text)
 
@@ -202,7 +255,10 @@ api.patch('/posts/:userId/:postId', jsonBodyParser, (req, res) => {
         let status = 500
         let errorName = SystemError.name
 
-        if (error instanceof NotFoundError) {
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
             status = 404
             errorName = error.constructor.name
         } else if (error instanceof OwnershipError) {

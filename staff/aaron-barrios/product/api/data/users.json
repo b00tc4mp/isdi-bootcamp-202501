@@ -36,5 +36,14 @@
         "createdAt": "2025-03-12T15:42:33.070Z",
         "modifiedAt": null,
         "id": "m8639lymfx"
+    },
+    {
+        "name": "Co hibido",
+        "email": "co@hibido.com",
+        "username": "co",
+        "password": "cococo",
+        "createdAt": "2025-03-13T14:19:13.628Z",
+        "modifiedAt": null,
+        "id": "m87fqb18ssk"
     }
 ]

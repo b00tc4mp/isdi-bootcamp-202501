@@ -1,1 +1,2 @@
-curl -X GET http://localhost:8080/users/m8639lymfx -H 'Content-type: application/json' -v
+curl -X GET http://localhost:8080/users/self/name \
+    -H 'Authorization: Basic m861ab4yxg' -v

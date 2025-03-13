@@ -1,7 +1,7 @@
-import {toggleLikePost} from './toggleLikePost.js'
+import { toggleLikePost } from './toggleLikePost.js'
 
-try{
-    toggleLikePost('m861ab4yxg', 'm861ynhh1t6')
-}catch (error){
+try {
+    toggleLikePost('nbe04yghwog', 'mp0qvpay8sg')
+} catch (error) {
     console.error(error)
 }

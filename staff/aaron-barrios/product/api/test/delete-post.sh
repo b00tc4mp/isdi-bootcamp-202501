@@ -1,1 +1,3 @@
-curl -X DELETE http://localhost:8080/posts/m865pyr0yv7 -H 'Content-type: application/json' -d '{"userId":"m8639lymfx"}' -v
+curl -X DELETE http://localhost:8080/posts/m87gibtmihe \
+    -H 'Authorization: Basic m87fqb18ssk' \
+    -H 'Content-type: application/json' -v
