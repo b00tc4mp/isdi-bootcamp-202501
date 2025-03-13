@@ -1,72 +1,164 @@
-const express = require("express");
+import express, { json } from "express";
 
-//crea el servidor
-const app = express();
+import { logic } from "./logic/index.js";
+import {
+  CredentialsError,
+  OwnershipError,
+  DuplicityError,
+  SystemError,
+  ValidationError,
+  NotFoundError,
+} from "./logic/errors.js";
 
-//defineix una variable amb el port
-const port = 1717;
+const api = express();
 
-const uuid = () => {
-  return (Math.random() * 15 + 1 ** 15).toString(36);
-};
+const jsonBodyParser = json();
 
-const data = {
-  users: [
-    { name: "frank", age: 25, id: uuid() },
-    { name: "mashenka", age: 20, id: uuid() },
-  ],
-  posts: [
-    {
-      id: uuid(),
-      text: "Hey mundo",
-      author: uuid(),
-    },
-  ],
-};
+api.get("/posts", jsonBodyParser, (req, res) => {
+  try {
+    const { authorization } = req.headers;
 
-// iguales una variable a la funció express.json()
-// express.json() fa parse a les requests que tinguin el Content-Type de json al Header
-const jsonParse = express.json();
+    const userId = authorization.slice(-12);
 
-//defineix un mètode associat a una ruta. En aquest cas farem un get que ens retornarà la data
-app.get("/", (req, res) => {
-  res.json(data);
+    const posts = logic.getPosts(userId);
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+
+    let status = 500;
+    let errorName = "System Error";
+
+    if (error instanceof NotFoundError) {
+      status = 404;
+      errorName = NotFoundError.name;
+    }
+
+    res.status(status).json({ error: errorName, message: error.message });
+  }
 });
 
-//associem el mètode post a la ruta /api el mètode post.
-//Li passem un middleware que hem guardat abans per a parsejar el body a javascript
-//Executem el callback per a fer el push del user
-app.post("/users", jsonParse, (req, res) => {
-  //validate body info
-  const { name, age } = req.body;
+api.post("/users/authenticate", jsonBodyParser, (req, res) => {
+  try {
+    const { username, password } = req.body;
 
-  const newUser = {
-    name,
-    age,
-    id: uuid(),
-  };
+    const id = logic.authenticateUser(username, password);
 
-  data.users.push(newUser);
+    res.status(200).send(id);
+  } catch (error) {
+    console.error(error);
 
-  res.status(201).json({ message: "User created!" });
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof NotFoundError) {
+      status = 404;
+
+      errorName = NotFoundError.name;
+    } else if (error instanceof CredentialsError) {
+      status = 401;
+
+      errorName = CredentialsError.name;
+    }
+
+    res.status(status).json({ error: errorName, message: error.message });
+  }
 });
 
-//el mateix però amb posts
-app.post("/posts", jsonParse, (req, res) => {
-  //validate body info
-  const { text, author } = req.body;
+api.post("/users", jsonBodyParser, (req, res) => {
+  try {
+    const { name, email, username, password } = req.body;
 
-  const newUser = {
-    text,
-    author,
-    id: uuid(),
-  };
+    logic.registerUser({
+      name: name,
+      email: email,
+      username: username,
+      password: password,
+    });
 
-  data.posts.push(newUser);
+    res.sendStatus(201);
+  } catch (error) {
+    console.error(error);
 
-  res.status(201).json({ message: "Post created!" });
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof ValidationError) {
+      status = 400;
+      errorName = ValidationError.name;
+    } else if (error instanceof DuplicityError) {
+      status = 409;
+      errorName = DuplicityError.name;
+    }
+    res.status(status).json({ error: errorName, message: error.message });
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+api.post("/users/self", (req, res) => {
+  try {
+    const { authorization } = req.headers;
+
+    const userId = authorization.slice(-12);
+
+    const name = logic.getOnlineUserName(userId);
+
+    res.status(200).json(name);
+  } catch (error) {
+    console.error(error);
+
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof ValidationError) {
+      status = 400;
+
+      errorName = ValidationError.name;
+    } else if (error instanceof OwnershipError) {
+      status = 403;
+
+      errorName = OwnershipError.name;
+    } else if (error instanceof NotFoundError) {
+      status = 404;
+
+      errorName = NotFoundError.name;
+    }
+
+    res.status(status).json({ error: errorName, message: error.message });
+  }
 });
+
+api.patch("/posts/:id", jsonBodyParser, (req, res) => {
+  try {
+    const { authorization } = req.headers;
+
+    const userId = authorization.slice(-12);
+
+    const {
+      params: { id },
+      body: { text },
+    } = req;
+
+    logic.updatePostText(userId, id, text);
+
+    res.status(200);
+  } catch (error) {
+    console.error(error);
+
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof ValidationError) {
+      status = 400;
+      errorName = ValidationError.name;
+    } else if (error instanceof NotFoundError) {
+      status = 404;
+      errorName = NotFoundError.name;
+    } else if (error instanceof OwnershipError) {
+      status = 403;
+      errorName = OwnershipError.name;
+    }
+
+    res.status(status).json({ error: errorName, message: error.message });
+  }
+});
+api.listen(8080, () => console.log("api listening in port 8080"));

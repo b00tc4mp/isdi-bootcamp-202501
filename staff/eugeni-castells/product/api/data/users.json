@@ -1,0 +1,36 @@
+[
+  {
+    "name": "lacho",
+    "email": "lucho@trucho.com",
+    "username": "lucho",
+    "password": "123123123",
+    "createdAt": "2025-03-07T15:58:36.540Z",
+    "modifiedAt": "2025-03-13T08:04:02.844Z",
+    "id": "7odunezhz0.9"
+  },
+  {
+    "name": "aaron",
+    "email": "aaron@sabroson.com",
+    "username": "aaronski",
+    "password": "123123123",
+    "id": "9fns3nqzvz.w"
+  },
+  {
+    "name": "Mashulinski",
+    "email": "mashola@pola.com",
+    "username": "mashinski",
+    "password": "123123123",
+    "createdAt": "2025-03-12T15:57:55.397Z",
+    "modifiedAt": null,
+    "id": "9l4wnf0z26.r"
+  },
+  {
+    "name": "eugeni",
+    "email": "test@gmail.com",
+    "username": "euge",
+    "password": "123123123",
+    "createdAt": "2025-03-13T09:40:15.640Z",
+    "modifiedAt": null,
+    "id": "2gvssspwv0.l"
+  }
+]

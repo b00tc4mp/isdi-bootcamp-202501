@@ -1,1 +1,0 @@
-curl -X POST -d '{"text":"in hawaii...","author":"123abc"}' -H 'Content-Type: application/json' -v http://localhost:1717/posts
