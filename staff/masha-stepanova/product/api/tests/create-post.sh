@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8080/posts/create -H 'Authorization: Basic m873ryudyt' -H 'Content-type: application/json' -d '{"link":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/769px-Cat03.jpg", "text":"miau"}' -v

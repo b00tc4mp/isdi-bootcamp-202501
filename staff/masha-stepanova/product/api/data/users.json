@@ -1,0 +1,38 @@
+[
+    {
+        "name": "admin",
+        "email": "ad@min.com",
+        "username": "admin",
+        "password": "12345678",
+        "createdAt": "2025-03-07T11:43:29.531Z",
+        "modifiedAt": null,
+        "id": "m7ypix2zy0i"
+    },
+    {
+        "name": "Aurora",
+        "email": "aurora@princess.com",
+        "username": "aurora",
+        "password": "12345678",
+        "createdAt": "2025-03-07T16:13:17.377Z",
+        "modifiedAt": null,
+        "id": "m7yz5vpd0gg"
+    },
+    {
+        "name": "Jasmine Princess",
+        "email": "jasmine@princess.com",
+        "username": "jasmine",
+        "password": "12345678",
+        "createdAt": "2025-03-12T17:20:24.973Z",
+        "modifiedAt": null,
+        "id": "m866rgr1po8"
+    },
+    {
+        "name": "Test",
+        "email": "test@test.com",
+        "username": "test",
+        "password": "12345678",
+        "createdAt": "2025-03-13T08:44:35.749Z",
+        "modifiedAt": null,
+        "id": "m873ryudyt"
+    }
+]
