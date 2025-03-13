@@ -24,6 +24,10 @@ Este tipo de petición se utiliza cuando el cliente está tratando de eliminar u
 
 Es similar al verbo PUT en el sentido que también actualiza algo pero en este caso podemos actualizar solo una parte.
 
+• ALL
+
+Método que sirve para que funciona la ruta con cualquier método. Es como crear múltiples rutas en una.
+
 
 ## Thunder Client Extension
 
@@ -41,3 +45,40 @@ Puede mandar strings, archivos html, imagenes, videos, formatos json...
 · 200 todo fue OK y te envio una respuesta
 · 204 todo fue OK pero no te devuelvo nada
 
+## Middleware
+
+· El concepto de middleware se basa en crear una función que
+decide/compruebe/valide/registre la petición del cliente antes de ser pasada
+por la siguiente ruta. 
+
+· Esta función, puede validar si la petición que llega del cliente cumple o coincide
+con unas condiciones y decidirá si autorizar o no su seguimiento. En el caso que 
+lo autorice proseguirá su camino (next) y en el caso que no le mandará una respuesta
+al navegador de no autorizado (res.send).
+
+· Un middleware siempre llevará el tercer parámetro next, ya que si no se quedará estancada
+esperando una respuesta.
+
+· Paquete Morgan: es un paquete que ya me tiene hecha la función middleware. Me devolverá en consola
+mucha información sobre lo que hemos pedido. Por eso le pasamos el paramétro dev a morgan. Hay varios
+formatos a escoger a parte de dev.
+
+## REST API
+
+· Servidor con ciertas url's que nos permiten procesar datos.
+· Crearemos una aplicación (no haremos la parte front-end) donde
+guardaremos datos/productos en un array a través del servidor. El servidor nos
+buscará los datos que le pidamos y los actualizará, borrará, generará...
+· Para que podemos decirle desde el cliente (front-end) al servidor que tiene
+que hacer estas operaciones hay que utilizar las rutas a través de los métodos
+de HTTP (GET, POST, DELETE...)
+· Nuestra app tendrá:
+    -Método GET con ruta /products.
+    -Método POST con ruta /products.
+    -Método GET con ruta products/:id (la misma ruta pero solo quiero un id específico).
+    -Método PUT con ruta products/:id (para actualizar).
+    -Método DELETE con ruta products/:id
+
+· API sería nuestro servidor, el cual tiene la función de conectar nuestros datos con el frontend.
+· Como nuestro servidor también está cumpliendo con los principios REST (formas en las que creamos 
+los url's -> con los métodos http), se le llama REST API.
