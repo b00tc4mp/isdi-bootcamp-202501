@@ -27,5 +27,14 @@
         "createdAt": "2025-03-12T14:47:06.466Z",
         "modifiedAt": null,
         "id": "m861ab4yxg"
+    },
+    {
+        "name": "Di vertido",
+        "email": "di@vertido.com",
+        "username": "di",
+        "password": "dididi",
+        "createdAt": "2025-03-12T15:42:33.070Z",
+        "modifiedAt": null,
+        "id": "m8639lymfx"
     }
 ]

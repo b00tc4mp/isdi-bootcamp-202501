@@ -1,0 +1,1 @@
+curl -X GET http://localhost:8080/users/m8639lymfx -H 'Content-type: application/json' -v

@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/posts/m7ywyvsuze6/gdkzyiyiysg -H 'Content-Type: application/json' -d '{"text":"orange"}'

@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/posts/m861ynhh1t6 -H 'Content-Type: application/json' -d '{"userId":"m8639lymfx"}'

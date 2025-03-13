@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8080/posts -H 'Content-type: application/json' -d '{"userId":"m8639lymfx","image":"https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3BvcDA5eXEzM3RueWhlM3B2ZGF3OTllMjd5OHF2bjN4aG8zbHY3ZyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/bAslCtb0Nx9NcPtLKH/giphy.gif","text":"dididi"}' -v
