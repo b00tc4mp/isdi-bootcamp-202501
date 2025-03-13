@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/updatet -H 'Content-type: application/json' -d '{"userId":"m866rqsnfut","postId":"m87pbc6hqqu","text":"olaaaa"}' -v
