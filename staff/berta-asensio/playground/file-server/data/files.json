@@ -1,12 +1,1 @@
-[
-  {
-    "uuid": "9623610d-f6dd-4d6a-94e8-1ed4ab309ab5",
-    "path": "files\\\\9623610d-f6dd-4d6a-94e8-1ed4ab309ab5\\\\8c7dd922ad47494fc02c388e12c00eac\\\\b9cfc7f2cdf78a7f4b91a753d10865a2",
-    "filename": "package.json"
-  },
-  {
-    "uuid": "d1e22ab7-937b-41ea-a800-af3bac172ce4",
-    "filename": "package.json",
-    "path": "files\\d1e22ab7-937b-41ea-a800-af3bac172ce4\\8c7dd922ad47494fc02c388e12c00eac\\b9cfc7f2cdf78a7f4b91a753d10865a2"
-  }
-]
+[{"uuid":"9623610d-f6dd-4d6a-94e8-1ed4ab309ab5","path":"files\\\\9623610d-f6dd-4d6a-94e8-1ed4ab309ab5\\\\8c7dd922ad47494fc02c388e12c00eac\\\\b9cfc7f2cdf78a7f4b91a753d10865a2","filename":"package.json"},{"uuid":"d1e22ab7-937b-41ea-a800-af3bac172ce4","filename":"package.json","path":"files\\d1e22ab7-937b-41ea-a800-af3bac172ce4\\8c7dd922ad47494fc02c388e12c00eac\\b9cfc7f2cdf78a7f4b91a753d10865a2"},{"uuid":"8b0716e9-39d5-48bf-b03f-cb1c8b9854a3","filename":"VISUAL STUDIO CODES.pdf","path":"files\\8b0716e9-39d5-48bf-b03f-cb1c8b9854a3\\8c7dd922ad47494fc02c388e12c00eac\\808ad2a3329506356a3b9b43b2373628"}]
