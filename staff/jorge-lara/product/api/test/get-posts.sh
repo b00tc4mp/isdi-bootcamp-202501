@@ -1,0 +1,1 @@
+curl -X GET http://localhost:8080/posts/20y8wll1xsu -H 'Content-type: application/json' -v
