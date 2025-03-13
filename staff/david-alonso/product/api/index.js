@@ -1,15 +1,66 @@
-const express = require('express')
-const api = express()
+import express, { json } from 'express'
+import { logic } from './logic/index.js'
+
+import { CredentialsError, DuplicityError, NotFoundError, SystemError } from './errors.js'
 
 const port = 8080
 
-api.use(express.json())
+const api = express()
 
-api.post('/users', (req, res) => {
+const jsonBodyParser = json()
 
-    const { name, surname } = req.body
+api.get('/hello', (req, res) => {
+    console.log(req.path)
 
-    res.send(`Users ${name} ${surname} create.`)
+    res.send('Hello, world!')
+})
+
+
+api.post('/users', jsonBodyParser, (req, res) => {
+
+    try {
+        const { name, email, username, password } = req.body
+
+        logic.registerUser(name, email, username, password)
+
+        res.status(201).send()
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof DuplicityError) {
+            status = 409
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+
+api.post('/users/auth', jsonBodyParser, (req, res) => {
+    try {
+        const { username, password } = req.body
+
+        const id = logic.authenticateUser(username, password)
+
+        res.json(id)
+    } catch (error) {
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof CredentialsError) {
+            status = 401
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
 })
 
 
