@@ -56,9 +56,9 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
     try {
         const { username, password } = req.body
 
-        logic.authenticateUser(username, password)
+        const id = logic.authenticateUser(username, password)
 
-        res.status(201).send()
+        res.json(id)
     } catch (error) {
         console.error(error)
 
@@ -119,7 +119,7 @@ api.get('/posts', jsonBodyParser, (req, res) => {
 
         const posts = logic.getPosts(userId)
 
-        res.status(201).send({ posts })
+        res.status(200).send({ posts })
     } catch (error) {
         console.error(error)
 
@@ -173,15 +173,13 @@ api.post('/posts', jsonBodyParser, (req, res) => {
 //  ----- DELETE POST METHOD-----
 api.delete('/posts/:postId', jsonBodyParser, (req, res) => {
     try {
-        const { authorization } = req.headers
+        const { headers: { authorization }, params: { postId } } = req
 
         const userId = authorization.slice(6)
 
-        const { postId } = req.params
-
         logic.deletePost(userId, postId)
 
-        res.status(201).send()
+        res.status(204).send()
     } catch (error) {
         console.error(error)
 
@@ -192,7 +190,7 @@ api.delete('/posts/:postId', jsonBodyParser, (req, res) => {
             status = 400
             errorName = error.constructor.name
         } else if (error instanceof OwnershipError) {
-            status = 401
+            status = 403
             errorName = error.constructor.name
         } else if (error instanceof NotFoundError) {
             status = 404
@@ -207,15 +205,13 @@ api.delete('/posts/:postId', jsonBodyParser, (req, res) => {
 //  ----- TOGGLE LIKE POST METHOD-----
 api.patch('/posts/:postId/likes', jsonBodyParser, (req, res) => {
     try {
-        const { authorization } = req.headers
+        const { headers: { authorization }, params: { postId } } = req
 
         const userId = authorization.slice(6)
 
-        const { postId } = req.params
-
         logic.toggleLikePost(userId, postId)
 
-        res.status(201).send()
+        res.status(204).send()
     } catch (error) {
         console.error(error)
 
@@ -238,17 +234,15 @@ api.patch('/posts/:postId/likes', jsonBodyParser, (req, res) => {
 
 //  ----- UPDATE POST TEXT METHOD-----
 // * pongo la ruta self para que no colapse con el toggle
-api.patch('/posts/:postId', jsonBodyParser, (req, res) => {
+api.patch('/posts/:postId/text', jsonBodyParser, (req, res) => {
     try {
-        const { authorization } = req.headers
+        const { headers: { authorization }, params: { postId }, body: { text } } = req
 
         const userId = authorization.slice(6)
 
-        const { params: { postId }, body: { text } } = req
-
         logic.updatePostText(userId, postId, text)
 
-        res.status(201).send()
+        res.status(204).send()
     } catch (error) {
         console.error(error)
 
@@ -262,7 +256,7 @@ api.patch('/posts/:postId', jsonBodyParser, (req, res) => {
             status = 404
             errorName = error.constructor.name
         } else if (error instanceof OwnershipError) {
-            status = 401
+            status = 403
             errorName = error.constructor.name
         }
 
