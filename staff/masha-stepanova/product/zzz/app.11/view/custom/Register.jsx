@@ -16,13 +16,8 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
             } = form
 
             logic.registerUser(name, email, username, password)
-                .then(() => onUserRegistered())
-                .catch(error => {
-                    console.error(error)
 
-                    alert(error.message)
-                })
-
+            onUserRegistered()
         } catch (error) {
             console.error(error)
 
@@ -31,13 +26,11 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     }
 
-    const handleLoginClick = () => onNavigateToLogin()
-
     return <div class="form">
-
+        {/* style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}> */}
         <h1>Logo</h1>
         <form onSubmit={handleUserRegistered} >
-
+            {/* style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}> */}
             <label htmlFor="name">Name</label>
             <input type="text" id="name" />
             <label htmlFor="email">E-mail</label>
@@ -48,6 +41,6 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
             <input type="password" id="password" />
             <button type="submit">Submit</button>
         </form>
-        <a onClick={handleLoginClick}>Login</a>
+        <a onClick={onNavigateToLogin}>Login</a>
     </div>
 }

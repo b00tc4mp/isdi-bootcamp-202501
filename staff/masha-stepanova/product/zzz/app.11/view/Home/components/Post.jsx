@@ -8,12 +8,8 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     const handleToggleLikePost = () => {
         try {
             logic.toggleLikePost(post.id)
-                .then(() => onPostLikeToggled())
-                .catch(error => {
-                    console.error(error)
 
-                    alert(error.message)
-                })
+            onPostLikeToggled()
         } catch (error) {
             console.error(error)
 
@@ -25,12 +21,8 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
         if (confirm('Delete post?'))
             try {
                 logic.deletePost(post.id)
-                    .then(() => onPostDeleted())
-                    .catch(error => {
-                        console.error(error)
 
-                        alert(error.message)
-                    })
+                onPostDeleted()
             } catch (error) {
                 console.error(error)
 
@@ -50,16 +42,10 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
             const { text: { value: text } } = form
 
             logic.updatePostText(post.id, text)
-                .then(() => {
-                    onPostTextEdited()
 
-                    setView('')
-                })
-                .catch(error => {
-                    console.error(error)
+            onPostTextEdited()
 
-                    alert(error.message)
-                })
+            setView('')
         } catch (error) {
             console.error(error)
 
@@ -73,6 +59,8 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
         <h3>{post.author.username}</h3>
 
         <img src={post.image} />
+
+        {/* {view === '' && <p>{post.text}</p>} */}
 
         {view === 'edit-text' && <form onSubmit={handleEditTextSubmit}>
             <label htmlFor="text">Text</label>

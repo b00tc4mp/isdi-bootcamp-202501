@@ -14,13 +14,9 @@ export function Home({ onUserLoggedOut, onNavigateToProfile }) {
         console.debug('Home -> useEffect')
 
         try {
-            logic.getUserName()
-                .then(name => setUsername(name))
-                .catch(error => {
-                    console.error(error)
+            const name = logic.getUserName()
 
-                    alert(error.message)
-                })
+            setUsername(name)
         } catch (error) {
             console.error(error)
 
@@ -31,8 +27,8 @@ export function Home({ onUserLoggedOut, onNavigateToProfile }) {
     const handleLogoutClick = () => {
         try {
             logic.logoutUser()
-            onUserLoggedOut()
 
+            onUserLoggedOut()
         } catch (error) {
             console.error(error)
 
@@ -40,11 +36,23 @@ export function Home({ onUserLoggedOut, onNavigateToProfile }) {
         }
     }
 
-    const handleCreatedPost = () => setView('posts')
+    const handleCreatedPost = () => {
+        try {
+            setView('posts')
+        } catch (error) {
+            console.error(error)
 
-    const handleNavigateToProfile = () => onNavigateToProfile()
+            alert(error.message)
+        }
+    }
 
-    const handleCreatePostCanceled = () => setView('posts')
+    const handleNavigateToProfile = () => {
+        onNavigateToProfile()
+    }
+
+    const handleCreatePostCanceled = () => {
+        setView('posts')
+    }
 
     console.debug('Home -> render')
 

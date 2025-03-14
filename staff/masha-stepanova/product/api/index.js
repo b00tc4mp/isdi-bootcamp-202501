@@ -1,4 +1,5 @@
 import express, { json } from 'express'
+import cors from 'cors'
 
 import { logic } from './logic/index.js'
 import { CredentialsError, DuplicityError, NotFoundError, SystemError, OwnershipError, ValidationError } from './errors.js'
@@ -9,7 +10,7 @@ const jsonBodyParse = json()
 
 const port = 8080
 
-// api.use(cors())
+api.use(cors())
 
 api.get('/', (req, res) => {
     res.send('Hello, API!')
@@ -48,7 +49,7 @@ api.post('/users/auth', jsonBodyParse, (req, res) => {
 
         const id = logic.authenticateUser(username, password)
 
-        res.json(id)
+        res.json({ id })
     } catch (error) {
         console.error(error)
 
@@ -70,15 +71,15 @@ api.post('/users/auth', jsonBodyParse, (req, res) => {
     }
 })
 
-api.post('/posts/create', jsonBodyParse, (req, res) => {
+api.post('/posts', jsonBodyParse, (req, res) => {
     try {
         const { authorization } = req.headers
 
         const userId = authorization.slice(6)
 
-        const { body: { link, text } } = req
+        const { body: { image, text } } = req
 
-        logic.createPost(userId, link, text)
+        logic.createPost(userId, image, text)
 
         res.status(201).send()
     } catch (error) {

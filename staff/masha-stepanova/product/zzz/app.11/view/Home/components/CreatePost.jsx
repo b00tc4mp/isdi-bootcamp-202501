@@ -2,7 +2,15 @@ import { logic } from '../../../logic/index'
 
 export function CreatePost({ onCreatedPost, onCreatePostCanceled }) {
 
-    const handleCancelClick = () => onCreatePostCanceled()
+    const handleCancelClick = () => {
+        try {
+            onCreatePostCanceled()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
 
     const handleCreatedPost = (event) => {
         event.preventDefault()
@@ -16,12 +24,8 @@ export function CreatePost({ onCreatedPost, onCreatePostCanceled }) {
             } = form
 
             logic.addPost(image, text)
-                .then(() => onCreatedPost())
-                .catch(error => {
-                    console.error(error)
 
-                    alert(error.message)
-                })
+            onCreatedPost()
         } catch (error) {
             console.error(error)
 

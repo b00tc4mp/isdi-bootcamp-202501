@@ -12,13 +12,9 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
 
     useEffect(() => {
         try {
-            logic.getUserPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+            const posts = logic.getUserPosts()
 
-                    alert(error.message)
-                })
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -29,12 +25,8 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
     const handleUserLoggedOut = () => {
         try {
             logic.logoutUser()
-                .then(() => onUserLoggedOut())
-                .catch(error => {
-                    console.error(error)
 
-                    alert(error.message)
-                })
+            onUserLoggedOut()
         } catch (error) {
             console.error(error)
 
@@ -44,13 +36,9 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
 
     const handlePostLikeToggled = (postId) => {
         try {
-            logic.getUserPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+            const posts = logic.getUserPosts()
 
-                    alert(error.message)
-                })
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -60,13 +48,9 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
 
     const handlePostDeleted = () => {
         try {
-            logic.getUserPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+            const posts = logic.getUserPosts()
 
-                    alert(error.message)
-                })
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -76,13 +60,9 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
 
     const handlePostTextEdited = () => {
         try {
-            logic.getUserPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+            const posts = logic.getUserPosts()
 
-                    alert(error.message)
-                })
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -90,7 +70,15 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
         }
     }
 
-    const handleAddPostClick = () => setView('addPost')
+    const handleAddPostClick = () => {
+        try {
+            setView('addPost')
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
 
     const handleCreatePostSubmit = (event) => {
         event.preventDefault()
@@ -104,23 +92,11 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
             } = form
 
             logic.createPost(image, text)
-                .then(() => logic.getUserPosts())
-                .catch(error => {
-                    console.error(error)
 
-                    alert(error.message)
-                })
+            const posts = logic.getUserPosts()
 
-            logic.getUserPosts()
-                .then(posts => {
-                    setPosts(posts)
-                    setView('profile')
-                })
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
+            setPosts(posts)
+            setView('profile')
         } catch (error) {
             console.error(error)
 
@@ -128,10 +104,25 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
         }
     }
 
-    const handleCreatePostCancelClick = () => onCreatePostCanceled()
+    const handleCreatePostCancelClick = () => {
+        try {
+            onCreatePostCanceled()
+        } catch (error) {
+            console.error(error)
 
-    const handleNavigateToHome = () => onNavigateToHome()
+            alert(error.message)
+        }
+    }
 
+    const handleNavigateToHome = () => {
+        try {
+            onNavigateToHome()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
 
     return <div class="posts">
         <section class="header">
@@ -153,7 +144,7 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
 
         {
             view === 'addPost' && <section >
-
+                {/* style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px", gap: "0.3rem" }}> */}
                 <h1>Logo</h1>
 
                 <p>To add new post you have to add the image link and a description to it. Try it now!</p>

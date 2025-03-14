@@ -11,13 +11,9 @@ export function Posts() {
         console.debug('Posts -> useEffect')
 
         try {
-            logic.getPosts()
-                .then(setPosts)
-                .catch(error => {
-                    console.error(error)
+            const posts = logic.getPosts()
 
-                    alert(error.message)
-                })
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -27,13 +23,9 @@ export function Posts() {
 
     const handlePostLikeToggled = () => {
         try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+            const posts = logic.getPosts()
 
-                    alert(error.message)
-                })
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -43,13 +35,9 @@ export function Posts() {
 
     const handlePostDeleted = () => {
         try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+            const posts = logic.getPosts()
 
-                    alert(error.message)
-                })
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -59,13 +47,9 @@ export function Posts() {
 
     const handlePostTextEdited = () => {
         try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+            const posts = logic.getPosts()
 
-                    alert(error.message)
-                })
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 

@@ -10,6 +10,7 @@ import { getPosts } from './getPosts'
 import { deletePost } from './deletePost'
 import { updatePostText } from './updatePostText'
 import { toggleLikePost } from './toggleLikePost'
+import { isPostLikedByUser } from './isPostLikedByUser'
 
 export const logic = {
     registerUser,
@@ -24,4 +25,5 @@ export const logic = {
     deletePost,
     updatePostText,
     toggleLikePost,
+    isPostLikedByUser
 }

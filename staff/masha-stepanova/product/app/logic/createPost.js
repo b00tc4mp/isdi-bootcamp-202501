@@ -9,14 +9,28 @@ export const createPost = (link, text) => {
 
     const { userId } = data
 
-    const newPost = {
-        author: userId,
-        image: link,
-        text: text,
-        createdAt: new Date(),
-        modifiedAt: null,
-        likes: []
-    }
+    return fetch('http://localhost:8080/posts', {
+        method: 'POST',
+        headers: {
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ image, text })
+    })
 
-    data.posts.insertOne(newPost)
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status)
+
+            if (response.status === 201)
+                return
+
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    throw new Error(message)
+                })
+        })
 }

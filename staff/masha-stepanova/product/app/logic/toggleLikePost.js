@@ -1,25 +1,32 @@
 import { data } from '../data/index.js'
 import { validate } from './validate.js'
 
-import { NotFoundError } from '../errors.js'
+// import { NotFoundError } from '../errors.js'
 
 export const toggleLikePost = (postId) => {
     validate.id(postId, 'postId')
 
     const { userId } = data
 
-    let postToLike = data.posts.findOne(post => post.id === postId)
-
-    if (!postToLike) throw new NotFoundError('post not found')
-
-    for (var i = 0; i < postToLike.likes.length; i++) {
-        if (postToLike.likes[i] === userId) {
-            postToLike.likes.splice(i, 1)
-            data.posts.updateOne(postToLike)
-            return
+    return fetch(`http://localhost:8080/posts/${postId}/likes`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Basic ${userId}`
         }
-    }
-    postToLike.likes[postToLike.likes.length] = userId
+            .catch(error => { throw new Error(error.message) })
+            .then(response => {
+                console.log(response.status)
 
-    data.posts.updateOne(postToLike)
+                if (response.status == 204)
+                    return
+
+                return response.json()
+                    .catch(error => { throw new Error(error.message) })
+                    .then(body => {
+                        const { error, message } = body
+
+                        throw new Error(message)
+                    })
+            })
+    })
 }

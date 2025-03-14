@@ -1,12 +1,18 @@
 export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
+    const handleRegisterClick = () => onNavigateToRegister()
+
+    const handleRegisterLogin = () => onNavigateToLogin()
+
+    console.debug('Landing -> render')
+
     return <div className="landing-page" >
 
         <h1>Logo</h1>
 
         <section className="register-login">
-            <a onClick={onNavigateToRegister}>Register</a>
+            <a onClick={handleRegisterClick}>Register</a>
             <> or </>
-            <a onClick={onNavigateToLogin}>Login</a>
+            <a onClick={handleRegisterLogin}>Login</a>
         </section>
 
     </div>
