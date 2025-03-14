@@ -2,7 +2,7 @@ import express, { json } from 'express'
 
 import { logic } from './logic/index.js'
 
-import { DuplicityError, NotFoundError, SystemError, ValidationError } from './errors.js';
+import { DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } from './errors.js';
 
 const api = express();
 
@@ -10,8 +10,8 @@ const PORT = 8080;
 
 const jsonBodyParser = json();
 
-api.get('/hello', (req, res) => {
-    res.send('HelloWorld!');
+api.get('/', (req, res) => {
+    res.send('Hello API!');
 })
 
 api.post('/users', jsonBodyParser, (req, res) => {
@@ -67,7 +67,7 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
     }
 })
 
-api.get('/users/me', (req, res) => {
+api.get('/users/self/name', (req, res) => {
     try {
         const { authorization } = req.headers;
 
@@ -149,15 +149,17 @@ api.get('/posts', (req, res) => {
     }
 })
 
-api.delete('/posts', jsonBodyParser, (req, res) => {
+api.delete('/posts/:postid', (req, res) => {
     try {
         const { authorization } = req.headers;
 
         const userId = authorization.slice(6);
 
-        const { postId } = req.body;
+        const { postid } = req.params;
 
-        logic.deletePost(userId, postId);
+        logic.deletePost(userId, postid);
+
+        res.status(204).send();
     } catch (error) {
         console.error(error);
 
@@ -166,6 +168,9 @@ api.delete('/posts', jsonBodyParser, (req, res) => {
 
         if (error instanceof ValidationError) {
             status = 400;
+            errorName = error.constructor.name;
+        } else if (error instanceof OwnershipError) {
+            status = 403;
             errorName = error.constructor.name;
         } else if (error instanceof NotFoundError) {
             status = 404;
@@ -186,7 +191,7 @@ api.patch('/posts/:postid/likes', (req, res) => {
 
         logic.toggleLikePost(userId, postid);
 
-        res.status(201).send();
+        res.status(204).send();
     } catch (error) {
         console.error(error);
 
@@ -200,10 +205,12 @@ api.patch('/posts/:postid/likes', (req, res) => {
             status = 404;
             errorName = error.constructor.name;
         }
+
+        res.status(status).json({ error: errorName, message: error.message })
     }
 })
 
-api.patch('/posts/:postid', jsonBodyParser, (req, res) => {
+api.patch('/posts/:postid/text', jsonBodyParser, (req, res) => {
     try {
         const { authorization } = req.headers;
 
@@ -215,7 +222,7 @@ api.patch('/posts/:postid', jsonBodyParser, (req, res) => {
 
         logic.updatePostText(userId, postid, text);
 
-        res.status(201).send();
+        res.status(204).send();
     } catch (error) {
         console.error(error);
 
@@ -225,10 +232,15 @@ api.patch('/posts/:postid', jsonBodyParser, (req, res) => {
         if (error instanceof ValidationError) {
             status = 400;
             errorName = error.constructor.name;
+        } else if (error instanceof OwnershipError) {
+            status = 403;
+            errorName = error.constructor.name;
         } else if (error instanceof NotFoundError) {
             status = 404;
             errorName = error.constructor.name;
         }
+
+        res.status(status).json({ error: errorName, message: error.message })
     }
 })
 

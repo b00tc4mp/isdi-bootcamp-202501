@@ -1,10 +1,18 @@
 import { data } from '../data/index.js'
-import { NotFoundError } from '../errors.js';
+import { NotFoundError, OwnershipError } from '../errors.js';
 import { validate } from './validate.js';
 
 export const updatePostText = (userId, postId, text) => {
     validate.id(userId, 'userId');
     validate.id(postId, 'postId');
+    validate.text(text, 'text');
+    validate.maxLength(text, 400, 'text');
+
+    const user = data.users.getById(userId);
+
+    if (!user) {
+        throw new NotFoundError('user not found');
+    }
 
     const foundPost = data.posts.findOne(post => post.id === postId);
 
