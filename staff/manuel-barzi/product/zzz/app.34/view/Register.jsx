@@ -15,16 +15,10 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
             } = form
 
             logic.registerUser(name, email, username, password)
-                .then(() => {
-                    form.reset()
 
-                    onUserRegistered()
-                })
-                .catch(error => {
-                    console.error(error)
+            form.reset()
 
-                    alert(error.message)
-                })
+            onUserRegistered()
         } catch (error) {
             console.error(error)
 

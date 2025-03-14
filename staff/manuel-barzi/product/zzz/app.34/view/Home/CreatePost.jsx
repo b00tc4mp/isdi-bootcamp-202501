@@ -10,12 +10,8 @@ export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
             const { image: { value: image }, text: { value: text } } = form
 
             logic.createPost(image, text)
-                .then(() => onPostCreated())
-                .catch(error => {
-                    console.error(error)
 
-                    alert(error.message)
-                })
+            onPostCreated()
         } catch (error) {
             console.error(error)
 

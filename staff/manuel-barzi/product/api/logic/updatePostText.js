@@ -6,6 +6,8 @@ import { NotFoundError, OwnershipError } from '../errors.js'
 export const updatePostText = (userId, postId, text) => {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')
+    validate.text(text, 'text')
+    validate.maxLength(text, 400, 'text')
 
     const user = data.users.getById(userId)
 
