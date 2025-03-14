@@ -9,10 +9,10 @@ const jsonBodyParse = json()
 
 const port = 8080
 
-api.get('/hello', (req, res) => {
-    console.log(req.path)
+// api.use(cors())
 
-    res.send('Hello, World!')
+api.get('/', (req, res) => {
+    res.send('Hello, API!')
 })
 
 api.post('/users', jsonBodyParse, (req, res) => {
@@ -171,7 +171,7 @@ api.get('/users/self/name', (req, res) => {
     }
 })
 
-api.delete('/posts/:postId', jsonBodyParse, (req, res) => {
+api.delete('/posts/:postId', (req, res) => {
     try {
         const { authorization } = req.headers
 
@@ -181,7 +181,7 @@ api.delete('/posts/:postId', jsonBodyParse, (req, res) => {
 
         logic.deletePost(userId, postId)
 
-        res.status(200).send('Post deleted')
+        res.status(204).send()
     } catch (error) {
         console.error(error)
 
@@ -192,7 +192,7 @@ api.delete('/posts/:postId', jsonBodyParse, (req, res) => {
             status = 400
             errorName = error.constructor.name
         } else if (error instanceof OwnershipError) {
-            status = 401
+            status = 403
             errorName = error.constructor.name
         } else if (error instanceof NotFoundError) {
             status = 404
@@ -203,7 +203,9 @@ api.delete('/posts/:postId', jsonBodyParse, (req, res) => {
     }
 })
 
-api.patch('/posts/:postId/like', jsonBodyParse, (req, res) => {
+// TODO eliminate ownership error
+
+api.patch('/posts/:postId/likes', jsonBodyParse, (req, res) => {
     try {
         const { authorization } = req.headers
 
@@ -213,7 +215,7 @@ api.patch('/posts/:postId/like', jsonBodyParse, (req, res) => {
 
         logic.toggleLikePost(userId, postId)
 
-        res.status(200).send()
+        res.status(204).send()
     } catch (error) {
         console.error(error)
 
@@ -222,9 +224,6 @@ api.patch('/posts/:postId/like', jsonBodyParse, (req, res) => {
 
         if (error instanceof ValidationError) {
             status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof OwnershipError) {
-            status = 401
             errorName = error.constructor.name
         } else if (error instanceof NotFoundError) {
             status = 404
@@ -235,7 +234,7 @@ api.patch('/posts/:postId/like', jsonBodyParse, (req, res) => {
     }
 })
 
-api.patch('/posts/:postId/text-update', jsonBodyParse, (req, res) => {
+api.patch('/posts/:postId/text', jsonBodyParse, (req, res) => {
     try {
         const { authorization } = req.headers
 
@@ -245,7 +244,7 @@ api.patch('/posts/:postId/text-update', jsonBodyParse, (req, res) => {
 
         logic.updatePostText(userId, postId, text)
 
-        res.status(200).send()
+        res.status(204).send()
     } catch (error) {
         console.error(error)
 
@@ -256,7 +255,7 @@ api.patch('/posts/:postId/text-update', jsonBodyParse, (req, res) => {
             status = 400
             errorName = error.constructor.name
         } else if (error instanceof OwnershipError) {
-            status = 401
+            status = 403
             errorName = error.constructor.name
         } else if (error instanceof NotFoundError) {
             status = 404
