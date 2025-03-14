@@ -1,7 +1,7 @@
 import { deletePost } from "./deletePost.js";
 
 try {
-  const postD= deletePost('m834iqai-q9g8acf555p','m87eiv1x-ava51w2g4j');
+  const postD= deletePost('au-012fwytt1ex2e','m88wxeyf-89g96azbdmq');
   console.log(postD);
 } catch (error) {
   console.error(error);

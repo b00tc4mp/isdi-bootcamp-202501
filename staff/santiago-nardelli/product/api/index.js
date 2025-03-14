@@ -1,61 +1,246 @@
 // node --inspect-brk index.js
 
 import express, { json } from "express";
+import cors from "cors";
 
 import { logic } from "./logic/index.js";
 
 import {
   SystemError,
-  ValidationError,
+  ValidateError,
   CredentialsError,
   NotFoundError,
-} from "./errors/index.js";
+  OwnershipError,
+} from "./errors/errors.js";
 const app = express();
 const port = 3000;
 
 const jsonBodyParse = json();
+app.use(cors());
 
 app.get("/hello", (req, res) => {
   console.log(req.path);
   res.send("Hello World!");
 });
+// Ruta para obtener los posts
+app.get("/posts", (req, res) => {
+  try {
+    const { authorization } = req.headers;
+
+    const userId = authorization.slice(6);
+
+    const posts = logic.getPosts(userId);
+
+    res.json(posts);
+  } catch (error) {
+    console.error(error);
+
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof ValidateError) {
+      status = 400;
+      errorName = error.constructor.name;
+    } else if (error instanceof NotFoundError) {
+      status = 404;
+      errorName = error.constructor.name;
+    }
+    res.status(status).json({ error: errorName, message: error.message });
+  }
+});
 
 // Ruta para autenticar usuarios
 app.post("/users/auth", jsonBodyParse, (req, res) => {
-    try {
-      // Extrae el email y password del cuerpo de la solicitud
-      const { email, password } = req.body;
-  
-      // Llama a la lógica de autenticación de usuario con el email y password proporcionados
-      const id = logic.authenticateUser(email, password);
-  
-      // Responde con el id del usuario autenticado en formato JSON
-      res.json(id);
-    } catch (error) {
-      // Imprime el error en la consola para propósitos de depuración
-      console.log(error);
-  
-      // Inicializa el estado de respuesta y el nombre del error
-      let status = 500;
-      let errorName = SystemError.name;
-  
-      // Maneja errores específicos y ajusta el estado de respuesta y el nombre del error en consecuencia
-      if (error instanceof ValidationError) {
-        status = 400; // Error de validación, solicitud incorrecta
-        errorName = error.constructor.name;
-      } else if (error instanceof CredentialsError) {
-        status = 401; // Error de credenciales, no autorizado
-        errorName = error.constructor.name;
-      } else if (error instanceof NotFoundError) {
-        status = 404; // Error de no encontrado, recurso no encontrado
-        errorName = error.constructor.name;
-      }
-  
-      // Responde con el estado de error y un objeto JSON que contiene el nombre del error y el mensaje
-      res.status(status).json({ error: errorName, message: error.message });
+  try {
+    // Extrae el email y password del cuerpo de la solicitud
+    const { email, password } = req.body;
+
+    // Llama a la lógica de autenticación de usuario con el email y password proporcionados
+    const id = logic.authenticateUser(email, password);
+
+    // Responde con el id del usuario autenticado en formato JSON
+    res.json(id);
+  } catch (error) {
+    // Imprime el error en la consola para propósitos de depuración
+    console.log(error);
+
+    // Inicializa el estado de respuesta y el nombre del error
+    let status = 500;
+    let errorName = SystemError.name;
+
+    // Maneja errores específicos y ajusta el estado de respuesta y el nombre del error en consecuencia
+    if (error instanceof ValidateError) {
+      status = 400; // Error de validación, solicitud incorrecta
+      errorName = error.constructor.name;
+    } else if (error instanceof CredentialsError) {
+      status = 401; // Error de credenciales, no autorizado
+      errorName = error.constructor.name;
+    } else if (error instanceof NotFoundError) {
+      status = 404; // Error de no encontrado, recurso no encontrado
+      errorName = error.constructor.name;
     }
-  });
-  
+
+    // Responde con el estado de error y un objeto JSON que contiene el nombre del error y el mensaje
+    res.status(status).json({ error: errorName, message: error.message });
+  }
+});
+
+// Ruta para registrar usuarios
+app.post("/user/register", jsonBodyParse, (req, res) => {
+  try {
+    // Extrae los datos del usuario del cuerpo de la solicitud
+    const { name, email, password } = req.body;
+
+    // Llama a la lógica de registro de usuario con los datos proporcionados
+    logic.registerUser(name, email, password);
+
+    // Responde con un mensaje de éxito
+    res.status(200).send();
+  } catch (error) {
+    // Imprime el error en la consola para propósitos de depuración
+    console.log(error);
+
+    // Inicializa el estado de respuesta y el nombre del error
+    let status = 500;
+    let errorName = SystemError.name;
+
+    // Maneja errores específicos y ajusta el estado de respuesta y el nombre del error en consecuencia
+    if (error instanceof ValidateError) {
+      status = 400; // Error de validación, solicitud incorrecta
+      errorName = error.constructor.name;
+    } else if (error instanceof CredentialsError) {
+      status = 409; // Error de credenciales, no autorizado
+      errorName = error.constructor.name;
+    }
+
+    // Responde con el estado de error y un objeto JSON que contiene el nombre del error y el mensaje
+    res.status(status).json({ error: errorName, message: error.message });
+  }
+});
+// Ruta para crear un post
+app.post("/posts", jsonBodyParse, (req, res) => {
+  try {
+    const { authorization } = req.headers;
+
+    const userId = authorization.slice(6);
+
+    const { image, text } = req.body;
+
+    logic.createPost(userId, image, text);
+
+    res.send(201).send();
+  } catch (error) {
+    console.error(error);
+
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof ValidateError) {
+      status = 400;
+      errorName = error.constructor.name;
+    } else if (error instanceof NotFoundError) {
+      status = 404;
+      errorName = error.constructor.name;
+    }
+    res.status(status).json({ error: errorName, message: error.message });
+  }
+});
+// Ruta para modificar un post
+app.patch("/posts/:postId/text", jsonBodyParse, (req, res) => {
+  try {
+    const { authorization } = req.headers;
+
+    const userId = authorization.slice(6);
+
+    const { postId } = req.params;
+
+    const { text } = req.body;
+
+    logic.modifyPost(userId, postId, text);
+
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof ValidateError) {
+      status = 400;
+      errorName = error.constructor.name;
+    } else if (error instanceof NotFoundError) {
+      status = 404;
+      errorName = error.constructor.name;
+    } else if (error instanceof OwnershipError) {
+      status = 403;
+      errorName = error.constructor.name;
+    }
+
+    res.status(status).json({ error: errorName, message: error.message });
+  }
+});
+//Ruta para los likes
+app.patch("/posts/:postId/likes", (req, res) => {
+  try {
+    const { authorization } = req.headers;
+
+    const userId = authorization.slice(6);
+
+    const { postId } = req.params;
+
+    logic.toggleLikePost(userId, postId);
+
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof ValidateError) {
+      status = 400;
+      errorName = error.constructor.name;
+    } else if (error instanceof NotFoundError) {
+      status = 404;
+      errorName = error.constructor.name;
+    }
+
+    res.status(status).json({ error: errorName, message: error.message });
+  }
+});
+
+app.delete("/posts/:postId", (req, res) => {
+  try {
+    const { authorization } = req.headers;
+
+    const userId = authorization.slice(6);
+
+    const { postId } = req.params;
+
+    logic.deletePost(userId, postId);
+
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+
+    let status = 500;
+    let errorName = SystemError.name;
+
+    if (error instanceof ValidateError) {
+      status = 400;
+      errorName = error.constructor.name;
+    } else if (error instanceof NotFoundError) {
+      status = 404;
+      errorName = error.constructor.name;
+    }else if  (error instanceof OwnershipError) {
+      status = 403;
+      errorName = error.constructor
+    }
+
+    res.status(status).json({ error: errorName, message: error.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

@@ -25,7 +25,7 @@ class ValidateError extends Error {
         super(message)
     }
 }
-class SistemError extends Error {
+class SystemError extends Error {
     constructor(message) {
         super(message)
     }
@@ -38,5 +38,5 @@ export {
     NotFoundError,
     OwnershipError,
     ValidateError,
-    SistemError
+    SystemError
 }

@@ -1,13 +1,12 @@
 import { data } from "../data/index.js";
 import { validate } from "./validate.js";
 import { NotFoundError, OwnershipError } from "../errors/errors.js";
-export const modifyPost = (userId, postId, image, title) => {
+export const modifyPost = (userId, postId, title) => {
   // Validar el ID del post
   validate.id(postId, "postId");
 
-  // Validar la imagen y el título
-  validate.text(image, "image");
-  validate.maxLength(image, 1000, "image");
+  // Validar  el título
+  
   validate.text(title, "title");
   validate.maxLength(title, 500, "title");
 
@@ -22,7 +21,7 @@ export const modifyPost = (userId, postId, image, title) => {
     throw new OwnershipError("user is not author of post");
 
   // Actualizar el post con los nuevos datos
-  foundPost.image = image;
+
   foundPost.title = title;
   foundPost.modifiedAt = new Date();
 

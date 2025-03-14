@@ -48,5 +48,15 @@
         "role": "user",
         "modifiedAt": null,
         "id": "m86dreer-16hxgfuyla2"
+    },
+    {
+        "name": "Diego",
+        "email": "diego@maradona.com",
+        "password": "123456",
+        "createdAt": "2025-03-14T18:20:26.868Z",
+        "status": "active",
+        "role": "user",
+        "modifiedAt": null,
+        "id": "m893sdbo-k4w7454bn"
     }
 ]
