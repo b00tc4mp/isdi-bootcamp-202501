@@ -7,33 +7,20 @@ export const toggleLikePost = (userId, postId) => {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')
 
-    const foundPost = data.posts.findOne(post => post.id === postId)
+    const user = data.users.getById(userId)
 
-    if (!foundPost) throw new NotFoundError('post not found')
+    if (!user) throw new NotFoundError('user not found')
 
-    let userIdFound = false
+    const post = data.posts.findOne(post => post.id === postId)
 
-    for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-        const id = foundPost.likes[i]
+    if (!post) throw new NotFoundError('post not found')
 
-        if (id === userId)
-            userIdFound = true
-    }
+    const index = post.likes.findIndex(likeUserId => likeUserId === userId)
 
-    if (!userIdFound)
-        foundPost.likes[foundPost.likes.length] = userId
-    else {
-        const likes = []
+    if (index < 0)
+        post.likes.push(userId)
+    else
+        post.likes.splice(index, 1)
 
-        for (let i = 0; i < foundPost.likes.length; i++) {
-            const id = foundPost.likes[i]
-
-            if (id !== userId)
-                likes[likes.length] = id
-        }
-
-        foundPost.likes = likes
-    }
-
-    data.posts.updateOne(post => post.id === postId, foundPost)
+    data.posts.updateOne(post => post.id === postId, post)
 }

@@ -7,14 +7,18 @@ export const updatePostText = (userId, postId, text) => {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')
 
-    const foundPost = data.posts.findOne(post => post.id === postId)
+    const user = data.users.getById(userId)
 
-    if (!foundPost) throw new NotFoundError('post not found')
+    if (!user) throw new NotFoundError('user not found')
 
-    if (foundPost.author !== userId) throw new OwnershipError('user is not author of post')
+    const post = data.posts.findOne(post => post.id === postId)
 
-    foundPost.text = text
-    foundPost.modifiedAt = new Date
+    if (!post) throw new NotFoundError('post not found')
 
-    data.posts.updateOne(post => post.id === postId, foundPost)
+    if (post.author !== userId) throw new OwnershipError('user is not author of post')
+
+    post.text = text
+    post.modifiedAt = new Date
+
+    data.posts.updateOne(post => post.id === postId, post)
 }
