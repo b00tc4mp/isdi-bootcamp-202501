@@ -1,7 +1,7 @@
 import { toggleLikePost } from './toggleLikePost.js'
 
 try {
-    toggleLikePost('20y8wll1xsu', 'arvih5to6gc');
+    toggleLikePost('p1ferh4x30w', 'f77xr7goyq8');
 } catch (error) {
     console.error(error);
 }

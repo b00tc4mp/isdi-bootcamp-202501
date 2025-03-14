@@ -1,4 +1,4 @@
-import { getUserName } from "./getUsername"
+import { getUserName } from './getUsername.js'
 
 try {
     const user = getUserName('20y8wll1xsu')

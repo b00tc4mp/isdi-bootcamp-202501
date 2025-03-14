@@ -2,7 +2,7 @@ import express, { json } from 'express'
 
 import { logic } from './logic/index.js'
 
-import { DuplicityError, NotFoundError, SystemError } from './errors.js';
+import { DuplicityError, NotFoundError, SystemError, ValidationError } from './errors.js';
 
 const api = express();
 
@@ -27,7 +27,10 @@ api.post('/users', jsonBodyParser, (req, res) => {
         let status = 500;
         let errorName = SystemError.name;
 
-        if (error instanceof DuplicityError) {
+        if (error instanceof ValidationError) {
+            status = 400;
+            errorName = error.constructor.name;
+        } else if (error instanceof DuplicityError) {
             status = 409;
             errorName = error.constructor.name;
         }
@@ -49,7 +52,10 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
         let status = 500;
         let errorName = SystemError.name;
 
-        if (error instanceof CredentialsError) {
+        if (error instanceof ValidationError) {
+            status = 400;
+            errorName = error.constructor.name;
+        } else if (error instanceof CredentialsError) {
             status = 401;
             errorName = error.constructor.name;
         } else if (error instanceof NotFoundError) {
@@ -61,9 +67,40 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
     }
 })
 
+api.get('/users/me', (req, res) => {
+    try {
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        const name = logic.getUserName(userId);
+
+        res.json(name);
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
 api.post('/posts', jsonBodyParser, (req, res) => {
     try {
-        const { userId, text, url } = req.body;
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        const { text, url } = req.body;
 
         logic.addPost(userId, text, url);
 
@@ -74,8 +111,11 @@ api.post('/posts', jsonBodyParser, (req, res) => {
         let status = 500;
         let errorName = SystemError.name;
 
-        if (error instanceof DuplicityError) {
-            status = 409;
+        if (error instanceof ValidationError) {
+            status = 400;
+            errorName = error.constructor.name;
+        } else if (error instanceof NotFoundError) {
+            status = 404;
             errorName = error.constructor.name;
         }
 
@@ -83,17 +123,112 @@ api.post('/posts', jsonBodyParser, (req, res) => {
     }
 })
 
-api.get('/posts/:userid', (req, res) => {
+api.get('/posts', (req, res) => {
     try {
-        const { userid } = req.params;
+        const { authorization } = req.headers;
 
-        const posts = logic.getPosts(userid);
+        const userId = authorization.slice(6);
 
-        res.send(posts);
+        const posts = logic.getPosts(userId);
+
+        res.json(posts);
     } catch (error) {
         console.error(error);
 
-        res.status(500).send('Error listing posts')
+        let status = 500;
+        let errorName = SystemError.name;
+
+        if (error instanceof ValidationError) {
+            status = 400;
+            errorName = error.constructor.name;
+        } else if (error instanceof NotFoundError) {
+            status = 404;
+            errorName = error.constructor.name;
+        }
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+api.delete('/posts', jsonBodyParser, (req, res) => {
+    try {
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        const { postId } = req.body;
+
+        logic.deletePost(userId, postId);
+    } catch (error) {
+        console.error(error);
+
+        let status = 500;
+        let errorName = SystemError.name;
+
+        if (error instanceof ValidationError) {
+            status = 400;
+            errorName = error.constructor.name;
+        } else if (error instanceof NotFoundError) {
+            status = 404;
+            errorName = error.constructor.name;
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+api.patch('/posts/:postid/likes', (req, res) => {
+    try {
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        const { postid } = req.params;
+
+        logic.toggleLikePost(userId, postid);
+
+        res.status(201).send();
+    } catch (error) {
+        console.error(error);
+
+        let status = 500;
+        let errorName = SystemError.name;
+
+        if (error instanceof ValidationError) {
+            status = 400;
+            errorName = error.constructor.name;
+        } else if (error instanceof NotFoundError) {
+            status = 404;
+            errorName = error.constructor.name;
+        }
+    }
+})
+
+api.patch('/posts/:postid', jsonBodyParser, (req, res) => {
+    try {
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        const { postid } = req.params;
+
+        const { text } = req.body;
+
+        logic.updatePostText(userId, postid, text);
+
+        res.status(201).send();
+    } catch (error) {
+        console.error(error);
+
+        let status = 500;
+        let errorName = SystemError.name;
+
+        if (error instanceof ValidationError) {
+            status = 400;
+            errorName = error.constructor.name;
+        } else if (error instanceof NotFoundError) {
+            status = 404;
+            errorName = error.constructor.name;
+        }
     }
 })
 

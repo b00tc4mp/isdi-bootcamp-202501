@@ -7,5 +7,14 @@
         "createdAt": "2025-03-12T23:31:39.076Z",
         "modifiedAt": null,
         "id": "20y8wll1xsu"
+    },
+    {
+        "name": "admin2",
+        "email": "admin2@gmail.com",
+        "username": "admin2",
+        "password": "12345678",
+        "createdAt": "2025-03-08T17:41:22.611Z",
+        "modifiedAt": null,
+        "id": "p1ferh4x30w"
     }
 ]
