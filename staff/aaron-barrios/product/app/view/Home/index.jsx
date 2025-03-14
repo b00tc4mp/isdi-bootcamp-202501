@@ -1,9 +1,9 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
-import {Posts} from './Posts.jsx'
-import {CreatePost} from './CreatePost.jsx'
+import { Posts } from './Posts.jsx'
+import { CreatePost } from './CreatePost.jsx'
 
-import {logic} from '../../logic/index.js'
+import { logic } from '../../logic/index.js'
 
 export function Home({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')
@@ -11,9 +11,15 @@ export function Home({ onUserLoggedOut }) {
 
     useEffect(() => {
         try {
-            const name = logic.getUsername()
+            logic.getUsername()
+                .then(name => setUsername(name))
+                //ERRORES ASÍNCRONOS
+                .catch(error => {
+                    console.error(error)
 
-            setUsername(name)
+                    alert(error.message)
+                })
+            //ERRORES SÍNCRONOS
         } catch (error) {
             console.error(error)
 

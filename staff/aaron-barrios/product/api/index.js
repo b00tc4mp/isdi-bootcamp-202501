@@ -1,4 +1,5 @@
 import express, { json } from 'express'
+import cors from 'cors'
 
 import { logic } from './logic/index.js'
 
@@ -12,10 +13,10 @@ const jsonBodyParser = json()
 
 const port = 8080
 
+api.use(cors())
+
 //se ejecuta el metodo get cuando tiramos curl -> http://localhost:8080 y te devuelve (res) el objeto json de users
-api.get('/', (req, res) => {
-    res.json(users)
-})
+api.get('/', (req, res) => res.send('Hello, API!'))
 
 //se ejecuta el metodo post cuando tiramos -> curl -X POST -d '{"name":"aaron", "age": "26"}' -H 'Content-Type: 'application/json' - v http://localhost:8080
 
@@ -58,7 +59,7 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
 
         const id = logic.authenticateUser(username, password)
 
-        res.json(id)
+        res.json({ id })
     } catch (error) {
         console.error(error)
 
@@ -90,7 +91,7 @@ api.get('/users/self/name', jsonBodyParser, (req, res) => {
 
         const name = logic.getUsername(userId)
 
-        res.json(name)
+        res.json({ name })
     } catch (error) {
         console.error(error)
 
@@ -119,7 +120,7 @@ api.get('/posts', jsonBodyParser, (req, res) => {
 
         const posts = logic.getPosts(userId)
 
-        res.status(200).send({ posts })
+        res.json(posts)
     } catch (error) {
         console.error(error)
 

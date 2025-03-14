@@ -1,15 +1,38 @@
-import {data} from '../data/index.js'
-import {validate} from './validate.js'
+import { data } from '../data'
+import { validate } from './validate'
 
-import { CredentialsError} from '../errors.js'
+// import { CredentialsError } from '../errors'
 
 export const loginUser = (username, password) => {
-        validate.username(username, 'name')
-        validate.password(password, 'password')
+    validate.username(username, 'username')
+    validate.password(password, 'password')
 
-        const found = data.users.findOne(user => user.username === username)
+    return fetch('http://localhost:8080/users/auth', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-        if (!found || found.password !== password) throw new CredentialsError('Wrong credentials')
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new Error(error.message) })
+                    .then(body => {
+                        const { id } = body
 
-        data.userId = found.id
-    }
+                        data.userId = id
+                    })
+
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    throw new Error(message)
+                })
+        })
+}

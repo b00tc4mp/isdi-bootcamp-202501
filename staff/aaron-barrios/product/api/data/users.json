@@ -54,5 +54,14 @@
         "createdAt": "2025-03-14T09:23:21.877Z",
         "modifiedAt": null,
         "id": "m88klod1jbh"
+    },
+    {
+        "name": "Dor Mido",
+        "email": "dor@mido.com",
+        "username": "do",
+        "password": "dododo",
+        "createdAt": "2025-03-14T12:38:44.641Z",
+        "modifiedAt": null,
+        "id": "m88rkxpe19"
     }
 ]
