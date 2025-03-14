@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/toggle -H 'Content-type: application/json' -d '{"userId":"m866ajbah4", "postId":"m876c8tsles"}' -v
