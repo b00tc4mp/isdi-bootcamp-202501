@@ -43,5 +43,14 @@
         "createdAt": "2025-03-13T09:43:35.333Z",
         "modifiedAt": null,
         "id": "m875vu05c6j"
+    },
+    {
+        "name": "Diego Armando",
+        "email": "diego@armando.com",
+        "username": "eldiego",
+        "password": "123123123",
+        "createdAt": "2025-03-15T01:20:37.732Z",
+        "modifiedAt": null,
+        "id": "m89isq5gxm9"
     }
 ]
