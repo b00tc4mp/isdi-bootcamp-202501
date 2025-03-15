@@ -1,0 +1,37 @@
+[
+    {
+        "author": "m76fexkfwpd",
+        "image": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2F3bmk0bjl4OXkzeTZkd2NueG9ibnpzd2ZhYnRvZWI0dm52cnBubiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ge2ckPYYtHJX5mdgiY/giphy.gif",
+        "text": "i need a coffee!",
+        "createdAt": "2025-03-08T10:58:06.500Z",
+        "modifiedAt": "2025-03-08T15:25:52.381Z",
+        "likes": [
+            "m7w30juebf",
+            "m806ubra03",
+            "m76fm39hq1u"
+        ],
+        "id": "m803cen9crr"
+    },
+    {
+        "author": "m806ubra03",
+        "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmYzcnp1dTRpbmV1YW9meTh3OWdpNmpmbmM4M3M5eGt0MGo4eWRnayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/L45Nt0ttUm4zZ3kmex/giphy.gif",
+        "text": "dancing together",
+        "createdAt": "2025-03-08T12:37:20.786Z",
+        "modifiedAt": "2025-03-15T08:39:00.729Z",
+        "likes": [
+            "m806ubra03"
+        ],
+        "id": "m806w102e98"
+    },
+    {
+        "author": "m7w30juebf",
+        "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExamZ3cm4zbmlrdWY0bDljNndpc2Z4cnZuZWJuMmhjaTE2dXZ2Mmh6dyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AQ7GWTm9iBxaU/giphy.gif",
+        "text": "I love this girl",
+        "createdAt": "2025-03-14T16:24:17.553Z",
+        "modifiedAt": null,
+        "likes": [
+            "m7w139zujl"
+        ],
+        "id": "m88zmzrlwjn"
+    }
+]

@@ -12,5 +12,5 @@ export const loginUser = (username, password) => {
 
         if(!found || found.password !== password) throw new CredentialsError('wrong credentials')
 
-        data.userId = found.id
+        data.userId = found.id //Aqui en el navegador se guarda el id del usuario
 }

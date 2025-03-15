@@ -1,0 +1,65 @@
+[
+    {
+        "id": "m76fexkfwpd",
+        "name": "Abeja Maya",
+        "username": "MayaBee",
+        "password": "123123ss",
+        "email": "abeja@maya.com",
+        "createdAt": "2024-01-01T23:00:00.000Z",
+        "modifiedAt": null
+    },
+    {
+        "id": "m76fm39hq1u",
+        "name": "Bob Esponja",
+        "username": "SpongeBob",
+        "password": "456456ss",
+        "email": "bob@esponja.com",
+        "createdAt": "2024-04-19T22:00:00.000Z",
+        "modifiedAt": null
+    },
+    {
+        "id": "m7w139zujl",
+        "name": "Mickey Mouse",
+        "username": "MikeMouse",
+        "password": "456456",
+        "email": "Mickey@Mouse.com",
+        "createdAt": "2025-03-05T14:43:56.634Z",
+        "modifiedAt": null
+    },
+    {
+        "id": "m7w30juebf",
+        "name": "Pato Donald",
+        "username": "DonnyDuck",
+        "password": "789789",
+        "email": "Pato@Donald.com",
+        "createdAt": "2025-03-05T15:37:48.662Z",
+        "modifiedAt": null
+    },
+    {
+        "name": "Minnie Mouse",
+        "username": "MouseMinnie",
+        "password": "123123",
+        "email": "Minnie@Mouse.com",
+        "createdAt": "2025-03-08T12:36:01.414Z",
+        "modifiedAt": null,
+        "id": "m806ubra03"
+    },
+    {
+        "name": "Scooby Doo",
+        "username": "Doo Scooby",
+        "password": "123123a",
+        "email": "scooby@doo.com",
+        "createdAt": "2025-03-14T15:24:01.294Z",
+        "modifiedAt": null,
+        "id": "m88xhhfzv5c"
+    },
+    {
+        "name": "Pantera Rosa",
+        "username": "PinkPanter",
+        "password": "456456aa",
+        "email": "pantera@rosa.com",
+        "createdAt": "2025-03-15T11:11:12.870Z",
+        "modifiedAt": null,
+        "id": "m8a3w82utm"
+    }
+]
