@@ -67,5 +67,68 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
     }
 })
 
+api.get('/users/self/name', (req, res) => {
+    try {
+        const { authorization } = req.headers //Para acceder a la cabecera del curl -H 'Authorization...'
+
+        const userId = authorization.slice(6) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+
+        const name = logic.getUserName(userId)
+
+        res.json(name) //hay que retornarlo en forma de JSON
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+api.post('/posts', jsonBodyParser, (req, res) => {
+    try {
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const { image, text } = req.body
+
+        logic.createPost(userId, image, text)
+
+        res.status(201).send()
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.error
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+api.get('/posts', (req, res) => {
+    const { authorization } = req.headers
+
+    const userId = authorization.slice(6)
+
+    const posts = logic.getPosts(userId)
+
+    res.json(posts)
+})
+
 
 api.listen(PORT, () => console.log(`API running on port ${PORT}`))

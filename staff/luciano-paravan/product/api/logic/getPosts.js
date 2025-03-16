@@ -1,6 +1,14 @@
 import { data } from '../data/index.js'
+import { NotFoundError } from '../errors.js'
+import { validate } from './validate.js'
 
 export const getPosts = userId => {
+    validate.id(userId, 'userId')
+
+    const user = data.users.getById(userId)
+
+    if (!user) throw new NotFoundError('user not found')
+
     const posts = data.posts.getAll()
 
     const aggregatedPosts = []
