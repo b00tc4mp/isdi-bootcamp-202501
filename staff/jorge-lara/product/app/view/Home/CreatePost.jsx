@@ -8,13 +8,16 @@ export function CreatePost({ onPostCreateCancelled, onPostCreated }) {
         try {
             const { target: form } = event
 
-            const { image: { value: image }, title: { value: title } } = form
+            const { image: { value: image }, text: { value: text } } = form
 
-            logic.addPost(title, image);
+            logic.addPost(text, image)
+                .then(() => onPostCreated())
+                .catch(error => {
+                    console.error(error);
 
-            form.reset();
+                    alert(error.message);
+                })
 
-            onPostCreated();
         } catch (error) {
             console.error(error);
 
@@ -26,7 +29,7 @@ export function CreatePost({ onPostCreateCancelled, onPostCreated }) {
         <h1>Create a post</h1>
         <form onSubmit={handleAddSubmit}>
             <div className="field">
-                <input type="text" id="title" placeholder="Type a title" />
+                <input type="text" id="text" placeholder="Type a description" />
             </div>
             <div className="field">
                 <input type="url" id="image" placeholder="Enter an url" />

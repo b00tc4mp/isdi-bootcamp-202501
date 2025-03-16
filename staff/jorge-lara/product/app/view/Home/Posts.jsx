@@ -8,9 +8,13 @@ export function Posts() {
 
     useEffect(() => {
         try {
-            const posts = logic.getPosts();
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error);
 
-            setPosts(posts);
+                    alert(error.message);
+                })
 
         } catch (error) {
             console.error(error);
@@ -21,9 +25,14 @@ export function Posts() {
 
     const handlePostLikeToggled = () => {
         try {
-            const posts = logic.getPosts();
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error);
 
-            setPosts(posts);
+                    alert(error.message)
+                });
+
         } catch (error) {
             console.error(error);
 
@@ -33,9 +42,14 @@ export function Posts() {
 
     const handlePostDeleted = () => {
         try {
-            const posts = logic.getPosts();
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error);
 
-            setPosts(posts);
+                    alert(error.message)
+                });
+
         } catch (error) {
             console.error(error);
 
@@ -45,13 +59,18 @@ export function Posts() {
 
     const handlePostTextEdited = () => {
         try {
-            const posts = logic.getPosts();
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error);
 
-            setPosts(posts);
+                    alert(error.message)
+                });
+
         } catch (error) {
-            console.error(error)
+            console.error(error);
 
-            alert(error.message)
+            alert(error.message);
         }
     }
 

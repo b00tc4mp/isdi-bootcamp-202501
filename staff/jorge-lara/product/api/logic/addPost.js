@@ -3,7 +3,7 @@ import { validate } from './validate.js'
 
 export const addPost = (userId, text, image) => {
     validate.id(userId, 'id');
-    validate.text(text, 'title');
+    validate.text(text, 'text');
     validate.url(image, 'url');
 
     const post = {

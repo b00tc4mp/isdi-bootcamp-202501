@@ -1,4 +1,5 @@
 import express, { json } from 'express'
+import cors from 'cors';
 
 import { logic } from './logic/index.js'
 
@@ -9,6 +10,8 @@ const api = express();
 const PORT = 8080;
 
 const jsonBodyParser = json();
+
+api.use(cors());
 
 api.get('/', (req, res) => {
     res.send('Hello API!');
@@ -45,7 +48,7 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
 
         const id = logic.authenticateUser(username, password);
 
-        res.json(id);
+        res.json({ id });
     } catch (error) {
         console.error(error);
 
@@ -149,15 +152,15 @@ api.get('/posts', (req, res) => {
     }
 })
 
-api.delete('/posts/:postid', (req, res) => {
+api.delete('/posts/:postId', (req, res) => {
     try {
         const { authorization } = req.headers;
 
         const userId = authorization.slice(6);
 
-        const { postid } = req.params;
+        const { postId } = req.params;
 
-        logic.deletePost(userId, postid);
+        logic.deletePost(userId, postId);
 
         res.status(204).send();
     } catch (error) {
@@ -181,15 +184,15 @@ api.delete('/posts/:postid', (req, res) => {
     }
 })
 
-api.patch('/posts/:postid/likes', (req, res) => {
+api.patch('/posts/:postId/likes', (req, res) => {
     try {
         const { authorization } = req.headers;
 
         const userId = authorization.slice(6);
 
-        const { postid } = req.params;
+        const { postId } = req.params;
 
-        logic.toggleLikePost(userId, postid);
+        logic.toggleLikePost(userId, postId);
 
         res.status(204).send();
     } catch (error) {
@@ -210,17 +213,17 @@ api.patch('/posts/:postid/likes', (req, res) => {
     }
 })
 
-api.patch('/posts/:postid/text', jsonBodyParser, (req, res) => {
+api.patch('/posts/:postId/text', jsonBodyParser, (req, res) => {
     try {
         const { authorization } = req.headers;
 
         const userId = authorization.slice(6);
 
-        const { postid } = req.params;
+        const { postId } = req.params;
 
         const { text } = req.body;
 
-        logic.updatePostText(userId, postid, text);
+        logic.updatePostText(userId, postId, text);
 
         res.status(204).send();
     } catch (error) {

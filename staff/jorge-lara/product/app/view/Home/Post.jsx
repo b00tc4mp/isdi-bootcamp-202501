@@ -7,9 +7,14 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
 
     const handleToggleLikeClick = () => {
         try {
-            logic.toggleLikePost(post.id);
+            logic.toggleLikePost(post.id)
+                .then(() => onPostLikeToggled())
+                .catch(error => {
+                    console.error(error);
 
-            onPostLikeToggled();
+                    alert(error.message);
+                })
+
         } catch (error) {
             console.error(error);
 
@@ -20,11 +25,18 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     const handleDeleteClick = () => {
         if (confirm('Delete post?')) {
             try {
-                logic.deletePost(post.id);
+                logic.deletePost(post.id)
+                    .then(() => onPostDeleted())
+                    .catch(error => {
+                        console.error(error);
 
-                onPostDeleted();
+                        alert(error.message);
+                    })
+
             } catch (error) {
+                console.error(error);
 
+                alert(error.message);
             }
         }
     }

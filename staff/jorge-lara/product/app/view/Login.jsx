@@ -12,11 +12,18 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
                 password: { value: password }
             } = form;
 
-            logic.loginUser(username, password);
+            logic.loginUser(username, password)
+                .then(() => {
+                    form.reset();
 
-            form.reset();
+                    onUserLoggedIn();
+                })
+                .catch(error => {
+                    console.error(error);
 
-            onUserLoggedIn();
+                    alert(error.message);
+                })
+
         } catch (error) {
             console.error(error);
 

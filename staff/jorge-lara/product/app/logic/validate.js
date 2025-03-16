@@ -44,5 +44,11 @@ export const validate = {
         if (!constant.URL_REGEX.test(url)) {
             throw new SyntaxError(`invalid ${explain} syntax`);
         }
+    },
+    id(id, explain) {
+        this.text(id, explain);
+        if (id.length < 10 || id.length > 12) {
+            throw new RangeError(`invalid ${explain} length`);
+        }
     }
 }

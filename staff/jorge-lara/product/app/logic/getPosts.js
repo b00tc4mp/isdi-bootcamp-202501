@@ -1,41 +1,40 @@
 import { data } from '../data/index.js'
 
 export const getPosts = () => {
-    const posts = data.posts.getAll();
-
     const { userId } = data;
 
-    const addedPosts = [];
+    return fetch('http://localhost:8080/posts', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${userId}`
+        }
+    })
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status);
 
-    for (let i = 0; i < posts.length; i++) {
-        const post = posts[i];
+            if (response.status === 200) {
+                return response.json()
+                    .catch(error => { throw new Error(error.message) })
+                    .then(body => {
+                        const posts = body;
 
-        let liked = false;
+                        posts.forEach(post => {
+                            post.createdAt = new Date(post.createdAt);
+                            if (post.modifiedAt) {
+                                post.modifiedAt = new Date(post.modifiedAt);
+                            }
+                        });
 
-        for (let i = 0; i < post.likes.length && !liked; i++) {
-            const id = post.likes[i];
-
-            if (id === userId) {
-                liked = true;
+                        return posts;
+                    })
             }
-        }
 
-        const user = data.users.getById(post.author);
-
-        const addedPost = {
-            id: post.id,
-            author: { id: post.author, username: user.username },
-            image: post.image,
-            text: post.text,
-            createdAt: new Date(post.createdAt),
-            modifiedAt: post.modifiedAt,
-            liked: liked,
-            likesCount: post.likes.length,
-            own: post.author === userId
-        }
-
-        addedPosts.push(addedPost);
-    }
-
-    return addedPosts.reverse();
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body;
+                    throw new Error(message);
+                })
+        })
 }

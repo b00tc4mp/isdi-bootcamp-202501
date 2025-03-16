@@ -1,4 +1,5 @@
 import { data } from '../data/index.js'
+import { DuplicityError } from '../errors.js';
 import { validate } from './validate.js'
 
 export const registerUser = (name, email, username, password) => {
@@ -12,7 +13,7 @@ export const registerUser = (name, email, username, password) => {
     const found = data.users.findOne(user => user.email === email || user.username === username);
 
     if (found) {
-        throw new Error('user already exists');
+        throw new DuplicityError('user already exists');
     }
 
     const user = {
