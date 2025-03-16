@@ -41,6 +41,16 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
         }
     }
 
+    const handleCurrentUserClick = () => {
+        try {
+            logic.getCurrentUser()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
     const handleProfileClick = () => onProfileClick()
 
     const handleCreatePostClick = () => setView('create-post')
@@ -60,6 +70,8 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
             <h2>Welcome, {username}</h2>
 
             <button onClick={handleProfileClick}>🥸</button>
+
+            <button onClick={handleCurrentUserClick}>🫵</button>
 
             <button onClick={handleLogoutClick}>Logout</button>
         </header >}

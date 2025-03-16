@@ -14,25 +14,25 @@ export const loginUser = (username, password) => {
         },
         body: JSON.stringify({ username, password })
     })
-        .catch(error => { throw new Error(error.message) })
-        .then(response => {
+        .catch(error => { throw new Error(error.message) }) // => steps in when port is incorrect or 
+        .then(response => {                                 // api not thrown (FAILED TO FETCH)
             console.log(response.status)
 
             if (response.status === 200)
                 return response.json()
-                    .catch(error => { throw new Error(error.message) })
+                    .catch(error => { throw new Error(error.message) }) // => steps in when the response is a non valid JSON
                     .then(body => {
                         const { id } = body
 
-                        data.userId = id
+                        data.userId = id        // => HAPPY PATH
                     })
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new Error(error.message) }) // => steps in when route params are incorrect
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    throw new Error(message)                // => steps in when a wrongcred or unexistingUser is found
                 })
         })
 }

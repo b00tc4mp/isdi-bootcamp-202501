@@ -63,5 +63,32 @@
         "createdAt": "2025-03-14T12:38:44.641Z",
         "modifiedAt": null,
         "id": "m88rkxpe19"
+    },
+    {
+        "name": "maca",
+        "email": "ma@ca.com",
+        "username": "maca",
+        "password": "mamama",
+        "createdAt": "2025-03-16T14:30:07.896Z",
+        "modifiedAt": null,
+        "id": "m8bqfvvdvwk"
+    },
+    {
+        "name": "lucho",
+        "email": "lu@cho.com",
+        "username": "lucho",
+        "password": "lululu",
+        "createdAt": "2025-03-16T14:38:31.718Z",
+        "modifiedAt": null,
+        "id": "m8bqqomfsn"
+    },
+    {
+        "name": "eugeni",
+        "email": "eu@geni.com",
+        "username": "Augeni",
+        "password": "eueueu",
+        "createdAt": "2025-03-16T14:41:10.530Z",
+        "modifiedAt": null,
+        "id": "m8bqu35u3ji"
     }
 ]
