@@ -1,24 +1,27 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
-import {Posts} from './Posts.jsx'
-import {CreatePost} from './CreatePost.jsx'
+import { Posts } from './Posts.jsx'
+import { CreatePost } from './CreatePost.jsx'
 
-import {logic} from '../../logic/index.js'
+import { logic } from '../../logic/index.js'
 
 export function Home({ onUserLoggedOut, onProfileClick }) {
     const [view, setView] = useState('posts')
     const [username, setUsername] = useState('')
 
-    //state that stores the targetPostId -> where comments shown
-    // const [activeCommentPostId, setActiveCommentPostId] = useState(null)
-
     useEffect(() => {
         console.debug('Index -> useEffect')
 
         try {
-            const name = logic.getUsername()
+            logic.getUsername()
+                .then(name => setUsername(name))
+                //ERRORES ASÍNCRONOS
+                .catch(error => {
+                    console.error(error)
 
-            setUsername(name)
+                    alert(error.message)
+                })
+            //ERRORES SÍNCRONOS
         } catch (error) {
             console.error(error)
 
@@ -40,8 +43,6 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
 
     const handleProfileClick = () => onProfileClick()
 
-
-
     const handleCreatePostClick = () => setView('create-post')
 
     const handlePostCreated = () => setView('posts')
@@ -49,7 +50,6 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
     const handlePostCreateCancelled = () => setView('posts')
 
     const handleHomeClick = () => setView('posts')
-
 
     // const commentButtonClick = postId => { setActiveCommentPostId(currentId => currentId === postId ? null : postId) }
 

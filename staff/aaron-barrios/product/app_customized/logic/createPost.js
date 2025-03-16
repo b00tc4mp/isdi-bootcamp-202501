@@ -1,22 +1,35 @@
-import {data} from '../data/index.js'
-import {validate} from './validate.js'
+import { data } from '../data/index.js'
+import { validate } from './validate.js'
 
 export const createPost = (image, text) => {
-        validate.url(image, 'image')
-        validate.maxLength(1000)
-        validate.text(text, 'text')
-        validate.minLength(500)
+    validate.url(image, 'image')
+    validate.maxLength(1000)
+    validate.text(text, 'text')
+    validate.minLength(500)
 
-        const { userId } = data
+    const { userId } = data
 
-        const post = {
-            author: userId,
-            image: image,
-            text: text,
-            createdAt: new Date(),
-            modifiedAt: null,
-            likes: []
-        }
+    return fetch('http://localhost:8080/posts', {
+        method: 'POST',
+        headers: {
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ image, text })
+    })
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-        data.posts.insertOne(post)
-    }
+            if (response.status === 201)
+                return
+
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    throw new Error(message)
+                })
+        })
+}

@@ -1,44 +1,32 @@
-import {data} from '../data/index.js'
-import {validate} from './validate.js'
+import { data } from '../data/index.js'
+import { validate } from './validate.js'
 
-import {NotFoundError} from '../errors.js'
+// import { NotFoundError } from '../errors.js'
 
-export const toggleLikePost = (postId) => {
-        validate.id(postId, 'postId')
-        //paso el post Id por parametro desde loadPosts y lo busco
-        const { userId } = data
+export const toggleLikePost = postId => {
+    validate.id(postId, 'postId')
 
-        const foundPost = data.posts.findOne(post => post.id === postId)
+    const { userId } = data
 
-        if (!foundPost) throw new NotFoundError('post not found')
-
-        let userIdFound = false
-
-        //en este caso lo encuentro y voy a buscar el like en concreto
-        for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-            const id = foundPost.likes[i]
-
-            if (id === userId)
-                userIdFound = true
+    return fetch(`http://localhost:8080/posts/${postId}/likes`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Basic ${userId}`
         }
+    })
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-        //si no encuentro el like de ese usuario le doy like 
-        if (!userIdFound) {
-            foundPost.likes[foundPost.likes.length] = userId
-        }
-        else {
-            //en caso de tener like lo solapo con otro array para quitarlo
-            const likes = []
+            if (response.status === 204)
+                return
 
-            for (let i = 0; i < foundPost.likes.length; i++) {
-                const id = foundPost.likes[i]
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
-                if (id !== userId)
-                    likes[likes.length] = id
-            }
-
-            foundPost.likes = likes
-        }
-
-        data.posts.updateOne(foundPost)
-    }
+                    throw new Error(message)
+                })
+        })
+}

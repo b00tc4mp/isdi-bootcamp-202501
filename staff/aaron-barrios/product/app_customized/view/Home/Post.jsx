@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import {Comment} from './Comment.jsx'
+import { Comment } from './Comment.jsx'
 
-import {logic} from '../../logic/index.js'
+import { logic } from '../../logic/index.js'
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('')
@@ -11,8 +11,12 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     const handleToggleLikeClick = () => {
         try {
             logic.toggleLikePost(post.id)
+                .then(() => onPostLikeToggled())
+                .catch(error => {
+                    console.error(error)
 
-            onPostLikeToggled()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -23,8 +27,12 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     const handleDeleteClick = () => {
         try {
             logic.deletePost(post.id)
+                .then(() => onPostDeleted())
+                .catch(error => {
+                    console.error(error)
 
-            onPostDeleted()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -45,10 +53,16 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
             const { text: { value: text } } = form
 
             logic.updatePostText(post.id, text)
+                .then(() => {
+                    onPostTextEdited()
 
-            onPostTextEdited()
+                    setView('')
+                })
+                .catch(error => {
+                    console.error(error)
 
-            setView('')
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 

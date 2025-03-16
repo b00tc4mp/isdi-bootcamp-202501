@@ -1,4 +1,4 @@
-import {logic} from '../logic/index.js'
+import { logic } from '../logic/index.js'
 
 export function Register({ onNavigateToLogin, onUserRegistered }) {
     const handleRegisterSubmit = event => {
@@ -15,10 +15,18 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
             } = form
 
             logic.registerUser(name, email, username, password)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
+                    onUserRegistered()
+                })
+                //ERRORES ASINCRONOS 
+                .catch(error => {
+                    console.error(error)
 
-            onUserRegistered()
+                    alert(error.message)
+                })
+            //ERRORES SINCRONOS
         } catch (error) {
             console.error(error)
 

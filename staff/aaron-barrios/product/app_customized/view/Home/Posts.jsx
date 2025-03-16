@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
-import {Post} from './Post.jsx'
+import { Post } from './Post.jsx'
 
-import {logic} from '../../logic/index.js'
+import { logic } from '../../logic/index.js'
 
 export function Posts() {
     const [posts, setPosts] = useState([])
@@ -11,9 +11,13 @@ export function Posts() {
         console.debug('Index -> useEffect')
 
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -23,9 +27,13 @@ export function Posts() {
 
     const handlePostLikeToggled = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -35,9 +43,13 @@ export function Posts() {
 
     const handlePostDeleted = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -47,9 +59,13 @@ export function Posts() {
 
     const handlePostTextEdited = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 

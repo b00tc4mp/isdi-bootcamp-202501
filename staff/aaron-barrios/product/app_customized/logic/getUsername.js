@@ -1,15 +1,35 @@
-import {data} from '../data/index.js'
+import { data } from '../data/index.js'
 
-import {NotFoundError} from '../errors.js'
+// import { NotFoundError} from '../errors.js'
 
 export const getUsername = () => {
-        const users = data.users.getAll()
+    const { userId } = data
 
-        const { userId } = data
+    return fetch('http://localhost:8080/users/self/name', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${userId}`
+        }
+    })
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-        const found = data.users.getById(userId)
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new Error(error.message) })
+                    .then(body => {
+                        const { name } = body
 
-        if (!found) throw new NotFoundError('user not found')
+                        return name
+                    })
 
-        return found.name
-    }
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    throw new Error(message)
+                })
+        })
+}

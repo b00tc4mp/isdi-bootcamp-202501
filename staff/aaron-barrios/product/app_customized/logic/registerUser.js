@@ -1,32 +1,35 @@
-import {data} from '../data/index.js'
-import {validate} from './validate.js'
+import { validate } from './validate.js'
 
-import {DuplicityError} from '../errors.js'
+// import { DuplicityError } from '../errors.js'
 
 export const registerUser = (name, email, username, password) => {
-        validate.text(name, 'name')
-        validate.minLength(name, 1, 'name')
-        validate.maxLength(name, 20, 'name')
-        validate.email(email, 'email')
-        validate.username(username, 'username')
-        validate.password(password, 'password')
+    validate.text(name, 'name')
+    validate.minLength(name, 1, 'name')
+    validate.maxLength(name, 20, 'name')
+    validate.email(email, 'email')
+    validate.username(username, 'username')
+    validate.password(password, 'password')
 
-        const found = data.users.findOne(
-            user => user.email === email ||
-                user.username === username)
+    return fetch('http://localhost:8080/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, username, password })
+    })
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-        if (found) throw new DuplicityError('User already exists')
+            if (response.status === 201)
+                return
 
-        const user = {
-            name: name,
-            email: email,
-            username: username,
-            password: password,
-            createdAt: new Date(),
-            role: username === 'god' ? 'admin' : 'user', //TEST -> ROLE
-            state: null,  // TEST -> status
-            modifiedAt: null,
-        }
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
-        data.users.insertOne(user)
-    }
+                    throw new Error(message)
+                })
+        })
+}

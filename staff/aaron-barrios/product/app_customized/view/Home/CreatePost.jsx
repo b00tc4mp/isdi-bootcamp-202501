@@ -1,4 +1,4 @@
-import {logic} from '../../logic/index.js'
+import { logic } from '../../logic/index.js'
 
 export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
     const handleCreatePostSubmit = event => {
@@ -13,10 +13,12 @@ export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
             } = form
 
             logic.createPost(image, text)
+                .then(() => { onPostCreated() })
+                .catch(error => {
+                    console.error(error)
 
-            form.reset()
-
-            onPostCreated()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
