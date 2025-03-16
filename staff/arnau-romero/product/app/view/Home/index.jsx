@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-import { Posts } from './Posts'
-import { CreatePost } from './CreatePost'
+import { Posts } from './Posts.jsx'
+import { CreatePost } from './CreatePost.jsx'
 
-import { logic } from '../../Logic/index'
+import { logic } from '../../logic/index.js'
 
 export function Home({ onLogoutClick}) {
     const[view, setView] = useState('posts')
@@ -14,18 +16,18 @@ export function Home({ onLogoutClick}) {
         console.debug('Index -> useEffect')
 
         try{
-            // lamamos a la logica de obtener el nombre y la guardamos en la variable name.
-            const name = logic.getUserName()
-          
+           logic.getUserName()
+                .then(name => setUserName(name))
+                .catch(error => {
+                    console.error(error)
 
-            //llamamos a setUserName declarado en la línea 5 para cambiar el useState a la nueva variable name.
-            setUserName(name)
-          
-
+                    toast.error(`❌ ${error.message}`)
+                })
+                
         }catch(error){
             console.error(error)
 
-            alert(error.message)
+            toast.error(`❌ ${error.message}`)
         }
     }, [])
 
@@ -35,10 +37,12 @@ export function Home({ onLogoutClick}) {
             logic.logoutUser()
 
             onLogoutClick()
+
+            toast.success('Bye, See You soon!!')
         } catch(error) {
             console.error(error)
 
-            alert(error.message)
+            toast.error(`❌ ${error.message}`)
         }
     }
 

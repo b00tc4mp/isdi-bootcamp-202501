@@ -2,56 +2,80 @@ import { useState, useEffect} from 'react'
 
 import  { Post } from './Post.jsx'
 
-import  { logic } from '../../logic/index'
+import  { logic } from '../../logic/index.js'
+
+import { toast } from 'react-toastify' // Importamos react-toastify
+import 'react-toastify/dist/ReactToastify.css' // Importamos los estilos
 
 export function Posts() {
     const[posts, setPosts] = useState([])
     useEffect(() => {
         try{
-            const posts = logic.getPosts()
-
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
+                    toast.error(`❌ ${error.message}`)
+                })
             setPosts(posts)
         }catch(error){
             console.error(error)
     
-            alert(error.message)
+            toast.error(`❌ ${error.message}`)
         }
 
     }, [])
 
     const handlePostLikeToggled = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    consoler.error(error)
+
+                    toast.error(`❌ ${error.message}`) 
+                })
 
             setPosts(posts)
         } catch (error) {
             consoler.error(error)
 
-            alert(error.message)
+            toast.error(`❌ ${error.message}`)
         }
     }
    
     const handlePostDeleted = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    toast.error(`❌ ${error.message}`)
+                })
+
+          
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            toast.error(`❌ ${error.message}`)
         }
     }
 
     const handlePostTextEdited = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    toast.error(`❌ ${error.message}`)
+                })
+
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            toast.error(`❌ ${error.message}`)
         }
     }
 

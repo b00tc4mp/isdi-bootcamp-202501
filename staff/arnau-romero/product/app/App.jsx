@@ -3,49 +3,51 @@ import { useState, useEffect } from 'react'
 import { Landing } from './view/Landing.jsx'
 import { Register } from './view/Register.jsx'
 import { Login } from './view/Login.jsx'
-import { Home } from './view/Home/index'
+import { Home } from './view/Home/index.jsx'
 
-import { logic } from './logic/index'
+import { logic } from './logic/index.js'
+
+import { ToastContainer, toast } from 'react-toastify' // Importamos Toastify
+import 'react-toastify/dist/ReactToastify.css' // Importamos los estilos
 
 function App(){
-    // Estado inicial del usestate en landing.
+    // Estado inicial del useState en landing.
     const [view, setView] = useState('landing')
-    //useEffect para que cuando estemos loggin nos mantenga en home al referescar la pagina
+
+    // useEffect para que, si el usuario está logueado, lo mantenga en Home al refrescar la página.
     useEffect(() => {
-        try{
-            //llamamos a la funcion que nos devuelve un true si el usuario esta loggeado
+        try {
+            // Llamamos a la función que nos dice si el usuario está logueado
             const loggedIn = logic.isUserLoggedIn()
 
-            // si esta loggeado montamos la view Index.
-            loggedIn && setView('home')
-        } catch(error){
+            // Si está logueado, montamos la vista Home
+            if (loggedIn) setView('home')
+        } catch (error) {
             console.error(error)
-            alert(error.message)
+            toast.error(`❌ ${error.message}`) // Mostramos el error con Toastify en lugar de alert()
         }
-    }, []) // Si ponemos el array vacio, haremos que este useEffect se revise cada vez que actualicemos pagina.
-    // Si clickamos en el register anchor de landing cambiamos el setView a register.
+    }, []) 
+
+    // Manejo de navegación entre vistas
     const handleRegisterClick = () => setView('register')
-    // Si clickamos en el login anchor de landing cambiamos el setView a login.
     const handleLoginClick = () => setView('login')
-    // Si clickamos en el boton register de login cambiamos el setView a login.
     const handleRegisterSubmit = () => setView('login')
-
     const handleLoginSubmit = () => setView('home')
-
     const handleLogoutClick = () => setView('login')
 
     console.debug('App -> render')
 
-    return <>
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick}/>}
+    return (
+        <>
+            {/* ToastContainer para gestionar las notificaciones */}
+            <ToastContainer position="top-right" autoClose={2000} />
 
-        {view === 'register' && <Register onLoginClick = {handleLoginClick} onRegisterSubmit = {handleRegisterSubmit}/>}
-
-        {view === 'login' && <Login onRegisterClick= {handleRegisterClick} onLoginSubmit={handleLoginSubmit }/>}
-
-        {view === 'home' && <Home onLogoutClick = {handleLogoutClick} />}
-     
-    </>
+            {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
+            {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />}
+            {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />}
+            {view === 'home' && <Home onLogoutClick={handleLogoutClick} />}
+        </>
+    )
 }
 
 export default App

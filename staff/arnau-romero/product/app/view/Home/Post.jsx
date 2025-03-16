@@ -1,17 +1,24 @@
 import { useState } from 'react'
-import { logic } from '../../logic/index'
+import { logic } from '../../logic/index.js'
+
+import { toast } from 'react-toastify' // Importamos react-toastify
+import 'react-toastify/dist/ReactToastify.css' // Importamos los estilos
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited})  {
     const [view, setView] = useState('')
     const handleToggleLikePostClick = () => {
         try {
             logic.toggleLikePost(post.id)
+                    .then(() => onPostLikeToggled())
+                    .catch(error => {
+                        console.error(error)
 
-            onPostLikeToggled()
+                        toast.error(`❌ ${error.message}`)
+                    })
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            toast.error(`❌ ${error.message}`)
         }
     }
 
@@ -19,12 +26,16 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited}
         if(confirm('Delete post?'))
             try {
                 logic.deletePost(post.id)
+                    .then(() => onPostDeleted())
+                    .catch(error =>{
+                        console.error(error)
 
-                onPostDeleted()
+                        toast.error(`❌ ${error.message}`)
+                    })
             } catch (error) {
                 console.error(error)
 
-                alert(error.message)
+                toast.error(`❌ ${error.message}`)
             }
     }
 
@@ -42,14 +53,23 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited}
             const { text: { value: text } } = form
 
             logic.updatePostText(post.id, text)
+                .then(() => {
+                    onPostTextEdited()
 
-            onPostTextEdited()
+                    setView('')
 
-            setView('')
+                    toast.success(`Text edited succesfuly!`)
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    toast.error(`❌ ${error.message}`)
+                })
+
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            toast.error(`❌ ${error.message}`)
         }
     }
     console.debug('Post -> render')

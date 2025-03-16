@@ -1,38 +1,38 @@
 import { data } from "../data/index.js"
 
 export const getPosts = () => { // Crear funcion para obtener los posts de data, la llamaremos desde main
-    const posts = data.posts.getAll()
+  const { userId } = data
 
-    const { userId } = data
-
-    const aggregatedPosts = []
-
-    for (let i = 0; i < posts.length; i++){
-        const post = posts[i]
-        let liked = false
-        for (let i = 0; i < post.likes.length && !liked; i++){
-            const id = post.likes[i]
-
-            if(id === userId)
-                liked = true
+  return fetch('http://localhost:8080/posts', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${userId}`
         }
+    })
+        .catch(error => { throw new Error(error.message) })
+        .then(response =>{
+            console.log(response.status)
 
-        const user = data.users.getById(post.author)
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new Error(error.message)} )
+                    .then(body => {
+                        const posts = body
 
-        const aggregatedPost = {
-            id: post.id,
-            author: {is: post.author, username: user.username},
-            image: post.image,
-            text: post.text,
-            createdAt: new Date(post.createdAt),
-            modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
-            liked: liked,
-            likesCount: post.likes.length,
-            own: post.author === userId
+                        posts.forEach(post => {
+                            post.createdAt = new Date(post.createdAt)
+                            if (post.modifiedAt) post.modifiedAt = new Date(post.modifiedAt)
+                        })
+                        
+                        return posts
+                    })
+           
+            return response.json()
+                .catch(error => { throw new Error(error.message)})
+                .then(body =>{
+                    const { error, message } = body
 
-        }
-        aggregatedPosts[aggregatedPosts.length] = aggregatedPost
-    }
-
-    return aggregatedPosts.reverse()
+                    throw new Error(message)
+                })               
+        })
 }
