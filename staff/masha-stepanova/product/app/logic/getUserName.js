@@ -12,7 +12,7 @@ export const getUserName = () => {
         }
     })
 
-        .catch(Error => { throw new Error(error.message) })
+        .catch(error => { throw new Error(error.message) })
         .then(response => {
             console.log(response.status)
 

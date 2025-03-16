@@ -6,8 +6,6 @@ import { NotFoundError } from '../errors.js'
 export const getUserName = userId => {
     validate.id(userId, 'userId')
 
-    const users = data.users.getAll()
-
     const found = data.users.getById(userId)
 
     if (!found) throw new NotFoundError('user not found')

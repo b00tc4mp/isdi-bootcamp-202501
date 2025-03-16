@@ -1,8 +1,8 @@
 import { data } from '../data/index.js'
 import { validate } from './validate.js'
 
-export const createPost = (link, text) => {
-    validate.url(link)
+export const createPost = (image, text) => {
+    validate.url(image)
     validate.maxLength(1000)
     validate.text(text)
     validate.maxLength(500)

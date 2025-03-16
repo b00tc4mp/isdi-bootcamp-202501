@@ -33,7 +33,7 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     const handleLoginClick = () => onNavigateToLogin()
 
-    return <div class="form">
+    return <div className="form">
 
         <h1>Logo</h1>
         <form onSubmit={handleUserRegistered} >

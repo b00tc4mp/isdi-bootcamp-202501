@@ -11,7 +11,8 @@ export const updatePostText = (postId, text) => {
     return fetch(`http://localhost:8080/posts/${postId}/text`, {
         method: 'PATCH',
         headers: {
-            Authorization: `Basic ${userId}`
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ text })
 

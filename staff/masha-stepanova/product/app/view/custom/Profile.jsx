@@ -7,18 +7,28 @@ import { useState, useEffect } from 'react'
 export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCanceled }) {
     const [view, setView] = useState('profile')
     const [posts, setPosts] = useState([])
-
-    const userName = logic.getUserName()
+    const [userName, setUsername] = useState('')
 
     useEffect(() => {
         try {
-            logic.getUserPosts()
-                .then(posts => setPosts(posts))
+            logic.getUserName()
+                .then(name => {
+                    setUsername(name)
+
+                    logic.getUserPosts()
+                        .then(posts => setPosts(posts))
+                        .catch(error => {
+                            console.error(error)
+
+                            alert(error.message)
+                        })
+                })
                 .catch(error => {
                     console.error(error)
 
                     alert(error.message)
                 })
+
         } catch (error) {
             console.error(error)
 
@@ -29,12 +39,8 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
     const handleUserLoggedOut = () => {
         try {
             logic.logoutUser()
-                .then(() => onUserLoggedOut())
-                .catch(error => {
-                    console.error(error)
+            onUserLoggedOut()
 
-                    alert(error.message)
-                })
         } catch (error) {
             console.error(error)
 
@@ -104,7 +110,15 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
             } = form
 
             logic.createPost(image, text)
-                .then(() => logic.getUserPosts())
+                .then(() => {
+                    logic.getUserPosts()
+                        .then(posts => setPosts(posts))
+                        .catch(error => {
+                            console.error(error)
+
+                            alert(error.message)
+                        })
+                })
                 .catch(error => {
                     console.error(error)
 
@@ -133,8 +147,8 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
     const handleNavigateToHome = () => onNavigateToHome()
 
 
-    return <div class="posts">
-        <section class="header">
+    return <div className="posts">
+        <section className="header">
             <h1>Logo</h1>
             <h3>{userName}</h3>
             <button onClick={handleUserLoggedOut}>Logout</button>

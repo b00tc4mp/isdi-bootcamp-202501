@@ -153,7 +153,7 @@ api.get('/users/self/name', (req, res) => {
 
         const name = logic.getUserName(userId)
 
-        res.json(name)
+        res.json({ name })
     } catch (error) {
         console.error(error)
 
@@ -204,8 +204,6 @@ api.delete('/posts/:postId', (req, res) => {
     }
 })
 
-// TODO eliminate ownership error
-
 api.patch('/posts/:postId/likes', jsonBodyParse, (req, res) => {
     try {
         const { authorization } = req.headers
@@ -241,7 +239,13 @@ api.patch('/posts/:postId/text', jsonBodyParse, (req, res) => {
 
         const userId = authorization.slice(6)
 
-        const { params: { postId }, body: { text } } = req
+        // const { params: { postId }, body: { text } } = req
+
+        const { postId } = req.params
+
+        const { text } = req.body
+
+        console.log(userId, postId, text)
 
         logic.updatePostText(userId, postId, text)
 

@@ -1,7 +1,7 @@
 import { updatePostText } from './updatePostText.js'
 
 try {
-    updatePostText('m7yz5vpd0gg', 'm7yz68lpw1m', 'Hello world')
+    updatePostText('m8918s8oby', 'm8bsd3m2j2a', 'Hello world')
 } catch (error) {
     console.error(error)
 }

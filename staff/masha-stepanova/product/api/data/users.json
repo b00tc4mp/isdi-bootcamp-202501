@@ -43,5 +43,14 @@
         "createdAt": "2025-03-14T17:09:13.848Z",
         "modifiedAt": null,
         "id": "m8918s8oby"
+    },
+    {
+        "name": "Cinderella",
+        "email": "cinderella@princess.com",
+        "username": "cinderella",
+        "password": "123456789",
+        "createdAt": "2025-03-16T17:05:31.416Z",
+        "modifiedAt": null,
+        "id": "m8bvzpy0ij"
     }
 ]

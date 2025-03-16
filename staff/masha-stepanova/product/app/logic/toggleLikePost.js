@@ -13,20 +13,20 @@ export const toggleLikePost = (postId) => {
         headers: {
             Authorization: `Basic ${userId}`
         }
-            .catch(error => { throw new Error(error.message) })
-            .then(response => {
-                console.log(response.status)
-
-                if (response.status == 204)
-                    return
-
-                return response.json()
-                    .catch(error => { throw new Error(error.message) })
-                    .then(body => {
-                        const { error, message } = body
-
-                        throw new Error(message)
-                    })
-            })
     })
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status)
+
+            if (response.status == 204)
+                return
+
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    throw new Error(message)
+                })
+        })
 }
