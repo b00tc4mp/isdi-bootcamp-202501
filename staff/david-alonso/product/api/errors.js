@@ -23,7 +23,14 @@ class OwnershipError extends Error {
         super(message)
     }
 }
+
 class SystemError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
+class ValidationError extends Error {
     constructor(message) {
         super(message)
     }
@@ -34,5 +41,6 @@ export {
     CredentialsError,
     NotFoundError,
     OwnershipError,
-    SystemError
+    SystemError,
+    ValidationError
 }

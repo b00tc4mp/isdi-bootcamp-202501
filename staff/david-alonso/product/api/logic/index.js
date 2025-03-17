@@ -4,7 +4,7 @@ import { getUserName } from './getUserName.js'
 
 import { createPost } from './createPost.js'
 import { getPosts } from './getPosts.js'
-import { deletePost } from './deletePosts.js'
+import { deletePost } from './deletePost.js'
 import { updatePostText } from './updatePostText.js'
 import { toggleLikePost } from './toggleLikePost.js'
 
