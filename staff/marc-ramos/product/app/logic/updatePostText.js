@@ -1,22 +1,34 @@
 import { data } from '../data/index.js'
 import { validate } from './validate.js'
 
-import { NotFoundError, OwnershipError } from '../errors.js'
+// import { NotFoundError, OwnershipError } from '../errors.js'
 
 export const updatePostText = (postId, text) => { // edit post text
     validate.id(postId, 'postId') // validamos el post id
 
-    const {userId} = data
+    const {userId} = data // traemos userId de data
 
-    const foundPost = data.posts.findOne(post => post.id === postId) // a traves del id buscamos el post 
+    return fetch(`http://localhost:8080/posts/${postId}/text`, { //  
+        method: 'PATCH', // el metodo patch se usa para cambiar parcialmente una parte
+        headers: {
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text })
+    })
+    .catch(error => { throw new Error(error.message) })
+    .then(response => {
+        console.log(response.status)
 
-    if (!foundPost) throw new NotFoundError('post not found')
+        if (response.status === 204)
+            return
 
-    if (foundPost.author !== userId) throw new OwnershipError('user is not author of post') // si se intenta editar un post, la logica se protege y lanza un error si el id del usuario no es el mismo que el del post 
+        return response.json() // si no va bien, convertimos a json
+            .catch(error => { throw new Error(error.message) }) // si convertir a JSON falla, lanzamos un error con el mensaje
+            .then(body => {
+                const { error, message } = body
 
-    foundPost.text = text // ponemos el nuevo texto en el text del foundPost
-
-    foundPost.modifiedAt = new Date // same as new Date() ?
-
-    data.posts.updateOne(foundPost) // insertamos el post con el nuevo texto en el localStorage
+                throw new Error(message)
+            })
+    })
 }

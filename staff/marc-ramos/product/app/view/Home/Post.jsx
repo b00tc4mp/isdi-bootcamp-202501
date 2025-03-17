@@ -9,8 +9,12 @@ export function Post({post, onPostLikeToggled, onPostDeleted, onPostTextEdited})
     const handleToggleLikeClick = () => { // 
         try{
             logic.toggleLikePost(post.id)
+                .then(() => onPostLikeToggled())
+                .catch(error => {
+                    console.error(error)
 
-            onPostLikeToggled()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -22,8 +26,12 @@ export function Post({post, onPostLikeToggled, onPostDeleted, onPostTextEdited})
         if (confirm('Delete post?')) // confirm para preguntar si estamos seguros de borrar el post
             try{
                 logic.deletePost(post.id) // llamamos a la logica de delete post
+                    .then(() => onPostDeleted())
+                    .catch(error => {
+                        console.error(error)
 
-                onPostDeleted()
+                        alert(error.message)
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -43,10 +51,16 @@ export function Post({post, onPostLikeToggled, onPostDeleted, onPostTextEdited})
             const {text: {value: text}} = form
 
             logic.updatePostText(post.id, text)
+                .then(() => {
+                    onPostTextEdited()
 
-            onPostTextEdited()
+                    setView('')
+                })
+                .catch(error => {
+                    console.error(error)
 
-            setView('')
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 

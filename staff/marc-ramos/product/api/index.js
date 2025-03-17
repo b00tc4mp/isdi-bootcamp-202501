@@ -226,7 +226,7 @@ api.get('/users/self/name', (req, res) => {
 
         const name = logic.getUserName(userId)
 
-        res.json(name)
+        res.json({ name })
     } catch (error) {
         console.error(error)
 

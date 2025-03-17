@@ -1,6 +1,6 @@
 import {logic} from '../../logic/index.js'
 
-export function CreatePost({onPostCreated, onPostCreateCancelled}) {
+export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
     const handleFormSubmit = event => {
         event.preventDefault()
 
@@ -10,8 +10,12 @@ export function CreatePost({onPostCreated, onPostCreateCancelled}) {
             const {image: {value: image}, text: {value: text}} = form
 
             logic.createPost(image, text)
+                .then(() => onPostCreated())
+                .catch(error => {
+                    console.error(error)
 
-            onPostCreated()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
