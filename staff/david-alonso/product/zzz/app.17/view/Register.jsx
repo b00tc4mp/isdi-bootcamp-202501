@@ -24,18 +24,12 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
             // Llamamos a la funcion para validar los valores del formulario
             logic.registerUser(name, email, username, password)
-                .then(() => {
-                    // Reseteamos el formulario
-                    form.reset()
 
-                    // Llamamos a la funcion para actualizar la pagina
-                    onUserRegistered()
-                })
-                .catch(error => {
-                    console.error(error)
+            // Reseteamos el formulario
+            form.reset()
 
-                    alert(error.message)
-                })
+            // Llamamos a la funcion para actualizar la pagina
+            onUserRegistered()
         } catch (error) {
             // Muestra si hay errores
             console.error(error)

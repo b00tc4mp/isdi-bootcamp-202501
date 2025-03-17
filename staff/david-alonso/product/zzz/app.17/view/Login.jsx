@@ -21,19 +21,12 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
             // Llamamos a la funcion para validar los valores del formulario
             logic.loginUser(username, password)
-                .then(() => {
-                    // Reseteamos el formulario
-                    form.reset()
 
-                    // Llamamos a la funcion para actualizar la pagina
-                    onUserLoggedIn()
-                })
-                .catch(error => {
-                    // Muestra si hay errores
-                    console.error(error)
+            // Reseteamos el formulario
+            form.reset()
 
-                    alert(error.message)
-                })
+            // Llamamos a la funcion para actualizar la pagina
+            onUserLoggedIn()
         } catch (error) {
             // Muestra si hay errores
             console.error(error)
