@@ -1,0 +1,62 @@
+[
+    {
+        "id": "m71tm7l3l5l",
+        "name": "Harry Potter",
+        "email": "harry@potter.com",
+        "username": "GryffindorSeeker",
+        "house": "gryffindor",
+        "password": "harrypotter123",
+        "createdAt": "2024-01-09T23:00:00.000Z",
+        "modifiedAt": null
+    },
+    {
+        "id": "m71tml17ly",
+        "name": "Hermione Granger",
+        "email": "hermione@granger.com",
+        "username": "Granger",
+        "house": "gryffindor",
+        "password": "hermionegranger123",
+        "createdAt": "2024-06-19T22:00:00.000Z",
+        "modifiedAt": null
+    },
+    {
+        "id": "m7t6td0y48",
+        "name": "Luna Lovegood",
+        "email": "luna@lovegood.com",
+        "username": "Lony_Luna",
+        "house": "ravenclaw",
+        "password": "lunalovegood123!",
+        "createdAt": "2025-03-03T15:00:53.171Z",
+        "modifiedAt": "2025-03-07T13:54:52.986Z"
+    },
+    {
+        "id": "m7uf0vvi8r",
+        "name": "Draco Malfoy",
+        "email": "draco@malfoy.com",
+        "username": "SilverSnake",
+        "house": "slytherin",
+        "password": "purebloodPrince123",
+        "createdAt": "2025-03-04T11:38:27.294Z",
+        "modifiedAt": null
+    },
+    {
+        "name": "Cedric Diggory",
+        "email": "cedric@diggory.com",
+        "username": "hufflyCed",
+        "house": "hufflepuff",
+        "password": "HuffleWinning04",
+        "createdAt": "2025-03-17T10:33:09.096Z",
+        "modifiedAt": null,
+        "id": "m8cxez8oheh"
+    },
+    {
+        "name": "Ron Weasly",
+        "email": "ron@weasly.com",
+        "username": "QuidditchFan",
+        "house": "gryffindor",
+        "password": "ronweasly123!",
+        "createdAt": "2025-03-17T21:11:11.267Z",
+        "modifiedAt": null,
+        "id": "m8dk7hyb7mc"
+    }
+]

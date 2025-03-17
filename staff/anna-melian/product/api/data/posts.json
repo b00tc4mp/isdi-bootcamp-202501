@@ -1,0 +1,50 @@
+[
+    {
+        "author": {
+            "id": "m71tml17ly",
+            "username": "Granger"
+        },
+        "image": "https://media.giphy.com/media/IWvuFVQICQIr6/giphy.gif?cid=790b76118lomln5febmjku33rteti54ptvt8t5jlohw9bday&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+        "text": "It's leviosa, not leviosaaa",
+        "createdAt": "2025-03-08T17:36:30.886Z",
+        "modifiedAt": null,
+        "likes": [],
+        "id": "m80hkrdyctn"
+    },
+    {
+        "author": {
+            "id": "m7uf0vvi8r",
+            "username": "SilverSnake"
+        },
+        "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDJzOTR0bXM2aXZtYXd6bmt0aGlta2oxbGtwYjc3ZmgwYjQzN3JrciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AEnmjpLdK4gyA/giphy.gif",
+        "text": "Stupid book and stupid subject",
+        "createdAt": "2025-03-08T17:45:46.019Z",
+        "modifiedAt": null,
+        "likes": [],
+        "id": "m80hwnqbrwl"
+    },
+    {
+        "author": {
+            "id": "m8cxez8oheh",
+            "username": "hufflyCed"
+        },
+        "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExajdpMDVjYThiNG04djZvOWR2eWw2cnRzM2FjMWNra3Azemc3dTdwaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1UAIoVWRhtjhe/giphy.gif",
+        "text": "Thank you for the support!",
+        "createdAt": "2025-03-08T17:46:29.028Z",
+        "modifiedAt": "2025-03-17T20:04:21.994Z",
+        "likes": [],
+        "id": "m80hxkx04mr"
+    },
+    {
+        "author": {
+            "id": "m7t6td0y48",
+            "username": "Lony_Luna"
+        },
+        "image": "https://media.giphy.com/media/Mylaa4mpiWCUE/giphy.gif?cid=790b7611cm3b41jb3l9qbixjcdb5qxga7nifvz1mkn68gam9&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+        "text": "Beware of the Nargles!",
+        "createdAt": "2025-03-17T11:29:40.476Z",
+        "modifiedAt": null,
+        "likes": [],
+        "id": "m8czfo1o1i"
+    }
+]
