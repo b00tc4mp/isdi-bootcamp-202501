@@ -1,11 +1,12 @@
  import { constant } from './constant.js'
 
- import { ValidationError } from '../../api/errors.js'
+ import { ValidationError } from './errors.js'
  
  // creamos las validaciones para los inputs
  export const validate = {
     string(string, explain) {
-        if(typeof string !== 'string') throw new ValidationError(`invalid ${explain} type`)
+        if(typeof string !== 'string') throw new TypeError(`invalid ${explain} type`)
+
     },
     text(text, explain) {
         this.string(text, explain)

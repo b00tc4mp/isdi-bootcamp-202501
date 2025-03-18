@@ -1,10 +1,10 @@
 import express, { json } from 'express'
-
 import cors from 'cors'
+import { errors } from 'com'
 
 import { logic } from './logic/index.js'
 
-import { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } from './errors.js'
+const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
 const api = express() // inicializamos la aplicación, creamos una instancia de la aplicación para manejar rutas, peticiones y respuestas
 

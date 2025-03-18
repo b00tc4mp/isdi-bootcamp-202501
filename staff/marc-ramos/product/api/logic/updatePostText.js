@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError, OwnershipError } from '../errors.js'
+const { NotFoundError, OwnershipError } = errors
 
 export const updatePostText = (userId, postId, text) => { // edit post text
     validate.id(userId, 'userId')

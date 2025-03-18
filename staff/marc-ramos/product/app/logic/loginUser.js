@@ -1,7 +1,7 @@
-import { data } from "../data/index"
-import { validate } from "./validate"
+import { data } from "../data"
+import { errors, validate } from "com"
 
-// import { CredentialsError } from "../errors"
+const { SystemError } = errors
 
 export const loginUser = (username, password) =>{
     validate.username(username, 'username')
@@ -19,17 +19,15 @@ export const loginUser = (username, password) =>{
             'Content-Type': 'application/JSON' // Le decimos al servidor que el cuerpo de la solicitud contiene datos en formato JSON, es importante para que el servidor interpete los datos correctamente.
         },
         body: JSON.stringify({ username, password }) // Body es donde se incluye el contenido de la solicitud. En este caos se esta enviando el Username y password en formato JSON.
-                                                     // Usamos stringify para convertirlo en un string, es el formato en el que se deben enviar datos a un servidor.
+        // Usamos stringify para convertirlo en un string, es el formato en el que se deben enviar datos a un servidor.
    })
     // Manejamos el error en la soilicitud HTTP.
-    .catch(error => { throw new Error(error.message)})
+    .catch(error => { throw new SystemError(error.message)})
     // Manejamos respuesta en la solicitud HTTP.
     .then(response => {
-        console.log(response.status)
-
-        if(response.status === 200) // Si la respuesta tiene estado 200 (solicitud exitosa)
+        if (response.status === 200) // Si la respuesta tiene estado 200 (solicitud exitosa)
             return response.json() // Convertimos la respuesta en un objeto javaScript
-                .catch(error => { throw new Error(error.message) }) // Si hay un error convirtiendolo a JSON lo capturamos aqui
+                .catch(error => { throw new SystemError(error.message) }) // Si hay un error convirtiendolo a JSON lo capturamos aqui
                 .then( body => { // Si la conversion es exitosa recibimos el body.
                     const { id } = body // Sacamos la iD del body
 
@@ -37,11 +35,13 @@ export const loginUser = (username, password) =>{
                 })
 
         return response.json() // Si la respuesta del servidor no es un 200 
-            .catch(error => { throw new Error(error.message) }) // Capturamos por si hay un error convirtiendolo a JSON
+            .catch(error => { throw new SystemError(error.message) }) // Capturamos por si hay un error convirtiendolo a JSON
             .then( body => {
                 const { error, message } = body
 
-                throw new Error(message)
+                const constructor = errors[error]
+
+                throw new constructor(message)
             })    
     })
 }

@@ -1,4 +1,7 @@
 import { data } from '../data/index.js'
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
 
 export const getPosts = () => {
     const { userId } = data
@@ -9,13 +12,11 @@ export const getPosts = () => {
             Authorization: `Basic ${userId}`
         }
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status)
-
             if (response.status === 200)
                 return response.json()
-                    .catch(error => { throw new Error(error.message) })
+                    .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
                         const posts = body
 
@@ -28,11 +29,13 @@ export const getPosts = () => {
                     })
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }
