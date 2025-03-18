@@ -9,6 +9,7 @@ class CredentialsError extends Error {
         super(message)
     }
 }
+
 class NotFoundError extends Error {
     constructor(message) {
         super(message)
@@ -21,10 +22,23 @@ class OwnershipError extends Error {
     }
 }
 
+class SystemError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
+class ValidationError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
 
 export {
     DuplicityError,
     CredentialsError,
     NotFoundError,
-    OwnershipError
+    OwnershipError,
+    SystemError,
+    ValidationError
 }

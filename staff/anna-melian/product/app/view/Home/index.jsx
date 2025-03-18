@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { logic } from '../../logic.js'
+import { logic } from '../../logic/index.js'
 import { Posts } from './Posts.jsx'
 import { Profile } from './Profile.jsx'
 import { CreatePost } from './CreatePost.jsx'

@@ -1,4 +1,4 @@
-import { logic } from '../logic.js'
+import { logic } from '../logic/index.js'
 
 import { useState, useEffect } from 'react'
 

@@ -1,9 +1,4 @@
-import { Collection } from "./collection"
-
-export var data = {
-    users: new Collection('users'),
-    posts: new Collection('posts'),
-
+export const data = {
     get userId() {
         const id = JSON.parse(sessionStorage.userId || 'null')
 

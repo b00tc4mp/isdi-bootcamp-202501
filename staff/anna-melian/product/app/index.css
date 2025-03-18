@@ -31,15 +31,12 @@ a {
     transition: font-size .2s, transform 0.3s ease, box-shadow 0.3s ease;
     color: var(--color);
     font-weight: bold;
-
 }
 
 a:hover {
     font-size: 1.7rem;
     transform: scale(1.1);
     text-shadow: 0 0 10px rgb(255, 230, 0), 0 0 20px rgb(255, 255, 255), 0 0 30px rgb(250, 239, 145);
-
-
 }
 
 button {
@@ -52,7 +49,6 @@ button {
     cursor: pointer;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-
 }
 
 button:hover {
@@ -80,7 +76,6 @@ label {
 }
 
 input {
-
     background-color: white;
     color: black;
     border: 2px solid var(--color);
@@ -123,7 +118,6 @@ article {
         color: var(--color);
     }
 
-
     img {
         width: 100%;
     }
@@ -131,11 +125,8 @@ article {
     .post-footer {
         display: flex;
         justify-content: space-between;
-
     }
 }
-
-
 
 header {
     display: flex;
@@ -143,7 +134,6 @@ header {
     align-items: center;
     position: fixed;
     top: 0;
-    /* width: calc(100% - 20px); */
     width: 100%;
     background-color: var(--bg-color);
     padding: var(--padding-y) var(--padding-x);
@@ -151,14 +141,12 @@ header {
 }
 
 h1,
-
 h2 {
     margin: 0;
     color: var(--color);
     font-size: 2rem;
     text-shadow: 0 0 10px var(--shadow1-color), 0 0 20px var(--shadow2-color);
 }
-
 
 h4 {
     margin: 0;
@@ -197,7 +185,6 @@ footer {
     justify-self: center;
 }
 
-
 .logo-hogwarts,
 .logo-gryffindor,
 .logo-ravenclaw,
@@ -212,7 +199,6 @@ footer {
     margin: 7px;
     overflow: hidden;
     transition: transform 0.5s ease, box-shadow 0.5s ease;
-
 }
 
 .logo-hogwarts {
@@ -230,12 +216,10 @@ footer {
     box-shadow: 0 0 15px var(--color);
 }
 
-
 .logo-hufflepuff {
     background-image: url('https://hogwartssantafe.wordpress.com/wp-content/uploads/2011/10/hufflepuffcrest.jpg');
     box-shadow: 0 0 15px var(--color);
 }
-
 
 .logo-ravenclaw {
     background-image: url('https://imgs.search.brave.com/QWyT_XZ79Mt8kIOdbm8lRITPQ21SptHfxKbb8AZVYZI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5teWthcmFtZWxs/aS5jb20vZ2FsZXJp/YS9hcnRpY3Vsb3Mv/ZGVjb3JhY2lvbi1k/ZS1wYXJlZC1lbWJs/ZW1hLXJhdmVuY2xh/dy1oYXJyeS1wb3R0/ZXItNjFjbV8xMjQy/MF8xLmpwZw');
@@ -263,8 +247,6 @@ footer {
     --bg-color: #FFC107;
     --shadow1-color: #db4f51;
     --shadow2-color: #920709;
-
-
 }
 
 .slytherin {

@@ -1,3 +1,5 @@
+/*
+
 import { data } from "../data"
 import { NotFoundError, CredentialsError } from "../errors"
 import { validate } from "./validate"
@@ -29,3 +31,5 @@ export const changePassword = (actualPassword, newPassword) => {
     data.users.updateOne(user)
 
 }
+
+*/

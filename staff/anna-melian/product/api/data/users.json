@@ -58,5 +58,15 @@
         "createdAt": "2025-03-17T21:11:11.267Z",
         "modifiedAt": null,
         "id": "m8dk7hyb7mc"
+    },
+    {
+        "name": "Anna Melian",
+        "email": "anna@10.com",
+        "username": "Anna",
+        "house": "ravenclaw",
+        "password": "123123123",
+        "createdAt": "2025-03-18T18:57:38.679Z",
+        "modifiedAt": null,
+        "id": "m8euvm2fw1m"
     }
 ]

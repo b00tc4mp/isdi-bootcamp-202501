@@ -5,7 +5,7 @@ import { Register } from './view/Register.jsx'
 import { Login } from './view/Login.jsx'
 import { Home } from './view/Home/index.jsx'
 
-import { logic } from './logic.js'
+import { logic } from './logic/index.js'
 
 
 function App() {

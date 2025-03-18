@@ -3,7 +3,7 @@ import { NotFoundError, OwnershipError } from "../errors"
 import { validate } from "./validate"
 
 
-export const editMyPost = (myPost, text) => {
+export const updatePostText = (myPost, text) => {
     validate.id(myPost.id, 'postId')
 
     validate.text(text, 'text')

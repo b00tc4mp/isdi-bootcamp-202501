@@ -53,7 +53,7 @@ export function MyPost({ post, onPostLikeToggled, onPostDeleted, onPostEdited })
 
             } = form
 
-            const updated = logic.editMyPost(post, text)
+            const updated = logic.updatePostText(post, text)
 
             if (!updated) {
                 alert('No modifications')

@@ -1,3 +1,5 @@
+/*
+
 import { data } from "../data"
 import { NotFoundError } from "../errors"
 
@@ -27,3 +29,6 @@ export const deleteProfile = () => {
     data.userId = null
 
 }
+
+*/
+

@@ -1,3 +1,6 @@
+
+/*
+
 import { data } from "../data"
 import { getPosts } from "./getPosts"
 
@@ -17,3 +20,5 @@ export const getOwnPosts = () => {
     return ownPosts
 
 }
+
+*/
