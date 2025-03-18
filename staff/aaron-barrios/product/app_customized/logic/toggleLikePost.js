@@ -1,5 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
 
 // import { NotFoundError } from '../errors.js'
 
@@ -14,19 +16,19 @@ export const toggleLikePost = postId => {
             Authorization: `Basic ${userId}`
         }
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status)
-
             if (response.status === 204)
                 return
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

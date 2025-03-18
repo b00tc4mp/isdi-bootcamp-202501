@@ -1,6 +1,8 @@
 import { data } from '../data/index.js'
 
-// import { NotFoundError} from '../errors.js'
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
 
 export const getUsername = () => {
     const { userId } = data
@@ -11,13 +13,11 @@ export const getUsername = () => {
             Authorization: `Basic ${userId}`
         }
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status)
-
             if (response.status === 200)
                 return response.json()
-                    .catch(error => { throw new Error(error.message) })
+                    .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
                         const { name } = body
 
@@ -25,11 +25,13 @@ export const getUsername = () => {
                     })
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

@@ -1,7 +1,7 @@
 import { data } from '../data'
-import { validate } from './validate'
+import { errors, validate } from 'com'
 
-// import { CredentialsError } from '../errors'
+const { SystemError } = errors
 
 export const loginUser = (username, password) => {
     validate.username(username, 'username')
@@ -14,13 +14,11 @@ export const loginUser = (username, password) => {
         },
         body: JSON.stringify({ username, password })
     })
-        .catch(error => { throw new Error(error.message) }) // => steps in when port is incorrect or 
+        .catch(error => { throw new SystemError(error.message) }) // => steps in when port is incorrect or 
         .then(response => {                                 // api not thrown (FAILED TO FETCH)
-            console.log(response.status)
-
             if (response.status === 200)
                 return response.json()
-                    .catch(error => { throw new Error(error.message) }) // => steps in when the response is a non valid JSON
+                    .catch(error => { throw new SystemError(error.message) }) // => steps in when the response is a non valid JSON
                     .then(body => {
                         const { id } = body
 
@@ -28,11 +26,13 @@ export const loginUser = (username, password) => {
                     })
 
             return response.json()
-                .catch(error => { throw new Error(error.message) }) // => steps in when route params are incorrect
+                .catch(error => { throw new SystemError(error.message) }) // => steps in when route params are incorrect
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)                // => steps in when a wrongcred or unexistingUser is found
+                    const constructor = errors[error]
+
+                    throw new constructor(message)                // => steps in when a wrongcred or unexistingUser is found
                 })
         })
 }

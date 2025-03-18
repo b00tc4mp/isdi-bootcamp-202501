@@ -1,5 +1,3 @@
-import {data} from '../data/index.js'
+import { data } from '../data/index.js'
 
-export const isUserLoggedIn = () => {
-        return !!data.userId
-    }
+export const isUserLoggedIn = () => !!data.userId

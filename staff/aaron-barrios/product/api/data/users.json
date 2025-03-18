@@ -90,5 +90,14 @@
         "createdAt": "2025-03-16T14:41:10.530Z",
         "modifiedAt": null,
         "id": "m8bqu35u3ji"
+    },
+    {
+        "name": "Santi",
+        "email": "san@ti.com",
+        "username": "santi",
+        "password": "sasasa",
+        "createdAt": "2025-03-18T14:24:58.223Z",
+        "modifiedAt": null,
+        "id": "m8el4y9b9e"
     }
 ]

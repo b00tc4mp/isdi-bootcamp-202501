@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError } from '../errors.js'
+const { NotFoundError } = errors
 
 export const getUsername = userId => {
     const user = data.users.getById(userId)

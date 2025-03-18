@@ -1,6 +1,6 @@
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-// import { DuplicityError } from '../errors.js'
+const { SystemError } = errors
 
 export const registerUser = (name, email, username, password) => {
     validate.text(name, 'name')
@@ -17,19 +17,19 @@ export const registerUser = (name, email, username, password) => {
         },
         body: JSON.stringify({ name, email, username, password })
     })
-        .catch(error => { throw new Error(error.message) }) // => steps in when port is incorrect or 
+        .catch(error => { throw new SystemError(error.message) }) // => steps in when port is incorrect or 
         .then(response => {                                    // api not thrown (FAILED TO FETCH)
-            console.log(response.status)
-
             if (response.status === 201)
                 return                  // => HAPPY PATH
 
             return response.json()
-                .catch(error => { throw new Error(error.message) }) // => steps in when fetch route params are incorrect
+                .catch(error => { throw new SystemError(error.message) }) // => steps in when fetch route params are incorrect
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)                        // => steps in when a duplicity is found
+                    const constructor = errors[error]
+
+                    throw new constructor(message)                        // => steps in when a duplicity is found
                 })
         })
 }
