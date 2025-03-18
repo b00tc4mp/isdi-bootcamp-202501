@@ -1,5 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
+
+const { SystemError } = errors;
 
 export const loginUser = (username, password) => {
     validate.username(username, 'username');
@@ -12,14 +14,13 @@ export const loginUser = (username, password) => {
         },
         body: JSON.stringify({ username, password })
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status);
 
             if (response.status === 200) {
                 return response.json()
                     .catch(error => {
-                        throw new Error(error.message)
+                        throw new SystemError(error.message)
                     })
                     .then(body => {
                         const { id } = body;
@@ -29,11 +30,13 @@ export const loginUser = (username, password) => {
             }
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
-                    const { error, message } = body
+                    const { error, message } = body;
 
-                    throw new Error(message);
+                    const constructor = errors[error];
+
+                    throw new constructor(message);
                 })
         })
 }

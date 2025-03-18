@@ -1,5 +1,7 @@
-import { validate } from './validate.js';
+import { errors, validate } from 'com'
 import { data } from '../data/index.js'
+
+const { SystemError } = errors;
 
 export const updatePostText = (postId, text) => {
     validate.id(postId, 'postId');
@@ -14,19 +16,20 @@ export const updatePostText = (postId, text) => {
         },
         body: JSON.stringify({ text })
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status);
 
             if (response.status === 204)
                 return;
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body;
 
-                    throw new Error(message);
+                    const constructor = errors[error];
+
+                    throw new constructor(message);
                 })
         })
 }

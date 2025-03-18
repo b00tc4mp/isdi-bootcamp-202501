@@ -42,3 +42,14 @@ export {
     OwnershipError,
     ValidationError
 }
+
+const errors = {
+    SystemError,
+    DuplicityError,
+    NotFoundError,
+    CredentialsError,
+    OwnershipError,
+    ValidationError
+}
+
+export default errors;

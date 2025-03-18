@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
-import { NotFoundError, OwnershipError } from '../errors.js';
-import { validate } from './validate.js';
+import { errors, validate } from 'com'
+
+const { NotFoundError, OwnershipError } = errors;
 
 export const deletePost = (userId, postId) => {
     validate.id(userId, 'userId');

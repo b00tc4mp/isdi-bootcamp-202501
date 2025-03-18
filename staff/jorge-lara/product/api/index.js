@@ -1,9 +1,10 @@
 import express, { json } from 'express'
 import cors from 'cors';
+import { errors } from 'com'
 
 import { logic } from './logic/index.js'
 
-import { DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } from './errors.js';
+const { DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors;
 
 const api = express();
 

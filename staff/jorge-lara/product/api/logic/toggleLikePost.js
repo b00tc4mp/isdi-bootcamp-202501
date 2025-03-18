@@ -1,42 +1,31 @@
 import { data } from '../data/index.js';
-import { NotFoundError } from '../errors.js';
-import { validate } from './validate.js';
+import { errors, validate } from 'com'
+
+const { NotFoundError } = errors;
 
 export const toggleLikePost = (userId, postId) => {
     validate.id(userId, 'userId');
     validate.id(postId, 'postId');
 
-    const foundPost = data.posts.findOne(post => post.id === postId);
+    const user = data.users.getById(userId);
 
-    if (!foundPost) {
+    if (!user) {
+        throw new NotFoundError('user not found');
+    }
+
+    const post = data.posts.findOne(post => post.id === postId);
+
+    if (!post) {
         throw new NotFoundError("post not found");
     }
 
-    let userIdFound = false;
+    const index = post.likes.findIndex(likeUserId => likeUserId === userId);
 
-    for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-        const id = foundPost.likes[i];
-
-        if (id === userId) {
-            userIdFound = true
-        }
-    }
-
-
-    if (!userIdFound) {
-        foundPost.likes.push(userId);
+    if (index < 0) {
+        post.likes.push(userId);
     } else {
-        const likes = [];
-
-        for (let i = 0; i < foundPost.likes.length; i++) {
-            const id = foundPost.likes[i];
-
-            if (id !== userId) {
-                likes.push(id);
-            }
-        }
-
-        foundPost.likes = likes;
+        post.likes.splice(index, 1);
     }
-    data.posts.updateOne(post => post.id === postId, foundPost);
+
+    data.posts.updateOne(post => post.id === postId, post);
 }

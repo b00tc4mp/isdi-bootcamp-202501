@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
-import { NotFoundError, OwnershipError } from '../errors.js';
-import { validate } from './validate.js';
+import { errors, validate } from 'com'
+
+const { NotFoundError, OwnershipError } = errors;
 
 export const updatePostText = (userId, postId, text) => {
     validate.id(userId, 'userId');
@@ -14,18 +15,18 @@ export const updatePostText = (userId, postId, text) => {
         throw new NotFoundError('user not found');
     }
 
-    const foundPost = data.posts.findOne(post => post.id === postId);
+    const post = data.posts.findOne(post => post.id === postId);
 
-    if (!foundPost) {
+    if (!post) {
         throw new NotFoundError('post not found');
     }
 
-    if (foundPost.author !== userId) {
+    if (post.author !== userId) {
         throw new OwnershipError('user is not author of post');
     }
 
-    foundPost.text = text;
-    foundPost.modifiedAt = new Date;
+    post.text = text;
+    post.modifiedAt = new Date;
 
-    data.posts.updateOne(post => post.id === postId, foundPost);
+    data.posts.updateOne(post => post.id === postId, post);
 }
