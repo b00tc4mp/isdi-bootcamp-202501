@@ -1,7 +1,5 @@
 import { useState } from "react";
-import updatePostLikes from "../../logic/updatePostLikes";
-import deletePost from "../../logic/deletePostId";
-import updatePostText from "../../logic/updatePostText";
+import { logic } from "../../logic";
 
 function Post({
   author,
@@ -20,9 +18,17 @@ function Post({
 
   const handleToggleClick = (id) => {
     try {
-      updatePostLikes(id);
+      logic
+        .updatePostLike(id)
+        .then(() => {
+          console.log("EUREKA");
+          onPostLikeUpdate();
+        })
+        .catch((error) => {
+          console.error("Asynchronous error", error);
 
-      onPostLikeUpdate();
+          alert(error.message);
+        });
     } catch (error) {
       console.error(error);
 
@@ -35,9 +41,14 @@ function Post({
   const handleDeleteClick = () => {
     try {
       if (confirm("Do you want to delete?")) {
-        deletePost(id);
-
-        handleDeletedPostSuccess();
+        logic
+          .deletePost(id)
+          .then(() => {
+            handleDeletedPostSuccess();
+          })
+          .catch((error) => {
+            throw new Error(error.message);
+          });
       }
     } catch (error) {
       console.error(error);
@@ -60,11 +71,16 @@ function Post({
         text: { value: text },
       } = e.target;
 
-      updatePostText(id, text);
+      logic
+        .updatePostText(id, text)
+        .then(() => {
+          setView("");
 
-      setView("");
-
-      handleUpdatedTextSuccess();
+          handleUpdatedTextSuccess();
+        })
+        .catch((error) => {
+          throw new Error(error.message);
+        });
     } catch (error) {
       console.error(error);
 

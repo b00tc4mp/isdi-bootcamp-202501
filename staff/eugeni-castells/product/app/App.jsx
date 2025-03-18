@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
 import isUserConnected from "./logic/isUserConnected.js";
-import getOnlineUserName from "./logic/getOnlineUserName.js";
-
-import HamburgerMenu from "./view/Home/HamburgerMenu.jsx";
-import Header from "./view/Home/Header.jsx";
 import Home from "./view/Home/index.jsx";
 import Landing from "./view/Landing.jsx";
 import Login from "./view/Login.jsx";

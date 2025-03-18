@@ -1,5 +1,5 @@
 import { validate } from "./validate.js";
-import data from "../data/index.js";
+import { data } from "../data/index.js";
 
 const loginUser = function (username, password) {
   validate.password(password, "password");

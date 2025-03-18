@@ -1,4 +1,4 @@
-import { registerUser } from "../logic/registerUser";
+import { logic } from "../logic";
 
 function Register({ onLoginNavigation, onRegisterSuccess }) {
   const handleRegisterSUbmit = (event) => {
@@ -14,16 +14,23 @@ function Register({ onLoginNavigation, onRegisterSuccess }) {
         password: { value: password },
       } = form;
 
-      registerUser({
-        name: name,
-        email: email,
-        username: username,
-        password: password,
-      });
+      logic
+        .registerUser({
+          name,
+          email,
+          username,
+          password,
+        })
+        .then(() => {
+          form.reset();
 
-      form.reset();
+          handleRegisterSuccess();
+        })
+        .catch((error) => {
+          console.error;
 
-      handleRegisterSuccess();
+          alert(error.message);
+        });
     } catch (error) {
       console.error(error);
 

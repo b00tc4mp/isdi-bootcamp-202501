@@ -1,4 +1,4 @@
-import loginUser from "../logic/logInUser";
+import { logic } from "../logic";
 
 function Login({ onRegisterNavigation, onLoginSuccess }) {
   const handleLoginSuccess = () => {
@@ -13,21 +13,34 @@ function Login({ onRegisterNavigation, onLoginSuccess }) {
     event.preventDefault();
 
     try {
+      const { target: form } = event;
+
       const {
         username: { value: username },
         password: { value: password },
-      } = event.target.elements;
+      } = form;
 
-      loginUser(username, password);
+      logic
+        .authenticateUser(username, password)
+        .then(() => {
+          form.reset();
 
-      handleLoginSuccess();
+          handleLoginSuccess();
+        })
+        .catch((error) => {
+          console.error(error);
+
+          alert(error);
+        });
     } catch (error) {
       console.error(error);
 
       alert(error.message);
     }
   };
+
   console.log("Login -> render");
+
   return (
     <div className="screen-container">
       <form

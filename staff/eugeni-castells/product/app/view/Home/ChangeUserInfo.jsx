@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-
+import { logic } from "../../logic";
 import "./ChangeUserInfo.css";
-import getOnlineUserInfo from "../../logic/getOnlineUserInfo";
-import updateUser from "../../logic/updateUser";
 
 function ChangeUserInfo({ onHomeNavigation }) {
   const [userInfo, setUserInfo] = useState({});
@@ -24,7 +22,7 @@ function ChangeUserInfo({ onHomeNavigation }) {
       password,
     };
 
-    updateUser(updatedUser);
+    logic.updateUser(updatedUser);
 
     handleHomeNavigation();
   };
@@ -33,7 +31,7 @@ function ChangeUserInfo({ onHomeNavigation }) {
 
   useEffect(() => {
     try {
-      const info = getOnlineUserInfo();
+      const info = logic.getUserInfo();
 
       setUserInfo(info);
     } catch (error) {}

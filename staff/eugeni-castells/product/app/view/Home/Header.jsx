@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import HamburgerButton from "./HamburgerButton";
-import getOnlineUserName from "../../logic/getOnlineUserName";
+import { logic } from "../../logic";
 
 const Header = ({ onMenuNavigation }) => {
   const [loggedInUserName, setLoggedInUserName] = useState("");
@@ -11,10 +11,18 @@ const Header = ({ onMenuNavigation }) => {
   };
   useEffect(() => {
     try {
-      const name = getOnlineUserName();
+      logic
+        .getUserInfo()
+        .catch((error) => {
+          console.error;
+          alert(error.message);
+        })
+        .then((user) => setLoggedInUserName(user.name));
+    } catch (error) {
+      console.log(error);
 
-      setLoggedInUserName(name);
-    } catch (error) {}
+      alert(error.message);
+    }
   }, []);
 
   return (

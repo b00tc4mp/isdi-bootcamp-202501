@@ -2,50 +2,80 @@ import Post from "./Post";
 
 import { useState, useEffect } from "react";
 
-import getPosts from "../../logic/getPosts";
+import { logic } from "../../logic";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    let posts = getPosts();
+    try {
+      logic
+        .getPosts()
+        .then((posts) => setPosts(posts))
+        .catch((error) => {
+          console.error(error);
 
-    setPosts(posts);
+          alert(error.message);
+        });
+    } catch (error) {
+      (error) => {
+        console.error(error);
+        alert(error.message);
+      };
+    }
   }, []);
 
   const handleLikeUpdate = function () {
     try {
-      const newPosts = getPosts();
+      logic
+        .getPosts()
+        .then((posts) => setPosts(posts))
+        .catch((error) => {
+          console.error(error);
 
-      setPosts(newPosts);
+          alert(error.message);
+        });
     } catch (error) {
-      console.error(error);
-
-      alert(error.message);
+      (error) => {
+        console.error(error);
+        alert(error.message);
+      };
     }
   };
 
   const handleDeletedPostSuccess = () => {
     try {
-      const newPosts = getPosts();
+      logic
+        .getPosts()
+        .then((posts) => setPosts(posts))
+        .catch((error) => {
+          console.error(error);
 
-      setPosts(newPosts);
+          alert(error.message);
+        });
     } catch (error) {
-      console.error(error);
-
-      alert(error.message);
+      (error) => {
+        console.error(error);
+        alert(error.message);
+      };
     }
   };
 
   const handleUpdateTextSuccess = () => {
     try {
-      const newPosts = getPosts();
+      logic
+        .getPosts()
+        .then((posts) => setPosts(posts))
+        .catch((error) => {
+          console.error(error);
 
-      setPosts(newPosts);
+          alert(error.message);
+        });
     } catch (error) {
-      console.error(error);
-
-      alert(error.message);
+      (error) => {
+        console.error(error);
+        alert(error.message);
+      };
     }
   };
   return (

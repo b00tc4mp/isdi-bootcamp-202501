@@ -1,4 +1,4 @@
-import data from "../data";
+import { data } from "../data/index.js";
 
 const logoutUser = () => {
   data.userId = null;
