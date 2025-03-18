@@ -34,6 +34,11 @@ export const validate = {
     if (value.length < minLength)
       throw new ValidationError("invalid " + explain + " range error");
   },
+  url(url, explain) {
+    this.string(url, explain);
+    if (!constant.URL_REGEX.test(url))
+      throw new ValidationError(`invalid ${explain} syntax`);
+  },
   id(id, explain) {
     this.text(id, explain);
     if (id.length < 10 || id.length > 14)

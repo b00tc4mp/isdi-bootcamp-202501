@@ -1,10 +1,17 @@
 import data from "../data/index.js";
+import { NotFoundError, OwnershipError } from "./errors.js";
 
 import { validate } from "./validate.js";
 
 export const updateUser = (userId, userInfo) => {
-  if (userId !== userInfo.id)
-    throw new Error("user cannot modify other user's info");
+  validate.id(userId);
+
+  let userFound = data.users.getById(userId);
+
+  if (!userFound) throw new NotFoundError("user not found");
+
+  if (userId !== userFound.id)
+    throw new OwnershipError("user cannot modify other user's info");
 
   const { name, email, username, password } = userInfo;
 

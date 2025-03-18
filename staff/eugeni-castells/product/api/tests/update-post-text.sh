@@ -1,1 +1,1 @@
-curl -X PATCH http://localhost:8080/posts/2wy30f5dt0.y -H 'Authorization: Basic 9fns3nqzvz.w'  -d '{"text":"text from curl test"}' -H 'Content-Type: application/json' -v
+curl -X PATCH http://localhost:8080/posts/text/2wy30f5dt0.y -H 'Authorization: Basic 9fns3nqzvz.w'  -d '{"text":"text from curl test"}' -H 'Content-Type: application/json' -v

@@ -1,0 +1,1 @@
+curl -X DELETE htpp://localhost:8080/posts/2wy30f5dt0.y -v -H 'Authorization: Basic 9fns3nqzvz.w'

@@ -1,8 +1,13 @@
 import data from "../data/index.js";
+import { NotFoundError } from "./errors.js";
 import { validate } from "./validate.js";
 
 export const updatePostLikes = (userId, postId) => {
   validate.id(userId, "user id");
+
+  const user = data.users.getById(userId);
+
+  if (!user) throw new NotFoundError("user not found");
 
   const postFound = data.posts.getById(postId);
 

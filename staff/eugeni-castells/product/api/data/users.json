@@ -1,11 +1,11 @@
 [
   {
-    "name": "lacho",
+    "name": "luchasso",
     "email": "lucho@trucho.com",
-    "username": "lucho",
+    "username": "lucchio",
     "password": "123123123",
     "createdAt": "2025-03-07T15:58:36.540Z",
-    "modifiedAt": "2025-03-13T08:04:02.844Z",
+    "modifiedAt": "2025-03-16T15:15:03.104Z",
     "id": "7odunezhz0.9"
   },
   {
@@ -32,5 +32,14 @@
     "createdAt": "2025-03-13T09:40:15.640Z",
     "modifiedAt": null,
     "id": "2gvssspwv0.l"
+  },
+  {
+    "name": "Eugeni Castells",
+    "email": "ecastellsricart@gmail.com",
+    "username": "eugeni",
+    "password": "123123123",
+    "createdAt": "2025-03-16T18:31:48.875Z",
+    "modifiedAt": null,
+    "id": "1crj5tedh4.x"
   }
 ]

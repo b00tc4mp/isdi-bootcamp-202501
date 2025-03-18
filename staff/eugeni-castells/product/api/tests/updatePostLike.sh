@@ -1,0 +1,1 @@
+curl -X  PATCH http://localhost:8080/posts/likes/2wy30f5dt0.y -H 'Content-Type:application/json' -H 'Authorization: Basic 7odunezhz0.9'  -v

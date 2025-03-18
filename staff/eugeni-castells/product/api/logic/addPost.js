@@ -1,5 +1,6 @@
 import { validate } from "./validate.js";
 import data from "../data/index.js";
+import { NotFoundError } from "./errors.js";
 
 export const addPost = (id, post) => {
   const { image, text } = post;
@@ -8,6 +9,10 @@ export const addPost = (id, post) => {
   validate.text(image, "image URL");
   validate.minLength(image, 10, "image URL");
   validate.text(text, "text");
+
+  const user = data.users.getById(id);
+
+  if (!user) throw new NotFoundError("user not found");
 
   const newPost = {
     author: id,

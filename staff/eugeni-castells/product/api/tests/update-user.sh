@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/users -H 'Authorization: Basic 7odunezhz0.9' -d '{"name":"luchasso","email":"lucho@trucho.com","username":"lucchio","password":"123123123"}' -H 'Content-Type: application/json' -v
