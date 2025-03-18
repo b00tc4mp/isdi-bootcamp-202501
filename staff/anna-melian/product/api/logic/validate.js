@@ -37,6 +37,6 @@ export const validate = {
     id(id, explain) {
         this.text(id, explain)
         this.minLength(id, 8, explain)
-        this.maxLength(id, 11, explain)
+        this.maxLength(id, 12, explain)
     }
 }

@@ -29,9 +29,9 @@
             "username": "hufflyCed"
         },
         "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExajdpMDVjYThiNG04djZvOWR2eWw2cnRzM2FjMWNra3Azemc3dTdwaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1UAIoVWRhtjhe/giphy.gif",
-        "text": "Thank you for the support!",
+        "text": "Thank you for the suport!",
         "createdAt": "2025-03-08T17:46:29.028Z",
-        "modifiedAt": "2025-03-17T20:04:21.994Z",
+        "modifiedAt": "2025-03-18T09:40:03.551Z",
         "likes": [],
         "id": "m80hxkx04mr"
     },
@@ -46,5 +46,17 @@
         "modifiedAt": null,
         "likes": [],
         "id": "m8czfo1o1i"
+    },
+    {
+        "author": {
+            "id": "m71tm7l3l5l",
+            "username": "GryffindorSeeker"
+        },
+        "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWl4dmRudTRlY3Vnb281emp0bG1ldnhsY3l0bWxxb2Zhb3Y5ODdmaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/mz1kJeDVueKC4/giphy.gif",
+        "text": "Searching my wand",
+        "createdAt": "2025-03-18T09:16:57.407Z",
+        "modifiedAt": null,
+        "likes": [],
+        "id": "m8ea4udbve7"
     }
 ]
