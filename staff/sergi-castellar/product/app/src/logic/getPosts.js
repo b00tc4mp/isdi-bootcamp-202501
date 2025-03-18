@@ -1,34 +1,43 @@
 import { data } from './../data/index';
+import { errors } from 'com'
+
+const { SystemError } = errors
 
 export const getPosts = () => {
-    const posts = data.posts.getAll();
-
     const { userId } = data;
 
-    const aggregatedPosts = [];
+    return fetch('http://localhost:8080/posts', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${userId}`
+        }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-    posts.forEach(post => {
-        let liked;
-        post.likes.includes(userId) ? liked = true : liked = false;
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(body => {
+                        const posts = body
 
-        const author = data.users.getById(post.authorId);
+                        posts.forEach(post => {
+                            post.createdAt = new Date(post.createdAt)
+                            if (post.modifiedAt) post.modifiedAt = new Date(post.modifiedAt)
+                        })
 
-        const { id, imageSrc, textDescription, createdAt, modifiedAt, likes } = post;
+                        return posts
+                    })
 
-        const aggregatedPost = {
-            id: id,
-            author: { ...author },
-            imageSrc: imageSrc,
-            textDescription: textDescription,
-            createdAt: createdAt && new Date(createdAt),
-            modifiedAt: modifiedAt && new Date(modifiedAt),
-            likes: likes,
-            liked: liked,
-            own: post.authorId === userId
-        };
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
-        aggregatedPosts.push(aggregatedPost);
-    });
+                    const constructor = errors[error]
 
-    return aggregatedPosts;
+                    throw new constructor(message)
+                })
+        })
 };

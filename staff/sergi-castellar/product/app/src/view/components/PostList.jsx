@@ -8,9 +8,12 @@ export function PostList() {
 
     useEffect(() => {
         try {
-            const posts = logic.getPosts()
-            
-            setPosts(posts)
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -19,9 +22,12 @@ export function PostList() {
 
     const handlePostDeleted = () => { //TODO se repite
         try {
-            const posts = logic.getPosts()
-            
-            setPosts(posts)
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -30,9 +36,12 @@ export function PostList() {
 
     const handlePostDescriptionEdited = () => { //TODO se repite
         try {
-            const posts = logic.getPosts()
-            
-            setPosts(posts)
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -41,9 +50,12 @@ export function PostList() {
 
     const handlePostLikeToggled = () => { //TODO se repite
         try {
-            const posts = logic.getPosts()
-            
-            setPosts(posts)
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)

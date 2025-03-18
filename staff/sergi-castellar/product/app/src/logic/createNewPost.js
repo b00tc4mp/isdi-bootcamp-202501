@@ -1,6 +1,7 @@
 import { data } from './../data/index'
+import { errors, validate } from 'com'
 
-import { validate } from "./validate"
+const { SystemError } = errors
 
 export const createNewPost = (imageSrc, textDescription) => {
     validate.url(imageSrc, 'url');
@@ -8,14 +9,29 @@ export const createNewPost = (imageSrc, textDescription) => {
 
     const { userId } = data;
 
-    const newPost = {
-        authorId: userId,
-        imageSrc: imageSrc,
-        textDescription: textDescription,
-        createdAt: new Date(),
-        modifiedAt: null,
-        likes: []
-    };
+    return fetch('http://localhost:8080/posts/new', {
+        method: 'POST',
+        headers: {
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ imageSrc, textDescription })
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-    data.posts.insertOne(newPost, '01');
+            if (response.status === 201)
+                return
+
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 }

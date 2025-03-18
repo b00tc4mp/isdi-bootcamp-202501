@@ -1,24 +1,34 @@
 import { data } from './../data/index';
-import { NotFoundError } from './../errors';
-import { validate } from "./validate"
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
 
 export const toggleLike = (currentPostId) => {
     validate.id(currentPostId, 'id');
 
     const { userId } = data;
 
-    const currentPost = data.posts.findOne(post => post.id === currentPostId);
+    return fetch(`http://localhost:8080/posts/likes/${currentPostId}`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Basic ${userId}`
+        }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-    if (!currentPost) throw new NotFoundError('post not found');
+            if (response.status === 204)
+                return
 
-    const likePosition = currentPost.likes.indexOf(userId);
-    const isAlreadyLiked = likePosition !== -1;
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
-    if (!isAlreadyLiked) {
-        currentPost.likes.push(userId);
-    } else {
-        currentPost.likes.splice(likePosition, 1);
-    }
+                    const constructor = errors[error]
 
-    data.posts.updateOne(currentPost);
+                    throw new constructor(message)
+                })
+        })
 };

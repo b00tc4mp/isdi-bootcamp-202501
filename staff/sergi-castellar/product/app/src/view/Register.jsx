@@ -15,12 +15,18 @@ export function Register({onNavigateToLogin, onUserRegistered}) {
             } = form
 
             logic.registerUser(name, email, username, password)
+                .then(() => {
+                    form.reset()
+        
+                    alert('user created')
+        
+                    onUserRegistered()
+                })
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
 
-            form.reset()
-
-            alert('user created')
-
-            onUserRegistered()
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -32,14 +38,14 @@ export function Register({onNavigateToLogin, onUserRegistered}) {
     return <div>
         <Logo />
         <form id="register-form" onSubmit={handleRegisterSubmit}>
-            <label htmlFor="register-name">Name</label>
-            <input type="text" id="register-name" placeholder="name"/>
-            <label htmlFor="register-email">E-mail</label>
-            <input type="email" id="register-email" placeholder="e-mail"/>
-            <label htmlFor="register-username">Username</label>
-            <input type="text" id="register-username" placeholder="username"/>
-            <label htmlFor="register-password">Password</label>
-            <input type="password" id="register-password" placeholder="********"/>
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" placeholder="name"/>
+            <label htmlFor="email">E-mail</label>
+            <input type="email" id="email" placeholder="e-mail"/>
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" placeholder="username"/>
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" placeholder="********"/>
             <div className="buttons-div">
                 <a onClick={handleLoginClick}>Login</a>
                 <button type="submit" form="register-form">Register</button>

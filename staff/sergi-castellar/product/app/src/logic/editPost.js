@@ -1,20 +1,39 @@
 import { data } from './../data/index';
-import { NotFoundError, OwnershipError } from './../errors';
-import { validate } from "./validate"
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
 
 
 export const editPost = (postId, text) => {
     validate.id(postId, 'id');
+    validate.description(text, 'text');
 
-    const { posts } = data;
+    const { userId } = data;
 
-    const findPost = posts.findOne(post => post.id === postId);
+    return fetch(`http://localhost:8080/posts/edit/${postId}`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text })
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-    if (!findPost) throw new NotFoundError('post not found');
-    if (data.userId !== findPost.authorId) throw new OwnershipError('user is not the post author');
+            if (response.status === 204)
+                return
 
-    findPost.textDescription = text;
-    findPost.modifiedAt = new Date;
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
-    data.posts.updateOne(findPost);
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
+
 };

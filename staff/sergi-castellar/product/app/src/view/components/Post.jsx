@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {logic} from '../../logic/index'
 
 export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeToggled}) {
     const [view, setView] = useState('')
+    const [postDetails, setPostDetails] = useState([])
+
+
 
     const { id, author, imageSrc, textDescription, createdAt, currentPostModifiedAt, likes, liked, own } = post
     
@@ -45,8 +48,11 @@ export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeTo
     const handleDeleteClick = () => {
         try {
             logic.deletePost(id)
-
-            onPostDeleted()
+                .then(() => onPostDeleted())
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -64,9 +70,14 @@ export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeTo
             const { target: {description: {value: description}}} = event
 
             logic.editPost(id, description)
-
-            onPostDescriptionEdited()
-            setView('')
+                .then(() => {
+                    onPostDescriptionEdited()
+                    setView('')
+                })
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -76,8 +87,11 @@ export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeTo
     const handleToggleLikeClick = () => {
         try {
             logic.toggleLike(id)
-
-            onPostLikeToggled()
+                .then(() => onPostLikeToggled())
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -86,18 +100,39 @@ export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeTo
 
     const { name: authorName, username: authorUsername } = author
 
-    let likesString = ''
+    /*let likesString = ''
     let formattedDate = ''
-        try {
-            const likesUsernames = logic.getLikesUsernames(likes)
-            likesString = likesToString(likesUsernames)
+    //useEffect(() => {
+        const test = () => {
+            try {
+            logic.getLikesUsernames(likes)
+                .then(likesUsernames => {
+                    console.log('likesUsernames from post.jsx :>> ', likesUsernames);
 
-            formattedDate = dateToFormat(createdAt)
+                    likesString = likesToString(likesUsernames);
+                    console.log('likesUsernames from post.jsx :>> ', likesString);
+
+                    formattedDate = dateToFormat(createdAt);
+                    console.log('likesUsernames from post.jsx :>> ', formattedDate);
+
+                    setPostDetails([likesString, formattedDate])
+                    // Aquí podrías actualizar el estado o cualquier otra cosa si es necesario
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert(error.message);
+                });
         } catch (error) {
-            console.error(error)
-            alert(error.message)
-        }
+            console.error(error);
+            alert(error.message);
+        }}
+    //}, [])
 
+    if (a > 0){
+        test()
+        a--
+    }*/
+    
     return <article>
             <h2>{authorName}</h2>
         <figure>
@@ -112,10 +147,10 @@ export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeTo
                         <button onClick={handleEditDescriptionClick}>✏</button>
                     </div>}
                 </div> 
-                <span>{formattedDate}</span>
+                <span>{postDetails[1]}</span>
             </section>
             <section>
-                <p>{likesString}</p>
+                <p>{postDetails[0]}</p>
             </section>
             <section>
                 <div>

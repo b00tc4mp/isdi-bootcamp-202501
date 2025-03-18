@@ -14,12 +14,17 @@ export function Login({onNavigateToRegister, onUserLoggedIn}) {
             } = form
                 
             logic.loginUser(username, password)
+                .then(() => {
+                form.reset()
 
-            form.reset()
+                alert(`Welcome again, ${username}`)
 
-            alert(`Welcome again, ${username}`)
-
-            onUserLoggedIn()
+                onUserLoggedIn()
+                })
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)

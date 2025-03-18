@@ -10,12 +10,17 @@ export function CreatePost({onCreatePostCancelled, onPostCreated}) {
             const {imageRoute: {value: imageSrc}, description: {value: textDescription}} = form
 
             logic.createNewPost(imageSrc, textDescription)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
+                    alert('Post created')
 
-            alert('Post created')
-
-            onPostCreated()
+                    onPostCreated()
+                })
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
