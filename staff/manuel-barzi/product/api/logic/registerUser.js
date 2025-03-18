@@ -1,8 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-
-import { DuplicityError } from '../errors.js'
+const { DuplicityError } = errors
 
 export const registerUser = (name, email, username, password) => {
     validate.text(name, 'name')

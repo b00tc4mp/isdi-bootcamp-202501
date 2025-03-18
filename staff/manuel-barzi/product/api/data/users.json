@@ -124,5 +124,14 @@
         "createdAt": "2025-03-14T11:28:54.192Z",
         "modifiedAt": null,
         "id": "m88p34c0qwu"
+    },
+    {
+        "name": "Va Mos",
+        "email": "va@mos.com",
+        "username": "vamos",
+        "password": "123123123",
+        "createdAt": "2025-03-18T11:50:49.787Z",
+        "modifiedAt": null,
+        "id": "m8efmq4ceth"
     }
 ]

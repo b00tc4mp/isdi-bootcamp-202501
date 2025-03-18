@@ -22,9 +22,34 @@ class OwnershipError extends Error {
     }
 }
 
+class SystemError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
+class ValidationError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
 export {
     DuplicityError,
     CredentialsError,
     NotFoundError,
-    OwnershipError
+    OwnershipError,
+    SystemError,
+    ValidationError
 }
+
+const errors = {
+    DuplicityError,
+    CredentialsError,
+    NotFoundError,
+    OwnershipError,
+    SystemError,
+    ValidationError
+}
+
+export default errors

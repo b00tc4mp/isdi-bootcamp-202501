@@ -87,5 +87,23 @@
         "modifiedAt": null,
         "likes": [],
         "id": "m88q6hcpgij"
+    },
+    {
+        "author": "m7yp34lurs6",
+        "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2k0eGx5ZnozcmhxdXV5MnEyczl5MHl5OWZqNjNoamhjazNjbTN1cSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/ikZGjmXheymLcs8n9Q/giphy.gif",
+        "text": "my friends",
+        "createdAt": "2025-03-18T11:05:06.502Z",
+        "modifiedAt": null,
+        "likes": [],
+        "id": "m8edzxdzvhp"
+    },
+    {
+        "author": "m8efmq4ceth",
+        "image": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHZwMDdkM2c3dDQ1dmRpOXNmZjdxczcwbm9sOXp6eGtza3lvamx3MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7KrkkOsyeWFFecO8g9/giphy.gif",
+        "text": "vamo vamo",
+        "createdAt": "2025-03-18T11:51:47.911Z",
+        "modifiedAt": null,
+        "likes": [],
+        "id": "m8efnyyv99"
     }
 ]
