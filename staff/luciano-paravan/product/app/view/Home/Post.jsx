@@ -8,8 +8,13 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
     const handleToggleLikeClick = () => {
         try {
             logic.toggleLikePost(post.id)
+                .then(()=>onPostLikeToggled())
+                .catch(error => {
+                    console.error(error)
 
-            onPostLikeToggled()
+                    alert(error.message)
+                })
+            
         } catch (error) {
             console.error(error)
 
@@ -33,8 +38,14 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
         if (confirm('Delete post?')) {
             try {
                 logic.deletePost(post.id)
+                    .then(()=>onPostDeleted())
+                    .catch(error=>{
+                        console.error(error)
+
+                        alert(error.message)
+                    })
     
-                onPostDeleted()
+                
             } catch (error) {
                 console.error(error)
     
@@ -56,10 +67,15 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
             const { text: { value: text } } = form
 
             logic.updatePostText(post.id, text)
+                .then(()=>{
+                    onPostTextEdited()
+                    setView('')
+                })
+                .catch(error => {
+                    console.error(error)
 
-            onPostTextEdited()
-
-            setView('')
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
         
@@ -92,7 +108,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
 
         {post.own && <button onClick={handleEditTextClick}>📝</button>}
 
-        {<button onClick={handleSaveClick}>Save Post 🏷️</button>}
+        {/*<button onClick={handleSaveClick}>Save Post 🏷️</button>*/}
     </div>
 
 </article>

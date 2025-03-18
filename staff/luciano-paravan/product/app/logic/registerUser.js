@@ -1,33 +1,37 @@
-import { DuplicityError } from '../errors.js'
-
-import { data } from '../data/index.js'
 import { validate } from './validate.js'
 
-export const registerUser = (name, surname, email, username, password) => {
+import { DuplicityError } from '../errors.js'
+
+export const registerUser = (name, email, username, password) => {
     validate.text(name, 'name')
     validate.maxLength(name, 20, 'name')
     validate.minLength(name, 1, 'name')
-    validate.text(surname, 'surname')
+    /*validate.text(surname, 'surname')
     validate.maxLength(surname, 20, 'surname')
-    validate.minLength(surname, 1, 'surname')
+    validate.minLength(surname, 1, 'surname')*/
     validate.email(email, 'email')
     validate.username(username, 'username')
     validate.password(password, 'password')
 
-    const found = data.users.findOne(user => user.username === username || user.email === email)
+    return fetch('http://localhost:8080/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, username, password })
+    })
+        .catch(error => { throw new Error(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-    if (found) throw new DuplicityError('user already exists')
+            if (response.status === 201)
+                return
 
-    const user = {
-        name: name,
-        surname: surname,
-        email: email,
-        username: username,
-        password: password,
-        createdAt: new Date(),
-        modifiedAt: null,
-        savedPosts: []
-    }
-
-    data.users.insertOne(user)
+            return response.json()
+                .catch(error => { throw new Error(error.message) })
+                .then(body => {
+                    const { error, message } = body
+                    throw new Error(message)
+                })
+        })
 }

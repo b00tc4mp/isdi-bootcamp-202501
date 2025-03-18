@@ -52,5 +52,14 @@
         "createdAt": "2025-03-15T01:20:37.732Z",
         "modifiedAt": null,
         "id": "m89isq5gxm9"
+    },
+    {
+        "name": "claudia",
+        "email": "claudia@gmail.com",
+        "username": "laclaudia",
+        "password": "123123123",
+        "createdAt": "2025-03-17T23:14:21.830Z",
+        "modifiedAt": null,
+        "id": "m8dolwjqml"
     }
 ]

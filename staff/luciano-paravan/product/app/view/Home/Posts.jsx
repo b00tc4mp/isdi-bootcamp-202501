@@ -9,10 +9,15 @@ export function Posts() {
 
     useEffect(() => {
         console.debug('Post -> useEffect')
-        try {
-            const posts = logic.getPosts()
 
-            setPosts(posts)
+        try {
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -22,9 +27,13 @@ export function Posts() {
 
     const handlePostLikeToggled = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -34,9 +43,13 @@ export function Posts() {
 
     const handlePostDeleted = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts() //en el getPosts de logic, retorno posts por eso es que los recibo aca
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             
@@ -46,9 +59,13 @@ export function Posts() {
 
     const handlePostTextEdited = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -56,21 +73,25 @@ export function Posts() {
         }
     }
 
-    const handleSavePost = () => {
+    /*const handleSavePost = () => {
         try {
             const posts = logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
             alert(error.message)
         }
-    }
+    }*/
 
     console.debug('Posts -> render')
 
     return <section>
-    {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onSavePost={handleSavePost} onPostTextEdited={handlePostTextEdited}/>)}
+    {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted}  onPostTextEdited={handlePostTextEdited} /*onSavePost={handleSavePost}*//>)}
 </section>
 }

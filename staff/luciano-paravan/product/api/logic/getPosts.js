@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
-import { NotFoundError } from '../errors.js'
 import { validate } from './validate.js'
+
+import { NotFoundError } from '../errors.js'
 
 export const getPosts = userId => {
     validate.id(userId, 'userId')

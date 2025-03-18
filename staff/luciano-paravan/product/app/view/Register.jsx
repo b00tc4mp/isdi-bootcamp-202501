@@ -9,17 +9,26 @@ export function Register ({ onNavigateToLogin, onUserRegistered }) {
 
             const {
                 name: { value: name },
-                surname: { value: surname },
+                //surname: { value: surname },
                 email: { value: email },
                 username: { value: username },
                 password: { value: password }
             } = form
 
-            logic.registerUser(name, surname, email, username, password)
+            //logic.registerUser(name, surname, email, username, password)
 
-            form.reset()
+            logic.registerUser(name, email, username, password)
+                .then(()=> {
+                    form.reset()
+        
+                    onUserRegistered()
+                })
+                .catch(error => {
+                    console.error(error)
 
-            onUserRegistered()
+                    alert(error.message)
+                })
+            
         } catch (error) {
             console.error(error)
 
@@ -41,10 +50,10 @@ export function Register ({ onNavigateToLogin, onUserRegistered }) {
                     <input type="text" id="name"/>
                 </div>
 
-                <div className="field">
+                {/*<div className="field">
                     <label htmlFor="surname">Surname</label>
                     <input type="text" id="surname"/>                    
-                </div>
+                </div>*/}
 
                 <div className="field">
                     <label htmlFor="email">E-mail</label>

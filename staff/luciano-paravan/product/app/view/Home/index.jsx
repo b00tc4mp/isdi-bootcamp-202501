@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
-import { Posts } from '../../view/Home/Posts.jsx'
-import { CreatePost } from '../../view/Home/CreatePost.jsx'
+import { Posts } from './Posts.jsx'
+import { CreatePost } from './CreatePost.jsx'
 
 import { logic } from '../../logic/index.js'
 
@@ -11,10 +11,15 @@ export function Home ({ onUserLoggedOut }) {
     
     useEffect(() => {
         console.debug('Home -> useEffect')
-        try {
-            const name = logic.getUserName()
 
-            setUserName(name)
+        try {
+            logic.getUserName()
+                .then(name => setUserName(name))
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -41,7 +46,7 @@ export function Home ({ onUserLoggedOut }) {
     const handlePostCreateCancelled = () => setView('posts')
     console.debug('Home -> render')
 
-    const handlePostTextEdited = () => setView('posts')
+    //const handlePostTextEdited = () => setView('posts')
 
     return <div className='Home'>
         <header>
