@@ -1,4 +1,4 @@
-import { logic } from "../../logic"
+import { logic } from '../../logic/index.js'
 
 export function CreatePost({ onPostCreateSubmit }) {
 
@@ -13,8 +13,12 @@ export function CreatePost({ onPostCreateSubmit }) {
             } = form
 
             logic.createPost(img, text)
+                .then(() => onPostCreateSubmit())
+                .catch(error => {
+                    console.error(error)
 
-            onPostCreateSubmit()
+                    alert(error.message)
+                })
 
 
         } catch (error) {

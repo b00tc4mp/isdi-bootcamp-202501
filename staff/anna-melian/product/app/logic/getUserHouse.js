@@ -1,15 +1,35 @@
-import { NotFoundError } from "../errors"
-import { data } from "../data"
+import { data } from '../data/index.js'
+
+import errors, { SystemError } from '../errors.js'
 
 export const getUserHouse = () => {
-    const users = data.users.getAll()
-
     const { userId } = data
 
-    const found = data.users.getById(userId)
+    return fetch('http://localhost:8080/users/self/house', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${userId}`
+        }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(body => {
+                        const { house } = body
 
-    if (!found) throw new NotFoundError('user not found')
+                        return house
+                    })
 
-    return found.house
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 }

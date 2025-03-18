@@ -7,6 +7,7 @@ import { getPosts } from './getPosts.js'
 import { deletePost } from './deletePost.js'
 import { updatePostText } from './updatePostText.js'
 import { toggleLikePost } from './toggleLikePost.js'
+import { getOwnPosts } from './getOwnPosts.js'
 
 
 export const logic = {
@@ -16,6 +17,7 @@ export const logic = {
 
     createPost,
     getPosts,
+    getOwnPosts,
     deletePost,
     updatePostText,
     toggleLikePost

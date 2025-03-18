@@ -8,7 +8,7 @@ import { isUserLoggedIn } from './isUserLoggedIn.js'
 import { getPosts } from './getPosts.js'
 import { createPost } from './createPost.js'
 import { toggleLikePost } from './toggleLikePost.js'
-//import { getOwnPosts } from './getOwnPosts.js'
+import { getOwnPosts } from './getOwnPosts.js'
 //import { updateUserProfile } from './updateUserProfile.js'
 import { updatePostText } from './updatePostText.js'
 //import { changePassword } from './changePassword.js'
@@ -26,7 +26,7 @@ export const logic = {
     getPosts,
     createPost,
     toggleLikePost,
-    //getOwnPosts,
+    getOwnPosts,
     //updateUserProfile,
     updatePostText,
     //changePassword,

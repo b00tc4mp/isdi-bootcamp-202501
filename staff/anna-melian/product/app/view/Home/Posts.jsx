@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react'
 
-import { logic } from "../../logic";
-import { Post } from "./Post";
+import { logic } from '../../logic/index.js'
+import { Post } from './Post.jsx'
 
 export function Posts() {
     const [posts, setPosts] = useState([])
 
-
     useEffect(() => {
 
         try {
-            const posts = logic.getPosts()
-            setPosts(posts)
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -22,14 +26,20 @@ export function Posts() {
 
     const handleToggleLikePostClick = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
         }
     }
+
+    console.debug('Posts -> render')
 
     return <section>
         {posts.map(post =>

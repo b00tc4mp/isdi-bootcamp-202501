@@ -16,11 +16,11 @@ export function Home({ onLogoutClick, onDeleteProfileClick }) {
 
         try {
             const name = logic.getUserName()
-            const house = logic.getUserHouse()
+            //const house = logic.getUserHouse()
 
-            document.body.className = ''
-            document.body.classList.add(house)
-            document.querySelector('h1').classList.add(`logo-${house}`)
+            //document.body.className = ''
+            //document.body.classList.add(house)
+            //document.querySelector('h1').classList.add(`logo-${house}`)
 
 
             setUserName(name)
@@ -35,7 +35,7 @@ export function Home({ onLogoutClick, onDeleteProfileClick }) {
     const handleLogoutClick = () => {
         try {
             logic.logoutUser()
-            document.body.className = ''
+            //document.body.className = ''
 
             onLogoutClick()
         } catch (error) {
@@ -58,7 +58,7 @@ export function Home({ onLogoutClick, onDeleteProfileClick }) {
     const handleSubmitChanges = () => setView('posts')
 
     const handleDeleteProfile = () => {
-        document.body.className = ''
+        //document.body.className = ''
         onDeleteProfileClick()
     }
 

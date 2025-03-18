@@ -97,6 +97,35 @@ api.get('/users/self/name', (req, res) => {
     }
 })
 
+api.get('/users/self/house', (req, res) => {
+    try {
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const house = logic.getUserHouse(userId)
+
+        res.json({ house })
+
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+
 api.post('/posts', jsonBodyParser, (req, res) => {
     try {
         const { authorization } = req.headers
@@ -153,7 +182,34 @@ api.get('/posts', (req, res) => {
     }
 })
 
-api.delete('/posts/:postId', (req, res) => {
+api.get('/myposts', (req, res) => {
+    try {
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const posts = logic.getOwnPosts(userId)
+
+        res.json(posts)
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+api.delete('/myposts/:postId', (req, res) => {
     try {
         const { authorization } = req.headers
 
@@ -214,7 +270,7 @@ api.patch('/posts/:postId/likes', (req, res) => {
     }
 })
 
-api.patch('/posts/:postId/text', jsonBodyParser, (req, res) => {
+api.patch('/myposts/:postId/text', jsonBodyParser, (req, res) => {
     try {
         const { authorization } = req.headers
 

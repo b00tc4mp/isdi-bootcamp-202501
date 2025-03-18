@@ -3,7 +3,7 @@ import { validate } from './validate.js'
 
 import { NotFoundError } from '../errors.js'
 
-export const getPosts = userId => {
+export const getOwnPosts = userId => {
     validate.id(userId, 'userId')
 
     const user = data.users.getById(userId)
@@ -12,10 +12,12 @@ export const getPosts = userId => {
 
     const posts = data.posts.getAll()
 
+    const myPosts = posts.filter(post => post.author.id === userId)
+
     const aggregatedPosts = []
 
-    for (let i = 0; i < posts.length; i++) {
-        const post = posts[i]
+    for (let i = 0; i < myPosts.length; i++) {
+        const post = myPosts[i]
 
         let liked = false
 

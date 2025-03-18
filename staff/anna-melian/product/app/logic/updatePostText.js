@@ -1,33 +1,35 @@
-import { data } from "../data"
-import { NotFoundError, OwnershipError } from "../errors"
-import { validate } from "./validate"
+import { data } from '../data/index.js'
+import { validate } from './validate.js'
 
+import errors, { SystemError } from '../errors.js'
 
-export const updatePostText = (myPost, text) => {
-    validate.id(myPost.id, 'postId')
+export const updatePostText = (postId, text) => {
+    validate.id(postId, 'postId')
 
-    validate.text(text, 'text')
-
-    const posts = data.posts.getAll()
     const { userId } = data
 
+    return fetch(`http://localhost:8080/myposts/${postId}/text`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text })
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
 
-    const post = data.posts.getById(myPost.id)
+            if (response.status === 204)
+                return
 
-    if (!post) throw new NotFoundError('Post not found')
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
-    if (post.author.id !== userId) throw new OwnershipError('user is not author of post')
+                    const constructor = errors[error]
 
-
-    if (post.text === text) {
-        return false
-    }
-
-    post.text = text
-    post.modifiedAt = new Date
-
-    data.posts.updateOne(post)
-
-    return true
-
+                    throw new constructor(message)
+                })
+        })
 }

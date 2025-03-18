@@ -1,24 +1,40 @@
+import { data } from '../data/index.js'
 
-/*
-
-import { data } from "../data"
-import { getPosts } from "./getPosts"
-
+import errors, { SystemError } from '../errors.js'
 
 export const getOwnPosts = () => {
     const { userId } = data
 
-    const posts = getPosts()
-    let ownPosts = []
+    return fetch('http://localhost:8080/myposts', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${userId}`
+        }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(body => {
+                        const posts = body
 
-    for (let i = 0; i < posts.length; i++) {
-        const post = posts[i]
-        if (post.author.id === userId)
-            ownPosts.push(post)
-    }
+                        posts.forEach(post => {
+                            post.createdAt = new Date(post.createdAt)
+                            if (post.modifiedAt) post.modifiedAt = new Date(post.modifiedAt)
+                        })
 
-    return ownPosts
+                        return posts
+                    })
 
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 }
-
-*/

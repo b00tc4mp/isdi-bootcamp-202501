@@ -1,36 +1,40 @@
-import { data } from "../data"
+import { data } from '../data/index.js'
+
+import errors, { SystemError } from '../errors.js'
 
 export const getPosts = () => {
-    const posts = data.posts.getAll()
-
     const { userId } = data
 
-    const aggregatedPosts = []
-
-    for (let i = 0; i < posts.length; i++) {
-        const post = posts[i]
-
-        let liked = false
-
-        for (let i = 0; i < post.likes.length && !liked; i++) {
-            const id = post.likes[i]
-
-            if (id === userId)
-                liked = true
+    return fetch('http://localhost:8080/posts', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${userId}`
         }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(body => {
+                        const posts = body
 
+                        posts.forEach(post => {
+                            post.createdAt = new Date(post.createdAt)
+                            if (post.modifiedAt) post.modifiedAt = new Date(post.modifiedAt)
+                        })
 
-        const aggregatedPost = {
-            id: post.id,
-            author: post.author,
-            image: post.image,
-            text: post.text,
-            createdAt: new Date(post.createdAt),
-            modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
-            liked: liked,
-            likesCount: post.likes.length,
-        }
-        aggregatedPosts[aggregatedPosts.length] = aggregatedPost
-    }
-    return aggregatedPosts.reverse()
+                        return posts
+                    })
+
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 }

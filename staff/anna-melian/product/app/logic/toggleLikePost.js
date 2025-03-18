@@ -1,7 +1,7 @@
-import { data } from "../data"
-import { validate } from "./validate"
+import { data } from '../data/index.js'
+import { validate } from './validate.js'
 
-import { NotFoundError } from "../errors"
+import errors, { SystemError } from '../errors.js'
 
 
 export const toggleLikePost = postId => {
@@ -9,35 +9,26 @@ export const toggleLikePost = postId => {
 
     const { userId } = data
 
-    const foundPost = data.posts.findOne(post => post.id === postId)
-
-    if (!foundPost) throw new NotFoundError('post not found')
-
-    let userIdFound = false
-
-    for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-        const id = foundPost.likes[i]
-
-        if (id === userId)
-            userIdFound = true
-    }
-
-    if (!userIdFound) {
-        foundPost.likes[foundPost.likes.length] = userId
-
-    }
-    else {
-        const likes = []
-
-        for (let i = 0; i < foundPost.likes.length; i++) {
-            const id = foundPost.likes[i]
-
-            if (id != userId)
-                likes[likes.length] = id
+    return fetch(`http://localhost:8080/posts/${postId}/likes`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Basic ${userId}`
         }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
 
-        foundPost.likes = likes
-    }
+            if (response.status === 204)
+                return
 
-    data.posts.updateOne(foundPost)
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 }

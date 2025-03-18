@@ -1,22 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-import { logic } from "../../logic";
+import { logic } from '../../logic/index.js'
 
 export function MyPost({ post, onPostLikeToggled, onPostDeleted, onPostEdited }) {
     const [view, setView] = useState('')
 
-    useEffect(() => {
-
-        console.debug('useEffect mypost')
-
-    }, [])
-
-
     const handleToggleLikeClick = () => {
         try {
             logic.toggleLikePost(post.id)
+                .then(() => onPostLikeToggled())
+                .catch(error => {
+                    console.error(error)
 
-            onPostLikeToggled()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -28,8 +25,12 @@ export function MyPost({ post, onPostLikeToggled, onPostDeleted, onPostEdited })
         if (confirm('Delete post?'))
             try {
                 logic.deletePost(post.id)
+                    .then(() => onPostDeleted())
+                    .catch(error => {
+                        console.error(error)
 
-                onPostDeleted()
+                        alert(error.message)
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -53,17 +54,17 @@ export function MyPost({ post, onPostLikeToggled, onPostDeleted, onPostEdited })
 
             } = form
 
-            const updated = logic.updatePostText(post, text)
+            logic.updatePostText(post.id, text)
+                .then(() => {
+                    onPostEdited()
 
-            if (!updated) {
-                alert('No modifications')
-            } else {
+                    setView('')
+                })
+                .catch(error => {
+                    console.error(error)
 
-                alert('Post successfully updated 🧙‍♀️')
-                setView('')
-                onPostEdited()
-
-            }
+                    alert(error.message)
+                })
 
         } catch (error) {
             console.error(error)

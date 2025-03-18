@@ -36,7 +36,6 @@ export const validate = {
     },
     id(id, explain) {
         this.text(id, explain)
-        this.minLength(id, 8, explain)
-        this.maxLength(id, 12, explain)
+        if (id.length < 8 || id.length > 12) throw new ValidationError(`invalid ${explain} length`)
     }
 }

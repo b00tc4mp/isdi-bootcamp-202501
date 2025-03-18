@@ -17,10 +17,11 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
             } = form
 
             logic.loginUser(username, password)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
-
-            onLoginSubmit()
+                    onLoginSubmit()
+                })
         } catch (error) {
             console.error(error)
 

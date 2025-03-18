@@ -1,16 +1,35 @@
-import { NotFoundError } from '../errors.js'
-
 import { data } from '../data/index.js'
 
+import errors, { SystemError } from '../errors.js'
 
 export const getUserName = () => {
-    const users = data.users.getAll()
-
     const { userId } = data
 
-    const found = data.users.getById(userId)
+    return fetch('http://localhost:8080/users/self/name', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${userId}`
+        }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(body => {
+                        const { name } = body
 
-    if (!found) throw new NotFoundError('user not found')
+                        return name
+                    })
 
-    return found.name
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 }

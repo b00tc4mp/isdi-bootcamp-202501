@@ -1,4 +1,4 @@
-import { logic } from "../../logic";
+import { logic } from '../../logic/index.js'
 
 export function Post({ post, onPostLikeToggled }) {
 
@@ -6,8 +6,12 @@ export function Post({ post, onPostLikeToggled }) {
     const handleToggleLikeClick = () => {
         try {
             logic.toggleLikePost(post.id)
+                .then(() => onPostLikeToggled())
+                .catch(error => {
+                    console.error(error)
 
-            onPostLikeToggled()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
-import { logic } from "../../logic";
-import { MyPost } from "../Home/MyPost.jsx";
+import { logic } from '../../logic/index.js'
+import { MyPost } from './MyPost.jsx'
 
 export function Profile() {
     const [myPosts, setPosts] = useState([])
@@ -10,8 +10,13 @@ export function Profile() {
     useEffect(() => {
 
         try {
-            const myPosts = logic.getOwnPosts()
-            setPosts(myPosts)
+            logic.getOwnPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -22,9 +27,13 @@ export function Profile() {
 
     const handleToggleLikePostClick = () => {
         try {
-            const myPosts = logic.getOwnPosts()
+            logic.getOwnPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(myPosts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -33,11 +42,13 @@ export function Profile() {
 
     const handleDeletePostClick = () => {
         try {
-            alert('Post deleted')
+            logic.getOwnPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            const myPosts = logic.getOwnPosts()
-
-            setPosts(myPosts)
+                    alert(error.message)
+                })
 
         } catch (error) {
             console.error(error)
@@ -48,9 +59,13 @@ export function Profile() {
     const handleEditPostClick = () => {
         try {
 
-            const myPosts = logic.getOwnPosts()
+            logic.getOwnPosts()
+                .then(posts => setPosts(posts))
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(myPosts)
+                    alert(error.message)
+                })
 
         } catch (error) {
             console.error(error)

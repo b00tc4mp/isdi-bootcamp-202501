@@ -1,19 +1,41 @@
-import { data } from "../data/index"
-import { validate } from "./validate"
+import { data } from '../data/index.js'
+import { validate } from './validate.js'
 
-import { CredentialsError } from "../errors"
+import errors, { SystemError } from '../errors.js'
 
 
 export const loginUser = (username, password) => {
     validate.username(username, 'username')
     validate.password(password, 'password')
 
-    const found = data.users.findOne(user => user.username === username)
+    return fetch('http://localhost:8080/users/auth', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(body => {
+                        const { id } = body
 
-    if (!found || found.password !== password)
-        throw new CredentialsError('wrong credentails')
+                        data.userId = id
+                    })
 
-    data.userId = found.id
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 
 
 }
