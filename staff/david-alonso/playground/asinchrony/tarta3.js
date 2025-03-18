@@ -8,10 +8,10 @@
 // 2º APARECEN LOS AVANCES CON SU TIEMPO
 
 const setTimeoutPromised = millis => new Promise(resolve => setTimeout(resolve, millis))
-
+//                         TIEMPO    
 // 1
 const base = () => {
-    console.log('1º PASO = BASE')
+    console.log('1º PASO = BASE')  //  
 
     return setTimeoutPromised(3000) // TIEMPO QUE TARDA EN APARECER DESDE QUE CARGA EN COLA ** ASINCRONO **
 
@@ -21,7 +21,7 @@ const base = () => {
 }
 
 // 2
-const crema = () => {
+const cream = () => {
     console.log('2º PASO = CREMA')
 
     return setTimeoutPromised(3000)
@@ -31,7 +31,7 @@ const crema = () => {
 }
 
 // 3
-const horneado = () => {
+const baked = () => {
     console.log('3º PASO = HORNEARDO ')
 
     return setTimeoutPromised(3000)
@@ -41,10 +41,10 @@ const horneado = () => {
 }
 
 // 4
-const disfrutar = () => {
+const enjoy = () => {
     console.log('4º PASO = DISFRUTAR')
 
-    return setTimeoutPromised(5000)
+    return setTimeoutPromised(4000)
         .then(() => {
             console.log('UNA VEZ FRIA LA TARTA, DISFRUTA DE SU SABOR VICTOR')
         })
@@ -52,6 +52,6 @@ const disfrutar = () => {
 
 // START  ** 1ª FUNCION A LA QUE LLAMAMOS
 base()
-    .then(() => crema())
-    .then(() => horneado())
-    .then(() => disfrutar())
+    .then(() => cream())
+    .then(() => baked())
+    .then(() => enjoy())

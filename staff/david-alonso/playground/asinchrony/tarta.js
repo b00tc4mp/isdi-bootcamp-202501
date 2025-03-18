@@ -15,7 +15,7 @@ const base = () => {
 }
 
 // 2
-const crema = () => {
+const cream = () => {
     console.log('MEZCLO TODOS LOS INGREDIENTES')
 
     setTimeout(() => {
@@ -25,7 +25,7 @@ const crema = () => {
 }
 
 // 3
-const horneado = () => {
+const baked = () => {
     console.log('METE EN EL HORNO 60 MINUTOS')
 
     setTimeout(() => {
@@ -35,7 +35,7 @@ const horneado = () => {
 }
 
 // 4
-const disfrutar = () => {
+const enjoy = () => {
     console.log('TENGO LA TARTA LISTA')
 
     setTimeout(() => {
@@ -46,8 +46,8 @@ const disfrutar = () => {
 
 // START
 base()
-crema()
-horneado()
-disfrutar()
+cream()
+baked()
+enjoy()
 
 

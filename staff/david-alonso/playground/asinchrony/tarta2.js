@@ -11,7 +11,7 @@
 const base = () => {
     console.log('1º PASO = BASE')
 
-    crema() // LLAMAMOS A LA SIGUIENTE FUNCION ** SINCRONO **
+    cream() // LLAMAMOS A LA SIGUIENTE FUNCION ** SINCRONO **
 
     setTimeout(() => {
         console.log('MEZCLO LAS GALLETAS Y LA MANTEQUILLA. METO LA BASE EN LA NEVERA')
@@ -20,10 +20,10 @@ const base = () => {
 }
 
 // 2
-const crema = () => {
+const cream = () => {
     console.log('2º PASO = CREMA')
 
-    horneado()
+    baked()
 
     setTimeout(() => {
         console.log('BATO TODOS LOS INGREDIENTES, HECHO LA CREMA EN EL MOLDE')
@@ -32,10 +32,10 @@ const crema = () => {
 }
 
 // 3
-const horneado = () => {
+const baked = () => {
     console.log('3º PASO = HORNEARDO ')
 
-    disfrutar()
+    enjoy()
     setTimeout(() => {
         console.log('METO LA TARTA AL HORNO 60 MINUTOS')
 
@@ -43,7 +43,7 @@ const horneado = () => {
 }
 
 // 4
-const disfrutar = () => {
+const enjoy = () => {
     console.log('4º PASO = DISFRUTAR')
 
     setTimeout(() => {
