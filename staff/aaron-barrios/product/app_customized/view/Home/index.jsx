@@ -4,6 +4,9 @@ import { Posts } from './Posts.jsx'
 import { CreatePost } from './CreatePost.jsx'
 
 import { logic } from '../../logic/index.js'
+import {errors} from 'com'
+
+const {SystemError, ValidationError} = errors
 
 export function Home({ onUserLoggedOut, onProfileClick }) {
     const [view, setView] = useState('posts')
@@ -19,13 +22,19 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
                 .catch(error => {
                     console.error(error)
 
-                    alert(error.message)
+                    if(error instanceof SystemError)
+                        alert('⛔ ' + error.message)
+                    else
+                        alert('⚠️ ' + error.message)
                 })
             //ERRORES SÍNCRONOS
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            if(error instanceof ValidationError)
+                alert('❌ ' + error.message)
+            else
+                alert('⛔ ' + error.message)
         }
     }, [])
 

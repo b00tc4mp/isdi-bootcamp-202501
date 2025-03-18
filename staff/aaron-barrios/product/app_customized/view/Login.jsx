@@ -1,4 +1,7 @@
 import { logic } from '../logic/index.js'
+import {errors} from 'com'
+
+const {SystemError, ValidationError} = errors
 
 export function Login({ onNavigateToRegister, onUserLoggedIn }) {
     const handleLoginSubmit = event => {
@@ -22,13 +25,19 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
                 .catch(error => {
                     console.error(error)
 
-                    alert(error.message)
+                    if(error instanceof SystemError)
+                        alert('⛔ ' + error.message)
+                    else
+                        alert('⚠️ ' + error.message)
                 })
             //ERRORES SÍNCRONOS
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            if(error instanceof ValidationError)
+                alert('❌ ' + error.message)
+            else
+                alert('⛔ ' + error.message)
         }
     }
 

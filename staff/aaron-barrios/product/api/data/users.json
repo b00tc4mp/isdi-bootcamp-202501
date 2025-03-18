@@ -99,5 +99,14 @@
         "createdAt": "2025-03-18T14:24:58.223Z",
         "modifiedAt": null,
         "id": "m8el4y9b9e"
+    },
+    {
+        "name": "david",
+        "email": "da@vid.com",
+        "username": "David",
+        "password": "dadada",
+        "createdAt": "2025-03-18T14:41:47.952Z",
+        "modifiedAt": null,
+        "id": "m8elqldc8et"
     }
 ]
