@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Masha Stepanova",
+        "email": "masha@gmail.com",
+        "username": "masha",
+        "password": "123456789",
+        "createdAt": "2025-01-07T13:43:16.443666",
+        "modifiedAt": null,
+        "id": "jsu8v2h49b3"
+    },
+    {
+        "name": "Aaron Barrios",
+        "email": "aaron@gmail.com",
+        "username": "aaron",
+        "password": "123456789",
+        "createdAt": "2025-01-17T03:45:25.155150",
+        "modifiedAt": null,
+        "id": "uzg1htw8z4l"
+    },
+    {
+        "name": "Victor Alvarado",
+        "email": "victor@gmail.com",
+        "username": "victor",
+        "password": "123456789",
+        "createdAt": "2025-01-20T03:27:55.422538",
+        "modifiedAt": null,
+        "id": "x4d2tby9p8z"
+    },
+    {
+        "name": "Camila Torrent",
+        "email": "camila@gmail.com",
+        "username": "camila",
+        "password": "123456789",
+        "createdAt": "2025-01-19T00:19:08.487973",
+        "modifiedAt": null,
+        "id": "w0q4jz8g0e2"
+    },
+    {
+        "name": "Sergi",
+        "email": "sergi@gmail.com",
+        "username": "sergi",
+        "password": "123456789",
+        "createdAt": "2025-01-14T11:06:38.344148",
+        "modifiedAt": null,
+        "id": "yqz9k3u7p1s"
+    },
+    {
+        "name": "Manu Barzi",
+        "email": "manu@gmail.com",
+        "username": "manu",
+        "password": "123456789",
+        "createdAt": "2025-01-05T14:13:03.582546",
+        "modifiedAt": null,
+        "id": "p8h2k9b1q7w"
+    },
+    {
+        "name": "Frank Pereira",
+        "email": "frank@gmail.com",
+        "username": "frank",
+        "password": "123456789",
+        "createdAt": "2025-01-05T23:16:40.510628",
+        "modifiedAt": null,
+        "id": "v6s5a7r8t1f"
+    }
+]
