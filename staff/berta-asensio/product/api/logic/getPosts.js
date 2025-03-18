@@ -1,10 +1,15 @@
 import { data } from '../data/index.js'
-
 import { validate } from './validate.js'
+import { NotFoundError } from '../errors.js'
 
 //Esta función trae los posts
 export const getPosts = (userId) => { //ahora le pasamos el userId para que lo coja de la app
         validate.id(userId, 'userId') //validamos userId
+
+        //Y comprobamos que el usuario exista
+        const user = data.users.getById(userId)
+
+        if(!user) throw new NotFoundError ('user not found')
 
         const posts = data.posts.getAll() //llamamos al método 
         

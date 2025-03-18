@@ -6,7 +6,6 @@ class DuplicityError extends Error {
     }
 }
 
-//CREDENCIALES son datos privados, la contraseña por ejemplo. Username no lo es xk es publico
 class CredentialsError extends Error {
     constructor(message) {
         super(message)
@@ -25,25 +24,10 @@ class OwnershipError extends Error {
     }
 }
 
-class SystemError extends Error {
-    constructor(message) {
-        super(message)
-    }
-}
-
-//Juntamos en esta class todos los errores que son de validación
-class ValidationError extends Error {
-    constructor(message) {
-        super(message)
-    }
-}
-
 
 export {
     DuplicityError,
     CredentialsError,
     NotFoundError,
-    OwnershipError,
-    SystemError,
-    ValidationError
+    OwnershipError
 }

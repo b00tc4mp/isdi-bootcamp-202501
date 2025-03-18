@@ -61,5 +61,32 @@
         "createdAt": "2025-03-15T11:11:12.870Z",
         "modifiedAt": null,
         "id": "m8a3w82utm"
+    },
+    {
+        "name": "Daisy Donald",
+        "username": "DonnyDaisy",
+        "password": "123123aa",
+        "email": "daisy@donald.com",
+        "createdAt": "2025-03-16T18:12:01.174Z",
+        "modifiedAt": null,
+        "id": "m8byd8gnw29"
+    },
+    {
+        "name": "Pluto Perro",
+        "username": "DogPluto",
+        "password": "123123aa",
+        "email": "pluto@perro.com",
+        "createdAt": "2025-03-17T17:48:33.425Z",
+        "modifiedAt": null,
+        "id": "m8dcywwh9da"
+    },
+    {
+        "name": "Jofre Hall",
+        "username": "Goffrey",
+        "password": "Goffrey77.",
+        "email": "jofre@hall.com",
+        "createdAt": "2025-03-17T18:11:12.054Z",
+        "modifiedAt": null,
+        "id": "m8dds18685m"
     }
 ]

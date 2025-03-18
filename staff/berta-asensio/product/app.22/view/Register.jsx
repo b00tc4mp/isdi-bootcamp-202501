@@ -15,11 +15,16 @@ export function Register({onReturnClick, onUserRegistered}) {
             } = form
 
             logic.registerUser(name, username, password, email)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
+                    onUserRegistered()
+                })
+                .catch(error => {
+                    console.error(error)
 
-            onUserRegistered()
-
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -33,7 +38,7 @@ export function Register({onReturnClick, onUserRegistered}) {
             <h2>...the new app to meet honey people!🍯</h2>
         </div>
 
-        <p class="paragraph">Create account</p>
+        <p className="paragraph">Create account</p>
         
 
         <form onSubmit={handleRegisterSubmit}>

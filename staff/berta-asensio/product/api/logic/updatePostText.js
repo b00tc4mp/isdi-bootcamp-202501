@@ -8,16 +8,22 @@ export const updatePostText = (userId, postId, text) => {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')
 
-    const foundPost = data.posts.findOne(post => post.id === postId)
+    //Comprobamos que el usuario exista
+    const user = data.users.getById(userId)
 
-    if (!foundPost) throw new NotFoundError('post not found')
+    if(!user) throw new NotFoundError ('user not found')
+        
+    //Comprobamos que el post exista
+    const post = data.posts.findOne(post => post.id === postId)
 
-    if (foundPost.author !== userId) throw new OwnershipError('user is not author of post')
+    if (!post) throw new NotFoundError('post not found')
 
-    foundPost.text = text
+    if (post.author !== userId) throw new OwnershipError('user is not author of post')
 
-    foundPost.modifiedAt = new Date()
+    post.text = text
 
-    //ahora updateOne la hemos modificado en collection respecto a app, para que a parte del document (foundPost) tambien acepte una condición.
-    data.posts.updateOne(post => post.id === postId, foundPost)
+    post.modifiedAt = new Date()
+
+    //ahora updateOne la hemos modificado en collection respecto a app, para que a parte del document (postost) tambien acepte una condición.
+    data.posts.updateOne(post => post.id === postId, post)
 }

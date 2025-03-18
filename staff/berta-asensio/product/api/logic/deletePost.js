@@ -8,6 +8,12 @@ export const deletePost = (userId, postId) =>  {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')
 
+    //comprobamos que el usuario exista
+    const user = data.users.getById(userId)
+
+    if(!user) throw new NotFoundError ('user not found')
+
+    //comprobamos que el post exista:
     const foundPost = data.posts.findOne(post => post.id === postId)
 
     if (!foundPost) throw new NotFoundError ('post not found') 

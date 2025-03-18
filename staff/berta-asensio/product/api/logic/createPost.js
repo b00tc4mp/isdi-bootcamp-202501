@@ -1,13 +1,19 @@
 import { data } from '../data/index.js'
 import { validate } from './validate.js'
 
+import { NotFoundError } from '../errors.js'
+
 export const createPost = (userId, image, text) => { //pasamos userId de la app a la api por aqui, por lo que hay que validarlo:
         validate.id(userId, 'userId')
         validate.url(image, 'image')
-        validate.maxLength(1000)
+        validate.maxLength(image, 800, 'image')
         validate.text(text, 'text')
-        validate.maxLength(500)
+        validate.maxLength(text, 500, 'text')
 
+        //Debemos comprobar que el usuario exista.
+        const user = data.users.getById(userId)
+
+        if(!user) throw new NotFoundError ('user not found')
 
         const post = {
             author: userId, //buscamos en data al author

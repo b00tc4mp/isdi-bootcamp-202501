@@ -5,7 +5,7 @@ try {
     const posts = getPosts('m76fexkfwpd')
 
     console.log(posts)
-    console.log(posts1)
+    
 } catch (error) {
     console.error(error)
 }
