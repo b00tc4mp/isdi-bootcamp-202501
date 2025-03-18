@@ -65,6 +65,7 @@ export class Collection {
         let json = readFileSync(`data/${this.name}.json`, 'utf8')
 
         const collection = JSON.parse(json)
+        console.log(collection)
 
         const index = collection.findIndex(condition)
 

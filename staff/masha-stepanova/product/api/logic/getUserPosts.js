@@ -1,8 +1,14 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
+
+const { NotFoundError } = errors
 
 export const getUserPosts = userId => {
     validate.id(userId, 'userId')
+
+    let user = data.users.getById(userId)
+
+    if (!user) throw new NotFoundError('user not found')
 
     const posts = data.posts.getAll()
 

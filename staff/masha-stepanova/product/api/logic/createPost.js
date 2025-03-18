@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
-import { NotFoundError } from '../errors.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
+
+const { NotFoundError } = errors
 
 export const createPost = (userId, link, text) => {
     validate.id(userId, 'userId')

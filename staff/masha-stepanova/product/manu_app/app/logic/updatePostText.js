@@ -1,5 +1,5 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
 // import { NotFoundError, OwnershipError } from '../errors.js'
 
@@ -28,7 +28,9 @@ export const updatePostText = (postId, text) => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

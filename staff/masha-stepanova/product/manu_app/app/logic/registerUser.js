@@ -1,4 +1,4 @@
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
 // import { DuplicityError } from '../errors.js'
 
@@ -29,7 +29,9 @@ export const registerUser = (name, email, username, password) => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

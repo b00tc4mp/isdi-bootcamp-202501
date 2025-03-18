@@ -1,5 +1,5 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
 import { NotFoundError } from '../errors.js'
 

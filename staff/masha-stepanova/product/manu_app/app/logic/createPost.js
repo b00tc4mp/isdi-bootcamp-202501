@@ -1,5 +1,5 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
 export const createPost = (image, text) => {
     validate.url(image, 'image')
@@ -29,7 +29,9 @@ export const createPost = (image, text) => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

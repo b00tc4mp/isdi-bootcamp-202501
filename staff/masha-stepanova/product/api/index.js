@@ -1,8 +1,10 @@
 import express, { json } from 'express'
 import cors from 'cors'
+import { errors } from 'com'
 
 import { logic } from './logic/index.js'
-import { CredentialsError, DuplicityError, NotFoundError, SystemError, OwnershipError, ValidationError } from './errors.js'
+
+const { CredentialsError, DuplicityError, NotFoundError, SystemError, OwnershipError, ValidationError } = errors
 
 const api = express()
 
@@ -209,8 +211,11 @@ api.patch('/posts/:postId/likes', jsonBodyParse, (req, res) => {
         const { authorization } = req.headers
 
         const userId = authorization.slice(6)
+        console.log(userId)
 
         const { postId } = req.params
+        console.log(postId)
+
 
         logic.toggleLikePost(userId, postId)
 

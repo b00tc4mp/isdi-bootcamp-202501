@@ -1,5 +1,5 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
 // import { NotFoundError } from '../errors.js'
 
@@ -26,7 +26,9 @@ export const toggleLikePost = postId => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }
