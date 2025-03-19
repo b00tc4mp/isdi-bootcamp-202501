@@ -1,17 +1,97 @@
-fetch('https://api.jikan.moe/v4/anime?q=legend', { method: 'POST' })
-    .catch(error => { throw new Error('connection error') })
-    .then(response => {
-        const { status } = response
+Promise.resolve(10)
+    .then(value => Promise.resolve(value + 10))
+    .then(value => new Promise((resolve, reject) => reject(value + 10)))
+    .catch(error => {
+        console.error('E', error)
 
-        if (status === 200)
-            return response.json()
-                .catch(error => { throw new Error('failed to parse json response') })
-
-        throw new Error('status not 200 but ' + status)
+        return Promise.resolve(error + 10)
+            .then(value => Promise.reject(value + 10))
+            .then(value => new Promise((resolve, reject) => reject(value + 10)))
     })
-    .then(body => {
-        const { data } = body
+    .then(value => Promise.resolve(value + 10)
+        .then(value => Promise.resolve(value + 10))
+        .then(value => new Promise((resolve, reject) => resolve(value + 10))))
+    .catch(error => {
+        console.error('E', error)
 
-        console.table(data)
+        return error + 10
     })
-    .catch(error => console.error(error))
+    .then(value => {
+        console.log(value)
+
+        return Promise.all([
+            Promise.resolve(value + 10)
+                .then(value => Promise.resolve(value + 10))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.resolve(value + 10))
+                .then(value => {
+                    console.log(value)
+
+                    return Promise.resolve(value + 10)
+                }),
+            Promise.resolve(value + 10)
+                .then(value => Promise.resolve(value + 10))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.resolve(value + 10))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.reject(value + 10))
+        ])
+            .then(([value1, value2]) => {
+                console.log(value1, value2)
+
+                return value1 + value2
+            })
+            .catch(error => {
+                console.error('E', error)
+
+                return Promise.resolve(error)
+            })
+    })
+    .then(value => {
+        return Promise.race([
+            Promise.resolve(value + 10)
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.resolve(value + 10))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.resolve(value + 10))
+                .then(value => {
+                    console.log(value)
+
+                    return Promise.resolve(value + 10)
+                }),
+            Promise.resolve(value + 10)
+                .then(value => Promise.resolve(value + 10))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.resolve(value + 10))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.reject(value + 10)),
+            Promise.resolve(value + 10)
+                .then(value => Promise.resolve(value + 10))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.resolve(value + 10))
+                .then(value => {
+                    console.log(value)
+
+                    return Promise.resolve(value + 10)
+                }),
+            Promise.resolve(value + 10)
+                .then(value => Promise.resolve(value + 10))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => new Promise((resolve, reject) => resolve(value + 10)))
+                .then(value => Promise.resolve(value + 10))
+                .then(value => {
+                    console.log(value)
+
+                    return Promise.resolve(value + 10)
+                }),
+        ])
+    })
+    .then(value => console.log('L', value))
+    .catch(error => console.error('E', error))
