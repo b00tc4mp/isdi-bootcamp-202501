@@ -1,34 +1,34 @@
-/*
+import { data } from '../data/index.js'
+import { validate } from './validate.js'
 
-import { data } from "../data"
-import { NotFoundError } from "../errors"
-
+import errors, { SystemError } from '../errors.js'
 
 export const deleteProfile = () => {
     const { userId } = data
 
-    const posts = data.posts.getAll()
-    const users = data.users.getAll()
+    validate.id(userId, 'userId')
 
-    const user = data.users.getById(userId)
-
-    if (!user) throw new NotFoundError('user not found')
-
-    data.users.deleteOne(user => user.id === userId)
-
-
-    const remainingPosts = posts.filter(post => post.author.id !== userId)
-
-
-    const newPosts = remainingPosts.map(post => {
-        const updatedLikes = post.likes.filter(id => id !== userId)
-        return { ...post, likes: updatedLikes }
-
+    return fetch(`http://localhost:8080/profile/delete`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Basic ${userId}`
+        }
     })
-    data.posts.setAll(newPosts)
-    data.userId = null
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            if (response.status === 204)
+                return
+
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 
 }
-
-*/
 

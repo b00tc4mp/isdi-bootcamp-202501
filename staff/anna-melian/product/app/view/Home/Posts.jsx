@@ -7,7 +7,7 @@ export function Posts() {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-
+        console.debug('Posts -> useEffect')
         try {
             logic.getPosts()
                 .then(posts => setPosts(posts))

@@ -8,6 +8,10 @@ import { deletePost } from './deletePost.js'
 import { updatePostText } from './updatePostText.js'
 import { toggleLikePost } from './toggleLikePost.js'
 import { getOwnPosts } from './getOwnPosts.js'
+import { deleteProfile } from './deleteProfile.js'
+import { getUserInfo } from './getUserInfo.js'
+import { updateUserProfile } from './updateUserProfile.js'
+import { changePassword } from './changePassword.js'
 
 
 export const logic = {
@@ -20,5 +24,9 @@ export const logic = {
     getOwnPosts,
     deletePost,
     updatePostText,
-    toggleLikePost
+    toggleLikePost,
+    deleteProfile,
+    getUserInfo,
+    updateUserProfile,
+    changePassword
 }

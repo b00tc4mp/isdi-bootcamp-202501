@@ -27,6 +27,7 @@ export function CreatePost({ onPostCreateSubmit }) {
         }
     }
 
+    console.debug('Create-Post -> render')
 
     return <section className="options">
         <h2>Create a new post</h2>

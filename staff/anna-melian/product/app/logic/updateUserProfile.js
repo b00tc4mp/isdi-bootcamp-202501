@@ -1,11 +1,7 @@
-/*
+import { data } from '../data/index.js'
+import { validate } from './validate.js'
 
-import { data } from "../data"
-import { NotFoundError } from "../errors"
-
-import { validate } from "./validate"
-
-
+import errors, { SystemError } from '../errors.js'
 
 export const updateUserProfile = (name, username, email) => {
     validate.text(name, 'name')
@@ -14,28 +10,32 @@ export const updateUserProfile = (name, username, email) => {
 
     const { userId } = data
 
-    const users = data.users.getAll()
+    return fetch(`http://localhost:8080/settings/updated`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, username, email })
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
 
-    const user = data.users.getById(userId)
+            if (response.status === 204)
+                return
 
-    if (!user) throw new NotFoundError('User not found')
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
-    if (user.name === name && user.username === username && user.email === email) {
-        return false
-    }
+                    const constructor = errors[error]
 
-    user.name = name
-    user.username = username
-    user.email = email
-    user.modifiedAt = new Date()
-
-    data.users.updateOne(user)
-
-    return true
+                    throw new constructor(message)
+                })
+        })
 
 }
-
-*/
 
 
 

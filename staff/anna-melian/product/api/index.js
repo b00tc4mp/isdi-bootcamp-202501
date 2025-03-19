@@ -304,4 +304,120 @@ api.patch('/myposts/:postId/text', jsonBodyParser, (req, res) => {
     }
 })
 
+api.delete('/profile/delete', (req, res) => {
+    try {
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        logic.deleteProfile(userId)
+
+        res.status(204).send()
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+api.get('/profile/self/info', (req, res) => {
+    try {
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const userInfo = logic.getUserInfo(userId)
+
+        res.json({ userInfo })
+
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+api.patch('/settings/updated', jsonBodyParser, (req, res) => {
+    try {
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const { name, username, email } = req.body
+
+        logic.updateUserProfile(userId, name, username, email)
+
+        res.status(204).send()
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
+api.patch('/settings/password', jsonBodyParser, (req, res) => {
+    try {
+        const { authorization } = req.headers
+
+        const userId = authorization.slice(6)
+
+        const { actualPassword, newPassword } = req.body
+
+        const result = logic.changePassword(userId, actualPassword, newPassword)
+
+        if (result === false)
+            return res.status(204).send()
+
+        res.status(200).send()
+    } catch (error) {
+        console.error(error)
+
+        let status = 500
+        let errorName = SystemError.name
+
+        if (error instanceof ValidationError) {
+            status = 400
+            errorName = error.constructor.name
+        } else if (error instanceof NotFoundError) {
+            status = 404
+            errorName = error.constructor.name
+        }
+
+        res.status(status).json({ error: errorName, message: error.message })
+    }
+})
+
 api.listen(8080, () => console.log('API running on port 8080'))

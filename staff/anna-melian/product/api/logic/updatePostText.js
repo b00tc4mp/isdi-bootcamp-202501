@@ -19,7 +19,6 @@ export const updatePostText = (userId, postId, text) => {
 
     if (post.author.id !== userId) throw new OwnershipError('user is not author of post')
 
-    //TODO if no modifications, throw alert
     post.text = text
     post.modifiedAt = new Date
 

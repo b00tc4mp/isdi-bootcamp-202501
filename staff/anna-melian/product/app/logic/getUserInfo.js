@@ -1,31 +1,26 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
 
 import errors, { SystemError } from '../errors.js'
 
-
-export const changePassword = (actualPassword, newPassword) => {
-    validate.password(actualPassword, 'actualPassword')
-    validate.password(newPassword, 'newPassword')
-
+export const getUserInfo = () => {
     const { userId } = data
 
-    return fetch(`http://localhost:8080/settings/password`, {
-        method: 'PATCH',
+    return fetch('http://localhost:8080/profile/self/info', {
+        method: 'GET',
         headers: {
-            Authorization: `Basic ${userId}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ actualPassword, newPassword })
+            Authorization: `Basic ${userId}`
+        }
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-
-            if (response.status === 204)
-                return false
-
             if (response.status === 200)
-                return true
+                return response.json()
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(body => {
+                        const { userInfo } = body
+
+                        return userInfo
+                    })
 
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
@@ -37,5 +32,4 @@ export const changePassword = (actualPassword, newPassword) => {
                     throw new constructor(message)
                 })
         })
-
 }

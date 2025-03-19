@@ -9,11 +9,12 @@ import { getPosts } from './getPosts.js'
 import { createPost } from './createPost.js'
 import { toggleLikePost } from './toggleLikePost.js'
 import { getOwnPosts } from './getOwnPosts.js'
-//import { updateUserProfile } from './updateUserProfile.js'
+import { updateUserProfile } from './updateUserProfile.js'
 import { updatePostText } from './updatePostText.js'
-//import { changePassword } from './changePassword.js'
+import { changePassword } from './changePassword.js'
 import { deletePost } from './deletePost.js'
-//import { deleteProfile } from './deleteProfile.js'
+import { deleteProfile } from './deleteProfile.js'
+import { getUserInfo } from './getUserInfo.js'
 
 export const logic = {
     registerUser,
@@ -27,12 +28,13 @@ export const logic = {
     createPost,
     toggleLikePost,
     getOwnPosts,
-    //updateUserProfile,
+    updateUserProfile,
     updatePostText,
-    //changePassword,
+    changePassword,
+    getUserInfo,
 
 
-    //deleteProfile,
+    deleteProfile,
     deletePost
 
 

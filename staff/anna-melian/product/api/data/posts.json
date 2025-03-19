@@ -70,5 +70,17 @@
         "modifiedAt": null,
         "likes": [],
         "id": "m8f3x5rf53u"
+    },
+    {
+        "author": {
+            "id": "m8frbick4w",
+            "username": "Anna"
+        },
+        "image": "https://media.giphy.com/media/MNliqYN8ZSZQk/giphy.gif?cid=ecf05e47292j0eyppn7rkmgovlefl0nblr4c0i95hb537oa8&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+        "text": "9 3/4, hogwarts express!",
+        "createdAt": "2025-03-19T10:06:12.981Z",
+        "modifiedAt": "2025-03-19T15:19:00.569Z",
+        "likes": [],
+        "id": "m8frc1klbd"
     }
 ]

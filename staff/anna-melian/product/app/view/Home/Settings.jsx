@@ -1,24 +1,25 @@
 import { useState, useEffect } from 'react'
 
-import { logic } from "../../logic";
-import { data } from '../../data/index.js'
+import { logic } from '../../logic/index.js'
 
 
 export function Settings({ onDeleteProfileClick, onSubmitChanges }) {
     const [showPassword, setShowPassword] = useState(false)
+    const [userInfo, setUserInfo] = useState('')
+
 
     useEffect(() => {
-        const { userId } = data
-        const users = data.users.getAll()
-        const user = data.users.getById(userId)
+        try {
+            logic.getUserInfo()
+                .then(userInfo => setUserInfo(userInfo))
+                .catch(error => {
+                    console.error(error)
 
-        if (user) {
-            document.querySelector('#name').value = user.name
-            document.querySelector('#username').value = user.username
-            document.querySelector('#email').value = user.email
+                    alert(error.message)
+                })
+        } catch (error) {
 
         }
-
     }, [])
 
 
@@ -44,18 +45,15 @@ export function Settings({ onDeleteProfileClick, onSubmitChanges }) {
 
             } = form
 
+            logic.updateUserProfile(name, username, email)
+                .then(value => {
+                    if (value === true)
+                        alert('Profile successfully updated 🧙‍♀️')
+                    if (value == false)
+                        alert('No modifications')
 
-            const updated = logic.updateUserProfile(name, username, email)
-
-            if (!updated) {
-                alert('No modifications')
-            } else {
-
-                alert('Profile successfully updated 🧙‍♀️')
-                onSubmitChanges()
-
-            }
-
+                    onSubmitChanges()
+                })
 
         } catch (error) {
             console.error(error)
@@ -75,11 +73,10 @@ export function Settings({ onDeleteProfileClick, onSubmitChanges }) {
             } = form
 
             logic.changePassword(actualPassword, newPassword)
-
-            alert('Password successfully changed 🧙‍♀️')
-
-            onSubmitChanges()
-
+                .then(() => {
+                    alert('Password successfully changed 🧙‍♀️')
+                    onSubmitChanges()
+                })
 
         } catch (error) {
             console.error(error)
@@ -97,13 +94,13 @@ export function Settings({ onDeleteProfileClick, onSubmitChanges }) {
         <h4>Change personal information</h4>
         <form onSubmit={handleUpdateProfileSubmit}>
             <label htmlFor="text">Name</label>
-            <input id='name' type="text" />
+            <input id='name' type="text" defaultValue={userInfo.name} />
 
             <label htmlFor="text">Username</label>
-            <input id='username' type="text" />
+            <input id='username' type="text" defaultValue={userInfo.username} />
 
             <label htmlFor="text">E-mail</label>
-            <input id='email' type="email" />
+            <input id='email' type="email" defaultValue={userInfo.email} />
 
             <button type="submit">Update profile</button>
         </form>

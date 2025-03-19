@@ -15,16 +15,18 @@ export function Home({ onLogoutClick, onDeleteProfileClick }) {
         console.debug('Home -> useEffect')
 
         try {
-            const name = logic.getUserName()
+            logic.getUserName()
+                .then(name => setUserName(name))
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
             //const house = logic.getUserHouse()
 
             //document.body.className = ''
             //document.body.classList.add(house)
             //document.querySelector('h1').classList.add(`logo-${house}`)
-
-
-            setUserName(name)
-
         } catch (error) {
             console.error(error)
 
@@ -55,7 +57,17 @@ export function Home({ onLogoutClick, onDeleteProfileClick }) {
 
     const handlePostCreateSubmit = () => setView('posts')
 
-    const handleSubmitChanges = () => setView('posts')
+    const handleSubmitChanges = () => {
+        setView('posts')
+        logic.getUserName()
+            .then(name => setUserName(name))
+            .catch(error => {
+                console.error(error)
+
+                alert(error.message)
+            })
+
+    }
 
     const handleDeleteProfile = () => {
         //document.body.className = ''
