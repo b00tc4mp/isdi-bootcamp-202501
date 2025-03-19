@@ -1,6 +1,6 @@
 import { data } from '../data/index.js'
 
-import { errors, validate } from 'com'
+import { errors } from 'com'
 
 const { SystemError } = errors
 
