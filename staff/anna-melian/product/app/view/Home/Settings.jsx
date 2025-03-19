@@ -54,6 +54,11 @@ export function Settings({ onDeleteProfileClick, onSubmitChanges }) {
 
                     onSubmitChanges()
                 })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
 
         } catch (error) {
             console.error(error)
@@ -76,6 +81,11 @@ export function Settings({ onDeleteProfileClick, onSubmitChanges }) {
                 .then(() => {
                     alert('Password successfully changed 🧙‍♀️')
                     onSubmitChanges()
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
                 })
 
         } catch (error) {

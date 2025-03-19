@@ -1,5 +1,6 @@
 import { constant } from './constant.js'
-import { ValidationError } from '../errors.js'
+
+import { ValidationError } from './errors.js'
 
 export const validate = {
     string(string, explain) {
@@ -23,7 +24,7 @@ export const validate = {
     username(username, explain) {
         this.text(username, explain)
         this.minLength(username, 3, explain)
-        this.maxLength(username, 20, explain)
+        this.maxLength(username, 25, explain)
     },
     password(password, explain) {
         this.text(password, explain)
@@ -32,10 +33,18 @@ export const validate = {
     },
     url(url, explain) {
         this.string(url, explain)
-        if (!constant.URL_REGEX.test(url)) throw new ValidationError(`invalid ${explain} syntax`)
+        if (!constant.URL_REGEX.test(url))
+            throw new ValidationError('invalid' + explain + 'syntax')
     },
     id(id, explain) {
         this.text(id, explain)
         if (id.length < 8 || id.length > 12) throw new ValidationError(`invalid ${explain} length`)
+    },
+    house(house, explain) {
+        this.text(house, explain)
+        if (house !== 'ravenclaw' & house !== 'gryffindor' & house !== 'slytherin' & house !== 'hufflepuff') throw new ValidationError(`invalid ${explain} election`)
     }
+
+
+
 }

@@ -1,7 +1,7 @@
-import { validate } from './validate.js'
 import { data } from '../data/index.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError, CredentialsError } from '../errors.js'
+const { CredentialsError, NotFoundError } = errors
 
 export const changePassword = (userId, actualPassword, newPassword) => {
     validate.id(userId, 'userId')

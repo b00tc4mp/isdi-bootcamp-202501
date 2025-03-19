@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from '../../app/logic/validate.js'
+import { errors, validate } from 'com'
 
-import { DuplicityError } from '../../app/errors.js'
+const { DuplicityError } = errors
 
 export const registerUser = (name, email, username, house, password) => {
 
@@ -11,8 +11,7 @@ export const registerUser = (name, email, username, house, password) => {
     validate.email(email, 'email')
     validate.username(username, 'username')
     validate.password(password, 'password')
-    //TODO validate house
-
+    validate.house(house, 'house')
     const found = data.users.findOne(user => user.email === email || user.username === username)
 
     if (found) throw new DuplicityError('user already exists')

@@ -1,6 +1,6 @@
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import errors, { SystemError } from '../errors.js'
+const { SystemError } = errors
 
 export const registerUser = (name, email, username, house, password) => {
     validate.text(name, 'name')
@@ -9,6 +9,7 @@ export const registerUser = (name, email, username, house, password) => {
     validate.email(email, 'email')
     validate.username(username, 'username')
     validate.password(password, 'password')
+    validate.house(house, 'house')
 
     return fetch('http://localhost:8080/users', {
         method: 'POST',

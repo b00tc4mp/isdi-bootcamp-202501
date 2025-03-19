@@ -50,23 +50,23 @@
         "id": "m8cxez8oheh"
     },
     {
+        "name": "Anna",
+        "email": "anna@10.com",
+        "username": "Anna",
+        "house": "ravenclaw",
+        "password": "123123123",
+        "createdAt": "2025-03-19T22:11:05.411Z",
+        "modifiedAt": null,
+        "id": "m8gh88jn2ee"
+    },
+    {
         "name": "Ron Weasly",
         "email": "ron@weasly.com",
         "username": "QuidditchFan",
         "house": "gryffindor",
         "password": "ronweasly123!",
-        "createdAt": "2025-03-17T21:11:11.267Z",
+        "createdAt": "2025-03-19T23:09:45.887Z",
         "modifiedAt": null,
-        "id": "m8dk7hyb7mc"
-    },
-    {
-        "name": "Anna Melián",
-        "email": "anna@10.com",
-        "username": "Anna",
-        "house": "ravenclaw",
-        "password": "123123123",
-        "createdAt": "2025-03-19T10:05:48.068Z",
-        "modifiedAt": "2025-03-19T15:08:27.503Z",
-        "id": "m8frbick4w"
+        "id": "m8gjboynxis"
     }
 ]

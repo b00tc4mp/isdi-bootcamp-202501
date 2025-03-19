@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from '../../app/logic/validate.js'
-import { CredentialsError, NotFoundError } from '../../app/errors.js'
+import { errors, validate } from 'com'
+
+const { CredentialsError, NotFoundError } = errors
 
 export const authenticateUser = (username, password) => {
     validate.username(username, 'username')

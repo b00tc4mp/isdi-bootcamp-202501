@@ -22,6 +22,15 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
 
                     onLoginSubmit()
                 })
+                .catch(error => {
+                    console.error(error)
+
+                    if (error instanceof SyntaxError)
+                        alert('⛔️' + error.message)
+                    else
+                        alert('⚠️' + error.message)
+                })
+
         } catch (error) {
             console.error(error)
 

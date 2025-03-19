@@ -1,4 +1,7 @@
 import { logic } from '../logic/index.js'
+import { errors } from 'com'
+
+const { ValidationError, SystemError } = errors
 
 import { useState, useEffect } from 'react'
 
@@ -19,17 +22,27 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
                 password: { value: password }
             } = form
 
-            if (house === '') throw new Error('Choose your house')
-
             logic.registerUser(name, email, username, house, password)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
+                    onRegisterSubmit()
+                })
+                .catch(error => {
+                    console.error(error)
 
-            onRegisterSubmit()
+                    if (error instanceof SystemError)
+                        alert('⛔️' + error.message)
+                    else
+                        alert('⚠️' + error.message)
+                })
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            if (error instanceof ValidationError)
+                alert('❗️ ' + error.message)
+            else
+                alert('⛔️ ' + error.message)
         }
     }
     const togglePasswordVisibility = () => {

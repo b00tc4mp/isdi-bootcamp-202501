@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import errors, { SystemError } from '../errors.js'
+const { SystemError } = errors
 
 export const deletePost = postId => {
     validate.id(postId, 'postId')
