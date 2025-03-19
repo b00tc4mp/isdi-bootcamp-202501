@@ -1,7 +1,7 @@
 import {data} from "../data/index.js";
-import { validate } from './validate'
+import { validate, errors } from 'com'
 
-import {NotFoundError, OwnershipError} from "../errors";
+const { SystemError } = errors
 
 export const deletePost = postId => {
    validate.id(postId, 'postId')
@@ -25,7 +25,9 @@ export const deletePost = postId => {
                 .then(body => {
                     const {error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

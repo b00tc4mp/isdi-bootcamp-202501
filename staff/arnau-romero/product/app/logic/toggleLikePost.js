@@ -1,6 +1,8 @@
 
 import { data } from "../data/index";
-import { validate } from "./validate.js";
+import { validate, errors } from "com";
+
+const { SystemError } = errors
 
 export const toggleLikePost = (postId) =>{
     validate.id(postId, 'postId')
@@ -30,7 +32,9 @@ export const toggleLikePost = (postId) =>{
                 .then( body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

@@ -1,5 +1,8 @@
 import { data } from "../data/index.js"
 
+import { validate , errors } from 'com'
+const { SystemError } = errors 
+
 export const getPosts = () => { // Crear funcion para obtener los posts de data, la llamaremos desde main
   const { userId } = data
 
@@ -32,7 +35,9 @@ export const getPosts = () => { // Crear funcion para obtener los posts de data,
                 .then(body =>{
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })               
         })
 }

@@ -1,7 +1,6 @@
-import { data } from '../data/index.js' // Importamos data
-import { validate } from './validate.js' // Importamos validaciones
-
-import { CredentialsError, NotFoundError} from '../errors.js' // Importamos CredentialsError y NotFoundError
+import { errors, validate } from 'com'  // Importamos data y validaciones
+import { data } from '../data/index.js'
+const { NotFoundError, CredentialsError } = errors
 
 // Función de autenticación que verifica el usuario y contraseña
 export const authenticateUser = (username, password) => {

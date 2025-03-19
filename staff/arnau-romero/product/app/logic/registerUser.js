@@ -1,4 +1,6 @@
-import { validate } from "./validate.js";
+import { validate, errors } from "com";
+
+const { SystemError } = errors
 
 export const registerUser = (name, email, username, password) => {
     // Validamos todos los campos con la lógica de validación
@@ -35,8 +37,10 @@ export const registerUser = (name, email, username, password) => {
                 // Si la conversion a JSON funciona obtenemos un objeto con un error y message del cuerpo de la respuesta.
                 .then(body => {
                     const { error,message } = body // const error = body.error
-                                                   // const message = body.message
-                    throw new Error(message)
+                    
+                    const constructor = errors[error] // const message = body.message
+                   
+                    throw new constructor(message)
                 })
         })
 }

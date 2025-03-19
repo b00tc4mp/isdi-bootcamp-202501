@@ -1,6 +1,7 @@
 import { data } from "../data/index.js"
-import { validate } from "./validate.js"
+import { validate, errors } from 'com'
 
+const { NotFoundError } = errors
 export const getPosts = userId => { // Crear funcion para obtener los posts de data, la llamaremos desde main
     validate.id(userId, 'userId')
 

@@ -1,12 +1,12 @@
 // Importamos Express y el middleware para parsear el cuerpo de las peticiones en JSON
 import express, { json } from 'express';
 import cors from 'cors' // Importamos cors 
-
+import { errors } from 'com'
 // Importamos la lógica de negocio
 import { logic } from './logic/index.js';
 
 // Importamos clases de error personalizadas
-import { CredentialsError, DuplicityError, NotFoundError, SystemError, ValidationError, OwnershipError } from './errors.js';
+const { CredentialsError, DuplicityError, NotFoundError, SystemError, ValidationError, OwnershipError } = errors 
 
 // Creamos una instancia de la aplicación Express
 const api = express();

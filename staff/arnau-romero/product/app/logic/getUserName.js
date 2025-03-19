@@ -1,5 +1,9 @@
 import { data } from "../data/index.js";
 
+import { validate, errors } from "com";
+
+const { SystemError } = errors 
+
 export const getUserName = () => {
 
     const {userId} = data // const users = data.users
@@ -27,7 +31,9 @@ export const getUserName = () => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

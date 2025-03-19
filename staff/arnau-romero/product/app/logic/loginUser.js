@@ -1,6 +1,7 @@
-import { data } from "../data/index"
-import { validate } from "./validate"
+import { data } from "../data"
+import { validate , errors } from "com"
 
+const { SystemError } = errors
 
 export const loginUser = (username, password) =>{
     validate.username(username, 'username') // validamos username
@@ -22,25 +23,27 @@ export const loginUser = (username, password) =>{
                                                      // Usamos stringify para convertirlo en un string, es el formato en el que se deben enviar datos a un servidor.
    })
     // Manejamos el error en la soilicitud HTTP.
-    .catch(error => { throw new Error(error.message)})
+    .catch(error => { throw new SystemError(error.message)})
     // Manejamos respuesta en la solicitud HTTP.
     .then(response => {
         console.log(response.status)
 
         if(response.status === 200) // Si la respuesta tiene estado 200 (solicitud exitosa)
             return response.json() // Convertimos la respuesta en un objeto javaScript
-                .catch(error => { throw new Error(error.message) }) // Si hay un error convirtiendolo a JSON lo capturamos aqui
+                .catch(error => { throw new SystemError(error.message) }) // Si hay un error convirtiendolo a JSON lo capturamos aqui
                 .then( body => { // Si la conversion es exitosa recibimos el body.
                     const { id } = body // Sacamos la iD del body
                   
                     data.userId = id // Y la guardamos en la base de datos
                 })
         return response.json() // Si la respuesta del servidor no es un 200 
-            .catch(error => { throw new Error(error.message) }) // Capturamos por si hay un error convirtiendolo a JSON
+            .catch(error => { throw new SystemError(error.message) }) // Capturamos por si hay un error convirtiendolo a JSON
             .then( body => { // Si lo convertimos bien a JSON
                 const { error, message } = body // Sacamos el mensaje de error del body
 
-                throw new Error(message) // Lanzamos el error con el mensaje
+                const constructor = errors[error]
+
+                throw new constructor(message) // Lanzamos el error con el mensaje
             }
             )    
     })

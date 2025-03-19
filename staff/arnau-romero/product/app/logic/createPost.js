@@ -1,11 +1,12 @@
 import { data } from '../data/index'
-import { validate } from './validate'
+import { validate, errors } from 'com'
 
+const { SystemError } = errors
 export const createPost = (image, text) => { // Funcion para la logica de crear post
     validate.url(image, 'image')
-    validate.maxLength(1000)
+    validate.maxLength(image, 1000, 'image')
     validate.text(text, 'text')
-    validate.maxLength(500)
+    validate.maxLength(text, 500, 'text')
 
     const { userId } = data
     // PETICIÓN FETCH PARA CREAR EL POST:
@@ -30,8 +31,10 @@ export const createPost = (image, text) => { // Funcion para la logica de crear 
                 .catch(error => { throw new Error(error.message)}) // Si falla al parsear el JSON, lanzamos un error
                 .then(body => {                  // Si el JSON se parsea correctamente
                     const { error, message } = body // Extraemos el error y mensaje del cuerpo
+
+                    const constructor = errors[error]
   
-                    throw new Error(message) // Lanzamos un error con el mensaje recibido del servidor
+                    throw new constructor(message) // Lanzamos un error con el mensaje recibido del servidor
                 })
         })
 }       
