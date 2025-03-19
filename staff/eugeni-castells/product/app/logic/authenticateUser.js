@@ -1,5 +1,7 @@
-import { validate } from "./validate";
+import { validate, errors } from "../../com";
 import { data } from "../data";
+
+const { SystemError } = errors;
 
 export const authenticateUser = (username, password) => {
   validate.username(username, "username");
@@ -20,7 +22,7 @@ export const authenticateUser = (username, password) => {
         return response
           .json()
           .catch((error) => {
-            throw new Error(error.message);
+            throw new SystemError(error.message);
           })
           .then((body) => {
             const { id } = body;
@@ -31,14 +33,14 @@ export const authenticateUser = (username, password) => {
       return response
         .json()
         .catch((error) => {
-          throw new Error(error.message);
+          throw new SystemError(error.message);
         })
         .then((body) => {
           const { error, message } = body;
 
-          console.log(error);
+          const constructor = errors[error];
 
-          throw new Error(message);
+          throw new constructor(message);
         });
     });
 };

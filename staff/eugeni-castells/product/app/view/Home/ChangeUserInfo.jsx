@@ -22,19 +22,33 @@ function ChangeUserInfo({ onHomeNavigation }) {
       password,
     };
 
-    logic.updateUser(updatedUser);
-
-    handleHomeNavigation();
+    logic
+      .updateUser(updatedUser)
+      .catch((error) => {
+        throw new Error(error.message);
+      })
+      .then(() => {
+        handleHomeNavigation();
+      });
   };
 
   const handleHomeNavigation = () => onHomeNavigation();
 
   useEffect(() => {
     try {
-      const info = logic.getUserInfo();
+      logic
+        .getUserInfo()
+        .catch((error) => {
+          throw new Error(error.message);
+        })
+        .then((body) => {
+          setUserInfo(body);
+        });
+    } catch (error) {
+      console.error(error);
 
-      setUserInfo(info);
-    } catch (error) {}
+      alert(error.message);
+    }
   }, []);
 
   return (

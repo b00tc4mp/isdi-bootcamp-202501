@@ -1,6 +1,6 @@
-import { validate } from "./validate.js";
+import { errors, validate } from "../../com/index.js";
 import data from "../data/index.js";
-import { DuplicityError } from "./errors.js";
+const { DuplicityError } = errors;
 
 export const registerUser = function (userInfo) {
   validate.text(userInfo.name, "name");

@@ -1,7 +1,8 @@
 import data from "../data/index.js";
-import { NotFoundError, OwnershipError } from "./errors.js";
 
-import { validate } from "./validate.js";
+import { errors, validate } from "../../com/index.js";
+
+const { NotFoundError, OwnershipError } = errors;
 
 export const updateUser = (userId, userInfo) => {
   validate.id(userId);

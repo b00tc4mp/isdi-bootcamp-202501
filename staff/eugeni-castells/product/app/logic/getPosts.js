@@ -1,4 +1,7 @@
 import { data } from "../data";
+import { errors } from "../../com";
+
+const { SystemError } = errors;
 
 export const getPosts = () => {
   const { userId } = data;
@@ -8,15 +11,16 @@ export const getPosts = () => {
     headers: { Authorization: `Basic ${userId}` },
   })
     .catch((error) => {
-      throw new Error(error.message);
+      throw new SystemError(error.message);
     })
     .then((response) => {
       console.log(response.status);
+
       if (response.status === 200) {
         return response
           .json()
           .catch((error) => {
-            throw new Error(error.message);
+            throw new SystemError(error.message);
           })
           .then((body) => {
             const posts = body;
@@ -32,14 +36,14 @@ export const getPosts = () => {
       return response
         .json()
         .catch((error) => {
-          throw new Error(error.message);
+          throw new SystemError(error.message);
         })
         .then((body) => {
           const { error, message } = body;
 
-          console.log(error);
+          const constructor = errors[error];
 
-          throw new Error(message);
+          throw new constructor(message);
         });
     });
 };

@@ -1,6 +1,7 @@
-import { validate } from "./validate.js";
+import { validate, errors } from "../../com";
 import { data } from "../data/index.js";
 
+const { CredentialsError } = errors;
 const loginUser = function (username, password) {
   validate.password(password, "password");
   validate.username(username, "username");
@@ -8,7 +9,7 @@ const loginUser = function (username, password) {
   let found = data.users.findOne((user) => user.username === username);
 
   if (!found || found.password !== password)
-    throw new Error("wrong credentials");
+    throw new CredentialsError("wrong credentials");
 
   data.userId = found.id;
 };

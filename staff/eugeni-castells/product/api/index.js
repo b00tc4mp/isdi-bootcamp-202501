@@ -1,15 +1,16 @@
 import express, { json } from "express";
 import cors from "cors";
 import { logic } from "./logic/index.js";
-import {
+import { errors } from "../com/index.js";
+
+const {
   CredentialsError,
   OwnershipError,
   DuplicityError,
   SystemError,
   ValidationError,
   NotFoundError,
-} from "./logic/errors.js";
-
+} = errors;
 const api = express();
 
 api.use(cors());
@@ -172,7 +173,7 @@ api.patch("/users", jsonBodyParser, (req, res) => {
 
     logic.updateUser(userId, { name, email, username, password });
 
-    res.status(204);
+    res.status(204).send();
   } catch (error) {
     console.error(error);
 

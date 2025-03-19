@@ -1,5 +1,7 @@
 import { data } from "../data/index.js";
-import { validate } from "./validate";
+import { validate, errors } from "../../com";
+
+const { SystemError } = errors;
 
 export const updatePostText = (postId, text) => {
   const { userId } = data;
@@ -24,17 +26,17 @@ export const updatePostText = (postId, text) => {
       return response
         .json()
         .catch((error) => {
-          throw new Error(error.message);
+          throw new SystemError(error.message);
         })
         .then((body) => {
           const { error, message } = body;
 
-          console.log(error);
+          const constructor = errors[error];
 
-          throw new Error(message);
+          throw new constructor(message);
         });
     })
     .catch((error) => {
-      throw new Error(error.message);
+      throw new SystemError(error.message);
     });
 };

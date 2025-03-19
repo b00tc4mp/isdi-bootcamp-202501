@@ -1,5 +1,7 @@
 import { data } from "../data/index.js";
-import { validate } from "./validate.js";
+import { validate, errors } from "../../com";
+
+const { SystemError } = errors;
 
 export const getUserInfo = () => {
   try {
@@ -11,14 +13,14 @@ export const getUserInfo = () => {
       headers: { Authorization: `${data.userId}` },
     })
       .catch((error) => {
-        throw new Error(error.message);
+        throw new SystemError(error.message);
       })
       .then((response) => {
         if (response.status === 200)
           return response
             .json()
             .catch((error) => {
-              throw new Error(error.message);
+              throw new S(error.message);
             })
             .then((body) => {
               return body;
@@ -27,14 +29,14 @@ export const getUserInfo = () => {
         return response
           .json()
           .catch((error) => {
-            throw new Error(error.message);
+            throw new SystemError(error.message);
           })
           .then((body) => {
             const { error, message } = body;
 
-            console.log(error);
+            const constructor = errors[error];
 
-            throw new Error(message);
+            throw new constructor(message);
           });
       });
   } catch (error) {

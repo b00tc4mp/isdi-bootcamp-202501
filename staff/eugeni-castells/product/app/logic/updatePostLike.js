@@ -1,5 +1,7 @@
-import { validate } from "./validate";
+import { validate, errors } from "../../com";
 import { data } from "../data/index.js";
+
+const { SystemError } = errors;
 
 export const updatePostLike = (postId) => {
   const { userId } = data;
@@ -14,7 +16,7 @@ export const updatePostLike = (postId) => {
     },
   })
     .catch((error) => {
-      throw new Error(`Fetching error: ${error.message}`);
+      throw new SystemError(`Fetching error: ${error.message}`);
     })
     .then((response) => {
       console.log(response.status);
@@ -24,14 +26,14 @@ export const updatePostLike = (postId) => {
       return response
         .json()
         .catch((error) => {
-          throw new Error(error.message);
+          throw new SystemError(error.message);
         })
         .then((body) => {
           const { error, message } = body;
 
-          console.log(error);
+          const constructor = errors[error];
 
-          throw new Error(message);
+          throw new constructor(message);
         });
     });
 };

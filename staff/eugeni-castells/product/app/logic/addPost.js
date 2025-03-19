@@ -1,37 +1,45 @@
-import { validate } from "./validate.js";
+import { data } from "../data/index.js";
+import { validate, errors } from "../../com";
 
-export const addPost = (userId, postInfo) => {
+const { SystemError } = errors;
+
+export const addPost = (postInfo) => {
   try {
-    const { id, url, maxLength, text } = validate;
-    const { image } = postInfo;
+    const { userId } = data;
 
-    id(userId, "userId");
-    url(image, "image url");
-    text(text, "post text");
-    maxLength(500, "post text length");
+    const { image, text } = postInfo;
+
+    validate.id(userId, "userId");
+    validate.url(image, "image url");
+    validate.text(text, "post text");
+    validate.maxLength(500, "post text length");
 
     return fetch("http://localhost:8080/posts", {
       method: "POST",
-      headers: "Content-Type:application/json",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${userId}`,
+      },
       body: JSON.stringify(postInfo),
     })
       .catch((error) => {
-        throw new Error(error.message);
+        throw new SystemError(error.message);
       })
       .then((response) => {
         console.log(response);
-        if (response === 201) return;
+        if (response.status === 201) return;
 
         return response
           .json()
           .catch((error) => {
-            throw new Error(error.message);
+            throw new SystemError(error.message);
           })
           .then((body) => {
             const { error, message } = body;
 
-            console.log(error);
-            throw new Error(message);
+            const constructor = errors[error];
+
+            throw new constructor(message);
           });
       });
   } catch (error) {

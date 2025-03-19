@@ -1,20 +1,19 @@
 import constant from "./constants.js";
-import { ValidationError } from "./errors.js";
 
 export const validate = {
   string: function (string, explain) {
     if (typeof string !== "string")
-      throw new ValidationError("invalid " + explain + " type");
+      throw new Error("invalid " + explain + " type");
   },
   text: function (text, explain) {
     this.string(text, explain);
     if (constant.EMPTY_OR_BLANK_REGEX.test(text))
-      throw new ValidationError("invalid " + explain + " syntax");
+      throw new Error("invalid " + explain + " syntax");
   },
   email: function (email, explain) {
     this.string(email, explain);
     if (!constant.EMAIL_REGEX.test(email))
-      throw new ValidationError("invalid " + explain + " syntax");
+      throw new Error("invalid " + explain + " syntax");
   },
   username: function (username, explain) {
     this.text(username, explain);
@@ -28,20 +27,20 @@ export const validate = {
   },
   maxLength: function (value, maxLength, explain) {
     if (value.length > maxLength)
-      throw new ValidationError("invalid " + explain + " range error");
+      throw new Error("invalid " + explain + " range error");
   },
   minLength: function (value, minLength, explain) {
     if (value.length < minLength)
-      throw new ValidationError("invalid " + explain + " range error");
+      throw new Error("invalid " + explain + " range error");
   },
   url(url, explain) {
     this.string(url, explain);
     if (!constant.URL_REGEX.test(url))
-      throw new ValidationError(`invalid ${explain} syntax`);
+      throw new Error(`invalid ${explain} syntax`);
   },
   id(id, explain) {
     this.text(id, explain);
     if (id.length < 10 || id.length > 14)
-      throw new ValidationError(`invalid ${explain} length`);
+      throw new Error(`invalid ${explain} length`);
   },
 };

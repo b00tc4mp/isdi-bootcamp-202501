@@ -1,6 +1,6 @@
-import { validate } from "./validate.js";
+import { errors, validate } from "../../com/index.js";
 import data from "../data/index.js";
-import { NotFoundError } from "./errors.js";
+const { NotFoundError } = errors;
 
 export const addPost = (id, post) => {
   const { image, text } = post;

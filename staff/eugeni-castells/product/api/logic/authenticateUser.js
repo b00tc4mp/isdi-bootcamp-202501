@@ -1,6 +1,6 @@
-import { validate } from "./validate.js";
+import { errors, validate } from "../../com/index.js";
 import data from "../data/index.js";
-import { CredentialsError, NotFoundError } from "./errors.js";
+const { CredentialsError, NotFoundError } = errors;
 
 export const authenticateUser = function (username, password) {
   validate.password(password, "password");

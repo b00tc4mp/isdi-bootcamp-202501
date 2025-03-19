@@ -1,6 +1,6 @@
 import data from "../data/index.js";
-import { NotFoundError, OwnershipError } from "./errors.js";
-import { validate } from "./validate.js";
+const { NotFoundError, OwnershipError } = errors;
+import { errors, validate } from "../../com/index.js";
 
 export const getOnlineUserInfo = function (userId) {
   validate.id(userId, "user id");
