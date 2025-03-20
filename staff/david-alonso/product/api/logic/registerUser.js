@@ -1,10 +1,9 @@
 // REGISTRAR USUARIO 
 
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { DuplicityError } from '../errors.js'
-
+const { DuplicityError } = errors
 
 // Funcion para Registrar al usuario
 export const registerUser = (name, email, username, password) => {
@@ -25,7 +24,7 @@ export const registerUser = (name, email, username, password) => {
         username: username,
         password: password,
         createdAt: new Date().toLocaleString(),
-        modifiedAt: null
+        modifiedAt: new Date().toLocaleString()
     }
 
     // ****

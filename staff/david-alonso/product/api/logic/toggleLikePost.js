@@ -1,9 +1,9 @@
 // CAMBIAR LIKE A UN POST
 
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError } from '../errors.js'
+const { NotFoundError } = errors
 
 // Agrega o elimina el Like de los Posts
 export const toggleLikePost = (userId, postId) => {

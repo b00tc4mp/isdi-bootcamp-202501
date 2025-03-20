@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError } from '../errors.js'
+const { SystemError } = errors
 
 // Agrega o elimina el Like de los Posts
 export const toggleLikePost = postId => {
@@ -15,7 +15,7 @@ export const toggleLikePost = postId => {
             Authorization: `Basic ${userId}`
         },
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => {
             console.log(response.status)
 
@@ -23,11 +23,13 @@ export const toggleLikePost = postId => {
                 return
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

@@ -1,7 +1,7 @@
-import { deletePost } from './deletePosts.js'
+import { deletePost } from './deletePost.js'
 
 try {
-    deletePost('m7a771ui2b', 'm82pkjjien')
+    deletePost('m86hbjvqpre', 'm8et10xywoq')
 } catch (error) {
     console.error(error)
 }

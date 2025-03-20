@@ -1,8 +1,8 @@
 import { data } from '../data/index.js'
 
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { CredentialsError, NotFoundError } from '../errors.js'
+const { NotFoundError, CredentialsError } = errors
 
 // Funcion para Iniciar sesion
 export const authenticateUser = (username, password) => {

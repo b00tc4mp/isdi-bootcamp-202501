@@ -44,3 +44,14 @@ export {
     SystemError,
     ValidationError
 }
+
+const errors = {
+    DuplicityError,
+    CredentialsError,
+    NotFoundError,
+    OwnershipError,
+    SystemError,
+    ValidationError
+}
+
+export default errors

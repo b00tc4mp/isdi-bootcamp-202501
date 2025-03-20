@@ -1,10 +1,10 @@
 import express, { json } from 'express'
-
 import cors from 'cors'
+import { errors } from 'com'
 
 import { logic } from './logic/index.js'
 
-import { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } from './errors.js'
+const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
 const port = 8080
 
@@ -50,7 +50,7 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
 
         const id = logic.authenticateUser(username, password)
 
-        res.json(id)
+        res.json({ id })
     } catch (error) {
         console.error(error)
 
@@ -81,7 +81,7 @@ api.get('/users/self/name', (req, res) => {
 
         const name = logic.getUserName(userId)
 
-        res.json(name)
+        res.json({ name })
     } catch (error) {
         console.error(error)
 
@@ -224,13 +224,15 @@ api.patch('/posts/:postId/likes', (req, res) => {
 })
 
 // MODIFICAR EL TEXTO DE UN POST
-api.patch('/posts/:postId/likes', (req, res) => {
+api.patch('/posts/:postId/text', jsonBodyParser, (req, res) => {
     try {
         const { authorization } = req.headers
 
         const userId = authorization.slice(6)
 
         const { postId } = req.params
+
+        const { text } = req.body
 
         logic.updatePostText(userId, postId, text)
 

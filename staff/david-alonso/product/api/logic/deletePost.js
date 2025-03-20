@@ -1,9 +1,9 @@
 // BORRAR UN POST 
 
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError, OwnershipError } from '../errors.js'
+const { NotFoundError, OwnershipError } = errors
 
 export const deletePost = (userId, postId) => {
     validate.id(userId, 'userId')
@@ -15,7 +15,7 @@ export const deletePost = (userId, postId) => {
 
     const post = data.posts.findOne(post => post.id === postId)
 
-    if (!foundPost) throw new NotFoundError('post not found')
+    if (!post) throw new NotFoundError('post not found')
 
     if (post.author !== userId) throw new OwnershipError('user is not author of post')
 

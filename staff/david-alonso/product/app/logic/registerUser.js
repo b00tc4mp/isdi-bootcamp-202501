@@ -1,4 +1,6 @@
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
 
 // Funcion para Registrar al usuario
 export const registerUser = (name, email, username, password) => {
@@ -15,7 +17,7 @@ export const registerUser = (name, email, username, password) => {
         },
         body: JSON.stringify({ name, email, username, password })
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => {
             console.log(response.status)
 
@@ -23,11 +25,13 @@ export const registerUser = (name, email, username, password) => {
                 return
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

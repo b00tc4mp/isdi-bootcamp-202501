@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError } from '../errors.js'
+const { NotFoundError } = errors
 
 // Funcion para añadir un Posts nuevo
 export const createPost = (userId, image, text) => {
@@ -20,8 +20,8 @@ export const createPost = (userId, image, text) => {
         author: userId,
         image: image,
         text: text,
-        createdAt: new Date().toLocaleString(),
-        modifiedAt: null,
+        createdAt: new Date().toISOString(),
+        modifiedAt: new Date().toISOString(),
         likes: []
     }
 

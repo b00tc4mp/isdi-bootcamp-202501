@@ -1,15 +1,15 @@
 // CAMBIAR EL TEXTO DEL POSTS
 
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError, OwnershipError } from '../errors.js'
+const { NotFoundError, OwnershipError } = errors
 
 export const updatePostText = (userId, postId, text) => {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')
     validate.text(text, 'text')
-    validate.maxLength(text, 400, 'text')
+    validate.maxLength(text, 300, 'text')
 
     const user = data.users.getById(userId)
 
@@ -22,7 +22,7 @@ export const updatePostText = (userId, postId, text) => {
     if (post.author !== userId) throw new OwnershipError('user is not author of post')
 
     post.text = text
-    post.modifiedAt = new Date
+    post.modifiedAt = new Date().toISOString()
 
     data.posts.updateOne(post => post.id === postId, post)
 }
