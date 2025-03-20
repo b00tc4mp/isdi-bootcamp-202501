@@ -20,10 +20,27 @@ class OwnershipError extends Error {
         super(message)
     }
 }
+class SystemError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
 
 export {
     DuplicityError,
     CredentialsError,
     NotFoundError,
-    OwnershipError
+    OwnershipError,
+    SystemError
+
 }
+
+const errors = {
+    DuplicityError,
+    CredentialsError,
+    NotFoundError,
+    OwnershipError,
+    SystemError
+}
+
+export default errors;

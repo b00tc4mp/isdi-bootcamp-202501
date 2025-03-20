@@ -1,28 +1,37 @@
-import { validate } from "../validate.js";
-import { data } from "../../data/data.js";
-
+import { validate, errors } from "com";
+const { SystemError } = errors;
 export const registerUser = (name, email, password) => {
   validate.text(name, "name");
   validate.maxLength(name, 20, "name");
   validate.email(email, "email");
   validate.password(password, "password");
 
-  //meotodo de data para buscar un usuario
-  const found = data.users.findOne(
-    (user) => user.email === email || user.name === name
-  );
+  return fetch("http://localhost:3000/user/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, email, password }),
+  })
+    .catch((error) => {
+      throw new SystemError(error.message);
+    })
+    .then((response) => {
+      if (response.status === 201)
+        return (
+          response
+            .json()
+            .catch((error) => {
+              throw new SystemError(error.message);
+            })
+            //Necesito darle una iteracion mas a esta parte de la logica
+            .then((body) => {
+              const { error, message } = body;
 
-  if (found) throw new DuplicityError("user already exists");
+              const constructor = errors[error];
 
-  const user = {
-    name: name,
-    email: email,
-    password: password,
-    createdAt: new Date(),
-    status: "active",
-    role: "user",
-    modifiedAt: null,
-  };
-  //metodo de data para insertar un usuario
-  data.users.insertOne(user);
+              throw new constructor(message);
+            })
+        );
+    });
 };

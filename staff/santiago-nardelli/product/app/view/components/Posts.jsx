@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import {Post} from "./Post.jsx";
+import { Post } from "./Post.jsx";
 
-import {logic} from "../../logic/logic.js";
+import { logic } from "../../logic/logic.js";
 
 export function Posts() {
   const [posts, setPosts] = useState([]);
@@ -10,9 +10,13 @@ export function Posts() {
     console.debug("Posts -> useEffect");
 
     try {
-      const posts = logic.getPosts();
-
-      setPosts(posts);
+      logic
+        .getPosts()
+        .then((posts) => setPosts(posts))
+        .catch((error) => {
+          console.error(error);
+          alert(error.message);
+        });
     } catch (error) {
       console.error(error);
 
@@ -22,9 +26,13 @@ export function Posts() {
 
   const handleToggleLikeClick = () => {
     try {
-      const posts = logic.getPosts();
-
-      setPosts(posts);
+      logic
+        .getPosts()
+        .then((posts) => setPosts(posts))
+        .catch((error) => {
+          console.error(error);
+          alert(error.message);
+        });
     } catch (error) {
       console.error(error);
 
@@ -34,9 +42,13 @@ export function Posts() {
 
   const handleDeleteClick = () => {
     try {
-      const posts = logic.getPosts();
-
-      setPosts(posts);
+      logic
+        .getPosts()
+        .then((posts) => setPosts(posts))
+        .catch((error) => {
+          console.error(error);
+          alert(error.message);
+        });
     } catch (error) {
       console.error(error);
 
@@ -46,15 +58,19 @@ export function Posts() {
 
   const handleModifyClick = () => {
     try {
-      const posts = logic.getPosts();
-
-      setPosts(posts);
+      logic
+        .getPosts()
+        .then((posts) => setPosts(posts))
+        .catch((error) => {
+          console.error(error);
+          alert(error.message);
+        });
     } catch (error) {
       console.error(error);
 
       alert(error.message);
     }
-  }
+  };
 
   console.debug("Posts -> render");
 
@@ -67,10 +83,8 @@ export function Posts() {
           onToggleLikeClick={handleToggleLikeClick}
           onDeleteClick={handleDeleteClick}
           onModifyClick={handleModifyClick}
-
         />
       ))}
     </section>
   );
 }
-

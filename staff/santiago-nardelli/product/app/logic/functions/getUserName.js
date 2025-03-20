@@ -1,14 +1,44 @@
-import { NotFoundError } from '../../errors/errors.js';
-import { data } from "../../data/data.js";
+import { data } from '../../data/data.js';
+import { errors } from "com";
 
-export const getUserName=()=> {
-    const users = data.users.getAll();
+const { SystemError } = errors;
 
-    const { userId } = data;
+export const getUserName = () => {
+  const { userId } = data;
 
-    const found = data.users.getById(userId);
+  return fetch("http://localhost:3000/users/self/name", {
+    method: "GET",
+    headers: {
+      Authorization: `Basic ${userId}`,
+    },
+  })
+    .catch((error) => {
+      throw new SystemError(error.message);
+    })
+    .then((response) => {
+      if (response.status === 200)
+        return response
+          .json()
+          .catch((error) => {
+            throw new SystemError(error.message);
+          })
+          .then((body) => {
+            const { name } = body;
 
-    if (!found) throw new NotFoundError("user not found");
+            return name;
+          });
 
-    return found.name;
-  }
+      return response
+        .json()
+        .catch((error) => {
+          throw new SystemError(error.message);
+        })
+        .then((body) => {
+          const { error, message } = body;
+
+          const constructor = errors[error];
+
+          throw new constructor(message);
+        });
+    });
+};

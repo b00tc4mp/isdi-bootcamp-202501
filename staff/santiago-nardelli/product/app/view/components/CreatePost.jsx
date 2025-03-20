@@ -12,11 +12,18 @@ export function CreatePost({ onPostCreateSubmit, onCancelClick }) {
         title: { value: title },
       } = form;
       //llamo a mi logica de creacion de posts
-      logic.createPost(image, title);
+      logic.createPost(image, title)
+        .then(()=>{
+          form.reset()
+          onPostCreateSubmit()})
+        .catch((error)=>{ 
+          console.error(error)
+          alert(error.message)
+        })
       //limpio el formulario
-      form.reset();
+      //form.reset();
 
-      onPostCreateSubmit();
+      
     } catch (error) {
       console.error(error);
       alert(error.message);

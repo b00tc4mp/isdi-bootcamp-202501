@@ -1,4 +1,8 @@
-import {logic }from "../logic/logic.js";
+import { logic } from "../logic/logic.js";
+
+import { errors } from "com";
+
+const { SystemError, ValidateError } = errors;
 export function Register({ onRegisterSubmit, onLoginClick }) {
   /*Creo mifuncion que maneja el evento de submit del formulario de registro
   y evito que se ejecute el submit por defecto y refresh de la pagina
@@ -19,17 +23,31 @@ export function Register({ onRegisterSubmit, onLoginClick }) {
       } = form;
 
       // LLamo a mi funcion de la logica para registrar un usuario
-      logic.registerUser(name, email, password);
-
-      // Limpio el formulario
-      form.reset();
-      // Llamo a la funcion de submit del registro
-      onRegisterSubmit();
+      logic
+        .registerUser(name, email, password)
+        .then(() => {
+          form.reset();
+          onRegisterSubmit();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error instanceof SystemError) {
+            alert("⛔" + error.message);
+          } else alert("❌" + error.message);
+        });
     } catch (error) {
       console.error(error);
 
-      alert(error.message);
+      if (error instanceof ValidateError) {
+        alert("⛔" + error.message);
+      } else {
+        alert("❌" + error.message);
+      }
     }
+  };
+
+  const handleLoginClick = () => {
+    onLoginClick();
   };
   console.debug("Register -> render");
 
@@ -49,8 +67,10 @@ export function Register({ onRegisterSubmit, onLoginClick }) {
         />
         <button type="submit">Register</button>
       </form>
-      
-      <a className="landing-page__button" onClick={onLoginClick}>Login</a>
+
+      <a className="landing-page__button" onClick={handleLoginClick}>
+        Login
+      </a>
     </div>
   );
 }

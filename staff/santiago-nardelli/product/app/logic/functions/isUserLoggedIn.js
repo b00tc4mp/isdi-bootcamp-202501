@@ -2,6 +2,4 @@
 
  import { data } from "../../data/data.js";
  
- export const isUserLoggedIn=()=> {
-    return !!data.userId;
-  }
+ export const isUserLoggedIn = () => !!data.userId;

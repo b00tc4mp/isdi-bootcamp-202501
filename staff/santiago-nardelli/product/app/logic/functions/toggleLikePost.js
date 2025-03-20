@@ -1,41 +1,39 @@
-import { validate } from "../validate.js";
 import { data } from "../../data/data.js";
 
+import { errors, validate } from "com";
+
+const { SystemError } = errors;
 export const toggleLikePost = (postId) => {
   validate.id(postId, "postId");
-  // me traigo el user id de la data
+  // me traigo el user id de la data, que viene del session storage
   const { userId } = data;
 
-  // me traigo los posts de la data para trabajar sobre ellos
-  let foundPost = data.posts.findOne((post) => post.id === postId);
+  return fetch(`http://localhost:3000/posts/${postId}/likes`, {
+    method: "PATCH",
+    headers: {
+      // le paso el user id en el header
+      Authorization: `Basic ${userId}`,
+      //aca no usoo el content type porque no estoy enviando nada en el body
+    },
+  })
+  .catch(error=>{
+    throw new SystemError("Error al dar like al post", error.message)
+  })
+  .then(response => {
+    if(response.status === 204) return
+    //Duda aqui de por que poner ese return y despues el de abajo 
+    return response.json()
+    .catch(error=>{
+      throw new SystemError("Error al dar like al post", error.message)
+    })
+    //Aca es donde se me mezcla los conceptos de que hacer con el body
+    .then(body=>{
+      const {error, message} = body
 
-  // si no encuentra el post tira un error
-  if (!foundPost) throw new NotFoundError("post not found");
+      const constructor = error[error]
 
-  // declaro una variable booleana para saber si el user ya le dio like al post y la inicializo en false
-  let userIdFound = false;
-  //recorro el array de likes del post
-  for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-    const id = foundPost.likes[i];
+      throw new constructor(message)
 
-    if (id === userId) userIdFound = true;
-  }
-  // Si el usuario no ha dado like, se añade su id al array de likes
-  if (!userIdFound) foundPost.likes[foundPost.likes.length] = userId;
-  else {
-    // Si el usuario ya ha dado like, se elimina su id del array de likes
-    //Si userIdFound es true, se crea un nuevo array likes y se recorre el array de likes del post. Se añaden todos los id al nuevo array excepto el userId del usuario actual. Luego, se actualiza el array de likes del post con el nuevo array likes.
-    const likes = [];
-
-    for (let i = 0; i < foundPost.likes.length; i++) {
-      const id = foundPost.likes[i];
-
-      if (id !== userId) likes[likes.length] = id;
-    }
-
-    foundPost.likes = likes;
-  }
-  // Actualizo el post en la data
-
-  data.posts.updateOne(foundPost);
+    })
+  })
 };

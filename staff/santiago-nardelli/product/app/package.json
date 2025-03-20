@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "type":"module",  
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite"
@@ -15,6 +15,7 @@
     "vite": "^6.2.1"
   },
   "dependencies": {
+    "com": "file:../com",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }

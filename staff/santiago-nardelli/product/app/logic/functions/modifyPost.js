@@ -1,33 +1,40 @@
-import { validate } from "../validate.js";
+import { errors, validate } from "com";
+const { SystemError } = errors;
 import { data } from "../../data/data.js";
-export const modifyPost = (postId, image, title) => {
-  // Validar el ID del post
-  // this.validate.id(postId, "postId");
 
-  // Validar la imagen y el título
-  validate.text(image, "image");
-  validate.maxLength(image, 1000, "image");
-  validate.text(title, "title");
-  validate.maxLength(title, 500, "title");
+export const modifyPost = (postId, title) => {
+  // Validar el ID del post
+  validate.id(postId, "postId");
 
   // Obtener el ID del usuario actual
   const { userId } = data;
 
-  // Buscar el post en la data
-  const foundPost = data.posts.findOne((post) => post.id === postId);
+  // Realizar la petición
+  return fetch(`http://localhost:3000/posts/${postId}/title`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Basic ${userId}`,
+      "Content-Type": "application/json ",
+    },
+    body: JSON.stringify({ title }),
+  })
+    .catch((error) => {
+      throw new SystemError(error.message);
+    })
+    .then((response) => {
+      if (response.status === 204) return;
 
-  // Si no se encuentra el post, lanzar un error
-  if (!foundPost) throw new NotFoundError("post not found");
+      return response
+        .json()
+        .catch((error) => {
+          throw new SystemError(error.message);
+        })
+        .then((body) => {
+          const { error, message } = body;
 
-  // Si el autor del post no es el usuario actual, lanzar un error
-  if (foundPost.author !== userId)
-    throw new OwnershipError("user is not author of post");
+          const constructor = errors[error];
 
-  // Actualizar el post con los nuevos datos
-  foundPost.image = image;
-  foundPost.title = title;
-  foundPost.modifiedAt = new Date();
-
-  // Actualizar el post en la data
-  data.posts.updateOne(foundPost);
+          throw new constructor(message);
+        });
+    });
 };

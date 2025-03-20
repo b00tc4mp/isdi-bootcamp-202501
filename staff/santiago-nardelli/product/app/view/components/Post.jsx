@@ -1,16 +1,26 @@
 import { useState } from "react";
-import {logic} from "../../logic/logic.js";
+import { logic } from "../../logic/logic.js";
 
-export function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) {
+export function Post({
+  post,
+  onToggleLikeClick,
+  onDeleteClick,
+  onModifyClick,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(post.title);
-  const [newImage, setNewImage] = useState(post.image);
 
   const handleToggleLikeClick = () => {
     try {
-      logic.toggleLikePost(post.id);
-
-      onToggleLikeClick();
+      logic
+        .toggleLikePost(post.id)
+        .then(() => {
+          onToggleLikeClick();
+        })
+        .catch((error) => {
+          console.error(error);
+          alert(error.message);
+        });
     } catch (error) {
       console.error(error);
 
@@ -21,9 +31,15 @@ export function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) 
   const handleDeleteClick = () => {
     if (confirm("Delete post?"))
       try {
-        logic.deletePost(post.id);
-
-        onDeleteClick();
+        logic
+          .deletePost(post.id)
+          .then(() => {
+            onDeleteClick();
+          })
+          .catch((error) => {
+            console.error(error);
+            alert(error.message);
+          });
       } catch (error) {
         console.error(error);
 
@@ -35,11 +51,24 @@ export function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) 
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = (event) => {
+    event.preventDefault();
+    // const { target: form } = event;
+    // const {
+    //   title: { value: newTitle },
+    // } = form;
     try {
-      logic.modifyPost(post.id, newImage, newTitle);
-      setIsEditing(false);
-      onModifyClick();
+      logic.modifyPost(post.id, newTitle)
+        .then(()=>{
+          onModifyClick()
+        
+          setIsEditing(false);
+        })
+        .catch((error) => {
+          console.error(error); 
+          alert(error.message);
+        });
+      
     } catch (error) {
       console.error(error);
 
@@ -50,7 +79,6 @@ export function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) 
   const handleCancelClick = () => {
     try {
       setIsEditing(false);
-      setNewImage(post.image);
       setNewTitle(post.title);
     } catch (error) {
       console.error(error);
@@ -65,14 +93,10 @@ export function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) 
       <h3 className="post-author">{post.author.name}</h3>
       {isEditing ? (
         <>
+          <img src={post.image} alt={post.title} className="post-image" />
           <input
             type="text"
-            value={newImage}
-            onChange={(e) => setNewImage(e.target.value)}
-            className="post-image-input"
-          />
-          <input
-            type="text"
+            name = "title"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             className="post-title-input"
@@ -129,8 +153,6 @@ export function Post({ post, onToggleLikeClick, onDeleteClick, onModifyClick }) 
     </article>
   );
 }
-
-
 
 //==== DESCRIPTION OF MY CODE ====
 

@@ -13,9 +13,17 @@ export function Home({ onLogoutClick }) {
     console.debug("Home -> useEffect");
 
     try {
-      const name = logic.getUserName();
+      logic.getUserName()
+        .then((name) => {
+          setUserName(name);
+        })
+        .catch((error) => {
+          console.error(error);
+          alert(error.message);
+        });
 
-      setUserName(name);
+
+     
     } catch (error) {
       console.error(error);
 

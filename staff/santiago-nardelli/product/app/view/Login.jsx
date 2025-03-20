@@ -11,15 +11,24 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
         password: { value: password },
       } = form;
 
-      logic.loginUser(email, password);
+      logic.loginUser(email, password)
+        .then(()=>{
+          form.reset()
+          onLoginSubmit()})
+        .catch((error)=>{
+          console.error(error)
+          alert(error.message)
+        })
 
-      form.reset();
-
-      onLoginSubmit();
+     
     } catch (error) {
       console.error(error);
       alert(error.message);
     }
+  };
+
+  const handleRegisterClick = () => {
+    onRegisterClick();
   };
 
   console.debug("Login -> render");
@@ -34,7 +43,7 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
         <input type="password" name="password" placeholder="Password" />
         <button type="submit">Login</button>
       </form>
-      <a className='landing-page__button' onClick={onRegisterClick}>Register</a>
+      <a className='landing-page__button' onClick={handleRegisterClick}>Register</a>
     </div>
   );
 }
