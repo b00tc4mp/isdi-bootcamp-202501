@@ -239,4 +239,15 @@ test> db.posts.find({ author: ObjectId('67dab8b24004605bfaa729a3') })
   }
 ]
 test> db.posts.find({ author: ObjectId('67dab8514004605bfaa729a1') })
+test> db.users.createIndex({ email: 1 }, { unique: true })
+email_1
+test> db.users.createIndex({ username: 1 }, { unique: true })
+username_1
+test> db.users.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { email: 1 }, name: 'email_1', unique: true },
+  { v: 2, key: { username: 1 }, name: 'username_1', unique: true }
+]
+test> 
 ```
