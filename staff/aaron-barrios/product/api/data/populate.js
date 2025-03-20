@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from 'mongodb'
+import { MongoClient, ObjectId} from 'mongodb'
 
 //instancia del cliente de mongo que como parametros pide una url y te proporciona métodos para acceder a la base de datos, desconectarnos, etc. 
 const client = new MongoClient('mongodb://localhost:27017')
@@ -17,10 +17,14 @@ client.connect() // => retorna una promesa
         // return users.findOne({ _id: new ObjectId('67dad747c4a65ccf6b1b104c') })
 
         //should return user collection
-        // return users.find().toArray() // =>needs to be parsed cause it returns mongosh documents 
+        //=> if thrown in mongosh, syntax is: db.users.find() 
+        // return users.find().toArray() // =>needs to be parsed cause it returns mongosh documents
+
 
         //should return post collection
-        return posts.find().toArray() // =>needs to be parsed cause it returns mongosh documents 
+        //=> if thrown in mongosh, syntax is: db.posts.find()
+        // return posts.find().toArray() //=>needs to be parsed cause it returns mongosh documents
+
 
         //should return Masha userId
         // return users.insertOne({ name: 'Masha', email: 'ma@sha.com', username: 'mashinsky', password: 'mamama' })
@@ -29,7 +33,7 @@ client.connect() // => retorna una promesa
         // return users.insertOne({ name: 'Superman', email: 'super@man.com', username: 'supeeeeer', password: 'sususu' })
 
         //should return { acknowledged: true, deletedCount: 1 }
-        // return users.deleteOne({ _id: new ObjectId('67dad9ef09c0ef247da94d9a') })
+        return users.deleteOne({ _id: new ObjectId('67dc238d988f9357b0f69735') })
 
         //should return postId
         // return posts.insertOne({
@@ -47,6 +51,12 @@ client.connect() // => retorna una promesa
 
         //should return true && remove Like
         // return posts.updateOne({ _id: new ObjectId('67dadf57628cf6f9c27846da') }, { $pull: { likes: { _id: new ObjectId('67dab80c3e909e877bb71236') } } })
+
+        //return true (WIP)
+        // db.posts.updateMany(
+        //     { userId: { $exists: true } }, // Encuentra documentos con la propiedad "userId"
+        //     { $rename: { userId: "author" } } // Renombra "userId" a "author"
+        // )
     })
     .then(result => {
         console.log(result)

@@ -1,9 +1,19 @@
+import {data} from '../data/index.js'
 import {authenticateUser} from './authenticateUser.js'
 
-try{
-    const user = authenticateUser('pe', 'pepepe')
+console.info('TEST AUTHENTICATE USER')
 
-    console.log(`Authenticated user: ${user}`)
-}catch(error){
-    console.error(error)
-}
+data.connect('mongodb://localhost:27017', 'test')
+.then(() => {
+    try{
+        let userId
+
+        return authenticateUser('john', 'jojojo')
+            .then(id => userId = id)
+            .finally(() => console.assert(typeof userId === 'string', 'userId must be a string'))
+    }catch(error){
+        console.error(error)
+    }
+})
+.catch(error => console.error(error))
+.finally(() => data.disconnect())

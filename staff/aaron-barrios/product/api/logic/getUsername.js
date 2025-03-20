@@ -1,12 +1,17 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError } = errors
+const {ObjectId} = data
+const { SystemError, NotFoundError } = errors
 
 export const getUsername = userId => {
-    const user = data.users.getById(userId)
+    validate.id(userId, 'userId')
 
-    if (!user) throw new NotFoundError('user not found')
+    return data.users.findOne({_id: new ObjectId(userId)})
+        .catch(error => {throw new SystemError(error.message)}) //=> steps into when mongo fails (db fell off, etc.)
+        .then(user => {
+            if (!user) throw new NotFoundError('user not found')
 
-    return user.name
+            return user.name
+        })
 }
