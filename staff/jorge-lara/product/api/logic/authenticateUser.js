@@ -1,21 +1,24 @@
 import { data } from '../data/index.js';
 import { errors, validate } from 'com';
 
-const { NotFoundError, CredentialsError } = errors;
+const { SystemError, NotFoundError, CredentialsError } = errors;
 
 export const authenticateUser = (username, password) => {
     validate.username(username, 'username');
     validate.password(password, 'password');
 
-    const found = data.users.findOne(user => user.username === username);
+    return data.users.findOne({ username })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
 
-    if (!found) {
-        throw new NotFoundError('user not found');
-    }
+            if (!user) {
+                throw new NotFoundError('user not found');
+            }
 
-    if (found.password !== password) {
-        throw new CredentialsError('wrong credentials');
-    }
+            if (user.password !== password) {
+                throw new CredentialsError('wrong credentials');
+            }
 
-    return found.id;
+            return user._id.toString();
+        })
 }

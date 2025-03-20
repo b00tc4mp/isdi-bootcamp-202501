@@ -1,7 +1,16 @@
+import { data } from '../data/index.js';
 import { registerUser } from './registerUser.js';
 
-try {
-    registerUser('admin2', 'admin2@gmail.com', 'admin2', '123123123')
-} catch (error) {
-    console.error(error)
-}
+console.info('TEST registerUsers')
+
+data.connect('mongodb://localhost:27017', 'test')
+    .then(() => {
+        try {
+            return registerUser('John', 'john@doe.com', 'john doe', '123123123')
+                .then(result => console.assert(result === undefined, 'result is undefined'))
+        } catch (error) {
+            console.error(error);
+        }
+    })
+    .catch(console.error(error))
+    .finally(() => data.disconnect())
