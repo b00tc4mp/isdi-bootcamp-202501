@@ -1,6 +1,7 @@
-import { NotFoundError } from '../errors.js'
-
 import { data } from '../data/index.js'
+
+import { errors } from 'com'
+const { NotFoundError } = errors
 
 export const savePost = (postId) => {
     const { users, userId } = data
