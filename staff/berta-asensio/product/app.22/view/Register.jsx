@@ -1,5 +1,9 @@
 import { logic } from '../logic/index'
 
+import { errors } from 'com'
+
+const { SystemError, ValidationError } = errors
+
 export function Register({onReturnClick, onUserRegistered}) {
     const handleRegisterSubmit = event => {
         event.preventDefault()
@@ -22,13 +26,20 @@ export function Register({onReturnClick, onUserRegistered}) {
                 })
                 .catch(error => {
                     console.error(error)
-
-                    alert(error.message)
+                    //si el error que viene de la parte sincrona es un sistem error
+                    if(error instanceof SystemError) 
+                        alert('ERROR GRAVE: ' + error.message)
+                    //si no mostramos alerta normal
+                    else
+                        alert('Warning ⚠' + error.message)
                 })
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            if(error instanceof ValidationError)
+                alert('❕' + error.message)
+            else
+            alert('Warning ⚠' + error.message)
         }
     }
 

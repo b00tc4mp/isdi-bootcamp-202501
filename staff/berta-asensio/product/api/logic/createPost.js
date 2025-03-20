@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError } from '../errors.js'
+const { NotFoundError } = errors
 
 export const createPost = (userId, image, text) => { //pasamos userId de la app a la api por aqui, por lo que hay que validarlo:
         validate.id(userId, 'userId')

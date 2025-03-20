@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "directories": {
-  "doc": "doc"
+    "doc": "doc"
   },
   "scripts": {
     "hola": "echo Hola, Mundo!",
@@ -20,6 +20,7 @@
     "vite": "^6.2.1"
   },
   "dependencies": {
+    "com": "file:../com",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }

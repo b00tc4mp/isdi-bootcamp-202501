@@ -1,11 +1,13 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
 
 export const createPost = (image, text) => {
         validate.url(image, 'image')
-        validate.maxLength(1000)
+        validate.maxLength(image, 1000, 'image')
         validate.text(text, 'text')
-        validate.maxLength(500)
+        validate.maxLength(text, 500, 'text')
 
         const { userId } = data
 
@@ -18,19 +20,20 @@ export const createPost = (image, text) => {
             body: JSON.stringify({ image, text })
         })
 
-            .catch(error => { throw new Error(error.message) })
-            .then(response => {
-                console.log(response.status)
-
+            .catch(error => { throw new SystemError(error.message) })            
+            .then(response => {//después de este then, si todo va bien, va al siguiente then que está en createpost.jsx
+               
                 if(response.status === 201)
-                    return
+                    return //este return es el que nos lleva al then de createpost.jsx
                 
                 return response.json()
-                    .catch(error => { throw new Error(error.message) })
+                    .catch(error => { throw new SystemError(error.message) })                    
                     .then(body => {
                         const { error, message } = body
 
-                        throw new Error(message)
+                        const constructor = errors[error]
+
+                        throw new constructor(message)
                     })
             })
 }

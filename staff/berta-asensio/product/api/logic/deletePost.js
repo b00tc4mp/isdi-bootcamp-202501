@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError, OwnershipError } from '../errors.js'
+const { NotFoundError, OwnershipError } = errors
 
 //pasamos userId por la función porque la traemos de la app, ya no la llamamos desde data y la validamos
 export const deletePost = (userId, postId) =>  {

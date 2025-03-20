@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
-import { NotFoundError } from '../errors.js'
+import { errors, validate } from 'com'
+
+const { NotFoundError } = errors
 
 //Esta función trae los posts
 export const getPosts = (userId) => { //ahora le pasamos el userId para que lo coja de la app

@@ -1,9 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-
-//import { NotFoundError } from '../errors.js'
-
+const { SystemError } = errors
 
 export const toggleLikePost = (postId) => {
     validate.id(postId, 'postId')
@@ -16,7 +14,7 @@ export const toggleLikePost = (postId) => {
             Authorization: `Basic ${userId}`
         }
     })
-        .catch(error => { throw new Error (error.message) }) //si falla conexión o servidor
+        .catch(error => { throw new SystemError(error.message) }) //si falla conexión o servidor
         .then(response => { //happy path
             console.log(response.status) //se imprime en consola el codigo de estado de la respuesta
 
@@ -24,11 +22,13 @@ export const toggleLikePost = (postId) => {
                 return  //respuesta super happy path, no devolvemos nada. Todo ok.
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })                
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+ 
+                    throw new constructor(message)
                 })
         })  
 }

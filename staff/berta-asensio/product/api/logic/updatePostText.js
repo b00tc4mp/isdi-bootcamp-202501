@@ -1,9 +1,8 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { NotFoundError, OwnershipError } from '../errors.js'
-//Esta función permite cambiar el texto del post.
-//Le pasamos el userId y lo validamos.
+const { NotFoundError, OwnershipError } = errors
+
 export const updatePostText = (userId, postId, text) => {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')

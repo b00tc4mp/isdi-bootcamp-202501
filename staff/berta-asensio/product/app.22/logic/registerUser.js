@@ -1,6 +1,6 @@
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-//import { DuplicityError } from '../errors.js'
+const { SystemError } = errors
 
 export const registerUser = (name, username, password, email) => {
     validate.name(name, 'name')
@@ -16,19 +16,20 @@ export const registerUser = (name, username, password, email) => {
         body: JSON.stringify({ name, username, password, email })
     })
 
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) }) //Si falla conexión
         .then(response => {
-            console.log(response.status)
-
+            
             if(response.status === 201)
                 return
             
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) }) //si falla json de respuesta
                 .then(body => {
                     const { error, message } = body
-
-                    throw new Error(message)
+                    //extraigo la constructora correcta
+                    const constructor = errors[error]
+                    //y aqui uso la constructora
+                    throw new constructor(message)
                 })
         })
 }
