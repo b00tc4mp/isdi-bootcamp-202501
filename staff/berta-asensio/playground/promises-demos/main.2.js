@@ -7,7 +7,7 @@ fetch('https://api.jikan.moe/v4/anime?q=legend') //esto me trae una respuesta js
         const { status } = response
 
         if (status === 200) 
-            return response.json() //si la respuesta es Ok(200), que me devuelva el objeto recogido en formato json
+            return response.json() //si la respuesta es Ok(200), que me devuelva el objeto recogido en formato json. EL METODO RESPONSE TAMBIEN ES UNA PROMESA
                 .catch(error => { throw new Error ('failed to parse json response') }) //por si json no es un json y da error, lo capturamos
         
         throw new Error('status not 200 but ' + status) // si respuesta no es 200, me devuelve error con el status que es
