@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
-import { validate } from './validate.js' //debemos importar validate ya que ahora pasamos userId por la función para recibirlo de la app y hay que validarla.
-import { NotFoundError } from '../errors.js'
+import { errors, validate } from 'com'
+
+const { NotFoundError } = errors
 
 /*
 Debemos modificarla respecto a la de la app ya que utilizamos información 

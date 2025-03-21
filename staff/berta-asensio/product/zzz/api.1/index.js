@@ -1,11 +1,10 @@
 import express from 'express'
-//const express = require('express')
 import cors from 'cors'
+import { errors } from 'com'
 
-//importamos logic
 import { logic } from './logic/index.js'
 
-import { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } from './errors.js'
+const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
 //montamos la api
 const api = express()
