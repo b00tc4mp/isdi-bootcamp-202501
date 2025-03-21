@@ -25,7 +25,9 @@ function ChangeUserInfo({ onHomeNavigation }) {
     logic
       .updateUser(updatedUser)
       .catch((error) => {
-        throw new Error(error.message);
+        console.error(error);
+
+        alert(error.message);
       })
       .then(() => {
         handleHomeNavigation();
