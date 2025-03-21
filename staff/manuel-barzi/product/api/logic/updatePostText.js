@@ -1,7 +1,8 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError, OwnershipError } = errors
+const { ObjectId } = data
+const { SystemError, NotFoundError, OwnershipError } = errors
 
 export const updatePostText = (userId, postId, text) => {
     validate.id(userId, 'userId')
@@ -9,18 +10,28 @@ export const updatePostText = (userId, postId, text) => {
     validate.text(text, 'text')
     validate.maxLength(text, 400, 'text')
 
-    const user = data.users.getById(userId)
+    return data.users.findOne({ _id: new ObjectId(userId) })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
+            const postObjectId = new ObjectId(postId)
 
-    const post = data.posts.findOne(post => post.id === postId)
+            return data.posts.findOne({ _id: postObjectId })
+                .catch(error => { throw new SystemError(error.message) })
+                .then(post => {
+                    if (!post) throw new NotFoundError('post not found')
 
-    if (!post) throw new NotFoundError('post not found')
+                    if (post.author.toString() !== userId) throw new OwnershipError('user is not author of post')
 
-    if (post.author !== userId) throw new OwnershipError('user is not author of post')
-
-    post.text = text
-    post.modifiedAt = new Date
-
-    data.posts.updateOne(post => post.id === postId, post)
+                    return data.posts.updateOne({ _id: postObjectId }, {
+                        $set: {
+                            text,
+                            modifiedAt: new Date
+                        }
+                    })
+                        .catch(error => { throw new SystemError(error.message) })
+                })
+                .then(() => { })
+        })
 }
