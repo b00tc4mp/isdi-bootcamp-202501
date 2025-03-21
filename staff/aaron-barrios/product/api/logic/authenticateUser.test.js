@@ -6,11 +6,11 @@ console.info('TEST AUTHENTICATE USER')
 data.connect('mongodb://localhost:27017', 'test')
 .then(() => {
     try{
-        let userId
+        let id2
 
         return authenticateUser('john', 'jojojo')
-            .then(id => userId = id)
-            .finally(() => console.assert(typeof userId === 'string', 'userId must be a string'))
+            .then(id => id2 = id)
+            .finally(() => console.assert(typeof id2 === 'string', 'userId must be a string'))
     }catch(error){
         console.error(error)
     }

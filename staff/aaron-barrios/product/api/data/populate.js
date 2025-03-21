@@ -33,7 +33,7 @@ client.connect() // => retorna una promesa
         // return users.insertOne({ name: 'Superman', email: 'super@man.com', username: 'supeeeeer', password: 'sususu' })
 
         //should return { acknowledged: true, deletedCount: 1 }
-        return users.deleteOne({ _id: new ObjectId('67dc238d988f9357b0f69735') })
+        return users.deleteOne({ _id: new ObjectId('67dc2ee1504f4d2b6a1b0146') })
 
         //should return postId
         // return posts.insertOne({
@@ -41,7 +41,7 @@ client.connect() // => retorna una promesa
         // })
 
         //should return { acknowledged: true, deletedCount: 1 }
-        // return posts.deleteOne({ _id: new ObjectId('67dadb3ba9738d9b9ad96ff9') })
+        // return posts.deleteOne({ _id: new ObjectId('67dd8559d2491e40711d0ce8') })
 
         //should return true
         // return posts.updateOne({ _id: new ObjectId('67dadb3ba9738d9b9ad96ff9') }, { $set: { text: 'f meat hand pie' } })

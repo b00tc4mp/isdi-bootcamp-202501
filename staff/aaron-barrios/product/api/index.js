@@ -1,8 +1,8 @@
 import express, { json } from 'express'
 import cors from 'cors'
-import {errors} from 'com'
+import { errors } from 'com'
 
-import {data} from './data/index.js'
+import { data } from './data/index.js'
 import { logic } from './logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
@@ -73,14 +73,14 @@ data.connect('mongodb://localhost:27017', 'test')
                 const { username, password } = req.body
 
                 logic.authenticateUser(username, password)
-                    .then(id=> res.json({ id }))
+                    .then(id => res.json({ id }))
                     .catch(error => {
                         console.error(error)
 
                         let status = 500
                         let errorName = SystemError.name
 
-                         if (error instanceof CredentialsError) {
+                        if (error instanceof CredentialsError) {
                             status = 401
                             errorName = error.constructor.name
                         } else if (error instanceof NotFoundError) {
@@ -114,7 +114,7 @@ data.connect('mongodb://localhost:27017', 'test')
                 const userId = authorization.slice(6)
 
                 logic.getUsername(userId)
-                    .then (name => res.json({ name }))
+                    .then(name => res.json({ name }))
                     .catch(error => {
                         console.error(error)
 
@@ -151,9 +151,21 @@ data.connect('mongodb://localhost:27017', 'test')
 
                 const userId = authorization.slice(6)
 
-                const posts = logic.getPosts(userId)
+                logic.getPosts(userId)
+                    .then(posts => res.json(posts))
+                    .catch(error => {
+                        console.error(error)
 
-                res.json(posts)
+                        let status = 500
+                        let errorName = SystemError.name
+
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -162,9 +174,6 @@ data.connect('mongodb://localhost:27017', 'test')
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
                     errorName = error.constructor.name
                 }
 
@@ -183,8 +192,20 @@ data.connect('mongodb://localhost:27017', 'test')
                 const { image, text } = req.body
 
                 logic.createPost(userId, image, text)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        console.error(error)
 
-                res.status(201).send()
+                        let status = 500
+                        let errorName = SystemError.name
+
+                        if (error instanceof NotFoundError) {
+                            status = 409
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -193,9 +214,6 @@ data.connect('mongodb://localhost:27017', 'test')
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof DuplicityError) {
-                    status = 409
                     errorName = error.constructor.name
                 }
 
@@ -212,8 +230,23 @@ data.connect('mongodb://localhost:27017', 'test')
                 const userId = authorization.slice(6)
 
                 logic.deletePost(userId, postId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
 
-                res.status(204).send()
+                        let status = 500
+                        let errorName = SystemError.name
+
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        } else if (error instanceof OwnershipError) {
+                            status = 403
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -222,12 +255,6 @@ data.connect('mongodb://localhost:27017', 'test')
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof OwnershipError) {
-                    status = 403
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
                     errorName = error.constructor.name
                 }
 
@@ -244,8 +271,21 @@ data.connect('mongodb://localhost:27017', 'test')
                 const userId = authorization.slice(6)
 
                 logic.toggleLikePost(userId, postId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
 
-                res.status(204).send()
+                        let status = 500
+                        let errorName = SystemError.name
+
+
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -255,9 +295,6 @@ data.connect('mongodb://localhost:27017', 'test')
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
                     errorName = error.constructor.name
                 }
 
@@ -275,8 +312,23 @@ data.connect('mongodb://localhost:27017', 'test')
                 const userId = authorization.slice(6)
 
                 logic.updatePostText(userId, postId, text)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
 
-                res.status(204).send()
+                        let status = 500
+                        let errorName = SystemError.name
+
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        } else if (error instanceof OwnershipError) {
+                            status = 403
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -285,12 +337,6 @@ data.connect('mongodb://localhost:27017', 'test')
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
-                } else if (error instanceof OwnershipError) {
-                    status = 403
                     errorName = error.constructor.name
                 }
 

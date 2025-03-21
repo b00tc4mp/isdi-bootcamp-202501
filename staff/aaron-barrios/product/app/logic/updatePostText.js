@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { SystemError } = errors
+const { SystemError, NotFoundError } = errors
 
 export const updatePostText = (postId, text) => {
     validate.id(postId, 'postId')

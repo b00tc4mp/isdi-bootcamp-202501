@@ -6,8 +6,11 @@ console.info('TEST REGISTER_USER')
 data.connect('mongodb://localhost:27017', 'test')
     .then(() => {
         try{
+            let result2 = null
+
             return registerUser('John Doe', 'john@doe.com', 'john', 'jojojo')
-                .then(() => console.assert(result === undefined, 'result is undefined'))
+                .then(result => result2 = result)
+                .finally(() => console.assert(result2 === undefined, 'result is undefined'))
 
             // return Promise.all([
             //     registerUser('Pepito Grillo', 'pepito@grillo.com', 'pepitogrillo', '123123123'),
