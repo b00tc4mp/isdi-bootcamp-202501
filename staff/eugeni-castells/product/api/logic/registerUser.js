@@ -1,5 +1,6 @@
-import { errors, validate } from "../../com/index.js";
-import data from "../data/index.js";
+import { errors, validate } from "com";
+import { data } from "../data/index.js";
+import { SystemError } from "com/errors.js";
 const { DuplicityError } = errors;
 
 export const registerUser = function (userInfo) {
@@ -10,21 +11,27 @@ export const registerUser = function (userInfo) {
   validate.username(userInfo.username, "username");
   validate.password(userInfo.password, "password");
 
-  const userFound = data.users.findOne(
-    (user) =>
-      user.username === userInfo.username || user.email === userInfo.email
-  );
+  const { email, username } = userInfo;
+  return data.users
+    .findOne({ $or: [{ email }, { username }] })
+    .then((user) => {
+      if (user) throw new DuplicityError("user already exists");
 
-  if (userFound) throw new DuplicityError("user already exists");
+      const userToRegister = {
+        name: userInfo.name,
+        email: userInfo.email,
+        username: userInfo.username,
+        password: userInfo.password,
+        createdAt: new Date(),
+        modifiedAt: null,
+      };
 
-  const user = {
-    name: userInfo.name,
-    email: userInfo.email,
-    username: userInfo.username,
-    password: userInfo.password,
-    createdAt: new Date(),
-    modifiedAt: null,
-  };
+      return data.users.insertOne(userToRegister).catch((error) => {
+        if (error.code === 11000)
+          throw new DuplicityError("user already exists");
 
-  data.users.insertOne(user);
+        throw new SystemError(error.message);
+      });
+    })
+    .then(() => {});
 };

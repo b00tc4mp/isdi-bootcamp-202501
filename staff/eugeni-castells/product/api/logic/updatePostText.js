@@ -1,6 +1,9 @@
-import { errors, validate } from "../../com/index.js";
-import data from "../data/index.js";
-const { NotFoundError, OwnershipError } = errors;
+import { errors, validate } from "com";
+import { data } from "../data/index.js";
+
+const { ObjectId } = data;
+
+const { NotFoundError, OwnershipError, SystemError } = errors;
 
 export const updatePostText = (userId, postId, text) => {
   validate.id(userId, "post id");
@@ -8,16 +11,33 @@ export const updatePostText = (userId, postId, text) => {
   validate.text(text, "post text");
   validate.maxLength(text, 500, "text maxLength");
 
-  const post = data.posts.findOne((post) => post.id === postId);
+  const userObjectId = new ObjectId(userId);
 
-  if (!post) throw new NotFoundError("post not found");
+  return data.users
+    .findOne({ _id: userObjectId })
+    .catch((error) => {
+      throw new SystemError(error.message);
+    })
+    .then((user) => {
+      if (!user) throw new NotFoundError("user not found");
 
-  if (post.author !== userId)
-    throw new OwnershipError("user is not author of post");
+      const postObjectId = new ObjectId(postId);
 
-  post.text = text;
+      return data.posts.findOne({ _id: postObjectId }).then((post) => {
+        if (!post) throw new NotFoundError("post not found");
 
-  post.modifiedAt = new Date();
+        if (post.author.toString() !== userId)
+          throw new OwnershipError("user is not author of post");
 
-  data.posts.updateOne((post) => post.id === postId, post);
+        return data.posts
+          .updateOne(
+            { _id: postObjectId },
+            { $set: { text, modifiedAt: new Date() } }
+          )
+          .catch((error) => {
+            throw new SystemError(error.message);
+          });
+      });
+    })
+    .then(() => {});
 };

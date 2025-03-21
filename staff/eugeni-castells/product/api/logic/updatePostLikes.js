@@ -1,34 +1,47 @@
-import data from "../data/index.js";
-import { errors, validate } from "../../com/index.js";
-const { NotFoundError } = errors;
+import { data } from "../data/index.js";
+import { errors, validate } from "com";
+const { NotFoundError, SystemError } = errors;
+const { ObjectId } = data;
 
 export const updatePostLikes = (userId, postId) => {
   validate.id(userId, "user id");
+  validate.id(postId, "post id");
 
-  const user = data.users.getById(userId);
+  const userObjectId = new ObjectId(userId);
 
-  if (!user) throw new NotFoundError("user not found");
+  const postObjectId = new ObjectId(postId);
 
-  const postFound = data.posts.getById(postId);
+  return data.users
+    .findOne({ _id: userObjectId })
+    .catch((error) => {
+      throw new SystemError(error.message);
+    })
+    .then((user) => {
+      if (!user) throw new NotFoundError("user not found");
 
-  if (!postFound) throw new Error("Post not found");
+      return data.posts
+        .findOne({ _id: postObjectId })
+        .catch((error) => {
+          throw new SystemError(error.message);
+        })
+        .then((postFound) => {
+          if (!postFound) throw new NotFoundError("Post not found");
 
-  let userIdFound;
+          const { likes } = postFound;
 
-  for (let i = 0; i < postFound.likes.length; i++) {
-    if (userId === postFound.likes[i]) userIdFound = userId;
-  }
+          const index = likes.findIndex(
+            (userObjectId) => userObjectId.toString() === userId
+          );
 
-  if (!userIdFound) {
-    postFound.likes[postFound.likes.length] = userId;
-  } else {
-    let likes = [];
+          if (index > -1) likes.splice(index, 1);
+          else likes.push(userObjectId);
 
-    for (let i = 0; i < postFound.likes.length; i++) {
-      if (postFound.likes[i] !== userId)
-        likes[likes.length] = postFound.likes[i];
-    }
-    postFound.likes = likes;
-  }
-  data.posts.updateOne((post) => post.id === postId, postFound);
+          return data.posts
+            .updateOne({ _id: postObjectId }, { $set: { likes } })
+            .catch((error) => {
+              throw new SystemError(error.message);
+            })
+            .then(() => {});
+        });
+    });
 };

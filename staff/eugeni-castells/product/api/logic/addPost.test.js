@@ -1,11 +1,26 @@
 import { addPost } from "./addPost.js";
+import { data } from "../data/index.js";
 
-addPost("9fns3nqzvz.w", {
-  author: "7odunezhz0.9",
-  image: "https://i.gifer.com/MEkr.gif",
-  text: "spaguettini",
-  createdAt: "2025-03-08T11:15:05.913Z",
-  modifiedAt: "2025-03-08T11:15:26.102Z",
-  likes: ["4h3lrd6j0j.e"],
-  id: "301fg823zb.m",
-});
+console.info("TEST addPost");
+
+data
+  .connect("mongodb://localhost:27017", "test")
+  .then(() => {
+    try {
+      let result2 = null;
+
+      return addPost(
+        "67dc1e01a779a5da6cb71236",
+        "https://media.giphy.com/media/lg23waF4O25ot2cRIF/giphy.gif?cid=790b7611n2m3s8805uafk8prl2ny9o33hfdwx1r0p7mjcmwv&ep=v1_gifs_trending&rid=giphy.gif&ct=g",
+        "let's go"
+      )
+        .then((result) => (result2 = result))
+        .finally(() =>
+          console.assert(result2 === undefined, "result is undefined")
+        );
+    } catch (error) {
+      console.error(error);
+    }
+  })
+  .catch((error) => console.error(error))
+  .finally(() => data.disconnect());

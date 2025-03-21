@@ -1,4 +1,4 @@
-import data from "../data/index.js";
+import { data } from "../data/index.js";
 
 import { errors, validate } from "../../com/index.js";
 
