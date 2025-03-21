@@ -34,7 +34,7 @@ export const validate = {
     },
     id(id, explain) {
         this.text(id, explain)
-        if (id.length < 10 || id.length > 11)
+        if (id.length !== 24)
             throw new ValidationError(`invalid ${explain} length`)
     }
 }
