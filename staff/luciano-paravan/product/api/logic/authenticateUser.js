@@ -1,17 +1,20 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { CredentialsError, NotFoundError } = errors
+const { SystemError, CredentialsError, NotFoundError } = errors
 
 export const authenticateUser = (username, password) => {
     validate.username(username, 'username')
     validate.password(password, 'password')
 
-    const found = data.users.findOne(user => user.username === username)
+    return data.users.findOne({ username }) //En Mongo para buscar se hace de esta forma
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => { //Mongo cuando no encuentra nada te devuelve un null
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!found) throw new NotFoundError('user not found')
+            if (user.password !== password) throw new CredentialsError('wrong credentials')
 
-    if (found.password !== password) throw new CredentialsError('wrong credentials')
-
-    return found.id
+            return user._id.toString() //Con el toString() se devuelve solo el string que esta entre ''. Nadie en la capa superior de api tiene que saber que usamos Mongo debajo.
+            // Este return va a parar al siguiente .then del test
+        })
 }
