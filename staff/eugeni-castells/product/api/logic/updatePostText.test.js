@@ -2,6 +2,7 @@ import { data } from "../data/index.js";
 
 import { updatePostText } from "./updatePostText.js";
 
+console.info("TEST updatePostText");
 data
   .connect("mongodb://localhost:27017", "test")
   .then(() => {

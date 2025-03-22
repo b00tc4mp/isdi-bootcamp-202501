@@ -1,1 +1,1 @@
-curl -X DELETE htpp://localhost:8080/posts/2wy30f5dt0.y -v -H 'Authorization: Basic 9fns3nqzvz.w'
+curl -X DELETE http://localhost:8080/posts/67dd6aa2ca6e0cc11b72c90b -v -H 'Authorization: Basic 67dc1e01a779a5da6cb71236'

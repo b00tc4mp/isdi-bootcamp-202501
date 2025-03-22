@@ -1,12 +1,27 @@
 import { updateUser } from "./updateUser.js";
+import { data } from "../data/index.js";
 
-updateUser("7odunezhz0.9", {
-  name: "lacho",
-  email: "lucho@trucho.com",
-  username: "lucho",
-  password: "123123123",
-  createdAt: "2025-03-07T15:58:36.540Z",
-  modifiedAt: null,
-  id: "7odunezhz0.9",
-});
+console.info("TEST updateUserInfo");
+
+data
+  .connect("mongodb://localhost:27017", "test")
+  .then(() => {
+    try {
+      let result2;
+
+      return updateUser("67dc2c792a5c183cf9c079df", {
+        name: "lucchio",
+        username: "luciano",
+      })
+        .then((result) => (result2 = result))
+        .finally(() =>
+          console.assert(result2 === undefined, "result is undefined")
+        );
+    } catch (error) {
+      console.error(error);
+    }
+  })
+  .catch((error) => console.error(error))
+  .finally(() => data.disconnect());
+
 //

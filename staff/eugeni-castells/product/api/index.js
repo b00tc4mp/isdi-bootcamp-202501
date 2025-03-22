@@ -1,3 +1,4 @@
+import { data } from "./data/index.js";
 import express, { json } from "express";
 import cors from "cors";
 import { logic } from "./logic/index.js";
@@ -11,288 +12,428 @@ const {
   ValidationError,
   NotFoundError,
 } = errors;
-const api = express();
 
-api.use(cors());
+data
+  .connect("mongodb://localhost:27017", "test")
+  .catch((error) => console.error(error))
+  .then(() => {
+    const api = express();
 
-const jsonBodyParser = json();
+    api.use(cors());
 
-api.get("/posts", jsonBodyParser, (req, res) => {
-  try {
-    const { authorization } = req.headers;
+    const jsonBodyParser = json();
 
-    const userId = authorization.slice(-12);
+    api.get("/posts", jsonBodyParser, (req, res) => {
+      try {
+        const { authorization } = req.headers;
 
-    const posts = logic.getPosts(userId);
+        const userId = authorization.slice(6);
 
-    res.status(200).json(posts);
-  } catch (error) {
-    console.error(error);
+        return logic
+          .getPosts(userId)
 
-    let status = 500;
-    let errorName = "System Error";
+          .then((posts) => {
+            res.status(200).json(posts);
+          })
+          .catch((error) => {
+            console.error(error);
 
-    if (error instanceof NotFoundError) {
-      status = 404;
-      errorName = NotFoundError.name;
-    }
+            let status = 500;
+            let errorName = "System Error";
 
-    res.status(status).json({ error: errorName, message: error.message });
-  }
-});
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = NotFoundError.name;
+            }
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          });
+      } catch (error) {
+        console.error(error);
 
-api.post("/posts", jsonBodyParser, (req, res) => {
-  try {
-    const { authorization } = req.headers;
+        let status = 500;
+        let errorName = "System Error";
 
-    const userId = authorization.slice(-12);
+        if (error instanceof ValidationError) {
+          status = 400;
+          errorName = ValidationError.name;
+        }
 
-    const { image, text } = req.body;
-
-    logic.addPost(userId, { image, text });
-
-    res.status(201).send();
-  } catch (error) {
-    let status = 500;
-    let errorName = SystemError.name;
-
-    if (error instanceof ValidationError) {
-      status = 400;
-
-      errorName = ValidationError.name;
-    } else if (error instanceof NotFoundError) {
-      status = 404;
-
-      errorName = NotFoundError.name;
-    }
-
-    res.status(status).send({ error: errorName, message: error.message });
-  }
-});
-
-api.delete("/posts/:postId", (req, res) => {
-  try {
-    const { authorization } = req.headers;
-
-    const userId = authorization.slice(-12);
-
-    const { postId } = req.params;
-
-    logic.deletePost(userId, postId);
-
-    res.status(202).send();
-  } catch (error) {
-    let status = 500;
-
-    let errorName = SystemError.name;
-
-    if (error instanceof ValidationError) {
-      status = 400;
-
-      errorName = ValidationError.name;
-    } else if (error instanceof NotFoundError) {
-      status = 404;
-      errorName = NotFoundError.name;
-    } else if (error instanceof OwnershipError) {
-      status = 403;
-
-      errorName = OwnershipError.name;
-    }
-
-    res.status(status).res.json({ error: errorName, message: error.message });
-  }
-});
-
-api.post("/users/auth", jsonBodyParser, (req, res) => {
-  try {
-    const { username, password } = req.body;
-
-    const id = logic.authenticateUser(username, password);
-
-    res.status(200).json({ id });
-  } catch (error) {
-    console.error(error);
-
-    let status = 500;
-    let errorName = SystemError.name;
-
-    if (error instanceof NotFoundError) {
-      status = 404;
-
-      errorName = NotFoundError.name;
-    } else if (error instanceof CredentialsError) {
-      status = 401;
-
-      errorName = CredentialsError.name;
-    } else if (error instanceof ValidationError) {
-      status = 400;
-
-      errorName = ValidationError.name;
-    }
-
-    res.status(status).json({ error: errorName, message: error.message });
-  }
-});
-
-api.post("/users", jsonBodyParser, (req, res) => {
-  try {
-    const { name, email, username, password } = req.body;
-
-    logic.registerUser({
-      name: name,
-      email: email,
-      username: username,
-      password: password,
+        res.status(status).json({ error: errorName, message: error.message });
+      }
     });
 
-    res.sendStatus(201);
-  } catch (error) {
-    console.error(error);
+    api.post("/posts", jsonBodyParser, (req, res) => {
+      try {
+        const { authorization } = req.headers;
 
-    let status = 500;
-    let errorName = SystemError.name;
+        const userId = authorization.slice(6);
 
-    if (error instanceof ValidationError) {
-      status = 400;
-      errorName = ValidationError.name;
-    } else if (error instanceof DuplicityError) {
-      status = 409;
-      errorName = DuplicityError.name;
-    }
-    res.status(status).json({ error: errorName, message: error.message });
-  }
-});
+        const { image, text } = req.body;
 
-api.patch("/users", jsonBodyParser, (req, res) => {
-  try {
-    const { authorization } = req.headers;
+        return logic
+          .addPost(userId, image, text)
+          .then(() => {
+            res.status(201).send();
+          })
+          .catch((error) => {
+            let status = 500;
+            let errorName = SystemError.name;
 
-    const userId = authorization.slice(-12);
+            if (error instanceof NotFoundError) {
+              status = 404;
 
-    const { name, username, email, password } = req.body;
+              errorName = NotFoundError.name;
+            }
 
-    logic.updateUser(userId, { name, email, username, password });
+            res
+              .status(status)
+              .send({ error: errorName, message: error.message });
+          });
+      } catch (error) {
+        let status = 500;
+        let errorName = SystemError.name;
 
-    res.status(204).send();
-  } catch (error) {
-    console.error(error);
+        if (error instanceof ValidationError) {
+          status = 400;
 
-    let status = 500;
+          errorName = ValidationError.name;
+        }
 
-    let errorName = SystemError.name;
+        res.status(status).send({ error: errorName, message: error.message });
+      }
+    });
 
-    if (error instanceof ValidationError) {
-      status = 400;
+    api.delete("/posts/:postId", (req, res) => {
+      try {
+        const { authorization } = req.headers;
 
-      errorName = ValidationError.name;
-    } else if (error instanceof OwnershipError) {
-      status = 404;
+        const userId = authorization.slice(6);
 
-      errorName = OwnershipError.name;
-    } else if (error instanceof NotFoundError) {
-      status = 404;
+        const { postId } = req.params;
 
-      errorName = NotFoundError.name;
-    }
-    res.status(status).json({ error: errorName, message: error.message });
-  }
-});
+        return logic
+          .deletePost(userId, postId)
+          .catch((error) => {
+            let status = 500;
 
-api.get("/users/self", (req, res) => {
-  try {
-    const { authorization } = req.headers;
+            let errorName = SystemError.name;
 
-    const userId = authorization.slice(-12);
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = NotFoundError.name;
+            } else if (error instanceof OwnershipError) {
+              status = 403;
 
-    const name = logic.getOnlineUserInfo(userId);
+              errorName = OwnershipError.name;
+            }
 
-    res.status(200).json(name);
-  } catch (error) {
-    console.error(error);
+            res
+              .status(status)
+              .res.json({ error: errorName, message: error.message });
+          })
+          .then(() => {
+            res.status(202).send();
+          });
+      } catch (error) {
+        let status = 500;
 
-    let status = 500;
-    let errorName = SystemError.name;
+        let errorName = SystemError.name;
 
-    if (error instanceof ValidationError) {
-      status = 400;
+        if (error instanceof ValidationError) {
+          status = 400;
 
-      errorName = ValidationError.name;
-    } else if (error instanceof OwnershipError) {
-      status = 403;
+          errorName = ValidationError.name;
+        } else if (error instanceof NotFoundError) {
+          status = 404;
+          errorName = NotFoundError.name;
+        } else if (error instanceof OwnershipError) {
+          status = 403;
 
-      errorName = OwnershipError.name;
-    } else if (error instanceof NotFoundError) {
-      status = 404;
+          errorName = OwnershipError.name;
+        }
 
-      errorName = NotFoundError.name;
-    }
+        res
+          .status(status)
+          .res.json({ error: errorName, message: error.message });
+      }
+    });
 
-    res.status(status).json({ error: errorName, message: error.message });
-  }
-});
+    api.post("/users/auth", jsonBodyParser, (req, res) => {
+      try {
+        const { username, password } = req.body;
 
-api.patch("/posts/text/:id", jsonBodyParser, (req, res) => {
-  try {
-    const { authorization } = req.headers;
+        return logic
+          .authenticateUser(username, password)
+          .catch((error) => {
+            console.error(error);
 
-    const userId = authorization.slice(-12);
+            let status = 500;
+            let errorName = SystemError.name;
 
-    const {
-      params: { id },
-      body: { text },
-    } = req;
+            if (error instanceof NotFoundError) {
+              status = 404;
 
-    logic.updatePostText(userId, id, text);
+              errorName = NotFoundError.name;
+            } else if (error instanceof CredentialsError) {
+              status = 401;
 
-    res.status(200).send();
-  } catch (error) {
-    console.error(error);
+              errorName = CredentialsError.name;
+            }
 
-    let status = 500;
-    let errorName = SystemError.name;
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          })
+          .then((id) => {
+            res.status(200).json({ id });
+          });
+      } catch (error) {
+        console.error(error);
 
-    if (error instanceof ValidationError) {
-      status = 400;
-      errorName = ValidationError.name;
-    } else if (error instanceof NotFoundError) {
-      status = 404;
-      errorName = NotFoundError.name;
-    } else if (error instanceof OwnershipError) {
-      status = 403;
-      errorName = OwnershipError.name;
-    }
+        let status = 500;
+        let errorName = SystemError.name;
 
-    res.status(status).json({ error: errorName, message: error.message });
-  }
-});
+        if (error instanceof ValidationError) {
+          status = 400;
 
-api.patch("/posts/likes/:postId", (req, res) => {
-  try {
-    const { authorization } = req.headers;
+          errorName = ValidationError.name;
+        }
 
-    const userId = authorization.slice(-12);
+        res.status(status).json({ error: errorName, message: error.message });
+      }
+    });
 
-    const { postId } = req.params;
+    api.post("/users", jsonBodyParser, (req, res) => {
+      try {
+        const { name, email, username, password } = req.body;
 
-    logic.updatePostLikes(userId, postId);
+        return logic
+          .registerUser({
+            name: name,
+            email: email,
+            username: username,
+            password: password,
+          })
+          .catch((error) => {
+            console.error(error);
 
-    res.status(204).send();
-  } catch (error) {
-    console.error(error);
+            let status = 500;
+            let errorName = SystemError.name;
 
-    let status = 500;
+            if (error instanceof ValidationError) {
+              status = 400;
+              errorName = ValidationError.name;
+            }
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          })
+          .then(() => {
+            res.sendStatus(201);
+          });
+      } catch (error) {
+        console.error(error);
 
-    let errorName = SystemError.name;
+        let status = 500;
+        let errorName = SystemError.name;
 
-    if (error instanceof ValidationError) {
-      status = 400;
-      errorName = ValidationError.name;
-    } else if (error instanceof NotFoundError) {
-      status = 404;
-      errorName = NotFoundError.name;
-    }
+        if (error instanceof ValidationError) {
+          status = 400;
+          errorName = ValidationError.name;
+        }
+        res.status(status).json({ error: errorName, message: error.message });
+      }
+    });
 
-    res.status(status).json({ error: errorName, message: error.message });
-  }
-});
-api.listen(8080, () => console.log("api listening in port 8080"));
+    api.patch("/users", jsonBodyParser, (req, res) => {
+      try {
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        const body = req.body;
+
+        return logic
+          .updateUser(userId, body)
+          .catch((error) => {
+            console.error(error);
+
+            let status = 500;
+
+            let errorName = SystemError.name;
+
+            if (error instanceof OwnershipError) {
+              status = 404;
+
+              errorName = OwnershipError.name;
+            } else if (error instanceof NotFoundError) {
+              status = 404;
+
+              errorName = NotFoundError.name;
+            }
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          })
+          .then(() => {
+            res.status(204).send();
+          });
+      } catch (error) {
+        console.error(error);
+
+        let status = 500;
+
+        let errorName = SystemError.name;
+
+        if (error instanceof ValidationError) {
+          status = 400;
+
+          errorName = ValidationError.name;
+        }
+        res.status(status).json({ error: errorName, message: error.message });
+      }
+    });
+
+    api.get("/users/self", (req, res) => {
+      try {
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        return logic
+          .getOnlineUserInfo(userId)
+          .catch((error) => {
+            console.error(error);
+
+            let status = 500;
+            let errorName = SystemError.name;
+
+            if (error instanceof OwnershipError) {
+              status = 403;
+
+              errorName = OwnershipError.name;
+            } else if (error instanceof NotFoundError) {
+              status = 404;
+
+              errorName = NotFoundError.name;
+            }
+
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          })
+          .then((userInfo) => {
+            res.status(200).json(userInfo);
+          });
+      } catch (error) {
+        console.error(error);
+
+        let status = 500;
+        let errorName = SystemError.name;
+
+        if (error instanceof ValidationError) {
+          status = 400;
+
+          errorName = ValidationError.name;
+        }
+
+        res.status(status).json({ error: errorName, message: error.message });
+      }
+    });
+
+    api.patch("/posts/text/:id", jsonBodyParser, (req, res) => {
+      try {
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        const {
+          params: { id },
+          body: { text },
+        } = req;
+
+        return logic
+          .updatePostText(userId, id, text)
+          .catch((error) => {
+            console.error(error);
+
+            let status = 500;
+            let errorName = SystemError.name;
+
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = NotFoundError.name;
+            } else if (error instanceof OwnershipError) {
+              status = 403;
+              errorName = OwnershipError.name;
+            }
+
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          })
+          .then(() => {
+            res.status(200).send();
+          });
+      } catch (error) {
+        console.error(error);
+
+        let status = 500;
+        let errorName = SystemError.name;
+
+        if (error instanceof ValidationError) {
+          status = 400;
+          errorName = ValidationError.name;
+        }
+
+        res.status(status).json({ error: errorName, message: error.message });
+      }
+    });
+
+    api.patch("/posts/likes/:postId", (req, res) => {
+      try {
+        const { authorization } = req.headers;
+
+        const userId = authorization.slice(6);
+
+        const { postId } = req.params;
+
+        return logic
+          .updatePostLikes(userId, postId)
+          .catch((error) => {
+            console.error(error);
+
+            let status = 500;
+
+            let errorName = SystemError.name;
+
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = NotFoundError.name;
+            }
+
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          })
+          .then(() => {
+            res.status(204).send();
+          });
+      } catch (error) {
+        console.error(error);
+
+        let status = 500;
+
+        let errorName = SystemError.name;
+
+        if (error instanceof ValidationError) {
+          status = 400;
+          errorName = ValidationError.name;
+        }
+        res.status(status).json({ error: errorName, message: error.message });
+      }
+    });
+    api.listen(8080, () => console.log("api listening in port 8080"));
+  });

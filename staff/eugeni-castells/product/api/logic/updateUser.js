@@ -1,38 +1,49 @@
 import { data } from "../data/index.js";
 
-import { errors, validate } from "../../com/index.js";
+const { ObjectId } = data;
 
-const { NotFoundError, OwnershipError } = errors;
+import { errors, validate } from "com";
+
+const { NotFoundError, OwnershipError, SystemError } = errors;
 
 export const updateUser = (userId, userInfo) => {
   validate.id(userId);
 
-  let userFound = data.users.getById(userId);
+  const userObjectId = new ObjectId(userId);
 
-  if (!userFound) throw new NotFoundError("user not found");
+  return data.users
+    .findOne({ _id: userObjectId })
+    .catch((error) => {
+      throw new SystemError(error.message);
+    })
+    .then((userFound) => {
+      if (!userFound) throw new NotFoundError("user not found");
 
-  if (userId !== userFound.id)
-    throw new OwnershipError("user cannot modify other user's info");
+      if (userId !== userFound._id.toString())
+        throw new OwnershipError("user cannot modify other user's info");
 
-  const { name, email, username, password } = userInfo;
+      const { name, email, username, password } = userInfo;
 
-  validate.username(username, "username");
-  validate.email(email, "email");
-  validate.password(password), "password";
-  validate.text(name, "name");
-  validate.minLength(1, "name");
-  validate.maxLength(20, "name");
+      if (username) validate.username(username, "username");
 
-  const user = data.users.getById(userId);
+      if (email) validate.email(email, "email");
 
-  const updatedUser = {
-    ...user,
-    username: username,
-    name: name,
-    email: email,
-    password: password,
-    modifiedAt: new Date(),
-  };
+      if (password) validate.password(password), "password";
 
-  data.users.updateOne((user) => user.id === userId, updatedUser);
+      if (name) {
+        validate.text(name, "name");
+        validate.minLength(1, "name");
+        validate.maxLength(20, "name");
+      }
+
+      return data.users
+        .updateOne({ _id: userObjectId }, { $set: userInfo })
+        .catch((error) => {
+          throw new SystemError(error.message);
+        });
+    })
+    .catch((error) => {
+      throw new SystemError(error.message);
+    })
+    .then(() => {});
 };

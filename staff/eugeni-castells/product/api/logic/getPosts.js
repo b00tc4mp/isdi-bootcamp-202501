@@ -1,51 +1,77 @@
 import { data } from "../data/index.js";
-import { errors, validate } from "../../com/index.js";
+import { errors, validate } from "com";
 
-const { NotFoundError } = errors;
+const { ObjectId } = data;
+
+const { NotFoundError, SystemError } = errors;
 
 export const getPosts = (userId) => {
   validate.id(userId, "user id");
 
-  let user;
+  const userObjectId = new ObjectId(userId);
 
-  user = data.users.getById(userId);
-
-  if (!user) throw new NotFoundError("user not found");
-
-  const aggregatedPosts = [];
-
-  const posts = data.posts.getAll();
-
-  for (let i = 0; i < posts.length; i++) {
-    let post = posts[i];
-
-    let liked = false;
-
-    for (let i = 0; i < post.likes.length && !liked; i++) {
-      if (post.likes[i] === userId) {
-        liked = true;
+  return data.users
+    .findOne({ _id: userObjectId })
+    .catch((error) => {
+      {
+        throw new System(error.message);
       }
-    }
-    const { id, author, image, text, createdAt, modifiedAt, likes } = post;
+    })
+    .then((user) => {
+      if (!user) throw new NotFoundError("user not found");
 
-    const user = data.users.getById(author);
+      return data.posts
+        .find()
+        .toArray()
+        .catch((error) => {
+          throw new SystemError(error.message);
+        })
+        .then((posts) => {
+          const authors = posts.map(({ author }) => author);
 
-    const username = user.username;
+          return data.users
+            .find({ _id: { $in: authors } })
+            .toArray()
+            .catch((error) => {
+              throw new SystemError(error.message);
+            })
+            .then((users) => {
+              const aggregatedPosts = [];
 
-    let aggregatedPost = {
-      id: id,
-      author: { id: author, username: username },
-      image: image,
-      text: text,
-      createdAt: createdAt && new Date(createdAt),
-      modifiedAt: modifiedAt && new Date(modifiedAt),
-      likes: likes,
-      liked: liked,
-      own: post.author === userId,
-    };
+              for (let i = 0; i < posts.length; i++) {
+                let post = posts[i];
 
-    aggregatedPosts[aggregatedPosts.length] = aggregatedPost;
-  }
+                let liked = false;
 
-  return aggregatedPosts;
+                for (let i = 0; i < post.likes.length && !liked; i++) {
+                  if (post.likes[i].toString() === userId) {
+                    liked = true;
+                  }
+                }
+
+                const authorId = post.author.toString();
+
+                const user = users.find(
+                  (user) => user._id.toString() === authorId
+                );
+
+                const aggregatedPost = {
+                  id: post._id.toString(),
+                  author: { id: authorId, username: user.username },
+                  image: post.image,
+                  text: post.text,
+                  createdAt: new Date(post.createdAt),
+                  modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
+                  likes: post.likes,
+                  liked: liked,
+                  own: authorId === userId,
+                  likesCount: post.likes.length,
+                };
+
+                aggregatedPosts[aggregatedPosts.length] = aggregatedPost;
+              }
+              return aggregatedPosts;
+            });
+        });
+    });
 };
