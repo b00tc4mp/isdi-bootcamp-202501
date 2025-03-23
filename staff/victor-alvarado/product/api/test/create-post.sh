@@ -1,0 +1,1 @@
+curl -X POST http://192.168.1.143:8080/post -H 'Authorization: Basic m7yp34lurs6' -H 'Content-type: application/json' -d '{"image":"https://i.gifer.com/origin/c6/c6c3520124a60f245040125401fd536e.gif", "text":"Soy groot!"}' -v

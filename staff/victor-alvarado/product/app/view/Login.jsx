@@ -13,10 +13,17 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
             } = form
 
             logic.loginUser(username, password)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
+                    onUserLoggedIn()
+                })
+                .catch(error => {
+                    console.error(error)
 
-            onUserLoggedIn()
+                    alert(error.message)
+                })
+
         } catch (error) {
             console.error(error)
 
@@ -27,8 +34,6 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
     const handleRegisterClick = () => onNavigateToRegister()
 
     console.debug('Login -> render')
-
-
 
     return <div>
         <img src="https://elpingo.com/wp-content/uploads/2023/02/hombre-arana-logo-negro.png" className="logo2" />

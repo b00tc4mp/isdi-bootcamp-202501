@@ -1,9 +1,6 @@
-import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
 
-import { DuplicityError } from '../errors.js'
-
-
+const { SystemError } = errors
 
 export const registerUser = (name, email, username, password) => {
     validate.text(name, 'name')
@@ -13,18 +10,28 @@ export const registerUser = (name, email, username, password) => {
     validate.username(username, 'username')
     validate.password(password, 'password')
 
-    const found = data.users.findOne(user => user.email === email || user.username === username)
+    return fetch('http://localhost:8080/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, username, password })
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-    if (found) throw new DuplicityError('user already exists')
+            if (response.status === 201)
+                return
 
-    const user = {
-        name: name,
-        email: email,
-        username: username,
-        password: password,
-        createdAt: new Date(),
-        modifiedAt: null
-    }
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
 
-    data.users.insertOne(user)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 }

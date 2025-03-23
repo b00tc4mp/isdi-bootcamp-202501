@@ -8,8 +8,11 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     const handleToggleLikeClick = () => {
         try {
             logic.toggleLikePost(post.id)
+                .then(() => onPostLikeToggled())
+                .catch(error => {
+                    alert(error.message)
+                })
 
-            onPostLikeToggled()
         } catch (error) {
             console.error(error)
 
@@ -21,8 +24,13 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
         if (confirm('Delete post?'))
             try {
                 logic.deletePost(post.id)
+                    .then(() => onPostDeleted())
+                    .catch(error => {
+                        console.error(error)
 
-                onPostDeleted()
+                        alert(error.message)
+                    })
+
             } catch (error) {
                 console.error(error)
 
@@ -43,10 +51,18 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
             const { text: { value: text } } = form
 
             logic.updatePostText(post.id, text)
+                .then(() => {
+                    onPostTextEdited()
 
-            onPostTextEdited()
+                    setView('')
+                })
 
-            setView('')
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+
         } catch (error) {
             console.error(error)
 

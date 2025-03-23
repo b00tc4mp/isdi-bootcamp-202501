@@ -13,9 +13,13 @@ export function Home({ onUserLoggedOut }) {
         console.debug('Home -> useEfect')
 
         try {
-            const name = logic.getUserName()
+            logic.getUserName()
+                .then(name => setUserName(name))
+                .catch(error => {
+                    console.error(error)
 
-            setUserName(name)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -44,7 +48,7 @@ export function Home({ onUserLoggedOut }) {
 
     console.debug('Home -> render')
 
-    return <div>
+    return <div className="Home">
         <header>
             <h1>Logo</h1>
 

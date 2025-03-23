@@ -1,23 +1,39 @@
-
 import { data } from '../data/index.js'
-import { validate } from './validate.js'
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
 
 export const createPost = (image, text) => {
     validate.url(image, 'image')
-    validate.maxLength(1000)
+    validate.maxLength(image, 1000, 'image')
     validate.text(text, 'text')
-    validate.maxLength(500)
+    validate.maxLength(text, 500, 'text')
 
     const { userId } = data
 
-    const post = {
-        author: userId,
-        image: image,
-        text: text,
-        createdAt: new Date(),
-        modifiedAt: null,
-        likes: []
-    }
+    return fetch('http://localhost:8080/posts', {
+        method: 'POST',
+        headers: {
+            Authorization: `Basic ${userId}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ image, text })
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            console.log(response.status)
 
-    data.posts.insertOne(post)
+            if (response.status === 201)
+                return
+
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
 }
