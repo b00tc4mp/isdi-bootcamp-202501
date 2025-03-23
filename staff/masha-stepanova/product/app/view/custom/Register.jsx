@@ -35,7 +35,7 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     return <div className="form">
 
-        <h1>Logo</h1>
+        <h1>Foodies</h1>
         <form onSubmit={handleUserRegistered} >
 
             <label htmlFor="name">Name</label>

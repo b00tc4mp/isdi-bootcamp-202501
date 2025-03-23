@@ -34,7 +34,7 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
     return <div className="form">
 
-        <h1>Logo</h1>
+        <h1>Foodies</h1>
 
         <form onSubmit={handleUserLoginSubmit} >
 

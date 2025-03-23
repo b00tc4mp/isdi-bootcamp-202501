@@ -31,8 +31,6 @@ export function CreatePost({ onCreatedPost, onCreatePostCanceled }) {
 
     return <section >
 
-        <h1>Logo</h1>
-
         <p>To add new post you have to add the image link and a description to it. Try it now!</p>
 
         <form onSubmit={handleCreatedPost} >

@@ -149,9 +149,10 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
 
     return <div className="posts">
         <section className="header">
-            <h1>Logo</h1>
-            <h3>{userName}</h3>
             <button onClick={handleUserLoggedOut}>Logout</button>
+            <h1>Foodies</h1>
+            <h3>{userName}</h3>
+
         </section>
 
         {view === 'profile' && <section> {
@@ -167,8 +168,6 @@ export function Profile({ onUserLoggedOut, onNavigateToHome, onCreatePostCancele
 
         {
             view === 'addPost' && <section >
-
-                <h1>Logo</h1>
 
                 <p>To add new post you have to add the image link and a description to it. Try it now!</p>
 

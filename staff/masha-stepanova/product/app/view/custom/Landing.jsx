@@ -7,7 +7,7 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
 
     return <div className="landing-page" >
 
-        <h1>Logo</h1>
+        <h1>Foodies</h1>
 
         <section className="register-login">
             <a onClick={handleRegisterClick}>Register</a>

@@ -51,9 +51,14 @@ export function Home({ onUserLoggedOut, onNavigateToProfile }) {
     return <div className="posts">
 
         <section className="header">
-            <h1>Logo</h1>
-            <h3>Welcome, {userName}</h3>
-            <button type="button" onClick={handleNavigateToProfile}>🤴🏻</button>
+            <button onClick={handleLogoutClick}>Logout</button>
+
+            <h1>Foodies</h1>
+
+            <section className="profile-logout">
+                <button type="button" onClick={handleNavigateToProfile}>🤴🏻</button>
+            </section>
+
         </section>
 
         <main>
@@ -61,10 +66,6 @@ export function Home({ onUserLoggedOut, onNavigateToProfile }) {
 
             {view === 'addPost' && <CreatePost onCreatedPost={handleCreatedPost} onCreatePostCanceled={handleCreatePostCanceled} />}
         </main>
-
-        <footer>
-            <button onClick={handleLogoutClick}>Logout</button>
-        </footer>
 
     </div >
 }
