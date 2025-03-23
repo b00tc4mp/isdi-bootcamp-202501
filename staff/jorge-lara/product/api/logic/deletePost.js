@@ -1,22 +1,37 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError, OwnershipError } = errors;
+const { ObjectId } = data
+const { SystemError, NotFoundError, OwnershipError } = errors;
 
 export const deletePost = (userId, postId) => {
     validate.id(userId, 'userId');
     validate.id(postId, 'postId');
 
-    const foundPost = data.posts.findOne(post => post.id === postId)
+    return data.users.findOne({ _id: new ObjectId(userId) })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
 
-    if (!foundPost) {
-        throw new NotFoundError('post not found');
-    }
+            if (!user) {
+                throw new NotFoundError('user not found');
+            }
 
-    if (foundPost.author !== userId) {
-        throw new OwnershipError('user is not author of the post');
-    }
+            const postObjectId = new ObjectId(postId);
 
-    data.posts.deleteOne(post => post.id === postId)
+            return data.posts.findOne({ _id: postObjectId })
+                .catch(error => { throw new SystemError(error.message) })
+                .then(post => {
+                    if (!post) {
+                        throw new NotFoundError('post not found');
+                    }
+                    if (post.author.toString() !== userId) {
+                        throw new OwnershipError('user is not author of the post');
+                    }
+
+                    return data.posts.deleteOne({ _id: postObjectId })
+                        .catch(error => { throw new SystemError(error.message) })
+                })
+                .then(() => { })
+        })
 
 }

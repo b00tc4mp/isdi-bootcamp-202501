@@ -1,7 +1,20 @@
 import { toggleLikePost } from './toggleLikePost.js'
+import { data } from '../data/index.js';
 
-try {
-    toggleLikePost('p1ferh4x30w', 'f77xr7goyq8');
-} catch (error) {
-    console.error(error);
-}
+console.info('TEST toggleLikePost');
+
+data.connect('mongodb://localhost:27017', 'test')
+    .then(() => {
+        try {
+            let result2 = null;
+
+            return toggleLikePost('67e04ea43dde14789cf6585c', '67e04ea43dde14789cf6585f')
+                .then(result => result2 = result)
+                .finally(() => console.assert(result2 === undefined, 'result is undefined'))
+
+        } catch (error) {
+            console.error(error);
+        }
+    })
+    .catch(error => console.error(error))
+    .finally(() => data.disconnect())
