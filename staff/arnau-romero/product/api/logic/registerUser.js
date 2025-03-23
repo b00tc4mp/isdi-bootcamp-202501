@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
 import { validate, errors } from 'com'
 
-const { DuplicityError } = errors
+const { SystemError, DuplicityError } = errors
 
 export const registerUser = (name, email, username, password) => {
     validate.text(name, 'name')
@@ -9,20 +9,28 @@ export const registerUser = (name, email, username, password) => {
     validate.maxLength(name, 20, 'name')
     validate.email(email, 'email')
     validate.username(username, 'username')
-    validate.password(password, 'password')
+    validate.password(password, 'password') 
 
-    const found = data.users.findOne(user => user.email === email || user.username === username)
+    return data.users.findOne( { $or: [{ email }, { username }]})
+        .catch(error => { throw new SystemError(error.message)})
+        .then(user =>{
+            if (user) throw new DuplicityError('user already exists')
+            
+            user = {
+                name: name,
+                email: email,
+                username: username,
+                password: password,
+                createdAt: new Date(),
+                modifiedAt: null
+             }
+             
+             return data.users.insertOne(user)
+                .catch(error => {
+                    if (error.code === 11000) throw new DuplicityError('user already exist')
 
-    if (found) throw new DuplicityError('user already exists')
-
-    const user = {
-        name: name,
-        email: email,
-        username: username,
-        password: password,
-        createdAt: new Date(),
-        modifiedAt: null
-    }
-
-    data.users.insertOne(user)
+                    throw new SystemError(error.message)
+                })
+        })
+        .then(() => { })
 }
