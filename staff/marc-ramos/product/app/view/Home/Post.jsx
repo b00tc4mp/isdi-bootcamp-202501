@@ -6,7 +6,7 @@ export function Post({post, onPostLikeToggled, onPostDeleted, onPostTextEdited})
 
     const [view, setView] = useState('')
 
-    const handleToggleLikeClick = () => { // 
+    const handleToggleLikeClick = () => { 
         try{
             logic.toggleLikePost(post.id)
                 .then(() => onPostLikeToggled())

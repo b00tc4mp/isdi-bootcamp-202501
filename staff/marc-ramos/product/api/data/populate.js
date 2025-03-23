@@ -20,7 +20,7 @@ client.connect()
         // return users.deleteOne({ _id: new ObjectId('67dae6855684ca78f8d6f4f7') })
 
         // visualizamos los posts
-        // return posts.find().toArray() 
+         return posts.find().toArray() 
         
         // create a post
         // return posts.insertOne({ author: '67dab819946509559c3fa81e', image: 'https://media.giphy.com/media/shkh5vfrJ56BAoeWqt/giphy.gif?cid=790b7611or5b4ap8btdrs8j5ez3a53aec0z2zf4nb1cwnnna&ep=v1_gifs_search&rid=giphy.gif&ct=g', text: 'frieren', createdAt: new Date, modifiedAt: null})
