@@ -13,7 +13,7 @@ const client = new MongoClient('mongodb://localhost:27017')
 -Siempre se ejecutará finally y cerrará la conexión con MongoDB para liberar recursos.
 */
 client.connect()
-    .then(() => {
+    .then(connection => {
         const db = client.db('test')
 
         const users = db.collection('users')

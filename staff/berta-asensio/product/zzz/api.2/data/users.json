@@ -88,5 +88,14 @@
         "createdAt": "2025-03-17T18:11:12.054Z",
         "modifiedAt": null,
         "id": "m8dds18685m"
+    },
+    {
+        "name": "Berta Asensio",
+        "username": "AsensioBerta",
+        "password": "123123aa",
+        "email": "berta@asensio.com",
+        "createdAt": "2025-03-21T16:29:07.206Z",
+        "modifiedAt": null,
+        "id": "m8izw5xjuv8"
     }
 ]

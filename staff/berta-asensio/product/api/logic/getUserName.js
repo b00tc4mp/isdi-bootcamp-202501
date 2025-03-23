@@ -1,25 +1,33 @@
+
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError } = errors
+const { ObjectId } = data //recordemos que he importado en data/index el object id
+const { SystemError, NotFoundError } = errors
 
 /*
-Debemos modificarla respecto a la de la app ya que utilizamos información 
-del session storage que aquí no tendremos. Ya que el estado de sesión lo maneja
-la app.
-El getUserName de la API tendrá que recibir el username de la app. Lo tenemos que 
-enviar de la app a la api para saber qué usuario es, lo recoja y si lo encuentra me 
-devuelve name.
-Este id que estamos solicitando sirve para las operaciones privadas (recuperar nombre de usuario, 
-recuperar los posts, todo lo que sea interno de la aplicación y personal). Por eso queremos obtener
-el id del usuario y guardarlo. Ademas, tenemos lógica que infiere en esta función.
+-La función getUserName recibe userId, que es el ID del usuario que se quiere buscar
+en la base de datos.
+-Se valida userId.
+-Se busca en la colección users de la base de data un documento que coincida con _id.
+Se convierte el userId en un ObjectId de Mongo ya que asi se identifican los documentos.
+-FindOne devuelve null si no encuentra el usuario, si lo encuentra pasamos al siguiente then.
+-System error si hay un error al acceder a la base de datos o a la conexión.
+-Este then verifica si el usuario existe:
+        -Si no existe devuelve un NotFoundError
+        -Si existe, devuelve el nombre del usuario.
+TEST: node logic.getUserName.test.js
+-Una vez modificado index de api, comprobamos API: test/get-username.sh
 */
-export const getUserName = userId => { //traerá aqui el userId desde la app
+
+export const getUserName = userId => { 
         validate.id(userId, 'userId')
 
-        const user = data.users.getById(userId)
+        return data.users.findOne({ _id: new ObjectId(userId) })
+                .catch(error => { throw new SystemError(error.message) }) 
+                .then(user => {
+                        if(!user) throw new NotFoundError ('user not found')
 
-        if(!user) throw new NotFoundError ('user not found')
-
-        return user.name
+                        return user.name
+                })
 }
