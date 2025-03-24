@@ -1,3 +1,4 @@
+/*
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
@@ -39,3 +40,4 @@ export const changePassword = (actualPassword, newPassword) => {
         })
 
 }
+*/

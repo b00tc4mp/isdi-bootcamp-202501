@@ -1,14 +1,17 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError } = errors
+const { ObjectId } = data
+const { SystemError, NotFoundError } = errors
 
 export const getUserName = userId => {
     validate.id(userId, 'userId')
 
-    const user = data.users.getById(userId)
+    return data.users.findOne({ _id: new ObjectId(userId) })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
-
-    return user.name
+            return user.name
+        })
 }

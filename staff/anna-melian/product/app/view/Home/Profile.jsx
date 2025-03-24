@@ -1,3 +1,5 @@
+/*
+
 import { useState, useEffect } from 'react'
 
 import { logic } from '../../logic/index.js'
@@ -81,5 +83,6 @@ export function Profile() {
 
     </section >
 }
+*/
 
 

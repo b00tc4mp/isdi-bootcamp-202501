@@ -1,3 +1,5 @@
+/*
+
 import { useState } from 'react'
 
 import { logic } from '../../logic/index.js'
@@ -113,3 +115,4 @@ export function MyPost({ post, onPostLikeToggled, onPostDeleted, onPostEdited })
 
 }
 
+*/
