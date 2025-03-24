@@ -2,262 +2,340 @@ import express, { json } from 'express'
 import cors from 'cors'
 import { errors } from 'com'
 
+import { data } from './data/index.js'
 import { logic } from './logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
-const port = 8080
+data.connect('mongodb://localhost:27017', 'test')
+    .catch(console.error)
+    .then(() => {
 
-const api = express()
+        const port = 8080
+
+        const api = express()
 
-const jsonBodyParser = json()
+        const jsonBodyParser = json()
+
+        api.use(cors())
+
+        api.get('/', (req, res) => res.send('Hello, API!'))
+
+        // REGISTRAR USUARIO
+        api.post('/users', jsonBodyParser, (req, res) => {
 
-api.use(cors())
+            try {
+                const { name, email, username, password } = req.body
+
+                logic.registerUser(name, email, username, password)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        console.error(error)
 
-api.get('/', (req, res) => res.send('Hello, API!'))
+                        let status = 500
+                        let errorName = SystemError.name
 
-// REGISTRAR USUARIO
-api.post('/users', jsonBodyParser, (req, res) => {
+                        if (error instanceof DuplicityError) {
+                            status = 409
+                            errorName = error.constructor.name
+                        }
 
-    try {
-        const { name, email, username, password } = req.body
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+            } catch (error) {
+                console.error(error)
 
-        logic.registerUser(name, email, username, password)
+                let status = 500
+                let errorName = SystemError.name
 
-        res.status(201).send()
-    } catch (error) {
-        console.error(error)
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
+                res.status(status).json({ error: errorName, message: error.message })
+            }
+        })
 
-        let status = 500
-        let errorName = SystemError.name
+        // AUTENTIFICAR USUARIO
+        api.post('/users/auth', jsonBodyParser, (req, res) => {
+            try {
+                const { username, password } = req.body
 
-        if (error instanceof ValidationError) {
-            status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof DuplicityError) {
-            status = 409
-            errorName = error.constructor.name
-        }
+                logic.authenticateUser(username, password)
+                    .then(id => res.json({ id }))
+                    .catch(error => {
+                        console.error(error)
 
-        res.status(status).json({ error: errorName, message: error.message })
-    }
-})
+                        let status = 500
+                        let errorName = SystemError.name
 
-// AUTENTIFICAR USUARIO
-api.post('/users/auth', jsonBodyParser, (req, res) => {
-    try {
-        const { username, password } = req.body
+                        if (error instanceof CredentialsError) {
+                            status = 401
+                            errorName = error.constructor.name
+                        } else if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
 
-        const id = logic.authenticateUser(username, password)
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+            } catch (error) {
+                console.error(error)
 
-        res.json({ id })
-    } catch (error) {
-        console.error(error)
+                let status = 500
+                let errorName = SystemError.name
 
-        let status = 500
-        let errorName = SystemError.name
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
 
-        if (error instanceof ValidationError) {
-            status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof CredentialsError) {
-            status = 401
-            errorName = error.constructor.name
-        } else if (error instanceof NotFoundError) {
-            status = 404
-            errorName = error.constructor.name
-        }
+                res.status(status).json({ error: errorName, message: error.message })
+            }
+        })
 
-        res.status(status).json({ error: errorName, message: error.message })
-    }
-})
+        // OBTENER EL NOMBRE DE USUARIO
+        api.get('/users/self/name', (req, res) => {
+            try {
+                const { authorization } = req.headers
 
-// OBTENER EL NOMBRE DE USUARIO
-api.get('/users/self/name', (req, res) => {
-    try {
-        const { authorization } = req.headers
+                const userId = authorization.slice(6)
 
-        const userId = authorization.slice(6)
+                logic.getUserName(userId)
+                    .then(name => res.json({ name }))
+                    .catch(error => {
+                        console.error(error)
 
-        const name = logic.getUserName(userId)
+                        let status = 500
+                        let errorName = SystemError.name
 
-        res.json({ name })
-    } catch (error) {
-        console.error(error)
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
 
-        let status = 500
-        let errorName = SystemError.name
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+            } catch (error) {
+                console.error(error)
 
-        if (error instanceof ValidationError) {
-            status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof NotFoundError) {
-            status = 404
-            errorName = error.constructor.name
-        }
+                let status = 500
+                let errorName = SystemError.name
 
-        res.status(status).json({ error: errorName, message: error.message })
-    }
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
 
-})
+                res.status(status).json({ error: errorName, message: error.message })
+            }
 
-// CREAR UN POST
-api.post('/posts', jsonBodyParser, (req, res) => {
-    try {
-        const { authorization } = req.headers
+        })
 
-        const userId = authorization.slice(6)
+        // CREAR UN POST
+        api.post('/posts', jsonBodyParser, (req, res) => {
+            try {
+                const { authorization } = req.headers
 
-        const { image, text } = req.body
+                const userId = authorization.slice(6)
 
-        logic.createPost(userId, image, text)
+                const { image, text } = req.body
 
-        res.status(201).send()
-    } catch (error) {
-        console.error(error)
+                logic.createPost(userId, image, text)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        console.error(error)
 
-        let status = 500
-        let errorName = SystemError.name
+                        let status = 500
+                        let errorName = SystemError.name
 
-        if (error instanceof ValidationError) {
-            status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof NotFoundError) {
-            status = 404
-            errorName = error.constructor.name
-        }
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
 
-        res.status(status).json({ error: errorName, message: error.message })
-    }
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+            } catch (error) {
+                console.error(error)
 
-})
+                let status = 500
+                let errorName = SystemError.name
 
-// OBTENER PUBLICACIONES
-api.get('/posts', (req, res) => {
-    try {
-        const { authorization } = req.headers
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
 
-        const userId = authorization.slice(6)
+                res.status(status).json({ error: errorName, message: error.message })
+            }
 
-        const posts = logic.getPosts(userId)
+        })
 
-        res.json(posts)
-    } catch (error) {
-        console.error(error)
+        // OBTENER PUBLICACIONES
+        api.get('/posts', (req, res) => {
+            try {
+                const { authorization } = req.headers
 
-        let status = 500
-        let errorName = SystemError.name
+                const userId = authorization.slice(6)
 
-        if (error instanceof ValidationError) {
-            status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof NotFoundError) {
-            status = 404
-            errorName = error.constructor.name
-        }
+                logic.getPosts(userId)
+                    .then(posts => res.json(posts))
+                    .catch(error => {
+                        console.error(error)
 
-        res.status(status).json({ error: errorName, message: error.message })
-    }
-})
+                        let status = 500
+                        let errorName = SystemError.name
 
-// BORRAR UN POST
-api.delete('/post/:postId', (req, res) => {
-    try {
-        const { authorization } = req.headers
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
 
-        const userId = authorization.slice(6)
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+            } catch (error) {
+                console.error(error)
 
-        const { postId } = req.params
+                let status = 500
+                let errorName = SystemError.name
 
-        logic.deletePost(userId, postId)
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
 
-        res.status(204).send()
-    } catch (error) {
-        console.error(error)
+                res.status(status).json({ error: errorName, message: error.message })
+            }
+        })
 
-        let status = 500
-        let errorName = SystemError.name
+        // BORRAR UN POST
+        api.delete('/post/:postId', (req, res) => {
+            try {
+                const { authorization } = req.headers
 
-        if (error instanceof ValidationError) {
-            status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof NotFoundError) {
-            status = 404
-            errorName = error.constructor.name
-        } else if (error instanceof OwnershipError) {
-            status = 403
-            errorName = error.constructor.name
-        }
+                const userId = authorization.slice(6)
 
-        res.status(status).json({ error: errorName, message: error.message })
-    }
-})
+                const { postId } = req.params
 
-// CONTROLAR LOS LIKES DE POST
-api.patch('/posts/:postId/likes', (req, res) => {
-    try {
-        const { authorization } = req.headers
+                logic.deletePost(userId, postId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
 
-        const userId = authorization.slice(6)
+                        let status = 500
+                        let errorName = SystemError.name
 
-        const { postId } = req.params
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        } else if (error instanceof OwnershipError) {
+                            status = 403
+                            errorName = error.constructor.name
+                        }
 
-        logic.toggleLikePost(userId, postId)
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+            } catch (error) {
+                console.error(error)
 
-        res.status(204).send()
-    } catch (error) {
-        console.error(error)
+                let status = 500
+                let errorName = SystemError.name
 
-        let status = 500
-        let errorName = SystemError.name
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
 
-        if (error instanceof ValidationError) {
-            status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof NotFoundError) {
-            status = 404
-            errorName = error.constructor.name
-        }
+                res.status(status).json({ error: errorName, message: error.message })
+            }
+        })
 
-        res.status(status).json({ error: errorName, message: error.message })
-    }
-})
+        // CONTROLAR LOS LIKES DE POST
+        api.patch('/posts/:postId/likes', (req, res) => {
+            try {
+                const { authorization } = req.headers
 
-// MODIFICAR EL TEXTO DE UN POST
-api.patch('/posts/:postId/text', jsonBodyParser, (req, res) => {
-    try {
-        const { authorization } = req.headers
+                const userId = authorization.slice(6)
 
-        const userId = authorization.slice(6)
+                const { postId } = req.params
 
-        const { postId } = req.params
+                logic.toggleLikePost(userId, postId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
 
-        const { text } = req.body
+                        let status = 500
+                        let errorName = SystemError.name
 
-        logic.updatePostText(userId, postId, text)
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
 
-        res.status(204).send()
-    } catch (error) {
-        console.error(error)
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+            } catch (error) {
+                console.error(error)
 
-        let status = 500
-        let errorName = SystemError.name
+                let status = 500
+                let errorName = SystemError.name
 
-        if (error instanceof ValidationError) {
-            status = 400
-            errorName = error.constructor.name
-        } else if (error instanceof NotFoundError) {
-            status = 404
-            errorName = error.constructor.name
-        } else if (error instanceof OwnershipError) {
-            status = 403
-            errorName = error.constructor.name
-        }
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
 
-        res.status(status).json({ error: errorName, message: error.message })
-    }
-})
+                res.status(status).json({ error: errorName, message: error.message })
+            }
+        })
 
-api.listen(port, () => {
-    console.log(`API running on port ${port}`)
-})
+        // MODIFICAR EL TEXTO DE UN POST
+        api.patch('/posts/:postId/text', jsonBodyParser, (req, res) => {
+            try {
+                const { authorization } = req.headers
+
+                const userId = authorization.slice(6)
+
+                const { postId } = req.params
+
+                const { text } = req.body
+
+                logic.updatePostText(userId, postId, text)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
+
+                        let status = 500
+                        let errorName = SystemError.name
+
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        } else if (error instanceof OwnershipError) {
+                            status = 403
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+
+            } catch (error) {
+                console.error(error)
+
+                let status = 500
+                let errorName = SystemError.name
+
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
+
+                res.status(status).json({ error: errorName, message: error.message })
+            }
+        })
+
+        api.listen(port, () => {
+            console.log(`API running on port ${port}`)
+        })
+    })

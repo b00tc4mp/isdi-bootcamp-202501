@@ -1,9 +1,22 @@
+import { data } from '../data/index.js'
 import { authenticateUser } from './authenticateUser.js'
 
-try {
-    const id = authenticateUser('dallen', '123456789')
+console.info('TEST authenticateUser')
 
-    console.log(id)
-} catch (error) {
-    console.error(error)
-}
+data.connect('mongodb://localhost:27017', 'test')
+    .then(() => {
+        try {
+            let id2
+
+            return authenticateUser('dallen', '123456789')
+                .then(id => id2 = id)
+                .finally(() => console.assert(typeof id2 === 'string', 'userId is a string'))
+
+        } catch (error) {
+            console.error(error)
+        }
+
+    })
+    .catch(error => console.error(error))
+    .finally(() => data.disconnect())
+

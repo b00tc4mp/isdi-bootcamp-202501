@@ -3,7 +3,7 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { DuplicityError } = errors
+const { SystemError, DuplicityError } = errors
 
 // Funcion para Registrar al usuario
 export const registerUser = (name, email, username, password) => {
@@ -13,20 +13,29 @@ export const registerUser = (name, email, username, password) => {
     validate.username(username, 'username')
     validate.password(password, 'password')
 
-    // ****
-    const found = data.users.findOne(user => user.email === email || user.username === username)
+    // Busca y devuelve un usuario en data.users cuyo Email o Username coincida con los valores dados
+    return data.users.findOne({ $or: [{ email }, { username }] })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (user) throw new DuplicityError('user already exists')
 
-    if (found) throw new DuplicityError('user already exists')
+            user = {
+                name: name,
+                email: email,
+                username: username,
+                password: password,
+                createdAt: new Date(),
+                modifiedAt: null
+            }
 
-    const user = {
-        name: name,
-        email: email,
-        username: username,
-        password: password,
-        createdAt: new Date().toLocaleString(),
-        modifiedAt: new Date().toLocaleString()
-    }
+            // Inserta el objeto user en la colección data.users y devuelve el resultado
+            return data.users.insertOne(user)
+                .catch(error => {
+                    if (error.code === 11000) throw new DuplicityError('user already exists')
 
-    // ****
-    data.users.insertOne(user)
+                    throw new SystemError(error.message)
+                })
+        })
+        // Si todo va bien 
+        .then(() => { console.log("Changes OK") })
 }

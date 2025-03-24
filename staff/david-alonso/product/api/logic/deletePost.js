@@ -3,21 +3,38 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError, OwnershipError } = errors
+const { ObjectId } = data
+const { SystemError, NotFoundError, OwnershipError } = errors
 
 export const deletePost = (userId, postId) => {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')
 
-    const user = data.users.getById(userId)
+    // Busca y devuelve un usuario en data.users cuyo _id coincida con userId, lo convirte en ObjectId para MongoDB
+    return data.users.findOne({ _id: new ObjectId(userId) })
 
-    if (!user) throw new NotFoundError('user not found')
+        // Lanzamos un error si fallara la base de datos
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (!user) throw new NotFoundError('user not found')
 
-    const post = data.posts.findOne(post => post.id === postId)
+            // Convierte postId en un ObjectId de MongoDB para consultas a la base de datos
+            const postObjectId = new ObjectId(postId)
 
-    if (!post) throw new NotFoundError('post not found')
+            // Busca y devuelve un documento en data.posts cuyo _id coincida con postObjectId
+            return data.posts.findOne({ _id: postObjectId })
+                .catch(error => { throw new SystemError(error.message) })
+                .then(post => {
+                    if (!post) throw new NotFoundError('post not found')
 
-    if (post.author !== userId) throw new OwnershipError('user is not author of post')
+                    if (post.author.toString() !== userId) throw new OwnershipError('user is not author of post')
 
-    data.posts.deleteOne(post => post.id === postId)
+                    // Elimina un documento en la colección data.posts cuyo _id coincida con postObjectId
+                    return data.posts.deleteOne({ _id: postObjectId })
+                        .catch(error => { throw new SystemError(error.message) })
+                })
+
+                // Si todo va bien 
+                .then(() => { console.log("Changes OK") })
+        })
 }

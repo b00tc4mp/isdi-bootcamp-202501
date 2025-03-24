@@ -34,5 +34,14 @@
         "createdAt": "12/3/2025, 23:15:58",
         "modifiedAt": null,
         "id": "m86hbjvqpre"
+    },
+    {
+        "name": "paco",
+        "email": "paco@pa.com",
+        "username": "paquete",
+        "password": "123123123",
+        "createdAt": "20/3/2025, 14:30:40",
+        "modifiedAt": "20/3/2025, 14:30:40",
+        "id": "m8he2tr88t"
     }
 ]
