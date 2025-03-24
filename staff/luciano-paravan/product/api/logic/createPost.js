@@ -11,7 +11,7 @@ export const createPost = (userId, image, text) => {
     validate.text(text, 'text')
     validate.maxLength(text, 500, 'text')
 
-    const userObjectId = new ObjectId(userId)
+    const userObjectId = new ObjectId(userId) //Como lo uso dos veces, le pido que lo construya una vez y despues lo uso las veces que sea necesario
 
     return data.users.findOne({ _id: userObjectId })
         .catch(error => { throw new SystemError(error.message) })
@@ -20,7 +20,7 @@ export const createPost = (userId, image, text) => {
 
             const post = {
                 author: userObjectId,
-                image,
+                image, //Si la variable se llama igual que el campo del objeto se puede dejar asi
                 text,
                 createdAt: new Date(),
                 modifiedAt: null,

@@ -37,20 +37,20 @@ export const getPosts = userId => {
                             }
                         }
 
-                        const authorId = post.author.toString()
+                        const authorId = post.author.toString() //Como lo usaba 3 veces, lo crea una vez
 
                         const user = users.find(user => user._id.toString() === authorId) //Este find es metodo de array normal, no es de mongo
 
                         const aggregatedPost = {
                             id: post._id.toString(),
-                            author: { id: user._id.toString(), username: user.username },
+                            author: { id: authorId, username: user.username },
                             image: post.image,
                             text: post.text,
                             createdAt: new Date(post.createdAt),
                             modifiedAt: post.modifiedAt && new Date(post.modifiedAt),
                             liked: liked,
                             likesCount: post.likes.length,
-                            own: post.author.toString === userId
+                            own: authorId === userId
                         }
 
                         aggregatedPosts[aggregatedPosts.length] = aggregatedPost

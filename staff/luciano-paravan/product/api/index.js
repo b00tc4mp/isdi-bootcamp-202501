@@ -59,9 +59,19 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
 
                 const userId = authorization.slice(6)
 
-                const posts = logic.getPosts(userId)
+                logic.getPosts(userId)
+                    .then(posts => res.json(posts))
+                    .catch(error => {
+                        let status = 500
+                        let errorName = SystemError.name
 
-                res.json(posts)
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -70,9 +80,6 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
                     errorName = error.constructor.name
                 }
 
@@ -162,8 +169,20 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
                 const { image, text } = req.body
 
                 logic.createPost(userId, image, text)
+                    .then(res.status(201).send())
+                    .catch(error => {
+                        let status = 500
+                        let errorName = SystemError.name
 
-                res.status(201).send()
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.error
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+
+
             } catch (error) {
                 console.error(error)
 
@@ -173,9 +192,6 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
                 if (error instanceof ValidationError) {
                     status = 400
                     errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.error
                 }
 
                 res.status(status).json({ error: errorName, message: error.message })
@@ -191,8 +207,22 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
                 const { postId } = req.params
 
                 logic.deletePost(userId, postId)
+                    .then(post => res.status(204).send()) //204 ha ido todo bien y no hay body que responder, no hay contenido de respuesta.
+                    .catch(error => {
+                        let status = 500
+                        let errorName = SystemError.name
 
-                res.status(204) //204 ha ido todo bien y no hay body que responder, no hay contenido de respuesta.
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        } else if (error instanceof OwnershipError) {
+                            status = 403
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+
             } catch (error) {
                 console.error(error)
 
@@ -201,12 +231,6 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
-                } else if (error instanceof OwnershipError) {
-                    status = 403
                     errorName = error.constructor.name
                 }
 
@@ -223,8 +247,20 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
                 const { postId } = req.params
 
                 logic.toggleLikePost(userId, postId)
+                    .then(res.status(204).send())
+                    .catch(error => {
+                        let status = 500
+                        let errorName = SystemError.name
 
-                res.status(204).send()
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+
+
             } catch (error) {
                 console.error(error)
 
@@ -233,9 +269,6 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
                     errorName = error.constructor.name
                 }
 
@@ -254,8 +287,23 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
                 const { text } = req.body
 
                 logic.updatePostText(userId, postId, text)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        let status = 500
+                        let errorName = SystemError.name
 
-                res.status(204).send()
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        } else if (error instanceof OwnershipError) {
+                            status = 403
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
+
+
             } catch (error) {
                 console.error(error)
 
@@ -264,12 +312,6 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
-                } else if (error instanceof OwnershipError) {
-                    status = 403
                     errorName = error.constructor.name
                 }
 
