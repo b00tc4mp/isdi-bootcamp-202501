@@ -127,20 +127,20 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
             // Obtenemos el nombre del usuario desde la lógica de negocio
             const name = logic.getUserName(userId)
             logic.getUserName(userId)
-            .then(name => res.json({ name }))
-            .catch(error => {
-                console.error(error)
+                .then(name => res.json({ name }))
+                .catch(error => {
+                    console.error(error)
 
-                let status = 500
-                let errorName = SystemError.name
+                    let status = 500
+                    let errorName = SystemError.name
 
-                if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
-                }
+                    if (error instanceof NotFoundError) {
+                        status = 404
+                        errorName = error.constructor.name
+                    }
 
-                res.status(status).json({ error: errorName, message: error.message })
-            })   
+                    res.status(status).json({ error: errorName, message: error.message })
+                })   
         } catch (error) {
             console.error(error)
 
@@ -201,20 +201,20 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
             const { authorization } = req.headers;
             const userId = authorization.slice(6);
             logic.getPosts(userId)
-            .then(posts => res.json(posts))
-            .catch(error => {
-                console.error(error)
+                .then(posts => res.json(posts))
+                .catch(error => {
+                    console.error(error)
 
-                let status = 500
-                let errorName = SystemError.name
+                    let status = 500
+                    let errorName = SystemError.name
 
-                if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
-                }
+                    if (error instanceof NotFoundError) {
+                        status = 404
+                        errorName = error.constructor.name
+                    }
 
-                res.status(status).json({ error: errorName, message: error.message })
-            })
+                    res.status(status).json({ error: errorName, message: error.message })
+                })
         } catch (error) {
             console.error(error)
 
@@ -238,23 +238,23 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
             const { postId } = req.params;
 
             logic.deletePost(userId, postId)
-            .then(() => res.status(204).send())
-            .catch(error => {
-                console.error(error)
+                .then(() => res.status(204).send())
+                .catch(error => {
+                    console.error(error)
 
-                let status = 500
-                let errorName = SystemError.name
+                    let status = 500
+                    let errorName = SystemError.name
 
-                if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
-                } else if (error instanceof OwnershipError) {
-                    status = 403
-                    errorName = error.constructor.name
-                }
+                    if (error instanceof NotFoundError) {
+                        status = 404
+                        errorName = error.constructor.name
+                    } else if (error instanceof OwnershipError) {
+                        status = 403
+                        errorName = error.constructor.name
+                    }
 
-                res.status(status).json({ error: errorName, message: error.message })
-            })
+                    res.status(status).json({ error: errorName, message: error.message })
+                })
         } catch (error) {
             console.error(error)
 

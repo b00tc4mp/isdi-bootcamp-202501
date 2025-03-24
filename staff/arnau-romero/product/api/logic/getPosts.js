@@ -30,9 +30,9 @@ export const getPosts = userId => { // Crear funcion para obtener los posts de d
                     let liked = false
                         
                     for (let i = 0; i < post.likes.length && !liked; i++) {
-                            const id = post.likes[i]
+                            const userObjectId = post.likes[i]
                 
-                            if (id === userId)
+                            if (userObjectId.toString() === userId)
                                 liked = true
                     }
                 
