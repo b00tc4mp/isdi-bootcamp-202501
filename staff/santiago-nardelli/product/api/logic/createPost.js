@@ -1,7 +1,8 @@
 import { data } from "../data/index.js";
-import {validate, errors} from 'com'
+import { validate, errors } from "com";
 
-const { NotFoundError } = errors;
+const { ObjectId } = data;
+const { NotFoundError, SystemError } = errors;
 
 export const createPost = (userID, image, title) => {
   //valido que la imagen y el titulo sean de tipo string
@@ -11,26 +12,36 @@ export const createPost = (userID, image, title) => {
   validate.text(title, "title");
   validate.maxLength(500);
 
+  const userObjectID = ObjectId(userID); //==>creo un objeto con el id del usuario
 
-  //busco el usuario por id en el array de usuarios y si no lo encuentro lanzo un error
-  //el id lo busco en mi sessionStorage
-  const user = data.users.getById(userID);
-  if (!user) throw new NotFoundError("user not found");
+  return data.users
+    .findOne({ _id: userObjectID }) //==>busco el usuario en la base de datos
 
-  //creo un objeto post con los datos que recibo
-  const post = {
-    author: userID,
-    image: image,
-    title: title,
-    userId: userID,
-    createdAt: new Date(),
-    modifiedAt: null,
-    likes: [],
-  };
+    .catch(() => {
+      throw new SystemError("Error connecting to database", error.message);
+    })
 
-  //inserto el post en el array de posts
-  data.posts.insertOne(post);
+    .then((user) => {
+      if (!user) throw new NotFoundError("user not found");
+
+      const post = {
+        // ==>creo un objeto post con los datos que recibo
+        author: userObjectID,
+        image: image,
+        title: title,
+        userId: userID,
+        createdAt: new Date(),
+        modifiedAt: null,
+        likes: [],
+      };
+
+      return data.posts
+        .insertOne(post) //==>inserto el post en el array de posts
+        .catch(() => {
+          //==> si hay un error al insertar el post
+          throw new SystemError(error.message);
+        });
+    })
+
+    .then(() => {});
 };
-
-
-

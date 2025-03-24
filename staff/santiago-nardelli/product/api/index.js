@@ -133,27 +133,28 @@ data
           .registerUser(name, email, password)
           .then(() => {
             // Responde con un mensaje de éxito
-            res.status(200).send();
+            res.status(201).send();
           })
           .catch((error) => {
-            console.erro(error);
+            console.error(error);
+            // Inicializa el estado de respuesta y el nombre del error
+            let status = 500;
+            let errorName = SystemError.name;
+            // Maneja errores específicos y ajusta el estado de respuesta y el nombre del error en consecuencia
+            if (error instanceof DuplicityError) {
+              status = 409; // Error de duplicidad, conflicto
+
+              errorName = error.constructor.name;
+            }
+
+            // Responde con el estado de error y un objeto JSON que contiene el nombre del error y el mensaje
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
           });
-        // Inicializa el estado de respuesta y el nombre del error
-        let status = 500;
-        let errorName = SystemError.name;
-
-        // Maneja errores específicos y ajusta el estado de respuesta y el nombre del error en consecuencia
-        if (error instanceof DuplicityError) {
-          status = 409; // Error de duplicidad, conflicto
-
-          errorName = error.constructor.name;
-        }
-
-        // Responde con el estado de error y un objeto JSON que contiene el nombre del error y el mensaje
-        res.status(status).json({ error: errorName, message: error.message });
       } catch (error) {
         // Imprime el error en la consola para propósitos de depuración
-        console.log(error);
+        console.error(error);
 
         // Inicializa el estado de respuesta y el nombre del error
         let status = 500;

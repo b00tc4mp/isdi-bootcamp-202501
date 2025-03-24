@@ -7,8 +7,8 @@ data.connect("mongodb://localhost:27017", "test")
 .then(() => {
   try {
 
-    return registerUser("Julian", "juli@araNa.com", "123456")
-      .then(result=> console.assert(result === undefined, "should not return anything"))
+    return registerUser("Dibu Martinez", "dubu@idolo.com", "123456")
+      .then(result=> console.assert(result === undefined, "should not return anything"))// ==> debería retornar undefined siempre que se ejecute correctamente el test
   } catch (error) {
     console.error(error);
   }

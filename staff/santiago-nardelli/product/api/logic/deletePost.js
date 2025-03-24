@@ -1,19 +1,40 @@
 import { data } from "../data/index.js";
 import { validate, errors } from "com";
-const{ NotFoundError, OwnershipError } = errors;
+
+const { ObjectId } = data; //==> data.ObjectId
+const { NotFoundError, OwnershipError, SystemError } = errors;
 export const deletePost = (userId, postId) => {
   validate.id(postId, "postId");
   validate.id(userId, "userId");
 
-  const user = data.users.getById(userId);
-  if (!user) throw new NotFoundError("user not found");
+  //TODO POR QUE NO CREO UNA CONSTANTE CON EL ID DEL USUARIO
+  //  const userObjectID = ObjectId(userId);
 
-  const foundPost = data.posts.findOne((post) => post.id === postId);
+  return data.users
+    .findOne({ _id: new ObjectId(userId) })
+    .catch(() => {
+      throw new SystemError("database error", error.message);
+    })
+    .then((user) => {
+      if (!user) throw new NotFoundError("user not found");
 
-  if (!foundPost) throw new NotFoundError("post not found");
+      const postObjectID = new ObjectId(postId);
 
-  if (foundPost.author !== userId)
-    throw new OwnershipError("user is not author of post");
+      return data.posts
+        .findOne({ _id: postObjectID })
+        .catch(() => {
+          throw new SystemError("database error", error.message);
+        })
+        .then((post) => {
+          if (!post) throw new NotFoundError("post not found");
 
-  data.posts.deleteOne((post) => post.id === postId);
+          if (post.author.toString() !== userId)
+            //==>comparo el id del autor del post con el id del usuario, por que lo convierto a string?
+            throw new OwnershipError("user is not author of post");
+
+          return data.posts.deleteOne({ _id: postObjectID }).catch(() => {
+            throw new SystemError("database error", error.message);
+          });
+        });
+    });
 };

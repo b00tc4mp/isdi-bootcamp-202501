@@ -1,21 +1,25 @@
 import { data } from "../data/index.js";
-import {errors, validate } from 'com' 
+import { errors, validate } from "com";
 
-const { CredentialsError, NotFoundError } = errors;
-
-
+const { CredentialsError, NotFoundError, SystemError } = errors;
 
 export const authenticateUser = (email, password) => {
   validate.email(email, "email");
   validate.password(password, "password");
 
-  //metodo de data para buscar un usuario ya logueado
-  const found = data.users.findOne((user) => user.email === email);
+  return data.users
+    .findOne({ email })
+    .catch(() => {
+      throw new SystemError("Error connecting to database");
+    })
+    .then((user) => {
+      if (!user || user.password !== password)
+        throw new CredentialsError("invalid credentials");
 
-  if (!found || found.password !== password)
-    throw new CredentialsError("invalid credentials");
+      if (!user) throw new NotFoundError("user not found");
 
-  if (!found) throw new NotFoundError("user not found");
+      return user.id;
+    })
 
-  return found.id;
+    .then(() => {});
 };

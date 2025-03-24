@@ -1,43 +1,60 @@
-import {data} from '../data/index.js';
-import {validate, errors} from 'com';
-const { NotFoundError } = errors;
+import { data } from "../data/index.js";
+import { validate, errors } from "com";
+const { NotFoundError, SystemError } = errors;
+
+const { ObjectId } = data;
 
 export const toggleLikePost = (userId, postId) => {
   validate.id(postId, "postId");
   validate.id(userId, "userId");
- 
-  
 
-  // me traigo los posts de la data para trabajar sobre ellos
-  let foundPost = data.posts.findOne(post => post.id === postId);
 
-  // si no encuentra el post tira un error
-  if (!foundPost) throw new NotFoundError("post not found");
+  const userObjectId = new ObjectId(userId); //==>creo un objeto con el id del usuario para buscarlo en la base de datos y poder trabajar con el
+  return data.posts
+    .findOne({ id: postId })
+    .catch(() => {
+      throw new SystemError("database error", error.message);
+    })
 
-  // declaro una variable booleana para saber si el user ya le dio like al post y la inicializo en false
-  let userIdFound = false;
-  //recorro el array de likes del post
-  for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-    const id = foundPost.likes[i];
+    .then((user) => {
+      if (!user) throw new NotFoundError("user not found");
 
-    if (id === userId) userIdFound = true;
-  }
-  // Si el usuario no ha dado like, se añade su id al array de likes
-  if (!userIdFound) foundPost.likes[foundPost.likes.length] = userId;
-  else {
-    // Si el usuario ya ha dado like, se elimina su id del array de likes
-    //Si userIdFound es true, se crea un nuevo array likes y se recorre el array de likes del post. Se añaden todos los id al nuevo array excepto el userId del usuario actual. Luego, se actualiza el array de likes del post con el nuevo array likes.
-    const likes = [];
+      const postObjectID = new ObjectId(postId); //==>creo un objeto con el id del post para buscarlo en la base de datos y poder trabajar con el
 
-    for (let i = 0; i < foundPost.likes.length; i++) {
-      const id = foundPost.likes[i];
+      return data.posts
+        .findOne({ _id: postObjectID })
+        .catch(() => {
+          throw new SystemError("database error", error.message);
+        })
+        .then((post) => {
+          
+          if (!post) throw new NotFoundError("post not found");// ==> // Verifica si el post existe. Si no existe, lanza un error personalizado "NotFoundError".
+      
+          
+          const { likes } = post;//==>Extrae la lista de "likes" del post. Esto es un array que contiene los IDs de los usuarios que han dado "like".
+      
+          // Busca el índice del usuario en el array de "likes". 
+          // Se utiliza `findIndex` para encontrar la posición del ID del usuario que coincide con el `userId` proporcionado.
+          const index = likes.findIndex(
+              (userObjectId) => userObjectId.toString() === userId
+          );
+      
+          // Si el índice es menor a 0, significa que el usuario no ha dado "like" todavía.
+          if (index < 0) {
+              // Agrega el ID del usuario al array de "likes" (el usuario da "like").
+              likes.push(userObjectId);
+          } else {
+              // Si el índice es mayor o igual a 0, significa que el usuario ya dio "like".
+              // En este caso, elimina el ID del usuario del array (el usuario quita el "like").
+              likes.splice(index, 1);
+          }
 
-      if (id !== userId) likes[likes.length] = id;
-    }
-
-    foundPost.likes = likes;
-  }
-  // Actualizo el post en la data
-
-  data.posts.updateOne(post => post.id === postId, foundPost);
+          return data.posts
+            .updateOne({ _id: postObjectID }, { $set: { likes } })
+            .catch(() => {
+              throw new SystemError("database error", error.message);
+            })
+            .then(() => {});
+        });
+    });
 };
