@@ -46,10 +46,11 @@ export const validate = {
     },
     description(textDescription, explain) {
         this.text(textDescription, explain);
-        this.maxLength(textDescription, 750, explain);
+        this.maxLength(textDescription, 1000, explain);
     },
     id(id, explain) {
+        console.log('id validate :>> ', id);
         this.text(id, explain);
-        this.exactLength(id, 34, explain);
+        this.exactLength(id, 24, explain);
     }
 };
