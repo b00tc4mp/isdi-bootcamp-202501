@@ -1,17 +1,19 @@
 import { data } from '../data/index.js'
-
 import { errors, validate } from 'com'
 
-const { CredentialsError, NotFoundError } = errors
+const { CredentialsError, NotFoundError, SystemError } = errors
 
 export const authenticateUser = (username, password) => {
     validate.username(username, 'username')
     validate.password(password, 'password')
 
-    const userFound = data.users.findOne(user => user.username === username)
+    return data.users.findOne({ username })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!userFound) throw new NotFoundError('user not found')
-    if (userFound.password !== password) throw new CredentialsError('wrong password')
+            if (user.password !== password) throw new CredentialsError('wrong credentials')
 
-    return userFound.id
+            return user._id.toString()
+        })
 }

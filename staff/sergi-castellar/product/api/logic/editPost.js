@@ -1,7 +1,9 @@
+import { SystemError } from 'com/errors.js';
 import { data } from './../data/index.js';
 import { validate, errors } from 'com'
 
 const { NotFoundError, OwnershipError } = errors
+const { ObjectId } = data
 
 
 export const editPost = (userId, postId, text) => {
@@ -9,19 +11,20 @@ export const editPost = (userId, postId, text) => {
     validate.id(postId, 'id');
     validate.description(text, 'text')
 
-    const { posts, users } = data;
+    const postObjectId = new ObjectId(postId)
 
-    const user = users.getById(userId)
-    if (!user) throw new NotFoundError('user not found');
+    return Promise.all([
+        data.users.findOne({ _id: new ObjectId(userId) }),
+        data.posts.findOne({ _id: postObjectId })
+    ])
+        .catch(error => { throw new SystemError(error.message) })
+        .then(([user, post]) => {
+            if (user === null || post === null) throw new NotFoundError(`${user === null ? 'user' : 'post'} not found`)
 
-    const post = posts.getById(postId);
+            if (userId !== post.authorId.toString()) throw new OwnershipError('user is not the post author');
 
-    if (!post) throw new NotFoundError('post not found');
-    if (userId !== post.authorId) throw new OwnershipError('user is not the post author');
-
-    post.textDescription = text;
-
-    post.modifiedAt = new Date;
-
-    data.posts.updateOne(post);
+            return data.posts.updateOne({ _id: postObjectId }, { $set: { textDescription: text, modifiedAt: new Date } })
+                .catch(error => { throw new SystemError(error.message) })
+        })
+        .then(() => { })
 };
