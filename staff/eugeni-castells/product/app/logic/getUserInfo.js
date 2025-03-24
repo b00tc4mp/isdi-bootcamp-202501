@@ -10,7 +10,7 @@ export const getUserInfo = () => {
 
   return fetch("http://localhost:8080/users/self", {
     method: "GET",
-    headers: { Authorization: `${data.userId}` },
+    headers: { Authorization: `Basic ${data.userId}` },
   })
     .catch((error) => {
       throw new SystemError(error.message);
