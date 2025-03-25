@@ -4,7 +4,7 @@ import { validate, errors } from "../../com";
 const { SystemError } = errors;
 
 export const updateUser = (userInfo) => {
-  const { userId } = data;
+  const { token } = data;
 
   const { name, username, email, password } = userInfo;
 
@@ -18,7 +18,7 @@ export const updateUser = (userInfo) => {
   return fetch("http://localhost:8080/users", {
     method: "PATCH",
     headers: {
-      Authorization: `Basic ${userId}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(userInfo),

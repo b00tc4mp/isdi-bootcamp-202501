@@ -4,14 +4,14 @@ import { validate, errors } from "../../com";
 const { SystemError } = errors;
 
 export const deletePost = (postId) => {
-  const { userId } = data;
-  validate.id(userId, "user id");
+  const { token } = data;
+
   validate.id(postId, "post id");
 
   return fetch(`http://localhost:8080/posts/${postId}`, {
     method: "DELETE",
     headers: {
-      Authorization: `Basic ${userId}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .catch((error) => {

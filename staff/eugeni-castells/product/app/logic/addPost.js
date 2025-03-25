@@ -5,7 +5,7 @@ const { SystemError } = errors;
 
 export const addPost = (postInfo) => {
   try {
-    const { userId } = data;
+    const { token } = data;
 
     const { image, text } = postInfo;
 
@@ -18,7 +18,7 @@ export const addPost = (postInfo) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Basic ${userId}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(postInfo),
     })

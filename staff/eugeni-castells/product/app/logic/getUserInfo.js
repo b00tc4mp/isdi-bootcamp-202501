@@ -4,13 +4,11 @@ import { validate, errors } from "../../com";
 const { SystemError } = errors;
 
 export const getUserInfo = () => {
-  const { userId } = data;
-
-  validate.id(userId, "user id");
+  const { token } = data;
 
   return fetch("http://localhost:8080/users/self", {
     method: "GET",
-    headers: { Authorization: `Basic ${data.userId}` },
+    headers: { Authorization: `Bearer ${token}` },
   })
     .catch((error) => {
       throw new SystemError(error.message);

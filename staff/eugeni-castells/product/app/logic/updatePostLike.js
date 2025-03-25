@@ -4,15 +4,14 @@ import { data } from "../data/index.js";
 const { SystemError } = errors;
 
 export const updatePostLike = (postId) => {
-  const { userId } = data;
+  const { token } = data;
 
-  validate.id(userId, "userId");
   validate.id(postId, "postId");
 
   return fetch(`http://localhost:8080/posts/likes/${postId}`, {
     method: "PATCH",
     headers: {
-      Authorization: `Basic ${userId}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .catch((error) => {

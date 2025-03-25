@@ -11,7 +11,7 @@ const loginUser = function (username, password) {
   if (!found || found.password !== password)
     throw new CredentialsError("wrong credentials");
 
-  data.userId = found.id;
+  data.token = found.id;
 };
 
 export default loginUser;

@@ -4,9 +4,8 @@ import { validate, errors } from "../../com";
 const { SystemError } = errors;
 
 export const updatePostText = (postId, text) => {
-  const { userId } = data;
+  const { token } = data;
 
-  validate.id(userId);
   validate.id(postId);
   validate.text(text);
 
@@ -14,7 +13,7 @@ export const updatePostText = (postId, text) => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Basic ${userId}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ text }),
   })
