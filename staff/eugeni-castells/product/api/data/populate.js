@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-
+import bcrypt from "bcryptjs";
 const client = new MongoClient("mongodb://localhost:27017");
 
 client
@@ -12,26 +12,33 @@ client
 
     return Promise.all([users.deleteMany(), posts.deleteMany()])
       .then(() => {
-        return users.insertMany([
-          {
-            name: "Luciano",
-            email: "luciano@marrano",
-            username: "lucho",
-            password: "123123123",
-          },
-          {
-            name: "Aaron",
-            email: "aaron@sabroson",
-            username: "aaron",
-            password: "123123123",
-          },
-          {
-            name: "Masha",
-            email: "masha@nova",
-            username: "mashinski",
-            password: "123123123",
-          },
-        ]);
+        return bcrypt
+          .hash("123123123", 10)
+          .catch((error) => {
+            throw new SystemError(error.message);
+          })
+          .then((hash) => {
+            return users.insertMany([
+              {
+                name: "Luciano",
+                email: "luciano@marrano",
+                username: "lucho",
+                password: hash,
+              },
+              {
+                name: "Aaron",
+                email: "aaron@sabroson",
+                username: "aaron",
+                password: hash,
+              },
+              {
+                name: "Masha",
+                email: "masha@nova",
+                username: "mashinski",
+                password: hash,
+              },
+            ]);
+          });
       })
       .then((result) => {
         const { 0: luchoId, 1: aaronId, 2: mashaId } = result.insertedIds;

@@ -4,7 +4,6 @@ const { NotFoundError, SystemError } = errors;
 const { ObjectId } = data;
 
 export const updatePostLikes = (userId, postId) => {
-  validate.id(userId, "user id");
   validate.id(postId, "post id");
 
   const userObjectId = new ObjectId(userId);

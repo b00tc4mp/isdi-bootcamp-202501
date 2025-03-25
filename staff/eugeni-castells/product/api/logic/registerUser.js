@@ -1,7 +1,7 @@
 import { errors, validate } from "com";
 import { data } from "../data/index.js";
-import { SystemError } from "com/errors.js";
-const { DuplicityError } = errors;
+import bcrypt from "bcryptjs";
+const { DuplicityError, SystemError } = errors;
 
 export const registerUser = function (userInfo) {
   validate.text(userInfo.name, "name");
@@ -14,24 +14,32 @@ export const registerUser = function (userInfo) {
   const { email, username } = userInfo;
   return data.users
     .findOne({ $or: [{ email }, { username }] })
+
     .then((user) => {
       if (user) throw new DuplicityError("user already exists");
 
-      const userToRegister = {
-        name: userInfo.name,
-        email: userInfo.email,
-        username: userInfo.username,
-        password: userInfo.password,
-        createdAt: new Date(),
-        modifiedAt: null,
-      };
+      return bcrypt
+        .hash(userInfo.password, 10)
+        .catch((error) => {
+          throw new SystemError(error.message);
+        })
+        .then((hash) => {
+          const userToRegister = {
+            name: userInfo.name,
+            email: userInfo.email,
+            username: userInfo.username,
+            password: hash,
+            createdAt: new Date(),
+            modifiedAt: null,
+          };
 
-      return data.users.insertOne(userToRegister).catch((error) => {
-        if (error.code === 11000)
-          throw new DuplicityError("user already exists");
+          return data.users.insertOne(userToRegister).catch((error) => {
+            if (error.code === 11000)
+              throw new DuplicityError("user already exists");
 
-        throw new SystemError(error.message);
-      });
+            throw new SystemError(error.message);
+          });
+        });
     })
     .then(() => {});
 };
