@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
-    "inspect": "node --inspect-brk ."
+    "inspect": "node --inspect-brk .",
+    "watch": "node --watch ."
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "com": "file:../com",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.15.0"
   }
 }

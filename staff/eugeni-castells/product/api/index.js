@@ -1,5 +1,6 @@
 import { data } from "./data/index.js";
 import express, { json } from "express";
+import jwt from "jsonwebtoken";
 import cors from "cors";
 import { logic } from "./logic/index.js";
 import { errors } from "../com/index.js";
@@ -13,6 +14,7 @@ const {
   NotFoundError,
 } = errors;
 
+const JWT_SECRET = "undostresbotifarradepagès";
 data
   .connect("mongodb://localhost:27017", "test")
   .catch((error) => console.error(error))
@@ -27,7 +29,9 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         return logic
           .getPosts(userId)
@@ -68,7 +72,9 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const { image, text } = req.body;
 
@@ -109,7 +115,9 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const { postId } = req.params;
 
@@ -187,7 +195,9 @@ data
               .json({ error: errorName, message: error.message });
           })
           .then((id) => {
-            res.status(200).json({ id });
+            const token = jwt.sign({ sub: id }, JWT_SECRET);
+
+            res.status(200).json({ token });
           });
       } catch (error) {
         console.error(error);
@@ -251,7 +261,9 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const body = req.body;
 
@@ -300,7 +312,9 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         return logic
           .getOnlineUserInfo(userId)
@@ -347,7 +361,9 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const {
           params: { id },
@@ -396,7 +412,9 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const { postId } = req.params;
 
