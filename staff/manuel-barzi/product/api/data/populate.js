@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb'
+import bcrypt from 'bcryptjs'
 
 const client = new MongoClient('mongodb://localhost:27017')
 
@@ -13,14 +14,15 @@ client.connect()
             users.deleteMany(),
             posts.deleteMany()
         ])
-            .then(() => {
+            .then(() => bcrypt.hash('123123123', 10))
+            .then(hash => {
                 return users.insertMany([
-                    { name: 'Pepito Grillo', email: 'pepito@grillo.com', username: 'pepitogrillo', password: '123123123' },
-                    { name: 'Campa Nilla', email: 'campa@nilla.com', username: 'campanilla', password: '123123123' },
-                    { name: 'Peter Pan', email: 'peter@pan.com', username: 'peterpan', password: '123123123' },
-                    { name: 'Wendy Darling', email: 'wendy@darling.com', username: 'wendydarling', password: '123123123' },
-                    { name: 'James Hook', email: 'james@hook.com', username: 'jameshook', password: '123123123' },
-                    { name: 'Pin Ocho', email: 'pin@ocho.com', username: 'pinocho', password: '123123123' }
+                    { name: 'Pepito Grillo', email: 'pepito@grillo.com', username: 'pepitogrillo', password: hash },
+                    { name: 'Campa Nilla', email: 'campa@nilla.com', username: 'campanilla', password: hash },
+                    { name: 'Peter Pan', email: 'peter@pan.com', username: 'peterpan', password: hash },
+                    { name: 'Wendy Darling', email: 'wendy@darling.com', username: 'wendydarling', password: hash },
+                    { name: 'James Hook', email: 'james@hook.com', username: 'jameshook', password: hash },
+                    { name: 'Pin Ocho', email: 'pin@ocho.com', username: 'pinocho', password: hash }
                 ])
             })
             .then(result => {
