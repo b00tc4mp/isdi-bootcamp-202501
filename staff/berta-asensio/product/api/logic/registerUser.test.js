@@ -19,13 +19,14 @@ console.info('TEST registerUser')
 data.connect('mongodb://localhost:27017', 'test')
     .then(() => {
         try {
+            let result2 = null
             return registerUser('Scooby Doo', 'Doo Scooby', '123123a', 'scooby@doo.com')
+                .then(result => result2 = result)
+                .finally(() => console.assert(result2 === undefined, 'result is undefined') )
+
         } catch (error) {
             console.error(error)
         }
-    })
-    .then(result => {
-        console.assert(result === undefined, 'result is undefined')
     })
     .catch(console.error) // Esto es igual a: .catch(error => console.error(error))
     .finally(data.disconnect) // Y esto es igual a: .finally(() => data.disconnect())

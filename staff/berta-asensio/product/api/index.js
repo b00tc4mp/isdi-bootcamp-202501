@@ -55,6 +55,11 @@ data.connect('mongodb://localhost:27017', 'test')
                 let status = 500 
                 let errorName = SystemError.name 
 
+                if (error instanceof ValidationError) {
+                    status = 400
+                    errorName = error.constructor.name
+                }
+
                 res.status(status).json({ error: errorName, message: error.message }) 
             }
         })
@@ -73,32 +78,29 @@ data.connect('mongodb://localhost:27017', 'test')
                         let status = 500 
                         let errorName = SystemError.name 
         
-                        if (error instanceof ValidationError) { 
-                            status = 400
-                            errorName = error.constructor.name
-                        } 
+                    if (error instanceof CredentialsError) {
+                        status = 401
+                        errorName = error.constructor.name
+                    } else if (error instanceof NotFoundError) {
+                        status = 404
+                        errorName = error.constructor.name
+                    }
                         res.status(status).json({ error: errorName, message: error.message })
                     })
 
             } catch (error) {
-               
 
+                console.error(error)
+               
                 let status = 500 
                 let errorName = SystemError.name 
 
                 if (error instanceof ValidationError) { 
                     status = 400
                     errorName = error.constructor.name
-                } else if (error instanceof CredentialsError) {
-                    status = 401
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
                 }
                 res.status(status).json({ error: errorName, message: error.message })
             }
-
         })
 
         //GET USERNAME
@@ -151,22 +153,31 @@ data.connect('mongodb://localhost:27017', 'test')
                 const { image, text } = req.body //ponemos en body los datos recogidos y pasados a json por BodyParser
 
                 logic.createPost(userId, image, text)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        console.error(error)
 
-                res.status(201).send() //devolvemos 201 como que todo ok y no mandamos mensaje.
+                        let status = 500
+                        let errorName = SystemError.name
+        
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
+        
+                        res.status(status).json({ error: errorName, message: error.message })
+
+                    })
             } catch (error) {
                 console.error(error)
 
                 let status = 500
                 let errorName = SystemError.name
 
-                if (error instanceof ValidationError) { //error de validación
+                if (error instanceof ValidationError) {
                     status = 400
                     errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {//por si el usuario no existe
-                    status = 404
-                    errorName = error.constructor.name
-                }
-
+                } 
                 res.status(status).json({ error: errorName, message: error.message })
             }
         })
@@ -178,9 +189,21 @@ data.connect('mongodb://localhost:27017', 'test')
 
                 const userId = authorization.slice(6)
 
-                const posts = logic.getPosts(userId)
+                logic.getPosts(userId)
+                    .then(posts => res.json(posts))
+                    .catch(error => {
+                        console.error(error)
 
-                res.json(posts) //No hace falta poner status, devolvemos los posts en forma de json.
+                        let status = 500
+                        let errorName = SystemError.name
+                         
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
+        
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -189,9 +212,6 @@ data.connect('mongodb://localhost:27017', 'test')
 
                 if (error instanceof ValidationError) {
                     status = 400
-                    errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
                     errorName = error.constructor.name
                 }
 
@@ -202,16 +222,31 @@ data.connect('mongodb://localhost:27017', 'test')
         //DELETE POST
         api.delete('/posts/:postId', (req, res) => {
             try {
-                //necesitamos autorización usuario:
-                const { authorization } = req.headers;
+ 
+                const { authorization } = req.headers
 
-                const userId = authorization.slice(6);
+                const userId = authorization.slice(6)
 
-                const { postId } = req.params;
-                //Mi usuario te dice que borres un post
-                logic.deletePost(userId, postId);
+                const { postId } = req.params
 
-                res.status(204).send(); //ha ido todo bien, y no hay body que responder
+                logic.deletePost(userId, postId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
+
+                        let status = 500
+                        let errorName = SystemError.name
+        
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        } else if (error instanceof OwnershipError) {
+                            status = 403
+                            errorName = error.constructor.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -221,41 +256,43 @@ data.connect('mongodb://localhost:27017', 'test')
                 if (error instanceof ValidationError) {
                     status = 400
                     errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
-                } else if (error instanceof OwnershipError) {
-                    status = 403
-                    errorName = error.constructor.name
-                }
+                } 
                 res.status(status).json({ error: errorName, message: error.message })
             }
-        });
+        })
 
         //TOGGLE LIKE POST
 
         api.patch('/posts/:postId/likes', (req, res) => {
             try {
-                const { authorization } = req.headers;
+                const { authorization } = req.headers
 
-                const userId = authorization.slice(6);
+                const userId = authorization.slice(6)
 
-                const { postId } = req.params;
+                const { postId } = req.params
 
-                logic.toggleLikePost(userId, postId);
+                logic.toggleLikePost(userId, postId)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
 
-                res.status(204).send();
+                        let status = 500;
+                        let errorName = SystemError.name
+
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        }
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })      
             } catch (error) {
-                console.error(error);
+                console.error(error)
 
                 let status = 500;
-                let errorName = SystemError.name;
+                let errorName = SystemError.name
 
                 if (error instanceof ValidationError) {
-                    status = 400;
-                    errorName = error.constructor.name;
-                } else if (error instanceof NotFoundError) {
-                    status = 404;
+                    status = 400
                     errorName = error.constructor.name;
                 }
                 res.status(status).json({ error: errorName, message: error.message })
@@ -263,24 +300,32 @@ data.connect('mongodb://localhost:27017', 'test')
         })
 
         //UPDATE POST TEXT
-        /*
-        -Autorizamos id usuario y lo guardamos en headers.
-        -Guardamos id del post en params.
-        -Guardamos texto a actualizar (pasado por bodyparser) en body.
-        */
         api.patch("/posts/:postId/text", jsonBodyParser, (req, res) => {
             try {
-                const { authorization } = req.headers;
+                const { authorization } = req.headers
 
-                const userId = authorization.slice(6);
+                const userId = authorization.slice(6)
 
-                const { postId } = req.params;
+                const { postId } = req.params
 
-                const { text } = req.body;
+                const { text } = req.body
 
-                logic.updatePostText(userId, postId, text);
-
-                res.status(204).send();
+                logic.updatePostText(userId, postId, text)
+                    .then(() => res.status(204).send())
+                    .catch(error => {
+                        console.error(error)
+                        let status = 500
+                        let errorName = SystemError.name
+        
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = error.constructor.name
+                        } else if (error instanceof OwnershipError) {
+                            status = 403
+                            errorName = error.constructor.name
+                        }
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
                 console.error(error)
 
@@ -290,18 +335,10 @@ data.connect('mongodb://localhost:27017', 'test')
                 if (error instanceof ValidationError) {
                     status = 400
                     errorName = error.constructor.name
-                } else if (error instanceof NotFoundError) {
-                    status = 404
-                    errorName = error.constructor.name
-                } else if (error instanceof OwnershipError) {
-                    status = 403
-                    errorName = error.constructor.name
                 }
-
                 res.status(status).json({ error: errorName, message: error.message })
             }
-        });
-
+        })
 
         api.listen(8080, () => console.log('API running on post 8080'))
 

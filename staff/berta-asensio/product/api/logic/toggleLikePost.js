@@ -1,67 +1,64 @@
-import { data } from "../data/index.js";
+
+import { data } from "../data/index.js"
 import { errors, validate } from 'com'
 
-const { NotFoundError } = errors
+const { ObjectId } = data
+const { SystemError, NotFoundError } = errors
 
-//el userId le dará like a postId
+/*
+-Creamos función toggleLikePost con dos parámetros.
+-Validamos los ID's.
+-Convertimos userId en un ObjectId.
+-Buscamos usuario en la base de datos.
+  -Si hay algun error: SystemError.
+  -Si no, entramos en el then:
+    -Si no se encuentra el usuario, notFoundError.
+    -Convertimos postId en un ObjectId.
+    -Buscamos el post en la colección de posts
+    -Si hay un error durante la busqueda: System error.
+    -Happypath: 
+      -Si no encontramos el post: notFoundError.
+      -Buscamos si el usuario ya ha dado like con findIndex:
+        -Si index = -1, el usuario NO ha dado like.
+        -Si index >= 0, el usuario ya ha dado like.
+      -Si el usuario no ha dado like: lo agrega(push)
+      -SI el usuario ha dado like, lo quita (splice)
+      -Actualizamos el post en la colección de posts con el Id del post y actualizando el like.
+      -System error si hay algun error durante la actualización.
+      -Si la operación fue exitosa, then vacío para no devolver nada.
+*/
 
 export const toggleLikePost = (userId, postId) => {
-  validate.id(userId, "userId");
-  validate.id(postId, "postId");
+  validate.id(userId, "userId")
+  validate.id(postId, "postId")
 
-  //Comprobamos que el usuario exista
-  const user = data.users.getById(userId);
+  const userObjectId = new ObjectId(userId)
 
-  if (!user) throw new NotFoundError("user not found");
+  return data.users.findOne({ _id: userObjectId })
+    .catch(error => { throw new SystemError(error.message) })
+    .then(user => {
+      if(!user) throw new NotFoundError("user not found")
+      
+      const postObjectId = new ObjectId(postId)
 
-  //Comprobamos que el post exista
-  const post = data.posts.findOne(post => post.id === postId);
+      return data.posts.findOne({ _id: postObjectId })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(post => {
+          if (!post) throw new NotFoundError("post not found")
 
-  if (!post) throw new NotFoundError("post not found");
+          const { likes } = post
 
+          const index = likes.findIndex(userObjectId => userObjectId.toString() === userId)
 
-  /* TODO ESTO LO SIMPLIFICAMOS Y CAMBIAMOS POR MËTODOS
+          if (index < 0) {
+            post.likes.push(userObjectId)
+          } else {
+            post.likes.splice(index, 1)
+          }
 
-  let userIdFound = false;
-
-  for (let i = 0; i < foundPost.likes.length && !userIdFound; i++) {
-    const id = foundPost.likes[i];
-
-    if (id === userId) userIdFound = true;
-  }
-
-  if (!userIdFound) foundPost.likes[foundPost.likes.length] = userId;
-  else {
-    const likes = [];
-
-    for (let i = 0; i < foundPost.likes.length; i++) {
-      const id = foundPost.likes[i];
-
-      if (id !== userId) likes[likes.length] = id;
-    }
-
-    foundPost.likes = likes;
-  }
-    */
-
-  /* 
-  -Hacemos un findIndex en el post.likes (likes es un array de id's).
-  -Estamos buscando el likeUserId que coincida con el mio, porque si es que si
-  devolverá un indice superior o igual a 0.
-  -Si no lo ha encontrado (index < 0), lo pusheo.
-  -Si lo  ha encontrado, hay que hacer un splice en el indice.
-  */
-
-  const index = post.likes.findIndex(likeUserId => likeUserId === userId)
-
-  if (index < 0) {
-    post.likes.push(userId)
-  } else {
-    post.likes.splice(index, 1)
-  }
-  /*adaptamos la función con un callback. ya que en collection hemos
-    modificado la función updateOne para que nos permita pasar una condición.
-    Asi que le marcamos una condición, y un document.
-    */
-  data.posts.updateOne((post) => post.id === postId, post);
-};
+          return data.posts.updateOne({ _id: postObjectId }, { $set: { likes } })
+            .catch(error => { throw new SystemError(error.message) })
+            .then(() => { })
+        })
+    }) 
+}
