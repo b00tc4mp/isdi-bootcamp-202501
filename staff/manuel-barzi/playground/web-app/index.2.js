@@ -1,14 +1,22 @@
 const express = require('express')
+const fs = require('fs')
 
 const server = express()
-
-const public = express.static('public')
 
 const formBodyParser = express.urlencoded() // name=Pepito+Grillo&username=pepitogrillo&password=123123123
 
 const logic = require('./logic.js')
 
-server.use(public)
+server.get('/style.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css')
+
+    // res.send(`
+    //     a { color: gold; background-color: dodgerblue; }
+    // `)
+
+    const css = fs.readFileSync('public/style.css')
+    res.send(css)
+})
 
 server.get('/', (req, res) => {
     //if (req.headers.cookie && req.headers.cookie.includes('userId')) {
@@ -23,14 +31,11 @@ server.get('/', (req, res) => {
         <html>
             <head>
                 <title>Landing</title>
-                <link rel="icon" href="/favicon.ico" type="image/icon">
                 <link rel="stylesheet" href="style.css">
             </head>
 
             <body>
                 <a href="/register">Register</a> or <a href="/login">Login</a>
-
-                <audio controls src="fartito.mp3"></audio>
             </body>
         </html>
     `)
