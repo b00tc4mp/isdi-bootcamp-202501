@@ -1,13 +1,13 @@
 export const data = {
-    get userId() {
-        const userId = JSON.parse(sessionStorage.userId || 'null')
+    get token() {
+        const id = JSON.parse(sessionStorage.token || 'null')
 
-        return userId
+        return id
     },
 
-    set userId(userId) {
-        const json = JSON.stringify(userId)
+    set token(id) {
+        const json = JSON.stringify(id)
 
-        sessionStorage.userId = json
+        sessionStorage.token = json
     }
 }

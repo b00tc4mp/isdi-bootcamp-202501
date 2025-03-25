@@ -1,5 +1,6 @@
 import { data } from './../data/index.js';
 import { validate, errors } from 'com'
+import bcrypt from 'bcryptjs';
 
 const { DuplicityError, SystemError } = errors
 
@@ -14,11 +15,15 @@ export const registerUser = (name, email, username, password) => {
         .then(found => {
             if (found) throw new DuplicityError('user already exists')
 
+            return bcrypt.hash(password, 10)
+                .catch(error => { throw new SystemError(error.message) })
+        })
+        .then(hash => {
             const user = {
                 name: name,
                 email: email,
                 username: username,
-                password: password,
+                password: hash,
                 createdAt: new Date(),
                 modifiedAt: null
             };

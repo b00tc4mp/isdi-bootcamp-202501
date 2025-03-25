@@ -7,12 +7,12 @@ export const createNewPost = (imageSrc, textDescription) => {
     validate.url(imageSrc, 'url');
     validate.description(textDescription, 'description');
 
-    const { userId } = data;
+    const { token } = data;
 
     return fetch('http://localhost:8080/posts/new', {
         method: 'POST',
         headers: {
-            Authorization: `Basic ${userId}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ imageSrc, textDescription })

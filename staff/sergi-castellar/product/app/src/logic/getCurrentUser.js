@@ -4,12 +4,12 @@ import { errors } from 'com'
 const { SystemError } = errors
 
 export const getCurrentUser = () => {
-    const { userId } = data
+    const { token } = data
 
     return fetch('http://localhost:8080/users/self', {
         method: 'GET',
         headers: {
-            Authorization: `Basic ${userId}`
+            Authorization: `Bearer ${token}`
         }
     })
         .catch(error => { throw new SystemError(error.message) })

@@ -6,12 +6,12 @@ const { SystemError } = errors
 export const deletePost = (postId) => {
     validate.id(postId, 'id');
 
-    const { userId } = data
+    const { token } = data
 
     return fetch(`http://localhost:8080/posts/delete/${postId}`, {
         method: 'DELETE',
         headers: {
-            Authorization: `Basic ${userId}`
+            Authorization: `Bearer ${token}`
         }
     })
         .catch(error => { throw new SystemError(error.message) })

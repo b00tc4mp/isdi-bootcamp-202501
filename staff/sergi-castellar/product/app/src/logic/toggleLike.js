@@ -6,12 +6,12 @@ const { SystemError } = errors
 export const toggleLike = (currentPostId) => {
     validate.id(currentPostId, 'id');
 
-    const { userId } = data;
+    const { token } = data;
 
     return fetch(`http://localhost:8080/posts/likes/${currentPostId}`, {
         method: 'PATCH',
         headers: {
-            Authorization: `Basic ${userId}`
+            Authorization: `Bearer ${token}`
         }
     })
         .catch(error => { throw new SystemError(error.message) })

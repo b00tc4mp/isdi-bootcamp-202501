@@ -23,8 +23,10 @@ export const getPosts = userId => {
                     const aggregatedPosts = []
 
                     posts.forEach(post => {
+
                         let liked = false
-                        post.likes.includes(userId) ? liked = true : liked = false
+
+                        liked = post.likes.map(id => id.toString()).includes(userId) ? true : false
 
                         const authorId = post.authorId.toString()
 
