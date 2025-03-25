@@ -9,7 +9,6 @@ export const addPost = (postInfo) => {
 
     const { image, text } = postInfo;
 
-    validate.id(userId, "userId");
     validate.url(image, "image url");
     validate.text(text, "post text");
     validate.maxLength(500, "post text length");
