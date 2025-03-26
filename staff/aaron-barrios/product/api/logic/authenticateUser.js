@@ -1,5 +1,6 @@
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
+import bcrypt from 'bcryptjs'
 
 const { SystemError, CredentialsError, NotFoundError } = errors
 
@@ -12,8 +13,12 @@ export const authenticateUser = (username, password) => {
         .then(user => {
             if (!user) throw new NotFoundError('User not found!')
 
-            if (user.password !== password) throw new CredentialsError('Wrong credentials')
+            return bcrypt.compare(password, user.password)
+                .catch(error => { throw new SystemError(error.message)} )
+                .then(match => {
+                    if (!match) throw new CredentialsError('Wrong Credentials')
 
-            return user._id.toString() // => to mask the db we are using
+                    return user._id.toString() // => to mask the db we are using
+                })
         })
 }
