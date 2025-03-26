@@ -8,7 +8,7 @@ data.connect('mongodb://localhost:27017', 'test')
         try {
             let userId
 
-            return authenticateUser('arielle', '123456789')
+            return authenticateUser('marquecito', '123456789')
                 .then(id => userId = id)
                 .finally(() => console.assert(typeof userId === 'string', 'userId is a string'))
         } catch (error) {

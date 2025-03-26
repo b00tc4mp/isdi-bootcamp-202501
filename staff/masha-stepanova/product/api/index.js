@@ -1,11 +1,29 @@
 import express, { json } from 'express'
 import cors from 'cors'
 import { errors } from 'com'
+import jwt from 'jsonwebtoken'
 
 import { data } from './data/index.js'
 import { logic } from './logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, SystemError, OwnershipError, ValidationError } = errors
+
+const JWT_SECRET = 'psijfdvbwpiufveivlkjmhgfdsdfghnjmklkjhgfdfgbhnjmkkvdcx'
+
+const handleWithErrorHandling = (next, callback) => {
+    try {
+        callback()
+            .catch(error => {
+                console.error(error)
+
+                next(error)
+            })
+    } catch (error) {
+        console.error(error)
+
+        next(error)
+    }
+}
 
 data.connect('mongodb://localhost:27017', 'test')
     .catch(console.error)
@@ -22,356 +40,156 @@ data.connect('mongodb://localhost:27017', 'test')
             res.send('Hello, API!')
         })
 
-        api.post('/users', jsonBodyParse, (req, res) => {
-            try {
+        api.post('/users', jsonBodyParse, (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { name, email, username, password } = req.body
 
-                logic.registerUser(name, email, username, password)
+                return logic.registerUser(name, email, username, password)
                     .then(() => res.status(201).send())
-                    .catch(error => {
-                        console.error(error)
+            })
 
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof DuplicityError) {
-                            status = 400
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-                    })
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
         })
 
-        api.post('/users/auth', jsonBodyParse, (req, res) => {
-            try {
+        api.post('/users/auth', jsonBodyParse, (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { username, password } = req.body
 
-                logic.authenticateUser(username, password)
-                    .then(id => res.json({ id }))
-                    .catch(error => {
-                        console.error(error)
+                return logic.authenticateUser(username, password)
+                    .then(id => {
+                        const token = jwt.sign({ sub: id }, JWT_SECRET)
 
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof CredentialsError) {
-                            status = 401
-                            errorName = error.constructor.name
-                        } else if (error instanceof NotFoundError) {
-                            status = 404
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-
+                        res.json({ token })
                     })
+            })
 
-
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
         })
 
-        api.post('/posts', jsonBodyParse, (req, res) => {
-            try {
+        api.post('/posts', jsonBodyParse, (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
                 const { body: { image, text } } = req
 
-                logic.createPost(userId, image, text)
+                return logic.createPost(userId, image, text)
                     .then(() => res.status(201).send())
-                    .catch((error) => {
-                        console.error(error)
-
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof NotFoundError) {
-                            status = 404
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-
-                    })
-
-
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
+            })
         })
 
-        api.get('/posts', (req, res) => {
-            try {
+        api.get('/posts', (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
 
-                logic.getPosts(userId)
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+                return logic.getPosts(userId)
                     .then(posts => res.send(posts))
-                    .catch(error => {
-                        console.error(error)
-
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof NotFoundError) {
-                            status = 404
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-                    })
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
+            })
         })
 
-        api.get('/posts/self/posts', (req, res) => {
-            try {
+        api.get('/posts/self/posts', (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
 
-                logic.getUserPosts(userId)
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+                return logic.getUserPosts(userId)
                     .then(posts => res.json(posts))
-                    .catch(error => {
-                        console.error(error)
-
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof NotFoundError) {
-                            status = 404
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-                    })
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
+            })
         })
 
-        api.get('/users/self/name', (req, res) => {
-            try {
+        api.get('/users/self/name', (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
 
-                logic.getUserName(userId)
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+                return logic.getUserName(userId)
                     .then(name => res.json({ name }))
-                    .catch(error => {
-                        console.error(error)
-
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof NotFoundError) {
-                            status = 404
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-                    })
-
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
+            })
         })
 
-        api.delete('/posts/:postId', (req, res) => {
-            try {
+        api.delete('/posts/:postId', (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
                 const { postId } = req.params
 
-                logic.deletePost(userId, postId)
+                return logic.deletePost(userId, postId)
                     .then(() => res.status(204).send())
-                    .catch(error => {
-                        console.error(error)
-
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof OwnershipError) {
-                            status = 403
-                            errorName = error.constructor.name
-                        } else if (error instanceof NotFoundError) {
-                            status = 404
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-                    })
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
+            })
         })
 
-        api.patch('/posts/:postId/likes', jsonBodyParse, (req, res) => {
-            try {
+        api.patch('/posts/:postId/likes', jsonBodyParse, (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
-                console.log(userId)
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
                 const { postId } = req.params
-                console.log(postId)
 
-
-                logic.toggleLikePost(userId, postId)
+                return logic.toggleLikePost(userId, postId)
                     .then(() => res.status(204).send())
-                    .catch(error => {
-                        console.error(error)
-
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof NotFoundError) {
-                            status = 404
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-                    })
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
+            })
         })
 
-        api.patch('/posts/:postId/text', jsonBodyParse, (req, res) => {
-            try {
+        api.patch('/posts/:postId/text', jsonBodyParse, (req, res, next) => {
+            handleWithErrorHandling(next, () => {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
 
-                // const { params: { postId }, body: { text } } = req
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
                 const { postId } = req.params
 
                 const { text } = req.body
 
-                logic.updatePostText(userId, postId, text)
+                return logic.updatePostText(userId, postId, text)
                     .then(() => res.status(204).send())
-                    .catch(error => {
-                        console.error(error)
-
-                        let status = 500
-                        let errorName = SystemError.name
-
-                        if (error instanceof OwnershipError) {
-                            status = 403
-                            errorName = error.constructor.name
-                        } else if (error instanceof NotFoundError) {
-                            status = 404
-                            errorName = error.constructor.name
-                        }
-
-                        res.status(status).json({ error: errorName, message: error.message })
-                    })
-            } catch (error) {
-                console.error(error)
-
-                let status = 500
-                let errorName = SystemError.name
-
-                if (error instanceof ValidationError) {
-                    status = 400
-                    errorName = error.constructor.name
-                }
-
-                res.status(status).json({ error: errorName, message: error.message })
-            }
+            })
         })
+
+        const errorHandler = (error, _req, res, _next) => {
+            let status = 500
+            let errorName = SystemError.name
+
+            if (error instanceof DuplicityError) {
+                status = 400
+                errorName = error.constructor.name
+            } else if (error instanceof ValidationError) {
+                status = 400
+                errorName = error.constructor.name
+            } else if (error instanceof CredentialsError) {
+                status = 401
+                errorName = error.constructor.name
+            } else if (error instanceof NotFoundError) {
+                status = 404
+                errorName = error.constructor.name
+            } else if (error instanceof OwnershipError) {
+                status = 403
+                errorName = error.constructor.name
+            }
+
+            res.status(status).json({ error: errorName, message: error.message })
+        }
+
+        api.use(errorHandler)
 
         api.listen(port, () => {
             console.log('Test listening port ' + port)

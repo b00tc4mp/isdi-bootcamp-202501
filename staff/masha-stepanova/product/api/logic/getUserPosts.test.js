@@ -11,7 +11,6 @@ data.connect('mongodb://localhost:27017', 'test')
             return getUserPosts('67dc24464fb4f765fd5e5a67')
                 .then(result => {
                     posts = result
-                    console.log(posts)
                 })
                 .finally(() => {
                     console.assert(posts instanceof Array, 'posts is an array')

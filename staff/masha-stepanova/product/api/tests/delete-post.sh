@@ -1,1 +1,1 @@
-curl -X DELETE http://localhost:8080/posts/m87ilrsrl6 -H 'Authorization: Basic m873ryudyt' -v
+curl -X DELETE http://localhost:8080/posts/67e0663a163e8121156a41dc -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UwNjU1YjE2M2U4MTIxMTU2YTQxZGIiLCJpYXQiOjE3NDMwMDI5Mjl9.VmI5J8pbka8dsFwu8SeH0CEL7uUpz1ONpjAyEjTlPdI' -v
