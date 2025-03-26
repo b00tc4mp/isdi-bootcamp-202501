@@ -16,6 +16,17 @@ const formBodyParser = express.urlencoded()
 
 const logic = require('./logic.js')
 
+
+//RUTA PARA LOS ESTILOS
+
+server.get('/style.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css')
+
+    res.send(`
+        a { color: gold; background-color: dodgerblue; }
+        `)
+})
+
 //RUTAS DEL SERVIDOR (LANDING, REGISTER, LOGIN)
 
 /*
@@ -37,10 +48,11 @@ server.get('/', (req, res) => {
         <html>
             <head>
                 <title>Landing</title>
+                <link rel="stylesheet" href="style.css">  
             </head>
 
             <body>
-                <a href="/register">Register</> or <a href="/login">Login</a>
+                <a href="/register">Register</a> or <a href="/login">Login</a>
             </body>
         </html>
     `)
