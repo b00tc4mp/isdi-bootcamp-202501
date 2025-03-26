@@ -35,7 +35,11 @@ data
   .then(() => {
     const api = express();
 
-    api.use(cors());
+    api.use(cors(), (req, _res, next) => {
+      req.eugeni = true;
+
+      next();
+    });
 
     const jsonBodyParser = json();
 
@@ -43,12 +47,14 @@ data
       handleWithErrorHandling(next, () => {
         const { authorization } = req.headers;
 
+        const { eugeni } = req;
+
         const token = authorization.slice(7);
 
         const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         return logic.getPosts(userId).then((posts) => {
-          res.status(200).json(posts);
+          res.status(200).json(posts).send(console.log(eugeni));
         });
       });
     });
