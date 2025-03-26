@@ -6,7 +6,7 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     console.debug('Landing -> render')
 
     return <div className="landing">
-        <div class="image-container"></div>
+        <div className="image-container"></div>
         <h1>Deepstagram</h1>
         <h4>¡Meet people, share contents, rate posts and more!</h4>
         <a onClick={handleRegisterClick}>Register</a> or <a onClick={handleLoginClick}>Login</a>
