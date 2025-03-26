@@ -13,7 +13,7 @@ export const getUserName = (userId) => {
       throw new SystemError("database error", error.message);
     })
     .then((user) => {
-      if (!user) throw new NotuserError("user not found");
+      if (!user) throw new NotFoundError("user not found");
 
       return user.name;
     });

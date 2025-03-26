@@ -7,18 +7,18 @@ export const deletePost = (userId, postId) => {
   validate.id(postId, "postId");
   validate.id(userId, "userId");
 
-  //TODO POR QUE NO CREO UNA CONSTANTE CON EL ID DEL USUARIO
-  //  const userObjectID = ObjectId(userId);
+ 
+    const userObjectID = new ObjectId(userId);
+    const postObjectID = new ObjectId(postId);
 
-  return data.users
-    .findOne({ _id: new ObjectId(userId) })
+  return data.users.findOne({ _id: userObjectID })
     .catch(() => {
       throw new SystemError("database error", error.message);
     })
     .then((user) => {
       if (!user) throw new NotFoundError("user not found");
 
-      const postObjectID = new ObjectId(postId);
+      
 
       return data.posts
         .findOne({ _id: postObjectID })

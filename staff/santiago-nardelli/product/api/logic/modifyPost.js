@@ -5,7 +5,7 @@ const { ObjectId } = data;
 const { NotFoundError, OwnershipError, SystemError } = errors;
 
 export const modifyPost = (userId, postId, title) => {
-  // Validar el ID del post
+  validate.id(userId, "userId");
   validate.id(postId, "postId");
   validate.text(title, "title");
   validate.maxLength(title, 500, "title");
@@ -13,7 +13,7 @@ export const modifyPost = (userId, postId, title) => {
   const userObjectId = new ObjectId(userId); //==>creo un objeto con el id del usuario para buscarlo en la base de datos y poder trabajar con el
 
   return data.users
-    .findeOne({ _id: userObjectId }) // ==> Buscar el usuario en la base de datos
+    .findOne({ _id: userObjectId }) // ==> Buscar el usuario en la base de datos
     .catch(() => {
       throw new SystemError("database error", error.message);
     }) //==> Si hay un error, lanzar un error personalizado "SystemError".
@@ -23,7 +23,7 @@ export const modifyPost = (userId, postId, title) => {
 
       const postObjectID = new ObjectId(postId); //==>creo un objeto con el id del post para buscarlo en la base de datos y poder trabajar con el
       return data.posts
-        .findeOne({ _id: postObjectID }) //==> Buscar el post en la base de datos
+        .findOne({ _id: postObjectID }) //==> Buscar el post en la base de datos
         .catch(() => {
           throw new SystemError("database error", error.message);
         }) //==> Si hay un error, lanzar un error personalizado "SystemError".

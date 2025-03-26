@@ -6,13 +6,13 @@ const { SystemError } = errors;
 export const toggleLikePost = (postId) => {
   validate.id(postId, "postId");
   // me traigo el user id de la data, que viene del session storage
-  const { userId } = data;
+  const { token } = data;
 
   return fetch(`http://localhost:3000/posts/${postId}/likes`, {
     method: "PATCH",
     headers: {
       // le paso el user id en el header
-      Authorization: `Basic ${userId}`,
+      Authorization: `Bearer ${token}`,
       //aca no usoo el content type porque no estoy enviando nada en el body
     },
   })

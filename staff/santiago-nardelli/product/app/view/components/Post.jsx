@@ -53,10 +53,7 @@ export function Post({
 
   const handleSaveClick = (event) => {
     event.preventDefault();
-    // const { target: form } = event;
-    // const {
-    //   title: { value: newTitle },
-    // } = form;
+     
     try {
       logic.modifyPost(post.id, newTitle)
         .then(()=>{

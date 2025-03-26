@@ -8,13 +8,13 @@ export const deletePost = (postId) => {  // Función principal para eliminar un 
   // Valida que el `postId` sea correcto utilizando la función `validate.id`. Si no es válido, lanzará un error.
   validate.id(postId, "postId");  
 
-  const { userId } = data;  // Obtiene el `userId` del objeto `data`, que será usado para la autenticación.
+  const { token } = data;  // Obtiene el `userId` del objeto `data`, que será usado para la autenticación.
 
   // Realiza una solicitud HTTP `DELETE` para eliminar el post. La URL está construida con el `postId` proporcionado.
   return fetch(`http://localhost:3000/posts/${postId}`, {
     method: "DELETE",  // La solicitud es de tipo `DELETE`, que se usa para eliminar un recurso en el servidor.
     headers: {
-      Authorization: `Basic ${userId}`,  // Se incluye el `userId` en el encabezado `Authorization` para autenticar la solicitud.
+      Authorization: `Bearer ${token}`,  // Se incluye el `userId` en el encabezado `Authorization` para autenticar la solicitud.
     },
   })
     .catch((error) => {  // Si ocurre un error al hacer la solicitud (por ejemplo, problemas de red), se captura aquí.

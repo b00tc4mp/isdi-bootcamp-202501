@@ -7,6 +7,10 @@ import { logic } from "./logic/index.js";
 import { errors } from "com";
 import { data } from "./data/index.js";
 
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = "sergi te quiero";
+
 const {
   SystemError,
   ValidateError,
@@ -36,11 +40,27 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
 
-        const posts = logic.getPosts(userId);
-        //verificar si poner con llaves {posts}
-        res.json(posts);
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
+
+         logic
+          .getPosts(userId)
+          .then((posts) => res.json(posts))
+          .catch((error) => {
+            console.error(error);
+
+            let status = 500;
+            let errorName = SystemError.name;
+
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = error.constructor.name;
+            }
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          });
       } catch (error) {
         console.error(error);
 
@@ -49,9 +69,6 @@ data
 
         if (error instanceof ValidateError) {
           status = 400;
-          errorName = error.constructor.name;
-        } else if (error instanceof NotFoundError) {
-          status = 404;
           errorName = error.constructor.name;
         }
         res.status(status).json({ error: errorName, message: error.message });
@@ -63,11 +80,28 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
 
-        const name = logic.getUserName(userId);
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
-        res.json({ name });
+        logic
+          .getUserName(userId)
+          .then((name) => {
+            res.json({ name });
+          })
+          .catch((error) => {
+            console.error(error);
+            let status = 500;
+            let errorName = SystemError.name;
+
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = error.constructor.name;
+            }
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          });
       } catch (error) {
         console.error(error);
 
@@ -76,9 +110,6 @@ data
 
         if (error instanceof ValidateError) {
           status = 400;
-          errorName = error.constructor.name;
-        } else if (error instanceof NotFoundError) {
-          status = 404;
           errorName = error.constructor.name;
         }
 
@@ -93,27 +124,42 @@ data
         const { email, password } = req.body;
 
         // Llama a la lógica de autenticación de usuario con el email y password proporcionados
-        const id = logic.authenticateUser(email, password);
+        logic
+          .authenticateUser(email, password)
+          .then((id) => {
+            const token = jwt.sign({ sub: id }, JWT_SECRET);
+            res.json({ token });
+          }) //==> respondo con el id del usuario autenticado
+          .catch((error) => {
+            console.error(error);
 
-        // Responde con el id del usuario autenticado en formato JSON
-        res.json({ id });
+            let status = 500; //==> Inicializa el estado de respuesta y el nombre del error
+            let errorName = SystemError.name; // aqui se guarda el nombre del error
+
+            if (error instanceof CredentialsError) {
+              //==> Maneja errores específicos y ajusta el estado de respuesta y el nombre del error en consecuencia
+              status = 401; //==> Error de credenciales, no autorizado
+              errorName = error.constructor.name;
+            } else if (error instanceof NotFoundError) {
+              status = 404; //==> Error de no encontrado, recurso no encontrado
+              errorName = error.constructor.name;
+            }
+
+            // Responde con el estado de error y un objeto JSON que contiene el nombre del error y el mensaje
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          });
       } catch (error) {
         // Imprime el error en la consola para propósitos de depuración
-        console.log(error);
+        console.error(error);
 
-        // Inicializa el estado de respuesta y el nombre del error
-        let status = 500;
+        let status = 500; //==> Inicializa el estado de respuesta y el nombre del error
         let errorName = SystemError.name;
 
-        // Maneja errores específicos y ajusta el estado de respuesta y el nombre del error en consecuencia
         if (error instanceof ValidateError) {
-          status = 400; // Error de validación, solicitud incorrecta
-          errorName = error.constructor.name;
-        } else if (error instanceof CredentialsError) {
-          status = 401; // Error de credenciales, no autorizado
-          errorName = error.constructor.name;
-        } else if (error instanceof NotFoundError) {
-          status = 404; // Error de no encontrado, recurso no encontrado
+          //==> Maneja errores específicos y ajusta el estado de respuesta y el nombre del error en consecuencia
+          status = 400; //==> Error de validación, solicitud incorrecta
           errorName = error.constructor.name;
         }
 
@@ -175,13 +221,32 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const { image, title } = req.body;
 
-        logic.createPost(userId, image, title);
+        logic
+          .createPost(userId, image, title)
+          .then(() => {
+            res.status(201).send();
+          })
+          .catch((error) => {
+            console.error(error);
 
-        res.status(201).send();
+            let status = 500;
+            let errorName = SystemError.name;
+
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = error.constructor.name;
+            }
+
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          });
       } catch (error) {
         console.error(error);
 
@@ -190,9 +255,6 @@ data
 
         if (error instanceof ValidateError) {
           status = 400;
-          errorName = error.constructor.name;
-        } else if (error instanceof NotFoundError) {
-          status = 404;
           errorName = error.constructor.name;
         }
         res.status(status).json({ error: errorName, message: error.message });
@@ -203,15 +265,35 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const { postId } = req.params;
 
         const { title } = req.body;
 
-        logic.modifyPost(userId, postId, title);
+        logic
+          .modifyPost(userId, postId, title)
+          .then(() => {
+            res.status(204).send();
+          })
+          .catch((error) => {
+            let status = 500;
+            let errorName = SystemError.name;
 
-        res.status(204).send();
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = error.constructor.name;
+            } else if (error instanceof OwnershipError) {
+              status = 403;
+              errorName = error.constructor.name;
+            }
+
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          });
       } catch (error) {
         console.error(error);
 
@@ -220,12 +302,6 @@ data
 
         if (error instanceof ValidateError) {
           status = 400;
-          errorName = error.constructor.name;
-        } else if (error instanceof NotFoundError) {
-          status = 404;
-          errorName = error.constructor.name;
-        } else if (error instanceof OwnershipError) {
-          status = 403;
           errorName = error.constructor.name;
         }
 
@@ -237,13 +313,32 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const { postId } = req.params;
 
-        logic.toggleLikePost(userId, postId);
+        logic
+          .toggleLikePost(userId, postId)
+          .then(() => {
+            res.status(204).send();
+          })
+          .catch((error) => {
+            console.error(error);
 
-        res.status(204).send();
+            let status = 500;
+            let errorName = SystemError.name;
+
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = error.constructor.name;
+            }
+
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          });
       } catch (error) {
         console.error(error);
 
@@ -252,9 +347,6 @@ data
 
         if (error instanceof ValidateError) {
           status = 400;
-          errorName = error.constructor.name;
-        } else if (error instanceof NotFoundError) {
-          status = 404;
           errorName = error.constructor.name;
         }
 
@@ -266,13 +358,35 @@ data
       try {
         const { authorization } = req.headers;
 
-        const userId = authorization.slice(6);
+        const token = authorization.slice(7);
+
+        const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
         const { postId } = req.params;
 
-        logic.deletePost(userId, postId);
+        logic
+          .deletePost(userId, postId)
+          .then(() => {
+            res.status(204).send();
+          })
+          .catch((error) => {
+            console.error(error);
 
-        res.status(204).send();
+            let status = 500;
+            let errorName = SystemError.name;
+
+            if (error instanceof NotFoundError) {
+              status = 404;
+              errorName = error.constructor.name;
+            } else if (error instanceof OwnershipError) {
+              status = 403;
+              errorName = error.constructor;
+            }
+
+            res
+              .status(status)
+              .json({ error: errorName, message: error.message });
+          });
       } catch (error) {
         console.error(error);
 
@@ -282,12 +396,6 @@ data
         if (error instanceof ValidateError) {
           status = 400;
           errorName = error.constructor.name;
-        } else if (error instanceof NotFoundError) {
-          status = 404;
-          errorName = error.constructor.name;
-        } else if (error instanceof OwnershipError) {
-          status = 403;
-          errorName = error.constructor;
         }
 
         res.status(status).json({ error: errorName, message: error.message });

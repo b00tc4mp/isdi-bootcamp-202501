@@ -4,12 +4,12 @@ import { errors } from "com";
 const { SystemError } = errors;
 
 export const getUserName = () => {
-  const { userId } = data;
+  const { token } = data;
 
   return fetch("http://localhost:3000/users/self/name", {
     method: "GET",
     headers: {
-      Authorization: `Basic ${userId}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .catch((error) => {

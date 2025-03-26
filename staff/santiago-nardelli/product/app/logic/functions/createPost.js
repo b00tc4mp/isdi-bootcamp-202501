@@ -11,7 +11,7 @@ export const createPost = (image, title) => {
   validate.maxLength(500);
 
   // Extraigo el userId del objeto data
-  const { userId } = data;
+  const { token } = data;
 
   // Utilizo mi recurso fetch que me permite llamar a la ruta http://localhost:3000/posts de mi servidor y le paso un objeto con la configuración de la petición que incluye el método HTTP, los headers y el cuerpo de la petición que en este caso es un objeto con la imagen y el titulo del post
   //El método fetch devuelve una promesa que se resuelve con la respuesta de la petición HTTP
@@ -22,7 +22,7 @@ export const createPost = (image, title) => {
     method: "POST",
     // Defino los headers que son los encabezados de la petición que en este caso incluyen la autorización y el tipo de contenido
     headers: {
-      Authorization: `Basic ${userId}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json ",
     },
     //Defino el cuerpo de la petición que en este caso es un objeto con la imagen y el titulo del post

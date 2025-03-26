@@ -7,13 +7,13 @@ export const modifyPost = (postId, title) => {
   validate.id(postId, "postId");
 
   // Obtener el ID del usuario actual
-  const { userId } = data;
+  const { token } = data;
 
   // Realizar la petición
   return fetch(`http://localhost:3000/posts/${postId}/title`, {
     method: "PATCH",
     headers: {
-      Authorization: `Basic ${userId}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json ",
     },
     body: JSON.stringify({ title }),

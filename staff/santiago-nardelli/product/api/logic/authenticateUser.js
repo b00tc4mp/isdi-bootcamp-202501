@@ -18,8 +18,7 @@ export const authenticateUser = (email, password) => {
 
       if (!user) throw new NotFoundError("user not found");
 
-      return user.id;
+      return user._id.toString();
     })
 
-    .then(() => {});
 };

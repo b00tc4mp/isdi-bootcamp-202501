@@ -12,7 +12,7 @@ export const createPost = (userID, image, title) => {
   validate.text(title, "title");
   validate.maxLength(500);
 
-  const userObjectID = ObjectId(userID); //==>creo un objeto con el id del usuario
+  const userObjectID = new ObjectId(userID); //==>creo un objeto con el id del usuario
 
   return data.users
     .findOne({ _id: userObjectID }) //==>busco el usuario en la base de datos
@@ -29,7 +29,6 @@ export const createPost = (userID, image, title) => {
         author: userObjectID,
         image: image,
         title: title,
-        userId: userID,
         createdAt: new Date(),
         modifiedAt: null,
         likes: [],

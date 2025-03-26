@@ -10,8 +10,8 @@ export const toggleLikePost = (userId, postId) => {
 
 
   const userObjectId = new ObjectId(userId); //==>creo un objeto con el id del usuario para buscarlo en la base de datos y poder trabajar con el
-  return data.posts
-    .findOne({ id: postId })
+  return data.users
+    .findOne({ _id: userObjectId }) //==>busco el usuario en la base de datos
     .catch(() => {
       throw new SystemError("database error", error.message);
     })

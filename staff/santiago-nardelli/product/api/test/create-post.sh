@@ -1,19 +1,23 @@
-#!/bin/bash
+
 
 # URL del servidor
 URL="http://localhost:3000/posts"
 
 # Datos del post en formato JSON
 DATA='{
-  "image":"https://media.giphy.com/media/26Ff3LG9jN1BGFm4U/giphy.gif?cid=ecf05e4715ujpq6g06w8mlob85qv0ord11x6su4gr50xbiw4&ep=v1_gifs_search&rid=giphy.gif&ct=g",
-  "text": "God move over"
+  "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMm9sdnliZGh3eGJxMjg2dHlyMXBid2d3cXVzamFxMm5taXI4dGNnbCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/JBjboimLcWFukn5JTT/giphy.gif",
+  "title": "Si atletico de madrid gana la liga, me rapo la cabeza"
 }'
 
-# Token de autorización (reemplaza con un token válido)
-TOKEN="m88twjau-012fwytt1ex2e"
+# Token de autorización (reemplaza con un token válido) es el token de la cuenta de usuario
+TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UwNjc5MWE1NWRlYzhiYzlmZmQ2MTYiLCJpYXQiOjE1MTYyMzkwMjJ9.KE145FZBnQ-kUB4E1ZDU089XCcS6k3JOQQXevr62M8s"
 
 # Enviar la solicitud POST
 curl -X POST $URL \
      -H "Content-Type: application/json" \
-     -H "Authorization: $TOKEN" \
-     -d "$DATA"
+     -H "Authorization: Bearer $TOKEN" \
+     -d "$DATA" -v
+
+     # Pausar la terminal para que puedas ver la salida
+echo "Presiona cualquier tecla para cerrar..."
+read -n 1

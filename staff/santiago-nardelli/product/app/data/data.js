@@ -3,17 +3,17 @@ export const data = {
     
     // esta funcion A DIFERENCIA DE LOCAL/SESSION STORAGE,es para obtener el id del usuario y devuelvo null sino hay ninguno
   
-    get userId() {
-      const id = JSON.parse(sessionStorage.userId || "null");
+    get token() {
+      const id = JSON.parse(sessionStorage.token|| "null");
   
       return id;
     },
   
     // esta funcion me permite guardar el id del usuario en el sessionStorage
-    set userId(id) {
+    set token(id) {
       const json = JSON.stringify(id);
   
-      sessionStorage.userId = json;
+      sessionStorage.token = json;
     },
   };
  

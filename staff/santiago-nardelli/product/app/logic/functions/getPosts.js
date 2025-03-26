@@ -1,52 +1,4 @@
-// import { data } from '../../data/data.js';
-// import { errors} from "com";
 
-// const { SystemError } = errors;
-
-// export const getPosts = () => {
-//   const { userId } = data;
-
-//   return fetch("http://localhost:3000/posts", {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Basic ${userId}`,
-//     },
-//   })
-//     .catch((error) => {
-//       throw new SystemError(error.message);
-//     })
-//     .then((response) => {
-//       if (response.status === 200)
-//         return response
-//           .json()
-//           .catch((error) => {
-//             throw new SystemError(error.message);
-//           })
-//           .then((body) => {
-//             const posts = body;
-
-//             posts.forEach((post) => {
-//               post.createdAt = new Date(post.createdAt);
-//               if (post.modifiedAt) post.modifiedAt = new Date(post.modifiedAt);
-//             });
-
-//             return posts;
-//           });
-
-//       return response
-//         .json()
-//         .catch((error) => {
-//           throw new SystemError(error.message);
-//         })
-//         .then((body) => {
-//           const { error, message } = body;
-
-//           const constructor = errors[error];
-
-//           throw new constructor(message);
-//         });
-//     });
-// };
 
 import { data } from "../../data/data.js"; // Importa el objeto `data` que contiene información como el `userId`.
 import { errors } from "com"; // Importa el objeto `errors`, que contiene clases de error personalizadas.
@@ -54,13 +6,13 @@ import { errors } from "com"; // Importa el objeto `errors`, que contiene clases
 const { SystemError } = errors; // Desestructura `SystemError` de `errors` para usarlo más tarde.
 
 export const getPosts = () => {
-  const { userId } = data; // Obtiene el `userId` de los datos importados, que se usará para la autenticación en la solicitud.
+  const { token } = data; // Obtiene el `userId` de los datos importados, que se usará para la autenticación en la solicitud.
 
   return fetch("http://localhost:3000/posts", {
     // Realiza una solicitud HTTP GET al servidor para obtener los posts.
     method: "GET", // Especifica que la solicitud es de tipo GET (para obtener datos).
     headers: {
-      Authorization: `Basic ${userId}`, // Se pasa el `userId` en el encabezado `Authorization` para autenticar al usuario.
+      Authorization: `Bearer ${token}`, // Se pasa el `userId` en el encabezado `Authorization` para autenticar al usuario.
     },
   })
     .catch((error) => {
