@@ -1,14 +1,11 @@
 const express = require('express')
+const fs = require('fs')
 
 const server = express()
-
-const public = express.static('public')
 
 const formBodyParser = express.urlencoded()
 
 const logic = require('./logic.js')
-
-server.use(public)
 
 server.get('/style.css', (req, res) => {
     res.setHeader('Content-Type', 'text.css')
@@ -19,7 +16,7 @@ server.get('/style.css', (req, res) => {
     `)
     */
 
-    const css = fs.readFileSync('public/style.css')
+    const css = fs.readFileSync('static/style.css')
     res.send(css)
 })
 
@@ -36,8 +33,6 @@ server.get('/', (req, res) => { //landing a pagina de inicio
         <html>
             <head>
                 <title>Landing</title>
-                <link rel="favicon" href="favicon.ico" type="image/icon">
-                <link rel="stylesheet" href="style.css">
             </head>
 
             <body>
