@@ -1,18 +1,17 @@
-import { SystemError } from 'com/errors.js'
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError } = errors
+const { SystemError } = errors
 
 export const deletePost = (postId) => {
     validate.id(postId, 'postId')
 
-    const { userId } = data
+    const { token } = data
 
     return fetch(`http://localhost:8080/posts/${postId}`, {
         method: 'DELETE',
         headers: {
-            Authorization: `Basic: ${userId}`
+            Authorization: `Basic: ${token}`
         } //en este caso no se envia ningun json
     })
         .catch(error => { throw new SystemError(error.message) })
