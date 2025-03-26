@@ -1,4 +1,4 @@
-import { data } from '../data'
+import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
 const { SystemError } = errors
@@ -20,9 +20,9 @@ export const loginUser = (username, password) => {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) }) // => steps in when the response is a non valid JSON
                     .then(body => {
-                        const { id } = body
+                        const { token } = body
 
-                        data.userId = id        // => HAPPY PATH
+                        data.token = token        // => HAPPY PATH
                     })
 
             return response.json()

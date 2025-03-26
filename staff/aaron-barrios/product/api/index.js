@@ -1,11 +1,14 @@
 import express, { json } from 'express'
 import cors from 'cors'
-import { errors } from 'com'
+import {errors} from 'com'
+import jwt from 'jsonwebtoken'
 
 import { data } from './data/index.js'
 import { logic } from './logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
+
+const JWT_SECRET = 'hay una serpiente en mi boootaaa'
 
 data.connect('mongodb://localhost:27017', 'test')
     .catch(console.error)
@@ -73,7 +76,11 @@ data.connect('mongodb://localhost:27017', 'test')
                 const { username, password } = req.body
 
                 logic.authenticateUser(username, password)
-                    .then(id => res.json({ id }))
+                    .then(id => {
+                        const token = jwt.sign({sub:id}, JWT_SECRET, {expiresIn: '1h'})
+
+                        res.json({token})
+                    })
                     .catch(error => {
                         console.error(error)
 
@@ -111,7 +118,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
+
+                const {sub:userId} = jwt.verify(token, JWT_SECRET)
 
                 logic.getUsername(userId)
                     .then(name => res.json({ name }))
@@ -149,7 +158,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
+
+                const {sub:userId} = jwt.verify(token, JWT_SECRET)
 
                 logic.getPosts(userId)
                     .then(posts => res.json(posts))
@@ -187,7 +198,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
+
+                const {sub:userId} = jwt.verify(token, JWT_SECRET)
 
                 const { image, text } = req.body
 
@@ -227,7 +240,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { headers: { authorization }, params: { postId } } = req
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
+
+                const {sub:userId} = jwt.verify(token, JWT_SECRET)
 
                 logic.deletePost(userId, postId)
                     .then(() => res.status(204).send())
@@ -268,7 +283,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { headers: { authorization }, params: { postId } } = req
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
+
+                const {sub:userId} = jwt.verify(token, JWT_SECRET)
 
                 logic.toggleLikePost(userId, postId)
                     .then(() => res.status(204).send())
@@ -309,7 +326,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { headers: { authorization }, params: { postId }, body: { text } } = req
 
-                const userId = authorization.slice(6)
+                const token = authorization.slice(7)
+
+                const {sub:userId} = jwt.verify(token, JWT_SECRET)
 
                 logic.updatePostText(userId, postId, text)
                     .then(() => res.status(204).send())

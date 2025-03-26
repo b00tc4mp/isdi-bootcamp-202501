@@ -1,4 +1,4 @@
-curl -X PATCH http://localhost:8080/posts/67dd86b5fe13d497a3b7425a/text \
-    -H 'Authorization: Basic 67dc2db36a68ef2c2fd5cf1e' \
+curl -X PATCH http://localhost:8080/posts/67e40bf2894414cea3cdd6f4/text \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RjMmRiMzZhNjhlZjJjMmZkNWNmMWUiLCJpYXQiOjE3NDI5OTg2NzUsImV4cCI6MTc0MzAwMjI3NX0.l1afGO45DuasYe3v4xtMDlXsmljHDpK1fxByMHJrbdk' \
     -H 'Content-Type: application/json' \
-    -d '{"text":"debugging"}' -v
+    -d '{"text":"coconut yeah"}' -v

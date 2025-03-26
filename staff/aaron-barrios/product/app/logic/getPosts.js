@@ -1,19 +1,18 @@
 import { data } from '../data/index.js'
-
 import { errors } from 'com'
 
 const { SystemError } = errors
 
 export const getPosts = () => {
-    const { userId } = data
+    const { token } = data
 
     return fetch('http://localhost:8080/posts', {
         method: 'GET',
         headers: {
-            Authorization: `Basic ${userId}`
+            Authorization: `Bearer ${token}`
         }
     })
-        .catch(error => { throw new SystemError(error.message) }) // => steps in when port is incorrect or 
+        .catch(error => { throw new SystemError(error.message) }) // => steps in when port is incorrect or
         .then(response => {                                 // api not thrown (FAILED TO FETCH)
             if (response.status === 200)
                 return response.json()

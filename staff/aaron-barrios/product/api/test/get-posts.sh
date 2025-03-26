@@ -1,2 +1,2 @@
 curl -s -X GET http://localhost:8080/posts \
-    -H 'Authorization: Basic 67dad747c4a65ccf6b1b104c' -v
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RjMmRiMzZhNjhlZjJjMmZkNWNmMWUiLCJpYXQiOjE3NDI5OTg0NzEsImV4cCI6MTc0MzAwMjA3MX0.bvUnToUw0IYqGDN5xgPXJk0SbDc4F7d1tzOxJDD6q_o' -v
