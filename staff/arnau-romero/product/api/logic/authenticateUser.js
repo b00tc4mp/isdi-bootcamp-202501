@@ -1,5 +1,6 @@
 import { errors, validate } from 'com'  // Importamos data y validaciones
 import { data } from '../data/index.js'
+import bcrypt from 'bcryptjs'
 
 const { SystemError, NotFoundError, CredentialsError } = errors
 
@@ -14,8 +15,13 @@ export const authenticateUser = (username, password) => {
         .then(user =>{ // Si no hay error en la consulta entramos en el then.                                  
             if(!user) throw new NotFoundError('user not found') // Si no encontramos al usuario lanzamos error 'user not found'
 
-            if (user.password !== password) throw new CredentialsError('wrong credentials') // Si la contraseña que ha introducido no es igual a la de la base de datos lanzamos error de 'wrong credentials'
+            return bcrypt.compare(password, user.password)
+                .catch(error => { throw new SystemError(error.message)})
+                .then(match => {
+                    if (!match) throw new CredentialsError('wrong credentials')
 
-            return user._id.toString() // Si todo va bien devolvemos el id del usuario en forma de string.
+                    return user._id.toString()
+                })
+           
         })
 }

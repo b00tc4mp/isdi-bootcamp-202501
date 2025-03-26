@@ -4,15 +4,15 @@ import { validate , errors } from 'com'
 const { SystemError } = errors 
 
 export const getPosts = () => { // Crear funcion para obtener los posts de data, la llamaremos desde main
-  const { userId } = data
+  const { token } = data
 
   return fetch('http://localhost:8080/posts', {
         method: 'GET',
         headers: {
-            Authorization: `Basic ${userId}`
+            Authorization: `Bearer ${token}`
         }
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response =>{
             console.log(response.status)
 
@@ -31,7 +31,7 @@ export const getPosts = () => { // Crear funcion para obtener los posts de data,
                     })
            
             return response.json()
-                .catch(error => { throw new Error(error.message)})
+                .catch(error => { throw new SystemError(error.message)})
                 .then(body =>{
                     const { error, message } = body
 

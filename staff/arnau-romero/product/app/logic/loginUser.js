@@ -32,9 +32,9 @@ export const loginUser = (username, password) =>{
             return response.json() // Convertimos la respuesta en un objeto javaScript
                 .catch(error => { throw new SystemError(error.message) }) // Si hay un error convirtiendolo a JSON lo capturamos aqui
                 .then( body => { // Si la conversion es exitosa recibimos el body.
-                    const { id } = body // Sacamos la iD del body
+                    const { token } = body // Sacamos la iD del body
                   
-                    data.userId = id // Y la guardamos en la base de datos
+                    data.token = token// Y la guardamos en la base de datos
                 })
         return response.json() // Si la respuesta del servidor no es un 200 
             .catch(error => { throw new SystemError(error.message) }) // Capturamos por si hay un error convirtiendolo a JSON

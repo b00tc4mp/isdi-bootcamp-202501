@@ -5,9 +5,13 @@ import { errors } from 'com'
 // Importamos la lógica de negocio
 import { logic } from './logic/index.js';
 import { data } from './data/index.js'
+// Importamos libreria para generar los tokens
+import jwt from 'jsonwebtoken'
 
 // Importamos clases de error personalizadas
 const { CredentialsError, DuplicityError, NotFoundError, SystemError, ValidationError, OwnershipError } = errors 
+
+const JWT_SECRET = 'er diablo mamahuevo' // Es una clave secreta usada para firmar el token, evitando que otros puedan generarlo o modificarlo sin permiso.
 
 //Conectamos con el servidor de MONGOdb
 data.connect('mongodb://127.0.0.1:27017', 'test')
@@ -80,7 +84,13 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
 
             // Llamamos a la lógica de autenticación
             logic.authenticateUser(username, password)
-                .then(id => res.json({ id }))
+                .then(id => {
+                    const token = jwt.sign({ sub: id }, JWT_SECRET) // jwt.sign() Es una función de la librería jsonwebtoken que crea un token firmado.
+                                                                    // { sub: id} "sub" es un campo estándar en JWT ( sub significa "subject", es decir, el identificador del usuario)
+                                                                    // Se esta guardando el ID del usuario dentro del token para identificarlo en futuras solicitudes
+
+                    res.json({ token }) // Se responde al cliente con un objeto JSON que contiene el token, para que luego pueda usarlo en futuras peticiones para autenticarse.
+                })
                 .catch(error => {
                     console.error(error); // Mostramos el error en la consola
 
@@ -122,10 +132,10 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
             const { authorization } = req.headers;
 
             // Extraemos el userId del token (se asume que el token empieza con "Bearer ")
-            const userId = authorization.slice(6);
+            const token = authorization.slice(7);
 
-            // Obtenemos el nombre del usuario desde la lógica de negocio
-            const name = logic.getUserName(userId)
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
             logic.getUserName(userId)
                 .then(name => res.json({ name }))
                 .catch(error => {
@@ -160,7 +170,11 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
     api.post('/posts', jsonBodyParser, (req, res) => {
         try {
             const { authorization } = req.headers;
-            const userId = authorization.slice(6);
+
+            const token = authorization.slice(7);
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
             const { image, text } = req.body;
 
             logic.createPost(userId, image, text)
@@ -199,7 +213,11 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
     api.get('/posts', (req, res) => {
         try {
             const { authorization } = req.headers;
-            const userId = authorization.slice(6);
+
+            const token = authorization.slice(7)
+            
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
             logic.getPosts(userId)
                 .then(posts => res.json(posts))
                 .catch(error => {
@@ -234,7 +252,11 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
     api.delete('/posts/:postId', (req, res) => {
         try {
             const { authorization } = req.headers;
-            const userId = authorization.slice(6);
+
+            const token = authorization.slice(7);
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
             const { postId } = req.params;
 
             logic.deletePost(userId, postId)
@@ -274,7 +296,11 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
     api.patch('/posts/:postId/likes', (req, res) => {
         try {
             const { authorization } = req.headers;
-            const userId = authorization.slice(6);
+
+            const token = authorization.slice(7);
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
             const { postId } = req.params;
 
             logic.toggleLikePost(userId, postId)
@@ -311,7 +337,9 @@ data.connect('mongodb://127.0.0.1:27017', 'test')
         try {
             const { authorization } = req.headers
 
-            const userId = authorization.slice(6)
+            const token = authorization.slice(7);
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
             const { postId } = req.params
 

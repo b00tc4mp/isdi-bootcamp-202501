@@ -6,13 +6,13 @@ const { SystemError } = errors
 
 export const toggleLikePost = (postId) =>{
     validate.id(postId, 'postId')
-    const { userId } = data
+    const { token } = data
 
     // Solicitud al servidor de hacer un cambio en la propiedad likes de el array de objetos posts
     return fetch(`http://localhost:8080/posts/${postId}/likes`,{
         method: 'PATCH', // Mediante el metodo PATCH, que se usa solo para cambiar una parte de un elemento.
         headers:{ // En el headers le pasaremos la authorizazion usando nuestra iD para que verifique que somos un usuario registrado.
-            Authorization: `Basic ${userId}`
+            Authorization: `Bearer ${token}`
         }
     })
         // Si hay un error en la solicitud HTTP lo capturamos
