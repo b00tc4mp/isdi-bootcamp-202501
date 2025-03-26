@@ -1,11 +1,14 @@
 import express, { json } from 'express';
 import cors from 'cors';
 import { errors } from 'com';
+import jwt from 'jsonwebtoken';
 
 import { data } from './data/index.js';
 import { logic } from './logic/index.js';
 
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors;
+
+const JWT_SECRET = '606e37bba316dffa4593ed408cd037a52c88b86134fd880a986511a1242459c6';
 
 data.connect('mongodb://localhost:27017', 'test')
     .catch(console.error)
@@ -62,7 +65,11 @@ data.connect('mongodb://localhost:27017', 'test')
                 const { username, password } = req.body;
 
                 logic.authenticateUser(username, password)
-                    .then(id => res.json({ id }))
+                    .then(id => {
+                        const token = jwt.sign({ sub: id }, JWT_SECRET);
+
+                        res.json({ token });
+                    })
                     .catch(error => {
                         console.error(error);
 
@@ -99,7 +106,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers;
 
-                const userId = authorization.slice(6);
+                const token = authorization.slice(7);
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
                 logic.getUserName(userId)
                     .then(name => res.json({ name }))
@@ -137,7 +146,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers;
 
-                const userId = authorization.slice(6);
+                const token = authorization.slice(7);
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
                 const { text, url } = req.body;
 
@@ -176,10 +187,12 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers;
 
-                const userId = authorization.slice(6);
+                const token = authorization.slice(7);
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
                 logic.getPosts(userId)
-                    .then(() => res.json(posts))
+                    .then(posts => res.json(posts))
                     .catch(error => {
                         console.error(error);
 
@@ -212,7 +225,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers;
 
-                const userId = authorization.slice(6);
+                const token = authorization.slice(7);
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
                 const { postId } = req.params;
 
@@ -254,7 +269,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers;
 
-                const userId = authorization.slice(6);
+                const token = authorization.slice(7);
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
                 const { postId } = req.params;
 
@@ -293,7 +310,9 @@ data.connect('mongodb://localhost:27017', 'test')
             try {
                 const { authorization } = req.headers;
 
-                const userId = authorization.slice(6);
+                const token = authorization.slice(7);
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET);
 
                 const { postId } = req.params;
 

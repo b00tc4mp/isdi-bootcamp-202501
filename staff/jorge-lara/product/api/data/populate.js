@@ -1,4 +1,5 @@
-import { MongoClient, ObjectId } from 'mongodb'
+import { MongoClient } from 'mongodb'
+import bcrypt from 'bcryptjs'
 
 const client = new MongoClient('mongodb://localhost:27017');
 
@@ -13,11 +14,12 @@ client.connect()
             users.deleteMany(),
             posts.deleteMany()
         ])
-            .then(() => {
+            .then(() => bcrypt.hash('123123123', 10))
+            .then(hash => {
                 return users.insertMany([
-                    { name: 'admin', email: 'admin@admin.com', username: 'admin', password: '123123123' },
-                    { name: 'John Doe', email: 'johndoe@doe.com', username: 'johndoe', password: '123123123' },
-                    { name: 'Alexander', email: 'alexander@gmail.com', username: 'alexander', password: '123123123' },
+                    { name: 'admin', email: 'admin@admin.com', username: 'admin', password: hash },
+                    { name: 'John Doe', email: 'johndoe@doe.com', username: 'johndoe', password: hash },
+                    { name: 'Alexander', email: 'alexander@gmail.com', username: 'alexander', password: hash },
                 ])
             })
             .then(result => {

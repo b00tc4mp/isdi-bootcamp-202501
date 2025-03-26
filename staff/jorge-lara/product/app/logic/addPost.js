@@ -9,12 +9,12 @@ export const addPost = (text, image) => {
     validate.url(image, 'url');
     validate.maxLength(1000)
 
-    const { userId } = data;
+    const { token } = data;
 
     return fetch('http://localhost:8080/posts', {
         method: 'POST',
         headers: {
-            Authorization: `Basic ${userId}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ image, text })

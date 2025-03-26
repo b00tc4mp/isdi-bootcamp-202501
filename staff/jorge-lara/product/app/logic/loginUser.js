@@ -23,9 +23,9 @@ export const loginUser = (username, password) => {
                         throw new SystemError(error.message)
                     })
                     .then(body => {
-                        const { id } = body;
+                        const { token } = body;
 
-                        data.userId = id;
+                        data.token = token;
                     })
             }
 

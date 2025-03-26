@@ -6,12 +6,12 @@ const { SystemError } = errors;
 export const updatePostText = (postId, text) => {
     validate.id(postId, 'postId');
 
-    const { userId } = data;
+    const { token } = data;
 
     return fetch(`http://localhost:8080/posts/${postId}/text`, {
         method: 'PATCH',
         headers: {
-            Authorization: `Basic ${userId}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ text })
