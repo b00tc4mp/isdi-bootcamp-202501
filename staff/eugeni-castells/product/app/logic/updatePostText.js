@@ -6,8 +6,8 @@ const { SystemError } = errors;
 export const updatePostText = (postId, text) => {
   const { token } = data;
 
-  validate.id(postId);
-  validate.text(text);
+  validate.id(postId, "post id");
+  validate.text(text, "post text is text");
 
   return fetch(`http://localhost:8080/posts/text/${postId}`, {
     method: "PATCH",
