@@ -10,18 +10,42 @@ const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemE
 
 const JWT_SECRET = 'mi numero favorito es el 17'
 
-const handleWithErrorHandling = (next, callback) => {
+const respondWithError = (res, error) => {
+    let status = 500
+    let errorName = SystemError.name
+
+    if (error instanceof DuplicityError) {
+        status = 409
+        errorName = error.constructor.name
+    } else if (error instanceof ValidationError) {
+        status = 400
+        errorName = error.constructor.name
+    } else if (error instanceof CredentialsError) {
+        status = 401
+        errorName = error.constructor.name
+    } else if (error instanceof NotFoundError) {
+        status = 404
+        errorName = error.constructor.name
+    } else if (error instanceof OwnershipError) {
+        status = 403
+        errorName = error.constructor.name
+    }
+
+    res.status(status).json({ error: errorName, message: error.message })
+}
+
+const handleWithErrorHandling = (res, callback) => {
     try {
         callback()
             .catch(error => {
                 console.error(error)
 
-                next(error)
+                respondWithError(res, error)
             })
     } catch (error) {
         console.error(error)
 
-        next(error)
+        respondWithError(res, error)
     }
 }
 
@@ -36,8 +60,8 @@ data.connect('mongodb://localhost:27017', 'test')
 
         api.get('/', (req, res) => res.send('Hello, API!'))
 
-        api.post('/users', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.post('/users', jsonBodyParser, (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { name, email, username, password } = req.body
 
                 return logic.registerUser(name, email, username, password)
@@ -45,8 +69,8 @@ data.connect('mongodb://localhost:27017', 'test')
             })
         })
 
-        api.post('/users/auth', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.post('/users/auth', jsonBodyParser, (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { username, password } = req.body
 
                 return logic.authenticateUser(username, password)
@@ -58,8 +82,8 @@ data.connect('mongodb://localhost:27017', 'test')
             })
         })
 
-        api.get('/users/self/name', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.get('/users/self/name', (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -71,8 +95,8 @@ data.connect('mongodb://localhost:27017', 'test')
             })
         })
 
-        api.post('/posts', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.post('/posts', jsonBodyParser, (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -86,8 +110,8 @@ data.connect('mongodb://localhost:27017', 'test')
             })
         })
 
-        api.get('/posts', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.get('/posts', (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -99,8 +123,8 @@ data.connect('mongodb://localhost:27017', 'test')
             })
         })
 
-        api.delete('/posts/:postId', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.delete('/posts/:postId', (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -114,8 +138,8 @@ data.connect('mongodb://localhost:27017', 'test')
             })
         })
 
-        api.patch('/posts/:postId/likes', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.patch('/posts/:postId/likes', (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -129,8 +153,8 @@ data.connect('mongodb://localhost:27017', 'test')
             })
         })
 
-        api.patch('/posts/:postId/text', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.patch('/posts/:postId/text', jsonBodyParser, (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -145,32 +169,6 @@ data.connect('mongodb://localhost:27017', 'test')
                     .then(() => res.status(204).send())
             })
         })
-
-        const errorHandler = (error, req, res, next) => {
-            let status = 500
-            let errorName = SystemError.name
-
-            if (error instanceof DuplicityError) {
-                status = 409
-                errorName = error.constructor.name
-            } else if (error instanceof ValidationError) {
-                status = 400
-                errorName = error.constructor.name
-            } else if (error instanceof CredentialsError) {
-                status = 401
-                errorName = error.constructor.name
-            } else if (error instanceof NotFoundError) {
-                status = 404
-                errorName = error.constructor.name
-            } else if (error instanceof OwnershipError) {
-                status = 403
-                errorName = error.constructor.name
-            }
-
-            res.status(status).json({ error: errorName, message: error.message })
-        }
-
-        api.use(errorHandler)
 
         api.listen(8080, () => console.log('API running on post 8080'))
     })
