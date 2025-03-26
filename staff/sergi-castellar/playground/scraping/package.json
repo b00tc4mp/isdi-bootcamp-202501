@@ -1,8 +1,6 @@
 {
-  "dependencies": {
-    "@extractus/article-extractor": "^8.0.17"
-  },
   "name": "scraping",
+  "type": "module",
   "version": "1.0.0",
   "main": "scraping.js",
   "scripts": {
@@ -11,5 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@extractus/article-extractor": "^8.0.17",
+    "jsdom": "^26.0.0"
+  }
 }
