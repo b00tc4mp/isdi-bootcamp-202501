@@ -10,7 +10,7 @@ data.connect('mongodb://localhost:27017', 'test')
 
             return authenticateUser('dallen', '123456789')
                 .then(id => id2 = id)
-                .finally(() => console.assert(typeof id2 === 'string', 'userId is a string'))
+                .finally(() => console.assert(typeof id2 === 'string', 'token is a string'))
 
         } catch (error) {
             console.error(error)

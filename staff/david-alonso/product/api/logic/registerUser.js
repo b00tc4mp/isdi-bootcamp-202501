@@ -2,6 +2,7 @@
 
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
+import bcrypt, { hash } from 'bcryptjs'
 
 const { SystemError, DuplicityError } = errors
 
@@ -23,9 +24,9 @@ export const registerUser = (name, email, username, password) => {
                 name: name,
                 email: email,
                 username: username,
-                password: password,
-                createdAt: new Date(),
-                modifiedAt: null
+                password: hash,
+                createdAt: new Date(), //**** */
+                modifiedAt: null  //*** */
             }
 
             // Inserta el objeto user en la colección data.users y devuelve el resultado

@@ -7,12 +7,12 @@ const { SystemError } = errors
 // Funcion para Obtener nombre de usuario
 export const getUserName = () => {
 
-    const { userId } = data
+    const { token } = data
 
     return fetch(`http://localhost:8080/users/self/name`, {
         method: 'GET',
         headers: {
-            Authorization: `Basic ${userId}`,
+            Authorization: `Bearer ${token}`,
         }
     })
         .catch(error => { throw new SystemError(error.message) })
