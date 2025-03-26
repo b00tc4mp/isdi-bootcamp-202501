@@ -5,6 +5,7 @@ const { ObjectId } = data;
 
 export const updatePostLikes = (userId, postId) => {
   validate.id(postId, "post id");
+  validate.id(userId, "user id");
 
   const userObjectId = new ObjectId(userId);
 

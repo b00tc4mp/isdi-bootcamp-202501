@@ -4,6 +4,7 @@ const { ObjectId } = data;
 const { NotFoundError, SystemError } = errors;
 
 export const addPost = (id, image, text) => {
+  validate.id(id, "user id");
   validate.text(image, "image URL");
   validate.minLength(image, 10, "image URL");
   validate.text(text, "text");

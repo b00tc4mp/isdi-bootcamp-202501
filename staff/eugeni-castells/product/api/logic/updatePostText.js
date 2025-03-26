@@ -6,7 +6,7 @@ const { ObjectId } = data;
 const { NotFoundError, OwnershipError, SystemError } = errors;
 
 export const updatePostText = (userId, postId, text) => {
-  validate.id(userId, "post id");
+  validate.id(userId, "user id");
   validate.id(postId, "post id");
   validate.text(text, "post text");
   validate.maxLength(text, 500, "text maxLength");
