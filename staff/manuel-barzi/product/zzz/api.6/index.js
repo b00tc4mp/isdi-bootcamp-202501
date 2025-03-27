@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import express, { json } from 'express'
 import cors from 'cors'
 import { errors } from 'com'
@@ -9,7 +8,7 @@ import { logic } from './logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
-const { JWT_SECRET, PORT, MONGO_URL, MONGO_DB } = process.env
+const JWT_SECRET = 'mi numero favorito es el 17'
 
 const withErrorHandling = callback => {
     return (req, res, next) => {
@@ -22,7 +21,7 @@ const withErrorHandling = callback => {
     }
 }
 
-data.connect(MONGO_URL, MONGO_DB)
+data.connect('mongodb://localhost:27017', 'test')
     .catch(console.error)
     .then(() => {
         const api = express()
@@ -155,5 +154,5 @@ data.connect(MONGO_URL, MONGO_DB)
 
         api.use(errorHandler)
 
-        api.listen(PORT, () => console.log(`API running on post ${PORT}`))
+        api.listen(8080, () => console.log('API running on post 8080'))
     })
