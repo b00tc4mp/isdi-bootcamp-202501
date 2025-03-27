@@ -1,8 +1,9 @@
-import { data } from '../data/index.js'
+import { Types } from 'mongoose'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const {ObjectId} = data
-const {SystemError, NotFoundError } = errors
+const { ObjectId } = Types
+const { SystemError, NotFoundError } = errors
 
 export const toggleLikePost = (userId, postId) => {
     validate.id(userId, 'userId')
@@ -10,15 +11,15 @@ export const toggleLikePost = (userId, postId) => {
 
     const userObjectId = new ObjectId(userId)
 
-    return data.users.findOne({ _id: userObjectId})
-        .catch(error => {throw new SystemError(error.message)})
+    return User.findOne({ _id: userObjectId })
+        .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
             const postObjectId = new ObjectId(postId)
 
-            return data.posts.findOne({ _id: postObjectId})
-                .catch(error => {throw new SystemError(error.message)})
+            return Post.findOne({ _id: postObjectId })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(post => {
                     if (!post) throw new NotFoundError('post not found')
 
@@ -29,9 +30,9 @@ export const toggleLikePost = (userId, postId) => {
                     else
                         post.likes.splice(index, 1)
 
-                    data.posts.updateOne({ _id: postObjectId }, { $set: post })
-                        .catch(error => {throw new SystemError(error.message)})
-                        .then(() => {})
+                    return Post.updateOne({ _id: postObjectId }, { $set: post })
+                        .catch(error => { throw new SystemError(error.message) })
+                        .then(() => { })
                 })
         })
 }

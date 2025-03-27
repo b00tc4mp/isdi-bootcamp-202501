@@ -1,6 +1,8 @@
-import { data } from '../data/index.js'
+import { Types } from 'mongoose'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
-import {ObjectId} from "mongodb";
+
+const { ObjectId } = Types
 
 const { SystemError, NotFoundError, OwnershipError } = errors
 
@@ -8,23 +10,23 @@ export const deletePost = (userId, postId) => {
     validate.id(userId, 'userId')
     validate.id(postId, 'postId')
 
-    return data.users.findOne({ _id: new ObjectId(userId)  })
-        .catch(error => {throw new SystemError(error.message)})
-    .then(user => {
-        if (!user) throw new NotFoundError('user not found')
+    return User.findOne({ _id: new ObjectId(userId) })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (!user) throw new NotFoundError('user not found')
 
-        const postObjectId = new ObjectId(postId)
+            const postObjectId = new ObjectId(postId)
 
-        return data.posts.findOne({_id:postObjectId})
-            .catch(error => {throw new SystemError(error.message)})
-            .then(post => {
-                if (!post) throw new NotFoundError('post not found')
+            return Post.findOne({ _id: postObjectId })
+                .catch(error => { throw new SystemError(error.message) })
+                .then(post => {
+                    if (!post) throw new NotFoundError('post not found')
 
-                if (post.author.toString()  !== userId) throw new OwnershipError('user is not author of post')
+                    if (post.author.toString() !== userId) throw new OwnershipError('user is not author of post')
 
-                return data.posts.deleteOne({_id: postObjectId})
-                    .catch(error => {throw new NotFoundError('post not found')})
-            })
-            .then(post => {})
-    })
+                    return Post.deleteOne({ _id: postObjectId })
+                        .catch(error => { throw new NotFoundError('post not found') })
+                })
+                .then(post => { })
+        })
 }

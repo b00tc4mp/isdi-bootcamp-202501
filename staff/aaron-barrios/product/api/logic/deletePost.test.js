@@ -1,17 +1,20 @@
-import {data} from '../data/index.js'
-import {deletePost} from './deletePost.js'
+import 'dotenv/config'
+import { data } from '../data/index.js'
+import { deletePost } from './deletePost.js'
 
 console.info('TEST DELETE_POST')
 
-data.connect('mongodb://localhost:27017', 'test')
+const { MONGO_URL, MONGO_DB } = process.env
+
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
-        try{
+        try {
             let result2
 
-            return deletePost('67dc2db36a68ef2c2fd5cf1e', '67dd8595e2df1a2a17426709')
+            return deletePost('67e56b76aca435b739796a5c', '67e5802a3832b5c92df2103f')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
-        }catch(error){
+        } catch (error) {
             console.error(error)
         }
     })

@@ -1,7 +1,7 @@
-import {constant} from 'com'
-import {Schema, model, Types} from 'mongoose'
+import { constant } from 'com'
+import { Schema, model, Types } from 'mongoose'
 
-const { ObjectId} = Types
+const { ObjectId } = Types
 
 const user = new Schema({
     name: {
@@ -46,7 +46,18 @@ const post = new Schema({
     text: {
         type: String,
         required: true,
-        minlength: 500
+        maxlength: 500
+    },
+    likes: {
+        type: [ObjectId],
+        ref: 'User'
+    },
+    createdAt: {
+        type: Date
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 

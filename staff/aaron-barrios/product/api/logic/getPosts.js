@@ -1,26 +1,27 @@
-import { data } from '../data/index.js'
+import { Types } from 'mongoose'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const {ObjectId} = data
+const { ObjectId } = Types
 const { SystemError, NotFoundError } = errors
 
 export const getPosts = userId => {
     validate.id(userId, 'userId')
 
-    return data.users.findOne({ _id: new ObjectId(userId) })
-        .catch(error => {throw new SystemError(error.message)})
+    return User.findOne({ _id: new ObjectId(userId) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) throw new NotFoundError('User not found')
 
-            return data.posts.find().toArray()
+            return Post.find().lean()
                 .catch(error => { throw new SystemError(error.message) })
         })
         .then(posts => {
             //const authors = post.map(post => post.author)
-            const authors = posts.map(({author}) => author)
+            const authors = posts.map(({ author }) => author)
 
-            return data.users.find({_id: {$in: authors}}).toArray()
-                .catch(error => {throw new SystemError(error.message)})
+            return User.find({ _id: { $in: authors } }).lean()
+                .catch(error => { throw new SystemError(error.message) })
                 .then(users => {
                     const aggregatedPosts = []
 

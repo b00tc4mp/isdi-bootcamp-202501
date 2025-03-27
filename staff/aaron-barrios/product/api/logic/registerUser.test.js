@@ -1,11 +1,14 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
-import {registerUser} from './registerUser.js'
+import { registerUser } from './registerUser.js'
+
+const { MONGO_URL, MONGO_DB } = process.env
 
 console.info('TEST REGISTER_USER')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
-        try{
+        try {
             let result2 = null
 
             return registerUser('Carni Cero', 'carni@cero.com', 'carnicero', 'cacaca')
@@ -17,7 +20,7 @@ data.connect('mongodb://localhost:27017', 'test')
             //     registerUser('Pepito Grillo', 'pepito@grillo.com', 'pepitogrillo', '123123123'),
             //     registerUser('Pepito Grillo', 'pepito@grillo.com', 'pepitogrillo', '123123123')
             // ])
-        }catch (error){
+        } catch (error) {
             console.error(error)
         }
     })
