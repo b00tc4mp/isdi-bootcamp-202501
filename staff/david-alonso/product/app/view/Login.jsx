@@ -48,6 +48,8 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
     return <div className="loginRegister">
 
+        <img src="./view/images/MX.jpg" className="fondo" />
+
         <div className="formLogin">
             <h1>SIGN IN</h1>
 
@@ -65,7 +67,7 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
             </div>
         </div>
 
-        <img src="./view/images/fondo1.jpg" className="fondo" />
+        
 
     </div>
 }

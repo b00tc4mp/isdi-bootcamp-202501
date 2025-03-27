@@ -50,6 +50,8 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     return <div className="loginRegister">
 
+        <img src="./view/images/MX.jpg" className="fondo" />
+
         <div className="formRegister">
             <h1>CREATE ACCOUNT</h1>
 
@@ -70,8 +72,6 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
                 <a onClick={handleLoginClick} className="anchorLogin">LOGIN</a>
             </div>
         </div>
-
-        <img src="./view/images/fondo1.jpg" className="fondo" />
 
     </div>
 }

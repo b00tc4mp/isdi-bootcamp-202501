@@ -7,7 +7,7 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     console.debug('Landing -> render')
 
     return <div className="landing">
-        <img src="./view/images/Logo.jpg" className="logo" />
+        <img src="./view/images/Logo X.jpg" className="logo" />
         <div className="anchor">
             <div >
                 <a onClick={handleRegisterClick} >REGISTER</a>
