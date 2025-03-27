@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { data } from "./data/index.js";
 import express, { json } from "express";
 import jwt from "jsonwebtoken";
@@ -14,7 +15,7 @@ const {
   NotFoundError,
 } = errors;
 
-const JWT_SECRET = "undostresbotifarradepagès";
+const { JWT_SECRET, PORT, MONGO_URL } = process.env;
 
 const handleWithErrorHandling = (next, callback) => {
   try {
@@ -30,7 +31,7 @@ const handleWithErrorHandling = (next, callback) => {
   }
 };
 data
-  .connect("mongodb://localhost:27017", "test")
+  .connect(MONGO_URL, "test")
   .catch((error) => console.error(error))
   .then(() => {
     const api = express();
@@ -210,5 +211,5 @@ data
 
     api.use(errorHandler);
 
-    api.listen(8080, () => console.log("api listening in port 8080"));
+    api.listen(PORT, () => console.log(`api listening in port ${PORT}`));
   });
