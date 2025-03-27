@@ -8,7 +8,7 @@ data.connect('mongodb://localhost:27017', 'test')
         try{
             let result2 = null
 
-            return registerUser('John Doe', 'john@doe.com', 'john', 'jojojo')
+            return registerUser('Carni Cero', 'carni@cero.com', 'carnicero', 'cacaca')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
 
