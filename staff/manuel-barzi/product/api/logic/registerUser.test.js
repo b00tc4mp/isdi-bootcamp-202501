@@ -13,7 +13,8 @@ data.connect('mongodb://localhost:27017', 'test')
             //     registerUser('Pepito Griilo', 'pepito@grillo.com', 'pepitogrillo', '123123123')
             // ])
 
-            return registerUser('Pepito Griilo', 'pepito@grillo.com', 'pepitogrillo', '123123123')
+            // return registerUser('Pepito Griilo', 'pepito@grillo.com', 'pepitogrillo', '123123123')
+            return registerUser('Eu Geni', 'eu@geni.com', 'eugeni', '123123123')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {
