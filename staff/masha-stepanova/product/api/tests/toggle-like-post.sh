@@ -1,3 +1,3 @@
-curl -X PATCH http://localhost:8080/posts/m8763pn5v8/likes \
- -H 'Authorization: Basic m873ryudyt' \
+curl -X PATCH http://localhost:8080/posts/67e596f8a2457b9c61eee1da/likes \
+ -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UwNjU1YjE2M2U4MTIxMTU2YTQxZGIiLCJpYXQiOjE3NDMwOTg5NDJ9.dvbHTusJXoQwqsPtBSCsnmvaOhiezz90X9UaxcDTctI' \
  -H 'Content-Type: application/json' -v

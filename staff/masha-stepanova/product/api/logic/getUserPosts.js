@@ -1,7 +1,6 @@
-import { data } from '../data/index.js'
+import { User, ObjectId, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { ObjectId } = data
 const { NotFoundError, SystemError } = errors
 
 export const getUserPosts = userId => {
@@ -9,12 +8,12 @@ export const getUserPosts = userId => {
 
     const userObjectId = new ObjectId(userId)
 
-    return data.users.findOne({ _id: userObjectId })
+    return User.findOne({ _id: userObjectId })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return data.posts.find().toArray()
+            return Post.find()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(posts => {
                     const aggregatedPosts = []

@@ -1,7 +1,6 @@
-import { data } from '../data/index.js'
+import { User, Post, ObjectId } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { ObjectId } = data
 const { NotFoundError, SystemError } = errors
 
 export const toggleLikePost = (userId, postId) => {
@@ -11,12 +10,12 @@ export const toggleLikePost = (userId, postId) => {
     const userObjectId = new ObjectId(userId)
     const postObjectId = new ObjectId(postId)
 
-    return data.users.findOne({ _id: userObjectId })
+    return User.findOne({ _id: userObjectId })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return data.posts.findOne({ _id: postObjectId })
+            return Post.findOne({ _id: postObjectId })
         })
         .catch(error => { throw new SystemError(error.message) })
         .then(post => {
@@ -31,7 +30,7 @@ export const toggleLikePost = (userId, postId) => {
             else
                 likes.splice(index, 1)
 
-            return data.posts.updateOne({ _id: postObjectId }, {
+            return Post.updateOne({ _id: postObjectId }, {
                 $set: {
                     likes
                 }

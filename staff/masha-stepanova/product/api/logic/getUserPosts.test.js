@@ -1,14 +1,17 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { getUserPosts } from './getUserPosts.js'
 
+const { MONGO_URL, MONGO_DB } = process.env
+
 console.info('TEST getUserPosts')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         let posts
 
         try {
-            return getUserPosts('67dc24464fb4f765fd5e5a67')
+            return getUserPosts('67e0655b163e8121156a41db')
                 .then(result => {
                     posts = result
                 })

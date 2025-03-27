@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express, { json } from 'express'
 import cors from 'cors'
 import { errors } from 'com'
@@ -8,31 +9,25 @@ import { logic } from './logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, SystemError, OwnershipError, ValidationError } = errors
 
-const JWT_SECRET = 'psijfdvbwpiufveivlkjmhgfdsdfghnjmklkjhgfdfgbhnjmkkvdcx'
+const { JWT_SECRET, PORT, MONGO_URL, MONGO_DB } = process.env
 
-const handleWithErrorHandling = (next, callback) => {
-    try {
-        callback()
-            .catch(error => {
-                console.error(error)
-
-                next(error)
-            })
-    } catch (error) {
-        console.error(error)
-
-        next(error)
+const withErrorHandling = callback => {
+    return (req, res, next) => {
+        try {
+            callback(req, res)
+                .catch(error => next(error))
+        } catch (error) {
+            next(error)
+        }
     }
 }
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .catch(console.error)
     .then(() => {
         const api = express()
 
         const jsonBodyParse = json()
-
-        const port = 8080
 
         api.use(cors())
 
@@ -40,137 +35,119 @@ data.connect('mongodb://localhost:27017', 'test')
             res.send('Hello, API!')
         })
 
-        api.post('/users', jsonBodyParse, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { name, email, username, password } = req.body
+        api.post('/users', jsonBodyParse, withErrorHandling((req, res) => {
+            const { name, email, username, password } = req.body
 
-                return logic.registerUser(name, email, username, password)
-                    .then(() => res.status(201).send())
-            })
+            return logic.registerUser(name, email, username, password)
+                .then(() => res.status(201).send())
+        }))
 
-        })
+        api.post('/users/auth', jsonBodyParse, withErrorHandling((req, res) => {
+            const { username, password } = req.body
 
-        api.post('/users/auth', jsonBodyParse, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { username, password } = req.body
+            return logic.authenticateUser(username, password)
+                .then(id => {
+                    const token = jwt.sign({ sub: id }, JWT_SECRET)
+                    console.log(token)
+                    res.json({ token })
+                })
+        }))
 
-                return logic.authenticateUser(username, password)
-                    .then(id => {
-                        const token = jwt.sign({ sub: id }, JWT_SECRET)
+        api.post('/posts', jsonBodyParse, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                        res.json({ token })
-                    })
-            })
+            const token = authorization.slice(7)
 
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        api.post('/posts', jsonBodyParse, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { body: { image, text } } = req
 
-                const token = authorization.slice(7)
+            return logic.createPost(userId, image, text)
+                .then(() => res.status(201).send())
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+        api.get('/posts', withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { body: { image, text } } = req
+            const token = authorization.slice(7)
 
-                return logic.createPost(userId, image, text)
-                    .then(() => res.status(201).send())
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        api.get('/posts', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            return logic.getPosts(userId)
+                .then(posts => res.send(posts))
+        }))
 
-                const token = authorization.slice(7)
+        api.get('/posts/self/posts', withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+            const token = authorization.slice(7)
 
-                return logic.getPosts(userId)
-                    .then(posts => res.send(posts))
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        api.get('/posts/self/posts', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            return logic.getUserPosts(userId)
+                .then(posts => res.json(posts))
+        }))
 
-                const token = authorization.slice(7)
+        api.get('/users/self/name', withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+            const token = authorization.slice(7)
 
-                return logic.getUserPosts(userId)
-                    .then(posts => res.json(posts))
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        api.get('/users/self/name', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            return logic.getUserName(userId)
+                .then(name => res.json({ name }))
+        }))
 
-                const token = authorization.slice(7)
+        api.delete('/posts/:postId', withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+            const token = authorization.slice(7)
 
-                return logic.getUserName(userId)
-                    .then(name => res.json({ name }))
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        api.delete('/posts/:postId', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { postId } = req.params
 
-                const token = authorization.slice(7)
+            return logic.deletePost(userId, postId)
+                .then(() => res.status(204).send())
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+        api.patch('/posts/:postId/likes', jsonBodyParse, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { postId } = req.params
+            const token = authorization.slice(7)
 
-                return logic.deletePost(userId, postId)
-                    .then(() => res.status(204).send())
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        api.patch('/posts/:postId/likes', jsonBodyParse, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { postId } = req.params
 
-                const token = authorization.slice(7)
+            return logic.toggleLikePost(userId, postId)
+                .then(() => res.status(204).send())
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+        api.patch('/posts/:postId/text', jsonBodyParse, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { postId } = req.params
+            const token = authorization.slice(7)
 
-                return logic.toggleLikePost(userId, postId)
-                    .then(() => res.status(204).send())
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        api.patch('/posts/:postId/text', jsonBodyParse, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { postId } = req.params
 
-                const token = authorization.slice(7)
+            const { text } = req.body
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET)
-
-                const { postId } = req.params
-
-                const { text } = req.body
-
-                return logic.updatePostText(userId, postId, text)
-                    .then(() => res.status(204).send())
-            })
-        })
+            return logic.updatePostText(userId, postId, text)
+                .then(() => res.status(204).send())
+        }))
 
         const errorHandler = (error, _req, res, _next) => {
+            console.error(error)
+
             let status = 500
             let errorName = SystemError.name
 
             if (error instanceof DuplicityError) {
-                status = 400
+                status = 409
                 errorName = error.constructor.name
             } else if (error instanceof ValidationError) {
                 status = 400
@@ -191,8 +168,8 @@ data.connect('mongodb://localhost:27017', 'test')
 
         api.use(errorHandler)
 
-        api.listen(port, () => {
-            console.log('Test listening port ' + port)
+        api.listen(PORT, () => {
+            console.log('Test listening port ' + PORT)
         })
     })
 
