@@ -22,7 +22,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
         }
     }
     
-    const handleSaveClick = () => {
+    /*const handleSaveClick = () => {
         try {
             logic.savePost(post.id)
 
@@ -32,7 +32,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
 
             alert(error.message)
         }
-    }
+    }*/
 
     const handleDeleteClick = () => {
         if (confirm('Delete post?')) {
@@ -44,8 +44,6 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
 
                         alert(error.message)
                     })
-    
-                
             } catch (error) {
                 console.error(error)
     

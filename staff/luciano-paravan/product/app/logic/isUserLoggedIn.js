@@ -1,5 +1,5 @@
 import { data } from '../data/index.js'
 
 export const isUserLoggedIn = () => {
-    !!data.userId
+    !!data.token
 }

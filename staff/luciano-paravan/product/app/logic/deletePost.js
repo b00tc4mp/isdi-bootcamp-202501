@@ -11,7 +11,7 @@ export const deletePost = (postId) => {
     return fetch(`http://localhost:8080/posts/${postId}`, {
         method: 'DELETE',
         headers: {
-            Authorization: `Basic: ${token}`
+            Authorization: `Bearer: ${token}`
         } //en este caso no se envia ningun json
     })
         .catch(error => { throw new SystemError(error.message) })
