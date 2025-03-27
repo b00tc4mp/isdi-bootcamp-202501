@@ -20,13 +20,18 @@ export const registerUser = (name, email, username, password) => {
         .then(user => {
             if (user) throw new DuplicityError('user already exists')
 
-            user = {
+            return bcrypt.hash(password, 10)
+                .catch(error => { throw new SystemError(error.message )})
+        })
+
+        .then(hash => {
+            const user = {
                 name: name,
                 email: email,
                 username: username,
                 password: hash,
-                createdAt: new Date(), //**** */
-                modifiedAt: null  //*** */
+                createdAt: new Date(), 
+                modifiedAt: null  
             }
 
             // Inserta el objeto user en la colección data.users y devuelve el resultado
@@ -36,7 +41,9 @@ export const registerUser = (name, email, username, password) => {
 
                     throw new SystemError(error.message)
                 })
+
         })
+            
         // Si todo va bien 
         .then(() => { console.log("Changes OK") })
 }

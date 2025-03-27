@@ -8,7 +8,7 @@ data.connect('mongodb://localhost:27017', 'test')
         try {
             let posts2
 
-            return getPosts('67dffc2ca5d644d600b71238')
+            return getPosts('67e2e902a6186f4249516d21')
                 .then(posts => posts2 = posts)
                 .finally(() => console.assert(posts2 instanceof Array, 'posts is an array'))
 

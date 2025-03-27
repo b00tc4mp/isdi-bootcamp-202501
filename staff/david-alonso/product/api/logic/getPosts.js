@@ -46,7 +46,6 @@ export const getPosts = userId => {
 
                         // Publicacion agregada
                         const aggregatedPost = {
-
                             id: post._id.toString(),
                             author: { id: authorId, username: user.username },
                             image: post.image,
