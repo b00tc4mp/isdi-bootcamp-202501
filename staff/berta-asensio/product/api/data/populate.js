@@ -1,5 +1,7 @@
 //importamos MongoClient, que nos conecta mongobd con Node.js
 import { MongoClient } from 'mongodb'
+//importamos bcrypt para hashear los passwords
+import bcrypt from 'bcryptjs'
 
 //creamos una nueva instancia con el puerto por defecto de mongoDB(27017)
 const client = new MongoClient('mongodb://localhost:27017')
@@ -26,14 +28,15 @@ client.connect()
             users.deleteMany(),
             posts.deleteMany()
         ])
-            .then(() => {
+            .then(() => bcrypt.hash('123123aa', 10))
+            .then(hash => {
                 return users.insertMany([
-                    { name: 'Abeja Maya', username: 'MayaBee', password: '123123aa', email: 'abeja@maya.com' },
-                    { name: 'Pantera Rosa', username: 'PinkPanter', password: '123123aa', email: 'pantera@rosa.com' },
-                    { name: 'Daisy Donald', username: 'DonnyDaisy', password: '123123aa', email: 'daisy@donald.com' },
-                    { name: 'Minnie Mouse', username: 'MousMin', password: '123123aa', email: 'minnie@mouse.com' },
-                    { name: 'Goffrey Hall', username: 'HallGoff', password: '123123aa', email: 'goffrey@hall.com' },
-                    { name: 'Pato Donald', username: 'DonnyDuck', password: '123123aa', email: 'pato@donald.com' }
+                    { name: 'Abeja Maya', username: 'MayaBee', password: hash, email: 'abeja@maya.com' },
+                    { name: 'Pantera Rosa', username: 'PinkPanter', password: hash, email: 'pantera@rosa.com' },
+                    { name: 'Daisy Donald', username: 'DonnyDaisy', password: hash, email: 'daisy@donald.com' },
+                    { name: 'Minnie Mouse', username: 'MousMin', password: hash, email: 'minnie@mouse.com' },
+                    { name: 'Goffrey Hall', username: 'HallGoff', password: hash, email: 'goffrey@hall.com' },
+                    { name: 'Pato Donald', username: 'DonnyDuck', password: hash, email: 'pato@donald.com' }
                 ])
             })
             .then(result => {
