@@ -12,22 +12,14 @@ export const registerUser = (name, email, username, password) => {
     validate.username(username)
     validate.password(password)
 
-    return User.findOne({ $or: [{ email }, { username }] }).lean()
+    return bcrypt.hash(password, 10)
         .catch(error => { throw new SystemError(error.message) })
-        .then(user => {
-            if (user) throw new DuplicityError('user already exists')
-
-            return bcrypt.hash(password, 10)
-                .catch(error => { throw new SystemError(error.message) })
-        })
         .then(hash => {
             const user = {
                 name: name,
                 email: email,
                 username: username,
-                password: hash,
-                createdAt: new Date(),
-                modifiedAt: null
+                password: hash
             }
 
             return User.create(user)

@@ -7,14 +7,15 @@ const { NotFoundError } = errors
 export const getPosts = userId => {
     validate.id(userId, 'userId')
 
-    return Promise.all([
-        User.findById(userId).lean(),
-        Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean()
-    ])
+    return User.findById(userId).lean()
         .catch(error => { throw new SystemError(error.message) })
-        .then(([user, posts]) => {
+        .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
+            return Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean()
+                .catch(error => { throw new SystemError(error.message) })
+        })
+        .then(posts => {
             posts.forEach(post => {
                 post.id = post._id.toString()
                 delete post._id

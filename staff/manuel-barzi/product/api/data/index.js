@@ -2,8 +2,6 @@ import mongoose, { Types } from 'mongoose'
 import { errors } from 'com'
 import { User, Post } from './models.js'
 
-const { ObjectId } = Types
-
 const { SystemError } = errors
 
 const data = {
@@ -19,7 +17,6 @@ const data = {
 
 export {
     data,
-    ObjectId,
     User,
     Post
 }
