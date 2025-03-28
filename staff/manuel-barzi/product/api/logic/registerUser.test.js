@@ -1,9 +1,12 @@
-import { data } from '../data/index.js';
-import { registerUser } from './registerUser.js';
+import 'dotenv/config'
+import { data } from '../data/index.js'
+import { registerUser } from './registerUser.js'
+
+const { MONGO_URL, MONGO_DB } = process.env
 
 console.info('TEST registerUser')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let result2 = null

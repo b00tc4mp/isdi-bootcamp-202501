@@ -5,14 +5,14 @@ import bcrypt from 'bcryptjs'
 const { SystemError, DuplicityError } = errors
 
 export const registerUser = (name, email, username, password) => {
-    validate.text(name, 'name')
+    validate.name(name)
     validate.minLength(name, 1, 'name')
     validate.maxLength(name, 20, 'name')
-    validate.email(email, 'email')
-    validate.username(username, 'username')
-    validate.password(password, 'password')
+    validate.email(email)
+    validate.username(username)
+    validate.password(password)
 
-    return User.findOne({ $or: [{ email }, { username }] })
+    return User.findOne({ $or: [{ email }, { username }] }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (user) throw new DuplicityError('user already exists')

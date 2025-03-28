@@ -32,6 +32,15 @@ const user = new Schema({
         minLength: 8,
         maxLength: 100,
         // match: constant.EMPTY_OR_BLANK_REGEX
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 
@@ -51,6 +60,19 @@ const post = new Schema({
         required: true,
         maxLength: 500,
         // match: constant.EMPTY_OR_BLANK_REGEX
+    },
+    likes: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 
