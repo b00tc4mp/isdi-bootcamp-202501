@@ -4,8 +4,8 @@ import { errors } from 'com'
 import jwt from 'jsonwebtoken'
 
 
-import { data } from './data/index.js'
-import { logic } from './logic/index.js'
+import { data } from '../api/data/index.js'
+import { logic } from '../api/logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
