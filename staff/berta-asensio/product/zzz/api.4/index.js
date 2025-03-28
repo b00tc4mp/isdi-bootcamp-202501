@@ -1,4 +1,4 @@
-import 'dotenv/config' // importa las variables de entorno del fichero ignorado .env
+
 import express from 'express'  //Frameword para construir APIs en Node.js
 import cors from 'cors' // Middleware para permitir que el servidor acepte peticiones de diferentes orígenes
 import { errors } from 'com'
@@ -10,7 +10,7 @@ import { logic } from './logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
-const { JWT_SECRET, PORT, MONGO_URL, MONGO_DBNAME } = process.env // nos destructuramos el secreto desde el archivo ignorado .env
+const JWT_SECRET = 'Hola Didi' // Definición de secreto que será utilizado para firmar y verificar tokens.
 
 // Middleware que envuelve una función para manejar errores síncronos y asíncronos.
 const withErrorHandling = callback => {
@@ -25,7 +25,7 @@ const withErrorHandling = callback => {
 }
 
 //Conexión con la base de datos, si la conexión es exitosa, se monta la api.
-data.connect(MONGO_URL , MONGO_DBNAME) 
+data.connect('mongodb://localhost:27017', 'test') 
     .catch(console.error)
     .then(() => {
         //montamos la api
@@ -195,7 +195,7 @@ data.connect(MONGO_URL , MONGO_DBNAME)
 
         api.use(errorHandler)
 
-        api.listen(PORT, () => console.log(`API running on post ${PORT}`))
+        api.listen(8080, () => console.log('API running on post 8080'))
 
     })
 
