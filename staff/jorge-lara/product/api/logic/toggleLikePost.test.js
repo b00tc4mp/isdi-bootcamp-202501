@@ -1,9 +1,12 @@
+import 'dotenv/config'
 import { toggleLikePost } from './toggleLikePost.js'
 import { data } from '../data/index.js';
 
 console.info('TEST toggleLikePost');
 
-data.connect('mongodb://localhost:27017', 'test')
+const { MONGO_URL, MONGO_DB } = process.env;
+
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let result2 = null;

@@ -1,7 +1,8 @@
-import { data } from '../data/index.js';
+import { User, Post } from '../data/index.js';
 import { errors, validate } from 'com'
+import { Types } from 'mongoose';
 
-const { ObjectId } = data
+const { ObjectId } = Types;
 const { SystemError, NotFoundError } = errors;
 
 export const toggleLikePost = (userId, postId) => {
@@ -10,7 +11,7 @@ export const toggleLikePost = (userId, postId) => {
 
     const userObjectId = new ObjectId(userId);
 
-    return data.users.findOne({ _id: userObjectId })
+    return User.findOne({ _id: userObjectId })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
 
@@ -20,7 +21,7 @@ export const toggleLikePost = (userId, postId) => {
 
             const postObjectId = new ObjectId(postId);
 
-            return data.posts.findOne({ _id: postObjectId })
+            return Post.findOne({ _id: postObjectId })
                 .catch(error => { throw new SystemError(error.message) })
                 .then(post => {
                     if (!post) {
@@ -37,7 +38,7 @@ export const toggleLikePost = (userId, postId) => {
                         likes.splice(index, 1);
                     }
 
-                    return data.posts.updateOne({ _id: postObjectId }, { $set: { likes } })
+                    return Post.updateOne({ _id: postObjectId }, { $set: { likes } })
                         .catch(error => { throw new SystemError(error.message) })
                         .then(() => { })
                 })

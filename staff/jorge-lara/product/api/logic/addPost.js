@@ -1,7 +1,8 @@
-import { data } from '../data/index.js'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
+import { Types } from 'mongoose'
 
-const { ObjectId } = data
+const { ObjectId } = Types;
 const { SystemError, NotFoundError } = errors;
 
 export const addPost = (userId, text, image) => {
@@ -13,7 +14,7 @@ export const addPost = (userId, text, image) => {
 
     const userObjectId = new ObjectId(userId);
 
-    return data.users.findOne({ _id: userObjectId })
+    return User.findOne({ _id: userObjectId })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) {
@@ -29,7 +30,7 @@ export const addPost = (userId, text, image) => {
                 likes: []
             }
 
-            return data.posts.insertOne(post)
+            return Post.insertOne(post)
                 .catch(error => { throw new SystemError(error.message) })
         })
         .then(() => { })

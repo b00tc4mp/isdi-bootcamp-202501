@@ -1,7 +1,8 @@
-import { data } from '../data/index.js'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
+import { Types } from 'mongoose';
 
-const { ObjectId } = data;
+const { ObjectId } = Types;
 const { SystemError, NotFoundError, OwnershipError } = errors;
 
 export const updatePostText = (userId, postId, text) => {
@@ -10,7 +11,7 @@ export const updatePostText = (userId, postId, text) => {
     validate.text(text, 'text');
     validate.maxLength(text, 400, 'text');
 
-    return data.users.findOne({ _id: new ObjectId(userId) })
+    return User.findOne({ _id: new ObjectId(userId) })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) {
@@ -19,7 +20,7 @@ export const updatePostText = (userId, postId, text) => {
 
             const postObjectId = new ObjectId(postId)
 
-            return data.posts.findOne({ _id: postObjectId })
+            return Post.findOne({ _id: postObjectId })
                 .catch(error => { throw new SystemError(error.message) })
                 .then(post => {
                     if (!post) {
@@ -30,7 +31,7 @@ export const updatePostText = (userId, postId, text) => {
                         throw new OwnershipError('user is not author of post');
                     }
 
-                    return data.posts.updateOne({ _id: postObjectId }, {
+                    return Post.updateOne({ _id: postObjectId }, {
                         $set: {
                             text,
                             modifiedAt: new Date

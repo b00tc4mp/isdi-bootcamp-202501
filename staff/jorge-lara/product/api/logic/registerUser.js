@@ -1,4 +1,4 @@
-import { data } from '../data/index.js'
+import { User } from '../data/index.js'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 
@@ -12,7 +12,7 @@ export const registerUser = (name, email, username, password) => {
     validate.username(username, 'username');
     validate.password(password, 'password');
 
-    return data.users.findOne({ $or: [{ email }, { username }] })
+    return User.findOne({ $or: [{ email }, { username }] })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (user) {
@@ -33,7 +33,7 @@ export const registerUser = (name, email, username, password) => {
                 modifiedAt: null
             }
 
-            return data.users.insertOne(user)
+            return User.insertOne(user)
                 .catch(error => {
                     if (error.code === 11000) {
                         throw new DuplicityError('user already exists');

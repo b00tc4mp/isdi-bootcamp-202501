@@ -1,14 +1,15 @@
-import { data } from '../data/index.js'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
+import { Types } from 'mongoose'
 
-const { ObjectId } = data
+const { ObjectId } = Types
 const { SystemError, NotFoundError, OwnershipError } = errors;
 
 export const deletePost = (userId, postId) => {
     validate.id(userId, 'userId');
     validate.id(postId, 'postId');
 
-    return data.users.findOne({ _id: new ObjectId(userId) })
+    return User.findOne({ _id: new ObjectId(userId) })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
 
@@ -18,7 +19,7 @@ export const deletePost = (userId, postId) => {
 
             const postObjectId = new ObjectId(postId);
 
-            return data.posts.findOne({ _id: postObjectId })
+            return Post.findOne({ _id: postObjectId })
                 .catch(error => { throw new SystemError(error.message) })
                 .then(post => {
                     if (!post) {

@@ -1,13 +1,14 @@
-import { data } from '../data/index.js'
+import { User } from '../data/index.js'
 import { errors, validate } from 'com'
+import { Types } from 'mongoose';
 
-const { ObjectId } = data;
+const { ObjectId } = Types;
 const { SystemError, NotFoundError } = errors;
 
 export const getUserName = userId => {
     validate.id(userId, 'userId');
 
-    return data.users.findOne({ _id: new ObjectId(userId) })
+    return User.findOne({ _id: new ObjectId(userId) })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
 

@@ -1,9 +1,12 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { authenticateUser } from './authenticateUser.js'
 
 console.info('TEST authenticateUser');
 
-data.connect('mongodb://localhost:27017', 'test')
+const { MONGO_URL, MONGO_DB } = process.env;
+
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let userId
@@ -16,5 +19,5 @@ data.connect('mongodb://localhost:27017', 'test')
             console.error(error)
         }
     })
-    .catch(console.error(error))
+    .catch(error => console.error(error))
     .finally(() => data.disconnect())

@@ -1,14 +1,17 @@
+import 'dotenv/config'
 import { addPost } from './addPost.js'
 import { data } from '../data/index.js'
 
 console.info('TEST addPost');
 
-data.connect('mongodb://localhost:27017', 'test')
+const { MONGO_URL, MONGO_DB } = process.env;
+
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let result2 = null;
 
-            return addPost('67e040020a9939a3b5a6157e', 'https://www.frutas-hortalizas.com/img/fruites_verdures/presentacio/59.jpg', 'potatooo')
+            return addPost('67e3b7de759d2b7079073a7e', 'potatooo', 'https://www.frutas-hortalizas.com/img/fruites_verdures/presentacio/59.jpg')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {
