@@ -11,7 +11,7 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let username
 
-            return getUsername('67e56b76aca435b739796a5c')
+            return getUsername('67e6b6b04219300670bd238d')
                 .then(name => username = name)
                 .then(console.log)
                 .finally(() => console.assert(typeof username === 'string', 'username must be a string'))

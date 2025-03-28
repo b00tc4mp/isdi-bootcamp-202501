@@ -3,12 +3,12 @@ import { errors, validate } from 'com'
 const { SystemError } = errors
 
 export const registerUser = (name, email, username, password) => {
-    validate.text(name, 'name')
+    validate.name(name)
     validate.minLength(name, 1, 'name')
     validate.maxLength(name, 20, 'name')
-    validate.email(email, 'email')
-    validate.username(username, 'username')
-    validate.password(password, 'password')
+    validate.email(email)
+    validate.username(username)
+    validate.password(password)
 
     return fetch('http://localhost:8080/users', {
         method: 'POST',

@@ -11,7 +11,7 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let posts2
 
-            return getPosts('67e56b76aca435b739796a5c')
+            return getPosts('67e6b6b04219300670bd238d')
                 .then(posts => posts2 = posts)
                 .then(console.log)
                 .finally(() => console.assert(posts2 instanceof Array, 'posts must be an Array'))

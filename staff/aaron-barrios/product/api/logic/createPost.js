@@ -1,31 +1,24 @@
-import { Types } from 'mongoose'
 import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { ObjectId } = Types
 const { SystemError, NotFoundError } = errors
 
 export const createPost = (userId, image, text) => {
     validate.id(userId, 'userId')
-    validate.url(image, 'image')
+    validate.url(image)
     validate.maxLength(image, 500, 'image')
-    validate.text(text, 'text')
+    validate.text(text)
     validate.maxLength(text, 500, 'text')
 
-    const userObjectId = new ObjectId(userId)
-
-    return User.findOne({ _id: userObjectId })
+    return User.findById(userId).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
-            if (!user) throw new NotFoundError('User not found ')
+            if (!user) throw new NotFoundError('User not found!')
 
             const post = {
-                author: userObjectId,
+                author: userId,
                 image,
-                text,
-                createdAt: new Date(),
-                modifiedAt: null,
-                likes: []
+                text
             }
 
             return Post.create(post)

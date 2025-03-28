@@ -1,24 +1,19 @@
-import { MongoClient, ObjectId} from 'mongodb'
+import 'dotenv/config'
+import {data, User, Post} from '../data/index.js'
 import bcrypt from 'bcryptjs'
 
-//instancia del cliente de mongo que como parametros pide una url y te proporciona métodos para acceder a la base de datos, desconectarnos, etc. 
-const client = new MongoClient('mongodb://localhost:27017')
+const  { MONGO_URL , MONGO_DB  } = process.env
 
-client.connect() // => retorna una promesa
+data.connect(MONGO_URL, MONGO_DB) // => retorna una promesa
     .then(() => {
-        const db = client.db('test') //=> base de datos 'test' (juguete)
-
-        const users = db.collection('users')
-        const posts = db.collection('posts')
-
         return Promise.all([
-            users.deleteMany(),
-            posts.deleteMany()
+            User.deleteMany({}),
+            Post.deleteMany({})
         ])
 
             .then(() => bcrypt.hash('123123', 10))
             .then(hash => {
-                return users.insertMany([
+                return User.insertMany([
                     { name: 'Arnau', email: 'ar@nau.com', username: 'arnau', password: hash },
                     { name: 'Marc', email: 'marc@arc.com', username: 'marc', password: hash },
                     { name: 'Masha', email: 'ma@sha.com', username: 'mashinsky', password: hash },
@@ -26,13 +21,11 @@ client.connect() // => retorna una promesa
                     { name: 'John Doe', email: 'john@doe.com', username: 'john', password: hash }
                 ])
             })
-            .then(result => {
-                const {0: arnauId, 1: marcId, 2: mashaId, 3: diverId, 4: johnId} = result.insertedIds
-
-                return posts.insertMany([
-                    { author: johnId, image: 'https://media.giphy.com/media/sTczweWUTxLqg/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g', text: 'free day!', likes: [marcId, arnauId], createdAt: new Date, modifiedAt: null },
-                    { author: diverId, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW53Zjk1OWFrMjFyYmV3bDJqc3A5YjJhOHd1Nng3dnhpZjRlaXNtNSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/uQgXjl505BdYAv8H0X/giphy.gif', text: 'i am free!', likes: [], createdAt: new Date, modifiedAt: null },
-                    { author: mashaId, image: 'https://media.giphy.com/media/yoJC2GnSClbPOkV0eA/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g', text: 'so happy for you... mf', likes: [mashaId], createdAt: new Date, modifiedAt: null }
+            .then(([arnau, marc, masha, diver, john]) => {
+                return Post.insertMany([
+                    { author: arnau.id, image: 'https://media.giphy.com/media/sTczweWUTxLqg/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g', text: 'free day!', likes: [marc.id, diver.id], createdAt: new Date, modifiedAt: null },
+                    { author: masha.id, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW53Zjk1OWFrMjFyYmV3bDJqc3A5YjJhOHd1Nng3dnhpZjRlaXNtNSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/uQgXjl505BdYAv8H0X/giphy.gif', text: 'i am free!', likes: [], createdAt: new Date, modifiedAt: null },
+                    { author: john.id, image: 'https://media.giphy.com/media/yoJC2GnSClbPOkV0eA/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g', text: 'so happy for you... mf', likes: [masha.id], createdAt: new Date, modifiedAt: null }
                 ])
             })
 
@@ -84,7 +77,4 @@ client.connect() // => retorna una promesa
         //     { $rename: { userId: "author" } } // Renombra "userId" a "author"
         // )
     })
-    .then(result => {
-        console.log(result)
-    })
-    .finally(() => client.close())
+    .finally(() => data.disconnect())

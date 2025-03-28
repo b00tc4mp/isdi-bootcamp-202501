@@ -1,11 +1,8 @@
-import mongoose, {Types} from 'mongoose'
+import mongoose from 'mongoose'
 import {errors} from 'com'
 import {User, Post} from './models.js'
 
-const {ObjectId} = Types
-
 const {SystemError} = errors
-
 
  const data = {
     connect(url, dbName){
@@ -20,7 +17,6 @@ const {SystemError} = errors
 
 export {
     data,
-    ObjectId,
     User,
     Post
 }

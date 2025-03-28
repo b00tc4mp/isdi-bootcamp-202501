@@ -29,6 +29,15 @@ const user = new Schema({
         required: true,
         minlength: 5,
         maxLength: 80
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 
@@ -48,12 +57,14 @@ const post = new Schema({
         required: true,
         maxlength: 500
     },
-    likes: {
-        type: [ObjectId],
+    likes: [{
+        type: ObjectId,
         ref: 'User'
-    },
+    }],
     createdAt: {
-        type: Date
+        type: Date,
+        required: true,
+        default: Date.now
     },
     modifiedAt: {
         type: Date,
