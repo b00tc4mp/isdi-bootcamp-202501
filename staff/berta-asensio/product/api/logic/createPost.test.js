@@ -21,7 +21,7 @@ data.connect('mongodb://localhost:27017', 'test')
         try {
             let result2 = null
 
-            return createPost('67e04f98d9f076ef37e6a148', 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExamZ3cm4zbmlrdWY0bDljNndpc2Z4cnZuZWJuMmhjaTE2dXZ2Mmh6dyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AQ7GWTm9iBxaU/giphy.gif', 'I love this girl')
+            return createPost('67e662617ba1f822e43656e6', 'https://media.giphy.com/media/5t235Nf4wo3rhLSMVy/giphy.gif?cid=790b7611hsy6vpfm1wzxmz83ggr3wkpq40gzzxgktapngt8u&ep=v1_gifs_search&rid=giphy.gif&ct=g', 'Nyami')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {

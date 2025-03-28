@@ -11,6 +11,9 @@ export function CreatePost({onPostCreated, onPostCreateCancelled}) {
 
             const { image: { value: image }, text: { value: text } } = form
 
+            console.log('Image', image)
+            console.log('Text', text)
+            
             logic.createPost(image, text)
                 .then(() =>  onPostCreated())
                 .catch(error => {
@@ -27,20 +30,21 @@ export function CreatePost({onPostCreated, onPostCreateCancelled}) {
 
     const handleCancelClick = () => onPostCreateCancelled()
 
-    return <section>
-        <form onSubmit={handleFormSubmit}>
+    return (
+        <section>
+            <form onSubmit={handleFormSubmit}>
 
-            <label htmlFor="image">Image</label>
-            <input type="url" id="image" />
+                <label htmlFor="image">Image</label>
+                <input type="url" id="image" name="image" />
 
-            <label htmlFor="text">Text</label>
-            <input type="text" id="text" />
+                <label htmlFor="text">Text</label>
+                <input type="text" id="text" name="text" />
 
-            <button type="submit">Add post</button>
+                <button type="submit">Add post</button>
 
-        </form>
+            </form>
 
-        <a onClick={handleCancelClick} >Cancel</a>
-    </section>
-
+            <a onClick={handleCancelClick} >Cancel</a>
+        </section>
+    )
 }

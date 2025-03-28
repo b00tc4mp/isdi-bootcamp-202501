@@ -1,8 +1,8 @@
 curl -X POST http://localhost:8080/posts \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UyNTczM2QwNWIxNTk3YmE5ZWJlYzMiLCJpYXQiOjE3NDMwMTI1MTB9.u_WerqFIz8AqEy1PW-H9-zKie1tpQlnqT2ie5Z6Q9SM' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2U2NjI2MTdiYTFmODIyZTQzNjU2ZTYiLCJpYXQiOjE3NDMxNTE3MTl9.Rzoajk0ROeI27YIJesGQwzkAqFPFyeqBDbZeSwZqHdA' \
     -H 'Content-type: application/json' \
     -d '{
-        "image":"https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXlnbXp6eGtyMHAxbWE3NzJiYXhtbHlzdzNrbzd5dHgwbTA1c3B0YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EG0Y1zJIBDPsk/giphy.gif",
-        "text":"Good morning"
+        "image":"https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHYyNmgyam1tMzJlbXdvdG1xNWQ4OTBvdmNoc281d2FtbGdkZ3Y0NSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/pVkmGyqYRt4qY/giphy.gif",
+        "text":"I need to rest..."
         }' \
     -v

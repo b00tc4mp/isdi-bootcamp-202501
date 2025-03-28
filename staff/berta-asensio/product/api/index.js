@@ -98,6 +98,7 @@ data.connect('mongodb://localhost:27017', 'test')
         api.post('/posts', jsonBodyParser, (req, res, next) => {
             handleWithErrorHandling(next, () => {
                 const { authorization } = req.headers
+                const { image, text } = req.body
 
                 const token = authorization.slice(7)
 
