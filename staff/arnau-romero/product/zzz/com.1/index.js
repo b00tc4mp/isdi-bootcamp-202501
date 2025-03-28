@@ -3,6 +3,5 @@ import { validate } from './validate.js'
 
 export{
     errors,
-    validate,
-    constant
+    validate
 }

@@ -107,3 +107,12 @@ bin\mongod.exe --dbpath data  => comando a ejecutar en terminal 1
 (levantar mongosh) => cd D:\MONGODB\mongosh-2.4.2-win32-x64  =>  (ruta donde tienes tu carpeta mongosh)
 bin\mongosh   => comando a ejecutar en terminal 2
 ```
+
+# MONGOOSE
+
+![Mongoose 1](./images/mongoose1.jpg)
+![Mongoose 2](./images/mongoose2.jpg)
+![Mongoose 3](./images/mongoose3.jpg)
+![Mongoose 4](./images/mongoose4.jpg)
+![Mongoose 5](./images/mongoose5.jpg)
+![Mongoose 6](./images/mongoose6.jpg)
