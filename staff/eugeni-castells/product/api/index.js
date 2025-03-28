@@ -15,7 +15,7 @@ const {
   NotFoundError,
 } = errors;
 
-const { JWT_SECRET, PORT, MONGO_URL } = process.env;
+const { JWT_SECRET, PORT, MONGO_URL, MONGO_DB } = process.env;
 
 const handleWithErrorHandling = (next, callback) => {
   try {
@@ -31,7 +31,7 @@ const handleWithErrorHandling = (next, callback) => {
   }
 };
 data
-  .connect(MONGO_URL, "test")
+  .connect(MONGO_URL, MONGO_DB)
   .catch((error) => console.error(error))
   .then(() => {
     const api = express();
