@@ -1,36 +1,22 @@
-//Importo Mongo y ObjectId de la librería mongodb
-import { MongoClient, ObjectId } from "mongodb";
+import mongoose, { Types } from "mongoose"; // ==> importo mongoose y Types de mongoose
+import { User, Post } from "./models.js"; // ==> importo los modelos de mongoose
 import { errors } from "com";
+
+const { ObjectId } = Types; // ==> importo ObjectId de mongoose
 
 const { SystemError } = errors;
 
-let client;// ==> creo una variable client
-
-export const data = {
-  
-  users: null, //==> creo una variable users collection
-  posts: null, //==> creo una variable posts collection
-
-  //Utilizo metodo de mongo connect para conectarme a la base de datos
-  //url: url de la base de datos
-  //dbName: nombre de la base de datos
-  //Devuelvo una promesa que se resuelve cuando se conecta a la base de datos
-  connect(url, dbName) {//==> url y dbName son los parametros que recibe la función connect
-    return (client = new MongoClient(url)).connect()//==> creo una nueva conexión a la base de datos y la asigno a la variable client
-      .catch((error) => {
-        new SystemError("Error connecting to database"(error.message));
-      })
-      .then((client) => {
-        
-        const db = client.db(dbName);//==> asigno a la variable db la base de datos
-        data.users = db.collection("users");//==> asigno a la variable users la colección users de la base de datos 
-        data.posts = db.collection("posts"); //==> asigno a la variable posts la colección posts de la base de datos
-      });
+const data = {
+  connect(url, dbName) {
+    return mongoose.connect(`${url}/${dbName}`).catch((error) => {
+      new SystemError("Error connecting to database"(error.message));
+    });
   },
   disconnect() {
-    
-    return client.close();// ==> cierro la conexión a la base de datos
+    return mongoose.disconnect(); // ==> cierro la conexión a la base de datos
   },
-  
-  ObjectId,//==> exporto ObjectId por que lo utilizo en otros archivos
+
+  ObjectId, //==> exporto ObjectId por que lo utilizo en otros archivos
 };
+
+export { data, User,Post, ObjectId };

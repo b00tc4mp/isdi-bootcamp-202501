@@ -1,5 +1,4 @@
-import { constant } from "./constants.js";
-
+import { constant } from "./constants.js"
 import { ValidateError } from "./errors/errors.js";
 
 export const validate = {
