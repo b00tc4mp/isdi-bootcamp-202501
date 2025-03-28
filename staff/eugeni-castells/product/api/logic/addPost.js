@@ -1,18 +1,17 @@
 import { errors, validate } from "com";
-import { data } from "../data/index.js";
-const { ObjectId } = data;
+import { User, Post } from "../data/index.js";
 const { NotFoundError, SystemError } = errors;
 
 export const addPost = (id, image, text) => {
   validate.id(id, "user id");
   validate.text(image, "image URL");
+  validate.maxLength(image, 500, "image");
   validate.minLength(image, 10, "image URL");
   validate.text(text, "text");
+  validate.maxLength(text, 500, "text max length");
 
-  const userObjectId = new ObjectId(id);
-
-  return data.users
-    .findOne({ _id: userObjectId })
+  return User.findById(id)
+    .lean()
     .catch((error) => {
       throw new SystemError(error.message);
     })
@@ -20,15 +19,12 @@ export const addPost = (id, image, text) => {
       if (!user) throw new NotFoundError("user not found");
 
       const newPost = {
-        author: userObjectId,
+        author: id,
         image,
         text,
-        createdAt: new Date(),
-        modifiedAt: null,
-        likes: [],
       };
 
-      return data.posts.insertOne(newPost).catch((error) => {
+      return Post.create(newPost).catch((error) => {
         throw new SystemError(error.message);
       });
     })

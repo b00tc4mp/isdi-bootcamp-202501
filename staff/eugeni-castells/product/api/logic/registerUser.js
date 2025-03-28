@@ -12,6 +12,7 @@ export const registerUser = function (userInfo) {
   validate.password(userInfo.password, "password");
 
   const { email, username } = userInfo;
+
   return data.users
     .findOne({ $or: [{ email }, { username }] })
 

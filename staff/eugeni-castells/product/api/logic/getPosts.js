@@ -1,37 +1,31 @@
-import { data } from "../data/index.js";
+import { User, Post, ObjectId } from "../data/index.js";
 import { errors, validate } from "com";
-
-const { ObjectId } = data;
 
 const { NotFoundError, SystemError } = errors;
 
 export const getPosts = (userId) => {
   validate.id(userId, "user id");
 
-  const userObjectId = new ObjectId(userId);
-
-  return data.users
-    .findOne({ _id: userObjectId })
+  return User.findById(userId)
+    .lean()
     .catch((error) => {
       {
-        throw new System(error.message);
+        throw new SystemError(error.message);
       }
     })
     .then((user) => {
       if (!user) throw new NotFoundError("user not found");
 
-      return data.posts
-        .find()
-        .toArray()
+      return Post.find()
+        .lean()
         .catch((error) => {
           throw new SystemError(error.message);
         })
         .then((posts) => {
           const authors = posts.map(({ author }) => author);
 
-          return data.users
-            .find({ _id: { $in: authors } })
-            .toArray()
+          return User.find({ _id: { $in: authors } })
+            .lean()
             .catch((error) => {
               throw new SystemError(error.message);
             })

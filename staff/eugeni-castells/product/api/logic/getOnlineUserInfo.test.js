@@ -1,14 +1,17 @@
+import "dotenv/config";
 import { data } from "../data/index.js";
 import { getOnlineUserInfo } from "./getOnlineUserInfo.js";
+
+const { MONGO_URL, MONGO_DB } = process.env;
 
 console.info("TEST getOnlineUserInfo");
 
 data
-  .connect("mongodb://localhost:27017", "test")
+  .connect(MONGO_URL, MONGO_DB)
   .then(() => {
     let userInfo;
     try {
-      return getOnlineUserInfo("67dc4b9bc7f89659f96ba4c2")
+      return getOnlineUserInfo("67e6c7b68908f76d6283193f")
         .then((info) => {
           userInfo = info;
         })

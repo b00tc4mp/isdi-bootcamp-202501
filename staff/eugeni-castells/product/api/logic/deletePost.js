@@ -1,26 +1,30 @@
 import { errors, validate } from "../../com/index.js";
-import { data } from "../data/index.js";
-const { ObjectId } = data;
-const { OwnershipError, NotFoundError } = errors;
+import { Post, User } from "../data/index.js";
+const { OwnershipError, NotFoundError, SystemError } = errors;
 
 export const deletePost = (userId, postId) => {
   validate.id(postId, "id");
   validate.id(userId, "user id");
 
-  return data.posts
-    .findOne({ _id: new ObjectId(postId) })
+  return Promise.all([
+    User.findById(userId).lean(),
+    Post.findById(postId).lean(),
+  ])
     .catch((error) => {
-      throw new Error(error.message);
+      throw new SystemError(error.message);
     })
-    .then((foundPost) => {
+    .then(([user, foundPost]) => {
+      if (!user) throw new NotFoundError("user not found");
+
       if (!foundPost) throw new NotFoundError("post not found");
 
       if (foundPost.author.toString() !== userId)
-        throw new OwnershipError("user is not author of post");
+        throw new OwnershipError("user is not author of the post");
 
-      return data.posts.deleteOne({ _id: new ObjectId(postId) });
+      return Post.deleteOne({ _id: postId });
     })
     .catch((error) => {
-      throw new Error(error);
-    });
+      throw new SystemError(error.message);
+    })
+    .then(() => {});
 };

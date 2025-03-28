@@ -1,5 +1,5 @@
 import { errors, validate } from "com";
-import { data } from "../data/index.js";
+import { User } from "../data/index.js";
 import bcrypt from "bcryptjs";
 
 const { CredentialsError, NotFoundError, SystemError } = errors;
@@ -8,8 +8,8 @@ export const authenticateUser = (username, password) => {
   validate.password(password, "password");
   validate.username(username, "username");
 
-  return data.users
-    .findOne({ username })
+  return User.findOne({ username })
+    .lean()
     .catch((error) => {
       throw new SystemError(error.message);
     })

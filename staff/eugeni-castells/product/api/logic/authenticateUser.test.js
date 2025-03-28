@@ -1,13 +1,16 @@
+import "dotenv/config";
 import { errors } from "com";
 import { data } from "../data/index.js";
 import { authenticateUser } from "./authenticateUser.js";
+
+const { MONGO_URL, MONGO_DB } = process.env;
 
 const { SystemError } = errors;
 
 console.info("TEST authenticateUser");
 
 data
-  .connect("mongodb://localhost:27017", "test")
+  .connect(MONGO_URL, MONGO_DB)
   .catch((error) => {
     throw new SystemError(error.message);
   })
@@ -15,7 +18,7 @@ data
     try {
       let userId;
 
-      return authenticateUser("quesitos", "bouRules")
+      return authenticateUser("lucho", "123123123")
         .then((id) => (userId = id))
         .finally(() =>
           console.assert(typeof userId === "string", "userId is a string")
