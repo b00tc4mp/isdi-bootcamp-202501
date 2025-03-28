@@ -40,6 +40,10 @@ export const validate = {
   },
   id(id, explain) {
     this.text(id, explain);
+
+    if (!constant.OBJECT_ID_REGEX.test(id))
+      throw new Error(`invalid ${explain} as ObjectId syntax`);
+
     if (id.length !== 24) throw new Error(`invalid ${explain} length`);
   },
 };
