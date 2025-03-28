@@ -1,3 +1,3 @@
 curl -X GET http://localhost:8080/posts \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UyNTczM2QwNWIxNTk3YmE5ZWJlYzMiLCJpYXQiOjE3NDMwMTI1MTB9.u_WerqFIz8AqEy1PW-H9-zKie1tpQlnqT2ie5Z6Q9SM' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2U0ZmUzZThjYTkwZDc1OGFiNjQxNDIiLCJpYXQiOjE3NDMxNDg3Mjh9.G53OVq6qpPtfkcYxVyRSrv0F9lvkkbhsswyJ3DUJkvs' \
     -v

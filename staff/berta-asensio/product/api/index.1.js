@@ -12,18 +12,46 @@ const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemE
 // Creamos el secreto para el token
 const JWT_SECRET = 'Hola Didi'
 
+//Función para manejar los errores
+const respondWithError = (res, error) => {
+    let status = 500
+    let errorName = SystemError.name
+
+    if (error instanceof DuplicityError) {
+        status = 409
+        errorName = error.constructor.name
+    } else if (error instanceof ValidationError) {
+        status = 400
+        errorName = error.constructor.name
+    } else if (error instanceof CredentialsError) {
+        status = 401
+        errorName = error.constructor.name
+    } else if (error instanceof NotFoundError) {
+        status = 404
+        errorName = error.constructor.name
+    } else if (error instanceof OwnershipError) {
+        status = 403
+        errorName = error.constructor.name
+    }
+
+    res.status(status).json({ error: errorName, message: error.message })
+}
 
 //función para manejar los trycatchs sincronos y asincronos:
 
-const handleWithErrorHandling = (next, callback) => {
+const handleWithErrorHandling = (res, callback) => {
     try {
         callback() //este callback nos sustituye el try de cada función, con el request y el response, es decir, el caso happy
             .catch(error => {
-                next(error)
+                console.error(error)
+
+                respondWithError(res, error)
             })
 
     } catch (error) {
-        next(error)
+        console.error(error)
+
+        respondWithError(res, error)
     }
 }
 
@@ -48,8 +76,8 @@ data.connect('mongodb://localhost:27017', 'test')
         en forma de json {"":""}.
         -Asi que la data pasará a body como propiedad de la request.
         */
-        api.post('/users', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.post('/users', jsonBodyParser, (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { name, username, password, email } = req.body
 
                 return logic.registerUser(name, username, password, email)
@@ -66,8 +94,8 @@ data.connect('mongodb://localhost:27017', 'test')
         y se guardará para ser utilizado en las siguientes rutas.
         MIRAR LIBRETA, token bien explicado.
         */
-        api.post('/users/auth', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.post('/users/auth', jsonBodyParser, (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { username, password } = req.body 
 
                 return logic.authenticateUser(username, password) 
@@ -80,8 +108,8 @@ data.connect('mongodb://localhost:27017', 'test')
 
         //GET USERNAME
 
-        api.get('/users/self/name', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.get('/users/self/name', (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers 
 
                 const token = authorization.slice(7)
@@ -95,8 +123,8 @@ data.connect('mongodb://localhost:27017', 'test')
 
         //CREATE POST
 
-        api.post('/posts', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.post('/posts', jsonBodyParser, (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -109,8 +137,8 @@ data.connect('mongodb://localhost:27017', 'test')
         })
 
         //GET POSTS
-        api.get('/posts', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.get('/posts', (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -123,8 +151,8 @@ data.connect('mongodb://localhost:27017', 'test')
         })
 
         //DELETE POST
-        api.delete('/posts/:postId', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.delete('/posts/:postId', (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -140,8 +168,8 @@ data.connect('mongodb://localhost:27017', 'test')
 
         //TOGGLE LIKE POST
 
-        api.patch('/posts/:postId/likes', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.patch('/posts/:postId/likes', (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -156,8 +184,8 @@ data.connect('mongodb://localhost:27017', 'test')
         })
 
         //UPDATE POST TEXT
-        api.patch("/posts/:postId/text", jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
+        api.patch("/posts/:postId/text", jsonBodyParser, (req, res) => {
+            handleWithErrorHandling(res, () => {
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -172,34 +200,6 @@ data.connect('mongodb://localhost:27017', 'test')
                     .then(() => res.status(204).send())
             })
         })
-
-        const errorHandler = (error, req, res, next) => {
-            console.error(error)
-
-            let status = 500
-            let errorName = SystemError.name
-        
-            if (error instanceof DuplicityError) {
-                status = 409
-                errorName = error.constructor.name
-            } else if (error instanceof ValidationError) {
-                status = 400
-                errorName = error.constructor.name
-            } else if (error instanceof CredentialsError) {
-                status = 401
-                errorName = error.constructor.name
-            } else if (error instanceof NotFoundError) {
-                status = 404
-                errorName = error.constructor.name
-            } else if (error instanceof OwnershipError) {
-                status = 403
-                errorName = error.constructor.name
-            }
-        
-            res.status(status).json({ error: errorName, message: error.message })
-        }
-
-        api.use(errorHandler)
 
         api.listen(8080, () => console.log('API running on post 8080'))
 
