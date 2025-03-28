@@ -7,8 +7,7 @@
     "start": "node .",
     "watch": "node --watch .",
     "inspect": "node --inspect-brk .",
-    "test": "mocha logic/*.spec.js",
-    "test-inspect": "mocha --inspect-brk logic/*.spec.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -22,9 +21,5 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.0"
-  },
-  "devDependencies": {
-    "chai": "^5.2.0",
-    "mocha": "^11.1.0"
   }
 }
