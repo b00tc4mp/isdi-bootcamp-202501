@@ -1,16 +1,13 @@
-import { MongoClient } from "mongodb";
+import "dotenv/config.js";
+import { data, User, Post } from "./index.js";
 import bcrypt from "bcryptjs";
-const client = new MongoClient("mongodb://localhost:27017");
 
-client
-  .connect()
+const { MONGO_URL, MONGO_DB } = process.env;
+
+data
+  .connect(MONGO_URL, MONGO_DB)
   .then(() => {
-    const db = client.db("test");
-
-    const users = db.collection("users");
-    const posts = db.collection("posts");
-
-    return Promise.all([users.deleteMany(), posts.deleteMany()])
+    return Promise.all([User.deleteMany(), Post.deleteMany()])
       .then(() => {
         return bcrypt
           .hash("123123123", 10)
@@ -18,22 +15,22 @@ client
             throw new SystemError(error.message);
           })
           .then((hash) => {
-            return users.insertMany([
+            return User.insertMany([
               {
                 name: "Luciano",
-                email: "luciano@marrano",
+                email: "luciano@marrano.com",
                 username: "lucho",
                 password: hash,
               },
               {
                 name: "Aaron",
-                email: "aaron@sabroson",
+                email: "aaron@sabroson.com",
                 username: "aaron",
                 password: hash,
               },
               {
                 name: "Masha",
-                email: "masha@nova",
+                email: "masha@nova.com",
                 username: "mashinski",
                 password: hash,
               },
@@ -41,16 +38,14 @@ client
           });
       })
       .then((result) => {
-        const { 0: luchoId, 1: aaronId, 2: mashaId } = result.insertedIds;
+        const [{ _id: luchoId }, { _id: aaronId }, { _id: mashaId }] = result;
 
-        return posts.insertMany([
+        return Post.insertMany([
           {
             image:
               "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjNlYnJzbXZlM245eGhub3M2MWg4ZmppdnVnNmt1MXVjbjNvNTM5ZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/TTPi3fB9F5Aqs/giphy.gif",
-            text: "beast",
+            text: "work",
             author: luchoId,
-            createdAt: new Date(),
-            modifiedAt: null,
             likes: [mashaId],
           },
           {
@@ -58,8 +53,6 @@ client
               "https://media.giphy.com/media/IfQEkiEmaruqKTm8KA/giphy.gif?cid=ecf05e47ncv1fwr1zpkt12ex5pwl520fbfsc1zgcmg682n1j&ep=v1_gifs_search&rid=giphy.gif&ct=g",
             text: "smooth",
             author: mashaId,
-            createdAt: new Date(),
-            modifiedAt: null,
             likes: [aaronId],
           },
         ]);
@@ -68,4 +61,4 @@ client
         console.log(result);
       });
   })
-  .finally(() => client.close());
+  .finally(() => data.disconnect());
