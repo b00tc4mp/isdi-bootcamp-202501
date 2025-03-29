@@ -10,18 +10,14 @@ const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemE
 
 const JWT_SECRET = 'el secreto v1'
 
-const handleWithErrorHandling = (next, callback) => {
-    try {
-        callback()
-            .catch(error => {
-                console.error(error)
-
-                next(error)
-            })
-    } catch (error) {
-        console.error(error)
-
-        next(error)
+const withErrorHandling = callback => { //Esta funcion es la que ahora llama a las rutas
+    return (req, res, next) => {
+        try {
+            callback(req, res)
+                .catch(error => next(error))
+        } catch (error) {
+            next(error)
+        }
     }
 }
 
@@ -36,118 +32,113 @@ data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no cone
 
         api.get('/', (req, res) => res.send('Hello, API!'))
 
-        api.post('/users', jsonBodyParser, (req, res, next) => {
+        /*api.post('/users', jsonBodyParser, (req, res, next) => {
             handleWithErrorHandling(next, () => {
                 const { name, email, username, password } = req.body
 
                 return logic.registerUser(name, email, username, password)
                     .then(() => res.status(201).send()) //HAPPY. Como es asincrono, hay que poner la res.status una vez devuelva el register. No devuelve nada a nivel de datos.
             })
-        })
+        })*/
 
-        api.post('/users/auth', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { username, password } = req.body
+        api.post('/users', jsonBodyParser, withErrorHandling((req, res) => {
+            const { name, email, username, password } = req.body
 
-                logic.authenticateUser(username, password)
-                    .then(id => {
-                        const token = jwt.sign({ sub: id }, JWT_SECRET) //Se envian los datos, sub (subject) es un estandar. Nos devuelve el token
+            return logic.registerUser(name, email, username, password)
+                .then(() => res.status(201).send()) //HAPPY. Como es asincrono, hay que poner la res.status una vez devuelva el register. No devuelve nada a nivel de datos.
+        }))
 
-                        res.json({ token }) //Devolvemos el token
-                    })
-            })
-        })
+        api.post('/users/auth', jsonBodyParser, withErrorHandling((req, res) => {
+            const { username, password } = req.body
 
-        api.get('/users/self/name', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers //Para acceder a la cabecera del curl -H 'Authorization...'
-                //Enviaremos un token
+            return logic.authenticateUser(username, password)
+                .then(id => {
+                    const token = jwt.sign({ sub: id }, JWT_SECRET) //Se envian los datos, sub (subject) es un estandar. Nos devuelve el token
 
-                const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+                    res.json({ token }) //Devolvemos el token
+                })
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
+        api.get('/users/self/name', withErrorHandling((req, res) => {
+            const { authorization } = req.headers //Para acceder a la cabecera del curl -H 'Authorization...'
+            //Enviaremos un token
 
-                return logic.getUserName(userId)
-                    .then(name => { res.json({ name }) }) //hay que retornarlo en forma de JSON
-            })
-        })
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
 
-        api.post('/posts', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
-                const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+            return logic.getUserName(userId)
+                .then(name => { res.json({ name }) }) //hay que retornarlo en forma de JSON
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
+        api.post('/posts', jsonBodyParser, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { image, text } = req.body
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
 
-                logic.createPost(userId, image, text)
-                    .then(res.status(201).send())
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
-        api.get('/posts', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { image, text } = req.body
 
-                const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+            logic.createPost(userId, image, text)
+                .then(res.status(201).send())
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
+        api.get('/posts', withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                return logic.getPosts(userId)
-                    .then(posts => res.json(posts))
-            })
-        })
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
 
-        api.delete('/posts/:postId', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
-                const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+            return logic.getPosts(userId)
+                .then(posts => res.json(posts))
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
+        api.delete('/posts/:postId', jsonBodyParser, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { postId } = req.params
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
 
-                return logic.deletePost(userId, postId)
-                    .then(post => res.status(204).send()) //204 ha ido todo bien y no hay body que responder, no hay contenido de respuesta.
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
-        api.patch('/posts/:postId/likes', (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { postId } = req.params
 
-                const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+            return logic.deletePost(userId, postId)
+                .then(post => res.status(204).send()) //204 ha ido todo bien y no hay body que responder, no hay contenido de respuesta.
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
+        api.patch('/posts/:postId/likes', withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { postId } = req.params
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
 
-                return logic.toggleLikePost(userId, postId)
-                    .then(res.status(204).send())
-            })
-        })
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
-        api.patch('/posts/:postId/text', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { authorization } = req.headers
+            const { postId } = req.params
 
-                const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+            return logic.toggleLikePost(userId, postId)
+                .then(res.status(204).send())
+        }))
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
+        api.patch('/posts/:postId/text', jsonBodyParser, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
 
-                const { postId } = req.params
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
 
-                const { text } = req.body
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
-                return logic.updatePostText(userId, postId, text)
-                    .then(() => res.status(204).send())
-            })
-        })
+            const { postId } = req.params
+
+            const { text } = req.body
+
+            return logic.updatePostText(userId, postId, text)
+                .then(() => res.status(204).send())
+        }))
 
         const errorHandler = (error, req, res, next) => {
+            console.error(error)
+
             let status = 500
             let errorName = SystemError.name
 
