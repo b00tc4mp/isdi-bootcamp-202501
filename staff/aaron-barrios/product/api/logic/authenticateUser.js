@@ -16,7 +16,7 @@ export const authenticateUser = (username, password) => {
             return bcrypt.compare(password, user.password)
                 .catch(error => { throw new SystemError(error.message)} )
                 .then(match => {
-                    if (!match) throw new CredentialsError('Wrong Credentials')
+                    if (!match) throw new CredentialsError('Wrong credentials!')
 
                     return user._id.toString() // => to mask the db we are using
                 })

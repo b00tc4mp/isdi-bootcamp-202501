@@ -9,7 +9,7 @@ export const getUsername = userId => {
     return User.findById(userId)
         .catch(error => { throw new SystemError(error.message) }) //=> steps into when mongo fails (db fell off, etc.)
         .then(user => {
-            if (!user) throw new NotFoundError('user not found')
+            if (!user) throw new NotFoundError('User not found!')
 
             return user.name
         })
