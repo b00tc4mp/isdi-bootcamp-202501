@@ -1,8 +1,9 @@
 //importamos los módulos necesarios
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { authenticateUser } from './authenticateUser.js'
 
-
+const { MONGO_URL, MONGO_DBNAME} = process.env
 /*
 -Se establece una conexión con una base de datos de MongoDB.
 -Si la conexión se establece exitosamente, entramos en el then y se intenta
@@ -19,7 +20,7 @@ ser encontrado, devolverá undefined.
 
 console.info('TEST authenticateUser')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DBNAME)
     .then(() => {
         try {
             let userId //undefined

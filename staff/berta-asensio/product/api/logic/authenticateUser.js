@@ -1,6 +1,4 @@
-// AuthenticateUser = loginUser en app
-
-import { data } from '../data/index.js'
+import { User } from '../data/index.js'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 
@@ -23,10 +21,11 @@ const { SystemError, NotFoundError, CredentialsError } = errors
 */
 
 export const authenticateUser = (username, password) => {
-        validate.username(username, 'username')
-        validate.password(password, 'password')
+        console.log('Username:', username, 'Password:', password)
+        validate.username(username)
+        validate.password(password)
 
-        return data.users.findOne({ username })
+        return User.findOne({ username }).lean() // el lean trae el objeto
                 .catch(error => { throw new SystemError(error.message) })
                 .then(user => {
                         if(!user) throw new NotFoundError('user not found')

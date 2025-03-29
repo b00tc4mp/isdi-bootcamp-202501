@@ -1,5 +1,5 @@
 
-import { data } from '../data/index.js'
+import { User } from '../data/index.js'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 
@@ -23,12 +23,14 @@ encontrado o con NULL si no existe.
 test/register-user.sh
 */
 export const registerUser = (name, username, password, email) => {
-    validate.name(name, 'name')
-    validate.username(username, 'username')
-    validate.password(password, 'password')
-    validate.email(email, 'email')
+    validate.name(name)
+    validate.minLength(name, 1, 'name')
+    validate.maxLength(name, 20, 'name')
+    validate.email(email)
+    validate.username(username)
+    validate.password(password)
 
-    return data.users.findOne({ $or: [{ email }, { username }] })
+    return User.findOne({ $or: [{ email }, { username }] }).lean() //lean apra que nos devuelva el objeto
         .catch(error => { throw new SystemError (error.message) })
         .then(user => {
             if(user) throw new DuplicityError('user already exists')
@@ -46,7 +48,7 @@ export const registerUser = (name, username, password, email) => {
                 modifiedAt: null
             }
 
-            return data.users.insertOne(user)
+            return User.create(user)
                 .catch(error => {
                     if(error.code === 11000) throw new DuplicityError('user already exists')
                     
@@ -57,3 +59,5 @@ export const registerUser = (name, username, password, email) => {
         
         .then(() => { })
 }
+
+//node logic/registerUser.test.js

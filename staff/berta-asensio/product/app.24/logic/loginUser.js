@@ -4,8 +4,8 @@ import { errors, validate } from 'com'
 const { SystemError } = errors
 
 export const loginUser = (username, password) => {
-  validate.username(username, "username")
-  validate.password(password, "password")
+  validate.username(username)
+  validate.password(password)
 
   return fetch("http://localhost:8080/users/auth", {
     method: "POST",

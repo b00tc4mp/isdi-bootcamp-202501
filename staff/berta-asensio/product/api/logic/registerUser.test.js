@@ -1,8 +1,9 @@
 //importamos los módulos necesarios
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { registerUser } from './registerUser.js'
 
-
+const { MONGO_URL, MONGO_DBNAME } = process.env
 /*
 -Se establece una conexión con una base de datos de MongoDB.
 -Si la conexión se establece exitosamente, entramos en el then y se intenta
@@ -16,11 +17,11 @@ sea undefined ya que no queremos devolver nada. Solo registrar el usuario.
 
 console.info('TEST registerUser')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DBNAME)
     .then(() => {
         try {
             let result2 = null
-            return registerUser('Scooby Doo', 'Doo Scooby', '123123a', 'scooby@doo.com')
+            return registerUser('Antoni Estrader', 'EstraderToni', '123123aa', 'antoni@estrader.com')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined') )
 
