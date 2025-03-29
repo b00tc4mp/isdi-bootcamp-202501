@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import express, { json } from 'express'
 import cors from 'cors'
 import { errors } from 'com'
@@ -9,7 +8,7 @@ import { logic } from './logic/index.js'
 
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
-const { JWT_SECRET, PORT, MONGO_URL, MONGO_DB } = process.env
+const JWT_SECRET = 'el secreto v1'
 
 const withErrorHandling = callback => { //Esta funcion es la que ahora llama a las rutas
     return (req, res, next) => {
@@ -22,7 +21,7 @@ const withErrorHandling = callback => { //Esta funcion es la que ahora llama a l
     }
 }
 
-data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo, entonces hago el connect
+data.connect('mongodb://localhost:27017', 'test') //No va a funcionar si no conectamos con Mongo, entonces hago el connect
     .catch(console.error) //Si falla la conexion, nos lleva a este catch
     .then(() => { //Una vez conectados, montamos el servidor
         const api = express()
@@ -165,7 +164,7 @@ data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo
 
         api.use(errorHandler)
 
-        api.listen(PORT, () => console.log(`API running on port ${PORT}`))
+        api.listen(8080, () => console.log(`API running on port ${8080}`))
     })
 
 
