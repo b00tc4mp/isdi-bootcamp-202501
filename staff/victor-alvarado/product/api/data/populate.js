@@ -1,37 +1,33 @@
-import { MongoClient } from 'mongodb'
+import 'dotenv/config'
+import { data, User, Post } from '../data/index.js'
+import bcrypt from 'bcryptjs'
 
-const client = new MongoClient('mongodb://localhost:27017')
+const { MONGO_URL, MONGO_DB } = process.env
 
-client.connect()
+
+
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
-        const db = client.db('test')
-
-        const users = db.collection('users')
-        const posts = db.collection('posts')
-
         return Promise.all([
-            users.deleteMany(),
-            posts.deleteMany()
+            User.deleteMany({}),
+            Post.deleteMany({})
         ])
-            .then(() => {
-                return users.insertMany([
-                    { name: 'IronMan', email: 'iron@man.com', username: 'ironMan', password: '123123123' },
-                    { name: 'Grood', email: 'grood@grood.com', username: 'grood', password: '123123123' },
-                    { name: 'spiderMan', email: 'spider@man.com', username: 'spiderMan', password: '123123123' },
-                    { name: 'hulk', email: 'hulk@verde.com', username: 'hulk', password: '123123123' },
+            .then(() => bcrypt.hash('123123123', 10))
+            .then(hash => {
+                return User.insertMany([
+                    { name: 'IronMan', email: 'iron@man.com', username: 'ironMan', password: hash },
+                    { name: 'Grood', email: 'grood@grood.com', username: 'grood', password: hash },
+                    { name: 'spiderMan', email: 'spider@man.com', username: 'spiderMan', password: hash },
+                    { name: 'hulk', email: 'hulk@verde.com', username: 'hulk', password: hash }
                 ])
             })
-            .then(result => {
-                const { 0: IronManId, 1: GroodId, 2: spiderManId, 3: hulkId } = result.insertedIds
+            .then(([ironMan, grood, spiderman, hulk]) => {
+                return Post.insertMany([
+                    { author: ironMan.id, image: 'https://media1.tenor.com/m/McY9R4_xYOIAAAAC/iron-man-tony-stark.gif', text: 'Soy iron man', likes: [GroodId, spiderManId], createdAt: new Date, modifiedAt: null },
+                    { author: grood.id, image: 'https://media4.giphy.com/media/R97jJCEGEmh0I/giphy.gif?cid=6c09b95230ylflnu6jpg29lusjfb0815mklm1ts7x7p33z6t&ep=v1_gifs_search&rid=giphy.gif&ct=g', text: 'hola', likes: [], createdAt: new Date, modifiedAt: null },
+                    { author: spiderman.id, image: 'https://media1.tenor.com/m/6qYEVu_G1wkAAAAC/ninja-aranha.gif', text: 'hola!!', likes: [], createdAt: new Date, modifiedAt: null }
+                ])
+            })
+    })
 
-                return posts.insertMany([
-                    { author: IronManId, image: 'https://media1.tenor.com/m/McY9R4_xYOIAAAAC/iron-man-tony-stark.gif', text: 'Soy iron man', likes: [GroodId, spiderManId], createdAt: new Date, modifiedAt: null },
-                    { author: GroodId, image: 'https://media4.giphy.com/media/R97jJCEGEmh0I/giphy.gif?cid=6c09b95230ylflnu6jpg29lusjfb0815mklm1ts7x7p33z6t&ep=v1_gifs_search&rid=giphy.gif&ct=g', text: 'hola', likes: [], createdAt: new Date, modifiedAt: null },
-                    { author: spiderManId, image: 'https://media1.tenor.com/m/6qYEVu_G1wkAAAAC/ninja-aranha.gif', text: 'hola!!', likes: [], createdAt: new Date, modifiedAt: null }
-                ])
-            })
-    })
-    .then(result => {
-        console.log(result)
-    })
-    .finally(() => client.close())
+    .finally(() => data.disconnect())

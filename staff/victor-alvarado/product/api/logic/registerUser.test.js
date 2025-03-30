@@ -13,7 +13,7 @@ data.connect('mongodb://localhost:27017', 'test') // Conecta a MongoDB usando la
         try {
             let result2 = null
 
-            return registerUser('SpiderMan', 'spider@spider.com', 'spiderman', '123123123') // Llama a 'registerUser' para registrar un usuario de prueba.
+            return registerUser('manolo', 'manolo@lolo.com', 'manolo', '123123123') // Llama a 'registerUser' para registrar un usuario de prueba.
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
             // 'console.assert()' verifica que 'result' sea 'undefined'.

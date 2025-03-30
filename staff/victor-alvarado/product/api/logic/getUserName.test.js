@@ -1,14 +1,17 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { getUserName } from './getUserName.js'
 
+const { MONGO_URL, MONGO_DB } = process.env
+
 console.info('TEST getUserName')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let userName
 
-            return getUserName('67dc2aab95f7e4af3c2ab43d')
+            return getUserName('67e58b4da1685492ecd65a43')
                 .then(name => userName = name)
                 .finally(() => console.assert(typeof userName === 'string', 'userName is a string'))
         } catch (error) {

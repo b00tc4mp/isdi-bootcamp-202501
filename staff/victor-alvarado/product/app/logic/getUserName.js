@@ -4,20 +4,18 @@ import { errors } from 'com'
 const { SystemError } = errors
 
 export const getUserName = () => {
-    const { userId } = data
+    const { token } = data
 
     return fetch('http://localhost:8080/users/self/name', {
         metod: 'GET',
         headers: {
-            Authorization: `Basic ${userId}`
+            Authorization: `Bearer ${token}`
         }
 
     })
 
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status)
-
             if (response.status === 200)
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
