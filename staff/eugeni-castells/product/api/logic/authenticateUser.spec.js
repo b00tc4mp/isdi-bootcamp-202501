@@ -13,7 +13,7 @@ console.info("TEST authenticateUser");
 
 describe("authenticateUser", () => {
   before(() => {
-    data.connect(MONGO_URL, MONGO_DB);
+    return data.connect(MONGO_URL, MONGO_DB);
   });
 
   beforeEach(() => {
