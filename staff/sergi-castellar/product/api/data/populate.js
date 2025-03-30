@@ -1,89 +1,93 @@
-import { MongoClient, ObjectId } from 'mongodb'
+import 'dotenv/config'
+import { User, Post, ObjectId, data } from './../data/index.js'
+import bcrypt from 'bcryptjs'
 
-const client = new MongoClient('mongodb://localhost:27017')
+const { MONGO_URL, MONGO_DB } = process.env
 
-client.connect()
+const mashaId = new ObjectId('67dd9ed19312d9e32d86590a')
+const aaronId = new ObjectId('67dd9ed19312d9e32d86590b')
+const victorId = new ObjectId('67dd9ed19312d9e32d86590c')
+const camilaId = new ObjectId('67dd9ed19312d9e32d86590d')
+const sergiId = new ObjectId('67dd9ed19312d9e32d86590e')
+const manuId = new ObjectId('67dd9ed19312d9e32d86590f')
+const frankId = new ObjectId('67dd9ed19312d9e32d865910')
+
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
-        const db = client.db('test')
-
-        const users = db.collection('users')
-        const posts = db.collection('posts')
-
         return Promise.all([
-            posts.deleteMany({}),
-            users.deleteMany({})
+            Post.deleteMany({}),
+            User.deleteMany({})
         ])
-            .then(() => {
-                return users.insertMany([
+            .then(() => bcrypt.hash('123456', 10))
+            .then(hash => {
+                return User.insertMany([
                     {
-                        _id: new ObjectId('67dd9ed19312d9e32d86590a'),
+                        _id: mashaId,
                         name: "Masha Stepanova",
                         email: "masha@gmail.com",
                         username: "masha",
-                        password: "123456",
+                        password: hash,
                         createdAt: new Date("2025-01-07T13:43:16.443666"),
                         modifiedAt: null
                     },
                     {
-                        _id: new ObjectId('67dd9ed19312d9e32d86590b'),
+                        _id: aaronId,
                         name: "Aaron Barrios",
                         email: "aaron@gmail.com",
                         username: "aaron",
-                        password: "123456",
+                        password: hash,
                         createdAt: new Date("2025-01-17T03:45:25.155150"),
                         modifiedAt: null
                     },
                     {
-                        _id: new ObjectId('67dd9ed19312d9e32d86590c'),
+                        _id: victorId,
                         name: "Victor Alvarado",
                         email: "victor@gmail.com",
                         username: "victor",
-                        password: "123456",
+                        password: hash,
                         createdAt: new Date("2025-01-20T03:27:55.422538"),
                         modifiedAt: null
                     },
                     {
-                        _id: new ObjectId('67dd9ed19312d9e32d86590d'),
+                        _id: camilaId,
                         name: "Camila Torrent",
                         email: "camila@gmail.com",
                         username: "camila",
-                        password: "123456",
+                        password: hash,
                         createdAt: new Date("2025-01-19T00:19:08.487973"),
                         modifiedAt: null
                     },
                     {
-                        _id: new ObjectId('67dd9ed19312d9e32d86590e'),
+                        _id: sergiId,
                         name: "Sergi",
                         email: "sergi@gmail.com",
                         username: "sergi",
-                        password: "123456",
+                        password: hash,
                         createdAt: new Date("2025-01-14T11:06:38.344148"),
                         modifiedAt: null
                     },
                     {
-                        _id: new ObjectId('67dd9ed19312d9e32d86590f'),
+                        _id: manuId,
                         name: "Manu Barzi",
                         email: "manu@gmail.com",
                         username: "manu",
-                        password: "123456",
+                        password: hash,
                         createdAt: new Date("2025-01-05T14:13:03.582546"),
                         modifiedAt: null
                     },
                     {
-                        _id: new ObjectId('67dd9ed19312d9e32d865910'),
+                        _id: frankId,
                         name: "Frank Pereira",
                         email: "frank@gmail.com",
                         username: "frank",
-                        password: "123456",
+                        password: hash,
                         createdAt: new Date("2025-01-05T23:16:40.510628"),
                         modifiedAt: null
                     }
                 ])
             })
-            .then(result => {
-                const { 0: mashaId, 1: aaronId, 2: victorId, 3: camilaId, 4: sergiId, 5: manuId, 6: frankId } = result.insertedIds
-
-                return posts.insertMany([
+            .then(() => {
+                return Post.insertMany([
                     {
                         _id: new ObjectId('67dd9ed19312d9e32d865911'),
                         authorId: mashaId,
@@ -154,4 +158,4 @@ client.connect()
     .then(result => {
         console.log(result)
     })
-    .finally(() => client.close())
+    .finally(() => data.disconnect())
