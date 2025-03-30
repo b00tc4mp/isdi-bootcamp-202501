@@ -7,7 +7,7 @@ const { CredentialsError, NotFoundError, SystemError } = errors;
 export const authenticateUser = (username, password) => {
   validate.password(password, "password");
   validate.username(username, "username");
-
+  debugger;
   return User.findOne({ username })
     .lean()
     .catch((error) => {
