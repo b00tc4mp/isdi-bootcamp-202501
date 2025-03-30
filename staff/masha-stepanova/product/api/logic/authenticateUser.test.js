@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { data } from '../data/index.js'
 import { authenticateUser } from './authenticateUser.js'
+
 const { MONGO_URL, MONGO_DB } = process.env
 
 console.info('TEST authenticateUser')

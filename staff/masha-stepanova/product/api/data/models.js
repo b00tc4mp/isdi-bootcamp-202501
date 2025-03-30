@@ -8,7 +8,8 @@ const user = new Schema({
         type: String,
         required: true,
         minLength: 1,
-        maxLength: 20
+        maxLength: 20,
+        match: constant.NAME_REGEX
     },
     email: {
         type: String,
@@ -22,7 +23,8 @@ const user = new Schema({
         required: true,
         minLength: 3,
         maxLength: 20,
-        unique: true
+        unique: true,
+        match: constant.USERNAME_REGEX
     },
     password: {
         type: String,
@@ -31,7 +33,9 @@ const user = new Schema({
         maxLength: 100
     },
     createdAt: {
-        type: Date
+        type: Date,
+        required: true,
+        default: Date.now
     },
     modifiedAt: {
         type: Date,
@@ -56,16 +60,18 @@ const post = new Schema({
         maxLength: 500
     },
     createdAt: {
-        type: Date
+        type: Date,
+        required: true,
+        default: Date.now
     },
     modifiedAt: {
         type: Date,
         default: null
     },
-    likes: {
-        type: Array,
-        default: []
-    }
+    likes: [{
+        type: ObjectId,
+        ref: 'User'
+    }]
 })
 
 const User = model('User', user)

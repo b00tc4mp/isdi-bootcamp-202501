@@ -1,29 +1,24 @@
-import { User, Post, ObjectId } from '../data/index.js'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
 const { NotFoundError, SystemError } = errors
 
 export const createPost = (userId, image, text) => {
-    validate.id(userId, 'userId')
-    validate.url(image, 'image')
+    validate.id(userId)
+    validate.url(image)
     validate.maxLength(image, 1000, 'image')
-    validate.text(text, 'text')
+    validate.text(text)
     validate.maxLength(text, 500, 'text')
 
-    const userObjectId = new ObjectId(userId)
-
-    return User.findOne({ _id: userObjectId })
+    return User.findById(userId).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
             const newPost = {
-                author: userObjectId,
+                author: userId,
                 image,
-                text,
-                createdAt: new Date(),
-                modifiedAt: null,
-                likes: []
+                text
             }
 
             return Post.create(newPost)

@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "inspect": "node --inspect-brk .",
-    "watch": "node --watch ."
+    "watch": "node --watch .",
+    "test": "mocha logic/*.spec.js",
+    "test-inspect": "mocha --inspect-brk logic/*.spec.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +22,9 @@
     "express-busboy": "^10.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.0"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0"
   }
 }
