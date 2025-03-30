@@ -1,29 +1,25 @@
-import { data } from './../data/index.js'
+import { User, Post } from './../data/index.js'
 import { validate, errors } from 'com'
 
-const { ObjectId } = data
 const { NotFoundError, OwnershipError, SystemError } = errors
 
 export const deletePost = (userId, postId) => {
     validate.id(userId, 'id')
     validate.id(postId, 'id')
 
-    return data.users.findOne({ _id: new ObjectId(userId) })
+    return Promise.all([
+        User.findById(userId),
+        Post.findById(postId)
+    ])
         .catch(error => { throw new SystemError(error.message) })
-        .then(foundUser => {
+        .then(([foundUser, foundPost]) => {
             if (!foundUser) throw new NotFoundError('user not found');
-
-            return data.posts.findOne({ _id: new ObjectId(postId) })
-        })
-        .catch(error => { throw new SystemError(error.message) })
-        .then(foundPost => {
             if (!foundPost) throw new NotFoundError('post not found');
+
             if (userId !== foundPost.authorId.toString()) throw new OwnershipError('user is not the post author');
 
-            return data.posts.deleteOne({ _id: new ObjectId(postId) })
-                .catch(error => {
-                    throw new SystemError(error.message)
-                })
+            return Post.deleteOne({ _id: postId })
+                .catch(error => { throw new SystemError(error.message) })
         })
         .then(() => { })
 
