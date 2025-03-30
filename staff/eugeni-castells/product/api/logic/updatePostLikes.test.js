@@ -1,18 +1,22 @@
+import "dotenv/config";
+
 import { data } from "../data/index.js";
 
 import { updatePostLikes } from "./updatePostLikes.js";
 
+const { MONGO_URL, MONGO_DB } = process.env;
+
 console.info("TEST updatePostLikes");
 
 data
-  .connect("mongodb://localhost:27017", "test")
+  .connect(MONGO_URL, MONGO_DB)
   .then(() => {
     let result2;
 
     try {
       return updatePostLikes(
-        "67dc4b9bc7f89659f96ba4c2",
-        "67dd6e631a7ad84204324097"
+        "67e6c7b68908f76d62831941",
+        "67e6c7b68908f76d62831944"
       )
         .then((result) => {
           result2 = result;

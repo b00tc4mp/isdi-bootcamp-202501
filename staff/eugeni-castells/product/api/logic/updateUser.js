@@ -1,6 +1,4 @@
-import { data } from "../data/index.js";
-
-const { ObjectId } = data;
+import { User } from "../data/index.js";
 
 import { errors, validate } from "com";
 
@@ -9,10 +7,8 @@ const { NotFoundError, OwnershipError, SystemError } = errors;
 export const updateUser = (userId, userInfo) => {
   validate.id(userId);
 
-  const userObjectId = new ObjectId(userId);
-
-  return data.users
-    .findOne({ _id: userObjectId })
+  return User.findById(userId)
+    .lean()
     .catch((error) => {
       throw new SystemError(error.message);
     })
@@ -36,11 +32,11 @@ export const updateUser = (userId, userInfo) => {
         validate.maxLength(20, "name");
       }
 
-      return data.users
-        .updateOne({ _id: userObjectId }, { $set: userInfo })
-        .catch((error) => {
+      return User.updateOne({ _id: userId }, { $set: userInfo }).catch(
+        (error) => {
           throw new SystemError(error.message);
-        });
+        }
+      );
     })
     .catch((error) => {
       throw new SystemError(error.message);

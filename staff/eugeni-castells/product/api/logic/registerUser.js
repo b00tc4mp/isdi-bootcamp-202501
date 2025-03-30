@@ -1,5 +1,5 @@
 import { errors, validate } from "com";
-import { data } from "../data/index.js";
+import { User } from "../data/index.js";
 import bcrypt from "bcryptjs";
 const { DuplicityError, SystemError } = errors;
 
@@ -13,8 +13,7 @@ export const registerUser = function (userInfo) {
 
   const { email, username } = userInfo;
 
-  return data.users
-    .findOne({ $or: [{ email }, { username }] })
+  return User.findOne({ $or: [{ email }, { username }] })
 
     .then((user) => {
       if (user) throw new DuplicityError("user already exists");
@@ -34,7 +33,7 @@ export const registerUser = function (userInfo) {
             modifiedAt: null,
           };
 
-          return data.users.insertOne(userToRegister).catch((error) => {
+          return User.insertOne(userToRegister).catch((error) => {
             if (error.code === 11000)
               throw new DuplicityError("user already exists");
 

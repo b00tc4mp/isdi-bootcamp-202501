@@ -1,17 +1,21 @@
+import "dotenv/config";
+
 import { data } from "../data/index.js";
 
 import { updatePostText } from "./updatePostText.js";
 
+const { MONGO_URL, MONGO_DB } = process.env;
+
 console.info("TEST updatePostText");
 data
-  .connect("mongodb://localhost:27017", "test")
+  .connect(MONGO_URL, MONGO_DB)
   .then(() => {
     try {
       let result2 = null;
 
       return updatePostText(
-        "67dc1e01a779a5da6cb71236",
-        "67dd6aa2ca6e0cc11b72c90b",
+        "67e6c7b68908f76d62831941",
+        "67e6c7b68908f76d62831944",
         "test 3"
       )
         .then((result) => {

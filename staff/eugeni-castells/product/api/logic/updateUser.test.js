@@ -1,15 +1,16 @@
+import "dotenv/config";
 import { updateUser } from "./updateUser.js";
 import { data } from "../data/index.js";
-
+const { MONGO_URL, MONGO_DB } = process.env;
 console.info("TEST updateUserInfo");
 
 data
-  .connect("mongodb://localhost:27017", "test")
+  .connect(MONGO_URL, MONGO_DB)
   .then(() => {
     try {
       let result2;
 
-      return updateUser("67dc2c792a5c183cf9c079df", {
+      return updateUser("67e6c7b68908f76d6283193f", {
         name: "lucchio",
         username: "luciano",
       })

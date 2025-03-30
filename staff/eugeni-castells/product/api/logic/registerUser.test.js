@@ -1,18 +1,19 @@
+import "dotenv/config";
 import { data } from "../data/index.js";
 import { registerUser } from "./registerUser.js";
-
+const { MONGO_URL, MONGO_DB } = process.env;
 console.info("TEST registerUser");
 
 data
-  .connect("mongodb://127.0.0.1:27017", "test")
+  .connect(MONGO_URL, MONGO_DB)
   .then(() => {
     try {
       let result2 = null;
 
       return registerUser({
-        name: "Mashulinski",
-        email: "mashola@pola.com",
-        username: "mashinski",
+        name: "sergi",
+        email: "ser@gi.com",
+        username: "sergi",
         password: "123123123",
       })
         .then((result) => (result2 = result))
