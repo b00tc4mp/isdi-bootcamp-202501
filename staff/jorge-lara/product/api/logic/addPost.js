@@ -1,20 +1,16 @@
 import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
-import { Types } from 'mongoose'
 
-const { ObjectId } = Types;
 const { SystemError, NotFoundError } = errors;
 
 export const addPost = (userId, text, image) => {
-    validate.id(userId, 'id');
-    validate.text(text, 'text');
-    validate.maxLength(text, 500, 'text')
+    validate.id(userId, 'userId');
+    validate.text(text);
+    validate.maxLength(text, 500)
     validate.url(image, 'url');
     validate.maxLength(image, 500, 'image');
 
-    const userObjectId = new ObjectId(userId);
-
-    return User.findOne({ _id: userObjectId })
+    return User.findById(userId).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) {
@@ -23,14 +19,11 @@ export const addPost = (userId, text, image) => {
 
             const post = {
                 author: userId,
-                image: image,
-                text: text,
-                createdAt: new Date(),
-                modifiedAt: null,
-                likes: []
+                image,
+                text
             }
 
-            return Post.insertOne(post)
+            return Post.create(post)
                 .catch(error => { throw new SystemError(error.message) })
         })
         .then(() => { })
