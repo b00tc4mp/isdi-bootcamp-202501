@@ -1,2 +1,2 @@
-curl -X PATCH http://localhost:8080/posts/likes/016a08a5ca989b7be1277c7fc7b1a21cbe \
-    -H 'Authorization: Basic 0078dfd4e3168502717c19a4905d239202' -v
+curl -X PATCH http://localhost:8080/posts/likes/67dd9ed19312d9e32d86590d \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RkOWVkMTkzMTJkOWUzMmQ4NjU5MGUiLCJpYXQiOjE3NDMwNjQ4MjF9.Q0UN5R6u5uH3DXgVCGN-3pq6tCMQpaCRkLqvogXqSis' -v

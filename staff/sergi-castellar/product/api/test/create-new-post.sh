@@ -1,6 +1,6 @@
 curl -X POST http://localhost:8080/posts/new \
     -H 'Content-type: application/json' \
-    -H 'Authorization: Basic 0078dfd4e3168502717c19a4905d239202' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RkOWVkMTkzMTJkOWUzMmQ4NjU5MGUiLCJpYXQiOjE3NDMwNjQ4MjF9.Q0UN5R6u5uH3DXgVCGN-3pq6tCMQpaCRkLqvogXqSis' \
     -d '{
     "imageSrc":"https://i.ibb.co/v4RTvBdq/frank.png",
     "textDescription":"guitarrita"

@@ -1,3 +1,3 @@
-curl -X PATCH http://localhost:8080/posts/edit/016a08a5ca989b7be1277c7fc7b1a21cbe \
-    -H 'Authorization: Basic 0078dfd4e3168502717c19a4905d239202' \
+curl -X PATCH http://localhost:8080/posts/edit/67e5103b41b48cca09514e97 \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RkOWVkMTkzMTJkOWUzMmQ4NjU5MGUiLCJpYXQiOjE3NDMwNjQ4MjF9.Q0UN5R6u5uH3DXgVCGN-3pq6tCMQpaCRkLqvogXqSis' \
     -d '{"text":"descripcion editada"}' -v

@@ -1,1 +1,1 @@
-curl -X GET http://localhost:8080/users/0078dfd4e3168502717c19a4905d239202 -v
+curl -X GET http://localhost:8080/users/67dd9ed19312d9e32d86590e -v
