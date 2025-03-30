@@ -1,14 +1,14 @@
 {
   "name": "api",
   "version": "0.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node .",
     "inspect": "node --inspect-brk .",
     "watch": "node --watch .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha logic/*.spec.js",
+    "test-inspect": "mocha --inspect-brk logic/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -17,9 +17,14 @@
     "bcryptjs": "^3.0.2",
     "com": "file:../com",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-busboy": "^10.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.15.0"
+    "mongoose": "^8.13.0"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0"
   }
 }
