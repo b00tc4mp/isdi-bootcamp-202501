@@ -1,17 +1,18 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { registerUser } from './registerUser.js'
 
-//Para testear nos tenemos que conectar con Mongo primero, entonces importamos { data }
+const { MONGO_URL, MONGO_DB } = process.env
 
 console.info('TEST registeruser')
 
-//Primero se hace la conexion con Mongo, sino no se puede hacer nada
-data.connect('mongodb://localhost:27017', 'test')
+//Primero se hace la conexion con mongoose, sino no se puede hacer nada
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let result2 = null
 
-            return registerUser('Pepito Griilo', 'pepito@grillo.com', 'pepitogrillo', '123123123')
+            return registerUser('Manu Barzi', 'manu@barzi.com', 'manubarzi', '123123123')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {

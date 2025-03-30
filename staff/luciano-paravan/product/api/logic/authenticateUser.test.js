@@ -1,14 +1,17 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { authenticateUser } from './authenticateUser.js'
 
+const { MONGO_URL, MONGO_DB } = process.env
+
 console.info('TEST authenticateUser')
 
-data.connect('mongodb://localhost:27017', 'test') //Conecto
+data.connect(MONGO_URL, MONGO_DB) //Conecto
     .then(() => { //testeo
         try {
             let id2
 
-            return authenticateUser('datazo', '123123123') //el authenticate tiene que devolver un id
+            return authenticateUser('manubarzi', '123123123') //el authenticate tiene que devolver un id
                 .then(id => id2 = id)
                 .finally(() => console.assert(typeof id2 === 'string', 'userId is a string'))
 

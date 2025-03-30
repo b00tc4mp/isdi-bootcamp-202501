@@ -1,14 +1,14 @@
-import { data } from '../data/index.js'
+import { User } from '../data/index.js'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 
 const { SystemError, CredentialsError, NotFoundError } = errors
 
 export const authenticateUser = (username, password) => {
-    validate.username(username, 'username')
-    validate.password(password, 'password')
+    validate.username(username)
+    validate.password(password)
 
-    return data.users.findOne({ username }) //En Mongo para buscar se hace de esta forma
+    return User.findOne({ username }).lean() //lean para que traiga el objeto y no el modelo
         .catch(error => { throw new SystemError(error.message) })
         .then(user => { //Mongo cuando no encuentra nada te devuelve un null
             if (!user) throw new NotFoundError('user not found')

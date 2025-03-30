@@ -1,18 +1,18 @@
 import { User } from '../data/index.js'
 import { errors, validate } from 'com'
-import bcrypt, { hash } from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 
 const { SystemError, DuplicityError } = errors
 
 export const registerUser = (name, email, username, password) => {
-    validate.text(name, 'name')
+    validate.name(name)
     validate.minLength(name, 1, 'name')
     validate.maxLength(name, 20, 'name')
-    validate.email(email, 'email')
-    validate.username(username, 'username')
-    validate.password(password, 'password')
+    validate.email(email)
+    validate.username(username)
+    validate.password(password)
 
-    return User.findOne({ $or: [{ email }, { username }] })
+    return User.findOne({ $or: [{ email }, { username }] }).lean() //para traer el objeto y no el modelo
         .catch(error => { throw new SystemError(error.message) }) //Catch por si falla/se desconecta la base de datos
         .then(user => {
             if (user) throw new DuplicityError('user already exist') //Si encuentra un usuario con mismo email o username retorna error
@@ -21,7 +21,7 @@ export const registerUser = (name, email, username, password) => {
                 .catch(error => { throw new SystemError(error.message) })
         })
         .then(hash => {
-            user = {
+            const user = {
                 name: name,
                 email: email,
                 username: username,

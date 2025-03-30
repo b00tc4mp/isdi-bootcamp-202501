@@ -8,7 +8,7 @@ export const createPost = (userId, image, text) => {
     validate.id(userId, 'userId')
     validate.url(image, 'image')
     validate.maxLength(image, 500, 'image')
-    validate.text(text, 'text')
+    validate.text(text)
     validate.maxLength(text, 500, 'text')
 
     const userObjectId = new ObjectId(userId) //Como lo uso dos veces, le pido que lo construya una vez y despues lo uso las veces que sea necesario

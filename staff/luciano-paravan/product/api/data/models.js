@@ -29,6 +29,15 @@ const user = new Schema({
         required: true,
         minLength: 8,
         maxLength: 100
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now //Cuando le pasas este metodo mongoose cuando crea cualquier post le crea una fecha por defecto.
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 
 })
@@ -48,7 +57,19 @@ const post = new Schema({
         type: String,
         require: true,
         maxLength: 500,
-        match: constant.EMPTY_OR_BLANK_REGEX
+    },
+    likes: [{
+        type: ObjectId,
+        ref: 'User' //Se refieren a la coleccion de usuarios
+    }],
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now //Cuando le pasas este metodo mongoose cuando crea cualquier post le crea una fecha por defecto.
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 
