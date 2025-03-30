@@ -1,14 +1,14 @@
-import { data } from '../data/index.js'
+import { User } from '../data/index.js'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 
-const { SystemError, CredentialsError, NotFoundError } = errors
+const { SystemError, NotFoundError, CredentialsError } = errors
 
 export const authenticateUser = (username, password) => {
-    validate.username(username, 'username')
-    validate.password(password, 'password')
+    validate.username(username)
+    validate.password(password)
 
-    return data.users.findOne({ username })
+    return User.findOne({ username }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')

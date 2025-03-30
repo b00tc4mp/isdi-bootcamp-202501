@@ -1,14 +1,17 @@
-import { toggleLikePost } from './toggleLikePost.js'
+import 'dotenv/config'
 import { data } from '../data/index.js'
+import { toggleLikePost } from './toggleLikePost.js'
+
+const { MONGO_URL, MONGO_DB } = process.env
 
 console.info('TEST toggleLikePost')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let result2 = null
 
-            return toggleLikePost('67dc479bdc839d93c260b103', '67dd88fb150062b2bb14db0c')
+            return toggleLikePost('67e6bbb7793f289af9b62dcd', '67e6bbb7793f289af9b62dd3')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {

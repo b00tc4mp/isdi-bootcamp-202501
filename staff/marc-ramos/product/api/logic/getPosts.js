@@ -1,62 +1,36 @@
 import { SystemError } from 'com/errors.js'
-import { data } from '../data/index.js'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { ObjectId } = data
 const { NotFoundError } = errors
 
 export const getPosts = userId => {
     validate.id(userId, 'userId')
 
-    return data.users.findOne({ _id: new ObjectId(userId)})
+    return Promise.all([
+        User.findById(userId).lean(),
+        Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean()
+    ])
         .catch(error => { throw new SystemError(error.message)})
-        .then(user => {
+        .then(([user, posts]) => {
             if (!user) throw new NotFoundError('user not found')
 
-            return data.posts.find().toArray()
-                .catch(error => { throw new SystemError(error.message) })
-        })
-        .then(posts => {
-            // const authors = posts.map(post => post.author)
-            const authors = posts.map(({ author }) => author)
+            posts.forEach(post => {
+                post.id = post._id.toString()
+                delete post._id
 
-            return data.users.find({ _id: { $in: authors }}).toArray()
-                .catch(error => { throw new SystemError(error.message) })
-                .then(users => {
-                    const aggregatedPosts = []
+                if (post.author._id) {
+                    post.author.id = post.author._id.toString()
+                    delete post.author._id
+                }
 
-                    for (let i = 0; i < posts.length; i++) {
-                        const post = posts[i]
+                post.liked = post.likes.some(userObjectId => userObjectId.toString() === userId)
+                post.likesCount = post.likes.length
+                delete post.likes
 
-                        let liked = false
+                post.own = post.author.id === userId
+            })
 
-                        for (let i = 0; i < post.likes.length && !liked; i++) {
-                            const userObjectId = post.likes[i]
-
-                            if (userObjectId.toString() === userId)
-                                liked = true
-                        }
-
-                        const authorId = post.author.toString()
-
-                        const user = users.find(user => user._id.toString() === authorId)
-
-                        const aggregatedPost = {
-                            id: post._id.toString(),
-                            author: { id: authorId, username: user.username },
-                            image: post.image,
-                            text: post.text,
-                            createdAt: new Date(post.createdAt),
-                            modifiedAt: post.modifiedAt && new Date (post.modifiedAt),
-                            liked: liked,
-                            likesCount: post.likes.length,
-                            own: authorId === userId
-                        }
-
-                        aggregatedPosts[aggregatedPosts.length] = aggregatedPost
-                    }
-
-                    return aggregatedPosts.reverse()
-                })
+            return posts
         })
 }

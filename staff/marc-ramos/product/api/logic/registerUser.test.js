@@ -1,13 +1,19 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { registerUser } from './registerUser.js'
 
+const { MONGO_URL, MONGO_DB } = process.env
+
 console.info('TEST registerUser')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
-        try{
-            return registerUser('Paula', 'paula@galindo.com', 'paulita', '123123123')
-                .then(result => console.assert(result === undefined, 'result is undefined'))
+        try {
+            let result2 = null
+
+            return registerUser('Lucho', 'lu@cho.com', 'lucho', '123123123')
+                .then(result => result2 = result)
+                .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {
             console.error(error)
         }
