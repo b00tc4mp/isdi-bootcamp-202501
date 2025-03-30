@@ -1,10 +1,13 @@
+import 'dotenv/config'
 import { errors } from 'com'
 import { data } from '../data/index.js'
 import { updatePostText } from './updatePostText.js'
 
+const { MONGO_URL, MONGO_DB } = process.env
+
 console.info('TEST updatePostText')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let result2 = null

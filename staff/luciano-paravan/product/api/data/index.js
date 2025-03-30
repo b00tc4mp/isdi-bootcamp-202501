@@ -2,8 +2,6 @@ import mongoose, { Types } from 'mongoose'
 import { errors } from 'com'
 import { User, Post } from './models.js'
 
-const { ObjectId } = Types
-
 const { SystemError } = errors
 
 // Creamos el objeto data, y lo exportamos
@@ -18,12 +16,10 @@ const data = {
         return mongoose.disconnect()
     }, //Cierra la conexion con el servidor. Devuelve una promesa que se resuelve cuando la conexión se cierra correctamente.
 
-    ObjectId //Estoy exportando el ObjectId para despues usarlo en getUserName por ej
 }
 
 export {
     data,
-    ObjectId,
     User,
     Post
 }

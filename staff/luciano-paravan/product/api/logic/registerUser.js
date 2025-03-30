@@ -12,14 +12,8 @@ export const registerUser = (name, email, username, password) => {
     validate.username(username)
     validate.password(password)
 
-    return User.findOne({ $or: [{ email }, { username }] }).lean() //para traer el objeto y no el modelo
-        .catch(error => { throw new SystemError(error.message) }) //Catch por si falla/se desconecta la base de datos
-        .then(user => {
-            if (user) throw new DuplicityError('user already exist') //Si encuentra un usuario con mismo email o username retorna error
-
-            return bcrypt.hash(password, 10)
-                .catch(error => { throw new SystemError(error.message) })
-        })
+    return bcrypt.hash(password, 10)
+        .catch(error => { throw new SystemError(error.message) })
         .then(hash => {
             const user = {
                 name: name,
@@ -29,6 +23,7 @@ export const registerUser = (name, email, username, password) => {
                 createdAt: new Date(),
                 modiedAt: null
             }
+
             return User.create(user)
                 .catch(error => {
                     if (error.code === 11000) throw new DuplicityError('user already exists') //Este chatch con el error lo ponemos aca por si se intentan agregar usuarios en simultaneo.

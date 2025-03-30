@@ -1,14 +1,17 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { getPosts } from './getPosts.js'
 
+const { MONGO_URL, MONGO_DB } = process.env
+
 console.info('TEST getPosts')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let posts2
 
-            return getPosts('67dae1cd0a914c7c2ba729a2')
+            return getPosts('67e98bd3c4c9334450229384')
                 .then(posts => posts2 = posts)
                 .finally(() => console.assert(posts2 instanceof Array, 'posts2 is an array'))
         } catch (error) {
