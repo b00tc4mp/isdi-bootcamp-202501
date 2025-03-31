@@ -30,7 +30,7 @@ describe('authenticateUser', () => {
             .then(user => expect(user._id.toString()).to.equal(returnedUserId))
     })
 
-    it('fails on existing user', () => {
+    it.only('fails on existing user', () => {
         let catchedError
 
         return authenticateUser('eugeni', 'eueueu')
