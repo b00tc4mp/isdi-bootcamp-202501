@@ -26,7 +26,7 @@ export const deletePost = (userId, postId) => {
                 throw new OwnershipError('user is not author of the post');
             }
 
-            return data.posts.deleteOne({ _id: postId })
+            return Post.deleteOne({ _id: postId })
                 .catch(error => { throw new SystemError(error.message) })
         })
         .then(() => { })

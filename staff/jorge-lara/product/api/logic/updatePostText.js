@@ -24,7 +24,7 @@ export const updatePostText = (userId, postId, text) => {
             }
 
             if (post.author.toString() !== userId) {
-                throw new OwnershipError('user is not author of post');
+                throw new OwnershipError('user is not author of the post');
             }
             return Post.updateOne({ _id: postId }, {
                 $set: {
