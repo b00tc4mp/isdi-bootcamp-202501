@@ -1,3 +1,4 @@
+/*
 import { deleteProfile } from './deleteProfile.js'
 
 try {
@@ -5,3 +6,5 @@ try {
 } catch (error) {
     console.errror(error)
 }
+
+*/

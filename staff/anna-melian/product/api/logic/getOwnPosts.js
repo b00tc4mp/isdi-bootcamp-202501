@@ -1,3 +1,4 @@
+/*
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
@@ -47,3 +48,5 @@ export const getOwnPosts = userId => {
     return aggregatedPosts.reverse()
 
 }
+
+*/

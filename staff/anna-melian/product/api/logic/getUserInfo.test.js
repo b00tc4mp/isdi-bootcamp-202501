@@ -1,3 +1,4 @@
+/*
 import { getUserInfo } from './getUserInfo.js'
 
 try {
@@ -7,3 +8,5 @@ try {
 } catch (error) {
     console.error(error)
 }
+
+*/

@@ -12,7 +12,7 @@ import { toggleLikePost } from './toggleLikePost.js'
 //import { updateUserProfile } from './updateUserProfile.js'
 //import { updatePostText } from './updatePostText.js'
 //import { changePassword } from './changePassword.js'
-//import { deletePost } from './deletePost.js'
+import { deletePost } from './deletePost.js'
 //import { deleteProfile } from './deleteProfile.js'
 //import { getUserInfo } from './getUserInfo.js'
 
@@ -35,7 +35,7 @@ export const logic = {
 
 
     //deleteProfile,
-    //deletePost
+    deletePost
 
 
 }

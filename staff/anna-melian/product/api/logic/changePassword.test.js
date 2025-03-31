@@ -1,3 +1,4 @@
+/*
 import { changePassword } from './changePassword.js'
 
 try {
@@ -8,3 +9,4 @@ try {
 } catch (error) {
     console.error(error)
 }
+    */

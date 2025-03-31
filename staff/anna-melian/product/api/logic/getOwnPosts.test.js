@@ -1,3 +1,4 @@
+/*
 import { getOwnPosts } from './getOwnPosts.js'
 
 try {
@@ -7,3 +8,6 @@ try {
 } catch (error) {
     console.error(error)
 }
+
+
+*/

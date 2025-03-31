@@ -1,4 +1,3 @@
-/*
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
@@ -7,12 +6,12 @@ const { SystemError } = errors
 export const deletePost = postId => {
     validate.id(postId, 'postId')
 
-    const { userId } = data
+    const { token } = data
 
-    return fetch(`http://localhost:8080/myposts/${postId}`, {
+    return fetch(`http://localhost:8080/posts/${postId}`, {
         method: 'DELETE',
         headers: {
-            Authorization: `Basic ${userId}`
+            Authorization: `Bearer ${token}`
         }
     })
         .catch(error => { throw new SystemError(error.message) })
@@ -31,4 +30,3 @@ export const deletePost = postId => {
                 })
         })
 }
-        */

@@ -1,28 +1,22 @@
-import { MongoClient, ObjectId } from 'mongodb'
+import mongoose, { Types } from 'mongoose'
 import { errors } from 'com'
+import { User, Post } from './models.js'
 
 const { SystemError } = errors
 
-let client
-
-export const data = {
-    users: null,
-    posts: null,
-
+const data = {
     connect(url, dbName) {
-        return (client = new MongoClient(url)).connect()
+        return mongoose.connect(`${url}/${dbName}`)
             .catch(error => new SystemError(error.message))
-            .then(client => {
-                const db = client.db(dbName)
-
-                data.users = db.collection('users')
-                data.posts = db.collection('posts')
-            })
     },
 
     disconnect() {
-        return client.close()
-    },
+        return mongoose.disconnect()
+    }
+}
 
-    ObjectId
+export {
+    data,
+    User,
+    Post
 }

@@ -18,11 +18,11 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
                 name: { value: name },
                 email: { value: email },
                 username: { value: username },
-                house: { value: house },
+                //house: { value: house },
                 password: { value: password }
             } = form
 
-            logic.registerUser(name, email, username, house, password)
+            logic.registerUser(name, email, username, password)
                 .then(() => {
                     form.reset()
 

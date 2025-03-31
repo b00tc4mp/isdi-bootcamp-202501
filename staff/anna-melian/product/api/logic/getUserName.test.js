@@ -1,14 +1,17 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { getUserName } from './getUserName.js'
 
+const { MONGO_URL, MONGO_DB } = process.env
+
 console.info('TEST getUserName')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let userName
 
-            return getUserName('67e0c4137d362394168f3917')
+            return getUserName('67e66d549a04606cb8766835')
                 .then(name => userName = name)
                 .finally(() => console.assert(typeof userName === 'string', 'userName is a string'))
         } catch (error) {
@@ -17,3 +20,7 @@ data.connect('mongodb://localhost:27017', 'test')
     })
     .catch(error => console.error(error))
     .finally(() => data.disconnect())
+
+
+
+//TODO correct ids

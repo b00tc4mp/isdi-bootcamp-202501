@@ -1,3 +1,4 @@
+/*
 import { getUserHouse } from './getUserHouse.js'
 
 try {
@@ -7,3 +8,5 @@ try {
 } catch (error) {
     console.error(error)
 }
+
+*/

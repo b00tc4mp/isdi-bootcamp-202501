@@ -1,3 +1,4 @@
+/*
 import { updateUserProfile } from './updateUserProfile.js'
 
 try {
@@ -5,3 +6,4 @@ try {
 } catch (error) {
     console.error(error)
 }
+*/

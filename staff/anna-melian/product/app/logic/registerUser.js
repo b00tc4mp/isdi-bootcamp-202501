@@ -2,21 +2,20 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-export const registerUser = (name, email, username, house, password) => {
-    validate.text(name, 'name')
+export const registerUser = (name, email, username, password) => {
+    validate.name(name)
     validate.minLength(name, 1, 'name')
     validate.maxLength(name, 20, 'name')
-    validate.email(email, 'email')
-    validate.username(username, 'username')
-    validate.password(password, 'password')
-    validate.house(house, 'house')
+    validate.email(email)
+    validate.username(username)
+    validate.password(password)
 
     return fetch('http://localhost:8080/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, email, username, house, password })
+        body: JSON.stringify({ name, email, username, password })
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {

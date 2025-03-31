@@ -1,3 +1,4 @@
+/*
 import { data } from '../data/index.js'
 import { errors, validate } from 'com'
 
@@ -12,3 +13,5 @@ export const getUserHouse = userId => {
 
     return user.house
 }
+
+*/
