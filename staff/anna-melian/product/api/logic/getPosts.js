@@ -1,8 +1,7 @@
-import { SystemError } from 'com/errors.js'
 import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError } = errors
+const { NotFoundError, SystemError } = errors
 
 export const getPosts = userId => {
     validate.id(userId, 'userId')
