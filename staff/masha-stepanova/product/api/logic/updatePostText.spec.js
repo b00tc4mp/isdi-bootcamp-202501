@@ -1,14 +1,14 @@
 import 'dotenv/config'
 import { Types } from 'mongoose'
 import { data, User, Post } from '../data/index.js'
-import { deletePost } from './deletePost.js'
+import { updatePostText } from './updatePostText.js'
 import { expect } from 'chai'
 import { NotFoundError, OwnershipError } from 'com/errors.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 const { ObjectId } = Types
 
-describe('deletePost', () => {
+describe('updatePostText', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => {
@@ -18,7 +18,7 @@ describe('deletePost', () => {
         ])
     })
 
-    it('succeeds on deleted post', () => {
+    it('suceeds on updatet post text', () => {
         let result2
 
         return User.create({
@@ -27,24 +27,23 @@ describe('deletePost', () => {
             username: 'testing',
             password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
         })
-            .then(() => {
-                User.findOne({ username: 'testing' })
-                    .then(user => {
-                        Post.create({
-                            author: user._id,
-                            image: 'https://imgs.search.brave.com/RsLFMvrWg6yhxAib7bOTe6hVChF9oOEQBpoQPUBA5TE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aW1nbG9iYWwuY29t/L2ltYWdlcy9saWJy/YXJ5L3RoZS1pbWct/YWR2YW50YWdlLS0t/c3ZnLWdyYXBoaWNz/L2ltZy1hZHYtLW1l/bWJlcnMuc3Zn',
-                            text: 'Hello, World! TEST'
-                        })
-                            .then(() => Post.findOne({ text: 'Hello, World! TEST' }))
-                            .then(post => deletePost(user._id.toString(), post._id.toString()))
-                            .then(result => result2 = result)
-                            .finally(() => expect(result2).to.be.undefined)
-                            .then(() => Post.findOne({ text: 'Hello, World! TEST' }))
-                            .then(post => {
-                                expect(post).to.be.null
-                            })
+            .then(() => User.findOne({ username: 'testing' }))
+            .then(user => {
+                Post.create({
+                    author: user._id,
+                    image: 'https://imgs.search.brave.com/RsLFMvrWg6yhxAib7bOTe6hVChF9oOEQBpoQPUBA5TE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aW1nbG9iYWwuY29t/L2ltYWdlcy9saWJy/YXJ5L3RoZS1pbWct/YWR2YW50YWdlLS0t/c3ZnLWdyYXBoaWNz/L2ltZy1hZHYtLW1l/bWJlcnMuc3Zn',
+                    text: 'Hello, World! TEST'
+                })
+                    .then(() => Post.findOne({ text: 'Hello, World! TEST' }))
+                    .then(post => updatePostText(user._id.toString(), post._id.toString(), 'Text has been changed!'))
+                    .then(result => result2 = result)
+                    .finally(() => expect(result2).to.be.undefined)
+                    .then(() => Post.findOne({ text: 'https://imgs.search.brave.com/RsLFMvrWg6yhxAib7bOTe6hVChF9oOEQBpoQPUBA5TE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aW1nbG9iYWwuY29t/L2ltYWdlcy9saWJy/YXJ5L3RoZS1pbWct/YWR2YW50YWdlLS0t/c3ZnLWdyYXBoaWNz/L2ltZy1hZHYtLW1l/bWJlcnMuc3Zn' }))
+                    .then(post => {
+                        expect(post.author).to.equal(user._id)
+                        expect(post.image).to.equal('https://imgs.search.brave.com/RsLFMvrWg6yhxAib7bOTe6hVChF9oOEQBpoQPUBA5TE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aW1nbG9iYWwuY29t/L2ltYWdlcy9saWJy/YXJ5L3RoZS1pbWct/YWR2YW50YWdlLS0t/c3ZnLWdyYXBoaWNz/L2ltZy1hZHYtLW1l/bWJlcnMuc3Zn')
+                        expect(post.text).to.equal('Text has been changed!')
                     })
-
             })
     })
 
@@ -79,7 +78,7 @@ describe('deletePost', () => {
                             .then(() => {
                                 Post.findOne({ text: 'Hello, World! TEST' })
                                     .then(post => {
-                                        deletePost(userTesting._id.toString(), post._id.toString())
+                                        updatePostText(userTesting._id.toString(), post._id.toString(), 'Hello, World! TEST')
                                             .catch(error => catchedError = error)
                                             .finally(() => {
                                                 expect(catchedError).to.be.instanceOf(OwnershipError)
@@ -100,7 +99,7 @@ describe('deletePost', () => {
             .then(() => {
                 Post.find().lean()
                     .then(post => {
-                        deletePost('67e812e0a5d9869c01300954', post._id.toString())
+                        updatePostText('67e812e0a5d9869c01300954', post._id.toString(), 'Text has been changed!')
                             .catch(error => catchedError = error)
                             .finally(() => {
                                 expect(catchedError).to.be.instanceOf(NotFoundError)
@@ -122,7 +121,7 @@ describe('deletePost', () => {
         })
             .then(() => User.findOne({ username: 'testing' }))
             .then(user => {
-                deletePost(user._id.toString(), '67e86b851937a78043d97ebb')
+                updatePostText(user._id.toString(), '67e86b851937a78043d97ebb', 'Text has been changed!')
                     .catch(error => catchedError = error)
                     .finally(() => {
                         expect(catchedError).to.be.instanceOf(NotFoundError)
@@ -140,4 +139,3 @@ describe('deletePost', () => {
 
     after(() => data.disconnect())
 })
-
