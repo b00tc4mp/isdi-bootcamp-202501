@@ -19,7 +19,9 @@ export const registerUser = (name, email, username, password) => {
                 name: name,
                 email: email,
                 username: username,
-                password: hash
+                password: hash,
+                createdAt: new Date(),
+                modiedAt: null
             }
 
             return User.create(user)
