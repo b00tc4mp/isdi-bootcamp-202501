@@ -1,7 +1,7 @@
-import { data } from "../data/index.js";
+import { User, Post} from '../data/index.js'
 import { validate, errors } from "com";
 
-const { NotFoundError, OwnershipError, SystemError} = errors
+const { NotFoundError,  SystemError} = errors
 
 export const toggleLikePost = (userId, postId) => {
     validate.id(userId, 'userId')
@@ -14,7 +14,7 @@ export const toggleLikePost = (userId, postId) => {
         .catch(error => {throw new NotFoundError(error.message)} )
         .then(([user , post]) => { 
             if (!user) throw new NotFoundError('user not found')
-                if (!post) throw new NotFoundError('post not found')
+            if (!post) throw new NotFoundError('post not found')
                        
             const { likes } = post // const likes = post.likes
                             

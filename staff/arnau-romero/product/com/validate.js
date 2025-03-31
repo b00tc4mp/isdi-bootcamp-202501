@@ -29,7 +29,7 @@ export const validate = {
     },
     username(username, explain = 'username') {
         this.string(username, explain) // Funcion para comprobar que es una string
-        this.maxLength(username, 10, explain) // Llamamos funcion para comprobar que no sobrepasemos límite de caracteres.
+        this.maxLength(username, 20, explain) // Llamamos funcion para comprobar que no sobrepasemos límite de caracteres.
         this.minLength(username, 1, explain) // Llamamos funcion para comprobar el límite de caracteres.
         if(!constant.USERNAME_REGEX.test(username)) throw new ValidationError(`invalid ${explain} syntax`)
     },

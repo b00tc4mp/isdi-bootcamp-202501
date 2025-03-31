@@ -1,9 +1,12 @@
 import { data } from '../data/index.js'
 import { authenticateUser } from './authenticateUser.js'
+import 'dotenv/config'
+
+const { MONGO_DB, MONGO_URL } = process.env
 
 console.info('TEST authenticateUser')
 
-data.connect('mongodb://127.0.0.1:27017', 'test')
+data.connect(MONGO_URL,  MONGO_DB)
     .then(() => { 
         try{
           let userId
