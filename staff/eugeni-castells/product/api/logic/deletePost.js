@@ -3,6 +3,7 @@ import { Post, User } from "../data/index.js";
 const { OwnershipError, NotFoundError, SystemError } = errors;
 
 export const deletePost = (userId, postId) => {
+  debugger;
   validate.id(postId, "id");
   validate.id(userId, "user id");
 
@@ -21,10 +22,10 @@ export const deletePost = (userId, postId) => {
       if (foundPost.author.toString() !== userId)
         throw new OwnershipError("user is not author of the post");
 
-      return Post.deleteOne({ _id: postId });
+      return Post.deleteOne({ _id: postId }).catch((error) => {
+        throw new SystemError(error.message);
+      });
     })
-    .catch((error) => {
-      throw new SystemError(error.message);
-    })
+
     .then(() => {});
 };

@@ -17,18 +17,14 @@ const {
 
 const { JWT_SECRET, PORT, MONGO_URL, MONGO_DB } = process.env;
 
-const handleWithErrorHandling = (next, callback) => {
-  try {
-    callback().catch((error) => {
-      console.error(error);
-
+const withErrorHandling = (callback) => {
+  return (req, res, next) => {
+    try {
+      callback(req, res).catch((error) => next(error));
+    } catch (error) {
       next(error);
-    });
-  } catch (error) {
-    console.error(error);
-
-    next(error);
-  }
+    }
+  };
 };
 data
   .connect(MONGO_URL, MONGO_DB)
@@ -45,7 +41,7 @@ data
     const jsonBodyParser = json();
 
     api.get("/posts", jsonBodyParser, (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+      withErrorHandling(next, () => {
         const { authorization } = req.headers;
 
         const { eugeni } = req;
@@ -60,8 +56,10 @@ data
       });
     });
 
-    api.post("/posts", jsonBodyParser, (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+    api.post(
+      "/posts",
+      jsonBodyParser,
+      withErrorHandling((req, res) => {
         const { authorization } = req.headers;
 
         const token = authorization.slice(7);
@@ -73,11 +71,12 @@ data
         return logic.addPost(userId, image, text).then(() => {
           res.status(201).send();
         });
-      });
-    });
+      })
+    );
 
-    api.delete("/posts/:postId", (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+    api.delete(
+      "/posts/:postId",
+      withErrorHandling((req, res) => {
         const { authorization } = req.headers;
 
         const token = authorization.slice(7);
@@ -89,11 +88,13 @@ data
         return logic.deletePost(userId, postId).then(() => {
           res.status(202).send();
         });
-      });
-    });
+      })
+    );
 
-    api.post("/users/auth", jsonBodyParser, (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+    api.post(
+      "/users/auth",
+      jsonBodyParser,
+      withErrorHandling((req, res, next) => {
         const { username, password } = req.body;
 
         return logic.authenticateUser(username, password).then((id) => {
@@ -101,11 +102,13 @@ data
 
           res.status(200).json({ token });
         });
-      });
-    });
+      })
+    );
 
-    api.post("/users", jsonBodyParser, (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+    api.post(
+      "/users",
+      jsonBodyParser,
+      withErrorHandling((req, res) => {
         const { name, email, username, password } = req.body;
         return logic
           .registerUser({
@@ -117,11 +120,13 @@ data
           .then(() => {
             res.sendStatus(201);
           });
-      });
-    });
+      })
+    );
 
-    api.patch("/users", jsonBodyParser, (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+    api.patch(
+      "/users",
+      jsonBodyParser,
+      withErrorHandling((req, res, next) => {
         const { authorization } = req.headers;
 
         const token = authorization.slice(7);
@@ -133,11 +138,12 @@ data
         return logic.updateUser(userId, body).then(() => {
           res.status(204).send();
         });
-      });
-    });
+      })
+    );
 
-    api.get("/users/self", (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+    api.get(
+      "/users/self",
+      withErrorHandling((req, res) => {
         const { authorization } = req.headers;
 
         const token = authorization.slice(7);
@@ -147,11 +153,13 @@ data
         return logic.getOnlineUserInfo(userId).then((userInfo) => {
           res.status(200).json(userInfo);
         });
-      });
-    });
+      })
+    );
 
-    api.patch("/posts/text/:id", jsonBodyParser, (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+    api.patch(
+      "/posts/text/:id",
+      jsonBodyParser,
+      withErrorHandling((req, res) => {
         const { authorization } = req.headers;
 
         const token = authorization.slice(7);
@@ -166,11 +174,12 @@ data
         return logic.updatePostText(userId, id, text).then(() => {
           res.status(200).send();
         });
-      });
-    });
+      })
+    );
 
-    api.patch("/posts/likes/:postId", (req, res, next) => {
-      handleWithErrorHandling(next, () => {
+    api.patch(
+      "/posts/likes/:postId",
+      withErrorHandling((req, res, next) => {
         const { authorization } = req.headers;
 
         const token = authorization.slice(7);
@@ -182,8 +191,8 @@ data
         return logic.updatePostLikes(userId, postId).then(() => {
           res.status(204).send();
         });
-      });
-    });
+      })
+    );
 
     const errorHandler = (error, _req, res, _next) => {
       let status = 500;
