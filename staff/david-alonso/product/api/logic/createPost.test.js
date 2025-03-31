@@ -1,14 +1,17 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { createPost } from './createPost.js'
 
+const { MONGO_URL, MONGO_DB } = process.env
+
 console.info('TEST createPost')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let result2 = null
 
-            return createPost('67dfffb4c9ac469c16209dbf', 'https://img.pixers.pics/pho_wat(s3:700/FO/55/51/95/89/700_FO55519589_b74f9891feacf0ca445fb13b05f3128e.jpg,700,467,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,480,417,jpg)/fotomurales-motocross-en-la-puesta-de-sol.jpg.jpg', 'Atardecer')
+            return createPost('67e9946baa195117fab71239', 'https://img.redbull.com/images/c_crop,w_6048,h_3024,x_0,y_0/c_auto,w_1200,h_630/f_auto,q_auto/redbullcom/2016/04/20/1331789854044_1/jorge-prado-entrenando-en-belgica', 'Red Bull')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {
