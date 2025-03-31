@@ -1,5 +1,8 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { getPosts } from './getPosts.js'
+
+const { MONGO_URL, MONGO_DBNAME } = process.env
 
 console.info('TEST getPosts')
 
@@ -17,12 +20,12 @@ sea una instancia de Array. Lo que verifica que se ha obtenido un array de publi
 -Se desconecta de la base de datos.
 
  */
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DBNAME)
     .then(() => {
         try {
             let posts2
 
-            return getPosts('67e04f98d9f076ef37e6a146')
+            return getPosts('67e8ea9172e445b1b8f6b5e3')
                 .then(posts => posts2 = posts)
                 .finally(() => console.assert(posts2 instanceof Array, 'posts2 is an arry'))
             

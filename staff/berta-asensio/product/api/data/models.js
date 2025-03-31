@@ -71,7 +71,7 @@ const post = new  Schema({
         type: String,
         required: true,
         maxLength: 500,
-        match: constant.EMPTY_OR_BLANK_REGEX
+        //match: constant.EMPTY_OR_BLANK_REGEX
     },
     // Los likes son un array de tipo ObjectId que se refiere a la colección de User 
     likes:[{

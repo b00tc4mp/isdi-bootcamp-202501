@@ -1,8 +1,6 @@
-
-import { data } from '../data/index.js'
+import { User } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { ObjectId } = data //recordemos que he importado en data/index el object id
 const { SystemError, NotFoundError } = errors
 
 /*
@@ -10,8 +8,8 @@ const { SystemError, NotFoundError } = errors
 en la base de datos.
 -Se valida userId.
 -Se busca en la colección users de la base de data un documento que coincida con _id.
-Se convierte el userId en un ObjectId de Mongo ya que asi se identifican los documentos.
--FindOne devuelve null si no encuentra el usuario, si lo encuentra pasamos al siguiente then.
+Se convierte el userId en un ObjectId de Mongo ya que asi se identifican los documentos. AHORA MONGOOSE
+-FindOne devuelve null si no encuentra el usuario, si lo encuentra pasamos al siguiente then. AHORA MONGOOSE
 -System error si hay un error al acceder a la base de datos o a la conexión.
 -Este then verifica si el usuario existe:
         -Si no existe devuelve un NotFoundError
@@ -21,9 +19,9 @@ TEST: node logic.getUserName.test.js
 */
 
 export const getUserName = userId => { 
-        validate.id(userId, 'userId')
+        validate.id(userId)
 
-        return data.users.findOne({ _id: new ObjectId(userId) })
+        return User.findById(userId).lean()
                 .catch(error => { throw new SystemError(error.message) }) 
                 .then(user => {
                         if(!user) throw new NotFoundError ('user not found')

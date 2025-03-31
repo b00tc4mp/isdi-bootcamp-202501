@@ -1,6 +1,9 @@
 //se importan los módulos necesarios
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { getUserName } from './getUserName.js'
+
+const { MONGO_URL, MONGO_DBNAME } = process.env
 
 console.info('TEST getUserName')
 
@@ -17,11 +20,11 @@ esto devuelve una promesa con el nombre de usuario.
 -Manejamos errores por si algo falla en el camino.
 -Desconectamos data.
 */
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DBNAME)
     .then(() => {
         try {
             let userName //undefined
-            return getUserName('67defdca93248d0c09b71236') //aqui pondremos un id Mongo
+            return getUserName('67e7f752a1ce00e49b303365') //aqui pondremos un id Mongo
                 .then(name => userName = name) //
                 .finally(() => console.assert(typeof userName === 'string', 'username is a string'))
         } catch (error) {

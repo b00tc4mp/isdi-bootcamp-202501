@@ -25,7 +25,7 @@ data.connect(MONGO_URL, MONGO_DBNAME)
         try {
             let userId //undefined
 
-            return authenticateUser('MayaBee', '123123aa')
+            return authenticateUser('DonnyDuck', '123123aa')
                 .then(id => userId = id) //si el id coincide, lo guarda en la variable userId.
                 .finally(() => console.assert(typeof userId === 'string', 'userId is a string'))
         } catch (error) {

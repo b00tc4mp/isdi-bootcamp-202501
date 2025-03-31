@@ -1,68 +1,45 @@
 
-import { data } from '../data/index.js'
+import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { ObjectId } = data
 const { SystemError, NotFoundError } = errors
 
 
-export const getPosts = (userId) => { 
-        validate.id(userId, 'userId') 
+export const getPosts = (userId) => {
+    validate.id(userId)
 
-        return data.users.findOne({ _id: new ObjectId(userId) })
-            .catch(error => { throw new SystemError(error.message) })
-            .then(user => {
-                if (!user) throw new NotFoundError('user not found')
+    return Promise.all([ 
+        User.findById(userId).lean(),
+        Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean() //mongoose ya lo devuelve en forma de array
+    ])
+        
+        .catch(error => { throw new SystemError(error.message) })
+        .then(([ user, posts ]) => {
+            if (!user) throw new NotFoundError('user not found')
 
-                return data.posts.find().toArray()
-                    .catch(error => { throw new SystemError(error.message) })
+            posts.forEach(post => {
+                post.id = post._id.toString() 
+                delete post._id
+
+                if (post.author._id) {
+                    post.author.id = post.author._id.toString()
+                    delete post.author._id
+                }
+
+                post.liked = post.likes.some(userObjectId => userObjectId.toString() === userId)
+                post.totalLikes = post.likes.length
+                delete post.likes
+
+                post.own = post.author.id === userId
             })
-            .then(posts => {
-                const authors = posts.map(({ author }) => author) //const authors = posts.map(post => post.author)
 
-                return data.users.find({ _id: { $in: authors } }).toArray()
-                    .catch(error => { throw new SystemError(error.message) })
-                    .then(users => {
-                        const aggregatedPosts = []
+            return posts
+        })
+}         
 
-                        for (let i = 0; i < posts.length; i++) {
-                            const post = posts[i]
-        
-                            let liked = false
-        
-                            for (let i = 0; i < post.likes.length && !liked; i++) {
-                                const userObjectId = post.likes[i]
-        
-                                if (userObjectId.toString() === userId)
-                                    liked = true
-                            }
-
-                            const authorId = post.author.toString()
-        
-                            const user = users.find(user => user._id.toString() === authorId)
-        
-                            const aggregatedPost = {
-                                id: post._id.toString(),
-                                author: { id: authorId, username: user.username },
-                                image: post.image,
-                                text: post.text,
-                                createdAt: new Date(post.createdAt),
-                                modifiedAt: post.modifiedAt && new Date(post.modifiedAt), // si viene el dato, lo convierto en date si no lo mantengo en null
-                                liked: liked,
-                                totalLikes: post.likes.length,
-                                own: authorId === userId
-        
-                            }
-        
-                            aggregatedPosts[aggregatedPosts.length] = aggregatedPost
-                        }
-        
-                        return aggregatedPosts.reverse()                       
-                    })
-            })         
-}
 
 /*
+HA CAMBIADO, AHORA MONGOOSE
 -Declaración de la función getPosts, que recibe userId.
 -Se valida que userId tenga el formato adecuado.
 -Se busca al usuario en la  base de datos. newObjectOd convierte userId

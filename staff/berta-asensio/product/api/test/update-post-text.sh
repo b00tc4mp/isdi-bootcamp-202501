@@ -1,5 +1,5 @@
-curl -X PATCH http://localhost:8080/posts/67e17413437a0ec724f5e262/text \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UyNTczM2QwNWIxNTk3YmE5ZWJlYzMiLCJpYXQiOjE3NDMwMTI1MTB9.u_WerqFIz8AqEy1PW-H9-zKie1tpQlnqT2ie5Z6Q9SM' \
+curl -X PATCH http://localhost:8080/posts/67eac96495a688874ca41430/text \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2U4ZWE5MTcyZTQ0NWIxYjhmNmI1ZTUiLCJpYXQiOjE3NDM0NDAzNTV9.EoNd5IoXdgrsJTowuWZoOVwwg0k-ZAQQoBLdoU2HgVU' \
     -H 'Content-type: application/json' \
-    -d '{"text":"Hello, darling!"}' \
+    -d '{"text":"ROCKY"}' \
     -v

@@ -1,5 +1,8 @@
+import 'dotenv/config'
 import { data } from '../data/index.js'
 import { createPost } from './createPost.js'
+
+const { MONGO_URL, MONGO_DBNAME} = process.env
 
 /*
 -Si conectamos entramos en el then.
@@ -16,12 +19,12 @@ import { createPost } from './createPost.js'
 
 console.info('TEST createPost')
 
-data.connect('mongodb://localhost:27017', 'test')
+data.connect(MONGO_URL, MONGO_DBNAME)
     .then(() => {
         try {
             let result2 = null
 
-            return createPost('67e662617ba1f822e43656e6', 'https://media.giphy.com/media/5t235Nf4wo3rhLSMVy/giphy.gif?cid=790b7611hsy6vpfm1wzxmz83ggr3wkpq40gzzxgktapngt8u&ep=v1_gifs_search&rid=giphy.gif&ct=g', 'Nyami')
+            return createPost('67e8ea9172e445b1b8f6b5e5', 'https://media.giphy.com/media/mx0rj9sZRBcGTwEIX1/giphy.gif?cid=790b7611jiqaknu9whanizk5cl8xsude31ecmhuhj3wkru9a&ep=v1_gifs_trending&rid=giphy.gif&ct=g', 'You are a ROCK')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {

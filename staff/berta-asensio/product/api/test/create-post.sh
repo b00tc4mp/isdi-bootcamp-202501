@@ -1,8 +1,7 @@
 curl -X POST http://localhost:8080/posts \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2U2NjI2MTdiYTFmODIyZTQzNjU2ZTYiLCJpYXQiOjE3NDMxNTE3MTl9.Rzoajk0ROeI27YIJesGQwzkAqFPFyeqBDbZeSwZqHdA' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2U4ZWE5MTcyZTQ0NWIxYjhmNmI1ZTUiLCJpYXQiOjE3NDM0MTU0ODl9.wKtUlfJya_udt-83iFgv0NODvxk31Q_XiXpcJUJId5U' \
     -H 'Content-type: application/json' \
     -d '{
-        "image":"https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHYyNmgyam1tMzJlbXdvdG1xNWQ4OTBvdmNoc281d2FtbGdkZ3Y0NSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/pVkmGyqYRt4qY/giphy.gif",
-        "text":"I need to rest..."
+        "image":"https://media.giphy.com/media/mx0rj9sZRBcGTwEIX1/giphy.gif?cid=790b7611jiqaknu9whanizk5cl8xsude31ecmhuhj3wkru9a&ep=v1_gifs_trending&rid=giphy.gif&ct=g","text":"You are a ROCK"
         }' \
     -v
