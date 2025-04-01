@@ -1,15 +1,20 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import { Comment } from './Comment.jsx'
 
 import { logic } from '../../logic/index.js'
+import { formatedDate} from '../../utils/index.js'
 import {errors} from 'com'
+import * as util from "node:util";
 
 const { SystemError, ValidationError } = errors
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('')
     const [comments, setComments] = useState([])
+
+    const navigate = useNavigate()
 
     const handleToggleLikeClick = () => {
         try {
@@ -83,10 +88,12 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
 
     const handleCancelCommentsClick = () => setView('')
 
+    const handleUsernameClick = () => navigate(`/${post.author.username}`, {state: {userId: post.author.id}})
+
     return <article>
         <div className="post-header">
-            <h3>{post.author.username}</h3>
-            <time>{logic.formatedDate(post.createdAt)}</time>
+            <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
+            <time>{formatedDate(post.createdAt)}</time>
         </div>
         <img src={post.image} />
 

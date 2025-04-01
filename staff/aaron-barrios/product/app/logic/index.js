@@ -2,10 +2,10 @@ import { registerUser } from './registerUser'
 import { loginUser } from './loginUser'
 import { logoutUser } from './logoutUser'
 import { isUserLoggedIn } from './isUserLoggedIn'
-import { getUsername } from './getUsername'
-import { getCurrentUser } from './getCurrentUser'
-import { isCurrentAuthor } from './isCurrentAuthor'
-import { formatedDate } from './formatedDate'
+import { getUserUsername } from './getUserUsername.js'
+import { getUserId } from './getUserId.js'
+import { isCurrentAuthor } from './isCurrentAuthor.js'
+import { getUserPosts } from './getUserPosts.js'
 
 import { createPost } from './createPost'
 import { getPosts } from './getPosts'
@@ -18,10 +18,10 @@ export const logic = {
     loginUser,
     logoutUser,
     isUserLoggedIn,
-    getUsername,
-    getCurrentUser,
+    getUserUsername,
+    getUserId,
     isCurrentAuthor,
-    formatedDate,
+    getUserPosts,
 
     createPost,
     getPosts,

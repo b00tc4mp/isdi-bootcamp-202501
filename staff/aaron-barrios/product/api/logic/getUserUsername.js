@@ -3,7 +3,7 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const getUsername = userId => {
+export const getUserUsername = userId => {
     validate.id(userId, 'userId')
 
     return User.findById(userId)
@@ -11,6 +11,6 @@ export const getUsername = userId => {
         .then(user => {
             if (!user) throw new NotFoundError('User not found!')
 
-            return user.name
+            return user.username
         })
 }

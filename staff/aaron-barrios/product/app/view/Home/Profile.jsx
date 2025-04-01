@@ -1,18 +1,13 @@
-export function Profile({ onHomeClick }) {
-    // const user = index.getCurrentUser()
+import {useParams, useLocation} from 'react-router'
 
-    const handleHomeClick = () => {
-        try {
-            onHomeClick()
-        } catch (error) {
-            console.error(error)
+import {Posts} from './Posts.jsx'
 
-            alert(error.message)
-        }
-    }
+export const Profile = () => {
+    const {username} = useParams() // => useParams returns an object with various properties
+    const { state: {userId}} = useLocation() // => useLocation returns an object with X properties
 
     return < div className="profile">
-        <h1>Profile</h1>
+        <h1>{username}</h1>
 
         <img className="profPic" src="https://media.licdn.com/dms/image/v2/C4D03AQEirCF7fh9eeA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1659545777658?e=2147483647&v=beta&t=0Ms4MF7eaPWjy0mECePNvIASagZ7CM47zkMm2qgXbro" />
 
@@ -36,11 +31,8 @@ export function Profile({ onHomeClick }) {
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" placeholder="Type password..." />
             </div>
-
-            <span style={{ justifyContent: "space-between" }}>
-                <a onClick={handleHomeClick}>Home</a>
-                <button type="submit">Change</button>
-            </span>
         </form>
+
+        <Posts targetUserId={userId} />
     </div>
 }

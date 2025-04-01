@@ -1,6 +1,7 @@
 import { registerUser } from './registerUser.js'
 import { authenticateUser } from './authenticateUser.js'
-import { getUsername } from './getUsername.js'
+import { getUserUsername } from './getUserUsername.js'
+import { getUserPosts } from './getUserPosts.js'
 
 import { createPost } from './createPost.js'
 import { getPosts } from './getPosts.js'
@@ -11,7 +12,8 @@ import { toggleLikePost } from './toggleLikePost.js'
 export const logic = {
     registerUser,
     authenticateUser,
-    getUsername,
+    getUserUsername,
+    getUserPosts,
 
     createPost,
     getPosts,

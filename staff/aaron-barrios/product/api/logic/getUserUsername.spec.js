@@ -1,9 +1,9 @@
 import 'dotenv/config'
 import { data, User } from '../data/index.js'
-import {getUsername} from './getUserName.js'
+import { getUserUsername } from './getUserUsername.js'
 import { expect } from 'chai'
-import { CredentialsError, NotFoundError } from 'com/errors.js'
-import {get, Types} from 'mongoose'
+import { NotFoundError } from 'com/errors.js'
+import { Types } from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -24,7 +24,7 @@ describe('getUsername', () => {
                 username: 'eugeni',
                 password: hash
             }))
-            .then(user => getUsername(user.id))
+            .then(user => getUserUsername(user.id))
             .then(name => returnedName = name)
             .finally(() => expect(returnedName).to.equal('Eu Geni'))
     })
@@ -32,7 +32,7 @@ describe('getUsername', () => {
     it('fails on existing user', () => {
         let catchedError
 
-        return getUsername(new ObjectId().toString())
+        return getUserUsername(new ObjectId().toString())
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(NotFoundError)

@@ -13,7 +13,6 @@ describe('authenticateUser', () => {
     beforeEach(() => User.deleteMany({}))
 
     it('succeds on existing user', () => {
-        debugger
         let returnedUserId
 
         return bcrypt.hash('eueueu', 10)
@@ -30,7 +29,7 @@ describe('authenticateUser', () => {
             .then(user => expect(user._id.toString()).to.equal(returnedUserId))
     })
 
-    it.only('fails on existing user', () => {
+    it('fails on existing user', () => {
         let catchedError
 
         return authenticateUser('eugeni', 'eueueu')
@@ -42,7 +41,6 @@ describe('authenticateUser', () => {
     })
 
     it('fails on existing user but wrong password', () => {
-        debugger
         let catchedError
 
         return User.create({

@@ -3,18 +3,22 @@ import { useState, useEffect } from 'react'
 import { Post } from './Post.jsx'
 
 import { logic } from '../../logic/index.js'
-import {errors} from 'com'
+import { errors } from 'com'
 
 const {SystemError, ValidationError} = errors
 
-export function Posts() {
+export function Posts({targetUserId}) {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
         console.debug('Index -> useEffect')
 
+        loadPosts()
+    }, [])
+
+    const loadPosts = () => {
         try {
-            logic.getPosts()
+            (targetUserId ? logic.getUserPosts(targetUserId) : logic.getPosts())
                 .then(posts => setPosts(posts))
                 .catch(error => {
                     console.error(error)
@@ -32,55 +36,13 @@ export function Posts() {
             else
                 alert('⛔ ' + error.message)
         }
-    }, [])
-
-    const handlePostLikeToggled = () => {
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
     }
 
-    const handlePostDeleted = () => {
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+    const handlePostLikeToggled = () => loadPosts()
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
+    const handlePostDeleted = () => loadPosts()
 
-            alert(error.message)
-        }
-    }
-
-    const handlePostTextEdited = () => {
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
+    const handlePostTextEdited = () => loadPosts()
 
     return <section>
         {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onPostTextEdited={handlePostTextEdited} />)}

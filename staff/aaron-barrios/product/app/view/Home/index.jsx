@@ -2,22 +2,27 @@ import { useState, useEffect } from 'react'
 
 import { Posts } from './Posts.jsx'
 import { CreatePost } from './CreatePost.jsx'
+import { Profile } from './Profile.jsx'
+import { Search } from './Search.jsx'
 
 import { logic } from '../../logic/index.js'
-import {errors} from 'com'
+import { errors } from 'com'
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 
-const {SystemError, ValidationError} = errors
+const { SystemError, ValidationError } = errors
 
 export function Home({ onUserLoggedOut, onProfileClick }) {
-    const [view, setView] = useState('posts')
     const [username, setUsername] = useState('')
+
+    const navigate = useNavigate()
+    const { pathname } = useLocation() // => variable to extract the pathname for the Searcher
 
     useEffect(() => {
         console.debug('Index -> useEffect')
 
         try {
-            logic.getUsername()
-                .then(name => setUsername(name))
+            logic.getUserUsername()
+                .then(username => setUsername(username))
                 //ERRORES ASÍNCRONOS
                 .catch(error => {
                     console.error(error)
@@ -50,51 +55,53 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
         }
     }
 
-    const handleCurrentUserClick = () => {
-        try {
-            logic.getCurrentUser()
-        } catch (error) {
+    const handleCreatePostClick = () => navigate('/create-post')
+
+    const handlePostCreated = () => navigate('/')
+
+    const handlePostCreateCancelled = () => navigate('/')
+
+    const handleHomeClick = () => navigate('/')
+
+    const handleSearchClick = () => navigate('/search')
+
+    const handleProfileClick = () => {
+        try{
+            const userId = logic.getUserId()
+
+            navigate(`/${username}`, { state: { userId } })
+        }catch(error){
             console.error(error)
 
             alert(error.message)
         }
     }
 
-    const handleProfileClick = () => onProfileClick()
-
-    const handleCreatePostClick = () => setView('create-post')
-
-    const handlePostCreated = () => setView('posts')
-
-    const handlePostCreateCancelled = () => setView('posts')
-
-    const handleHomeClick = () => setView('posts')
-
-    // const commentButtonClick = postId => { setActiveCommentPostId(currentId => currentId === postId ? null : postId) }
 
     console.debug('Index -> render')
 
     return <div >
-        {view === 'posts' && <header>
-            <h2>Welcome, {username}</h2>
+        <header>
+            <h1 onClick={handleHomeClick}>Social App</h1>
 
-            <button onClick={handleProfileClick}>🥸</button>
+            <h2 onClick={handleProfileClick}>{username}</h2>
 
-            <button onClick={handleCurrentUserClick}>🫵</button>
+            {pathname === '/' && <button onClick={handleSearchClick}>🔍</button>}
 
             <button onClick={handleLogoutClick}>Logout</button>
-        </header >}
+        </header >
 
         <main>
-            {view === 'posts' && <Posts />}
-
-            {view === 'create-post' && <CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />}
-
-            {view === 'profile' && <Profile onHomeClick={handleHomeClick} />}
+            <Routes>
+                <Route path="/create-post" element = {<CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />} />
+                <Route path="/search" element = {<Search />} />
+                <Route path="/:username" element = {<Profile />} />
+                <Route path="/" element = {<Posts />} />
+            </Routes>
         </main>
 
         <footer>
-            {view === 'posts' && <button onClick={handleCreatePostClick}>🧉</button>}
+            {pathname === '/' && <button onClick={handleCreatePostClick}>🧉</button>}
         </footer>
     </div >
 }

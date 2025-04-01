@@ -1,26 +1,25 @@
 import 'dotenv/config'
 import { data } from '../data/index.js'
-import { getUsername } from './getUsername.js'
+import { getUserPosts } from './getUserPosts.js'
 
-console.info('GET_USERNAME TEST')
+console.info('TEST createPost')
 
 const { MONGO_URL, MONGO_DB } = process.env
 
 data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
-            let username
+            let posts2
 
-            return getUsername('67e6b6b04219300670bd238d')
-                .then(name => username = name)
+            return getUserPosts('67ebef1f4da44715d0d4d84b', '67ead5203480714ab3b22828')
+                .then(posts => posts2 = posts)
                 .then(console.log)
-                .finally(() => console.assert(typeof username === 'string', 'username must be a string'))
+                .finally(() => console.assert(posts2 instanceof Array, 'posts must be an Array'))
         } catch (error) {
             console.error(error)
         }
     })
     // .catch(error => console.error(error)) => can be breakpointed on debugger
     .catch(console.error)           // cant be breakpointed on debugger
-
     // .finally(() => data.disconnect()) => can be breakpointed on debugger
     .finally(data.disconnect)       // cant be breakpointed on debugger
