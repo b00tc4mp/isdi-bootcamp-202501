@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate } from 'react-router'
 
 import { Posts } from './Posts.jsx'
 import { CreatePost } from './CreatePost.jsx'
-import { Profile } from './Profile.jsx'
 
 import { logic } from '../../logic/index.js'
 
 export function Home({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
-
-    const navigate = useNavigate()
 
     useEffect(() => {
         console.debug('Home -> useEffect')
@@ -43,31 +39,17 @@ export function Home({ onUserLoggedOut }) {
         }
     }
 
-    const handleAddPostClick = () => {
-        setView('create-post')
-        navigate('/create-post')
-    }
+    const handleAddPostClick = () => setView('create-post')
 
-    const handlePostCreated = () => {
-        setView('posts')
-        navigate('/')
-    }
+    const handlePostCreated = () => setView('posts')
 
-    const handlePostCreateCancelled = () => {
-        setView('posts')
-        navigate('/')
-    }
-
-    const handleHomeClick = () => {
-        setView('posts')
-        navigate('/')
-    }
+    const handlePostCreateCancelled = () => setView('posts')
 
     console.debug('Home -> render')
 
     return <div className="Home">
         <header>
-            <h1 onClick={handleHomeClick}>Logo</h1>
+            <h1>Logo</h1>
 
             <h2>Hello, {userName}!</h2>
 
@@ -75,11 +57,9 @@ export function Home({ onUserLoggedOut }) {
         </header>
 
         <main>
-            <Routes>
-                <Route path="/create-post" element={<CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />} />
-                <Route path="/:username" element={<Profile />} />
-                <Route path="/" element={<Posts />} />
-            </Routes>
+            {view === 'posts' && <Posts />}
+
+            {view === 'create-post' && <CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />}
         </main>
 
         <footer>

@@ -9,8 +9,8 @@ import { Home } from './view/Home/index.jsx'
 import { logic } from './logic/index.js'
 
 function App() {
+    const [view, setView] = useState('landing')
     const [loggedIn, setLoggedIn] = useState(null)
-    const [showLanding, setShowLanding] = useState(true)
 
     const navigate = useNavigate()
 
@@ -26,31 +26,37 @@ function App() {
         }
     }, [])
 
-    const handleNavigateToRegister = () => {
-        setShowLanding(false)
-        navigate('/register')
-    }
+    useEffect(() => {
+        switch (view) {
+            case 'landing':
+                navigate('/landing')
+                break
+            case 'register':
+                navigate('/register')
+                break
+            case 'login':
+                navigate('/login')
+                break
+            case 'home':
+                navigate('/')
+                break
+        }
+    }, [view])
 
-    const handleNavigateToLogin = () => {
-        setShowLanding(false)
-        navigate('/login')
-    }
+    const handleNavigateToRegister = () => setView('register')
 
-    const handleUserRegistered = () => {
-        setShowLanding(false)
-        navigate('/login')
-    }
+    const handleNavigateToLogin = () => setView('login')
+
+    const handleUserRegistered = () => setView('login')
 
     const handleUserLoggedIn = () => {
-        setShowLanding(false)
         setLoggedIn(true)
-        navigate('/')
+        setView('home')
     }
 
     const handleUserLoggedOut = () => {
-        setShowLanding(false)
         setLoggedIn(false)
-        navigate('/login')
+        setView('login')
     }
 
     console.debug('App -> render')
@@ -63,7 +69,7 @@ function App() {
 
             <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
 
-            <Route path='/*' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to={`${showLanding ? '/landing' : '/login'}`} />} />
+            <Route path='/' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to="/landing" />} />
         </Routes>}
     </>
 }
