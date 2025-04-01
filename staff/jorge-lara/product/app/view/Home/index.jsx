@@ -11,7 +11,7 @@ export function Home({ onUserLoggedOut }) {
 
     useEffect(() => {
         try {
-            logic.getLoggedUser()
+            logic.getUserUsername()
                 .then(name => setUserName(name))
                 .catch(error => {
                     console.error(error);

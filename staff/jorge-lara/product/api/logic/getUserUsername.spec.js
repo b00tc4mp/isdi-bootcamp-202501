@@ -1,18 +1,18 @@
 import 'dotenv/config'
 import { data, User } from '../data/index.js'
-import { getUserName } from './getUsername.js'
+import { getUserUsername } from './getUserUsername.js'
 import { expect } from 'chai';
 import { NotFoundError } from 'com/errors.js';
 
 const { MONGO_URL, MONGO_DB } = process.env;
 
-describe('getUserName', () => {
+describe('getUserUsername', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => User.deleteMany({}))
 
     it('succeed on getting username', () => {
-        let returnedName;
+        let returnedUsername;
 
         return User.create({
             name: 'John Doe',
@@ -21,18 +21,18 @@ describe('getUserName', () => {
             password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
         })
             .then(user => {
-                return getUserName(user._id.toString())
+                return getUserUsername(user._id.toString())
             })
-            .then(userName => returnedName = userName)
-            .finally(() => expect(returnedName).to.be.a.string)
+            .then(username => returnedUsername = username)
+            .finally(() => expect(returnedUsername).to.be.a.string)
             .then(() => User.findOne({ username: 'johndoe' }).lean())
-            .then(user => expect(user.name).to.be.equal(returnedName))
+            .then(user => expect(user.username).to.be.equal(returnedUsername))
     })
 
     it('fails on non existing user', () => {
         let catchedError;
 
-        return getUserName('67e3b7de759d2b7079073a7e')
+        return getUserUsername('67e3b7de759d2b7079073a7e')
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(NotFoundError)

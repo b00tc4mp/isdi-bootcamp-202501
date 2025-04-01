@@ -1,12 +1,14 @@
 import { data } from '../data/index.js'
-import { errors } from 'com'
+import { errors, validate } from 'com'
 
-const { SystemError } = errors
+const { SystemError } = errors;
 
-export const getLoggedUser = () => {
+export const getUserPosts = targetUserId => {
+    validate.id(targetUserId, 'targetUserId');
+
     const { token } = data;
 
-    return fetch('http://localhost:8080/users/self/name', {
+    return fetch(`http://localhost:8080/users/${targetUserId}/posts`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
@@ -14,17 +16,21 @@ export const getLoggedUser = () => {
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-
-            if (response.status === 200) {
+            if (response.status === 200)
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { name } = body;
+                        const posts = body;
 
-                        return name;
+                        posts.forEach(post => {
+                            post.createdAt = new Date(post.createdAt);
+                            if (post.modifiedAt) {
+                                post.modifiedAt = new Date(post.modifiedAt);
+                            }
+                        });
+
+                        return posts;
                     })
-            }
-
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {

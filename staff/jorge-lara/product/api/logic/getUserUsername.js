@@ -3,7 +3,7 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors;
 
-export const getUserName = userId => {
+export const getUserUsername = userId => {
     validate.id(userId, 'userId');
 
     return User.findById(userId).lean()
@@ -14,6 +14,6 @@ export const getUserName = userId => {
                 throw new NotFoundError('user not found');
             }
 
-            return user.name;
+            return user.username;
         })
 }
