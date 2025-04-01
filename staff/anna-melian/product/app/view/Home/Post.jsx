@@ -1,9 +1,13 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
+
 
 import { logic } from '../../logic/index.js'
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('')
+
+    const navigate = useNavigate()
 
     const handleToggleLikeClick = () => {
         try {
@@ -67,11 +71,13 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
         }
     }
 
+    const handleUsernameClick = () => navigate(`/${post.author.username}`, { state: { userId: post.author.id } })
+
     console.debug('Post -> render')
 
     return <article>
         <div className='post-header'>
-            <h3>{post.author.username}</h3>
+            <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
             <div className='post-buttons'>
                 {post.own && <button onClick={handleEditTextClick}>🪶</button>}
                 {post.own && <button className='delete-button' onClick={handleDeleteClick}>🗑️</button>}

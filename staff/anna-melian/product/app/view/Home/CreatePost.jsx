@@ -27,7 +27,7 @@ export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
 
     console.debug('CreatePost -> render')
 
-    return <section className='create-post'>
+    return <section className='home-options'>
         <h2>Create a new post</h2>
         <form onSubmit={handleFormSubmit}>
             <label htmlFor="image">Image</label>

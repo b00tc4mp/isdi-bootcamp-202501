@@ -6,7 +6,10 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     console.debug('Landing -> render')
 
     return <div>
-        <h1 className="logo-hogwarts">Logo</h1>
-        <a onClick={handleRegisterClick}>Register</a> or <a onClick={handleLoginClick}>Login</a>
+        <h1 className="logo-hogwarts"></h1>
+        <div className="landing">
+            <a onClick={handleRegisterClick}>Register</a> or <a onClick={handleLoginClick}>Login</a>
+        </div>
+
     </div>
 }

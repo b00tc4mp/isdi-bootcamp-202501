@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import express, { json } from 'express'
+import express from 'express'
 import cors from 'cors'
 
 import { users, posts } from './routes/index.js'

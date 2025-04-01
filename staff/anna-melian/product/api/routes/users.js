@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { json, Router } from 'express'
+import { Router } from 'express'
 
 import { authHandler, withErrorHandling, jsonBodyParser } from '../handlers/index.js'
 
@@ -30,6 +30,13 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
 users.get('/self/name', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
-    return logic.getUserName(userId)
+    return logic.getUserUsername(userId)
         .then(name => res.json({ name }))
+}))
+
+users.get('/:targetUserId/posts', authHandler, withErrorHandling((req, res) => {
+    const { userId, params: { targetUserId } } = req
+
+    return logic.getUserPosts(userId, targetUserId)
+        .then(posts => res.json(posts))
 }))

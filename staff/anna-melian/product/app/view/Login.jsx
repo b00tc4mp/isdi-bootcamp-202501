@@ -51,7 +51,5 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
             <a onClick={handleRegisterClick}>Register</a>
         </div>
-
-
     </div>
 }

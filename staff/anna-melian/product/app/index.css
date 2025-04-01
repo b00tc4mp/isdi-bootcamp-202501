@@ -242,7 +242,7 @@ footer {
     filter: hue-rotate(10deg) saturate(1.3);
 }
 
-.create-post {
+.home-options {
     display: flex;
     flex-direction: column;
     gap: .5rem;

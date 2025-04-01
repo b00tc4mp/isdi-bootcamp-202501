@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { data, User } from '../data/index.js'
-import { getUserName } from './getUserName.js'
+import { getUserUsername } from './getUserUsername.js'
 import { expect } from 'chai'
 import { CredentialsError, NotFoundError } from 'com/errors.js'
 import { Types } from 'mongoose'
@@ -8,7 +8,7 @@ import { Types } from 'mongoose'
 const { MONGO_URL, MONGO_DB } = process.env
 const { ObjectId } = Types
 
-describe('getUserName', () => {
+describe('getUserUsername', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => User.deleteMany({}))
@@ -22,7 +22,7 @@ describe('getUserName', () => {
             username: 'GryffindorSeeker',
             password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
         })
-            .then(user => getUserName(user.id))
+            .then(user => getUserUsername(user.id))
             .then(name => returnedName = name)
             .finally(() => expect(returnedName).to.equal('Harry Potter'))
     })
@@ -30,7 +30,7 @@ describe('getUserName', () => {
     it('fails on non-existing user', () => {
         let catchedError
 
-        return getUserName(new ObjectId().toString())
+        return getUserUsername(new ObjectId().toString())
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(NotFoundError)
