@@ -1,0 +1,123 @@
+_* {
+    border: 1px solid red;
+}
+
+.car {
+    .wheels {
+        display: flex;
+        justify-content: space-between;
+        width: 40px;
+
+        .tire {
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .rim {
+                width: 5px;
+                height: 5px;
+                background-color: lightgray;
+                border-radius: 50%;
+            }
+        }
+    }
+
+
+    .chassis {
+        height: 2px;
+        width: 40px;
+        background-color: gray;
+    }
+
+    .interior {
+        display: flex;
+        justify-content: space-between;
+        width: 40px;
+
+        .motor {
+            height: 10px;
+            width: 10px;
+            background-color: darkgray;
+            font-size: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .seat-n-legs {
+            .seat {
+                display: flex;
+                width: 8px;
+                height: 8px;
+
+                .seat-bottom {
+                    height: 3px;
+                    width: 6px;
+                    background-color: brown;
+                    align-self: flex-end;
+                }
+
+                .seat-back {
+                    height: 8px;
+                    width: 2px;
+                    background-color: brown;
+                }
+            }
+
+            .legs {
+                display: flex;
+                width: 8px;
+                justify-content: space-between;
+
+                .leg {
+                    height: 2px;
+                    width: 1px;
+                    background-color: black;
+                }
+            }
+        }
+    }
+}
+
+.building {
+    width: 100px;
+    height: 220px;
+    background-color: dodgerblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .floors {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        .floor {
+            display: flex;
+            justify-content: space-between;
+
+            .window {
+                width: 10px;
+                height: 10px;
+                background-color: skyblue;
+            }
+        }
+    }
+
+    .ground {
+        display: flex;
+        justify-content: center;
+
+        .gate {
+            width: 10px;
+            height: 20px;
+            background-color: red;
+        }
+    }
+}
