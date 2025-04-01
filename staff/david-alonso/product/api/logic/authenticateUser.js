@@ -10,8 +10,8 @@ const { SystemError, NotFoundError, CredentialsError } = errors
 export const authenticateUser = (username, password) => {
 
     // Comprobamos que sean validos
-    validate.username(username)
-    validate.password(password)
+    validate.username(username, 'username')
+    validate.password(password, 'password')
 
     // Busca en la base de datos un usuario con el nombre de usuario dado.    
     return User.findOne({ username }).lean()
