@@ -5,13 +5,9 @@ import { getUserName } from './getUserName.js'
 import { createPost } from './createPost.js'
 import { getPosts } from './getPosts.js'
 import { deletePost } from './deletePost.js'
-//import { updatePostText } from './updatePostText.js'
+import { updatePostText } from './updatePostText.js'
 import { toggleLikePost } from './toggleLikePost.js'
-//import { getOwnPosts } from './getOwnPosts.js'
-//import { deleteProfile } from './deleteProfile.js'
-//import { getUserInfo } from './getUserInfo.js'
-//import { updateUserProfile } from './updateUserProfile.js'
-//import { changePassword } from './changePassword.js'
+
 
 
 export const logic = {
@@ -21,12 +17,9 @@ export const logic = {
 
     createPost,
     getPosts,
-    //getOwnPosts,
+
     deletePost,
-    //updatePostText,
+    updatePostText,
     toggleLikePost,
-    //deleteProfile,
-    //getUserInfo,
-    //updateUserProfile,
-    //changePassword
+
 }

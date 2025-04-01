@@ -1,18 +1,12 @@
-export function Landing({ onRegisterClick, onLoginClick }) {
+export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
+    const handleRegisterClick = () => onNavigateToRegister()
 
-    const handleRegisterClick = () => onRegisterClick()
-
-    const handleLoginClick = () => onLoginClick()
-
+    const handleLoginClick = () => onNavigateToLogin()
 
     console.debug('Landing -> render')
 
     return <div>
-        <h1 className="logo-hogwarts"></h1>
-        <p className="landing">
-            <a onClick={handleRegisterClick}>Register</a> or <a onClick={handleLoginClick}>Login</a>
-        </p>
-
+        <h1 className="logo-hogwarts">Logo</h1>
+        <a onClick={handleRegisterClick}>Register</a> or <a onClick={handleLoginClick}>Login</a>
     </div>
 }
-

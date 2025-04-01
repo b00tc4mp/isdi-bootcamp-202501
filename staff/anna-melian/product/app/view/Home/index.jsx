@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react'
 
-import { logic } from '../../logic/index.js'
 import { Posts } from './Posts.jsx'
-//import { Profile } from './Profile.jsx'
 import { CreatePost } from './CreatePost.jsx'
-//import { Settings } from './Settings.jsx'
 
-export function Home({ onLogoutClick, onDeleteProfileClick }) {
+import { logic } from '../../logic/index.js'
+
+export function Home({ onUserLoggedOut }) {
     const [view, setView] = useState('posts')
     const [userName, setUserName] = useState('')
-
 
     useEffect(() => {
         console.debug('Home -> useEffect')
@@ -22,11 +20,6 @@ export function Home({ onLogoutClick, onDeleteProfileClick }) {
 
                     alert(error.message)
                 })
-            //const house = logic.getUserHouse()
-
-            //document.body.className = ''
-            //document.body.classList.add(house)
-            //document.querySelector('h1').classList.add(`logo-${house}`)
         } catch (error) {
             console.error(error)
 
@@ -37,9 +30,8 @@ export function Home({ onLogoutClick, onDeleteProfileClick }) {
     const handleLogoutClick = () => {
         try {
             logic.logoutUser()
-            //document.body.className = ''
 
-            onLogoutClick()
+            onUserLoggedOut()
         } catch (error) {
             console.error(error)
 
@@ -49,70 +41,29 @@ export function Home({ onLogoutClick, onDeleteProfileClick }) {
 
     const handleAddPostClick = () => setView('create-post')
 
-    const handleSettingsClick = () => setView('home-settings')
+    const handlePostCreated = () => setView('posts')
 
-
-    const handleProfileCLick = () => setView('profile')
-
-
-    const handlePostCreateSubmit = () => setView('posts')
-
-    const handleSubmitChanges = () => {
-        setView('posts')
-        logic.getUserName()
-            .then(name => setUserName(name))
-            .catch(error => {
-                console.error(error)
-
-                alert(error.message)
-            })
-
-    }
-
-    const handleDeleteProfile = () => {
-        //document.body.className = ''
-        onDeleteProfileClick()
-    }
-
-    const onBackHomeClick = () => {
-        setView('posts')
-    }
-
+    const handlePostCreateCancelled = () => setView('posts')
 
     console.debug('Home -> render')
 
-    return <div>
+    return <div className="Home">
         <header>
             <h1 className="logo-hogwarts"></h1>
 
             <h2>Hello, {userName}!</h2>
 
             <button type="button" onClick={handleLogoutClick}>Logout</button>
-
         </header>
 
         <main>
-
             {view === 'posts' && <Posts />}
 
-            {view === 'create-post' && <CreatePost onPostCreateSubmit={handlePostCreateSubmit} />
-            }
-
-            {view === 'profile' && <Profile />}
-
-
-            {view === 'home-settings' && <Settings onSubmitChanges={handleSubmitChanges} onDeleteProfileClick={handleDeleteProfile} />}
-
+            {view === 'create-post' && <CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />}
         </main>
 
         <footer>
-
-            <button title="Home" onClick={onBackHomeClick} >🏰</button>
-            <button title="Create a post" onClick={handleAddPostClick}>➕</button>
-            <button title='Profile' onClick={handleProfileCLick}>🧙‍♀️</button>
-            <button title="Settings" onClick={handleSettingsClick}>⚙️</button>
-
+            {view === 'posts' && <button onClick={handleAddPostClick}>+</button>}
         </footer>
     </div>
 }
-

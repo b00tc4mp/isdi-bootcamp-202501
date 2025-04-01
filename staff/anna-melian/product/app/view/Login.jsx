@@ -1,10 +1,6 @@
 import { logic } from '../logic/index.js'
 
-import { useState, useEffect } from 'react'
-
-
-export function Login({ onRegisterClick, onLoginSubmit }) {
-    const [showPassword, setShowPassword] = useState(false)
+export function Login({ onNavigateToRegister, onUserLoggedIn }) {
     const handleLoginSubmit = event => {
         event.preventDefault()
 
@@ -20,17 +16,13 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
                 .then(() => {
                     form.reset()
 
-                    onLoginSubmit()
+                    onUserLoggedIn()
                 })
                 .catch(error => {
                     console.error(error)
 
-                    if (error instanceof SyntaxError)
-                        alert('⛔️' + error.message)
-                    else
-                        alert('⚠️' + error.message)
+                    alert(error.message)
                 })
-
         } catch (error) {
             console.error(error)
 
@@ -38,37 +30,28 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
         }
     }
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword)
-    }
-
-    const handleRegisterClick = () => onRegisterClick()
+    const handleRegisterClick = () => onNavigateToRegister()
 
     console.debug('Login -> render')
 
-    return <>
+    return <div>
         <h1 className="logo-hogwarts"></h1>
 
-        <div className="login">
+        <div className='login'>
             <h2>Login</h2>
             <form onSubmit={handleLoginSubmit}>
                 <label htmlFor="username">Username</label>
                 <input type="text" id="username" />
 
                 <label htmlFor="password">Password</label>
-                <div>
-                    <input type={showPassword ? 'text' : 'password'} id="password" />
-                    <button type="button" onClick={togglePasswordVisibility}>
-                        {showPassword ? '🙈' : '👁️'}
-                    </button>
-                </div>
-
+                <input type="password" id="password" />
 
                 <button type="submit">Login</button>
             </form>
 
             <a onClick={handleRegisterClick}>Register</a>
         </div>
-    </>
-}
 
+
+    </div>
+}

@@ -1,45 +1,44 @@
 import { logic } from '../../logic/index.js'
 
-export function CreatePost({ onPostCreateSubmit }) {
-
-    const handleCreatePostSubmit = event => {
+export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
+    const handleFormSubmit = event => {
         event.preventDefault()
 
         try {
             const { target: form } = event
-            const {
-                img: { value: img },
-                text: { value: text }
-            } = form
 
-            logic.createPost(img, text)
-                .then(() => onPostCreateSubmit())
+            const { image: { value: image }, text: { value: text } } = form
+
+            logic.createPost(image, text)
+                .then(() => onPostCreated())
                 .catch(error => {
                     console.error(error)
 
                     alert(error.message)
                 })
-
-
         } catch (error) {
             console.error(error)
+
             alert(error.message)
         }
     }
 
-    console.debug('Create-Post -> render')
+    const handleCancelClick = () => onPostCreateCancelled()
 
-    return <section className="options">
+    console.debug('CreatePost -> render')
+
+    return <section className='create-post'>
         <h2>Create a new post</h2>
-        <form onSubmit={handleCreatePostSubmit}>
+        <form onSubmit={handleFormSubmit}>
             <label htmlFor="image">Image</label>
-            <input id='img' type="url" />
+            <input type="url" id="image" />
 
             <label htmlFor="text">Text</label>
-            <input id='text' type="text" />
+            <input type="text" id="text" />
 
             <button type="submit">Create</button>
         </form>
+
+        <a onClick={handleCancelClick}>Cancel</a>
     </section>
 }
-

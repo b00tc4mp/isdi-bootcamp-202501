@@ -1,13 +1,9 @@
 import { logic } from '../logic/index.js'
 import { errors } from 'com'
 
-const { ValidationError, SystemError } = errors
+const { SystemError, ValidationError } = errors
 
-import { useState, useEffect } from 'react'
-
-export function Register({ onLoginClick, onRegisterSubmit }) {
-    const [showPassword, setShowPassword] = useState(false)
-
+export function Register({ onNavigateToLogin, onUserRegistered }) {
     const handleRegisterSubmit = event => {
         event.preventDefault()
 
@@ -18,7 +14,6 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
                 name: { value: name },
                 email: { value: email },
                 username: { value: username },
-                //house: { value: house },
                 password: { value: password }
             } = form
 
@@ -26,15 +21,15 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
                 .then(() => {
                     form.reset()
 
-                    onRegisterSubmit()
+                    onUserRegistered()
                 })
                 .catch(error => {
                     console.error(error)
 
                     if (error instanceof SystemError)
-                        alert('⛔️' + error.message)
+                        alert('⛔️ ' + error.message)
                     else
-                        alert('⚠️' + error.message)
+                        alert('⚠️ ' + error.message)
                 })
         } catch (error) {
             console.error(error)
@@ -45,18 +40,15 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
                 alert('⛔️ ' + error.message)
         }
     }
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword)
-    }
 
-    const handleLoginClick = () => onLoginClick()
+    const handleLoginClick = () => onNavigateToLogin()
 
     console.debug('Register -> render')
 
-    return <>
+    return <div>
         <h1 className="logo-hogwarts"></h1>
 
-        <div className="register">
+        <div className='register'>
             <h2>Register</h2>
             <form onSubmit={handleRegisterSubmit}>
                 <div className="field">
@@ -75,34 +67,15 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
                 </div>
 
                 <div className="field">
-                    <label htmlFor="houses">Your house</label>
-                    <select id="house">
-                        <option value="">Choose your house 🔥✨</option>
-                        <option value="gryffindor">🦁 Gryffindor</option>
-                        <option value="ravenclaw">🦅 Ravenclaw</option>
-                        <option value="slytherin">🐍 Slytherin</option>
-                        <option value="hufflepuff">🦡 Hufflepuff</option>
-                    </select>
-                </div>
-
-                <div className="field">
                     <label htmlFor="password">Password</label>
-                    <div>
-                        <input type={showPassword ? 'text' : 'password'} id="password" />
-                        <button type="button" onClick={togglePasswordVisibility}>
-                            {showPassword ? '🙈' : '👁️'}
-                        </button>
-                    </div>
+                    <input type="password" id="password" />
                 </div>
 
                 <button type="submit">Register</button>
             </form>
 
             <a onClick={handleLoginClick}>Login</a>
-
         </div>
 
-
-    </>
+    </div>
 }
-

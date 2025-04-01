@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route, useNavigate, Navigate } from 'react-router'
 
 import { Landing } from './view/Landing.jsx'
 import { Register } from './view/Register.jsx'
@@ -7,44 +8,69 @@ import { Home } from './view/Home/index.jsx'
 
 import { logic } from './logic/index.js'
 
-
 function App() {
     const [view, setView] = useState('landing')
+    const [loggedIn, setLoggedIn] = useState(null)
 
+    const navigate = useNavigate()
 
     useEffect(() => {
         try {
             const loggedIn = logic.isUserLoggedIn()
 
-            loggedIn && setView('home')
+            setLoggedIn(loggedIn)
         } catch (error) {
             console.error(error)
-            alert(error.message)
+
+            alert(error.messsage)
         }
     }, [])
 
-    const handleRegisterClick = () => setView('register')
+    useEffect(() => {
+        switch (view) {
+            case 'landing':
+                navigate('/landing')
+                break
+            case 'register':
+                navigate('/register')
+                break
+            case 'login':
+                navigate('/login')
+                break
+            case 'home':
+                navigate('/')
+                break
+        }
+    }, [view])
 
-    const handleLoginClick = () => setView('login')
+    const handleNavigateToRegister = () => setView('register')
 
-    const handleRegisterSubmit = () => setView('login')
+    const handleNavigateToLogin = () => setView('login')
 
-    const handleLoginSubmit = () => setView('home')
+    const handleUserRegistered = () => setView('login')
 
-    const handleLogoutClick = () => setView('landing')
+    const handleUserLoggedIn = () => {
+        setLoggedIn(true)
+        setView('home')
+    }
 
-    const handleDeleteProfileClick = () => setView('landing')
+    const handleUserLoggedOut = () => {
+        setLoggedIn(false)
+        setView('login')
+    }
 
     console.debug('App -> render')
 
     return <>
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
+        {loggedIn !== null && <Routes>
+            <Route path="/landing" element={loggedIn ? <Navigate to="/" /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
 
-        {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />}
+            <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
 
-        {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />}
+            <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
 
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick} onDeleteProfileClick={handleDeleteProfileClick} />}
+            <Route path='/' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to="/landing" />} />
+        </Routes>}
     </>
 }
 
