@@ -1,1 +1,1 @@
-curl -X GET http://localhost:8080/posts -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UwNjU1YjE2M2U4MTIxMTU2YTQxZGIiLCJpYXQiOjE3NDMwOTg5NDJ9.dvbHTusJXoQwqsPtBSCsnmvaOhiezz90X9UaxcDTctI' -v
+curl -X GET http://localhost:8080/posts -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ViOTY0MDdkNDRkYmUwOGY2ZTkxZmEiLCJpYXQiOjE3NDM0OTMzMDJ9.jXQaRhbf9Id8c1MAAOuQlZye4xxZwsskS7TA9fm4shg' -v

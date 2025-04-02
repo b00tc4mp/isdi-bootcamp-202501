@@ -39,13 +39,13 @@ describe('getUserPosts', () => {
                                 imageSrc: 'https://i.blogs.es/a19bfc/testing/450_1000.webp',
                                 textDescription: 'testing2',
                             })])
-                            .then(() => getUserPosts(user._id.toString()))
+                            .then(() => getUserPosts(user._id.toString(), user._id.toString()))
                             .then(result => result2 = result)
                             .finally(() => {
                                 const [post1, post2] = result2
                                 expect(post1.textDescription).to.equal('testing1')
                                 expect(post2.textDescription).to.equal('testing2')
-                                expect(posts2).to.have.lengthOf(2)
+                                expect(post2).to.have.lengthOf(2)
                             })
                     })
 

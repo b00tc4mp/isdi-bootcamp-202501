@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import { logic } from "../../../logic/index"
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('')
+
+    const navigate = useNavigate()
 
     const handleToggleLikePost = () => {
         try {
@@ -67,10 +70,12 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
         }
     }
 
+    const handleUsernameClick = () => navigate(`/${post.author.username}`, { state: { userId: post.author.id } })
+
     console.debug('Post -> render')
 
     return <article>
-        <h3>{post.author.username}</h3>
+        <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
 
         <img src={post.image} />
 

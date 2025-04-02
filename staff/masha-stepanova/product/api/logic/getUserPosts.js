@@ -3,20 +3,21 @@ import { errors, validate } from 'com'
 
 const { NotFoundError, SystemError } = errors
 
-export const getUserPosts = userId => {
+export const getUserPosts = (userId, targetUserId) => {
     validate.id(userId, 'userId')
+    validate.id(targetUserId, 'targetUserId')
 
     return Promise.all([
         User.findById(userId).lean(),
-        Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean()
+        User.findById(targetUserId).lean(),
+        Post.find({ author: targetUserId }).select('-__v').sort('-createdAt').populate('author', 'username').lean()
     ])
         .catch(error => { throw new SystemError(error.message) })
-        .then(([user, posts]) => {
+        .then(([user, targetUserId, posts]) => {
             if (!user) throw new NotFoundError('user not found')
+            if (!targetUserId) throw new NotFoundError('user not found')
 
-            const userPosts = posts.filter(post => post._id.toString() === userId)
-
-            userPosts.forEach(post => {
+            posts.forEach(post => {
                 post.id = post._id.toString()
                 delete post._id
 
@@ -32,6 +33,6 @@ export const getUserPosts = userId => {
                 post.own = post.author.id === userId
             })
 
-            return userPosts
+            return posts
         })
 }

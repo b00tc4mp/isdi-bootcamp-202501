@@ -1,4 +1,4 @@
-curl -X PATCH http://localhost:8080/posts/67e596f8a2457b9c61eee1da/text \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UwNjU1YjE2M2U4MTIxMTU2YTQxZGIiLCJpYXQiOjE3NDMwOTg5NDJ9.dvbHTusJXoQwqsPtBSCsnmvaOhiezz90X9UaxcDTctI' \
+curl -X PATCH http://localhost:8080/posts/67eb9756ff07daabb9471876/text \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ViOTY0MDdkNDRkYmUwOGY2ZTkxZmEiLCJpYXQiOjE3NDM0OTMxNjF9.oAUU5CQcUCx1v46MmSEZQgJM74hhj54QLBM_PVv0pNg' \
     -H 'Content-Type: application/json' \
     -d '{"text":"miau miau miau"}' -v

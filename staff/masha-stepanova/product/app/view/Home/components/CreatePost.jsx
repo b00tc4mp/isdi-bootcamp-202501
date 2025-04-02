@@ -4,7 +4,7 @@ export function CreatePost({ onCreatedPost, onCreatePostCanceled }) {
 
     const handleCancelClick = () => onCreatePostCanceled()
 
-    const handleCreatedPost = (event) => {
+    const handleCreatedPost = event => {
         event.preventDefault()
 
         try {
@@ -15,7 +15,7 @@ export function CreatePost({ onCreatedPost, onCreatePostCanceled }) {
                 text: { value: text }
             } = form
 
-            logic.addPost(image, text)
+            logic.createPost(image, text)
                 .then(() => onCreatedPost())
                 .catch(error => {
                     console.error(error)

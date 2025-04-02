@@ -3,7 +3,7 @@ import { errors } from 'com'
 
 const { SystemError } = errors
 
-export const getUserName = () => {
+export const getUserUsername = () => {
     const { token } = data
 
     return fetch('http://localhost:8080/users/self/name', {
