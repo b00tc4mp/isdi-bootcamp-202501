@@ -15,8 +15,6 @@ export const updatePostLikes = (userId, postId) => {
 
       if (!post) throw new NotFoundError("post not found");
 
-      if (!post) throw new NotFoundError("Post not found");
-
       const { likes } = post;
 
       const index = likes.findIndex(

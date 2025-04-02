@@ -7,6 +7,8 @@ import { registerUser } from "./registerUser.js";
 import { updatePostLikes } from "./updatePostLikes.js";
 import { updatePostText } from "./updatePostText.js";
 import { updateUser } from "./updateUser.js";
+import { testUser } from "./testUser.js";
+import { testPost } from "./testPost.js";
 
 export const logic = {
   addPost,
@@ -19,3 +21,5 @@ export const logic = {
   updatePostText,
   updateUser,
 };
+
+export { testUser, testPost };

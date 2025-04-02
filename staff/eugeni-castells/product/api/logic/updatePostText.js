@@ -25,10 +25,9 @@ export const updatePostText = (userId, postId, text) => {
       return Post.updateOne(
         { _id: postId },
         { $set: { text, modifiedAt: new Date() } }
-      );
-    })
-    .catch((error) => {
-      throw new SystemError(error.message);
+      ).catch((error) => {
+        throw new SystemError(error.message);
+      });
     })
     .then(() => {});
 };

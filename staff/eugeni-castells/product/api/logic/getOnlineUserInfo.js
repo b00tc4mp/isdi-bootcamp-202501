@@ -7,13 +7,11 @@ export const getOnlineUserInfo = function (userId) {
 
   return User.findById(userId)
     .lean()
-    .catch((error) => console.error(error))
-    .then((found) => {
-      if (!found) throw new NotFoundError("User not found");
-
-      if (userId !== found._id.toString())
-        throw new OwnershipError("user id not id of the user info returned");
-      else return found;
+    .catch((error) => {
+      throw new SystemError(error.message);
     })
-    .catch((error) => console.error(error));
+    .then((found) => {
+      if (!found) throw new NotFoundError("user not found");
+      else return found;
+    });
 };

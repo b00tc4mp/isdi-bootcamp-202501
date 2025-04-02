@@ -35,6 +35,7 @@ export const getPosts = (userId) => {
           (userObjectId) => userObjectId.toString() === userId
         );
         post.likesCount = post.likes.length;
+        delete post.likes;
 
         post.own = post.author.id === userId;
       });

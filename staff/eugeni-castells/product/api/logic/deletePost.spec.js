@@ -15,53 +15,53 @@ describe("deletePost", () => {
     return Promise.all([User.deleteMany({}), User.deleteMany({})]);
   });
 
-  // it("succeeds on deleting post", () => {
-  //   let result2;
+  it("succeeds on deleting post", () => {
+    let result2;
 
-  //   let beforeLength;
+    let beforeLength;
 
-  //   let afterLength;
+    let afterLength;
 
-  //   let postId;
+    let postId;
 
-  //   let post;
-  //   return Promise.all([
-  //     User.create({
-  //       name: "Sergi",
-  //       username: "SerGi",
-  //       email: "ser@gi.com",
-  //       password:
-  //         "$2b$12$p.S0qxtHvYzDf9LGnwsFfuuaHvgljEhFT2ldQ3qUM2cs90EDquSa2",
-  //     }),
-  //     Post.find({}),
-  //   ]).then(([user, posts]) => {
-  //     beforeLength = posts?.length;
+    let post;
+    return Promise.all([
+      User.create({
+        name: "Sergi",
+        username: "SerGi",
+        email: "ser@gi.com",
+        password:
+          "$2b$12$p.S0qxtHvYzDf9LGnwsFfuuaHvgljEhFT2ldQ3qUM2cs90EDquSa2",
+      }),
+      Post.find({}),
+    ]).then(([user, posts]) => {
+      beforeLength = posts?.length;
 
-  //     return Post.create({
-  //       image:
-  //         "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWY1aTRmZnh3bGJsODgycmNucjdiZXpiNzc0aXFlMWluaDJ6d2MzNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gw3IWyGkC0rsazTi/giphy.gif",
-  //       text: "Test",
-  //       author: user._id,
-  //     })
-  //       .then((post) => {
-  //         postId = post._id.toString();
-  //         return deletePost(post.author.toString(), post._id.toString());
-  //       })
-  //       .then((result) => {
-  //         result2 = result;
-  //       })
-  //       .then(() => Promise.all([Post.find({}), Post.findById(postId)]))
-  //       .then(([posts, post]) => {
-  //         afterLength = posts.length;
-  //         post = post;
-  //       })
-  //       .finally(() => {
-  //         expect(result2).to.equal(undefined);
-  //         expect(afterLength).to.equal(beforeLength);
-  //         expect(post).to.equal(undefined);
-  //       });
-  //   });
-  // });
+      return Post.create({
+        image:
+          "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWY1aTRmZnh3bGJsODgycmNucjdiZXpiNzc0aXFlMWluaDJ6d2MzNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gw3IWyGkC0rsazTi/giphy.gif",
+        text: "Test",
+        author: user._id,
+      })
+        .then((post) => {
+          postId = post._id.toString();
+          return deletePost(post.author.toString(), post._id.toString());
+        })
+        .then((result) => {
+          result2 = result;
+        })
+        .then(() => Promise.all([Post.find({}), Post.findById(postId)]))
+        .then(([posts, post]) => {
+          afterLength = posts.length;
+          post = post;
+        })
+        .finally(() => {
+          expect(result2).to.equal(undefined);
+          expect(afterLength).to.equal(beforeLength);
+          expect(post).to.equal(undefined);
+        });
+    });
+  });
 
   it("fails on non existing user", () => {
     let catchedError;

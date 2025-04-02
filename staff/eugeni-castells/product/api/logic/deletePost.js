@@ -3,7 +3,6 @@ import { Post, User } from "../data/index.js";
 const { OwnershipError, NotFoundError, SystemError } = errors;
 
 export const deletePost = (userId, postId) => {
-  debugger;
   validate.id(postId, "id");
   validate.id(userId, "user id");
 
