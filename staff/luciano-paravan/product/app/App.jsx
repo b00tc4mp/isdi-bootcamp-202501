@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import {Routes, Route, useNavigate, Navigate} from 'react-router'
 
 import { Landing } from './view/Landing.jsx'
 import { Register } from './view/Register.jsx'
@@ -7,14 +8,17 @@ import { Home } from './view/Home/index.jsx'
 
 import { logic } from './logic/index.js'
 
-export function App () {
+function App() {
     const[view, setView] = useState('landing')
+    const[loggedIn, setLoggedIn] = useState(null)
+    
+    const navigate = useNavigate()
 
     useEffect(() => {
         try {
             const loggedIn = logic.isUserLoggedIn()
 
-            loggedIn && setView('home')
+            setLoggedIn(loggedIn)
         } catch (error) {
             console.error(error)
 
@@ -22,25 +26,51 @@ export function App () {
         }
     }, [])
 
+    useEffect(() => {
+        switch(view) {
+            case 'landing':
+                navigate('/landing')
+                break
+            case 'register':
+                navigate('/register')
+                break
+            case 'login':
+                navigate('/login')
+                break
+            case 'home':
+                navigate('/')
+                break
+        }
+    }, [view])
+
     const handleNavigateToRegister = () => setView('register')
     
     const handleNavigateToLogin = () => setView('login')
 
     const handleUserRegistered = () => setView('login')
 
-    const handleUserLoggedIn = () => setView('home')
+    const handleUserLoggedIn = () => {
+        setLoggedIn(true)
+        setView('home')
+    }
 
-    const handleUserLoggedOut = () => setView('login')
+    const handleUserLoggedOut = () => {
+        setLoggedIn(false)
+        setView('login')
+    }
 
     console.debug('App -> render')
 
-    return <>
-    {view === 'landing' && <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin}/>}
-    
-    {view === 'register' && <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered}/>}
-    
-    {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn}/>}
-    
-    {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut}/>}
-    </>
+    return <Routes>
+        <Route path="/landing" element={loggedIn ? <Navigate to="/" /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin}/>} />
+        
+        <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered}/>} />
+        
+        <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn}/>} />
+        
+        <Route path="/" element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to="/login" />} />
+    </Routes>
 }
+//En el return definimos que si esta loggedIn va a ir siempre a home
+
+export default App
