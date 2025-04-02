@@ -11,7 +11,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router";
 
 const { SystemError, ValidationError } = errors
 
-export function Home({ onUserLoggedOut, onProfileClick }) {
+export function Home({ onUserLoggedOut }) {
     const [username, setUsername] = useState('')
 
     const navigate = useNavigate()
@@ -27,7 +27,7 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
                 .catch(error => {
                     console.error(error)
 
-                    if(error instanceof SystemError)
+                    if (error instanceof SystemError)
                         alert('⛔ ' + error.message)
                     else
                         alert('⚠️ ' + error.message)
@@ -36,7 +36,7 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
         } catch (error) {
             console.error(error)
 
-            if(error instanceof ValidationError)
+            if (error instanceof ValidationError)
                 alert('❌ ' + error.message)
             else
                 alert('⛔ ' + error.message)
@@ -66,11 +66,11 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
     const handleSearchClick = () => navigate('/search')
 
     const handleProfileClick = () => {
-        try{
+        try {
             const userId = logic.getUserId()
 
             navigate(`/${username}`, { state: { userId } })
-        }catch(error){
+        } catch (error) {
             console.error(error)
 
             alert(error.message)
@@ -93,10 +93,10 @@ export function Home({ onUserLoggedOut, onProfileClick }) {
 
         <main>
             <Routes>
-                <Route path="/create-post" element = {<CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />} />
-                <Route path="/search" element = {<Search />} />
-                <Route path="/:username" element = {<Profile />} />
-                <Route path="/" element = {<Posts />} />
+                <Route path="/create-post" element={<CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/:username" element={<Profile />} />
+                <Route path="/" element={<Posts />} />
             </Routes>
         </main>
 

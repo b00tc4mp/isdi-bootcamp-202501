@@ -1,7 +1,7 @@
-import {data} from '../data/index.js'
+import { data } from '../data/index.js'
 
 export const logoutUser = () => {
-        data.userId = null
-        // data.currentUser.state = 'Offline'
-        // data.currentUser = null
-    }
+    data.token = null
+    // data.currentUser.state = 'Offline'
+    // data.currentUser = null
+}

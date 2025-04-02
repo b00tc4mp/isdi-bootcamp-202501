@@ -5,6 +5,8 @@ import { Landing } from './view/Landing.jsx'
 import { Register } from './view/Register.jsx'
 import { Login } from './view/Login.jsx'
 import { Home } from './view/Home/index.jsx'
+import { Profile } from './view/Home/Profile.jsx'
+import { useParams } from 'react-router'
 
 import { logic } from './logic/index.js'
 
@@ -54,6 +56,22 @@ function App() {
         navigate('/login')
     }
 
+    // const handlePollas = () => {
+    //     try {
+    //         const userId = logic.getUserId()
+
+    //         let params = useParams()
+
+    //         const username = params.pathname
+
+    //         navigate(`/${username}`, { state: { userId } })
+    //     } catch (error) {
+    //         console.error(error)
+
+    //         alert(error.message)
+    //     }
+    // }
+
     return <>
         {loggedIn !== null && <Routes>
             <Route path="/landing" element={loggedIn ? <Navigate to="/" /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
@@ -63,6 +81,8 @@ function App() {
             <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
 
             <Route path="/*" element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to={`${showLanding ? '/landing' : '/login'}`} />} />
+
+            {/* <Route path="/:username" element={loggedIn ? <Profile onTest={handlePollas} /> : <Navigate to={`${showLanding ? '/landing' : '/login'}`} />} /> */}
         </Routes>}
     </>
 }
