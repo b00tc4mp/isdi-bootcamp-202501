@@ -46,22 +46,13 @@ class ValidationError extends Error {
     }
 }
 
-class AuthorizationError extends Error {
-    constructor(message) {
-        super(message)
-
-        this.name = this.constructor.name
-    }
-}
-
 export {
     DuplicityError,
     CredentialsError,
     NotFoundError,
     OwnershipError,
     SystemError,
-    ValidationError,
-    AuthorizationError
+    ValidationError
 }
 
 const errors = {
@@ -70,8 +61,7 @@ const errors = {
     NotFoundError,
     OwnershipError,
     SystemError,
-    ValidationError,
-    AuthorizationError
+    ValidationError
 }
 
 export default errors

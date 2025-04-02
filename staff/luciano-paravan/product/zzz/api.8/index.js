@@ -7,8 +7,7 @@ import jwt from 'jsonwebtoken' //jwt interviene desde la authentication en adela
 import { data } from './data/index.js' //Antes de crear todo debo conectar con data, mas abajo data.connect
 import { logic } from './logic/index.js'
 
-const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError, AuthorizationError } = errors
-const { JsonWebTokenError, TokenExpiredError } = jwt
+const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
 
 const { JWT_SECRET, PORT, MONGO_URL, MONGO_DB } = process.env
 
@@ -22,8 +21,6 @@ const withErrorHandling = callback => { //Esta funcion es la que ahora llama a l
         }
     }
 }
-
-
 
 data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo, entonces hago el connect
     .catch(console.error) //Si falla la conexion, nos lleva a este catch
@@ -57,54 +54,54 @@ data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo
 
             return logic.authenticateUser(username, password)
                 .then(id => {
-                    const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: '1h' }) //Se envian los datos, sub (subject) es un estandar. Nos devuelve el token que expira en 1 hs.
+                    const token = jwt.sign({ sub: id }, JWT_SECRET) //Se envian los datos, sub (subject) es un estandar. Nos devuelve el token
 
                     res.json({ token }) //Devolvemos el token
                 })
         }))
 
-        const authHandler = (req, res, next) => {
-            try {
-                const { authorization } = req.headers //Para acceder a la cabecera del curl -H 'Authorization...'
-                //Enviaremos un token
+        api.get('/users/self/name', withErrorHandling((req, res) => {
+            const { authorization } = req.headers //Para acceder a la cabecera del curl -H 'Authorization...'
+            //Enviaremos un token
 
-                const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
 
-                const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
-
-                req.userId = userId //Para que de authHandler llegue el userId a withErrorHandling hay que mutar la request
-
-                next() //Cuando haces el next sin error, te envia al siguiente handler
-            } catch (error) {
-                next(error)
-            }
-        }
-
-        api.get('/users/self/name', authHandler, withErrorHandling((req, res) => { //cuando ponemos authHandler antes que withErrorHandling significa que en la ruta /users/self/name pasa primero por auth y si todo va bien pasa a withErrorHandling
-            const { userId } = req //destructuro el userId que me traigo de authHandler
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
             return logic.getUserName(userId)
                 .then(name => { res.json({ name }) }) //hay que retornarlo en forma de JSON
         }))
 
-        api.post('/posts', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-            const { userId } = req
+        api.post('/posts', jsonBodyParser, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
+
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
             const { image, text } = req.body
 
-            return logic.createPost(userId, image, text)
+            logic.createPost(userId, image, text)
                 .then(res.status(201).send())
         }))
 
-        api.get('/posts', authHandler, withErrorHandling((req, res) => {
-            const { userId } = req
+        api.get('/posts', withErrorHandling((req, res) => {
+            const { authorization } = req.headers
+
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
             return logic.getPosts(userId)
                 .then(posts => res.json(posts))
         }))
 
-        api.delete('/posts/:postId', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-            const { userId } = req
+        api.delete('/posts/:postId', jsonBodyParser, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
+
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
             const { postId } = req.params
 
@@ -112,8 +109,12 @@ data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo
                 .then(post => res.status(204).send()) //204 ha ido todo bien y no hay body que responder, no hay contenido de respuesta.
         }))
 
-        api.patch('/posts/:postId/likes', authHandler, withErrorHandling((req, res) => {
-            const { userId } = req
+        api.patch('/posts/:postId/likes', withErrorHandling((req, res) => {
+            const { authorization } = req.headers
+
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
             const { postId } = req.params
 
@@ -121,8 +122,12 @@ data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo
                 .then(res.status(204).send())
         }))
 
-        api.patch('/posts/:postId/text', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-            const { userId } = req
+        api.patch('/posts/:postId/text', jsonBodyParser, withErrorHandling((req, res) => {
+            const { authorization } = req.headers
+
+            const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
+
+            const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
 
             const { postId } = req.params
 
@@ -137,7 +142,6 @@ data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo
 
             let status = 500
             let errorName = SystemError.name
-            let { message } = error
 
             if (error instanceof DuplicityError) {
                 status = 409
@@ -154,17 +158,9 @@ data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo
             } else if (error instanceof OwnershipError) {
                 status = 403
                 errorName = error.constructor.name
-            } else if (error instanceof TokenExpiredError) {
-                status = 401
-                errorName = AuthorizationError.name
-                message = 'expired JWT'
-            } else if (error instanceof JsonWebTokenError) {
-                status = 401
-                errorName = AuthorizationError.name
-                message = 'invalid JWT'
             }
 
-            res.status(status).json({ error: errorName, message })
+            res.status(status).json({ error: error.name, message: error.message })
         }
 
         api.use(errorHandler)
