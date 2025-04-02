@@ -2,7 +2,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { logic } from '../logic/index.js'
 
-export function Login({ onRegisterClick, onLoginSubmit }) {
+export function Login({ onNavigateToRegister, onUserLoggedIn }) {
     const handleLoginSubmit = event => {
         event.preventDefault()
 
@@ -17,7 +17,7 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
             logic.loginUser(username, password)
                 .then(() => {
                     form.reset()
-                    onLoginSubmit()
+                    onUserLoggedIn()
                     toast.success(`Welcome back! ${username}`)
                 })
                 .catch(error => {
@@ -46,7 +46,7 @@ export function Login({ onRegisterClick, onLoginSubmit }) {
                 <button type="submit">Login</button>
             </form>
 
-            <a onClick={onRegisterClick}>Register</a>
+            <a onClick={onNavigateToRegister}>Register</a>
         </div>
     )
 }

@@ -3,12 +3,15 @@ import { logic } from "../../logic/index.js";
 import { toast } from "react-hot-toast";
 
 import { showConfirmToast } from "./confirmToast.jsx";
+import {useNavigate} from 'react-router'
 
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState("");
 
-    const handleToggleLikePostClick = () => {
+    const navigate = useNavigate()
+
+    const handleToggleLikeClick = () => {
         try {
             logic.toggleLikePost(post.id)
                 .then(() => onPostLikeToggled())
@@ -37,19 +40,6 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
             }
         });
     };
-    // const deletePost = () => {
-    //     try {
-    //         logic.deletePost(post.id)
-    //             .then(() => onPostDeleted())
-    //             .catch(error => {
-    //                 console.error(error);
-    //                 toast.error(`❌ ${error.message}`);
-    //             });
-    //     } catch (error) {
-    //         console.error(error);
-    //         toast.error(`❌ ${error.message}`);
-    //     }
-    // };
 
     const handleEditPost = () => setView("edit-post");
 
@@ -82,12 +72,13 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
         }
     };
 
+    const handleUsernameClick = () => navigate(`/${post.author.username}`, { state: { userId: post.author.id } });
     console.debug("Post -> render");
 
     return (
         <article className="post">
             <div className="headerPost">
-                <h3>{post.author.username} </h3>
+                <h3 onClick={handleUsernameClick}>{post.author.username} </h3>
 
                 {post.own && view === "" && (
                     <button className="buttonConfig" onClick={handleEditPost}>
@@ -137,7 +128,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
                     })}
                 </time>
 
-                <button onClick ={handleToggleLikePostClick}>{`${post.liked ? "❤️" : "🤍"} (${post.likesCount})`}</button>
+                <button onClick ={handleToggleLikeClick}>{`${post.liked ? "❤️" : "🤍"} (${post.likesCount})`}</button>
             </div>
         </article>
     );

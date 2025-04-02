@@ -2,7 +2,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { logic } from '../../logic/index.js'
 
-export function CreatePost({ onPostCreateSubmit, onCancelClick }) {
+export function CreatePost({ onPostCreated, onPostCreatedCancelled }) {
     const handleCreatePostSubmit = event => {
         event.preventDefault()
 
@@ -12,7 +12,7 @@ export function CreatePost({ onPostCreateSubmit, onCancelClick }) {
 
             logic.createPost(image, text)
                 .then(() =>{ 
-                    onPostCreateSubmit() 
+                    onPostCreated() 
                     form.reset()
                     toast.success('✅ Post creado con éxito!')
                 })
@@ -31,7 +31,7 @@ export function CreatePost({ onPostCreateSubmit, onCancelClick }) {
         }
     }
 
-    const handleCancelClick = () => onCancelClick()
+    const handleCancelClick = () => onPostCreatedCancelled()
 
     console.debug('CreatePost -> render')
 

@@ -14,8 +14,8 @@ import 'react-toastify/dist/ReactToastify.css' // Importamos los estilos
 
 function App(){
     // Estado inicial del useState en landing.
-    const [view, setView] = useState('landing')
     const [loggedIn, setLoggedIn] = useState(null)
+    const [showLanding, setShowLanding] = useState(null)
 
     const navigate = useNavigate()
 
@@ -33,34 +33,27 @@ function App(){
         }
     }, []) 
 
-    useEffect(() => {
-        switch (view) {
-            case 'landing':
-                navigate('/landing')
-                break
-            case 'register':
-                navigate('/register')
-                break
-            case 'login':
-                navigate('/login')
-                break
-            case 'home':
-                navigate('/')
-                break
-        }
-    }, [view])
-
-    // Manejo de navegación entre vistas
-    const handleRegisterClick = () => setView('register')
-    const handleLoginClick = () => setView('login')
-    const handleRegisterSubmit = () => setView('login')
-    const handleLoginSubmit = () => {
-        setLoggedIn(true)
-        setView('home')
+    const handleNavigateToRegister = () => {
+        setShowLanding(false)
+        navigate('/register')
     }
-    const handleLogoutClick = () => { 
+    const handleNavigateToLogin = () => {
+        setShowLanding(false)
+        navigate('/login')
+    }
+    const handleUserRegistered = () => {
+        setShowLanding(false)
+        navigate('/login')
+    }
+    const handleUserLoggedIn = () => {
+        setShowLanding(false)
+        setLoggedIn(true)
+        navigate('/')
+    }
+    const handleUserLoggedOut = () => {
+        setShowLanding(false)
         setLoggedIn(false)
-        setView('login')
+        navigate('/login')
     }
 
     console.debug('App -> render')
@@ -72,13 +65,13 @@ function App(){
             <Toaster /> {/* Esto habilita los toasts en toda la app */}
             {loggedIn !== null && <Routes>
 
-                <Route path="/landing" element= {loggedIn ? <Navigate to="/" /> : <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />} />
+                <Route path="/landing" element= {loggedIn ? <Navigate to="/" /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
                 
-                <Route path="/register" element= {loggedIn ? <Navigate to="/" /> : <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />} />
+                <Route path="/register" element= {loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
                 
-                <Route path="/login" element= {loggedIn ? <Navigate to="/" /> :<Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />} />
+                <Route path="/login" element= {loggedIn ? <Navigate to="/" /> :<Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
                 
-                <Route path="/" element= {loggedIn ? <Home onLogoutClick={handleLogoutClick} /> : <Navigate to="/login" />} />
+                <Route path="/*" element= {loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to={`${showLanding ? '/landing' : '/login' }`} />} />
             </Routes>}   
         </>
     )

@@ -29,9 +29,16 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
 }))
 
 // Endpoint para obtener el nombre del usuario autenticado
-users.get('/self/name',authHandler, withErrorHandling((req, res) => {
+users.get('/self/username',authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
-    return logic.getUserName(userId)
-        .then(name => res.json({ name }))
+    return logic.getUserUsername(userId)
+        .then(username => res.json({ username }))
+}))
+
+users.get('/:targetUserId/posts', authHandler, withErrorHandling((req, res) => {
+    const { userId, params: { targetUserId } } = req
+
+    return logic.getUserPosts(userId, targetUserId)
+        .then(posts => res.json(posts))
 }))

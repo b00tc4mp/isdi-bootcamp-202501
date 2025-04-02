@@ -1,7 +1,7 @@
 import { data } from '../data/index.js'
 import { getUserName } from './getUserName.js'
 
-console.info('TEST getUserName')
+console.info('TEST getUserUsername')
 
 data.connect('mongodb://127.0.0.1:27017', 'test')
     .then(() => {
