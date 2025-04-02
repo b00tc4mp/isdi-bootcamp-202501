@@ -2,7 +2,7 @@ import 'dotenv/config' // Carga variables de entorno desde un archivo .env
 import { data, User } from '../data/index.js'
 import { getUserUsername } from './getUserUsername.js'
 import { expect } from 'chai'
-import { CredentialsError, NotFoundError } from 'com/errors.js'
+import { NotFoundError } from 'com/errors.js'
 import { Types } from 'mongoose'
 
 const { MONGO_URL, MONGO_DB} = process.env // Credenciales de la base de datos obtenidas de las variables de entorno.

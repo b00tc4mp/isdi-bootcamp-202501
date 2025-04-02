@@ -9,6 +9,8 @@ export const Profile = () => {
     return <div>
         <h1 className="username">{username}</h1>
 
-        <Posts targetUserId={userId} />
+
+        <Posts key={userId || 'default'} targetUserId={userId} />
+
     </div>
 }

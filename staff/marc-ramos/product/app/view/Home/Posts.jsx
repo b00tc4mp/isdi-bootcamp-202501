@@ -6,7 +6,7 @@ import { logic } from '../../logic/index.js'
 
 export function Posts({ targetUserId }) {
     const [posts, setPosts] = useState([])
-
+    console.log('Posts -> Componente Montado')
     useEffect(() => {
         console.debug('Posts -> useEffect')
 
