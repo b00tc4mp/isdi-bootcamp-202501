@@ -1,177 +1,26 @@
 import 'dotenv/config'
-import express, { json } from 'express'
+import express from 'express'
 import cors from 'cors'
-import { errors } from 'com'
-import jwt from 'jsonwebtoken' //jwt interviene desde la authentication en adelante, en cualquier otra ruta que venga despues va a haber que usarlo para verificar el usuario
 
+import { posts, users } from './routes/index.js'
+import { errorHandler } from './handlers/index.js'
 import { data } from './data/index.js' //Antes de crear todo debo conectar con data, mas abajo data.connect
-import { logic } from './logic/index.js'
 
-const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError, AuthorizationError } = errors
-const { JsonWebTokenError, TokenExpiredError } = jwt
-
-const { JWT_SECRET, PORT, MONGO_URL, MONGO_DB } = process.env
-
-const withErrorHandling = callback => { //Esta funcion es la que ahora llama a las rutas
-    return (req, res, next) => {
-        try {
-            callback(req, res)
-                .catch(error => next(error))
-        } catch (error) {
-            next(error)
-        }
-    }
-}
-
-
+const { PORT, MONGO_URL, MONGO_DB } = process.env
 
 data.connect(MONGO_URL, MONGO_DB) //No va a funcionar si no conectamos con Mongo, entonces hago el connect
     .catch(console.error) //Si falla la conexion, nos lleva a este catch
     .then(() => { //Una vez conectados, montamos el servidor
         const api = express()
 
-        const jsonBodyParser = json()
-
         api.use(cors())
 
         api.get('/', (req, res) => res.send('Hello, API!'))
 
-        /*api.post('/users', jsonBodyParser, (req, res, next) => {
-            handleWithErrorHandling(next, () => {
-                const { name, email, username, password } = req.body
-
-                return logic.registerUser(name, email, username, password)
-                    .then(() => res.status(201).send()) //HAPPY. Como es asincrono, hay que poner la res.status una vez devuelva el register. No devuelve nada a nivel de datos.
-            })
-        })*/
-
-        api.post('/users', jsonBodyParser, withErrorHandling((req, res) => {
-            const { name, email, username, password } = req.body
-
-            return logic.registerUser(name, email, username, password)
-                .then(() => res.status(201).send()) //HAPPY. Como es asincrono, hay que poner la res.status una vez devuelva el register. No devuelve nada a nivel de datos.
-        }))
-
-        api.post('/users/auth', jsonBodyParser, withErrorHandling((req, res) => {
-            const { username, password } = req.body
-
-            return logic.authenticateUser(username, password)
-                .then(id => {
-                    const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: '1h' }) //Se envian los datos, sub (subject) es un estandar. Nos devuelve el token que expira en 1 hs.
-
-                    res.json({ token }) //Devolvemos el token
-                })
-        }))
-
-        const authHandler = (req, res, next) => {
-            try {
-                const { authorization } = req.headers //Para acceder a la cabecera del curl -H 'Authorization...'
-                //Enviaremos un token
-
-                const token = authorization.slice(7) //Extraigo el valor de la autorization del curl con slice cortando desde ese indice hasta el final, lo que esta despues de Basic
-
-                const { sub: userId } = jwt.verify(token, JWT_SECRET) //El token generado en authentication se verifica aca
-
-                req.userId = userId //Para que de authHandler llegue el userId a withErrorHandling hay que mutar la request
-
-                next() //Cuando haces el next sin error, te envia al siguiente handler
-            } catch (error) {
-                next(error)
-            }
-        }
-
-        api.get('/users/self/name', authHandler, withErrorHandling((req, res) => { //cuando ponemos authHandler antes que withErrorHandling significa que en la ruta /users/self/name pasa primero por auth y si todo va bien pasa a withErrorHandling
-            const { userId } = req //destructuro el userId que me traigo de authHandler
-
-            return logic.getUserName(userId)
-                .then(name => { res.json({ name }) }) //hay que retornarlo en forma de JSON
-        }))
-
-        api.post('/posts', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-            const { userId } = req
-
-            const { image, text } = req.body
-
-            return logic.createPost(userId, image, text)
-                .then(res.status(201).send())
-        }))
-
-        api.get('/posts', authHandler, withErrorHandling((req, res) => {
-            const { userId } = req
-
-            return logic.getPosts(userId)
-                .then(posts => res.json(posts))
-        }))
-
-        api.delete('/posts/:postId', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-            const { userId } = req
-
-            const { postId } = req.params
-
-            return logic.deletePost(userId, postId)
-                .then(post => res.status(204).send()) //204 ha ido todo bien y no hay body que responder, no hay contenido de respuesta.
-        }))
-
-        api.patch('/posts/:postId/likes', authHandler, withErrorHandling((req, res) => {
-            const { userId } = req
-
-            const { postId } = req.params
-
-            return logic.toggleLikePost(userId, postId)
-                .then(res.status(204).send())
-        }))
-
-        api.patch('/posts/:postId/text', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-            const { userId } = req
-
-            const { postId } = req.params
-
-            const { text } = req.body
-
-            return logic.updatePostText(userId, postId, text)
-                .then(() => res.status(204).send())
-        }))
-
-        const errorHandler = (error, req, res, next) => {
-            console.error(error)
-
-            let status = 500
-            let errorName = SystemError.name
-            let { message } = error
-
-            if (error instanceof DuplicityError) {
-                status = 409
-                errorName = error.constructor.name
-            } else if (error instanceof ValidationError) {
-                status = 400
-                errorName = error.constructor.name
-            } else if (error instanceof CredentialsError) {
-                status = 401
-                errorName = error.constructor.name
-            } else if (error instanceof NotFoundError) {
-                status = 404
-                errorName = error.constructor.name
-            } else if (error instanceof OwnershipError) {
-                status = 403
-                errorName = error.constructor.name
-            } else if (error instanceof TokenExpiredError) {
-                status = 401
-                errorName = AuthorizationError.name
-                message = 'expired JWT'
-            } else if (error instanceof JsonWebTokenError) {
-                status = 401
-                errorName = AuthorizationError.name
-                message = 'invalid JWT'
-            }
-
-            res.status(status).json({ error: errorName, message })
-        }
+        api.use('/users', users) //cualquier ruta que sea /users, ira por el enrutador users
+        api.use('/posts', posts) //Le decimos a la api que para las rutas de posts /posts use el router de posts
 
         api.use(errorHandler)
 
         api.listen(PORT, () => console.log(`API running on port ${PORT}`))
     })
-
-
-
-
