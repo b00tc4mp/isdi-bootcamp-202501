@@ -29,10 +29,18 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
         })
 }))
 
-// OBTENER EL NOMBRE DE USUARIO
-users.get('/self/name', authHandler, withErrorHandling((req, res) => {
+// OBTENER EL USERNAME DEL USUARIO
+users.get('/self/username', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
-    return logic.getUserName(userId)
-        .then(name => res.json({ name }))
+    return logic.getUserUsername(userId)
+        .then(username => res.json({ username }))
+}))
+
+// OBTENER LOS POSTS DE UN USUARIO
+users.get('/:targetUserId/posts', authHandler, withErrorHandling((req, res) => {
+    const { userId, params: { targetUserId } } = req
+
+    return logic.getUserPosts(userId, targetUserId)
+        .then(posts => res.json(posts))
 }))

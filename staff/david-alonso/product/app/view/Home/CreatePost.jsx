@@ -35,9 +35,9 @@ export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
 
             <form onSubmit={handleFormSubmit} className='formCreate'>
 
-                <input type="url" id="image" placeholder=". 📷 Image" className="input" />
+                <input type="url" id="image" placeholder=" Image" className="input" />
 
-                <input type="text" id="text" placeholder=". 🔤 Text" className="input" />
+                <input type="text" id="text" placeholder=" Text" className="input" />
 
                 <button type="submit" >CREATE</button>
             </form>

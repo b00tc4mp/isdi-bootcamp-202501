@@ -11,7 +11,7 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let result2 = null
 
-            return toggleLikePost('67e9946baa195117fab71239', '67e99102aa195117fab71236')
+            return toggleLikePost('67eceb6691373c9de47f17f8', '67ed3b115fd334fac2a64886')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
 

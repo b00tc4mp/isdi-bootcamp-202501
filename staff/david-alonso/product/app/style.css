@@ -5,7 +5,7 @@ html {
     font-family: 'Roboto';
     font-style: italic;
     font-weight: 600;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(24, 26, 39);
     color: white;
     margin: 0;
 }
@@ -27,14 +27,15 @@ form {
     .input {
         height: 30px;
         font-size: medium;
+        padding-left: 1rem;
         border-radius: 12px;
+        cursor: pointer;
     }
 
     .input:is(:focus, :valid) {
-        box-shadow: 5px 5px 5px grey;
+        box-shadow: 5px 5px 5px rgb(48, 47, 47);
 
     }
-
 }
 
 article {
@@ -62,8 +63,8 @@ h1 {
     position: relative;
     display: flex;
     justify-content: center;
-    color: rgb(243, 80, 93);
-    text-shadow: 2px 2px 2px white;
+    color: rgb(253, 135, 0);
+    /* text-shadow: 2px 2px 2px white; */
     top: 40px;
 
 }
@@ -73,20 +74,94 @@ h1 {
     .logo {
         width: 100%;
         height: 500px;
+        margin-top: 50px;
 
     }
 
-    .anchor {
+    /* .anchor {
         display: flex;
         justify-content: space-evenly;
-        font-size: x-large;
+        font-size: xx-large;
         position: relative;
         top: 80px;
-        color: white;
-        text-decoration: underline;
-        text-underline-offset: 5px;
+        color: rgb(253, 135, 0);
+        cursor: pointer;
+
+    } */
+
+    .start {
+        display: flex;
+        justify-content: center;
+
+        /*         
+        .enter {
+            position: relative;
+            top: 70px;
+            padding: 10px 80px;
+            background-color: rgba(253, 135, 0);
+            color: black;
+            border-radius: 12px;
+            font-size: x-large;
+            font-weight: 900;
+            box-shadow: 0px 10px 10px rgb(180, 180, 180);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .enter:active {
+            box-shadow: none;
+            transform: translateY(8px);
+        } */
+
+        .enter {
+            position: relative;
+            top: 20px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #0ce3e3, rgb(253, 135, 0));
+            padding: 15px 80px;
+            border-radius: 10px;
+            font-size: 1.25em;
+            cursor: pointer;
+        }
+
+        .enter span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .enter::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            background: rgba(24, 26, 39);
+            border-radius: 9px;
+            transition: 0.5s;
+        }
+
+        .enter:hover::before {
+            opacity: 0.7;
+        }
+
+        .enter::after {
+            content: "";
+            position: absolute;
+            inset: 0px;
+            background: linear-gradient(45deg, #0ce3e3, rgb(253, 135, 0));
+            border-radius: 9px;
+            transition: 0.5s;
+            opacity: 0;
+            filter: blur(20px);
+        }
+
+        .enter:hover:after {
+            opacity: 1;
+        }
+
     }
+
+
 }
+
 
 /* LOGIN */
 .loginRegister {
@@ -105,7 +180,7 @@ h1 {
         top: -750px;
         background-color: rgba(66, 66, 66, 0.685);
         border-radius: 20px;
-        border: solid 2px #eb0e0e;
+        border: solid 5px rgba(253, 135, 0);
 
     }
 
@@ -117,7 +192,7 @@ h1 {
         top: -750px;
         background-color: rgba(66, 66, 66, 0.685);
         border-radius: 20px;
-        border: solid 2px #eb0e0e;
+        border: solid 5px rgba(253, 135, 0);
     }
 
     .formCreater {
@@ -128,7 +203,7 @@ h1 {
         top: -750px;
         background-color: rgba(66, 66, 66, 0.685);
         border-radius: 20px;
-        border: solid 2px #eb0e0e;
+        border: solid 5px rgba(253, 135, 0);
     }
 
     .anchorRegister {
@@ -163,25 +238,24 @@ h1 {
 
 /* BUTONS */
 button {
-    background: #949494;
+    background: rgba(253, 135, 0);
     color: #fff;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     position: relative;
     height: 30px;
-    font-family: 'Permanent Marker';
     font-size: 1rem;
     margin-top: 2px;
     padding: 0 2em;
     cursor: pointer;
     transition: 300ms ease all;
     outline: none;
-    box-shadow: 5px 5px 5px rgb(192, 52, 52);
+    box-shadow: 5px 5px 5px rgb(48, 47, 47);
 }
 
 button:hover {
     background: #ffffff00;
-    color: #eb0e0e;
+    color: rgba(253, 135, 0);
 }
 
 button:before,
@@ -192,7 +266,7 @@ button:after {
     right: 0;
     height: 2px;
     width: 0;
-    background: #eb0e0e;
+    background: rgba(253, 135, 0);
     transition: 300ms ease all;
 }
 

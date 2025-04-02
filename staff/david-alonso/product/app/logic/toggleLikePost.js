@@ -3,7 +3,6 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-// Agrega o elimina el Like de los Posts
 export const toggleLikePost = postId => {
     validate.id(postId, 'postId')
 
@@ -13,11 +12,10 @@ export const toggleLikePost = postId => {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${token}`
-        },
+        }
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status)
 
             if (response.status === 204)
                 return

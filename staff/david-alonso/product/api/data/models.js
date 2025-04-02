@@ -6,30 +6,29 @@ const { ObjectId } = Types
 const user = new Schema({
     name: {
         type: String,
-        requiered: true,
+        required: true,
         minLength: 1,
         maxLength: 20
     },
     email: {
         type: String,
-        requiered: true,
+        required: true,
         match: constant.EMAIL_REGEX,
         maxLength: 30,
         unique: true
     },
     username: {
         type: String,
-        requiered: true,
+        required: true,
         minLength: 3,
         maxLength: 20,
         unique: true
     },
     password: {
         type: String,
-        requiered: true,
+        required: true,
         minLength: 8,
         maxLength: 100,
-        unique: true
     },
     createdAt: {
         type: Date,
@@ -51,7 +50,7 @@ const post = new Schema({
         type: String,
         match: constant.URL_REGEX,
         maxLength: 500,
-        requiered: true
+        required: true
     },
     text: {
         type: String,

@@ -28,7 +28,7 @@ export const getPosts = userId => {
 
                 post.liked = post.likes.some(userObjectId => userObjectId.toString() === userId)
                 post.likesCount = post.likes.length
-                delete post.likesCount
+                delete post.likes
 
                 post.own = post.author.id === userId
 

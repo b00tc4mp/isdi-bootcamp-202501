@@ -4,45 +4,59 @@ import { ValidationError } from './errors.js'
 
 export const validate = {
     // Comprobamos que sea un Sting
-    string(string, explain) {
+    string(string, explain = 'string') {
         if (typeof string !== 'string') throw new ValidationError(`invalid ${explain} type`)
     },
+
     // Comprobamos que sea tipo Texto
-    text(text, explain) {
+    text(text, explain = 'text') {
         this.string(text, explain)
         if (constant.EMPTY_OR_BLANK_REGEX.test(text)) throw new ValidationError(`invalid ${explain} syntax`)
     },
+
+    // Comprueba que el nombre sea valido
+    name(name, explain = 'name') {
+        this.text(name, explain)
+        if (!constant.NAME_REGEX.test(name)) throw new ValidationError(`invalid ${explain} syntax`)
+    },
+
     // Comprueba que sea tipo Email
-    email(email, explain) {
+    email(email, explain = 'email') {
         this.string(email, explain)
         if (!constant.EMAIL_REGEX.test(email)) throw new ValidationError(`invalid ${explain} syntax`)
         this.maxLength(email, 30, explain)
     },
+
     // Comprueba que la longitod Maxima
     maxLength(value, maxLength, explain) {
         if (value.length > maxLength) throw new ValidationError(`invalid ${explain} maxLength`)
     },
+
     // Comprueba que la longitod Minima
     minLength(value, minLength, explain) {
         if (value.length < minLength) throw new ValidationError(`invalid ${explain} minLength`)
     },
+
     // Comprueba que el parametro Usuario
-    username(username, explain) {
+    username(username, explain = 'username') {
         this.text(username, explain)
         this.minLength(username, 3, explain)
         this.maxLength(username, 20, explain)
     },
+
     // Comprueba que el parametro Passwor
-    password(password, explain) {
+    password(password, explain = 'password') {
         this.text(password, explain)
         this.minLength(password, 8, explain)
         this.maxLength(password, 20, explain)
     },
-    url(url, explain) {
+
+    url(url, explain = 'url') {
         this.string(url, explain)
         if (!constant.URL_REGEX.test(url)) throw new ValidationError(`invalid ${explain} syntax`)
     },
-    id(id, explain) {
+
+    id(id, explain = 'id') {
         this.text(id, explain)
         if (id.length !== 24) throw new ValidationError(`invalid ${explain} length`)
     }

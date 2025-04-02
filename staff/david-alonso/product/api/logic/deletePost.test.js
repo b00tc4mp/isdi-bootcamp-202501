@@ -11,7 +11,7 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let result2 = null
 
-            return deletePost('67e9946baa195117fab71239', '67e9c51e835210515ecfb7f2')
+            return deletePost('67eceb6691373c9de47f17f8', '67ed344a5fd334fac2a64827')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {

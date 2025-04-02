@@ -7,12 +7,12 @@ const { SystemError, NotFoundError } = errors
 
 // Agrega o elimina el Like de los Posts
 export const toggleLikePost = (userId, postId) => {
-    validate.id(userId)
-    validate.id(postId)
+    validate.id(userId, 'userId')
+    validate.id(postId, 'postId')
 
     return Promise.all([
         User.findById(userId).lean(),
-        Post.findById(postId).lean
+        Post.findById(postId).lean()
     ])
         .catch(error => { throw new SystemError(error.message) })
         .then(([user, post]) => {

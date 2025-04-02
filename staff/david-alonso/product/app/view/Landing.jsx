@@ -1,6 +1,6 @@
 export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
 
-    const handleRegisterClick = () => onNavigateToRegister()
+    // const handleRegisterClick = () => onNavigateToRegister()
 
     const handleLoginClick = () => onNavigateToLogin()
 
@@ -8,12 +8,9 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
 
     return <div className="landing">
         <img src="./view/images/Logo X.jpg" className="logo" />
-        <div className="anchor">
-            <div >
-                <a onClick={handleRegisterClick} >REGISTER</a>
-            </div>
-            <div >
-                <a onClick={handleLoginClick} >LOGIN</a>
+        <div className="start">
+            <div>
+                <a onClick={handleLoginClick} className="enter" ><span>Enter</span></a>
             </div>
         </div>
     </div>

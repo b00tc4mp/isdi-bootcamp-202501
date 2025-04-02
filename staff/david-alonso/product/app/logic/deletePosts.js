@@ -9,7 +9,7 @@ export const deletePost = postId => {
 
     const { token } = data
 
-    return fetch(`http://localhost:8080/post/${postId}`, {
+    return fetch(`http://localhost:8080/posts/${postId}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${token}`

@@ -1,6 +1,6 @@
 import { data } from '../data/index.js'
 
-import { errors } from 'com'
+import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
@@ -17,7 +17,6 @@ export const getPosts = () => {
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status)
 
             if (response.status === 200)
                 return response.json()

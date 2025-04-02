@@ -1,35 +1,21 @@
 import { useState, useEffect } from 'react'
 
-// import Post from './Post.jsx'
 import { Post } from './Post.jsx'
 
 import { logic } from '../../logic/index.js'
 
-export function Posts() {
+export function Posts({ targetUserId }) {
     const [posts, setPosts] = useState([])
 
-    // Actualiza el nombre de usuario cuando se conecta
     useEffect(() => {
         console.debug('Posts -> useEffect')
 
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
+        loadPosts()
     }, [])
 
-    const handlePostLikeToggled = () => {
+    const loadPosts = () => {
         try {
-            logic.getPosts()
+            (targetUserId ? logic.getUserPosts(targetUserId) : logic.getPosts())
                 .then(posts => setPosts(posts))
                 .catch(error => {
                     console.error(error)
@@ -43,43 +29,15 @@ export function Posts() {
         }
     }
 
-    const handlePostDeleted = () => {
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+    const handlePostLikeToggled = () => loadPosts()
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
+    const handlePostDeleted = () => loadPosts()
 
-            alert(error.message)
-        }
-    }
-
-    const handlePostTextEdited = () => {
-
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
+    const handlePostTextEdited = () => loadPosts()
 
     console.debug('Posts -> render')
 
     return <section>
         {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onPostTextEdited={handlePostTextEdited} />)}
-        <div className="end"></div>
     </section>
 }

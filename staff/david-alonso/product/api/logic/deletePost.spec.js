@@ -1,8 +1,8 @@
 import 'dotenv/config'
-import { data, User } from '../data/index.js'
-import { getUserName } from './getUserName.js'
+import { data, User, Post } from '../data/index.js'
+import { deletePost } from './deletePost.js'
 import { expect } from 'chai'
-import { NotFoundError } from 'com/errors.js'
+import { NotFoundError, ValidationError } from 'com/errors.js'
 import { Types } from 'mongoose'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -11,7 +11,9 @@ const { ObjectId } = Types
 describe('deletePost', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
-    beforeEach(() => User.deleteMany({}))
+    beforeEach(() => Promise.all([User.deleteMany({}), Post.deleteMany({})]))
+
+    ImageTrack('')
 
 
 
