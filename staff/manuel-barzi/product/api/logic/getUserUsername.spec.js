@@ -24,7 +24,7 @@ describe('getUserUsername', () => {
         })
             .then(user => getUserUsername(user.id))
             .then(username => returnedUsername = username)
-            .finally(() => expect(returnedUsername).to.equal('Eu Geni'))
+            .finally(() => expect(returnedUsername).to.equal('eugeni'))
     })
 
     it('fails on non-existing user', () => {
