@@ -5,14 +5,14 @@ import { NotFoundError, ValidationError } from 'com/errors.js'
 import { expect } from 'chai'
 import * as chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import {Types} from 'mongoose'
+import { Types } from 'mongoose'
 
 chai.use(chaiAsPromised)
 
 const { MONGO_URL, MONGO_DB } = process.env
-const {ObjectId} = Types
+const { ObjectId } = Types
 
-describe.only('getPosts', () => {
+describe('getPosts', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     debugger
@@ -44,9 +44,9 @@ describe.only('getPosts', () => {
                 ])
             })
             .then(([_post, _post2]) => {
-                    post = _post
-                    post2 = _post2
-                })
+                post = _post
+                post2 = _post2
+            })
             .then(() => getPosts(user2.id))
             .then(posts => returnedPosts = posts)
             .finally(() => {
@@ -78,7 +78,9 @@ describe.only('getPosts', () => {
     })
 
     it('fails on existingUser', () => {
-       return expect(getPosts(new ObjectId().toString())).to.be.rejectedWith(NotFoundError, 'User not found!')
+        return expect(
+            getPosts(new ObjectId().toString())
+        ).to.be.rejectedWith(NotFoundError, 'User not found!')
     })
 
     it('fails on validates', () => {
