@@ -25,7 +25,7 @@ export const authenticateUser = (username, password) => {
         validate.username(username)
         validate.password(password)
 
-        return User.findOne({ username }).lean()
+        return User.findOne({ username }).lean() // el lean trae el objeto
                 .catch(error => { throw new SystemError(error.message) })
                 .then(user => {
                         if(!user) throw new NotFoundError('user not found')

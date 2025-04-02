@@ -3,6 +3,8 @@
 class DuplicityError extends Error {
     constructor(message) {
         super(message)
+
+        this.name = this.constructor.name //esto se hace por un error de node
     }
 }
 
@@ -10,24 +12,32 @@ class DuplicityError extends Error {
 class CredentialsError extends Error {
     constructor(message) {
         super(message)
+
+        this.name = this.constructor.name
     }
 }
 
 class NotFoundError extends Error {
     constructor(message) {
         super(message)
+
+        this.name = this.constructor.name
     }
 }
 
 class OwnershipError extends Error {
     constructor(message) {
         super(message)
+
+        this.name = this.constructor.name
     }
 }
 
 class SystemError extends Error {
     constructor(message) {
         super(message)
+
+        this.name = this.constructor.name
     }
 }
 
@@ -35,6 +45,8 @@ class SystemError extends Error {
 class ValidationError extends Error {
     constructor(message) {
         super(message)
+
+        this.name = this.constructor.name
     }
 }
 
