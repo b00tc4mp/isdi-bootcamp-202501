@@ -8,7 +8,8 @@ import jwt from 'jsonwebtoken' //bliblioteca para manejar los tokens y autentica
 import { data } from './data/index.js'
 import { logic } from './logic/index.js'
 
-const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError } = errors
+const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError, AuthorizationError } = errors
+const { JsonWebTokenError, TokenExpiredError } = jwt
 
 const { JWT_SECRET, PORT, MONGO_URL, MONGO_DBNAME } = process.env // nos destructuramos el secreto desde el archivo ignorado .env
 
@@ -78,19 +79,32 @@ data.connect(MONGO_URL , MONGO_DBNAME)
 
             return logic.authenticateUser(username, password)
                 .then(id => {
-                    const token = jwt.sign({ sub: id }, JWT_SECRET)
+                    const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: '1h' })
                     res.json({ token })
                 })
         }))
 
-        //GET USERNAME
-
-        api.get('/users/self/name', withErrorHandling((req, res) => {
+        //Creamos un middleware para manejar la autorización del token (y optimizar cada server)
+        
+        const authHandler = (req, res, next) => {
+            try {
             const { authorization } = req.headers
 
             const token = authorization.slice(7)
 
             const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+            req.userId = userId
+            
+            } catch (error) {
+                next(error)
+            }
+        }
+
+        //GET USERNAME
+
+        api.get('/users/self/name', authHandler, withErrorHandling((req, res) => {
+            const { userId } = req
 
             return logic.getUserName(userId)
                 .then(name => res.json({ name }))
@@ -98,37 +112,26 @@ data.connect(MONGO_URL , MONGO_DBNAME)
 
         //CREATE POST
 
-        api.post('/posts', jsonBodyParser, withErrorHandling((req, res) => {
-            const { authorization } = req.headers
+        api.post('/posts', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+            const { userId } = req
+
             const { image, text } = req.body
-
-            const token = authorization.slice(7)
-
-            const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
             return logic.createPost(userId, image, text)
                 .then(() => res.status(201).send())
         }))
 
         //GET POSTS
-        api.get('/posts', withErrorHandling((req, res) => {
-            const { authorization } = req.headers
-
-            const token = authorization.slice(7)
-
-            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+        api.get('/posts', authHandler, withErrorHandling((req, res) => {
+            const { userId } = req
 
             return logic.getPosts(userId)
                 .then(posts => res.json(posts))
         }))
 
         //DELETE POST
-        api.delete('/posts/:postId', withErrorHandling((req, res) => {
-            const { authorization } = req.headers
-
-            const token = authorization.slice(7)
-
-            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+        api.delete('/posts/:postId', authHandler,  withErrorHandling((req, res) => {
+            const { userId } = req
 
             const { postId } = req.params
 
@@ -138,12 +141,8 @@ data.connect(MONGO_URL , MONGO_DBNAME)
 
         //TOGGLE LIKE POST
 
-        api.patch('/posts/:postId/likes', withErrorHandling((req, res) => {
-            const { authorization } = req.headers
-
-            const token = authorization.slice(7)
-
-            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+        api.patch('/posts/:postId/likes', authHandler, withErrorHandling((req, res) => {
+            const { userId } = req
 
             const { postId } = req.params
 
@@ -152,12 +151,8 @@ data.connect(MONGO_URL , MONGO_DBNAME)
         }))
 
         //UPDATE POST TEXT
-        api.patch("/posts/:postId/text", jsonBodyParser, withErrorHandling((req, res) => {
-            const { authorization } = req.headers
-
-            const token = authorization.slice(7)
-
-            const { sub: userId } = jwt.verify(token, JWT_SECRET)
+        api.patch("/posts/:postId/text", authHandler,  jsonBodyParser, withErrorHandling((req, res) => {
+            const { userId } = req
 
             const { postId } = req.params
 
@@ -172,6 +167,7 @@ data.connect(MONGO_URL , MONGO_DBNAME)
 
             let status = 500
             let errorName = SystemError.name
+            let { message } = error //destructuramos aqui missage para poder especificar el mensaje en los JWT errors
 
             if (error instanceof DuplicityError) {
                 status = 409
@@ -188,9 +184,17 @@ data.connect(MONGO_URL , MONGO_DBNAME)
             } else if (error instanceof OwnershipError) {
                 status = 403
                 errorName = error.constructor.name
+            } else if (error instanceof TokenExpiredError) {
+                status = 401
+                errorName = AuthorizationError.name
+                message = 'expired JWT'
+            } else if (error instanceof JsonWebTokenError) {
+                status = 401
+                errorName = AuthorizationError.name
+                message = 'invalid JWT'
             }
 
-            res.status(status).json({ error: errorName, message: error.message })
+            res.status(status).json({ error: errorName, message })
         }
 
         api.use(errorHandler)
