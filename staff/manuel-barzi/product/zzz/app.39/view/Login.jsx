@@ -38,15 +38,11 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
         <h1>Logo</h1>
 
         <form onSubmit={handleLoginSubmit}>
-            <div className="field">
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" placeholder="username" />
-            </div>
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" />
 
-            <div className="field">
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" placeholder="password" />
-            </div>
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" />
 
             <button type="submit">Login</button>
         </form>

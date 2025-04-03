@@ -8,6 +8,8 @@ import { Search } from './Search.jsx'
 
 import { logic } from '../../logic/index.js'
 
+import './index.css'
+
 export function Home({ onUserLoggedOut }) {
     const [username, setUsername] = useState('')
 
@@ -68,9 +70,9 @@ export function Home({ onUserLoggedOut }) {
 
     console.debug('Home -> render')
 
-    return <div>
-        <header className="flex justify-between items-center fixed top-0 w-full bg-[var(--secondary-color)] py-[var(--padding-y)] px-[var(--padding-x)] box-border">
-            <h1 className="text-2xl" onClick={handleHomeClick}>Logo</h1>
+    return <div className="Home">
+        <header>
+            <h1 onClick={handleHomeClick}>Logo</h1>
 
             <h2 onClick={handleUserClick}>{username}</h2>
 
@@ -88,7 +90,7 @@ export function Home({ onUserLoggedOut }) {
             </Routes>
         </main>
 
-        <footer className="flex justify-center items-center fixed bottom-0 w-full bg-[var(--secondary-color)] py-[var(--padding-y)] px-[var(--padding-x)] box-border">
+        <footer>
             {pathname === '/' && <button onClick={handleAddPostClick}>+</button>}
         </footer>
     </div>

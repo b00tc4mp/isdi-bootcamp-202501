@@ -6,14 +6,18 @@
         h3,
         p,
         .post-footer {
+            /* padding: var(--padding-y) var(--padding-x); */
             @apply px-[var(--padding-x)];
         }
 
         img {
+            /* width: 100%; */
             @apply w-full;
         }
 
         .post-footer {
+            /* display: flex; */
+            /* justify-content: space-between; */
             @apply flex justify-between;
         }
     }

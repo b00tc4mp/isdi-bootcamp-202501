@@ -56,17 +56,17 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
             <div className="field">
                 <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" placeholder="email" />
+                <input type="email" id="email" />
             </div>
 
             <div className="field">
                 <label htmlFor="username">Username</label>
-                <input type="text" id="username" placeholder="username" />
+                <input type="text" id="username" />
             </div>
 
             <div className="field">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" placeholder="password" />
+                <input type="password" id="password" />
             </div>
 
             <button type="submit">Register</button>
