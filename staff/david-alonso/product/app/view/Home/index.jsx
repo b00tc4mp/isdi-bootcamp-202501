@@ -72,15 +72,11 @@ export function Home({ onUserLoggedOut }) {
 
         <header>
 
-            {/* ***** */}
-            <img onClick={handleHomeClick} src="./view/images/home.jpg" className="logoHome" />
-            {/* ****** */}
+            <img onClick={handleHomeClick} src="./view/images/Logo X.jpg" className="logoHome" />
 
-            <h3 onClick={handleUserClick} className="user">{username}</h3>
-
-            {pathname === '/' && <button onClick={handleSearchClick}>🔍</button>}
-
-            <button type="button" onClick={handleLogoutClick} className="logout">EXIT</button>
+            <div onClick={handleUserClick} className='profile'>
+                <h3 className="user">{username}</h3>
+            </div>
         </header>
 
 
@@ -97,7 +93,11 @@ export function Home({ onUserLoggedOut }) {
         <footer className="footer">
             <img src="./view/images/NV.jpg" className="nvLogo" />
 
+            {pathname === '/' && <button onClick={handleSearchClick} className='search'>🔍</button>}
+
             {pathname === '/' && <button onClick={handleAddPostClick} className="new">NEW</button>}
+
+            <button type="button" onClick={handleLogoutClick} className="logout">EXIT</button>
         </footer>
 
     </div >

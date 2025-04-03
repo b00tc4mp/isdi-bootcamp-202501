@@ -33,7 +33,7 @@ export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
         <div className="loginRegister">
             <h1>NEW POST</h1>
 
-            <form onSubmit={handleFormSubmit} className='formCreate'>
+            <form onSubmit={handleFormSubmit} className='form-text'>
 
                 <input type="url" id="image" placeholder=" Image" className="input" />
 

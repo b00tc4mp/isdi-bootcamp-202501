@@ -39,5 +39,7 @@ export function Posts({ targetUserId }) {
 
     return <section>
         {posts.map(post => <Post key={post.id} post={post} onPostLikeToggled={handlePostLikeToggled} onPostDeleted={handlePostDeleted} onPostTextEdited={handlePostTextEdited} />)}
+
+        <div className='end'></div>
     </section>
 }

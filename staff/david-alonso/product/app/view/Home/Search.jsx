@@ -22,12 +22,15 @@ export const Search = () => {
     }
 
     return <>
-        <h1>Search</h1>
+        <div>
+            <h1>Search</h1>
 
-        <form onSubmit={handleSearch}>
-            <input type="text" name="query" id="query" defaultValue={query} />
+            <form onSubmit={handleSearch} className='form-text'>
+                <input type="text" name="query" id="query" defaultValue={query} className="input2" />
 
-            <button type="submit">Search</button>
-        </form>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
     </>
 }
