@@ -12,7 +12,7 @@ const { NotFoundError } = errors
 describe('addPost', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB));
 
-    beforeEach(() => Post.deleteMany({}));
+    beforeEach(() => Promise.all([User.deleteMany({}), Post.deleteMany({})]))
 
     it('suceed on create new post', () => {
         let result2;

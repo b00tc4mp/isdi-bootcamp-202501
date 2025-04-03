@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { logic } from '../../logic/index.js';
 import { Post } from './Post.jsx'
 
-export function Posts({ targetuserId }) {
+export function Posts({ targetUserId }) {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -12,7 +12,8 @@ export function Posts({ targetuserId }) {
 
     const loadPosts = () => {
         try {
-            (targetuserId ? logic.getUserPosts(targetuserId) : logic.getPosts())
+            debugger;
+            (targetUserId ? logic.getUserPosts(targetUserId) : logic.getPosts())
                 .then(posts => setPosts(posts))
                 .catch(error => {
                     console.error(error);
