@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router'
 
-import { Posts } from './Posts.jsx'
-import { CreatePost } from './CreatePost.jsx'
-import { Profile } from './Profile.jsx'
-import { Search } from './Search.jsx'
+import { Posts } from './Posts'
+import { CreatePost } from './CreatePost'
+import { Profile } from './Profile'
+import { Search } from './Search'
 
-import { logic } from '../../logic/index.js'
+import { logic } from '../../logic'
+import { useContext } from '../../context'
 
 export function Home({ onUserLoggedOut }) {
+    const { alert, confirm } = useContext()
+
     const [username, setUsername] = useState('')
 
     const navigate = useNavigate()
@@ -33,15 +36,19 @@ export function Home({ onUserLoggedOut }) {
     }, [])
 
     const handleLogoutClick = () => {
-        try {
-            logic.logoutUser()
+        confirm('Logout?')
+            .then(accepted => {
+                if (accepted)
+                    try {
+                        logic.logoutUser()
 
-            onUserLoggedOut()
-        } catch (error) {
-            console.error(error)
+                        onUserLoggedOut()
+                    } catch (error) {
+                        console.error(error)
 
-            alert(error.message)
-        }
+                        alert(error.message)
+                    }
+            })
     }
 
     const handleAddPostClick = () => navigate('/create-post')

@@ -1,6 +1,9 @@
-import { logic } from '../../logic/index.js'
+import { logic } from '../../logic'
+import { useContext } from '../../context'
 
 export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
+    const { alert } = useContext()
+
     const handleFormSubmit = event => {
         event.preventDefault()
 
@@ -39,9 +42,9 @@ export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
                 <input type="text" id="text" />
             </div>
 
+            <button className="secondary" type="button" onClick={handleCancelClick}>Cancel</button>
             <button type="submit">Create</button>
         </form>
 
-        <button className="secondary" onClick={handleCancelClick}>Cancel</button>
     </section>
 }
