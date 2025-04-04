@@ -1,6 +1,6 @@
-import mongoose, { Types } from 'mongoose'
+import mongoose from 'mongoose'
 import { errors } from 'com'
-import { User, Post } from './models.js'
+import { User, Post, Comment, Message, Chat } from './models.js'
 
 const { SystemError } = errors
 
@@ -18,5 +18,8 @@ const data = {
 export {
     data,
     User,
-    Post
+    Post,
+    Comment,
+    Message,
+    Chat
 }
