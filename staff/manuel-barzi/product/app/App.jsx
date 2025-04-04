@@ -57,13 +57,11 @@ function App() {
 
     return <>
         {loggedIn !== null && <Routes>
-            <Route path="/landing" element={loggedIn ? <Navigate to="/" /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
-
             <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
 
             <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
 
-            <Route path='/*' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to={`${showLanding ? '/landing' : '/login'}`} />} />
+            <Route path='/*' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : showLanding ? <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} /> : <Navigate to='/login' />} />
         </Routes>}
     </>
 }
