@@ -1,7 +1,8 @@
 import { Router } from 'express'
 
-import { logic } from '../logic/index.js'
+
 import { authHandler, withErrorHandling, jsonBodyParser } from '../handlers/index.js'
+import { logic } from '../logic/index.js'
 
 export const posts = Router()
 

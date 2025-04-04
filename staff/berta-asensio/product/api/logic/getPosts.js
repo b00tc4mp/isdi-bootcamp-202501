@@ -1,4 +1,3 @@
-
 import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 

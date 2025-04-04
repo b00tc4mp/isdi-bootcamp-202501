@@ -20,7 +20,7 @@ TEST: node logic.getUserName.test.js
 
 export const getUserName = userId => { 
         validate.id(userId)
-
+ 
         return User.findById(userId).lean()
                 .catch(error => { throw new SystemError(error.message) }) 
                 .then(user => {
