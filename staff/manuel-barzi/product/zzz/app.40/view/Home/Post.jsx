@@ -75,7 +75,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     console.debug('Post -> render')
 
     return <article className="Post">
-        <h3 className="px-[var(--padding-x)] cursor-pointer" onClick={handleUsernameClick}>{post.author.username}</h3>
+        <h3 className="px-[var(--padding-x)]" onClick={handleUsernameClick}>{post.author.username}</h3>
 
         <img className="w-full" src={post.image} />
 

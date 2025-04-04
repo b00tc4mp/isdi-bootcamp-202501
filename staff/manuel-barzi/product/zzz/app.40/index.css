@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+15&family=Qahiri&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+    html {
+        --primary-color: red;
+        --primary-color-high: magenta;
+        --primary-color-low: firebrick;
+        --secondary-color: black;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
+
+        @apply font-['Jersey_15'] bg-[var(--secondary-color)] text-[var(--primary-color)];
+    }
+
+    body {
+        @apply m-0;
+    }
+
+    a {
+        @apply cursor-pointer transition-[font-size] duration-300 min-[1040px]:hover:text-[var(--primary-color-high)] min-[1040px]:hover:text-[2rem];
+    }
+
+    button {
+        @apply bg-[var(--primary-color)] text-[var(--secondary-color)] border-2 border-solid border-[var(--primary-color)] px-2;
+    }
+
+    button.secondary {
+        @apply bg-[var(--primary-color-low)] border-[var(--primary-color-low)] w-full;
+    }
+
+    form {
+        @apply flex flex-col gap-[.5rem];
+
+        .field {
+            @apply flex flex-col gap-[var(--padding-y)];
+        }
+    }
+
+    input {
+        @apply border-2 border-solid border-[var(--primary-color)] outline-none focus:border-[var(--primary-color-high)] placeholder:text-[var(--primary-color-low)];
+    }
+
+    /* TODO learn how-to in tailwindcss */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        background-color: var(--secondary-color);
+        -webkit-text-fill-color: var(--primary-color);
+        -webkit-box-shadow: 0 0 0px 1000px var(--secondary-color) inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    h1,
+    h2 {
+        @apply m-0;
+    }
+
+    main {
+        @apply my-[3rem];
+    }
+}
