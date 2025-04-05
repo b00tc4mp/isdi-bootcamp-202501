@@ -7,6 +7,7 @@ import { getPosts } from "./getPosts";
 import { deletePost } from "./deletePost";
 import { updatePostText } from "./updatePostText";
 import { authenticateUser } from "./authenticateUser";
+import isUserLoggedIn from "./isUserLoggedIn";
 
 export const logic = {
   addPost,
@@ -18,4 +19,5 @@ export const logic = {
   deletePost,
   updatePostText,
   authenticateUser,
+  isUserLoggedIn,
 };

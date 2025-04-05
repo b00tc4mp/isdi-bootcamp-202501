@@ -1,7 +1,7 @@
 import { data } from "../data/index.js";
 
-const isUserConnected = () => {
+const isUserLoggedIn = () => {
   return !!data.token;
 };
 
-export default isUserConnected;
+export default isUserLoggedIn;
