@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { logic } from "../../logic";
-
+import { useNavigate } from "react-router";
 function Post({
   author,
   image,
@@ -9,13 +9,18 @@ function Post({
   id,
   liked,
   onPostLikeUpdate,
-  likes,
+  likesCount,
   own,
   onDeletedPostSuccess,
   onUpdatedTextSuccess,
 }) {
   const [view, setView] = useState("");
 
+  const navigate = useNavigate();
+
+  const handleUserClick = () => {
+    navigate(`/${author.username}`, { state: { userId: author.id } });
+  };
   const handleToggleClick = (id) => {
     try {
       logic
@@ -91,7 +96,7 @@ function Post({
   const handleCancelEditTextClick = () => setView("");
   return (
     <article className="post">
-      <h3>{author}</h3>
+      <h3 onClick={handleUserClick}>{author.username}</h3>
       <div className="post-wrapper">
         <img src={image} />
         <div className="post-button-wrapper">
@@ -101,7 +106,7 @@ function Post({
             }}
           >
             {liked ? "❤️" : "🤍"}
-            {likes.length}
+            {likesCount}
           </span>
           <div className="post-action-button-wrapper">
             {own && <span onClick={handleDeleteClick}>🗑️</span>}
