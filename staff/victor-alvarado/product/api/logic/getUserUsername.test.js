@@ -1,19 +1,19 @@
 import 'dotenv/config'
 import { data } from '../data/index.js'
-import { authenticateUser } from './authenticateUser.js'
+import { getUserUsername } from './getUserUsername.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-console.info('TEST authenticateUser')
+console.info('TEST getUserUsername')
 
 data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
-            let id2
+            let username
 
-            return authenticateUser('grood', '123123123')
-                .then(id => id2 = id)
-                .finally(() => console.assert(typeof id2 === 'string', 'userId is a string'))
+            return getUserUsername('67e66d549a04606cb8766835')
+                .then(name => username = name)
+                .finally(() => console.assert(typeof username === 'string', 'username is a string'))
         } catch (error) {
             console.error(error)
         }

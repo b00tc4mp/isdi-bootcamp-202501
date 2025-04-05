@@ -1,20 +1,22 @@
-
+import { SystemError } from 'com/errors.js'
 import { User, Post } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { NotFoundError, SystemError } = errors
+const { NotFoundError } = errors
 
-export const getPosts = userId => {
+export const getUserPosts = (userId, targetUserId) => {
     validate.id(userId, 'userId')
+    validate.id(targetUserId, 'targetUserId')
 
     return Promise.all([
         User.findById(userId).lean(),
-        Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean()
+        User.findById(targetUserId).lean(),
+        Post.find({ author: targetUserId }).select('-__v').sort('-createdAt').populate('author', 'username').lean()
     ])
-
         .catch(error => { throw new SystemError(error.message) })
-        .then(([user, posts]) => {
+        .then(([user, targetUser, posts]) => {
             if (!user) throw new NotFoundError('user not found')
+            if (!targetUser) throw new NotFoundError('targetUser not found')
 
             posts.forEach(post => {
                 post.id = post._id.toString()

@@ -46,9 +46,10 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
     console.debug('Register -> render')
 
     return <div>
-        <h1>Logo</h1>
+        <img src="https://elpingo.com/wp-content/uploads/2023/02/hombre-arana-logo-negro.png" className="mx-auto w-80 h-80 mt-[-20px]" />
 
-        <form onSubmit={handleRegisterSubmit}>
+
+        <form onSubmit={handleRegisterSubmit} className="mt-[-30px]">
             <label htmlFor="name">Name</label>
             <input type="text" id="name" />
 

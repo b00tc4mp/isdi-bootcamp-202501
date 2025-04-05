@@ -36,15 +36,20 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
     console.debug('Login -> render')
 
     return <div>
-        <img src="https://elpingo.com/wp-content/uploads/2023/02/hombre-arana-logo-negro.png" className="logo2" />
+        <img src="https://elpingo.com/wp-content/uploads/2023/02/hombre-arana-logo-negro.png" className="mx-auto w-80 h-80" />
 
 
         <form onSubmit={handleLoginSubmit}>
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" />
+            <div className="field">
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" placeholder="username" />
+            </div>
 
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" />
+            <div className="field">
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" placeholder="password" />
+
+            </div>
 
             <button type="submit">Login</button>
 
