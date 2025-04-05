@@ -12,8 +12,7 @@ export const authHandler = (req, res, next) => {
         const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
         req.userId = userId
-        
-        next()
+
     } catch (error) {
         next(error)
     }

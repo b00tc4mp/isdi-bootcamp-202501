@@ -3,6 +3,7 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
+
 export const loginUser = (username, password) => {
   validate.username(username)
   validate.password(password)
@@ -37,3 +38,4 @@ export const loginUser = (username, password) => {
           })
     })
 }
+

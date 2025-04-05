@@ -2,7 +2,9 @@ import { registerUser } from './registerUser'
 import { loginUser } from './loginUser'
 import { logoutUser }  from './logoutUser'
 import { isUserLoggedIn } from './isUserLoggedIn'
-import { getUsername } from './getUsername'
+import { getUserUsername } from './getUserUsername'
+import { getUserId } from './getUserId'
+
 
 
 //importaciones de post
@@ -11,6 +13,7 @@ import { getPosts } from './getPosts'
 import { deletePost } from './deletePost'
 import { updatePostText } from './updatePostText'
 import { toggleLikePost } from './toggleLikePost'
+import { getUserPosts } from './getUserPosts'
 
 
 export const logic = {
@@ -18,12 +21,14 @@ export const logic = {
     loginUser,
     logoutUser,
     isUserLoggedIn,
-    getUsername,
+    getUserUsername,
+    getUserId,
 
     createPost,
     getPosts,
     deletePost,
     updatePostText,
-    toggleLikePost
+    toggleLikePost,
+    getUserPosts
 }
  

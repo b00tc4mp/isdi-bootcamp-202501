@@ -14,12 +14,11 @@ export function Homepage ({ onUserLoggedOut }) {
     const navigate = useNavigate()
     const { pathname } = useLocation
 
-
     useEffect(() => {
         console.debug('Home -> useEffect')
 
         try {
-            logic.getUsername()
+            logic.getUserUsername()
                 .then(username =>  setUsername(username))
                 .catch(error => {
                     console.error(error)

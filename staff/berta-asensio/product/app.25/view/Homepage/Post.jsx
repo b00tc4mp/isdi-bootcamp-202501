@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 
 import { logic } from '../../logic/index.js'
 
+
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('')
 

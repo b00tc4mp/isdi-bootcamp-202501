@@ -4,11 +4,12 @@ import { errors } from 'com'
 
 const { SystemError } = errors
 
+
 //esta funcion se usa en homepage, asi que pasamos then catch por ahi
-export const getUsername = () => {
+export const getUserUsername = () => {
   const { token } = data;
 
-  return fetch("http://localhost:8080/users/self/name", {
+  return fetch("http://localhost:8080/users/self/username", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
