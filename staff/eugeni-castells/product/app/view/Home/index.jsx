@@ -5,61 +5,92 @@ import CreatePost from "./CreatePost.jsx";
 import Header from "./Header.jsx";
 import HamburgerMenu from "./HamburgerMenu.jsx";
 import ChangeUserInfo from "./ChangeUserInfo.jsx";
+import { Profile } from "./Profile.jsx";
+
+import { Route, Routes, useNavigate, useLocation } from "react-router";
 
 function Home({ onLogoutSuccess }) {
-  const [view, setView] = useState("posts");
   const [displayMenu, setDisplayMenu] = useState(false);
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleMenuNavigation = () => {
     setDisplayMenu(!displayMenu);
   };
 
   const handleCancelClick = () => {
-    setView("posts");
+    navigate("/");
   };
   const handlePostCreationSubmit = () => {
-    setView("posts");
+    navigate("/");
+  };
+
+  const handleUserClick = () => {
+    try {
+      const userId = logic.getUserId();
+
+      navigate(`/${username}`, { state: { userId } });
+    } catch (error) {
+      console.error(error);
+
+      alert(error.message);
+    }
+  };
+  const handleSearchClick = () => {
+    navigate("/search");
   };
 
   const handleChangeUserInfoNavigation = () => {
     setDisplayMenu(false);
-    setView("change-user-info");
+    navigate("/change-user-info");
   };
 
   const handleLogoutSuccess = () => onLogoutSuccess();
 
   const handleHomeNavigation = () => {
-    setView("posts");
+    navigate("/");
   };
+
   return (
     <>
-      <Header onMenuNavigation={handleMenuNavigation} />
+      <Header
+        onMenuNavigation={handleMenuNavigation}
+        onUserClick={handleUserClick}
+      />
 
-      {displayMenu && (
-        <HamburgerMenu
-          onLogoutSuccess={handleLogoutSuccess}
-          onChangeUserInfoNavigation={handleChangeUserInfoNavigation}
-        />
-      )}
+      <main>
+        {displayMenu && (
+          <HamburgerMenu
+            onLogoutSuccess={handleLogoutSuccess}
+            onChangeUserInfoNavigation={handleChangeUserInfoNavigation}
+          />
+        )}
+        <Routes>
+          <Route
+            path="/change-user-info"
+            element={<ChangeUserInfo onHomeNavigation={handleHomeNavigation} />}
+          />
+          <Route path="/" element={<Posts />} />
+          <Route path="/:username" element={<Profile />} />
+          <Route
+            path="/create-post"
+            element={
+              <CreatePost
+                onCancelClick={handleCancelClick}
+                onPostCreationSubmit={handlePostCreationSubmit}
+              />
+            }
+          />
+        </Routes>
+      </main>
 
-      {view === "change-user-info" && (
-        <ChangeUserInfo onHomeNavigation={handleHomeNavigation} />
-      )}
-
-      {view === "posts" && <Posts />}
-
-      {view === "create-post" && (
-        <CreatePost
-          onCancelClick={handleCancelClick}
-          onPostCreationSubmit={handlePostCreationSubmit}
-        />
-      )}
       <footer className="home-footer">
-        {view === "posts" && (
+        {pathname === "/" && (
           <div
             className="create-post-button"
             onClick={() => {
-              setView("create-post");
+              navigate("/create-post");
             }}
           >
             +
