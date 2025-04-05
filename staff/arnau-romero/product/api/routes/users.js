@@ -43,3 +43,43 @@ users.get('/:targetUserId/posts', authHandler, withErrorHandling((req, res) => {
     return logic.getUserPosts(userId, targetUserId)
         .then(posts => res.json(posts))
 }))
+
+// Endpoint para buscar usuarios por nombre de usuario
+users.get('/search', authHandler, withErrorHandling((req, res) => {
+    const { query } = req.query; // Obtenemos el parámetro 'query' desde la query string
+
+    // Validamos que se haya recibido el 'query'
+    if (!query) {
+        return res.status(400).json({ error: 'Query string is required' });
+    }
+
+    return logic.searchUsers(query)
+        .then(users => res.json(users)) // Respondemos con la lista de usuarios que coinciden
+        .catch(error => res.status(500).json({ error: error.message }));
+}));
+
+// Endpoint para resolver usuario por su nombre de usuario
+users.get('/resolve', authHandler, withErrorHandling((req, res) => {
+    const { username } = req.query;
+
+    // Validamos que se pase el 'username'
+    if (!username) {
+        return res.status(400).json({ error: 'Username is required' });
+    }
+
+    // Llamamos a la lógica que busca el usuario por su 'username'
+    return logic.getUserIdByUsername(username)
+        .then(userId => {
+            // Si se encuentra el usuario, devolvemos el ID
+            return res.json({ id: userId });
+        })
+        .catch(error => {
+            // Manejo de errores si el usuario no se encuentra o hay otro fallo
+            if (error.message === 'User not found') {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            // Si hay otro tipo de error, devolvemos un error genérico
+            return res.status(500).json({ error: 'Internal Server Error' });
+        });
+}));

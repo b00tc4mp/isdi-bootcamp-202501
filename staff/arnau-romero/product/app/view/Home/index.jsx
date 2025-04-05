@@ -86,7 +86,7 @@ export function Home({ onUserLoggedOut}) {
                 <h1 className = "homeClick" onClick={handleHomeClick}>HOME</h1>
                 <h2 className= "profileClick" onClick={handleUserClick}>🙋 {username}</h2>
             
-            {pathname === '/' && <button onClick={handleSearchClick}>🔍</button>}
+            <button onClick={handleSearchClick}>🔍</button>
 
             <button type = "button" onClick={handleLogoutClick}>Logout</button>
         </header>
