@@ -9,7 +9,10 @@ const { PORT, MONGO_URL, MONGO_DB } = process.env;
 
 data
   .connect(MONGO_URL, MONGO_DB)
-  .catch((error) => console.error(error))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  })
   .then(() => {
     const api = express();
 

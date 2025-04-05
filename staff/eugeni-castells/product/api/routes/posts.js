@@ -7,15 +7,17 @@ import {
 } from "../handlers/index.js";
 export const posts = Router();
 
-posts.get("/", authHandler, jsonBodyParser, (req, res, next) => {
-  withErrorHandling(next, () => {
+posts.get(
+  "/",
+  authHandler,
+  withErrorHandling((req, res) => {
     const { userId } = req;
 
     return logic.getPosts(userId).then((posts) => {
-      res.status(200).json(posts).send();
+      res.status(200).json(posts);
     });
-  });
-});
+  })
+);
 
 posts.post(
   "/",

@@ -1,4 +1,4 @@
-import { User, Post, ObjectId } from "../data/index.js";
+import { User, Post } from "../data/index.js";
 import { errors, validate } from "com";
 
 const { NotFoundError, SystemError } = errors;
