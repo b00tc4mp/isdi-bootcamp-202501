@@ -41,6 +41,33 @@ const user = new Schema({
     }
 })
 
+const comment = new Schema({
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    text: {
+        type: String,
+        minlength: 1,
+        maxlength: 200,
+        required: true
+    },
+    likes:[{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
 const post = new Schema({
     author: {
         type: ObjectId,
@@ -69,13 +96,68 @@ const post = new Schema({
     modifiedAt: {
         type: Date,
         default: null
+    },
+    comments: [comment]
+})
+
+const message = new Schema({
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    text: {
+        type: String,
+        minlength: 1,
+        maxlength: 1000,
+        required: true
+    },
+    likes:[{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const chat = new Schema({
+    participants: [{
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    }],
+    title: {
+      type: String
+    },
+    messages: [message],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 
 const User = new model('User', user)
 const Post = new model('Post', post)
+const Comment = new model('Comment', comment)
+const Message = new model('Message', message)
+const Chat = new model('Chat', chat)
 
 export {
     User,
-    Post
+    Post,
+    Comment,
+    Message,
+    Chat
 }

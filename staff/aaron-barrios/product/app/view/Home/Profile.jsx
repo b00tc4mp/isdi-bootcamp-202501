@@ -38,6 +38,6 @@ export const Profile = () => {
             </div>
         </form>
 
-        <Posts key={userId || 'default'} targetUserId={userId} />
+        <Posts targetUserId={userId} />
     </div>
 }

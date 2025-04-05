@@ -1,9 +1,12 @@
 import { logic } from '../logic/index.js'
-import {errors} from 'com'
+import { errors } from 'com'
+import { useContext } from '../context.js'
 
 const {SystemError, ValidationError} = errors
 
 export function Login({ onNavigateToRegister, onUserLoggedIn }) {
+    const {alert} = useContext()
+
     const handleLoginSubmit = event => {
         event.preventDefault()
 

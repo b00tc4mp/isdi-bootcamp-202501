@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Route, Routes, useLocation, useNavigate } from 'react-router'
 
 import { Posts } from './Posts.jsx'
 import { CreatePost } from './CreatePost.jsx'
@@ -6,13 +7,16 @@ import { Profile } from './Profile.jsx'
 import { Search } from './Search.jsx'
 
 import { logic } from '../../logic/index.js'
+import { useContext } from '../../context.js'
+
 import { errors } from 'com'
-import { Route, Routes, useLocation, useNavigate } from "react-router";
 
 const { SystemError, ValidationError } = errors
 
 export function Home({ onUserLoggedOut }) {
     const [username, setUsername] = useState('')
+
+    const {alert, confirm} = useContext()
 
     const navigate = useNavigate()
     const { pathname } = useLocation() // => variable to extract the pathname for the Searcher
@@ -44,15 +48,20 @@ export function Home({ onUserLoggedOut }) {
     }, [])
 
     const handleLogoutClick = () => {
-        try {
-            logic.logoutUser()
+        confirm('Logout?')
+            .then(accepted => {
+                if (accepted) {
+                    try {
+                        logic.logoutUser()
 
-            onUserLoggedOut()
-        } catch (error) {
-            console.error(error)
+                        onUserLoggedOut()
+                    } catch (error) {
+                        console.error(error)
 
-            alert(error.message)
-        }
+                        alert(error.message)
+                    }
+                }
+            })
     }
 
     const handleCreatePostClick = () => navigate('/create-post')

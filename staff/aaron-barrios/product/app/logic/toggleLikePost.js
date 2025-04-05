@@ -10,7 +10,7 @@ export const toggleLikePost = postId => {
 
     const { token } = data
 
-    return fetch(`http://localhost:8080/posts/${postId}/likes`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/likes`, {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${token}`

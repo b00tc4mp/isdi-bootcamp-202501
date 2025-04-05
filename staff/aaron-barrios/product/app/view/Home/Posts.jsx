@@ -5,16 +5,20 @@ import { Post } from './Post.jsx'
 import { logic } from '../../logic/index.js'
 import { errors } from 'com'
 
+import { useContext } from '../../context.js'
+
 const {SystemError, ValidationError} = errors
 
 export function Posts({targetUserId}) {
     const [posts, setPosts] = useState([])
 
+    const {alert} = useContext()
+
     useEffect(() => {
         console.debug('Index -> useEffect')
 
         loadPosts()
-    }, [])
+    }, [targetUserId])
 
     const loadPosts = () => {
         try {

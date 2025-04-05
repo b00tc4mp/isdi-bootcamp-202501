@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, Navigate } from 'react-router'
 
-import { Landing } from './view/Landing.jsx'
-import { Register } from './view/Register.jsx'
-import { Login } from './view/Login.jsx'
-import { Home } from './view/Home/index.jsx'
-import { Profile } from './view/Home/Profile.jsx'
-import { useParams } from 'react-router'
+import { Landing } from './view/Landing'
+import { Register } from './view/Register'
+import { Login } from './view/Login'
+import { Home } from './view/Home/index'
+import {Alert} from './view/Alert'
+import {Confirm} from './view/Confirm'
 
 import { logic } from './logic/index.js'
+import {Context} from './context.js'
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(null)
     const [showLanding, setShowLanding] = useState(true) // => state to show Landing once
+    const [alertMessage, setAlertMessage] = useState('')
+    const [confirmMessage, setConfirmMessage] = useState('')
+    const [confirmState, setConfirmState] = useState(null)
 
     const navigate = useNavigate()
 
@@ -56,35 +60,44 @@ function App() {
         navigate('/login')
     }
 
-    // const handlePollas = () => {
-    //     try {
-    //         const userId = logic.getUserId()
+    const handleShowAlert = message => setAlertMessage(message)
 
-    //         let params = useParams()
+    const handleAlertAccepted = () => setAlertMessage('')
 
-    //         const username = params.pathname
+    const handleShowConfirm = message => {
+        return new Promise((resolve, _reject) => {
+            setConfirmMessage(message)
+            setConfirmState({resolve})
+        })
+    }
 
-    //         navigate(`/${username}`, { state: { userId } })
-    //     } catch (error) {
-    //         console.error(error)
+    const handleConfirmAccepted = () => {
+        confirmState.resolve(true)
+        setConfirmMessage('')
+        setConfirmState(null)
+    }
 
-    //         alert(error.message)
-    //     }
-    // }
+    const handleConfirmCancelled = () => {
+        confirmState.resolve(false)
+        setConfirmMessage('')
+        setConfirmState(null)
+    }
 
-    return <>
+    return <Context value={{
+        alert: handleShowAlert,
+        confirm: handleShowConfirm
+    }}>
         {loggedIn !== null && <Routes>
-            <Route path="/landing" element={loggedIn ? <Navigate to="/" /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
-
             <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
 
             <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
 
-            <Route path="/*" element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to={`${showLanding ? '/landing' : '/login'}`} />} />
-
-            {/* <Route path="/:username" element={loggedIn ? <Profile onTest={handlePollas} /> : <Navigate to={`${showLanding ? '/landing' : '/login'}`} />} /> */}
+            <Route path='/*' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : showLanding ? <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} /> : <Navigate to='/login' />} />
         </Routes>}
-    </>
+
+        {alertMessage && <Alert title="Alert ⚠️" message={alertMessage} onAccepted={handleAlertAccepted}/>}
+        {confirmMessage && <Confirm title="Confirm ❔" message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled}/>}
+    </Context>
 }
 
 export default App

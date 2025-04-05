@@ -1,9 +1,13 @@
 import { logic } from '../../logic/index.js'
 import {errors} from 'com'
 
+import { useContext } from '../../context.js'
+
 const {SystemError, ValidationError} = errors
 
 export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
+    const {alert} = useContext()
+
     const handleCreatePostSubmit = event => {
         event.preventDefault()
 
@@ -53,9 +57,9 @@ export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
                 <input type="text" id="text" />
             </div>
 
+            <button onClick={handleCancelClick} type="button">Cancel</button>
             <button type="submit">Create</button>
         </form>
 
-        <a onClick={handleCancelClick}>Cancel</a>
     </section>
 }

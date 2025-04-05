@@ -6,13 +6,16 @@ import { Comment } from './Comment.jsx'
 import { logic } from '../../logic/index.js'
 import { formatedDate} from '../../utils/index.js'
 import {errors} from 'com'
-import * as util from "node:util";
+
+import { useContext } from '../../context.js'
 
 const { SystemError, ValidationError } = errors
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
     const [view, setView] = useState('')
     const [comments, setComments] = useState([])
+
+    const {alert, confirm} = useContext()
 
     const navigate = useNavigate()
 
@@ -39,19 +42,30 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     }
 
     const handleDeleteClick = () => {
-        try {
-            logic.deletePost(post.id)
-                .then(() => onPostDeleted())
-                .catch(error => {
-                    console.error(error)
+        confirm('Delete Post?')
+            .then(accepted => {
+                if (accepted) {
+                    try {
+                        logic.deletePost(post.id)
+                            .then(() => onPostDeleted())
+                            .catch(error => {
+                                console.error(error)
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
+                                if (error instanceof SystemError)
+                                    alert('⛔ ' + error.message)
+                                else
+                                    alert('⚠️ ' + error.message)
+                            })
+                    } catch (error) {
+                        console.error(error)
 
-            alert(error.message)
-        }
+                        if (error instanceof ValidationError)
+                            alert('❌ ' + error.message)
+                        else
+                            alert('⛔ ' + error.message)
+                    }
+                }
+            })
     }
 
     const handleEditTextClick = () => setView('edit-text')
@@ -92,7 +106,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
 
     return <article>
         <div className="post-header">
-            <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
+            <h3 onClick={handleUsernameClick} style={{cursor:"pointer"}}>{post.author.username}</h3>
             <time>{formatedDate(post.createdAt)}</time>
         </div>
         <img src={post.image} />

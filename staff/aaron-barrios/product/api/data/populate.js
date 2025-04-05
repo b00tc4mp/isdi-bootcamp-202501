@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import {data, User, Post} from '../data/index.js'
+import {data, User, Post, Comment, Chat, Message} from '../data/index.js'
 import bcrypt from 'bcryptjs'
 
 const  { MONGO_URL , MONGO_DB  } = process.env
@@ -23,10 +23,58 @@ data.connect(MONGO_URL, MONGO_DB) // => retorna una promesa
             })
             .then(([arnau, marc, masha, diver, john]) => {
                 return Post.insertMany([
-                    { author: arnau.id, image: 'https://media.giphy.com/media/sTczweWUTxLqg/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g', text: 'free day!', likes: [marc.id, diver.id], createdAt: new Date, modifiedAt: null },
-                    { author: masha.id, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW53Zjk1OWFrMjFyYmV3bDJqc3A5YjJhOHd1Nng3dnhpZjRlaXNtNSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/uQgXjl505BdYAv8H0X/giphy.gif', text: 'i am free!', likes: [], createdAt: new Date, modifiedAt: null },
-                    { author: john.id, image: 'https://media.giphy.com/media/yoJC2GnSClbPOkV0eA/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g', text: 'so happy for you... mf', likes: [masha.id], createdAt: new Date, modifiedAt: null }
+                    {   author: arnau.id,
+                        image: 'https://media.giphy.com/media/sTczweWUTxLqg/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+                        text: 'free day!',
+                        likes: [marc.id, diver.id],
+                        createdAt: new Date(2024, 11, 1),
+                        modifiedAt: new Date(2024, 11, 3),
+                        comments: [
+                            new Comment({author: arnau.id, text: 'My name is Arnau', createdAt: new Date(2024, 11, 5)})
+                        ]
+                    },
+                    {   author: masha.id,
+                        image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW53Zjk1OWFrMjFyYmV3bDJqc3A5YjJhOHd1Nng3dnhpZjRlaXNtNSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/uQgXjl505BdYAv8H0X/giphy.gif',
+                        text: 'i am free!',
+                        likes: [],
+                        createdAt: new Date(2024, 9, 19),
+                        comments: [
+                            new Comment({author: masha.id, text: 'Mashinsky...', createdAt: new Date(2024, 11, 5)}),
+                            new Comment({author: diver.id, text: 'Divertido!!', createdAt: new Date(2024, 11, 5)})
+                        ]
+                    },
+                    {   author: john.id,
+                        image: 'https://media.giphy.com/media/yoJC2GnSClbPOkV0eA/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+                        text: 'so happy for you... mf',
+                        likes: [masha.id],
+                        createdAt: new Date(2024, 5, 12),
+                        comments: [
+                            new Comment({author: john.id, text: 'Jou are gonna die...', createdAt: new Date(2024, 11, 5)}),
+                            new Comment({author: arnau.id, text: 'Nauito', createdAt: new Date(2024, 11, 5)}),
+                            new Comment({author: marc.id, text: 'Marquitus...', createdAt: new Date(2024, 11, 5)})
+                        ]
+                    }
                 ])
+                    .then(([arnauPost, mashaPost, johnPost]) => {
+                        const comment = new Comment ({author: marc.id, text:'Hello world!'})
+
+                        arnauPost.comments.push(comment)
+
+                        return arnauPost.save()
+                    })
+                    .then(() => {
+                        return Chat.create({
+                            participants: [arnau.id, marc.id],
+                            messages: [
+                                new Message({author: marc.id, text: 'Ke pacha'})
+                            ]
+                        })
+                    })
+                    .then(chat => {
+                        chat.messages.push(new Message({author: arnau.id, text: 'a que te meto tonto'}))
+
+                        return chat.save()
+                    })
             })
 
         // --- BASE DE DATOS DOCUMENTAL O NO RELACIONAL//NO SQL (MONGO DB) --- 
