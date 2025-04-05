@@ -4,13 +4,18 @@ import { useState, useEffect } from "react";
 
 import { logic } from "../../logic";
 
-const Posts = () => {
+const Posts = ({ targetUserId }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    console.debug("Posts => useEffect");
+
+    loadPosts();
+  }, [targetUserId]);
+
+  const loadPosts = () => {
     try {
-      logic
-        .getPosts()
+      (targetUserId ? logic.getUserPosts(targetUserId) : logic.getPosts())
         .then((posts) => setPosts(posts))
         .catch((error) => {
           console.error(error);
@@ -18,12 +23,11 @@ const Posts = () => {
           alert(error.message);
         });
     } catch (error) {
-      (error) => {
-        console.error(error);
-        alert(error.message);
-      };
+      console.error(error);
+
+      alert(error.message);
     }
-  }, []);
+  };
 
   const handleLikeUpdate = function () {
     try {
@@ -38,6 +42,7 @@ const Posts = () => {
     } catch (error) {
       (error) => {
         console.error(error);
+
         alert(error.message);
       };
     }
@@ -56,6 +61,7 @@ const Posts = () => {
     } catch (error) {
       (error) => {
         console.error(error);
+
         alert(error.message);
       };
     }
@@ -74,23 +80,25 @@ const Posts = () => {
     } catch (error) {
       (error) => {
         console.error(error);
+
         alert(error.message);
       };
     }
   };
+
   return (
     <div className="posts-container">
       {posts.toReversed().map((post) => {
         return (
           <Post
-            author={post.author.username}
+            author={post.author}
             key={post.id}
             image={post.image}
             text={post.text}
             createdAt={post.createdAt}
             modifiedAt={post.modifiedAt}
             liked={post.liked}
-            likes={post.likes}
+            likesCount={post.likesCount}
             id={post.id}
             onPostLikeUpdate={handleLikeUpdate}
             onDeletedPostSuccess={handleDeletedPostSuccess}
