@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { data, User, Post} from '../data/index.js'
+import { data, User, Post, Comment} from '../data/index.js'
 import bcrypt from 'bcryptjs'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -27,6 +27,14 @@ data.connect(MONGO_URL, MONGO_DB)
                     { author: marc.id, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW53Zjk1OWFrMjFyYmV3bDJqc3A5YjJhOHd1Nng3dnhpZjRlaXNtNSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/uQgXjl505BdYAv8H0X/giphy.gif', text: 'i am free!', likes: []},
                     { author: eyla.id, image: 'https://media.giphy.com/media/yoJC2GnSClbPOkV0eA/giphy.gif?cid=790b7611mnwf959ak21rbewl2jsp9b2a8wu6x7vxif4eism5&ep=v1_gifs_trending&rid=giphy.gif&ct=g', text: 'so happy for you... mf', likes: []}
                 ])
+                    .then(([arnauPost, marcPost, eylaPost])=>{
+                        const comment = new Comment({ author: arnau.id , text: 'Ta guapo eso tt' })
+
+                        arnauPost.comments.push(comment)
+
+                        return arnauPost.save()
+
+                    })
             })
     })
     .finally(() => data.disconnect())

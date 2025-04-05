@@ -50,3 +50,26 @@ posts.patch('/:postId/text', authHandler, jsonBodyParser, withErrorHandling((req
         .then(() => res.status(204).send())
 }))
 
+// Endpoint para añadir un comentario
+posts.post('/:postId/comments', authHandler, jsonBodyParser,  withErrorHandling((req, res) => {
+    const { userId, params: { postId }, body: { text } } = req
+
+    return logic.addComment(userId, postId, text)
+        .then(() => res.status(201).send())
+}))
+
+// Endpoint para eliminar un comentario
+posts.delete('/:postId/comments/:commentId', authHandler,  withErrorHandling((req, res) => {
+    const { userId, params: { postId, commentId } } = req
+
+    return logic.deleteComments(userId, postId, commentId)
+        .then(() => res.status(204).send())
+}))
+
+// Endpoint para obtener los comentarios
+posts.get('/:postId/comments', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId, params: { postId } } = req
+
+    return logic.getComments(userId, postId)
+        .then((comments) => res.json(comments))
+}))

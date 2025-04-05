@@ -11,9 +11,13 @@
         /* padding, primer dato en vertical y segundo en horizontal */
         padding: 0 1rem;
         box-sizing: border-box; /* para que el contenido no se desplaze fuera de la pantalla */
-
+   
     }
-
+ 
+    .homeClick, .profileClick{
+        cursor: pointer;
+    }
+   
     footer {
         position: fixed;
         bottom: 0;

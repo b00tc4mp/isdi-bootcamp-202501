@@ -36,6 +36,7 @@ users.get('/self/username',authHandler, withErrorHandling((req, res) => {
         .then(username => res.json({ username }))
 }))
 
+// Endpoint para obtener los psots
 users.get('/:targetUserId/posts', authHandler, withErrorHandling((req, res) => {
     const { userId, params: { targetUserId } } = req
 

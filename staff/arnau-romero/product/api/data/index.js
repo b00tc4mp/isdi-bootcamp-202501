@@ -1,6 +1,6 @@
 import mongoose, { Types } from 'mongoose'
 import { errors } from 'com'
-import { User, Post } from './models.js'
+import { User, Post, Comment } from './models.js'
 
 
 
@@ -20,5 +20,6 @@ const data = {
 export {
     data,
     User,
-    Post
+    Post,
+    Comment
 }

@@ -9,10 +9,18 @@ import { updatePostText } from './updatePostText.js'
 import { toggleLikePost } from './toggleLikePost.js'
 import { getUserPosts } from './getUserPosts.js'
 
+import { getComments } from './getComments.js'
+import { deleteComments } from './deleteComments.js'
+import { addComment } from './addComment.js'
+
 export const logic ={
     registerUser,
     authenticateUser,
     getUserUsername,
+
+    getComments,
+    deleteComments,
+    addComment,
 
     createPost,
     getPosts,
