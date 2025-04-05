@@ -1,6 +1,8 @@
 import { logic } from '../../logic/index'
+import { useContext } from '../../context'
 
 export function Register({ onNavigateToLogin, onUserRegistered }) {
+    const { alert } = useContext()
 
     const handleUserRegistered = event => {
         event.preventDefault()

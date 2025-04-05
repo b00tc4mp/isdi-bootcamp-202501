@@ -2,8 +2,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { logic } from "../../../logic/index"
+import { useContext } from '../../../context'
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
+    const { alert, confirm } = useContext()
+
     const [view, setView] = useState('')
 
     const navigate = useNavigate()
@@ -25,20 +28,23 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     }
 
     const handleDeleteClick = () => {
-        if (confirm('Delete post?'))
-            try {
-                logic.deletePost(post.id)
-                    .then(() => onPostDeleted())
-                    .catch(error => {
+        confirm('Delete post?')
+            .then(accepted => {
+                if (accepted)
+                    try {
+                        logic.deletePost(post.id)
+                            .then(() => onPostDeleted())
+                            .catch(error => {
+                                console.error(error)
+
+                                alert(error.message)
+                            })
+                    } catch (error) {
                         console.error(error)
 
                         alert(error.message)
-                    })
-            } catch (error) {
-                console.error(error)
-
-                alert(error.message)
-            }
+                    }
+            })
     }
 
     const handleEditTextClick = () => setView('edit-text')
@@ -89,7 +95,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
 
         <section className="post-underline">
             <p>{post.text}</p>
-            <button className="like" onClick={() => handleToggleLikePost()}>{`${post.liked ? '❤️' : '🤍'} ${post.likesCount}`}</button>
+            <button className="like color-black" onClick={() => handleToggleLikePost()}>{`${post.liked ? '❤️' : '🤍'} ${post.likesCount}`}</button>
 
             {post.own && <button onClick={handleEditTextClick}>✏️</button>}
 

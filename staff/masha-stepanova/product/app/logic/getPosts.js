@@ -6,7 +6,7 @@ const { SystemError } = errors
 export const getPosts = () => {
     const { token } = data
 
-    return fetch('http://localhost:8080/posts', {
+    return fetch(`${import.meta.env.VITE_API_URL}/posts`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`

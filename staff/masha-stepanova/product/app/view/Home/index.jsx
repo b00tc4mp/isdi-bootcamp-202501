@@ -8,7 +8,11 @@ import { Posts } from './components/Posts.jsx'
 import { CreatePost } from './components/CreatePost.jsx'
 import { Search } from './components/Search.jsx'
 
-export function Home({ onUserLoggedOut /*, onNavigateToProfile */ }) {
+import { useContext } from '../../context.js'
+
+export function Home({ onUserLoggedOut }) {
+    const { alert, confirm } = useContext()
+
     const [username, setUsername] = useState('')
 
     const navigate = useNavigate()
