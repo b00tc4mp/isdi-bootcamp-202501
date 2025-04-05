@@ -2,9 +2,8 @@
 
 ## Intro
 
-Being submerged in a delinquent lifestyle leads into being incarcerate.
-In each process you are freed mysteriously; so you lead to meet your savior.
-Despite a light ray approached the issue will not develop as you might think it will...
+Tzend is a fitness app designed for both beginners and experienced users, offering access to a wide range of workouts and training routines. Beyond exploration, users can also create their own personalized exercises and routines, adding a unique and tailored experience. Additionally, Tzend includes a powerful progress tracking system that helps visualize individual transformation and performance over time.
+
 
 ![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3Btd2d4czU4aXdjdGFhb3F6OXF4ZWd2N3lubTJrMzBzYjVlZXRiciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3orieKRjkyDUti23sY/giphy.gif)
 
@@ -12,9 +11,21 @@ Despite a light ray approached the issue will not develop as you might think it 
 
 ### Use Cases
 
-User
+Admin
+- Accept/Decline workout
+- Accept/Decline routine
+
+User (Anonym)
+- Explore public/suggested content (Home page)
+- Complete training test (Home page)
+- View recommended workouts && routines (Home page)
+- Look up for routines (Routines page)
+- View individual routine details (Routine detail page)
+- Look up for workouts (Workouts page)
+- View individual workout details (Workout detail page)
+
+User (Registered)
 - Update/change user data
-- Switch player avatar
 
 
 ### UXUI Design 
@@ -39,9 +50,21 @@ User
 
 ### Data model
 
-User 
+Admin
+- role(string, enum: 1 (anonymous) | 2 (registered) | 3 (admin))
+- id (UUID)
+- alias
+- password
+- createdAt
+
+Anonym User
+- role(string, enum: 1 (anonymous) | 2 (registered) | 3 (admin))
+- id (temporal UUID) 
+- createdAt
+
+User (Registered)
 · USER DATA
-- role (string, enum: 1 (anonymous) | 2 (registered) | 3 (admin))
+- role(string, enum: 1 (anonymous) | 2 (registered) | 3 (admin))
 - id(UUID)
 - name (string)
 - last name (string)
@@ -49,13 +72,14 @@ User
 - password (hashed string) (bcrypt)
 - level (string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
 - interests ( [strings]) // enum: 1 (calysthenics) | 2: (strength) | 3: (cardio)...
+- createdAt
+- updatedAt
 
-· PHYSICAL DATA
+· PHYSICAL DATA (FUTURE INTEGRATION)
 - Gender (string, enum: 1 (male) | 2 (female) | 3 (other))
 - Height (number)
 - weight (number)
 - Skin folds([number])
-- lifestyle (?) 
 
 Routine
 - id (UUID)
@@ -84,16 +108,22 @@ Workout
 
 
 
-### Techs 
+### Technologies
 
 - HTML/CSS/JS (...)
+- TypeScript
 - React (...)
 - Node (...)
 - Express (...)
 - MongoDB/SH (...)
 - Mocha & Chai (...)
+- Tailwind
 - [...]
 
 ### Test Coverage
 
 [...]
+
+## Planning
+
+[Issue Tracking](https://github.com/b00tc4mp/isdi-bootcamp-202501/issues/70)
