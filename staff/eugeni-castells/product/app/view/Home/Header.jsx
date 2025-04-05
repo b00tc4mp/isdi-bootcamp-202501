@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import HamburgerButton from "./HamburgerButton";
 import { logic } from "../../logic";
 
-const Header = ({ onMenuNavigation }) => {
+const Header = ({ onMenuNavigation, onUserClick }) => {
   const [loggedInUserName, setLoggedInUserName] = useState("");
 
+  const handleUserClick = () => {
+    onUserClick();
+  };
   const handleMenuNavigation = () => {
     onMenuNavigation();
   };
@@ -17,7 +20,7 @@ const Header = ({ onMenuNavigation }) => {
           console.error;
           alert(error.message);
         })
-        .then((user) => setLoggedInUserName(user.name));
+        .then((user) => setLoggedInUserName(user.username));
     } catch (error) {
       console.log(error);
 
@@ -33,7 +36,7 @@ const Header = ({ onMenuNavigation }) => {
         className="header-logo"
       />
 
-      <h2>Hello, {loggedInUserName}!</h2>
+      <h2 onClick={handleUserClick}>Hello, {loggedInUserName}!</h2>
 
       <HamburgerButton onMenuNavigation={handleMenuNavigation} />
     </header>
