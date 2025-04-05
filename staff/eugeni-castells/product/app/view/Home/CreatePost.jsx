@@ -28,7 +28,9 @@ function CreatePost({ onPostCreationSubmit, onCancelClick }) {
         <input type="text" name="text" placeholder="text" />
         <div className="create-post-button-wrapper">
           <button type="submit">Create Post</button>
-          <button onClick={onCancelClick}>Cancel</button>
+          <button type="button" onClick={onCancelClick}>
+            Cancel
+          </button>
         </div>
       </form>
     </div>
