@@ -23,12 +23,12 @@ export const Search = () => {
 
     return <>
         <div>
-            <h1>Search</h1>
+            <h1>SEARCH</h1>
 
             <form onSubmit={handleSearch} className='form-text'>
-                <input type="text" name="query" id="query" defaultValue={query} className="input2" />
+                <input type="text" name="query" id="query" placeholder="TEXT" defaultValue={query} className="input" />
 
-                <button type="submit">Search</button>
+                <button type="submit">SEARCH</button>
             </form>
         </div>
 

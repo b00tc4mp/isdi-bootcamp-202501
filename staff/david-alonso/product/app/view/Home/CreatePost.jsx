@@ -30,14 +30,14 @@ export function CreatePost({ onPostCreated, onPostCreateCancelled }) {
     console.debug('CreatePost -> render')
 
     return <section>
-        <div className="loginRegister">
+        <div>
             <h1>NEW POST</h1>
 
             <form onSubmit={handleFormSubmit} className='form-text'>
 
-                <input type="url" id="image" placeholder=" Image" className="input" />
+                <input type="url" id="image" placeholder=" IMAGE" className="input" />
 
-                <input type="text" id="text" placeholder=" Text" className="input" />
+                <input type="text" id="text" placeholder=" TEXT" className="input" />
 
                 <button type="submit" >CREATE</button>
             </form>

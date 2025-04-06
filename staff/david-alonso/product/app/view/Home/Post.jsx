@@ -87,7 +87,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
 
             {view === 'edit-text' && <form className='form-text' onSubmit={handleEditTextSubmit}>
                 <label htmlFor="text">Text Post</label>
-                <input type="text" id="text" defaultValue={post.text} className='input2' />
+                <input type="text" id="text" defaultValue={post.text} className='input' />
 
                 <button type="submit">Save</button>
 

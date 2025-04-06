@@ -55,11 +55,11 @@ function App() {
         navigate('/')
     }
 
-    // Cambia hacia la pagina de Login al cerrar sesion
+    // Cambia hacia la pagina de Landing al cerrar sesion
     const handleUserLoggedOut = () => {
         setShowLanding(false)
         setLoggedIn(false)
-        navigate('/register')
+        navigate('/landing')
     }
 
     console.debug('App -> render')

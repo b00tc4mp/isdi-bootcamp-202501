@@ -52,7 +52,7 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
         <img src="./view/images/MX.jpg" className="fondo" />
 
-        <div className="formRegister">
+        <div className="form-style">
             <h1>CREATE ACCOUNT</h1>
 
             <form onSubmit={handleRegisterSubmit} >
@@ -69,7 +69,7 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
             </form>
 
             <div >
-                <a onClick={handleLoginClick} className="anchorLogin">LOGIN</a>
+                <a onClick={handleLoginClick} className="anchor-form">LOGIN</a>
             </div>
         </div>
 
