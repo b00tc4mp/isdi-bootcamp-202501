@@ -6,11 +6,10 @@ const { SystemError } = errors;
 export const updateUser = (userInfo) => {
   const { token } = data;
 
-  const { name, username, email, password } = userInfo;
+  const { name, username, email } = userInfo;
 
   validate.username(username, "username");
   validate.email(email, "email");
-  validate.password(password, "password");
   validate.text(name, "name");
   validate.minLength(name, 2, "name min length");
   validate.maxLength(name, 20, "nameMaxLength");

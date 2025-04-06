@@ -13,6 +13,7 @@ import { Search } from "./Search.jsx";
 function Home({ onLogoutSuccess }) {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [loggedInUserName, setLoggedInUserName] = useState("");
+  const [loggedInUsernameChanged, setLoggedInUsernameChanged] = useState(false);
 
   useEffect(() => {
     try {
@@ -28,7 +29,8 @@ function Home({ onLogoutSuccess }) {
 
       alert(error.message);
     }
-  }, []);
+  }, [loggedInUsernameChanged]);
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -66,6 +68,9 @@ function Home({ onLogoutSuccess }) {
     navigate("/");
   };
 
+  const handleLoggedInUsernameChange = () => {
+    setLoggedInUsernameChanged(!loggedInUsernameChanged);
+  };
   return (
     <>
       <Header
@@ -84,7 +89,12 @@ function Home({ onLogoutSuccess }) {
         <Routes>
           <Route
             path="/change-user-info"
-            element={<ChangeUserInfo onHomeNavigation={handleHomeNavigation} />}
+            element={
+              <ChangeUserInfo
+                onHomeNavigation={handleHomeNavigation}
+                onAccepted={handleLoggedInUsernameChange}
+              />
+            }
           />
           <Route path="/" element={<Posts />} />
           <Route path="/:username" element={<Profile />} />

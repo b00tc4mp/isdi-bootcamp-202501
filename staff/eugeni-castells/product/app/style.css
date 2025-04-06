@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
-html {
-  --bg-color: #11365b;
-  --primary-color: #fe8c00;
-  --secondary-color: #6e8aa3;
-  --color: #fffff3;
-  --screen-padding: 2rem;
-}
+@layer base {
+  html {
+    --bg-color: #11365b;
+    --primary-color: #fe8c00;
+    --secondary-color: #6e8aa3;
+    --color: #fffff3;
+    --screen-padding: 2rem;
 
-body {
-  box-sizing: border-box;
-  background-color: var(--bg-color);
-  background-color: var(--bg-color);
-  padding-top: 100px;
-  margin: 0;
-}
+    @apply box-border;
+  }
 
-.screen-container {
-  padding: var(--screen-padding);
+  body {
+    @apply bg-[var(--bg-color)] pt-[100px] m-0;
+  }
+
+  .screen-container {
+    @apply p-[var(--screen-padding)];
+  }
 }

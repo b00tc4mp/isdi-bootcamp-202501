@@ -2,39 +2,49 @@ import { useState, useEffect } from "react";
 import { logic } from "../../logic";
 import "./ChangeUserInfo.css";
 
-function ChangeUserInfo({ onHomeNavigation }) {
+function ChangeUserInfo({ onHomeNavigation, onAccepted }) {
   const [userInfo, setUserInfo] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const {
-      name: { value: name },
-      email: { value: email },
-      username: { value: username },
-      password: { value: password },
-    } = e.target;
-
-    const updatedUser = {
-      name,
-      email,
-      username,
-      password,
-    };
-
-    logic
-      .updateUser(updatedUser)
-      .catch((error) => {
-        console.error(error);
-
-        alert(error.message);
-      })
-      .then(() => {
-        handleHomeNavigation();
-      });
+  const handleSubmitSuccess = () => {
+    onHomeNavigation();
   };
 
-  const handleHomeNavigation = () => onHomeNavigation();
+  const handleAccept = () => {
+    onAccepted();
+  };
+  const handleSubmit = (e) => {
+    try {
+      e.preventDefault();
+
+      const {
+        name: { value: name },
+        email: { value: email },
+        username: { value: username },
+      } = e.target;
+
+      const updatedUser = {
+        name,
+        email,
+        username,
+      };
+
+      return logic
+        .updateUser(updatedUser)
+        .catch((error) => {
+          console.error(error);
+
+          alert(error.message);
+        })
+        .then(() => {
+          handleSubmitSuccess();
+          handleAccept();
+        });
+    } catch (error) {
+      console.error(error);
+
+      alert(error.message);
+    }
+  };
 
   useEffect(() => {
     try {
@@ -54,44 +64,66 @@ function ChangeUserInfo({ onHomeNavigation }) {
   }, []);
 
   return (
-    <div className="change-user-info-container">
-      <div className="change-user-info-block">
-        <h3>User Info</h3>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">Name</label>
+    <div className="w-full flex justify-center">
+      <div className="bg-[var(--primary-color)] p-8 w-[45%]">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-6 text-[var(--bg-color)]"
+        >
+          <div className="flex justify-between gap-2 w-full">
+            <label htmlFor="name" className="flex-1">
+              Name
+            </label>
             {userInfo.name && (
-              <input type="text" name="name" defaultValue={userInfo.name} />
+              <input
+                type="text"
+                name="name"
+                defaultValue={userInfo.name}
+                className="flex-1 border-2 border-[var(--bg-color)] p-2 "
+              />
             )}
           </div>
-          <div>
-            <label htmlFor="email">Email</label>
+          <div className="flex justify-between gap-2 w-full">
+            <label htmlFor="email" className="flex-1">
+              Email
+            </label>
             {userInfo.email && (
-              <input type="text" name="email" defaultValue={userInfo.email} />
+              <input
+                type="text"
+                name="email"
+                defaultValue={userInfo.email}
+                className="flex-1 border-2 border-[var(--bg-color)] p-2 "
+              />
             )}
           </div>
-          <div>
-            <label htmlFor="username">Username</label>
+          <div className="flex justify-between gap-2 w-full">
+            <label htmlFor="username" className="flex-1">
+              Username
+            </label>
             {userInfo.username && (
               <input
                 type="text"
                 name="username"
                 defaultValue={userInfo.username}
+                className="flex-1 border-2 border-[var(--bg-color)] p-2 "
               />
             )}
           </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            {userInfo.password && (
-              <input
-                type="text"
-                name="password"
-                defaultValue={userInfo.password}
-              />
-            )}
+          <div className="flex justify-between gap-4 mt-4">
+            <button
+              type="submit"
+              className="bg-[var(--primary-color)] text-[var(--bg-color)] px-4 py-2 border-2 border-solid border-[var(--bg-color)] hover:bg-[var(--bg-color)] hover:text-[var(--primary-color)] hover:cursor-pointer"
+            >
+              Accept
+            </button>
+            <button
+              type="button"
+              onClick={handleSubmitSuccess}
+              className="bg-transparent text-[var(--primary-color)] border-2 border-solid border-[var(--primary-color)] px-4 py-2"
+            >
+              Cancel
+            </button>
           </div>
-          <button type="submit">Accept</button>
-          <button onClick={handleHomeNavigation}>Cancel</button>
         </form>
       </div>
     </div>
