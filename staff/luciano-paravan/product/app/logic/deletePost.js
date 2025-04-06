@@ -3,7 +3,7 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-export const deletePost = (postId) => {
+export const deletePost = postId => {
     validate.id(postId, 'postId')
 
     const { token } = data
@@ -11,7 +11,7 @@ export const deletePost = (postId) => {
     return fetch(`http://localhost:8080/posts/${postId}`, {
         method: 'DELETE',
         headers: {
-            Authorization: `Bearer: ${token}`
+            Authorization: `Bearer ${token}`
         } //en este caso no se envia ningun json
     })
         .catch(error => { throw new SystemError(error.message) })

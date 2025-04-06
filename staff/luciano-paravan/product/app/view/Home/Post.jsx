@@ -1,9 +1,13 @@
 import { useState } from 'react'
-
+import { useNavigate } from 'react-router'
 import { logic } from '../../logic/index.js'
+
+import './Post.css'
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPostTextEdited }) {
     const [view, setView] = useState('')
+
+    const navigate = useNavigate()
 
     const handleToggleLikeClick = () => {
         try {
@@ -38,8 +42,8 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
         if (confirm('Delete post?')) {
             try {
                 logic.deletePost(post.id)
-                    .then(()=>onPostDeleted())
-                    .catch(error=>{
+                    .then(() => onPostDeleted())
+                    .catch(error => {
                         console.error(error)
 
                         alert(error.message)
@@ -82,8 +86,12 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
             
     }
 
+    const handleUsernameClick = () => navigate(`/${post.author.username}`, { state: { userId: post.author.id} })
+
+    console.debug('Post -> render')
+
     return <article className="post">
-    <h3>{post.author.username}</h3>
+    <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
 
     <img src={post.image} />
 

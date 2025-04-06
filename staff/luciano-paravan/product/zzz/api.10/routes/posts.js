@@ -22,13 +22,13 @@ posts.get('/', authHandler, withErrorHandling((req, res) => {
         .then(posts => res.json(posts))
 }))
 
-posts.delete('/:postId', authHandler, withErrorHandling((req, res) => {
+posts.delete('/:postId', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
 
     const { postId } = req.params
 
     return logic.deletePost(userId, postId)
-        .then(() => res.status(204).send()) //204 ha ido todo bien y no hay body que responder, no hay contenido de respuesta.
+        .then(post => res.status(204).send()) //204 ha ido todo bien y no hay body que responder, no hay contenido de respuesta.
 }))
 
 posts.patch('/:postId/likes', authHandler, withErrorHandling((req, res) => {

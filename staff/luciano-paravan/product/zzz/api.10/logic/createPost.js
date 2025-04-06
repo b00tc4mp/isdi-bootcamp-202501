@@ -10,7 +10,7 @@ export const createPost = (userId, image, text) => {
     validate.text(text)
     validate.maxLength(text, 500, 'text')
 
-    return User.findById(userId).lean() //el lean acelera las busquedas porque no trae un modelo, trae un documento
+    return User.findById(userId).leand() //el lean acelera las busquedas porque no trae un modelo, trae un documento
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')

@@ -1,7 +1,11 @@
 article {
-    h3, p, .post-footer {
+
+    h3,
+    p,
+    .post-footer {
         padding: var(--padding-y) var(--padding-x);
     }
+
     img {
         width: 100%;
     }

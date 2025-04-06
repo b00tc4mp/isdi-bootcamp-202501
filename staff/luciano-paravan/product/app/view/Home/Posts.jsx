@@ -4,74 +4,36 @@ import { Post } from './Post.jsx'
 
 import { logic } from '../../logic/index.js'
 
-export function Posts() {
+export function Posts({ targetUserId }) {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
         console.debug('Post -> useEffect')
 
+        loadPosts()
+    }, [])
+    
+    const loadPosts = () => {
         try {
-            logic.getPosts()
+            (targetUserId ? logic.getUserPosts(targetUserId) : logic.getPosts())
                 .then(posts => setPosts(posts))
                 .catch(error => {
                     console.error(error)
-
+    
                     alert(error.message)
                 })
         } catch (error) {
             console.error(error)
-
-            alert(error.message)
-        }
-    },[])
-
-    const handlePostLikeToggled = () => {
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
+    
             alert(error.message)
         }
     }
 
-    const handlePostDeleted = () => {
-        try {
-            logic.getPosts() //en el getPosts de logic, retorno posts por eso es que los recibo aca
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
+    const handlePostLikeToggled = () => loadPosts()
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-            
-            alert(error.message)
-        }
-    }
+    const handlePostDeleted = () => loadPosts()
 
-    const handlePostTextEdited = () => {
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
+    const handlePostTextEdited = () => loadPosts()
 
     /*const handleSavePost = () => {
         try {
