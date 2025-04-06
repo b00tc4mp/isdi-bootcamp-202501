@@ -5,12 +5,20 @@ import { Landing } from './view/Landing.jsx'
 import { Register } from './view/Register.jsx'
 import { Login } from './view/Login.jsx'
 import { Home } from './view/Home/index.jsx'
+import { Alert } from './view/Alert.jsx'
+import { Confirm } from './view/Confirm.jsx'
+
 
 import { logic } from './logic/index.js'
+import { Context } from './context'
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(null)
     const [showLanding, setShowLanding] = useState(true)
+    const [alertMessage, setAlertMessage] = useState('')
+    const [confirmMessage, setConfirmMessage] = useState('')
+    const [confirmState, setConfirmState] = useState(null)
+
 
     const navigate = useNavigate()
 
@@ -53,19 +61,48 @@ function App() {
         navigate('/login')
     }
 
+    const handleShowAlert = messsage => setAlertMessage(messsage)
+
+    const handleAlertAccepted = () => setAlertMessage('')
+
+    const handleShowConfirm = messsage => {
+        return new Promise((resolve, _reject) => {
+            setConfirmMessage(messsage)
+            setConfirmState({ resolve })
+        })
+    }
+
+    const handleConfirmAccepted = () => {
+        confirmState.resolve(true)
+        setConfirmMessage('')
+        setConfirmState(null)
+    }
+
+    const handleConfirmCancelled = () => {
+        confirmState.resolve(false)
+        setConfirmMessage('')
+        setConfirmMessage(null)
+    }
+
     console.debug('App -> render')
 
-    return <>
-        {loggedIn !== null && <Routes>
-            <Route path="/landing" element={loggedIn ? <Navigate to="/" /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
+    return <Context value={{
+        alert: handleShowAlert,
+        confirm: handleShowConfirm
+    }}>
 
+
+        {loggedIn !== null && <Routes>
             <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
 
             <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
 
-            <Route path='/*' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to={`${showLanding ? '/landing' : '/login'}`} />} />
+            <Route path='/*' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : showLanding ? <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} /> : <Navigate to='/login' />} />
         </Routes>}
-    </>
+
+        {alertMessage && <Alert title="⚠️" message={alertMessage} onAccepted={handleAlertAccepted} />}
+        {confirmMessage && <Confirm title="❔" message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
+    </Context>
 }
 
 export default App
