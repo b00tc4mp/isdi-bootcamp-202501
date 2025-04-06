@@ -1,7 +1,13 @@
 import { useNavigate, useLocation } from "react-router";
 import HamburgerButton from "./HamburgerButton";
 
-const Header = ({ onMenuNavigation, onUserClick, loggedInUserName }) => {
+const Header = ({
+  onMenuNavigation,
+  onUserClick,
+  loggedInUserName,
+  onHomeNavigation,
+  onSearchNavigation,
+}) => {
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
@@ -13,7 +19,11 @@ const Header = ({ onMenuNavigation, onUserClick, loggedInUserName }) => {
     onMenuNavigation();
   };
   const handleSearchClick = () => {
-    navigate("/search");
+    onSearchNavigation();
+  };
+
+  const handleHomeNavigation = () => {
+    onHomeNavigation();
   };
 
   return (
@@ -22,6 +32,7 @@ const Header = ({ onMenuNavigation, onUserClick, loggedInUserName }) => {
         src="https://www.shutterstock.com/image-vector/castle-logo-design-template-emblem-600nw-2483948833.jpg"
         alt="logo"
         className="header-logo"
+        onClick={handleHomeNavigation}
       />
 
       <h2 onClick={handleUserClick}>Hello, {loggedInUserName}!</h2>

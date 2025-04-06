@@ -71,12 +71,18 @@ function Home({ onLogoutSuccess }) {
   const handleLoggedInUsernameChange = () => {
     setLoggedInUsernameChanged(!loggedInUsernameChanged);
   };
+
+  const handleSearchNavigation = () => {
+    navigate("/search");
+  };
   return (
     <>
       <Header
         onMenuNavigation={handleMenuNavigation}
         onUserClick={handleUserClick}
         loggedInUserName={loggedInUserName}
+        onHomeNavigation={handleHomeNavigation}
+        onSearchNavigation={handleSearchNavigation}
       />
 
       <main>
