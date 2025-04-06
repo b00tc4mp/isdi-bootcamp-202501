@@ -1,144 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import 'tailwindcss';
 
-html {
-    font-family: "Merriweather";
-    background-color: var(--bg-color);
-    color: var(--color);
+@layer base {
+    html {
+        --bg-color: #BDDEEE;
+        --color: black;
+        --color-high: #92ADCA;
+        --color-low: grey;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
 
-    --bg-color: #BDDEEE;
-    --color: black;
-    --color-high: #92ADCA;
-    --color-low: grey;
-    --padding-x: 1rem;
-    --padding-y: .25rem;
-}
-
-body {
-    margin: 0;
-}
-
-a {
-    cursor: pointer;
-    transition: font-size .2s;
-}
-
-@media (min-width: 1024px) {
-    a:hover {
-        color: var(--color-high);
-        font-size: 2rem;
-    }
-}
-
-button {
-    cursor: pointer;
-    background-color: var(--color);
-    color: var(--bg-color);
-    border: 0;
-    font-family: inherit;
-    font-size: 1rem;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-
-    .field {
-        display: flex;
-        flex-direction: column;
-        gap: var(--padding-y);
-    }
-}
-
-input {
-    background-color: var(--bg-color);
-    color: var(--color);
-    /* border-width: 2px;
-    border-style: solid;
-    border-color: var(--color); */
-    border: 2px solid var(--color);
-    outline: none;
-    font-family: inherit;
-    font-size: 1rem;
-}
-
-input:focus {
-    background-color: var(--bg-color);
-    border-color: var(--color);
-}
-
-input::placeholder {
-    color: var(--color-low)
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-    background-color: var(--bg-color);
-    -webkit-text-fill-color: var(--color);
-    -webkit-box-shadow: 0 0 0px 1000px var(--bg-color) inset;
-    transition: background-color 5000s ease-in-out 0s;
-}
-
-h1,
-h2 {
-    margin: 0;
-}
-
-main {
-    margin: 3rem 0;
-}
-
-.landing {
-    width: 100%;
-    height: 100vh; /* Hace que ocupe toda la pantalla */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-}
-
-.landing .image-container {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Centra la imagen */
-    margin-bottom: 20px; /* Espacio entre la imagen y el título */
-}
-
-.landing .image-container {
-    width: 230px; /* Ancho del contenedor de la imagen */
-    height: 150px; /* Alto del contenedor de la imagen */
-    background-image: url('/Users/ramos13/workspace/isdi-bootcamp-202501/staff/marc-ramos/product/app/images/ballena.png'); /* Ruta de la imagen */
-    background-size: cover; /* Ajusta la imagen al contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    margin-bottom: 20px; /* Espacio entre la imagen y el título */
-}
-
-.landing h1 {
-    margin: 0;
-    font-size: 3rem; /* Ajusta el tamaño del texto */
-    color: #333; /* Color del texto */
-}
-
-@media (max-width: 768px) {
-    .landing .image-container img {
-        width: 100px; /* Imagen más pequeña en pantallas pequeñas */
+        @apply font-['Merriweather'] bg-[var(--bg-color)] text-[var(--color)];
     }
 
-    .landing h1 {
-        font-size: 2rem; /* Ajusta el tamaño del texto en pantallas pequeñas */
-    }
-}
-
-@media (max-width: 480px) {
-    .landing .image-container img {
-        width: 80px; /* Imagen aún más pequeña en pantallas muy pequeñas */
+    body {
+        @apply m-0;
     }
 
-    .landing h1 {
-        font-size: 1.5rem; /* Ajusta aún más el tamaño del texto en pantallas muy pequeñas */
+    a {
+        @apply cursor-pointer transition-[font-size] duration-300 min-[1040px]:hover:text-[var(--color-high)] min-[1040px]:hover:text-[2rem];
+    }
+
+    button {
+        @apply cursor-pointer bg-[var(--color)] text-[var(--bg-color)] border-0 font-['Merriweather'] text-base px-4 py-2;
+    }
+
+    button.secondary {
+        @apply bg-[var(--color-low)] text-[var(--bg-color)] border border-[var(--color-low)] w-full;
+    }
+
+    form {
+        @apply flex flex-col gap-2;
+
+        .field {
+            @apply flex flex-col gap-[var(--padding-y)];
+        }
+    }
+
+    input {
+        @apply bg-[var(--bg-color)] text-[var(--color)] border-2 border-[var(--color)] outline-none font-['Merriweather'] text-base placeholder:text-[var(--color-low)];
+    }
+
+    input:focus {
+        @apply border-[var(--color)];
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        background-color: var(--bg-color);
+        -webkit-text-fill-color: var(--color);
+        -webkit-box-shadow: 0 0 0px 1000px var(--bg-color) inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    h1,
+    h2 {
+        @apply m-0;
+    }
+
+    main {
+        @apply my-12;
     }
 }

@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router'
 
-import { Posts } from './Posts.jsx'
-import { CreatePost }  from './CreatePost.jsx'
-import { Profile } from './Profile.jsx'
-import { Search } from './Search.jsx'
+import { Posts } from './Posts'
+import { CreatePost }  from './CreatePost'
+import { Profile } from './Profile'
+import { Search } from './Search'
 
-import { logic } from '../../logic/index.js'
-
-import './index.css'
+import { logic } from '../../logic'
+import { useContext } from '../../context'
 
 export function Home({ onUserLoggedOut }) {
+    const { alert, confirm } = useContext()
+
     const [username, setUsername] = useState('')
 
     const navigate = useNavigate()
@@ -35,15 +36,19 @@ export function Home({ onUserLoggedOut }) {
     }, [])
 
     const handleLogoutClick = () => {
-        try {
-            logic.logoutUser()
-
-            onUserLoggedOut()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
+        confirm('Logout?')
+            .then(accepted => {
+                if (accepted)
+                    try {
+                        logic.logoutUser()
+            
+                        onUserLoggedOut()
+                    } catch (error) {
+                        console.error(error)
+            
+                        alert(error.message)
+                    }
+            })
     }
 
     const handleAddPostClick = () => navigate('create-post')
@@ -70,28 +75,28 @@ export function Home({ onUserLoggedOut }) {
 
     console.debug('Home -> render')
 
-    return <div className="Home">
-        <header>
+    return <div className="min-h-screen">
+          <header className="text-3xl fixed top-0 w-full flex justify-between items-center bg-[var(--color-high)] px-[var(--padding-x)] py-[var(--padding-y)] box-border z-10">
             <h1 onClick={handleHomeClick}>Logo</h1>
-
+      
             <h2 onClick={handleUserClick}>{username}</h2>
-
+      
             {pathname === '/' && <button onClick={handleSearchClick}>🔍</button>}
-
+      
             <button type="button" onClick={handleLogoutClick}>Logout</button>
-        </header>
-
-        <main>
+          </header>
+      
+          <main className="my-12">
             <Routes>
-                <Route path="/create-post" element={<CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/:username" element={<Profile />} />
-                <Route path="/" element={<Posts />} />
+              <Route path="/create-post" element={<CreatePost onPostCreated={handlePostCreated} onPostCreateCancelled={handlePostCreateCancelled} />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/:username" element={<Profile />} />
+              <Route path="/" element={<Posts />} />
             </Routes>
-        </main>
-
-        <footer>
+          </main>
+      
+          <footer className="fixed bottom-0 w-full flex justify-center bg-[var(--bg-color)] px-[var(--padding-x)] py-[var(--padding-y)] box-border z-10">
             {pathname === '/' && <button onClick={handleAddPostClick}>Add Post</button>}
-        </footer>
-    </div>
+          </footer>
+        </div>
 }

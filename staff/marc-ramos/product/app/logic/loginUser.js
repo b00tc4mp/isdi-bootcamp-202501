@@ -7,7 +7,7 @@ export const loginUser = (username, password) =>{
     validate.username(username, 'username')
     validate.password(password, 'password')
 
-   return fetch('http://localhost:8080/users/auth', { 
+   return fetch(`${import.meta.env.VITE_API_URL}/users/auth`, { 
     // El método fetch() se utiliza para realizar solicitudes HTTP en JavaScript (en los navegadores, o en entornos como Node.js si se usa una librería de node-fetch).
     // fetch() devuelve una promesa (Promise), lo que significa que el código continúa ejecutándose sin esperar la respuesta de la solicitud. Se maneja con .then() o async/awa
     /*

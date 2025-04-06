@@ -6,11 +6,10 @@ export const Profile = () => {
     const { username } = useParams()
     const { state: { userId } } = useLocation()
 
-    return <div>
-        <h1 className="username">{username}</h1>
-
-
-        <Posts key={userId || 'default'} targetUserId={userId} />
-
-    </div>
+    return (
+        <div className="text-center py-8">
+            <h1 className="text-3xl font-bold">{username}</h1>
+            <Posts targetUserId={userId} />
+        </div>
+    )
 }

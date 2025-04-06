@@ -3,15 +3,17 @@ import { useState, useEffect } from 'react'
 import { Post } from './Post.jsx'
 
 import { logic } from '../../logic/index.js'
+import { useContext } from '../../context'
 
 export function Posts({ targetUserId }) {
+    const { alert } = useContext()
     const [posts, setPosts] = useState([])
-    console.log('Posts -> Componente Montado')
+   
     useEffect(() => {
         console.debug('Posts -> useEffect')
 
         loadPosts()
-    }, [])
+    }, [targetUserId])
 
     const loadPosts = () => {
         try {

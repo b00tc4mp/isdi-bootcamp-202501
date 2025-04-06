@@ -11,7 +11,7 @@ export const registerUser = (name, email, username, password) => {
     validate.password(password, 'password')
 
     // Llamamos a la API para registrar al usuario
-    return fetch('http://localhost:8080/users', { // Fetch realiza una solicitud HTTP (en este caso, POST), a un servidor para registrar a un nuevo usuarip
+    return fetch(`${import.meta.env.VITE_API_URL}/users`, { // Fetch realiza una solicitud HTTP (en este caso, POST), a un servidor para registrar a un nuevo usuarip
         method: 'POST', // Metodo que POST
         headers: { // Especificar que los datos se enviaran en formato JSON
             'Content-Type': 'application/json'
