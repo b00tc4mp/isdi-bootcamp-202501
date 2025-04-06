@@ -69,31 +69,30 @@ User (Registered)
 
 ### Data model
 
-User 
-  - id (UUID)
-  - role (string, enum: ('anonymous', 'registered', 'admin'))
-  - alias (string)
-  - password  (string) (hashed)
-  - name? (string)
-  - lastName? (string)
-  - level? (string, enum: ('beginner', 'intermediate', 'advanced'))
-  - interests? ([string])
-  - createdAt (date)
-  - updatedAt? (date)
-  - workouts? ([Workout.id])
-  - routines? ({
-      routine: Routine.id
-      completed: boolean
-    })
+Admin
+- role(string, enum: 1 (anonymous) | 2 (registered) | 3 (admin))
+- id (UUID)
+- alias
+- password
+- createdAt
 
+Anonym User
+- role(string, enum: 1 (anonymous) | 2 (registered) | 3 (admin))
+- id (temporal UUID) 
+- createdAt
 
-<!-- · PHYSICAL DATA (FUTURE INTEGRATION)
-- userId (User.id)
-- Gender (string, enum: 1 (male) | 2 (female) | 3 (other))
-- Height (number)
-- weight (number)
-- Skin folds ([number])
-- createdAt (date) -->
+User (Registered)
+· USER DATA
+- role(string, enum: 1 (anonymous) | 2 (registered) | 3 (admin))
+- id(UUID)
+- name (string)
+- last name (string)
+- alias (string)
+- password (hashed string) (bcrypt)
+- level (string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
+- interests ( [strings]) // enum: 1 (calysthenics) | 2: (strength) | 3: (cardio)...
+- createdAt
+- updatedAt
 
 
 Workout
@@ -101,25 +100,27 @@ Workout
 - name (string)
 - description (string)
 - muscle group (string)
-- difficulty (number/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
-- category (number/string, enum: 1 (calysthenics) | 2: (strength) | 3: (cardio)...)
+- difficulty (int/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
+- category (int/string, enum: 1 (calysthenics) | 2: (strength) | 3: (cardio)...)
 - images([string])
 - realized (boolean)
-- status (string, enum: 1 (accepted) | 2: (pending) | 3: (declined))
-- likes ([User.id])
-- saves ([User.id])
-- completed ([User.id])
-- createdAt (date)
-- createdBy? (User.id)
-- progress (WorkoutProgress)
+- status (string, enum: 1 (accepted) | 2: (pending) | 3: (declined)) // operative_accepted (boolean)
+- createdAt: date
+- createdBy?: UUID
 
+UserWorkoutInteraction 
+  - userId: UUID
+  - workoutId: UUID
+  - liked: boolean
+  - saved: boolean
+  - completed: boolean
 
 WorkoutProgress 
-  - userId (User.id)
-  - workoutId (Workout.id) (????) -> needed?
-  - modificationDate (date)
-  - weightUsed (number)
-  - notes? (string) (???)
+  - userId: UUID
+  - workoutId: UUID
+  - date: date
+  - weightUsed: number
+  - notes?: string
 
 
 Routine
@@ -129,25 +130,31 @@ Routine
 - goal (string) //gain strength, resistance, etc
 - muscle group (string)
 - duration (string)
-- type (number/string, enum: 1 (home) | 2: (gym) | 3: (outside))
-- difficulty (number/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
-- frequencySuggestion? (string)
-- image? (string)
-- status (number/string, enum: 1 (accepted) | 2: (pending) | 3: (declined))
-- likes ([User.id])
-- saves ([User.id])
-- createdAt (date)
-- modifiedAt (date)
-- startedAt (date) (???) -> relevant?
-- createdBy? (User.id)
-- workouts ([{
-    workoutId: (Workout.id),
-    order: number,
-    sets: number,
-    reps: number,
-    weight?: number,
-    restTime?: number
-}])
+- type (string, enum: 1 (home) | 2: (gym) | 3: (outside))
+- difficulty (string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
+- frequencySuggestion?: (string)
+- image?: (string)
+- realized (boolean)
+- status (string, enum: 1 (accepted) | 2: (pending) | 3: (declined)) // operative_accepted (boolean)
+- createdAt: date
+- createdBy?: UUID
+
+RoutineWorkout 
+  - routineId: UUID (FK)
+  - workoutId: UUID (FK)
+  - order: int
+  - sets: number
+  - reps: number
+  - weight?: number
+  - restTime?: number // in seconds
+
+  UserRoutineInteraction 
+  - userId: UUID
+  - routineId: UUID
+  - liked: boolean
+  - saved: boolean
+  - completed: boolean
+  - customValues?: JSON // futura expansión
 
 
 
@@ -159,10 +166,8 @@ Routine
 - Node (...)
 - Express (...)
 - MongoDB/SH (...)
-- Mongoose
 - Mocha & Chai (...)
 - Tailwind
-- JWT 
 - [...]
 
 ### Test Coverage
