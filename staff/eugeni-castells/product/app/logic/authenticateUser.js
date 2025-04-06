@@ -7,7 +7,7 @@ export const authenticateUser = (username, password) => {
   validate.username(username, "username");
   validate.password(password, "password");
 
-  return fetch("http://localhost:8080/users/auth", {
+  return fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),

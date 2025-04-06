@@ -8,7 +8,7 @@ export const updatePostLike = (postId) => {
 
   validate.id(postId, "postId");
 
-  return fetch(`http://localhost:8080/posts/likes/${postId}`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/posts/likes/${postId}`, {
     method: "PATCH",
     headers: {
       Authorization: `Bearer ${token}`,

@@ -6,7 +6,7 @@ const { SystemError } = errors;
 export const getUserPosts = (targetUserId) => {
   const { token } = data;
 
-  return fetch(`http://localhost:8080/users/${targetUserId}/posts`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/users/${targetUserId}/posts`, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   })

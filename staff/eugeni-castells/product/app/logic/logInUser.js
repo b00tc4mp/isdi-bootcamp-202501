@@ -6,7 +6,7 @@ const loginUser = function (username, password) {
   validate.password(password, "password");
   validate.username(username, "username");
 
-  return fetch("http://localhost:8080/users/auth", {
+  return fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),

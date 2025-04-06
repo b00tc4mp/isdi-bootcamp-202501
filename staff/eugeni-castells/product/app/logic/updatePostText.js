@@ -9,7 +9,7 @@ export const updatePostText = (postId, text) => {
   validate.id(postId, "post id");
   validate.text(text, "post text is text");
 
-  return fetch(`http://localhost:8080/posts/text/${postId}`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/posts/text/${postId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

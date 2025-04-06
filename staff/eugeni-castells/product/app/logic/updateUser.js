@@ -15,7 +15,7 @@ export const updateUser = (userInfo) => {
   validate.minLength(name, 2, "name min length");
   validate.maxLength(name, 20, "nameMaxLength");
 
-  return fetch("http://localhost:8080/users", {
+  return fetch(`${import.meta.env.VITE_API_URL}/users`, {
     method: "PATCH",
     headers: {
       Authorization: `Bearer ${token}`,
