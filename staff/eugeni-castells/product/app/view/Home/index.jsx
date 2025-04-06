@@ -8,6 +8,7 @@ import ChangeUserInfo from "./ChangeUserInfo.jsx";
 import { Profile } from "./Profile.jsx";
 import { logic } from "../../logic/index.js";
 import { Route, Routes, useNavigate, useLocation } from "react-router";
+import { Search } from "./Search.jsx";
 
 function Home({ onLogoutSuccess }) {
   const [displayMenu, setDisplayMenu] = useState(false);
@@ -53,9 +54,6 @@ function Home({ onLogoutSuccess }) {
       alert(error.message);
     }
   };
-  const handleSearchClick = () => {
-    navigate("/search");
-  };
 
   const handleChangeUserInfoNavigation = () => {
     setDisplayMenu(false);
@@ -90,6 +88,7 @@ function Home({ onLogoutSuccess }) {
           />
           <Route path="/" element={<Posts />} />
           <Route path="/:username" element={<Profile />} />
+          <Route path="/search" element={<Search />} />
           <Route
             path="/create-post"
             element={

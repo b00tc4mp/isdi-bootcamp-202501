@@ -1,14 +1,19 @@
-import { useState, useEffect } from "react";
-
+import { useNavigate, useLocation } from "react-router";
 import HamburgerButton from "./HamburgerButton";
-import { logic } from "../../logic";
 
 const Header = ({ onMenuNavigation, onUserClick, loggedInUserName }) => {
+  const navigate = useNavigate();
+
+  const { pathname } = useLocation();
+
   const handleUserClick = () => {
     onUserClick();
   };
   const handleMenuNavigation = () => {
     onMenuNavigation();
+  };
+  const handleSearchClick = () => {
+    navigate("/search");
   };
 
   return (
@@ -21,6 +26,7 @@ const Header = ({ onMenuNavigation, onUserClick, loggedInUserName }) => {
 
       <h2 onClick={handleUserClick}>Hello, {loggedInUserName}!</h2>
 
+      {pathname === "/" && <button onClick={handleSearchClick}>🔍</button>}
       <HamburgerButton onMenuNavigation={handleMenuNavigation} />
     </header>
   );
