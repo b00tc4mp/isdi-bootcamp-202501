@@ -1,19 +1,16 @@
 import "dotenv/config";
-import { errors } from "com";
 import { data, User } from "../data/index.js";
 import { authenticateUser } from "./authenticateUser.js";
 import { expect } from "chai";
 import { CredentialsError, NotFoundError } from "com/errors.js";
 
-const { MONGO_URL, MONGO_DB } = process.env;
-
-const { SystemError } = errors;
+const { MONGO_URL, MONGO_DB_TEST } = process.env;
 
 console.info("TEST authenticateUser");
 
 describe("authenticateUser", () => {
   before(() => {
-    return data.connect(MONGO_URL, MONGO_DB);
+    return data.connect(MONGO_URL, MONGO_DB_TEST);
   });
 
   beforeEach(() => {

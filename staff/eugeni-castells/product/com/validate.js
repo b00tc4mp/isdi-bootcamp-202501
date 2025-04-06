@@ -1,19 +1,19 @@
 import constant from "./constants.js";
-
+import { ValidationError } from "./errors.js";
 export const validate = {
   string: function (string, explain) {
     if (typeof string !== "string")
-      throw new Error("invalid " + explain + " type");
+      throw new ValidationError("invalid " + explain + " type");
   },
   text: function (text, explain) {
     this.string(text, explain);
     if (constant.EMPTY_OR_BLANK_REGEX.test(text))
-      throw new Error("invalid " + explain + " syntax");
+      throw new ValidationError("invalid " + explain + " syntax");
   },
   email: function (email, explain) {
     this.string(email, explain);
     if (!constant.EMAIL_REGEX.test(email))
-      throw new Error("invalid " + explain + " syntax");
+      throw new ValidationError("invalid " + explain + " syntax");
   },
   username: function (username, explain) {
     this.text(username, explain);
@@ -27,23 +27,24 @@ export const validate = {
   },
   maxLength: function (value, maxLength, explain) {
     if (value.length > maxLength)
-      throw new Error("invalid " + explain + " range error");
+      throw new ValidationError("invalid " + explain + " range error");
   },
   minLength: function (value, minLength, explain) {
     if (value.length < minLength)
-      throw new Error("invalid " + explain + " range error");
+      throw new ValidationError("invalid " + explain + " range error");
   },
   url(url, explain) {
     this.string(url, explain);
     if (!constant.URL_REGEX.test(url))
-      throw new Error(`invalid ${explain} syntax`);
+      throw new ValidationError(`invalid ${explain} syntax`);
   },
   id(id, explain) {
     this.text(id, explain);
 
     if (!constant.OBJECT_ID_REGEX.test(id))
-      throw new Error(`invalid ${explain} as ObjectId syntax`);
+      throw new ValidationError(`invalid ${explain} as ObjectId syntax`);
 
-    if (id.length !== 24) throw new Error(`invalid ${explain} length`);
+    if (id.length !== 24)
+      throw new ValidationError(`invalid ${explain} length`);
   },
 };

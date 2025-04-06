@@ -2,12 +2,12 @@ import "dotenv/config";
 import { data } from "../data/index.js";
 import { getOnlineUserInfo } from "./getOnlineUserInfo.js";
 
-const { MONGO_URL, MONGO_DB } = process.env;
+const { MONGO_URL, MONGO_DB_TEST } = process.env;
 
 console.info("TEST getOnlineUserInfo");
 
 data
-  .connect(MONGO_URL, MONGO_DB)
+  .connect(MONGO_URL, MONGO_DB_TEST)
   .then(() => {
     let userInfo;
     try {

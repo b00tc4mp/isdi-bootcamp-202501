@@ -1,12 +1,12 @@
-import { data } from "../data/index.js";
-import { validate, errors } from "../../com";
+import { data } from "../data";
+import { errors } from "../../com";
 
 const { SystemError } = errors;
 
-export const getUserInfo = () => {
+export const getIdByUsername = (targetUserUsername) => {
   const { token } = data;
 
-  return fetch("http://localhost:8080/users/self", {
+  return fetch(`http://localhost:8080/users/${targetUserUsername}`, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   })
@@ -21,7 +21,9 @@ export const getUserInfo = () => {
             throw new SystemError(error.message);
           })
           .then((body) => {
-            return body;
+            const { id } = body;
+
+            return id;
           });
 
       return response

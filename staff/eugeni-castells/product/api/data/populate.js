@@ -2,10 +2,10 @@ import "dotenv/config.js";
 import { data, User, Post } from "./index.js";
 import bcrypt from "bcryptjs";
 
-const { MONGO_URL, MONGO_DB } = process.env;
+const { MONGO_URL, MONGO_DB_APP } = process.env;
 
 data
-  .connect(MONGO_URL, MONGO_DB)
+  .connect(MONGO_URL, MONGO_DB_APP)
   .then(() => {
     return Promise.all([User.deleteMany(), Post.deleteMany()])
       .then(() => {
@@ -55,8 +55,23 @@ data
             author: mashaId,
             likes: [aaronId],
           },
+          {
+            image:
+              "https://media.giphy.com/media/IfQEkiEmaruqKTm8KA/giphy.gif?cid=ecf05e47ncv1fwr1zpkt12ex5pwl520fbfsc1zgcmg682n1j&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+            text: "smooth",
+            author: mashaId,
+            likes: [aaronId],
+          },
+          {
+            image:
+              "https://media.giphy.com/media/IfQEkiEmaruqKTm8KA/giphy.gif?cid=ecf05e47ncv1fwr1zpkt12ex5pwl520fbfsc1zgcmg682n1j&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+            text: "smooth",
+            author: mashaId,
+            likes: [aaronId],
+          },
         ]);
       })
+      .catch((error) => console.error(error))
       .then((result) => {
         console.log(result);
       });

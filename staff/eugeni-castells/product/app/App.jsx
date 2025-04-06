@@ -5,10 +5,13 @@ import Login from "./view/Login.jsx";
 import Register from "./view/Register.jsx";
 import Home from "./view/Home/index.jsx";
 import { Route, useNavigate, Routes, Navigate } from "react-router";
+import { Alert } from "./view/Alert.jsx";
+import { Context } from "./context.js";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
   const [showLanding, setShowLanding] = useState(true);
+  const [alertFeedback, setAlertFeedback] = useState(null);
 
   const navigate = useNavigate();
 
@@ -25,8 +28,8 @@ function App() {
   }, []);
 
   const handleRegisterNavigation = () => {
-    navigate("/register");
     setShowLanding(false);
+    navigate("/register");
   };
 
   const handleLoginNavigation = () => {
@@ -51,64 +54,74 @@ function App() {
     setShowLanding(false);
   };
 
+  const handleAlertAccept = () => {
+    setAlertFeedback("");
+  };
+
+  const handleShowAlert = (message) => {
+    setAlertFeedback(message);
+  };
   console.log("render App");
 
   return (
-    <>
-      {loggedIn !== null && (
-        <Routes>
-          <Route
-            path="/landing"
-            element={
-              loggedIn ? (
-                <Navigate to="/" />
-              ) : (
-                <Landing
-                  onRegisterNavigation={handleRegisterNavigation}
-                  onLoginNavigation={handleLoginNavigation}
-                />
-              )
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              loggedIn ? (
-                <Navigate to="/" />
-              ) : (
-                <Register
-                  onLoginNavigation={handleLoginNavigation}
-                  onRegisterSuccess={handleRegisterSuccess}
-                />
-              )
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              loggedIn ? (
-                <Navigate to="/" />
-              ) : (
-                <Login
-                  onRegisterNavigation={handleRegisterNavigation}
-                  onLoginSuccess={handleLoginSuccess}
-                />
-              )
-            }
-          />
-          <Route
-            path="/*"
-            element={
-              loggedIn ? (
-                <Home onLogoutSuccess={handleLogoutSuccess} />
-              ) : (
-                <Navigate to={showLanding ? "/landing" : "/login"} />
-              )
-            }
-          />
-        </Routes>
-      )}
-    </>
+    <Context value={{ alert: handleShowAlert }}>
+      <>
+        {loggedIn !== null && (
+          <>
+            <Routes>
+              <Route
+                path="/register"
+                element={
+                  loggedIn ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Register
+                      onLoginNavigation={handleLoginNavigation}
+                      onRegisterSuccess={handleRegisterSuccess}
+                    />
+                  )
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  loggedIn ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Login
+                      onRegisterNavigation={handleRegisterNavigation}
+                      onLoginSuccess={handleLoginSuccess}
+                    />
+                  )
+                }
+              />
+              <Route
+                path="/*"
+                element={
+                  loggedIn ? (
+                    <Home onLogoutSuccess={handleLogoutSuccess} />
+                  ) : showLanding ? (
+                    <Landing
+                      onRegisterNavigation={handleRegisterNavigation}
+                      onLoginNavigation={handleLoginNavigation}
+                    />
+                  ) : (
+                    <Navigate to={"/login"} />
+                  )
+                }
+              />
+            </Routes>
+            {alertFeedback && (
+              <Alert
+                title={"⚠️"}
+                message={alertFeedback}
+                onAccepted={handleAlertAccept}
+              />
+            )}
+          </>
+        )}
+      </>
+    </Context>
   );
 }
 

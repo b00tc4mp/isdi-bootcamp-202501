@@ -2,12 +2,12 @@ import "dotenv/config";
 import { data } from "../data/index.js";
 import { authenticateUser } from "./authenticateUser.js";
 
-const { MONGO_URL, MONGO_DB } = process.env;
+const { MONGO_URL, MONGO_DB_TEST } = process.env;
 
 console.info("TEST authenticateUser");
 
 data
-  .connect(MONGO_URL, MONGO_DB)
+  .connect(MONGO_URL, MONGO_DB_TEST)
   .then(() => {
     let token;
     try {

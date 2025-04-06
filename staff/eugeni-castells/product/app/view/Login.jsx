@@ -1,6 +1,9 @@
 import { logic } from "../logic";
+import { useContext } from "../context";
 
 function Login({ onRegisterNavigation, onLoginSuccess }) {
+  const { alert } = useContext();
+
   const handleLoginSuccess = () => {
     onLoginSuccess();
   };
@@ -30,7 +33,7 @@ function Login({ onRegisterNavigation, onLoginSuccess }) {
         .catch((error) => {
           console.error(error);
 
-          alert(error);
+          alert(error.message);
         });
     } catch (error) {
       console.error(error);

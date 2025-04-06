@@ -4,11 +4,11 @@ import { data } from "../data/index.js";
 
 import { updatePostText } from "./updatePostText.js";
 
-const { MONGO_URL, MONGO_DB } = process.env;
+const { MONGO_URL, MONGO_DB_TEST } = process.env;
 
 console.info("TEST updatePostText");
 data
-  .connect(MONGO_URL, MONGO_DB)
+  .connect(MONGO_URL, MONGO_DB_TEST)
   .then(() => {
     try {
       let result2 = null;

@@ -3,13 +3,12 @@ import { deletePost } from "./deletePost.js";
 import { data, Post, User } from "../data/index.js";
 import { expect } from "chai";
 import { NotFoundError } from "com/errors.js";
-import { ObjectId } from "../data/index.js";
-const { MONGO_URL, MONGO_DB } = process.env;
+const { MONGO_URL, MONGO_DB_TEST } = process.env;
 
 console.info("TEST deletePost");
 
 describe("deletePost", () => {
-  before(() => data.connect(MONGO_URL, MONGO_DB));
+  before(() => data.connect(MONGO_URL, MONGO_DB_TEST));
 
   beforeEach(() => {
     return Promise.all([User.deleteMany({}), User.deleteMany({})]);
@@ -70,12 +69,14 @@ describe("deletePost", () => {
       .catch((error) => {
         return (catchedError = error);
       })
-      .finally(() => expect(catchedError).to.be.instanceOf(NotFoundError));
+      .finally(() => {
+        expect(catchedError).to.be.instanceOf(NotFoundError);
+        expect(catchedError.message).to.equal("user not found");
+      });
   });
 
   it("fails on non existing post", () => {
     let catchedError;
-    let userId;
 
     return User.create({
       name: "Sergi",
@@ -90,12 +91,15 @@ describe("deletePost", () => {
         author: user._id,
       })
         .then((post) => {
-          return deletePost(post._id.toString(), "2FDF93C125DEC91B087BF8C7");
+          return deletePost(post.author.toString(), "2FDF93C125DEC91B087BF8C7");
         })
         .catch((error) => {
           catchedError = error;
         })
-        .finally(() => expect(catchedError).to.be.instanceOf(NotFoundError));
+        .finally(() => {
+          expect(catchedError).to.be.instanceOf(NotFoundError);
+          expect(catchedError.message).to.equal("post not found");
+        });
     });
   });
 

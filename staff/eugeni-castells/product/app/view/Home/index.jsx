@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Posts from "./Posts.jsx";
 import CreatePost from "./CreatePost.jsx";
@@ -6,12 +6,28 @@ import Header from "./Header.jsx";
 import HamburgerMenu from "./HamburgerMenu.jsx";
 import ChangeUserInfo from "./ChangeUserInfo.jsx";
 import { Profile } from "./Profile.jsx";
-
+import { logic } from "../../logic/index.js";
 import { Route, Routes, useNavigate, useLocation } from "react-router";
 
 function Home({ onLogoutSuccess }) {
   const [displayMenu, setDisplayMenu] = useState(false);
+  const [loggedInUserName, setLoggedInUserName] = useState("");
 
+  useEffect(() => {
+    try {
+      logic
+        .getUserInfo()
+        .catch((error) => {
+          console.error;
+          alert(error.message);
+        })
+        .then((user) => setLoggedInUserName(user.username));
+    } catch (error) {
+      console.log(error);
+
+      alert(error.message);
+    }
+  }, []);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -30,7 +46,7 @@ function Home({ onLogoutSuccess }) {
     try {
       const userId = logic.getUserId();
 
-      navigate(`/${username}`, { state: { userId } });
+      navigate(`/${loggedInUserName}`, { state: { userId } });
     } catch (error) {
       console.error(error);
 
@@ -57,6 +73,7 @@ function Home({ onLogoutSuccess }) {
       <Header
         onMenuNavigation={handleMenuNavigation}
         onUserClick={handleUserClick}
+        loggedInUserName={loggedInUserName}
       />
 
       <main>

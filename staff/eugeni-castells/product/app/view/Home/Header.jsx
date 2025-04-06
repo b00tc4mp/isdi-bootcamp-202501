@@ -3,30 +3,13 @@ import { useState, useEffect } from "react";
 import HamburgerButton from "./HamburgerButton";
 import { logic } from "../../logic";
 
-const Header = ({ onMenuNavigation, onUserClick }) => {
-  const [loggedInUserName, setLoggedInUserName] = useState("");
-
+const Header = ({ onMenuNavigation, onUserClick, loggedInUserName }) => {
   const handleUserClick = () => {
     onUserClick();
   };
   const handleMenuNavigation = () => {
     onMenuNavigation();
   };
-  useEffect(() => {
-    try {
-      logic
-        .getUserInfo()
-        .catch((error) => {
-          console.error;
-          alert(error.message);
-        })
-        .then((user) => setLoggedInUserName(user.username));
-    } catch (error) {
-      console.log(error);
-
-      alert(error.message);
-    }
-  }, []);
 
   return (
     <header className="header">

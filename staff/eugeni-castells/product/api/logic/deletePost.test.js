@@ -2,12 +2,12 @@ import "dotenv/config";
 import { deletePost } from "./deletePost.js";
 import { data } from "../data/index.js";
 
-const { MONGO_URL, MONGO_DB } = process.env;
+const { MONGO_URL, MONGO_DB_TEST } = process.env;
 
 console.info("TEST deletePost");
 
 data
-  .connect(MONGO_URL, MONGO_DB)
+  .connect(MONGO_URL, MONGO_DB_TEST)
   .then(() => {
     try {
       let result2 = null;

@@ -13,11 +13,9 @@ export const authenticateUser = (username, password) => {
     body: JSON.stringify({ username, password }),
   })
     .catch((error) => {
-      throw new Error(error.message);
+      throw new SystemError(error.message);
     })
     .then((response) => {
-      console.log(response.status);
-
       if (response.status === 200)
         return response
           .json()

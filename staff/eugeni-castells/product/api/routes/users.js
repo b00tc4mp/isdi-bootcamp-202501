@@ -73,3 +73,33 @@ users.patch(
     });
   })
 );
+
+users.get(
+  "/:targetUserId/posts",
+  authHandler,
+  withErrorHandling((req, res) => {
+    const {
+      userId,
+      params: { targetUserId },
+    } = req;
+
+    return logic
+      .getUserPosts(userId, targetUserId)
+      .then((posts) => res.json(posts));
+  })
+);
+
+users.get(
+  "/:targetUserUsername",
+  authHandler,
+  withErrorHandling((req, res) => {
+    const {
+      userId,
+      params: { targetUserUsername },
+    } = req;
+
+    return logic
+      .getIdByUsername(userId, targetUserUsername)
+      .then((id) => res.status(200).json({ id }));
+  })
+);

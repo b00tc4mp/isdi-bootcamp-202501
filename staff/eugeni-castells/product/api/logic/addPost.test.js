@@ -4,9 +4,9 @@ import { data } from "../data/index.js";
 
 console.info("TEST addPost");
 
-const { MONGO_URL, MONGO_DB } = process.env;
+const { MONGO_URL, MONGO_DB_TEST } = process.env;
 data
-  .connect(MONGO_URL, MONGO_DB)
+  .connect(MONGO_URL, MONGO_DB_TEST)
   .then(() => {
     try {
       let result2 = null;

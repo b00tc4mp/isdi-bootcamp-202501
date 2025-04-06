@@ -2,7 +2,7 @@ import { User } from "../data/index.js";
 
 import { errors, validate } from "com";
 
-const { NotFoundError, OwnershipError, SystemError } = errors;
+const { NotFoundError, SystemError } = errors;
 
 export const updateUser = (userId, userInfo) => {
   validate.id(userId);
@@ -14,9 +14,6 @@ export const updateUser = (userId, userInfo) => {
     })
     .then((userFound) => {
       if (!userFound) throw new NotFoundError("user not found");
-
-      if (userId !== userFound._id.toString())
-        throw new OwnershipError("user cannot modify other user's info");
 
       const { name, email, username, password } = userInfo;
 
@@ -37,9 +34,6 @@ export const updateUser = (userId, userInfo) => {
           throw new SystemError(error.message);
         }
       );
-    })
-    .catch((error) => {
-      throw new SystemError(error.message);
     })
     .then(() => {});
 };

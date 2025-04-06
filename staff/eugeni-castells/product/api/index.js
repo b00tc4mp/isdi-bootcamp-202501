@@ -5,10 +5,10 @@ import cors from "cors";
 import { errorHandler } from "./handlers/index.js";
 import { users, posts } from "./routes/index.js";
 
-const { PORT, MONGO_URL, MONGO_DB } = process.env;
+const { PORT, MONGO_URL, MONGO_DB_APP } = process.env;
 
 data
-  .connect(MONGO_URL, MONGO_DB)
+  .connect(MONGO_URL, MONGO_DB_APP)
   .catch((error) => {
     console.error(error);
     process.exit(1);

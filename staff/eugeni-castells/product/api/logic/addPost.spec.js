@@ -1,11 +1,9 @@
 import "dotenv/config";
 import { addPost } from "./addPost.js";
-import { data, Post, User } from "../data/index.js";
+import { Post, User } from "../data/index.js";
 import { expect } from "chai";
 import { NotFoundError } from "com/errors.js";
 import { testHandler } from "./testHandler.js";
-
-const { MONGO_URL, MONGO_DB } = process.env;
 
 const succeedsOnCreatingPost = () => {
   let result2;
