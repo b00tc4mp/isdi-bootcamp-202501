@@ -1,3 +1,15 @@
+/*
+COMPO REACT DE LANDING:
+-Creamos el compo y le pasamos dos propiedades:
+    -onNavigateToRegister: función que se ejecutará cuando el usuario clique 'Register'
+    -onNavigateToLogin: función que se ejecutará cuando el usuario clique 'Login'
+
+    -handleRegisterClick: función que maneja el evento de click y llama a la función navigate que cambia de pantalla.
+    -handleLoginClick: función que maneja el evento de click y llama a la función navigate que cambia de pantalla.
+
+JSX(RENDERIZADO DEL COMPO)
+*/
+
 export function Landing({onNavigateToRegister, onNavigateToLogin}) {
 
     const handleRegisterClick = () => onNavigateToRegister()

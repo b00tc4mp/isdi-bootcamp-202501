@@ -1,14 +1,13 @@
 /*
 IMPORTACIONES: 
     -mongoose: biblioteca para conectarse y trabajar con MongoDB.
-    -Types: contiene tipos especiales de Mongoose, como ObjectId.
     -Errors
     -User y Post de models
 EXTRACCIONES:
     -ObjectId, para manejar los Ids únicos de Mongo.
     -System error.
 */
-import mongoose, { Types } from 'mongoose'
+import mongoose from 'mongoose'
 import { errors } from 'com' 
 import { User, Post } from './models.js'
 

@@ -4,7 +4,6 @@ export function Login({onUserLoggedIn, onReturnClick}) {
     const handleLoginSubmit = event => {
         event.preventDefault()
 
-    //trycatch captura errores sincronos y el thencatch de los asincronos
         try {
             const { target: form } = event
             

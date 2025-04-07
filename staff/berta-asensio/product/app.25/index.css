@@ -1,140 +1,148 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Signika+Negative:wght@300..700&display=swap');
+@import 'tailwindcss';
 
-html {
-    font-family: 'Nunito';
-    background-color: hsl(46, 100%, 50%);
-    color: black;
-    --padding-x: 1rem;
-    --padding-y: .25rem;
+@layer components {
+    html {
+        --primary-color: hsl(46, 100%, 50%);
+        --secondary-color:  black;
+        --secondary-color-light: white;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
 
-}
-
-body {
-    margin: 0;
-}
-
-.landing-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 25rem;
-    text-align: center;
-}
-
-.logo-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 150px;
-    height: auto;
-}
-
-.landing-buttons {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-}
-
-button {
-    cursor: pointer;
-    border: 0;
-    padding: 2px 5px;
-    border-radius: 12px;
-    font-size: 1rem;
-    transition: font-size 0.2s;
-    font-family: inherit;
-}
-
-@media (min-width: 200px) {
-    button:hover {
-        background-color: #000000;
-        color: #ffffff;
-        font-size: 1.5rem;
+        @apply font-['Nunito'];
+        @apply bg-[var(--primary-color)];
+        @apply text-[(var--secondary-color)];
     }
-}
-
-.register-login-header {
-    /*margin-bottom: 100px;*/
-    background-color: hsl(46, 100%, 50%);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: var(--padding-y) var(--padding-x);
-    box-sizing: border-box;
-}
-
-.bee-logo-register-login {
-    width: 100px;
-    height: auto;
     
-}
+    body {
+        @apply m-0; /*margen*/
+    }
+    
+    .landing-container {
+        @apply flex;
+        @apply flex-col;
+        @apply justify-center;
+        @apply items-center;
+        @apply h-100;
+        @apply: text-center;
+    }
+    /*LOGO LANDING*/
+    .logo-container {
+        @apply flex;
+        @apply flex-col;
+        @apply justify-center;
+        @apply w-50 h-auto;
+    }
+    
+    .landing-buttons {
+        @apply m-10;
+        @apply flex;
+        @apply flex-col;
+    }
+    
+    button {
+        @apply bg-[var(--secondary-color)];
+        @apply text-[var(--secondary-color-light)];
+        @apply cursor-pointer;
+        @apply border-[0px];
+        @apply rounded-[12px];
+        @apply transition-all duration-200 text-xl;
+        @apply font-[inherit];
+        @apply text-base;
+    }
 
-.register-header h2 {
-    flex-grow: 1;   /* Esto hace que el texto ocupe todo el espacio disponible */
-    text-align: right; /* Alinea el texto a la derecha */
-    font-size: 1.5rem;  /* Ajusta el tamaño del texto */
-    white-space: normal; /* Permite que el texto se divida en varias líneas si es necesario */
-    word-wrap: break-word; /* Hace que el texto se ajuste y salte a una nueva línea si es necesario */
-    overflow-wrap: break-word; /* Asegura que el texto se ajuste correctamente */
-}
+    @media (min-width: 768px) {
+        button {
+            @apply min-w-[768px];
+        }
 
-.paragraph {
-    margin-top: 100px; /* Separación superior */
-    font-size: 1.5em; /* Tamaño de fuente */
-    background-color: #000; /* Fondo negro */
-    color: #fff; /* Texto blanco */
-    padding: 10px; /* Espaciado dentro del párrafo */
-    border-radius: 8px; /* Bordes redondeados */
-    text-align: center; /* Centrar el texto */
-    width: auto; /* Ajusta el tamaño del párrafo según el contenido */
-    margin-left: auto; /* Centra el párrafo en la pantalla */
-    margin-right: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el párrafo */
-    display: block;
-}
+        button:hover {
+            @apply bg-[var(--secondary-color-light)];
+            @apply text-[var(--secondary-color)];
+            @apply text-[2rem];
+        }
+    }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 20px;
 
-    .field {
+    
+    .register-login-header {
+        /*margin-bottom: 100px;*/
+        background-color: hsl(46, 100%, 50%);
         display: flex;
-        flex-direction: column;
-        gap: var(--padding-y)
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: var(--padding-y) var(--padding-x);
+        box-sizing: border-box;
     }
-}
-
-input {
-    font-family: inherit;
-    font-size: 1rem;
-    transition: font-size 1s;
-}
-
-input::placeholder {
-    visibility: hidden;
-}
-
-@media (min-width: 200px) {
-    input:hover {
-        background-color: #ededed;
-        border: 0px;
+    
+    .bee-logo-register-login {
+        width: 100px;
+        height: auto;
+        
+    }
+    
+    .register-header h2 {
+        flex-grow: 1;   /* Esto hace que el texto ocupe todo el espacio disponible */
+        text-align: right; /* Alinea el texto a la derecha */
+        font-size: 1.5rem;  /* Ajusta el tamaño del texto */
+        white-space: normal; /* Permite que el texto se divida en varias líneas si es necesario */
+        word-wrap: break-word; /* Hace que el texto se ajuste y salte a una nueva línea si es necesario */
+        overflow-wrap: break-word; /* Asegura que el texto se ajuste correctamente */
+    }
+    
+    .paragraph {
+        margin-top: 100px; /* Separación superior */
+        font-size: 1.5em; /* Tamaño de fuente */
+        background-color: #000; /* Fondo negro */
+        color: #fff; /* Texto blanco */
+        padding: 10px; /* Espaciado dentro del párrafo */
+        border-radius: 8px; /* Bordes redondeados */
+        text-align: center; /* Centrar el texto */
+        width: auto; /* Ajusta el tamaño del párrafo según el contenido */
+        margin-left: auto; /* Centra el párrafo en la pantalla */
+        margin-right: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el párrafo */
+        display: block;
+    }
+    
+    form {
+        @apply flex;
+        @apply flex-col;
+        @apply gap-[1rem];
+        /* @apply m-5; */
+    
+        .field {
+            @apply flex;
+            @apply flex-col;
+            gap: var(--padding-y)
+        }
+    }
+    
+    input {
+        font-family: inherit;
         font-size: 1rem;
+        transition: font-size 1s;
     }
-    input:hover::placeholder {
-        visibility: visible;
+    
+    input::placeholder {
+        visibility: hidden;
     }
-}
+    
+    @media (min-width: 200px) {
+        input:hover {
+            background-color: #ededed;
+            border: 0px;
+            font-size: 1rem;
+        }
+        input:hover::placeholder {
+            visibility: visible;
+        }
+    }
 
-a {
-    cursor: pointer;
-}
-
-a:hover {
-    font-weight: bold;
+    a {
+        @apply cursor-pointer;
+    }
 }
 
 

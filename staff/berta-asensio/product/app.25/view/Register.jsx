@@ -1,3 +1,37 @@
+/*
+COMPO REACT DE REGISTER: Maneja el registro de usuario.
+
+-Importamos logic y errors.
+-Extraemos errores que vamos a utilizar.
+
+-Creamos componente Register con dos props:
+    -onReturnClick: funciñon que se ejecuta cuando se hace clic a Return.
+    -onUserRegistered: función que se ejecutra cuando el usuario se haya registrado correctamente.
+
+    -handleRegisterSubmit: función principal que maneja el SUBMIT registro de usuario:
+        TRY:
+        -Extramos el form del evento. Event.target es el formulario que disparó el evento submit.
+        -Extraemos los valores ingresados en el formulario. Cada campo del formulario tiene un value,
+        que es el valor que el usuario ha ingresado.
+        -Llamamos a la lógica(pasandole los valores capturados del formulario):
+            -Then: Si el registro es exitoso, se resetea el formulario y se llama a onUserRegistered para actualizar
+            el estado de la aplicación.
+            -Catch: si ocurre un error durante el proceso de registro, se captura el error:
+                -Si es instancia de SystemError, se muestra alerta grave.
+                -Si no lo es, se muestra alerta de advertencia.
+        CATCH:
+        -Si ocurre un error durante la ejecución de try, se captura en este catch:
+            -Si es instancia de ValidationError, muestra mensaje de validación.
+            -Si no, alerta de advertencia.
+
+JSX: RENDERIZADO DEL COMPONENTE.
+
+
+ */
+
+
+
+
 import { logic } from '../logic/index'
 
 import { errors } from 'com'
