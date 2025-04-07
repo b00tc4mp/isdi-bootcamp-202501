@@ -11,7 +11,7 @@ Tzend is a fitness app designed for both beginners and experienced users, offeri
 
 ### Use Cases
 
-Admin
+Moderator
 - Accept/Decline workout
 - Accept/Decline routine
 
@@ -31,6 +31,7 @@ User (Registered)
 - Explore public/suggested content (Home page)
 - Quick acces/navigation to key features: Current routine, last workout, smart suggestions (Home page)
 - Change/update user data (Profile page)
+- Look up workouts/routines saved in wishlist (Profile page)
 - Logout (Profile page)
 - Toggle light/dark theme (Profile page)
 - Look up and filter routines (Routines feed page)
@@ -64,14 +65,15 @@ User (Registered)
 - doc (the documentation)
 - app (the client-side application)
 - api (the server-side API)
-- dat (the data model and driver)
+<!-- - dat (the data model and driver) -->
 - com (the common validations, utils, ...)
+
 
 ### Data model
 
 User 
   - id (UUID)
-  - role (string, enum: ('anonymous', 'registered', 'admin'))
+  - role (string, enum: ('anonymous', 'regular', 'moderator'))
   - alias (string)
   - password  (string) (hashed)
   - name? (string)
@@ -81,10 +83,7 @@ User
   - createdAt (date)
   - updatedAt? (date)
   - workouts? ([Workout.id])
-  - routines? ({
-      routine: Routine.id
-      completed: boolean
-    })
+  - routines? ([Routine.id]) --> //with populate check if completed
 
 
 <!-- · PHYSICAL DATA (FUTURE INTEGRATION)
@@ -98,26 +97,23 @@ User
 
 Workout
 - id (UUID)
+- createdBy? (User.id)
 - name (string)
 - description (string)
-- muscle group (string)
+- muscleGroup (string)
 - difficulty (number/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
 - category (number/string, enum: 1 (calysthenics) | 2: (strength) | 3: (cardio)...)
 - images([string])
-- realized (boolean)
-- status (string, enum: 1 (accepted) | 2: (pending) | 3: (declined))
+- status (string, enum: 1 (accepted) | 2: (pending) | 3: (declined)) -> //if state === pending, can edit workout
 - likes ([User.id])
 - saves ([User.id])
-- completed ([User.id])
 - createdAt (date)
-- createdBy? (User.id)
-- progress (WorkoutProgress)
 
 
-WorkoutProgress 
-  - userId (User.id)
-  - workoutId (Workout.id) (????) -> needed?
-  - modificationDate (date)
+WorkoutProgress (conjunto de workoutProgress) -> poder borrar el punto
+  - user (User.id)
+  - workout (Workout.id) 
+  - createdAt (date)
   - weightUsed (number)
   - notes? (string) (???)
 
@@ -138,17 +134,18 @@ Routine
 - saves ([User.id])
 - createdAt (date)
 - modifiedAt (date)
-- startedAt (date) (???) -> relevant?
 - createdBy? (User.id)
-- workouts ([{
-    workoutId: (Workout.id),
-    order: number,
-    sets: number,
-    reps: number,
-    weight?: number,
-    restTime?: number
-}])
+- workouts ([RutineWorkout])
 
+RoutineWorkout 
+- id (UUID)
+- workout (Workout.id),
+- order? number,
+- sets? number,
+- reps? number,
+- time? number,
+- weight? number,
+- restTime? number
 
 
 ### Technologies
