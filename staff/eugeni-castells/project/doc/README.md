@@ -71,6 +71,7 @@ User
 - tripsHistory [trip.Id]
 - createdAt (Date)
 - modifiedAt (Date)
+- roadPoints (number,validations)
 
 Van
 
@@ -121,7 +122,8 @@ Van
 Trip
 
 - id (string, uuid)
-- dates [Date]
+- startDate (Date)
+- endDate (Date)
 - ensurance [Doc.id]
 - van (Van.id)
 - van owner (User.id)
@@ -166,3 +168,22 @@ Comment
 - content (string)
 - author (User.id)
 - van (Van.id)
+
+### Technologies
+
+- HTML/CSS/JS
+- Tailwind
+- Ionic?
+- Typescript
+- React
+- Node
+- NestJS/Express
+- GraphQL/MongoDB
+- Mocha/Chai
+- C8
+- Monocart
+- JWT
+
+## Planning
+
+[Issue Tracking](https://github.com/b00tc4mp/isdi-bootcamp-202501/issues/88)
