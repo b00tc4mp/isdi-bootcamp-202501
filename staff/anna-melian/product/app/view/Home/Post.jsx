@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-
 import { logic } from '../../logic/index.js'
+import { useContext } from '../../context'
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
+    const { alert, confirm } = useContext()
     const [view, setView] = useState('')
 
     const navigate = useNavigate()
