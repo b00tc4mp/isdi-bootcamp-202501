@@ -1,0 +1,47 @@
+[
+    {
+        "id": "m7313t7yhcl",
+        "name": "david",
+        "email": "david@31.com",
+        "username": "dallen",
+        "password": "123456789",
+        "createdAt": "2024-02-22T23:00:00.000Z",
+        "modifiedAt": null
+    },
+    {
+        "id": "m7a771ui2b",
+        "name": "luna",
+        "email": "lunita@ar.com",
+        "username": "luna",
+        "password": "123123123",
+        "createdAt": "2022-03-23T23:00:00.000Z",
+        "modifiedAt": null
+    },
+    {
+        "id": "m7yk28baa38",
+        "name": "Yuki",
+        "email": "fgg@poojr.com",
+        "username": "yuki",
+        "password": "123123123",
+        "createdAt": "7/3/2025, 10:10:32",
+        "modifiedAt": null
+    },
+    {
+        "name": "Sara",
+        "email": "sara@loca.com",
+        "username": "sareta",
+        "password": "123123123",
+        "createdAt": "12/3/2025, 23:15:58",
+        "modifiedAt": null,
+        "id": "m86hbjvqpre"
+    },
+    {
+        "name": "paco",
+        "email": "paco@pa.com",
+        "username": "paquete",
+        "password": "123123123",
+        "createdAt": "20/3/2025, 14:30:40",
+        "modifiedAt": "20/3/2025, 14:30:40",
+        "id": "m8he2tr88t"
+    }
+]

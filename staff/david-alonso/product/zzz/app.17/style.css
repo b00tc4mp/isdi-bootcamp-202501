@@ -1,0 +1,432 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+html {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 600;
+    background-color: rgb(32, 32, 33);
+    color: white;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    margin-top: 90px;
+
+    .input {
+        height: 35px;
+        font-size: large;
+        border-radius: 12px;
+    }
+
+    .input:is(:focus, :valid) {
+        outline-color: #eb0e0e;
+        box-shadow: 5px 5px 5px grey;
+
+    }
+
+}
+
+article {
+    width: 100%;
+    margin: 0;
+    padding-bottom: 0px;
+    /* object-fit: cover;
+    position: sticky;
+    top: 0; */
+}
+
+/* .container-posts {
+    width: 100%;
+    margin-block: 150px;
+    background-color: rgb(32, 32, 32);
+
+} */
+
+img {
+    width: 100%;
+}
+
+h1 {
+    font-size: 35px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    color: rgb(239, 48, 64);
+    text-shadow: 2px 2px 2px white;
+    top: 60px;
+
+}
+
+/* LANDING */
+.landing {
+    .logo {
+        width: 100%;
+        height: 700px;
+
+    }
+
+    .anchor {
+        display: flex;
+        justify-content: space-evenly;
+        font-size: x-large;
+        position: relative;
+        top: -60px;
+        color: white;
+        text-decoration: underline;
+        text-underline-offset: 5px;
+    }
+}
+
+/* LOGIN */
+.loginRegister {
+    .fondo {
+        width: 80%;
+        margin-top: 70px;
+        margin-left: 40px;
+        z-index: -1;
+    }
+
+    .formLogin {
+        width: 300px;
+        margin-inline: auto;
+    }
+
+    .formRegister {
+        width: 300px;
+        margin-inline: auto;
+    }
+
+    .anchorRegister {
+        color: white;
+        text-decoration: underline;
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+
+    }
+
+    .anchorLogin {
+        color: white;
+        text-decoration: underline;
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+}
+
+.anchorCancel {
+    color: white;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: 30px;
+}
+
+/* BUTONS */
+button {
+    background: #747474;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    position: relative;
+    height: 40px;
+    font-family: 'Permanent Marker';
+    font-size: 1.2rem;
+    margin-top: 5px;
+    padding: 0 2em;
+    cursor: pointer;
+    transition: 300ms ease all;
+    outline: none;
+    box-shadow: 5px 5px 5px rgb(192, 52, 52);
+}
+
+button:hover {
+    background: #ffffff00;
+    color: #eb0e0e;
+}
+
+button:before,
+button:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #eb0e0e;
+    transition: 300ms ease all;
+}
+
+button:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+button:hover:before,
+button:hover:after {
+    width: 100%;
+    transition: 1000ms ease all;
+}
+
+/* HOME */
+
+.home {
+    header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .logoHome {
+            width: 60%;
+
+        }
+
+        .user {
+            color: white;
+            position: relative;
+            top: 70px;
+            left: 75px;
+        }
+
+        .logout {
+            position: relative;
+            margin-left: 60px;
+            border-radius: 6px;
+            top: 10px;
+            left: -70px;
+            box-shadow: none;
+        }
+    }
+
+    .userName {
+        margin: 0;
+        margin-left: 20px;
+        color: #eb0e0e;
+        position: relative;
+        top: 12px;
+        font-size: 1.5rem;
+        text-shadow:
+            -1px -1px 0 white,
+            1px -1px 0 white,
+            -1px 1px 0 white,
+            1px 1px 0 white;
+    }
+
+    .postText {
+        margin: 0;
+    }
+
+    .data {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    .post-data {
+        width: auto;
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: auto;
+        padding: 15px;
+        padding-bottom: 30px;
+
+        .delete,
+        .edit,
+        .like {
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0);
+            box-shadow: none;
+            margin: 0;
+        }
+
+        .like:before,
+        .like:after,
+        .delete:before,
+        .delete:after,
+        .edit:before,
+        .edit:after {
+            content: none !important;
+            display: none !important;
+        }
+
+        .time {
+            margin-top: 15px;
+            text-decoration: overline;
+            font-size: 0.8rem;
+        }
+    }
+
+
+    .end {
+        height: 80px;
+    }
+
+    footer {
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        background-color: rgb(32, 32, 33);
+        padding: 12px;
+        bottom: 0px;
+        right: 0;
+        z-index: 1000;
+
+        .new {
+            border-radius: 6px;
+            box-shadow: none;
+        }
+
+        .nvLogo {
+            width: 30px;
+            margin-left: 40px;
+        }
+    }
+
+    .form-text {
+        width: 70%;
+    }
+}
+
+
+/* MEDIA QUERIES */
+
+@media screen and (min-width: 768px) {
+
+    .landing {
+        margin: auto;
+        width: 80%;
+
+        .anchor {
+            margin-top: 100px;
+        }
+    }
+
+    .login {
+        margin: auto;
+        width: 60%;
+        display: flex;
+        align-items: center;
+    }
+
+    .loginRegister {
+        margin: auto;
+        width: 60%;
+        margin-top: 100px;
+
+        .fondo {
+            width: 80%;
+            margin-top: 70px;
+            margin-left: 50px;
+
+        }
+
+        .formLogin {
+            width: 80%;
+
+        }
+
+        .formRegister {
+            width: 80%
+        }
+    }
+
+    .home {
+        margin: auto;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .logoHome {
+            height: 200px !important;
+            width: 530px !important;
+        }
+
+        .user {
+            font-size: xx-large;
+        }
+
+        .nvLogo {
+            margin-left: 110px;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+
+    .landing {
+        margin: auto;
+        width: 60%;
+
+        .anchor {
+            margin-top: 70px;
+        }
+    }
+
+    .login {
+        margin: auto;
+        width: 60%;
+        display: flex;
+        align-items: center;
+    }
+
+    .loginRegister {
+        margin: auto;
+        width: 60%;
+
+        .fondo {
+            width: 40%;
+            margin-left: 270px;
+
+        }
+
+        .formRegister {
+            width: 350px;
+            left: 80px;
+            top: -50px;
+        }
+
+        .formLogin {
+            width: 350px;
+            left: 460px;
+            top: -50px;
+        }
+    }
+
+    .home {
+        margin: auto;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .user {
+            font-size: xx-large;
+        }
+    }
+
+    .footer {
+        margin: auto;
+        width: 60%;
+        display: flex;
+        justify-content: space-between;
+        background-color: #eb0e0e;
+    }
+}

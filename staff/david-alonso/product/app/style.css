@@ -1,0 +1,552 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import 'tailwindcss';
+
+html {
+    /* font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 600;
+    background-color: rgb(24, 26, 39);
+    color: white;
+    margin: 0; */
+
+    /* Declarar un color variable => " border-[#0ce3e3] " */
+
+    --base-color: rgb(24, 26, 39);
+    --primary-color: rgba(253, 135, 0);
+    --secundary-color: #0ce3e3;
+    --form-color: rgba(102, 101, 101, 0.685);
+
+    @apply font-[Roboto] italic font-semibold bg-[var(--base-color)] text-white
+}
+
+body {
+    /* margin: 0; */
+    @apply m-0;
+}
+
+form {
+    /* display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -20px;
+    gap: 30px;
+    width: 80%;
+    margin-top: 90px;
+    margin-left: 30px; */
+
+    @apply flex flex-col relative left-[-8px] top-[-20px] gap-[30px] w-5/6 mt-[90px] ml-[30px];
+
+    .input {
+        /* height: 30px;
+        font-size: medium;
+        padding-left: 1rem;
+        border-radius: 12px;
+        cursor: pointer; */
+
+        @apply h-[30px] text-base pl-1 rounded-lg border-2 cursor-pointer bg-[#d8d8d8] text-[#343535] pl-4
+    }
+
+    .input:is(:focus, :valid) {
+        /* box-shadow: 5px 5px 5px rgb(48, 47, 47); */
+        @apply shadow-lg shadow-stone-900/70
+    }
+}
+
+article {
+    /* width: 100%;
+    margin: 0;
+    padding-bottom: 0px; */
+
+    /* ?????   object-fit: cover;
+    position: sticky;
+    top: 0; */
+
+    @apply w-full m-0 pb-0
+}
+
+/* ????? .container-posts {
+    width: 100%;
+    margin-block: 150px;
+    background-color: rgb(32, 32, 32);
+
+} */
+
+img {
+    /* width: 100%; */
+    @apply w-full
+}
+
+h1 {
+    /* font-size: x-large;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    color: rgba(253, 135, 0);
+    top: 40px; */
+
+    @apply text-2xl relative flex justify-center text-[var(--primary-color)] top-[40px]
+}
+
+/* LANDING */
+.landing {
+    .logo {
+        /* width: 100%;
+        height: 500px;
+        margin-top: 50px; */
+
+        @apply w-full h-[500px] mt-[50px]
+    }
+
+    .start {
+        /* display: flex;
+        justify-content: center; */
+        @apply flex justify-center;
+
+        .enter {
+            position: relative;
+            top: 20px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #0ce3e3, rgb(253, 135, 0));
+            padding: 15px 80px;
+            border-radius: 10px;
+            font-size: 1.25em;
+            cursor: pointer;
+            /* @apply relative top-[20px] text-amber-50 py-4 px-20  */
+        }
+
+        .enter span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .enter::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            background: rgba(24, 26, 39);
+            border-radius: 9px;
+            transition: 0.5s;
+        }
+
+        .enter:hover::before {
+            opacity: 0.7;
+        }
+
+        .enter::after {
+            content: "";
+            position: absolute;
+            inset: 0px;
+            background: linear-gradient(45deg, #0ce3e3, rgb(253, 135, 0));
+            border-radius: 9px;
+            transition: 0.5s;
+            opacity: 0;
+            filter: blur(20px);
+        }
+
+        .enter:hover:after {
+            opacity: 1;
+        }
+    }
+}
+
+/* LOGIN */
+.loginRegister {
+
+    .fondo {
+        /* width: 100%;
+        height: 940px;
+        z-index: -1; */
+        @apply w-full h-[940px] -z-1
+    }
+
+    .form-style {
+        /* width: 300px;
+        height: 500px;
+        margin-inline: auto;
+        position: relative;
+        
+        top: -750px;
+        background-color: rgba(66, 66, 66, 0.685);
+        border-radius: 20px;
+        border: solid 5px rgba(253, 135, 0); */
+        @apply w-[300px] h-[500px] mx-auto relative top-[-750px] bg-[var(--form-color)] rounded-2xl border-3 border-[var(--primary-color)] p-4
+    }
+
+    .anchor-form {
+        /* color: white;
+        text-decoration: underline;
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px; */
+        @apply text-amber-50 underline font-medium flex justify-center mt-[10px]
+    }
+}
+
+.anchorCancel {
+    /* color: white;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: 30px; */
+    @apply text-amber-50 underline font-medium flex justify-center mt-[10px] top-[30px]
+}
+
+/* BUTONS */
+button {
+    background: rgba(253, 135, 0);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    position: relative;
+    height: 30px;
+    font-size: 1rem;
+    margin-top: 2px;
+    padding: 0 2em;
+    cursor: pointer;
+    transition: 300ms ease all;
+    outline: none;
+}
+
+button:hover {
+    background: rgba(24, 26, 39, 0);
+    color: rgba(253, 135, 0);
+
+}
+
+button:before,
+button:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: rgba(253, 135, 0);
+    transition: 300ms ease all;
+}
+
+button:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+button:hover:before,
+button:hover:after {
+    width: 100%;
+    transition: 1000ms ease all;
+}
+
+/* HOME */
+
+.home {
+    header {
+
+        /* display: flex;
+        justify-content: space-between;
+        width: 100%; */
+        @apply flex justify-between w-full;
+
+        .logoHome {
+            /* width: 40%;
+            height: 150px;
+            cursor: pointer; */
+            @apply w-[40%] h-[150px] cursor-pointer
+        }
+
+        .profile {
+            /* border-radius: 30px;
+            border: 4px solid #0ce3e3;
+            height: 50px;
+            width: 140px;
+            position: relative;
+            top: 61px;
+            left: -80px; */
+            @apply rounded-2xl border-3 border-[#0ce3e3] p-4 h-[50px] w-[200px] relative top-[40px] left-[-80px];
+
+            .user {
+                /* color: rgba(253, 135, 0);
+                position: relative;
+                top: -12px;
+                left: 50px;
+                font-size: 1.5rem;
+                cursor: pointer; */
+                @apply text-[var(--primary-color)] relative ml-10 -top-2.5 cursor-pointer text-2xl
+            }
+        }
+
+        .profile:hover {
+            /* background-color: rgba(199, 199, 199, 0.932); */
+            @apply bg-[var(--secundary-color)] p-4
+        }
+
+        /* .user {
+            /* color: rgba(253, 135, 0);
+            position: relative;
+            top: -12px;
+            left: 50px;
+            font-size: 1.5rem;
+            cursor: pointer; */
+        /* @apply text-[var(--primary-color)] relative ml-10 -top-2.5 cursor-pointer text-2xl */
+        /* } */
+
+    }
+
+    .user-profile {
+        /* background-color: #0ce3e3;
+        height: 5px;
+        width: 250px;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        font-size: xx-large;
+        margin-left: 180px;
+        top: -3px; */
+        @apply bg-[var(--secundary-color)] h-1 w-full relative justify-center items-baseline-last text-3xl mt-8 top-[-5px]
+    }
+
+    .userName {
+        /* margin: 0;
+        margin-left: 20px;
+        color: rgba(253, 135, 0);
+        position: relative;
+        top: 18px;
+        font-size: 1.5rem;
+        text-shadow: -1.5px -1.5px 0 white,
+            1.5px -1.5px 0 white,
+            -1.5px 1.5px 0 white,
+            1.5px 1.5px 0 white;
+        cursor: pointer; */
+        @apply m-0 ml-[20px] text-[var(--primary-color)] relative top-[3px] text-2xl cursor-pointer
+    }
+
+    .postText {
+        margin: 0;
+        font-size: 1.3rem;
+    }
+
+    .data {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    .post-data {
+        width: auto;
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: auto;
+        padding: 15px;
+        padding-bottom: 30px;
+
+        .delete,
+        .edit,
+        .like {
+            font-size: 1.3rem;
+            background: rgba(0, 0, 0, 0);
+            box-shadow: none;
+            margin: 0;
+        }
+
+        .like:before,
+        .like:after,
+        .delete:before,
+        .delete:after,
+        .edit:before,
+        .edit:after {
+            content: none !important;
+            display: none !important;
+        }
+
+        .time {
+            margin-top: 8px;
+            font-size: 1.1rem;
+        }
+    }
+
+    .end {
+        height: 80px;
+    }
+
+    footer {
+        position: fixed;
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        background-color: rgb(21, 22, 34);
+        border-top: 3px solid #0ce3e3;
+        padding: 12px;
+        bottom: 0px;
+        right: 0;
+        z-index: 1000;
+
+        .new {
+            border-radius: 6px;
+            box-shadow: none;
+        }
+
+        .nvLogo {
+            width: 30px;
+        }
+
+        .logout {
+            position: relative;
+            border-radius: 6px;
+            box-shadow: none;
+        }
+
+        .search {
+            position: relative;
+            border-radius: 6px;
+            box-shadow: none;
+        }
+    }
+
+    /* .form-text {
+        width: 90%;
+    }
+
+    .input {
+        height: 30px;
+        border-radius: 12px;
+        padding-left: 2rem;
+    } */
+}
+
+.form-text {
+    width: 90%;
+    margin-left: 40px;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (min-width: 768px) {
+
+    .landing {
+        margin: auto;
+        width: 80%;
+
+        .anchor {
+            margin-top: 100px;
+        }
+    }
+
+    .login {
+        margin: auto;
+        width: 60%;
+        display: flex;
+        align-items: center;
+    }
+
+    .loginRegister {
+        margin: auto;
+        width: 60%;
+        margin-top: 100px;
+
+        .fondo {
+            width: 80%;
+            margin-top: 70px;
+            margin-left: 50px;
+
+        }
+
+        .formLogin {
+            width: 80%;
+
+        }
+
+        .formRegister {
+            width: 80%
+        }
+    }
+
+    .home {
+        margin: auto;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .logoHome {
+            height: 200px !important;
+            width: 530px !important;
+        }
+
+        .user {
+            font-size: xx-large;
+        }
+
+        .nvLogo {
+            margin-left: 110px;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+
+    .landing {
+        margin: auto;
+        width: 60%;
+
+        .anchor {
+            margin-top: 70px;
+        }
+    }
+
+    .login {
+        margin: auto;
+        width: 60%;
+        display: flex;
+        align-items: center;
+    }
+
+    .loginRegister {
+        margin: auto;
+        width: 60%;
+
+        .fondo {
+            width: 40%;
+            margin-left: 270px;
+
+        }
+
+        .formRegister {
+            width: 350px;
+            left: 80px;
+            top: -50px;
+        }
+
+        .formLogin {
+            width: 350px;
+            left: 460px;
+            top: -50px;
+        }
+    }
+
+    .home {
+        margin: auto;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .user {
+            font-size: xx-large;
+        }
+    }
+
+    .footer {
+        margin: auto;
+        width: 60%;
+        display: flex;
+        justify-content: space-between;
+        background-color: #eb0e0e;
+    }
+}

@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8080/posts -H 'Authorization: Basic m86hbjvqpre' -H 'Content-type: application/json' -d '{ "image":"https://www.kawasaki-la.com/Content/Images/SubBrand/2024-kx/25_kx_201_sblp_slides_1440x1000_f_domestic_slide_3.jpg","text":"Kawasaki KX"}' -v
