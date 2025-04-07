@@ -11,7 +11,7 @@ export const Confirm = ({ title, message, onAccepted, onCancelled }) => {
 
                 <p>{message}</p>
 
-                <button className="secondary" type="button" onClick={handleCancelClick}>Cancel</button>
+                <button className="bg-gray-700 text-white px-4 py-2 rounded mt-2" type="button" onClick={handleCancelClick}>Cancel</button>
                 <button type="button" onClick={handleAcceptClick}>Accept</button>
 
             </div>
