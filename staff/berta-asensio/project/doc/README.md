@@ -1,27 +1,40 @@
-# Bee you 
+# Little breakfast
 
 ## Intro
-(explicar en un parrafo de qué trata el producto)
 
-![](https://media.giphy.com/media/MTVgLuy0XknAMOr4FZ/giphy.gif?cid=ecf05e47otpc08m84nqwvhc11rir6gq4de64cgwxsp60e5tx&ep=v1_gifs_search&rid=giphy.gif&ct=g)
+Little breakfast es una aplicación móvil dirigida a familias que desean un servicio de desayuno diario para sus hijos de primaria en el colegio. Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijos y realizar los pedidos desde la app de manera fácil. 
+
+![](https://media.giphy.com/media/jhzar9OuWE6fq2wHL3/giphy.gif?cid=790b76117idtvpv2k9ng2aoxpxzz0n0rsw3i0zxdmp878j1m&ep=v1_gifs_search&rid=giphy.gif&ct=g)
 
 ## Functional
 
 ### Use Cases
 
-En forma de listado:
+#### User (Parents)
 
-User
--register
--login
--logout
--view posts
--create posts
--Toggle like post
--delete post
--edit post text
+- Register
+- Login
+- Logout
+- See menu options
+- Place orders
+- View order historial ?
+- Create form child ?
+- Edit child data
+- Cancel order
+- See money cart
+- View generated invoices ?
 
-*por ejemplo podemos poner una imagen de un diagrama de lo que hace el usuario
+#### Client (Child) ???
+
+- Technical sheet:
+    - Nombre
+    - Apellidos
+    - Edad
+    - Colegio
+    - 
+
+*Diagrama de flujo del proceso de pedidos y entregas, desde que el padre realiza el pedido hasta que el niño recibe el desayuno.
+
 
 ### UIUX Design
 
@@ -31,19 +44,22 @@ User
 
 ### Blocks
 
--App
--Api
-...
+- App (frontend)
+- Api (backend)
+- DB (data bases)
 
 ### Packages
 
--app (client-side application)
--api (...)
--doc (documentation)
+- app (client-side application)
+- api (...)
+- com(validations, errors)
+- doc (documentation)
+
 
 ### UI Components (arquitectura de componentes)
 
-(diagrama de componentes por ejemplo) (no obligatorio)
+(diagrama de componentes por ejemplo)
+ (no obligatorio)
 
 ### Behaviors
 
@@ -52,29 +68,36 @@ User
 
 ### Data Model
 
-User
+User(parent)
 - id (string, uuid)
-- name (string, minLength 1, maxLength 20)
-- email (....)
-- username (...)
-- password(...)
+- name (string, minLength 1, maxLength 50): nombre completo del padre
+- email (string, email): correo electrónico de padre
+- username (necesario?)
+- password(string): contraseña del padre
 -createdAt (Date)
 -modifiedAt (Date)
 
-Post
-- id (string, uuid)
-- author (string, User.id) -> asi se establece la relacion con el User
-- image (string, maxLength 1000)
-- text (string, maxL length 500)
-- createdAt (Date)
-- modifiedAt (Date)
-- likes ([User.id]) // los likes son un array de user.id
+Child:
+- id (string, uuid): indentificador único para el hijo
+- name (string, minLength 1, maxLength 30): nombre del niño
+- como establecer relación con User?
+- age (number): edad del niño
+- allergies(array of strings): alergias alimentarias
+
+Order:
+- id(string, uuid): identificador único para el pedido
+- childId(string, uuid): referencia al niño
+- menuOptions (array of strings): opciones de menú seleccionadas
+- status (string): Estado del pedido (pendiente, en camino, entregado, cancelado)
+- deliveryDay(Date): fecha de entrega
+-createdAt (Date): fecha realización pedido
+- modifiedAt(Date): fecha ultima modificación
 
 ### Technologies
 
-- HTML/ CSS/ JS
-- React / Vite
-- Express / Node
+- Frontend: HTML/ CSS/ JS / React
+- Backend: Node.js, Express, MongoDB
+- Authentication: JSON Web Tokens
 
 
 ## Planning 
@@ -83,20 +106,5 @@ Post
 [Issue Tracking] https://github.com/b00tc4mp/isdi-bootcamp-202501/issues/76
 
 ### Code Coverage
-...
+Testings
 
-
-
-# En total tenemos tres partes:
-
-1. La intro
-
-2. La parte funcional:
-- diseño
-
-3. La parte tecnica
-- bloques 
-- paquetes
-- componentes
-- comportamientos
-- modelo de datos
