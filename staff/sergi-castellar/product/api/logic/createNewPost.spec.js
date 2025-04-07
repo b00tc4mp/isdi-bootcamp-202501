@@ -30,8 +30,8 @@ describe('createNewPost', () => {
                 userId = user._id.toString()
                 return createNewPost(userId, 'https://i.blogs.es/a19bfc/testing/450_1000.webp', 'testing')
             })
-            .then(() => Post.findOne({ textDescription: 'testing' }).lean())
-            .then(post => postAuthorId = post.authorId._id.toString())
+            .then(() => Post.findOne({ text: 'testing' }).lean())
+            .then(post => postAuthorId = post.author._id.toString())
             .finally(() => {
                 expect(postAuthorId).to.be.a('string')
                 expect(userId).to.be.equal(postAuthorId)

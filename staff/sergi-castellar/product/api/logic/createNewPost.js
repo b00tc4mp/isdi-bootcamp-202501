@@ -3,10 +3,10 @@ import { validate, errors } from 'com'
 
 const { NotFoundError, SystemError } = errors
 
-export const createNewPost = (userId, imageSrc, textDescription) => {
+export const createNewPost = (userId, image, text) => {
     validate.id(userId, 'id')
-    validate.url(imageSrc, 'url')
-    validate.description(textDescription, 'description')
+    validate.url(image, 'url')
+    validate.description(text, 'description')
 
     return User.findById(userId)
         .catch(error => { throw new SystemError(error.message) })
@@ -14,9 +14,9 @@ export const createNewPost = (userId, imageSrc, textDescription) => {
             if (!user) throw new NotFoundError('user not found')
 
             const newPost = {
-                authorId: userId,
-                imageSrc,
-                textDescription
+                author: userId,
+                image,
+                text
             }
 
             return Post.create(newPost)

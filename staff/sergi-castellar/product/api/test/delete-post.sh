@@ -1,2 +1,2 @@
-curl -X DELETE http://localhost:8080/posts/delete/016a08a5ca989b7be1277c7fc7b1a21cbe \
+curl -X DELETE http://localhost:8080/posts/delete/67eb81e5e0c26bd6b9a9c650 \
     -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RkOWVkMTkzMTJkOWUzMmQ4NjU5MGUiLCJpYXQiOjE3NDMwNjQ4MjF9.Q0UN5R6u5uH3DXgVCGN-3pq6tCMQpaCRkLqvogXqSis' -v

@@ -58,11 +58,11 @@ const post = new Schema({
         required: false,
         auto: true
     },
-    authorId: {
+    author: {
         type: ObjectId,
         ref: 'User'
     },
-    imageSrc: {
+    image: {
         type: String,
         minLength: 1,
         maxLength: 5000,
@@ -70,7 +70,7 @@ const post = new Schema({
         unique: false,
         match: constant.URL_REGEX
     },
-    textDescription: {
+    text: {
         type: String,
         minLength: 1,
         maxLength: 1000,

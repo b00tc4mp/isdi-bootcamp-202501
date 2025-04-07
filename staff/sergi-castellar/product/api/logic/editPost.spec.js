@@ -31,17 +31,17 @@ describe('editPost', () => {
                 password: '$2b$10$.od0CuzCT6HHQdw/K3P/A.slG37zTbukraw1hLqa1r/TfBvY4C2mq'
             }),
             Post.create({
-                authorId: userId,
-                imageSrc: 'https://i.blogs.es/a19bfc/testing/450_1000.webp',
-                textDescription: 'testing',
+                author: userId,
+                image: 'https://i.blogs.es/a19bfc/testing/450_1000.webp',
+                text: 'testing',
             })
         ])
-            .then(() => Post.findOne({ textDescription: 'testing' }).lean())
+            .then(() => Post.findOne({ text: 'testing' }).lean())
             .then(post => {
                 postId = post._id
                 return editPost(userId.toString(), postId.toString(), 'testing edited')
             })
-            .then(() => Post.findOne({ textDescription: 'testing' }).lean())
+            .then(() => Post.findOne({ text: 'testing' }).lean())
             .then(post => expect(post).to.be.null)
     })
 
@@ -92,12 +92,12 @@ describe('editPost', () => {
                 password: '$2b$10$.od0CuzCT6HHQdw/K3P/A.slG37zTbukraw1hLqa1r/TfBvY4C2mq'
             }),
             Post.create({
-                authorId: nonUserId,
-                imageSrc: 'https://i.blogs.es/a19bfc/testing/450_1000.webp',
-                textDescription: 'testing',
+                author: nonUserId,
+                image: 'https://i.blogs.es/a19bfc/testing/450_1000.webp',
+                text: 'testing',
             })
         ])
-            .then(() => Post.findOne({ textDescription: 'testing' }).lean())
+            .then(() => Post.findOne({ text: 'testing' }).lean())
             .then(post => {
                 postId = post._id
 

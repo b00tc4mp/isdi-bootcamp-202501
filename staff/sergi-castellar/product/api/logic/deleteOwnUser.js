@@ -12,7 +12,7 @@ export const deleteOwnUser = (userId) => {
         .then(foundUser => {
             if (!foundUser) throw new NotFoundError('user not found');
 
-            //            if (userId !== foundPost.authorId.toString()) throw new OwnershipError('user is not the post author');
+            //            if (userId !== foundPost.author.toString()) throw new OwnershipError('user is not the post author');
 
             return data.users.deleteOne({ _id: new ObjectId(userId) })
                 .catch(error => {

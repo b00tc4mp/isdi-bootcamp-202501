@@ -1,7 +1,9 @@
 import 'dotenv/config'
-import { User, Post, ObjectId, data } from './../data/index.js'
+import { User, Post, data } from './../data/index.js'
+import { Types } from 'mongoose'
 import bcrypt from 'bcryptjs'
 
+const { ObjectId } = Types
 const { MONGO_URL, MONGO_DB } = process.env
 
 const mashaId = new ObjectId('67dd9ed19312d9e32d86590a')
@@ -90,18 +92,18 @@ data.connect(MONGO_URL, MONGO_DB)
                 return Post.insertMany([
                     {
                         _id: new ObjectId('67dd9ed19312d9e32d865911'),
-                        authorId: mashaId,
-                        imageSrc: "https://i.ibb.co/Mxctt2nG/masha.png",
-                        textDescription: "Se van a enterar, tengo un regalito preparado",
+                        author: mashaId,
+                        image: "https://i.ibb.co/Mxctt2nG/masha.png",
+                        text: "Se van a enterar, tengo un regalito preparado",
                         createdAt: new Date("2025-02-25T10:32:27.000Z"),
                         modifiedAt: null,
                         likes: []
                     },
                     {
                         _id: new ObjectId('67dd9ed19312d9e32d865912'),
-                        authorId: aaronId,
-                        imageSrc: "https://i.ibb.co/xK9rvJF2/aaron.png",
-                        textDescription: "Siendo el mas sexy",
+                        author: aaronId,
+                        image: "https://i.ibb.co/xK9rvJF2/aaron.png",
+                        text: "Siendo el mas sexy",
                         createdAt: new Date("2025-02-26T21:11:09.000Z"),
                         modifiedAt: null,
                         likes: [
@@ -111,9 +113,9 @@ data.connect(MONGO_URL, MONGO_DB)
                     },
                     {
                         _id: new ObjectId('67dd9ed19312d9e32d865913'),
-                        authorId: victorId,
-                        imageSrc: "https://i.ibb.co/9kGvPg4C/victor.png",
-                        textDescription: "Menuda tarta de queso me ha salido chavales",
+                        author: victorId,
+                        image: "https://i.ibb.co/9kGvPg4C/victor.png",
+                        text: "Menuda tarta de queso me ha salido chavales",
                         createdAt: new Date("2025-02-27T10:48:32.000Z"),
                         modifiedAt: null,
                         likes: [
@@ -123,9 +125,9 @@ data.connect(MONGO_URL, MONGO_DB)
                     },
                     {
                         _id: new ObjectId('67dd9ed19312d9e32d865914'),
-                        authorId: camilaId,
-                        imageSrc: "https://i.ibb.co/hxjTYPyJ/camila.png",
-                        textDescription: "Increible como come esta gente, me van a arruinar",
+                        author: camilaId,
+                        image: "https://i.ibb.co/hxjTYPyJ/camila.png",
+                        text: "Increible como come esta gente, me van a arruinar",
                         createdAt: new Date("2025-02-28T14:19:58.000Z"),
                         modifiedAt: null,
                         likes: [
@@ -134,9 +136,9 @@ data.connect(MONGO_URL, MONGO_DB)
                     },
                     {
                         _id: new ObjectId('67dd9ed19312d9e32d865915'),
-                        authorId: manuId,
-                        imageSrc: "https://i.ibb.co/21W8fR6Q/manu.png",
-                        textDescription: "Hoy no se programa papissss",
+                        author: manuId,
+                        image: "https://i.ibb.co/21W8fR6Q/manu.png",
+                        text: "Hoy no se programa papissss",
                         createdAt: new Date("2025-03-01T15:19:58.000Z"),
                         modifiedAt: null,
                         likes: [
@@ -145,9 +147,9 @@ data.connect(MONGO_URL, MONGO_DB)
                     },
                     {
                         _id: new ObjectId('67dd9ed19312d9e32d865916'),
-                        authorId: frankId,
-                        imageSrc: "https://i.ibb.co/v4RTvBdq/frank.png",
-                        textDescription: "Eldiavlo menuda bellesa",
+                        author: frankId,
+                        image: "https://i.ibb.co/v4RTvBdq/frank.png",
+                        text: "Eldiavlo menuda bellesa",
                         createdAt: new Date("2025-03-03T15:19:58.000Z"),
                         modifiedAt: null,
                         likes: []
@@ -156,6 +158,6 @@ data.connect(MONGO_URL, MONGO_DB)
             })
     })
     .then(result => {
-        console.log(result)
+        console.log('populate.js executed')
     })
     .finally(() => data.disconnect())

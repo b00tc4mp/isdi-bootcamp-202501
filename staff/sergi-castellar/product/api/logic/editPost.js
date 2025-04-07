@@ -17,9 +17,9 @@ export const editPost = (userId, postId, text) => {
             if (!user) throw new NotFoundError('user not found');
             if (!post) throw new NotFoundError('post not found');
 
-            if (userId !== post.authorId.toString()) throw new OwnershipError('user is not the post author');
+            if (userId !== post.author.toString()) throw new OwnershipError('user is not the post author');
 
-            return Post.updateOne({ _id: postId }, { $set: { textDescription: text, modifiedAt: new Date } })
+            return Post.updateOne({ _id: postId }, { $set: { text: text, modifiedAt: new Date } })
                 .catch(error => { throw new SystemError(error.message) })
         })
         .then(() => { })

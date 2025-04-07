@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { Types } from 'mongoose'
 import { data, User, Post } from "../data/index.js";
-import { getPosts } from "./getPosts.js"
+import { getUserPosts } from "./getUserPosts.js"
 import { expect } from 'chai'
 import * as chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
@@ -12,7 +12,7 @@ chai.use(chaiAsPromised)
 const { ObjectId } = Types
 const { MONGO_URL, MONGO_DB } = process.env
 
-describe('getPosts', () => {
+describe('getUserPosts', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => {
@@ -27,10 +27,11 @@ describe('getPosts', () => {
         const user2Id = new ObjectId('67dd9ed19312d9e32d86490a')
 
         let dbUser1, dbUser2
-        let dbPost1, dbPost2
+        let dbPost1, dbPost2, dbPost3
 
         let posts
 
+        debugger
 
         return Promise.all([
             User.create({
@@ -66,15 +67,24 @@ describe('getPosts', () => {
                         image: 'https://i.blogs.es/a19bfc/testing/450_1000.webp',
                         text: 'testing2.1',
                         createdAt: new Date(2025, 3, 9),
+                        likes: [user1Id, user2Id]
+                    }),
+                    Post.create({
+                        author: user2Id,
+                        image: 'https://i.blogs.es/a19bfc/testing/450_1000.webp',
+                        text: 'testing2.2',
+                        createdAt: new Date(2025, 3, 10),
                         likes: [user1Id]
                     })
                 ])
             })
-            .then(([_post1, _post2]) => {
+            .then(([_post1, _post2, _post3]) => {
                 dbPost1 = _post1
                 dbPost2 = _post2
+                dbPost3 = _post3
+                debugger
             })
-            .then(() => getPosts(user1Id.toString()))
+            .then(() => getUserPosts(user1Id.toString(), user2Id.toString()))
             .then(_posts => posts = _posts)
             .finally(() => {
                 const [post1, post2] = posts
@@ -83,28 +93,28 @@ describe('getPosts', () => {
 
                 expect(post1.author.id).to.equal(dbUser2._id.toString())
                 expect(post1.author.username).to.equal(dbUser2.username)
-                expect(post1.image).to.equal(dbPost2.image)
-                expect(post1.text).to.equal(dbPost2.text)
-                expect(post1.createdAt).to.deep.equal(dbPost2.createdAt)
-                expect(post1.modifiedAt).to.deep.equal(dbPost2.modifiedAt)
+                expect(post1.image).to.equal(dbPost3.image)
+                expect(post1.text).to.equal(dbPost3.text)
+                expect(post1.createdAt).to.deep.equal(dbPost3.createdAt)
+                expect(post1.modifiedAt).to.deep.equal(dbPost3.modifiedAt)
                 expect(post1.own).to.be.false
                 expect(post1.liked).to.be.true
 
-                expect(post2.author.id).to.equal(dbUser1.id)
-                expect(post2.author.username).to.equal(dbUser1.username)
-                expect(post2.image).to.equal(dbPost1.image)
-                expect(post2.text).to.equal(dbPost1.text)
-                expect(post2.createdAt).to.deep.equal(dbPost1.createdAt)
-                expect(post2.modifiedAt).to.deep.equal(dbPost1.modifiedAt)
-                expect(post2.own).to.be.true
-                expect(post2.liked).to.be.false
+                expect(post2.author.id).to.equal(dbUser2.id)
+                expect(post2.author.username).to.equal(dbUser2.username)
+                expect(post2.image).to.equal(dbPost2.image)
+                expect(post2.text).to.equal(dbPost2.text)
+                expect(post2.createdAt).to.deep.equal(dbPost2.createdAt)
+                expect(post2.modifiedAt).to.deep.equal(dbPost2.modifiedAt)
+                expect(post2.own).to.be.false
+                expect(post2.liked).to.be.true
             })
     })
 
     it('fails at non-existing user', () => {
         let catchedError
 
-        return getPosts('67dd9ed19312d9e32d86590c')
+        return getUserPosts('67dd9ed19312d9e32d86590c', '67dd9ed19312d9e32d86590a')
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(NotFoundError)

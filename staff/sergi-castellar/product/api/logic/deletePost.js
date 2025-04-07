@@ -16,7 +16,7 @@ export const deletePost = (userId, postId) => {
             if (!foundUser) throw new NotFoundError('user not found');
             if (!foundPost) throw new NotFoundError('post not found');
 
-            if (userId !== foundPost.authorId.toString()) throw new OwnershipError('user is not the post author');
+            if (userId !== foundPost.author.toString()) throw new OwnershipError('user is not the post author');
 
             return Post.deleteOne({ _id: postId })
                 .catch(error => { throw new SystemError(error.message) })
