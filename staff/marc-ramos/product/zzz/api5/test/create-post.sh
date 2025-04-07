@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8080/posts -H 'Authorization: Bearer m866rqsnfut' -H 'Content-type: application/json' -d '{"image":"https://media.giphy.com/media/NTCn2HsU6mRgs/giphy.gif?cid=790b7611z9yku8c1ys44xq467kr2s99cjc6gtwhwdmqabwa9&ep=v1_gifs_search&rid=giphy.gif&ct=g","text":"db"}' -v

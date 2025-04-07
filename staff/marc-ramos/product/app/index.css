@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+    html {
+        --bg-color: #BDDEEE;
+        --color: black;
+        --color-high: #92ADCA;
+        --color-low: grey;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
+
+        @apply font-['Merriweather'] bg-[var(--bg-color)] text-[var(--color)];
+    }
+
+    body {
+        @apply m-0;
+    }
+
+    a {
+        @apply cursor-pointer transition-[font-size] duration-300 min-[1040px]:hover:text-[var(--color-high)] min-[1040px]:hover:text-[2rem];
+    }
+
+    button {
+        @apply cursor-pointer bg-[var(--color)] text-[var(--bg-color)] border-0 font-['Merriweather'] text-base px-4 py-2;
+    }
+
+    button.secondary {
+        @apply bg-[var(--color-low)] text-[var(--bg-color)] border border-[var(--color-low)] w-full;
+    }
+
+    form {
+        @apply flex flex-col gap-2;
+
+        .field {
+            @apply flex flex-col gap-[var(--padding-y)];
+        }
+    }
+
+    input {
+        @apply bg-[var(--bg-color)] text-[var(--color)] border-2 border-[var(--color)] outline-none font-['Merriweather'] text-base placeholder:text-[var(--color-low)];
+    }
+
+    input:focus {
+        @apply border-[var(--color)];
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        background-color: var(--bg-color);
+        -webkit-text-fill-color: var(--color);
+        -webkit-box-shadow: 0 0 0px 1000px var(--bg-color) inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    h1,
+    h2 {
+        @apply m-0;
+    }
+
+    main {
+        @apply my-12;
+    }
+}
