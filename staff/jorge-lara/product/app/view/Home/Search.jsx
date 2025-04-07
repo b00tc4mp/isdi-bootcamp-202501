@@ -23,7 +23,7 @@ export const Search = () => {
         <h1>Search</h1>
 
         <form onSubmit={handleSearch}>
-            <input type='text' name='query' id='query' defaultValue={query} />
+            <input className='flex flex-col w-full mb-[1rem] border border-white' type='text' name='query' id='query' placeholder='Search' defaultValue={query} />
             <button type='submit'>Search</button>
         </form>
     </>

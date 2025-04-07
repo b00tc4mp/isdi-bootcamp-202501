@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router'
 
 import { logic } from '../../logic/index.js';
+import { useContext } from '../../context.js';
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited }) {
+    const { alert, confirm } = useContext();
     const [view, setView] = useState('');
 
     const navigate = useNavigate();
@@ -26,22 +28,25 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
     }
 
     const handleDeleteClick = () => {
-        if (confirm('Delete post?')) {
-            try {
-                logic.deletePost(post.id)
-                    .then(() => onPostDeleted())
-                    .catch(error => {
+        confirm('Delete post?')
+            .then(accepted => {
+                if (accepted) {
+                    try {
+                        logic.deletePost(post.id)
+                            .then(() => onPostDeleted())
+                            .catch(error => {
+                                console.error(error);
+
+                                alert(error.message);
+                            })
+
+                    } catch (error) {
                         console.error(error);
 
                         alert(error.message);
-                    })
-
-            } catch (error) {
-                console.error(error);
-
-                alert(error.message);
-            }
-        }
+                    }
+                }
+            })
     }
 
     const handleEditTextCancelClick = () => setView('');
@@ -75,12 +80,12 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
 
     const handleUsernameClick = () => navigate(`/${post.author.username}`, { state: { userId: post.author.id } })
 
-    return <article>
-        <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
-        <img src={post.image} />
+    return <article className='w-[600px] max-w-[90%] bg-[#181a1b] rounded-lg my-8 p-4 box-border relative pb-8'>
+        <h3 className='cursor-pointer' onClick={handleUsernameClick}>{post.author.username}</h3>
+        <img className='block w-full h-auto mx-auto' src={post.image} />
 
 
-        <div className="post-footer">
+        <div className='flex justify-between padding py-[var(--padding-y)] px-[var(--padding-x)]'>
             {view === '' && <p>{post.text}</p>}
 
             {view === 'edit-text' && <form onSubmit={handleEditTextSubmit}>
@@ -89,9 +94,9 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
                 <button type='submit'>Save</button>
             </form>}
 
-            <button onClick={handleToggleLikeClick}>{`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
-            {post.own && <button onClick={handleDeleteClick}>🗑️</button>}
-            {post.own && <button onClick={handleEditTextClick}>📝</button>}
+            <button className='right-4 bg-transparent border-0 py-2 px-4 cursor-pointer outline-none text-white transition-[font-size_0.2s] hover:text-2xl' onClick={handleToggleLikeClick}>{`${post.liked ? '❤️' : '🤍'} (${post.likesCount})`}</button>
+            {post.own && <button className='right-4 bg-transparent border-0 py-2 px-4 cursor-pointer outline-none text-white transition-[font-size_0.2s] hover:text-2xl' onClick={handleDeleteClick}>🗑️</button>}
+            {post.own && <button className='right-4 bg-transparent border-0 py-2 px-4 cursor-pointer outline-none text-white transition-[font-size_0.2s] hover:text-2xl' onClick={handleEditTextClick}>📝</button>}
         </div>
         <time>{post.createdAt.toISOString()}</time>
     </article>

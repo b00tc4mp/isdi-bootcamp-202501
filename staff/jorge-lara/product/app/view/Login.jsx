@@ -1,6 +1,8 @@
-import { logic } from '../logic/index.js';
+import { useContext } from '../context';
+import { logic } from '../logic/index';
 
 export function Login({ onNavigateToRegister, onUserLoggedIn }) {
+    const { alert } = useContext();
 
     const handleLoginSubmit = event => {
         event.preventDefault();
@@ -31,23 +33,23 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
         }
     }
 
-    return <div className="login">
+    return <div className='flex flex-col align-center justify-center text-center min-h-screen w-full'>
         <h1>Login</h1>
         <form onSubmit={handleLoginSubmit}>
-            <div className="field">
+            <div className='flex flex-col w-full mb-[1rem] border border-white'>
                 <input type="text" id="username" placeholder="Username" />
             </div>
-            <div className="field">
+            <div className='flex flex-col w-full mb-[1rem] border border-white'>
                 <input type="password" id="password" placeholder="Password" />
             </div>
             <div>
-                <button type="submit">Login</button>
+                <button className='w-50 cursor-pointer' type="submit">Login</button>
             </div>
         </form>
-        <div className="bottom-form">
+        <div className='text-base mt-[20px]'>
             <span>
                 Don't have an account?
-                <a onClick={onNavigateToRegister}>Sign Up</a>
+                <a className='ml-[12px]' onClick={onNavigateToRegister}>Sign Up</a>
             </span>
         </div>
     </div>
