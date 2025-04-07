@@ -80,7 +80,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
             <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
             <div className='post-buttons'>
                 {post.own && <button onClick={handleEditTextClick}>🪶</button>}
-                {post.own && <button className='delete-button' onClick={handleDeleteClick}>🗑️</button>}
+                {post.own && <button onClick={handleDeleteClick}>🗑️</button>}
             </div>
 
         </div>
@@ -94,8 +94,8 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
             <label htmlFor="text">Edit text</label>
             <input type="text" id="text" defaultValue={post.text} />
 
-            <button type="button" className="cancel-edit" onClick={handleEditTextCancelClick}>Cancel</button>
-            <button type="submit-edit">Save</button>
+            <button type="button" onClick={handleEditTextCancelClick}>Cancel</button>
+            <button type="button">Save</button>
         </form>}
 
         <div className="post-footer">

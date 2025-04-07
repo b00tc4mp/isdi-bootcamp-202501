@@ -6,7 +6,7 @@ const { SystemError } = errors
 export const getUserUsername = () => {
     const { token } = data
 
-    return fetch('http://localhost:8080/users/self/name', {
+    return fetch(`${import.meta.env.VITE_API_URL}/users/self/username`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
@@ -18,9 +18,9 @@ export const getUserUsername = () => {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { name } = body
+                        const { username } = body
 
-                        return name
+                        return username
                     })
 
             return response.json()

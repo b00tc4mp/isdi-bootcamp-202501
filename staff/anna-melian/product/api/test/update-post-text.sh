@@ -1,3 +1,1 @@
-
-curl -X PATCH http://localhost:8080/posts/m80hxkx04mr/text -H 'Authorization: Basic m8cxez8oheh' -H 'Content-type: application/json' -d '{"text":"Thank you so much for the support!!!"}' -v
-
+curl -X PATCH http://localhost:8080/posts/67ed569a426bf95525f7741a/text -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2VkNTE3OGYxYmQzNjU5YzhkY2NiZDgiLCJpYXQiOjE3NDM2MDY2NzMsImV4cCI6MTc0MzYxMDI3M30.fF_fK7t9cobOlO2tgT_TQdkC867uHVgkELLpbpQFPdo' -H 'Content-type: application/json' -d '{"text":"Amazing!"}' -v

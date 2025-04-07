@@ -1,202 +1,131 @@
 @import url('https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap');
+@import 'tailwindcss';
 
-html {
-    background-image: url('https://imgs.search.brave.com/EYbqZ18nhr7ABPXOAFnhYuAJwjVoOXJphlQt9mF9p1U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvZm9uZG9zLWRl/LXBhcGVsLXBlcmdh/bWluby12cmtrb2xz/djZ3dXpvdmcwLmpw/Zw');
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-    font-family: "Euphoria Script", serif;
-    background-color: var(--bg-color);
-    color: var(--color);
 
-    --bg-color: #f8f4c1;
-    --color: #000000;
-    --shadow1-color: #FFD700;
-    --shadow2-color: #ffc507;
-    --padding-x: 1rem;
-    --padding-y: .25rem;
+@layer base {
+    html {
+        background-image: url('https://imgs.search.brave.com/EYbqZ18nhr7ABPXOAFnhYuAJwjVoOXJphlQt9mF9p1U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvZm9uZG9zLWRl/LXBhcGVsLXBlcmdh/bWluby12cmtrb2xz/djZ3dXpvdmcwLmpw/Zw');
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        background-color: var(--bg-color);
 
-    font-size: 1.5rem;
-}
+        --bg-color: #f8f4c1;
+        --color: #000000;
+        --white: #ffffff;
+        --shadow1-color: #FFD700;
+        --shadow2-color: #ffc507;
+        --gold: #C5A000;
+        --grey: #949494;
+        --red: #800020;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
+        --new-size: 1.5rem;
 
-body {
-    margin: 0;
-}
+        font-size: 2rem;
 
-a {
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: font-size .2s, transform 0.3s ease, box-shadow 0.3s ease;
-    color: var(--color);
-    font-weight: bold;
-}
-
-a:hover {
-    font-size: 1.7rem;
-    transform: scale(1.1);
-    text-shadow: 0 0 10px rgb(255, 230, 0), 0 0 20px rgb(255, 255, 255), 0 0 30px rgb(250, 239, 145);
-}
-
-button {
-    font-family: inherit;
-    background-color: var(--color);
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 10px var(--shadow1-color), 0 0 20px var(--shadow2-color);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-    border-radius: 10px;
-    padding: var(--padding-x);
-    background-color: var(--bg-color);
-
-    .field {
-        display: flex;
-        flex-direction: column;
-        gap: var(--padding-y)
-    }
-}
-
-label {
-    font-weight: bold;
-}
-
-input {
-    background-color: white;
-    color: black;
-    border: 2px solid var(--color);
-    outline: none;
-    font-family: inherit;
-    font-size: 1rem;
-}
-
-input:focus {
-    background-color: rgb(216, 212, 212);
-    border-color: var(--color);
-}
-
-input::placeholder {
-    color: rgb(216, 212, 212);
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-    background-color: var(--bg-color);
-    -webkit-text-fill-color: var(--color);
-    -webkit-box-shadow: 0 0 0px 1000px rgb(216, 212, 212) inset;
-    transition: background-color 5000s ease-in-out 0s;
-}
-
-article {
-    background-color: var(--bg-color);
-    width: 600px;
-    max-width: 90%;
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    margin: 1rem;
-
-    h3,
-    .post-footer {
-        margin: 0.25rem;
-        color: var(--color);
-        padding-left: var(--padding-x);
-        padding-right: var(--padding-x);
-        padding-bottom: 1rem;
-
+        @apply font-['Euphoria_Script'] text-[var(--color)]
     }
 
-    time {
-        display: flex;
-        align-items: center;
-
+    body {
+        @apply m-0;
     }
 
-    p {
-        padding: var(--padding-y) var(--padding-x);
-        margin: 0.25rem;
-        color: var(--color);
+    a {
+        @apply cursor-pointer transition-[font-size] font-semibold duration-300 min-[1040px]:hover:text-[var(--bg-color)] min-[1040px]:hover:text-xl;
     }
 
-    img {
-        width: 100%;
+    button {
+        @apply cursor-pointer bg-[var(--color)] text-[var(--white)] border-2 border-solid border-[var(--gold)] px-2 transition-transform duration-300 min-[1040px]:hover:transform min-[1040px]:hover:scale-[1.1];
     }
 
-    .post-footer {
-        display: flex;
-        justify-content: space-between;
+    form {
+        @apply flex flex-col gap-[.5rem] rounded-[10px] bg-[var(--bg-color)] p-[var(--padding-x)];
+
+        .field {
+            @apply flex flex-col gap-[var(--padding-y)]
+        }
     }
+
+    label {
+        @apply font-bold
+    }
+
+    input {
+        @apply bg-[var(--white)] border-2 border-solid border-[var(--color)] outline-none focus:border-[var(--gold)] placeholder:text-[var(--grey)]
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        background-color: var(--bg-color);
+        -webkit-text-fill-color: var(--color);
+        -webkit-box-shadow: 0 0 0px 1000px rgb(216, 212, 212) inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    h1,
+    h2 {
+        @apply m-0 text-[var(--red)] text-3xl font-bold;
+    }
+
+    main {
+        @apply my-[3rem] flex flex-col items-center gap-[1rem] p-[2rem];
+    }
+
+    article {
+        @apply bg-[var(--bg-color)] rounded-[20px] m-[1rem] w-[600px] max-w-[90%];
+
+        h3,
+        .post-footer {
+            @apply m-[.25rem] text-[var(--color)] px-[var(--padding-x)] font-bold;
+        }
+
+        .post-footer {
+            @apply pb-[1rem]
+        }
+
+
+        time {
+            @apply flex items-center;
+        }
+
+        p {
+            @apply px-[var(--padding-x)] py-[var(--padding-y)] m-[.25rem] text-[var(--color)];
+        }
+
+        img {
+            @apply w-[100%];
+        }
+
+        .post-footer {
+            @apply flex justify-between
+        }
+    }
+
+    header {
+        @apply flex justify-between items-center w-[100%] bg-[var(--bg-color)] px-[var(--padding-x)] py-[var(--padding-y)] box-border fixed top-0;
+    }
+
+    footer {
+        @apply fixed flex justify-center box-border w-[100%] px-[var(--padding-x)] py-[var(--padding-y)] bg-[var(--bg-color)] bottom-0;
+    }
+
+    .landing {
+        @apply justify-self-center
+    }
+
+    .login {
+        @apply justify-self-center
+    }
+
+    .register {
+        @apply justify-self-center
+    }
+
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: var(--bg-color);
-    padding: var(--padding-y) var(--padding-x);
-    box-sizing: border-box;
-}
-
-h1,
-h2 {
-    margin: 0;
-    color: var(--color);
-    font-size: 2rem;
-    text-shadow: 0 0 10px var(--shadow1-color), 0 0 20px var(--shadow2-color);
-}
-
-main {
-    margin: 3rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 2rem;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: var(--bg-color);
-    padding: var(--padding-y) var(--padding-x);
-    box-sizing: border-box;
-}
-
-.landing {
-    justify-self: center;
-}
-
-.login {
-    justify-self: center;
-}
-
-.register {
-    justify-self: center;
-}
-
-.logo-hogwarts,
-.logo-gryffindor,
-.logo-ravenclaw,
-.logo-hufflepuff,
-.logo-slytherin {
+.logo-hogwarts {
     width: 100px;
     height: 100px;
     background-size: contain;
@@ -213,34 +142,6 @@ footer {
     box-shadow: 0 0 15px #000000;
 }
 
-.logo-gryffindor {
-    background-image: url('https://imgs.search.brave.com/eIxTnOzXuw6u3srH5x9S8CS7OKe1tu7XTuDM0DP_hSI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5teWthcmFtZWxs/aS5jb20vZ2FsZXJp/YS9hcnRpY3Vsb3Mv/ZGVjb3JhY2lvbi1k/ZS1wYXJlZC1lbWJs/ZW1hLWdyeWZmaW5k/b3ItaGFycnktcG90/dGVyLTYxY21fMTI0/MjJfMS5qcGc');
-    box-shadow: 0 0 15px var(--color);
-}
-
-.logo-slytherin {
-    background-image: url('https://imgs.search.brave.com/DCzHwpWrtvfV7FMvOQGQeeMzkiESwQYcwEujBq5EgvE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c2hvcGlmeS5jb20v/cy9maWxlcy8xLzE1/NDEvODU3OS9maWxl/cy9TbHl0aGVyaW4t/aGFycnktcG90dGVy/X2xhcmdlLmpwZz92/PTE0OTE1MzgzNDk');
-    box-shadow: 0 0 15px var(--color);
-}
-
-.logo-hufflepuff {
-    background-image: url('https://hogwartssantafe.wordpress.com/wp-content/uploads/2011/10/hufflepuffcrest.jpg');
-    box-shadow: 0 0 15px var(--color);
-}
-
-.logo-ravenclaw {
-    background-image: url('https://imgs.search.brave.com/QWyT_XZ79Mt8kIOdbm8lRITPQ21SptHfxKbb8AZVYZI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5teWthcmFtZWxs/aS5jb20vZ2FsZXJp/YS9hcnRpY3Vsb3Mv/ZGVjb3JhY2lvbi1k/ZS1wYXJlZC1lbWJs/ZW1hLXJhdmVuY2xh/dy1oYXJyeS1wb3R0/ZXItNjFjbV8xMjQy/MF8xLmpwZw');
-    box-shadow: 0 0 15px var(--color);
-}
-
-.logo-hogwarts,
-.logo-gryffindor,
-.logo-ravenclaw,
-.logo-hufflepuff,
-.logo-slytherin:hover {
-    transform: translateY(-2px) scale(1.05);
-    filter: hue-rotate(10deg) saturate(1.3);
-}
 
 .home-options {
     display: flex;
@@ -249,33 +150,7 @@ footer {
     padding: var(--padding-x);
 }
 
-.gryffindor {
-    --color: #740001;
-    --bg-color: #FFC107;
-    --shadow1-color: #db4f51;
-    --shadow2-color: #920709;
-}
 
-.slytherin {
-    --color: #1A472A;
-    --bg-color: #AAAAAA;
-    --shadow1-color: #5dbe45;
-    --shadow2-color: #36682f;
-}
-
-.hufflepuff {
-    --bg-color: #F5E6A3;
-    --color: #000000;
-    --shadow1-color: #8a8a8a;
-    --shadow2-color: #3d3d3d;
-}
-
-.ravenclaw {
-    --color: #0A3D91;
-    --bg-color: #C0C0C0;
-    --shadow1-color: #6bb9fa;
-    --shadow2-color: #0787ff;
-}
 
 .post-header {
     display: flex;
@@ -291,30 +166,4 @@ footer {
         margin: 10px;
     }
 
-    .delete-button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 10px rgb(255, 113, 113), 0 0 20px rgb(255, 0, 0);
-    }
-}
-
-.submit-edit {
-    font-size: 1.1rem;
-    transition: box-shadow 0.3s ease;
-}
-
-.submit-edit:hover {
-    font-size: 1.2rem;
-    transform: none;
-    box-shadow: 0 0 10px var(--shadow1-color), 0 0 20px var(--shadow2-color);
-}
-
-.cancel-edit {
-    font-size: 1.1rem;
-    transition: box-shadow 0.3s ease;
-}
-
-.cancel-edit:hover {
-    font-size: 1.2rem;
-    transform: none;
-    box-shadow: 0 0 10px rgb(255, 113, 113), 0 0 20px rgb(255, 0, 0);
 }
