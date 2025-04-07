@@ -1,43 +1,99 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route, useNavigate, Navigate } from 'react-router'
 
-import {logic} from './logic/index'
-import {Landing} from './view/Landing.jsx'
-import {Login} from './view/Login.jsx'
-import {Register} from './view/Register.jsx'
-import {Home} from './view/Home/index.jsx'
+import { Landing } from './view/Landing'
+import { Login } from './view/Login'
+import { Register } from './view/Register'
+import { Home } from './view/Home/index'
+import { Alert } from './view/Alert'
+import { Confirm } from './view/Confirm'
 
+import { logic } from './logic'
+import { Context } from './context'
 
 export function App() {
-    const [view, setView] = useState('landing')
+    const [loggedIn, setLoggedIn] = useState(null)
+    const [showLanding, setShowLanding] = useState(true)
+    const [alertMessage, setAlertMessage] = useState('')
+    const [confirmMessage, setConfirmMessage] = useState('')
+    const [confirmState, setConfirmState] = useState(null)
+
+    const navigate = useNavigate()
     
     useEffect(() => {
         try {
             const loggedIn = logic.isUserLoggedIn()
             
-            if (loggedIn) setView('home')
+            setLoggedIn(loggedIn)
         } catch (error) {
             console.error(error)
             alert(error.message)
         }
     }, [])
-
-    const handleNavigateToRegister = () => setView('register')
     
-    const handleNavigateToLogin = () => setView('login')
+    const handleNavigateToRegister = () => {
+        setShowLanding(false)
+        navigate('/register')
+    }
     
-    const handleUserRegistered = () => setView('login')
+    const handleNavigateToLogin = () => {
+        setShowLanding(false)
+        navigate('/login')
+    }
     
-    const handleUserLoggedIn = () => setView('home')
+    const handleUserRegistered = () => {
+        setShowLanding(false)
+        navigate('/login')
+    }
     
-    const handleUserLoggedOut = () => setView('login')
+    const handleUserLoggedIn = () => {
+        setShowLanding(false)
+        setLoggedIn(true)
+        navigate('/')
+    }
 
-    return <>
-        {view === 'landing' && <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin}/>}
+    const handleUserLoggedOut = () => {
+        setShowLanding(false)
+        setLoggedIn(false)
+        navigate('/login')
+    }
 
-        {view === 'register' && <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered}/>}
+    const handleShowAlert = message => setAlertMessage(message)
 
-        {view === 'login' && <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn}/>}
+    const handleAlertAccepted = () => setAlertMessage('')
 
-        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut}/>}
-    </>
+    const handleShowConfirm = message => {
+        return new Promise((resolve, _reject) => {
+            setConfirmMessage(message)
+            setConfirmState({ resolve })
+        })
+    }
+
+    const handleConfirmAccepted = () => {
+        confirmState.resolve(true)
+        setConfirmMessage('')
+        setConfirmState(null)
+    }
+
+    const handleConfirmCancelled = () => {
+        confirmState.resolve(false)
+        setConfirmMessage('')
+        setConfirmState(null)
+    }
+
+    return <Context value={{
+        alert: handleShowAlert,
+        confirm: handleShowConfirm
+    }}>
+        {loggedIn !== null && <Routes>
+            <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered}/>}/>
+
+            <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn}/>}/>
+
+            <Route path="/*" element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : showLanding ? <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} /> : <Navigate to={"/login"} />} />
+        </Routes>}
+
+        {alertMessage && <Alert title="ALERT" message={alertMessage} onAccepted={handleAlertAccepted} />}
+        {confirmMessage && <Confirm title="CONFIRM" message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
+    </Context>
 }

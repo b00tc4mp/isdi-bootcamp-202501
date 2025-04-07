@@ -1,13 +1,21 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route, useNavigate, useLocation } from 'react-router'
 
-import {logic} from '../../logic/index'
-import {Logo} from '../components/Logo.jsx'
-import {PostList} from '../components/PostList.jsx'
-import {CreatePost} from '../components/CreatePost.jsx'
+import { PostList } from '../components/PostList'
+import { CreatePost } from '../components/CreatePost'
+import { Profile } from '../components/Profile'
+import { Search } from '../components/Search'
+import { Logo } from '../components/Logo'
+import { useContext } from '../../context'
+import { logic } from '../../logic'
 
 export function Home({onUserLoggedOut}) {
-    const [view, setView] = useState('posts')
+    const { alert, confirm } = useContext()
+
     const [user, setUser] = useState(null)
+
+    const navigate = useNavigate()
+    const { pathname } = useLocation()
 
     useEffect(() => {
         try {
@@ -24,36 +32,65 @@ export function Home({onUserLoggedOut}) {
     }, [])
 
     const handleLogoutClick = () => {
-        try {
-            logic.logoutUser()
+        confirm('Do you want to logout?')
+        .then(accepted => {
+            if (accepted) {
+                try {
+                    logic.logoutUser()
+        
+                    onUserLoggedOut()
+                } catch (error) {
+                    console.error(error)
+                    alert(error.message)
+                }
+            }
+        })
+    }
 
-            onUserLoggedOut()
+    const handleCreatePostClick = () => navigate('/create-post')
+
+    const handleCreatePostCancelled = () => navigate('/')
+    
+    const handlePostCreated = () => navigate('/')
+
+    const handleSearchClick = () => navigate('/search')
+
+    const handleUserClick = () => {
+        try {
+            const userId = logic.getUserId()
+
+            navigate(`/${user.username}`, { state: {userId}})
         } catch (error) {
             console.error(error)
             alert(error.message)
         }
     }
 
-    const handleCreatePostClick = () => setView('create-post')
-
-    const handleCreatePostCancelled = () => setView('posts')
-    
-    const handlePostCreated = () => setView('posts')
-
-    return <>
-        {view === 'posts' && <div id="home">
+    return <div id="home">
             <header>
-                <h3>Welcome, {user ? user.username : ''}</h3>
+                <h3 onClick={handleUserClick}>{user ? user.username : ''}</h3>
+
                 <Logo />
+
+                {pathname === '/' && <button onClick={handleSearchClick}>🔍</button>}
+
                 <button onClick={handleLogoutClick}>Logout</button>
             </header>
-            <PostList />
-            </div>}
-            
-        {view === 'create-post' && <CreatePost onCreatePostCancelled={handleCreatePostCancelled} onPostCreated={handlePostCreated} />}
 
-        {view === 'posts' && <footer id='add-post-footer'>
-            <button id='add-post-button' onClick={handleCreatePostClick}>+</button>
-        </footer>}
-        </>
+            <main>
+                <Routes>
+                    <Route path="/create-post" element={<CreatePost onPostCreated={handlePostCreated} onCreatePostCancelled={handleCreatePostCancelled} />} />
+
+                    <Route path="/search" element={<Search />} />
+
+                    <Route path="/:username" element={<Profile />} />
+
+                    <Route path="/" element={<PostList />} />
+                </Routes>
+            </main>
+            
+        <footer className='add-post-footer'>
+            {pathname === '/' && <button className='add-post-button' onClick={handleCreatePostClick}>+</button>}
+        </footer>
+        </div>
 }

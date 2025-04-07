@@ -1,4 +1,4 @@
-import {Logo} from './components/Logo.jsx'
+import {Logo} from './components/Logo'
 
 export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     const handleRegisterClick = () => onNavigateToRegister()
@@ -6,7 +6,7 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     
     return <div>
         <Logo />
-        <div id="register-or-login">
+        <div className="register-or-login">
             <a onClick={handleRegisterClick}>Register</a>
             <span> or </span>
             <a onClick={handleLoginClick}>Login</a>

@@ -1,29 +1,21 @@
 import { useState, useEffect } from 'react'
+import { useContext } from '../../context'
+import { logic } from '../../logic'
+import { Post } from './Post'
 
-import {logic} from '../../logic/index'
-import {Post} from './Post.jsx'
+export function PostList({ targetUserId }) {
+    const { alert } = useContext()
 
-export function PostList() {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-            alert(error.message)
-        }
+        loadPosts()
     }, [])
 
-    const handlePostDeleted = () => { //TODO se repite
+    const loadPosts = () => {
         try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
+            (targetUserId ? logic.getUserPosts(targetUserId) : logic.getPosts())
+            .then(posts => setPosts(posts))
                 .catch(error => {
                     console.error(error)
                     alert(error.message)
@@ -34,35 +26,13 @@ export function PostList() {
         }
     }
 
-    const handlePostDescriptionEdited = () => { //TODO se repite
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-            alert(error.message)
-        }
-    }
+    const handlePostDeleted = () => loadPosts()
 
-    const handlePostLikeToggled = () => { //TODO se repite
-        try {
-            logic.getPosts()
-                .then(posts => setPosts(posts))
-                .catch(error => {
-                    console.error(error)
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-            alert(error.message)
-        }
-    }
+    const handlePostDescriptionEdited = () => loadPosts()
+
+    const handlePostLikeToggled = () => loadPosts()
     
-    return <section id="posts-section">
+    return <section className="posts-section">
         {posts.toReversed().map(post => <Post key={post.id} post={post} onPostDeleted={handlePostDeleted} onPostDescriptionEdited={handlePostDescriptionEdited} onPostLikeToggled={handlePostLikeToggled}/>)}
     </section>
 }

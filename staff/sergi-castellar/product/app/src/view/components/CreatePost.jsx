@@ -1,15 +1,18 @@
-import {logic} from '../../logic/index'
+import { logic } from '../../logic'
+import { useContext } from '../../context'
 
 export function CreatePost({onCreatePostCancelled, onPostCreated}) {
+    const { alert } = useContext()
+
     const handleCreatePostSubmit = event => {
         event.preventDefault()
 
         try {
             const form = event.target
 
-            const {imageRoute: {value: imageSrc}, description: {value: textDescription}} = form
+            const {imageRoute: {value: image}, description: {value: text}} = form
 
-            logic.createNewPost(imageSrc, textDescription)
+            logic.createNewPost(image, text)
                 .then(() => {
                     form.reset()
 
@@ -32,7 +35,7 @@ export function CreatePost({onCreatePostCancelled, onPostCreated}) {
     return <section>
         <section>
             <h2>Create new post</h2>
-            <form id="create-post" onSubmit={handleCreatePostSubmit}>
+            <form className="create-post" onSubmit={handleCreatePostSubmit}>
                 <label htmlFor="image-route">Image route</label>
                 <input type="url" id="imageRoute" placeholder="image route"/>
                 <label htmlFor="description">Description</label>

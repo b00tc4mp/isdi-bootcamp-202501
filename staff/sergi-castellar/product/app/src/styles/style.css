@@ -24,7 +24,7 @@ body {
   margin-top: 15px;
 }
 
-#register-or-login {
+.register-or-login {
   display: flex;
   justify-content: space-evenly;
 }
@@ -72,7 +72,7 @@ footer {
   justify-content: center;
 }
 
-#posts-section {
+.posts-section {
   background-color: var(--secondary-bg-color);
   display: flex;
   align-items: center;
@@ -83,7 +83,7 @@ footer {
   text-align: justify;
 }
 
-#add-post-button {
+.add-post-button {
   font-size: 30px;
   padding: 0 15px;
   margin-bottom: 10px;
@@ -104,11 +104,7 @@ button.cancel-button {
   cursor: pointer;
 }
 
-#register-or-login {
-  display: flex;
-}
-
-#addPostFooter {
+.addPostFooter {
   position: fixed;
   margin-bottom: 0;
   left: 0;
@@ -117,7 +113,7 @@ button.cancel-button {
   justify-content: center;
 }
 
-#addPostButton {
+.addPostButton {
   font-size: 30px;
   display: flex;
   justify-content: center;
@@ -148,15 +144,7 @@ header .main-logo {
   transform: translateX(-50%);
 }
 
-#posts-section {
-  padding: 100px 20px 70px 20px;
-  background-color: var(--secondary-bg-color);
-  display: block;
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-#posts-section img {
+.posts-section img {
   width: 120%;
   max-width: 500px;
   height: auto;
@@ -183,9 +171,5 @@ header .main-logo {
   header .main-logo {
     position: static;
     transform: none;
-  }
-
-  #posts-section {
-    margin-top: 80px;
   }
 }

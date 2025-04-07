@@ -1,8 +1,10 @@
-import {logic} from '../logic/index'
-
-import {Logo} from './components/Logo.jsx'
+import { logic } from '../logic'
+import { useContext } from '../context'
+import { Logo } from './components/Logo'
 
 export function Login({onNavigateToRegister, onUserLoggedIn}) {
+    const { alert } = useContext()
+
     const handleLoginSubmit = event => {
         event.preventDefault()
 
@@ -16,8 +18,6 @@ export function Login({onNavigateToRegister, onUserLoggedIn}) {
             logic.loginUser(username, password)
                 .then(() => {
                 form.reset()
-
-                alert(`Welcome again, ${username}`)
 
                 onUserLoggedIn()
                 })

@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react'
-
-import {logic} from '../../logic/index'
+import { Routes, Route, Navigate, useNavigate } from 'react-router'
+import { useContext } from '../../context'
+import { logic } from '../../logic'
 
 export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeToggled}) {
+    const { alert } = useContext()
+
     const [view, setView] = useState('')
     const [postDetails, setPostDetails] = useState([])
 
+    const navigate = useNavigate()
 
-
-    const { id, author, imageSrc, textDescription, createdAt, currentPostModifiedAt, likes, liked, own } = post
+    const { id, author, image, text, createdAt, currentPostModifiedAt, likes, liked, own } = post
     
     const likesToString = likes => {
         if (likes.length === 0) {
@@ -132,11 +135,13 @@ export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeTo
         test()
         a--
     }*/
+
+    const handleUsernameClick = () => navigate(`/${authorUsername}`, { state: { userId: author.id } })
     
     return <article>
-            <h2>{authorName}</h2>
+            <h2 onClick={handleUsernameClick}>{authorName}</h2>
         <figure>
-            <img src={imageSrc} style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'cover' }}/>
+            <img src={image} style={{ width: '100%', maxWidth: '300px', height: 'auto', objectFit: 'cover' }}/>
         </figure>
         <section>
             <section className="functionalities-and-date">
@@ -154,12 +159,12 @@ export function Post({post, onPostDeleted, onPostDescriptionEdited, onPostLikeTo
             </section>
             <section>
                 <div>
-                    <span className="post-username" style={{fontWeight: 'bold'}}>{authorUsername}</span>
+                    <span onClick={handleUsernameClick} className="post-username" style={{fontWeight: 'bold'}} >{authorUsername}</span>
                     {': '}
-                    {view === '' && <span className="post-description">{textDescription}</span>}
+                    {view === '' && <span className="post-description">{text}</span>}
                     {view === 'edit-post' && <form onSubmit={handleEditDescriptionSubmit}>
                         <label htmlFor='description'>Description</label>
-                        <input type='text' id='description' defaultValue={textDescription}></input>
+                        <input type='text' id='description' defaultValue={text}></input>
 
                         <button type='button' onClick={handleEditDescriptionCancelClick}>Cancel</button>
                         <button type='submit'>Confirm</button>

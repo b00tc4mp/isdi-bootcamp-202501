@@ -3,9 +3,9 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-export const createNewPost = (imageSrc, textDescription) => {
-    validate.url(imageSrc, 'url');
-    validate.description(textDescription, 'description');
+export const createNewPost = (image, text) => {
+    validate.url(image, 'url');
+    validate.description(text, 'description');
 
     const { token } = data;
 
@@ -15,7 +15,7 @@ export const createNewPost = (imageSrc, textDescription) => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ imageSrc, textDescription })
+        body: JSON.stringify({ image, text })
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {

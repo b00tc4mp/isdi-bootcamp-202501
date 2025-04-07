@@ -1,7 +1,10 @@
-import {logic} from '../logic/index'
-import {Logo} from './components/Logo.jsx'
+import {logic} from '../logic'
+import { useContext } from '../context'
+import {Logo} from './components/Logo'
 
 export function Register({onNavigateToLogin, onUserRegistered}) {
+    const { alert } = useContext()
+    
     const handleRegisterSubmit = event => {
         event.preventDefault()
 

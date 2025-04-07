@@ -9,6 +9,8 @@ import { loginUser } from './loginUser'
 import { logoutUser } from './logoutUser'
 import { registerUser } from './registerUser'
 import { toggleLike } from './toggleLike'
+import { getUserId } from './getUserId'
+import { getUserPosts } from './getUserPosts'
 
 export const logic = {
     createNewPost,
@@ -21,5 +23,7 @@ export const logic = {
     loginUser,
     logoutUser,
     registerUser,
-    toggleLike
+    toggleLike,
+    getUserId,
+    getUserPosts
 }
