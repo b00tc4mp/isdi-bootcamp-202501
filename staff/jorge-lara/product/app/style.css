@@ -1,0 +1,43 @@
+@import 'tailwindcss';
+
+@layer base {
+    html {
+        --primary-color: white;
+        --secondary-color: #292a2d;
+        --color-high: magenta;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
+
+        @apply bg-[var(--secondary-color)] text-[var(--primary-color)];
+    }
+
+    body {
+        @apply m-0;
+    }
+
+    a{
+        @apply cursor-pointer
+    }
+
+    form {
+        --formbackground-color: #181a1b;
+    
+        @apply flex flex-col w-[50vw]  max-w-[600px] m-auto p-[2rem] bg-(--formbackground-color) border border-solid border-white rounded-[8px] gap-[.5rem]
+    }
+
+    header {
+
+        @apply flex justify-between items-center fixed top-0 w-full bg-[#3498db] py-[var(--padding-y)] px-[var(--padding-x)] box-border z-[1] h-[50px]
+    }
+
+    h1,h2 {
+        @apply m-0
+    }
+
+    @media (min-width: 1024px) {
+    a:hover {
+        color: var(--color-high);
+        font-size: 2rem;
+    }
+}
+}

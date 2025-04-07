@@ -1,0 +1,1 @@
+curl -X GET http://localhost:8080/posts -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2UzM2JhNDg5ZmUyNDAxM2QwNjMzM2MiLCJpYXQiOjE3NDI5NDY0NzV9.eJA7CBL2itFl8PMqcPcKK-npBTaNfwl2FLzM_NNFxIw' -v
