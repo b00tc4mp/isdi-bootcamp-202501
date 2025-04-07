@@ -1,8 +1,11 @@
 // REGISTRO
 
 import { logic } from "../logic/index.js"
+import { useContext } from '../context'
 
 export function Register({ onNavigateToLogin, onUserRegistered }) {
+
+    const { alert } = useContext()
 
     //  Para manejar el evento de envío del formulario del Registro
     const handleRegisterSubmit = event => {

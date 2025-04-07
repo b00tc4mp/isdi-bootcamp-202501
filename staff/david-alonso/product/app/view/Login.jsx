@@ -1,7 +1,10 @@
 // lOGIN
 import { logic } from "../logic/index.js"
+import { useContext } from '../context'
 
 export function Login({ onNavigateToRegister, onUserLoggedIn }) {
+
+    const { alert } = useContext()
 
     //  Para manejar el evento de envío del formulario del Login
     const handleLoginSubmit = event => {
