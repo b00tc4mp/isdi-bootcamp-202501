@@ -77,9 +77,9 @@ Classification
 
 ## Technologies
 
-- HTML / Tailwind / JS
-- React Native / Vite
-- Express / Node
+- HTML / NativeWind / JS
+- React Native / Expo
+- Express / Node / Mongoose
 
 ### Code Coverage
 
