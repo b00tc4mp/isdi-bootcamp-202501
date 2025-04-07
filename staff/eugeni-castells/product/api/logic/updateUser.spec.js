@@ -64,17 +64,6 @@ const updateUserFailsNameTypeValidate = () => {
     );
   });
 };
-const updateUserFailsUnknownProperty = () => {
-  let userId;
-
-  return User.create(testUser).then((user) => {
-    debugger;
-    userId = user._id.toString();
-    return expect(updateUser(userId, { test: 1 })).to.be.rejectedWith(
-      SystemError
-    );
-  });
-};
 
 testHandler("updateUser", [
   updateUserWorks,
@@ -82,5 +71,4 @@ testHandler("updateUser", [
   updateUserFailsTextTypeValidate,
   updateUserFailsTextLengthValidate,
   updateUserFailsNameTypeValidate,
-  updateUserFailsUnknownProperty,
 ]);

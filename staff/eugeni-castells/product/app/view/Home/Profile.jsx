@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router";
+import { useParams, useLocation } from "react-router";
 import { useContext } from "../../context.js";
 import Posts from "./Posts.jsx";
 import { logic } from "../../logic/index.js";
@@ -8,7 +8,6 @@ export const Profile = () => {
   const location = useLocation();
   const [userId, setUserId] = useState(location?.state?.userId);
   const { username } = useParams();
-  const navigate = useNavigate();
   const { alert } = useContext();
 
   useEffect(() => {
@@ -20,8 +19,6 @@ export const Profile = () => {
             console.error(error);
 
             alert(error.message);
-
-            navigate("/");
           })
           .then((returnedId) => setUserId(returnedId));
       }
@@ -29,14 +26,12 @@ export const Profile = () => {
       console.error(error);
 
       alert(error.message);
-
-      navigate("/");
     }
   }, [userId]);
 
   return (
     <div>
-      <h1>{username}</h1>
+      {userId && <h1>{username}</h1>}
 
       <Posts targetUserId={userId} />
     </div>

@@ -13,7 +13,7 @@ export const addPost = (postInfo) => {
     validate.text(text, "post text");
     validate.maxLength(500, "post text length");
 
-    return fetch("http://localhost:8080/posts", {
+    return fetch("${import.meta.env.VITE_API_URL}/posts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
