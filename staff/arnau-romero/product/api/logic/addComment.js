@@ -4,7 +4,6 @@ import { validate, errors } from 'com'
 const { SystemError, NotFoundError } = errors
 
 export const addComment = (userId, postId, text) => {
-    // Validaciones de entrada
     validate.id(postId, 'postId');
     validate.id(userId, 'userId');
     validate.text(text);
@@ -21,7 +20,7 @@ export const addComment = (userId, postId, text) => {
         const comment =({
             author: userId,
             text,
-            createdAt: new Date() // Añadir timestamp por seguridad
+            createdAt: new Date() 
         })
 
         post.comments.push(comment);

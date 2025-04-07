@@ -8,8 +8,8 @@ export const getComments = (userId, postId) => {
     validate.id(postId, 'postId')
 
     return Promise.all([
-        User.exists({ _id: userId }),
-        Post.findById(postId).populate('comments.author', 'username').lean()
+        User.exists({ _id: userId }), // Verifica que el usuario existe, esto no devuelve el documento, solo true o false.
+        Post.findById(postId).populate('comments.author', 'username').lean() // Buscamos el post por su Id, usamos populate para traer el nombre de usuario del autor de cada comentario, .lean para obtener un objeto de JavaScript plano
     ])
         .catch(error => { throw new SystemError(error.message) })
         .then(([userExists, post]) => {
