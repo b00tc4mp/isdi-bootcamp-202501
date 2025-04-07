@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap');
+@import 'tailwindcss';
+
+
+@layer base {
+    html {
+        background-image: url('https://imgs.search.brave.com/EYbqZ18nhr7ABPXOAFnhYuAJwjVoOXJphlQt9mF9p1U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvZm9uZG9zLWRl/LXBhcGVsLXBlcmdh/bWluby12cmtrb2xz/djZ3dXpvdmcwLmpw/Zw');
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        background-color: var(--bg-color);
+
+        --bg-color: #f8f4c1;
+        --color: #000000;
+        --white: #ffffff;
+        --shadow1-color: #FFD700;
+        --shadow2-color: #ffc507;
+        --gold: #C5A000;
+        --grey: #949494;
+        --red: #800020;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
+        --new-size: 1.5rem;
+
+        font-size: 2rem;
+
+        @apply font-['Euphoria_Script'] text-[var(--color)]
+    }
+
+    body {
+        @apply m-0;
+    }
+
+    a {
+        @apply cursor-pointer transition-[font-size] font-semibold duration-300 min-[1040px]:hover:text-[var(--bg-color)] min-[1040px]:hover:text-xl;
+    }
+
+    button {
+        @apply cursor-pointer bg-[var(--color)] text-[var(--white)] border-2 border-solid border-[var(--gold)] px-2 transition-transform duration-300 min-[1040px]:hover:transform min-[1040px]:hover:scale-[1.1];
+    }
+
+    form {
+        @apply flex flex-col gap-[.5rem] rounded-[10px] bg-[var(--bg-color)] p-[var(--padding-x)];
+
+        .field {
+            @apply flex flex-col gap-[var(--padding-y)]
+        }
+    }
+
+    label {
+        @apply font-bold
+    }
+
+    input {
+        @apply bg-[var(--white)] border-2 border-solid border-[var(--color)] outline-none focus:border-[var(--gold)] placeholder:text-[var(--grey)]
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        background-color: var(--bg-color);
+        -webkit-text-fill-color: var(--color);
+        -webkit-box-shadow: 0 0 0px 1000px rgb(216, 212, 212) inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    h1,
+    h2 {
+        @apply m-0 text-[var(--red)] text-3xl font-bold;
+    }
+
+    main {
+        @apply my-[3rem] flex flex-col items-center gap-[1rem] p-[2rem];
+    }
+
+    article {
+        @apply bg-[var(--bg-color)] rounded-[20px] m-[1rem] w-[600px] max-w-[90%];
+
+        h3,
+        .post-footer {
+            @apply m-[.25rem] text-[var(--color)] px-[var(--padding-x)] font-bold;
+        }
+
+        .post-footer {
+            @apply pb-[1rem]
+        }
+
+
+        time {
+            @apply flex items-center;
+        }
+
+        p {
+            @apply px-[var(--padding-x)] py-[var(--padding-y)] m-[.25rem] text-[var(--color)];
+        }
+
+        img {
+            @apply w-[100%];
+        }
+
+        .post-footer {
+            @apply flex justify-between
+        }
+    }
+
+    header {
+        @apply flex justify-between items-center w-[100%] bg-[var(--bg-color)] px-[var(--padding-x)] py-[var(--padding-y)] box-border fixed top-0;
+    }
+
+    footer {
+        @apply fixed flex justify-center box-border w-[100%] px-[var(--padding-x)] py-[var(--padding-y)] bg-[var(--bg-color)] bottom-0;
+    }
+
+    .landing {
+        @apply justify-self-center
+    }
+
+    .login {
+        @apply justify-self-center
+    }
+
+    .register {
+        @apply justify-self-center
+    }
+
+}
+
+.logo-hogwarts {
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    margin: 7px;
+    overflow: hidden;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.logo-hogwarts {
+    background-image: url('logo-app.jpg');
+    box-shadow: 0 0 15px #000000;
+}
+
+
+.home-options {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: var(--padding-x);
+}
+
+
+
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-buttons {
+    margin: 10px;
+
+
+    button {
+        margin: 10px;
+    }
+
+}
