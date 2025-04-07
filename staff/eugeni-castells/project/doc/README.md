@@ -10,16 +10,32 @@ Lorem Ipsum...
 
 ### Use Cases
 
-User
+Unregistered User
 
 - register
-- login
+- search for location and dates (Home)
+- view van profile (Van Profile)
+
+Registered User
+
+- login (Login)
+- update user info (Profile)
 - logout
 - register van
+- update van
 - delete van
-- search van
-- search location
-- book van
+- search for location and dates (Home)
+- filter for features (Home)
+- view available vans (Home)
+- book trip (Trip Profile or Van Profile?)
+- view user profile (Profile)
+- view van profile (Van Profile)
+- view van book progress in calendar (Van Profile)
+- view loggedInUser trip progress (Trip Profile)
+- view loggedInUser book history (Profile)
+- view van book history
+- comment van
+- rate trip/van
 
 ### UIUX Design
 
@@ -29,8 +45,10 @@ User
 
 ### Blocks
 
--App
--API
+- App
+- API
+- DB?
+- Com (error, validation, etc)
 
 ### Packages
 
@@ -43,4 +61,108 @@ User
 User
 
 - id (string, uuid)
-- name (string)
+- admin (boolean)
+- name (string, validations)
+- username (string, validations)
+- email (string, validation)
+- vans [van.Id]
+- currentTrip (trip.id)
+  [comment]: <> (This currentTrip is the user booking another van. The trips of the vans the user have are in the van's profile, not the user. )
+- tripsHistory [trip.Id]
+- createdAt (Date)
+- modifiedAt (Date)
+
+Van
+
+- id (string, uuid)
+- name (string, validations)
+- features {
+  windows (number, validations),
+  doors (number, validations),
+  heating (boolean),
+  airConditioning (boolean),
+  bedCount (number, validations)
+  insideKitchen (boolean),
+  fridge (boolean),
+  bathroom (enum: 'portable','fixed')
+  fuelType(enum:'petrol', 'diesel', 'electric', 'hybrid')
+  storage (number, validations)
+  brand (string, validations)
+  model (string, validations)
+  year (number, validations)
+  accessible (boolean)
+  [comment]: <> (should some features be optional or all must be filled when registering the van)
+  }
+- legal [Doc.id]
+- owner (User.id)
+- currentTrip (Trip.id)
+- images [string]
+- tripHistory [Trip.id]
+- createdAt (Date)
+- modifiedAt (Date)
+- available (boolean)
+  [comment]: <> (should I have both available and availableDates or only availableDates and then return available when retrieved?)
+- availableDates [Date]
+- price (num, validations)
+  [comment]: <> (should I make price variable depending on the number of days and other variables? If so, how do I have to put it on data model)
+- rating [number, min 0, max 5]
+- comments [Comment.id]
+- location: {
+  address (string),
+  city (string),
+  region (string),
+  country (string),
+  coordinates: {
+  lat (number),
+  lng (number)
+  }
+  }
+
+Trip
+
+- id (string, uuid)
+- dates [Date]
+- ensurance [Doc.id]
+- van (Van.id)
+- van owner (User.id)
+- user/renter (User.id)
+- active (boolean)
+- price (number,validations)
+- issues [Doc.id]
+- location {
+  address (string),
+  city (string),
+  region (string),
+  country (string),
+  coordinates: {
+  lat (number),
+  lng (number)
+  }
+  }
+- agreements [Doc.id]
+- rating [number, min 0 , max 5]
+- paymentDone (boolean)
+- paymentReceived (boolean)
+- paymentMethod (enum: 'road points','currency')
+- createdAt (Date)
+- modifiedAt (Date)
+  [comment]: <> (The owner has to validate the trip?)
+- confirmed? (boolean)
+
+Doc
+
+- id (string, uuid)
+- createdAt (Date)
+- modifiedAt (Date)
+- content (string)
+- attachedTo [User.id || Van.id || Trip.id]
+- author (User.id) || [User.id]
+
+Comment
+
+- id (string, uuid)
+- createdAt (Date)
+- modifiedAt (Date)
+- content (string)
+- author (User.id)
+- van (Van.id)
