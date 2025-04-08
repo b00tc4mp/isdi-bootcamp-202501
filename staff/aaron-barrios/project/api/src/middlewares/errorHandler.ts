@@ -1,7 +1,8 @@
 import { errors } from 'com'
-import { NextFunction } from 'express'
-// import jwt from 'jsonwebtoken'
+import { Request, Response, NextFunction } from 'express'
+// import loggers from '../logs/index.js'
 
+import jwt from 'jsonwebtoken'
 import { StatusCode } from './types.js'
 
 const {
@@ -14,7 +15,7 @@ const {
     NotFountError
 } = errors
 
-// const { JsonWebTokenError, TokenExpiredError } = jwt
+const { JsonWebTokenError, TokenExpiredError } = jwt
 
 export const errorHandler =
     (
@@ -50,19 +51,20 @@ export const errorHandler =
                 status = 409
                 errorName = error.constructor.name
                 break
-            // case error instanceof TokenExpiredError:
-            //     status = 401
-            //     errorName = AuthorizationError //.name??
-            //     // message = 'expired JWT'
-            //     break
-            // case error instanceof JsonWebTokenError:
-            //     status = 401
-            //     errorName = AuthorizationError //.name??
-            //     // message = 'invalid JWT signature'
-            //     break
+            case error instanceof TokenExpiredError:
+                status = 401
+                errorName = AuthorizationError //.name??
+                // message = 'expired JWT'
+                break
+            case error instanceof JsonWebTokenError:
+                status = 401
+                errorName = AuthorizationError //.name??
+                // message = 'invalid JWT signature'
+                break
         }
 
-        // res.status(status).json({
-        //     error: status === 500 ? SystemError.name : error.constructor.name
-        // })
+        res.status(status).json({
+            error: status === 500 ? SystemError.name : error.constructor.name,
+            message: error.message
+        })
     }
