@@ -3,22 +3,23 @@ import { Schema, model, Types, ObjectId } from 'mongoose'
 
 const { ObjectId } = Types
 
-export interface iUser {
+export interface IUser {
     id: string
     role: string
     name: string
     lastName: string
     email: string
+    alias: string
     password: string
     level: string
-    interests: string[]
+    interests?: string[]
     createdAt: Date,
     modifiedAt: Date,
     workouts: ObjectId[]
     routines: ObjectId[]
 }
 
-const user = new Schema<iUser>({
+const user = new Schema<IUser>({
     name: {
         type: String,
         required: true,
@@ -37,6 +38,13 @@ const user = new Schema<iUser>({
         match: constant.EMAIL_REGEX,
         maxlength: 30,
         unique: true
+    },
+    alias: {
+        type: String,
+        required: true,
+        match: constant.NAME_REGEX,
+        minlength: 1,
+        maxlength: 16
     },
     password: {
         type: String,
@@ -63,7 +71,7 @@ const user = new Schema<iUser>({
     }]
 })
 
-export interface iWorkout {
+export interface IWorkout {
     id: string
     author: ObjectId
     name: string
@@ -78,7 +86,7 @@ export interface iWorkout {
     createdAt: Date
 }
 
-const workout = new Schema<iWorkout>({
+const workout = new Schema<IWorkout>({
     author: {
         type: ObjectId,
         ref: 'User',
@@ -121,11 +129,11 @@ const workout = new Schema<iWorkout>({
     }],
     likes: [{
         type: ObjectId,
-        ref: 'User' //o iUser
+        ref: 'User'
     }],
     saves: [{
         type: ObjectId,
-        ref: 'User' //o iUser
+        ref: 'User'
     }],
     status: {
         type: String,
@@ -138,22 +146,22 @@ const workout = new Schema<iWorkout>({
     }
 })
 
-export interface iWorkoutProgress {
+export interface IWorkoutProgress {
     user: ObjectId
     workout: ObjectId
     weightUsed: number
     date: Date
 }
 
-const workoutProgress = new Schema<iWorkoutProgress>({
+const workoutProgress = new Schema<IWorkoutProgress>({
     user: {
         type: ObjectId,
-        ref: 'User', //o iUser
+        ref: 'User',
         required: true
     },
     workout: {
         type: ObjectId,
-        ref: 'Workout', //o iUser
+        ref: 'Workout',
         required: true
     },
     weightUsed: {
@@ -163,11 +171,11 @@ const workoutProgress = new Schema<iWorkoutProgress>({
     date: {
         type: Date,
         required: true,
-        // default: Date.now ???
+        default: Date.now
     }
 })
 
-export interface iRoutineWorkout {
+export interface IRoutineWorkout {
     id: string
     workout: ObjectId
     order?: number
@@ -178,10 +186,10 @@ export interface iRoutineWorkout {
     restTime?: number
 }
 
-const routineWorkout = new Schema<iRoutineWorkout>({
+const routineWorkout = new Schema<IRoutineWorkout>({
     workout: {
         type: ObjectId,
-        ref: 'Workout', //o iWorkout
+        ref: 'Workout',
         required: true
     },
     order: {
@@ -210,7 +218,7 @@ const routineWorkout = new Schema<iRoutineWorkout>({
     }
 })
 
-export interface iRoutine {
+export interface IRoutine {
     id: string
     author: ObjectId
     name: string
@@ -227,13 +235,13 @@ export interface iRoutine {
     saves: ObjectId[]
     createdAt: Date
     modifiedAt: Date
-    workouts: iRoutineWorkout[] //???
+    workouts: IRoutineWorkout[]
 }
 
-const routine = new Schema<iRoutine>({
+const routine = new Schema<IRoutine>({
     author: {
         type: ObjectId,
-        ref: 'Workout',
+        ref: 'User',
         required: true
     },
     name: {
@@ -283,11 +291,11 @@ const routine = new Schema<iRoutine>({
     },
     likes: [{
         type: ObjectId,
-        ref: 'User' //o iUser
+        ref: 'User'
     }],
     saves: [{
         type: ObjectId,
-        ref: 'User' //o iUser
+        ref: 'User'
     }],
     status: {
         type: String,
@@ -307,19 +315,18 @@ const routine = new Schema<iRoutine>({
         type: Date,
         default: null
     },
-    workouts: [{
-        type: ObjectId,
-        ref: 'RoutineWorkout' //o iRoutineWorkout
-        //required ??
-    }]
+    workouts: {
+        type: [routineWorkout],
+        required: true
+    }
 })
 
 
-const User = model('User', user)
-const Workout = model('Workout', workout)
-const WorkoutProgress = model('WorkoutProgress', workoutProgress)
-const RoutineWorkout = model('RoutineWorkout', routineWorkout)
-const Routine = model('Routine', routine)
+const User = model<IUser>('User', user)
+const Workout = model<IWorkout>('Workout', workout)
+const WorkoutProgress = model<IWorkoutProgress>('WorkoutProgress', workoutProgress)
+const RoutineWorkout = model<IRoutineWorkout>('RoutineWorkout', routineWorkout)
+const Routine = model<IRoutine>('Routine', routine)
 
 export {
     User,

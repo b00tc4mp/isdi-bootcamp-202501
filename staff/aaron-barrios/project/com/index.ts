@@ -1,6 +1,6 @@
-import errors from './errors.ts'
-import { constant } from './constant.ts'
-import { validate } from './validate.ts'
+import errors from './errors.js'
+import { constant } from './constant.js'
+import { validate } from './validate.js'
 
 export {
     errors,

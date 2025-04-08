@@ -1,5 +1,5 @@
-import { constant } from './constant.ts'
-import errors from './errors.ts'
+import { constant } from './constant.js'
+import errors from './errors.js'
 
 const { ValidationError } = errors
 
