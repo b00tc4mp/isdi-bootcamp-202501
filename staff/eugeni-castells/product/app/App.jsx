@@ -6,12 +6,15 @@ import Register from "./view/Register.jsx";
 import Home from "./view/Home/index.jsx";
 import { Route, useNavigate, Routes, Navigate } from "react-router";
 import { Alert } from "./view/Alert.jsx";
+import { Confirm } from "./view/Confirm.jsx";
 import { Context } from "./context.js";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
   const [showLanding, setShowLanding] = useState(true);
   const [alertFeedback, setAlertFeedback] = useState(null);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [confirmState, setConfirmState] = useState(null);
 
   const navigate = useNavigate();
 
@@ -61,10 +64,29 @@ function App() {
   const handleShowAlert = (message) => {
     setAlertFeedback(message);
   };
+
+  const handleShowConfirm = (message) => {
+    return new Promise((resolve, _reject) => {
+      setConfirmMessage(message);
+      setConfirmState({ resolve });
+    });
+  };
+
+  const handleConfirmAccepted = () => {
+    confirmState.resolve(true);
+    setConfirmMessage("");
+    setConfirmState(null);
+  };
+
+  const handleConfirmCancelled = () => {
+    confirmState.resolve(false);
+    setConfirmMessage("");
+    setConfirmState(null);
+  };
   console.log("render App");
 
   return (
-    <Context value={{ alert: handleShowAlert }}>
+    <Context value={{ alert: handleShowAlert, confirm: handleShowConfirm }}>
       <>
         {loggedIn !== null && (
           <>
@@ -116,6 +138,14 @@ function App() {
                 title={"⚠️"}
                 message={alertFeedback}
                 onAccepted={handleAlertAccept}
+              />
+            )}
+            {confirmMessage && (
+              <Confirm
+                title="❔"
+                message={confirmMessage}
+                onAccepted={handleConfirmAccepted}
+                onCancelled={handleConfirmCancelled}
               />
             )}
           </>
