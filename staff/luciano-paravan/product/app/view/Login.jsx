@@ -49,9 +49,9 @@ export function Login ({ onNavigateToRegister, onUserLoggedIn }) {
                     <input type="password" id="password"/>
                 </div>
                     
-                <button type="submit" className="loginSubmitButton">Login</button>
+                <button type="submit" className="bg-[var(--first-color)] text-color rounded text-xl border-none">Login</button>
             </form>
-            <a onClick={handleRegisterClick} className="anchorRegisterOfLogin">Register</a>
+            <a onClick={handleRegisterClick} className="block bg-transparent text-color border border-color rounded px-4 py-1 m-4 text-center">Register</a>
         </div>
     </>
 }

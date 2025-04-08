@@ -9,7 +9,7 @@ export const getPosts = userId => {
 
     return Promise.all([
         User.findById(userId).lean(),
-        Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean()
+        Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean() //en la Collection Post, busca, y no trae la propiedad __V, por ponerle el - delante. Con el - delante del createdAt, los ordena al reves. Este .populate de los post que trae le pide que cambie la propiedad author y traer solo el username, reemplaza la propiedad author del post que originalmente es un id lo reemplaza por un objeto que es el id, _id y el username. No se toca la base de datos, solo trae datos con este formato.
     ])
 
         .catch(error => { throw new SystemError(error.message) })

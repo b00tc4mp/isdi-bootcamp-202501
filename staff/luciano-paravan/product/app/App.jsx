@@ -9,8 +9,8 @@ import { Home } from './view/Home/index.jsx'
 import { logic } from './logic/index.js'
 
 function App() {
-    const[showLanding, setShowLanding] = useState(false)
     const[loggedIn, setLoggedIn] = useState(null)
+    const[showLanding, setShowLanding] = useState(true)
     
     const navigate = useNavigate()
 
@@ -54,7 +54,7 @@ function App() {
 
     console.debug('App -> render')
 
-    const defaultRoute = loggedIn === null ? '/landing' : '/login'
+    //const defaultRoute = loggedIn === null ? '/landing' : '/login'
 
     return <>
         {loggedIn !== null && <Routes>

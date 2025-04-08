@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { logic } from '../../logic/index.js'
 
-import './Post.css'
-
 export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPostTextEdited }) {
     const [view, setView] = useState('')
 
