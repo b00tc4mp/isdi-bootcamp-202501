@@ -1,5 +1,5 @@
 import { logic } from '../logic/index.js'
-import { errors } from 'com'
+import { errors } from '../../com'
 
 const {SystemError, ValidationError} = errors
 

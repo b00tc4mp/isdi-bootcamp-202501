@@ -42,10 +42,37 @@ const user = new Schema({
 
 })
 
+const comment = new Schema({
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    text: {
+        type: String,
+        minLength: 1,
+        maxLength: 200
+    },
+    likes: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
 const post = new Schema({
     author: {
         type: ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     image: {
         type: String,
@@ -70,13 +97,67 @@ const post = new Schema({
     modifiedAt: {
         type: Date,
         default: null
+    },
+    comments: [comment] //embebido en post ponemos comment, creamos un array comments con los comentarios, mongoose aprovecha el esquema de comment
+})
+
+const message = new Schema({
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    text: {
+        type: String,
+        minLength: 1,
+        maxLength: 1000
+    },
+    likes: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const chat = new Schema({
+    participants: [{
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    }],
+    title: {
+        type: String
+    },
+    messages: [message],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 
 const User = model('User', user)
 const Post = model('Post', post)
+const Comment = model('Comment', comment)
+const Message = model('Message', message)
+const Chat = model('Chat', chat)
 
 export {
     User,
-    Post
+    Post,
+    Comment,
+    Message,
+    Chat
 }
