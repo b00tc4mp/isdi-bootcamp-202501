@@ -77,13 +77,13 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
 
     console.debug('Post -> render')
 
-    return<article className="post">
+    return<article className="flex flex-col py-[var(--padding-y)] px-[var(--padding-x)] m-0">
 
-        <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
+        <h3 className="m-0"onClick={handleUsernameClick}>{post.author.username}</h3>
 
-        <img src={post.image} />
+        <img className="w-full" src={post.image} />
 
-        {view === '' && <p>{post.text}</p>}
+        {view === '' && <p className="m-0">{post.text}</p>}
 
         {view === 'edit-post' && <form onSubmit={handleEditPostSubmit}>
             <label htmlFor="text">Text</label>
@@ -93,10 +93,10 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onPostTextEdited 
             <button type="submit">Save</button>
             </form>}
 
-        <div className="post-footer">
-            <time className="post-time">{post.createdAt.toISOString()}</time>
+        <div className="flex flex-row justify-between items-center mt-[-5px] pt-0">
+            <time className="mr-2.5">{post.createdAt.toISOString()}</time>
 
-            <button className="post-like" onClick={handleToggleLikeClick}>{`${post.liked ? '💗' : '🤍'} (${post.totalLikes})`}</button>
+            <button className="mt-0" onClick={handleToggleLikeClick}>{`${post.liked ? '💗' : '🤍'} (${post.totalLikes})`}</button>
 
             {post.own && <button className="edit-post" onClick = {handleEditPostTextClick}>✏</button>}
 

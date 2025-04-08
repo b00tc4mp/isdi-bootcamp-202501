@@ -33,15 +33,15 @@ export function CreatePost({onPostCreated, onPostCreateCancelled}) {
     return (
         <section>
             <form onSubmit={handleFormSubmit}>
-
-                <label htmlFor="image">Image</label>
-                <input type="url" id="image" name="image" />
-
-                <label htmlFor="text">Text</label>
-                <input type="text" id="text" name="text" />
-
-                <button type="submit">Add post</button>
-
+                <div className="field">
+                    <label htmlFor="image">Image</label>
+                    <input type="url" id="image" name="image" />
+                </div>
+                <div className="field">
+                    <label htmlFor="text">Text</label>
+                    <input type="text" id="text" name="text" />
+                </div>
+                    <button type="submit">Add post</button>
             </form>
 
             <a onClick={handleCancelClick} >Cancel</a>

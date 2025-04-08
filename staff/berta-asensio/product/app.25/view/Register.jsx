@@ -29,9 +29,6 @@ JSX: RENDERIZADO DEL COMPONENTE.
 
  */
 
-
-
-
 import { logic } from '../logic/index'
 
 import { errors } from 'com'
@@ -84,28 +81,43 @@ export function Register({onReturnClick, onUserRegistered}) {
         </div>
 
         <p className="paragraph">Create account</p>
-        
 
         <form onSubmit={handleRegisterSubmit}>
             <div className="field">
                 <label htmlFor="name">Name</label>
-                <input type="text" id="name"
-                placeholder="Your name" />
+                <input 
+                    type="text" 
+                    id="name"
+                    className="input"
+                    placeholder="Your name" 
+                />
             </div>
             <div className="field">
                 <label htmlFor="username">Username</label>
-                <input type="text" id="username"
-                placeholder="Introduce a username" />
+                <input 
+                    type="text" 
+                    id="username"
+                    className="input"
+                    placeholder="Introduce a username" 
+                />
             </div>
             <div className="field">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password"
-                placeholder="Introduce a password" />
+                <input 
+                    type="password" 
+                    id="password"
+                    className="input"
+                    placeholder="Introduce a password" 
+                />
             </div>
             <div className="field">
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email"
-                placeholder="Your email" />
+                <input 
+                    type="email" 
+                    id="email"
+                    className="input"
+                    placeholder="Your email" 
+                />
             </div>
 
             <button type="submit">Register</button>

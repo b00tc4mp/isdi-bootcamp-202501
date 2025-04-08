@@ -7,7 +7,7 @@ export const Profile = () => {
     const { state: { userId } } = useLocation()
 
     return <div>
-        <h1 class="username">{username}</h1>
+        <h1 className="px-[var(--padding-x)] text-2xl flex justify-center">{username}</h1>
 
         <Posts targetUserId={userId} />
     </div>

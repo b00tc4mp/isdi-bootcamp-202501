@@ -62,48 +62,43 @@
             @apply text-[2rem];
         }
     }
-
-
     
     .register-login-header {
-        /*margin-bottom: 100px;*/
-        background-color: hsl(46, 100%, 50%);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: var(--padding-y) var(--padding-x);
-        box-sizing: border-box;
+        @apply flex;
+        @apply justify-between;
+        @apply items-center;
+        @apply w-full;
+        @apply py-[var(--padding-y)] px-[var(--padding-x)];
+        @apply box-border;
     }
     
     .bee-logo-register-login {
-        width: 100px;
-        height: auto;
-        
+
+        @apply max-w-[150px];
+        @apply h-auto;
     }
     
     .register-header h2 {
-        flex-grow: 1;   /* Esto hace que el texto ocupe todo el espacio disponible */
-        text-align: right; /* Alinea el texto a la derecha */
-        font-size: 1.5rem;  /* Ajusta el tamaño del texto */
-        white-space: normal; /* Permite que el texto se divida en varias líneas si es necesario */
-        word-wrap: break-word; /* Hace que el texto se ajuste y salte a una nueva línea si es necesario */
-        overflow-wrap: break-word; /* Asegura que el texto se ajuste correctamente */
+        /* @apply flex-grow;  Esto hace que el texto ocupe todo el espacio disponible */
+        @apply text-right; /* Alinea el texto a la derecha */
+        @apply text-xl;  /* Ajusta el tamaño del texto */
+        @apply break-words;
+        @apply pr-6;
     }
     
     .paragraph {
-        margin-top: 100px; /* Separación superior */
-        font-size: 1.5em; /* Tamaño de fuente */
-        background-color: #000; /* Fondo negro */
-        color: #fff; /* Texto blanco */
-        padding: 10px; /* Espaciado dentro del párrafo */
-        border-radius: 8px; /* Bordes redondeados */
-        text-align: center; /* Centrar el texto */
-        width: auto; /* Ajusta el tamaño del párrafo según el contenido */
-        margin-left: auto; /* Centra el párrafo en la pantalla */
-        margin-right: auto;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el párrafo */
-        display: block;
+        @apply mt-24; /* Separación superior */
+        @apply mb-6; /* Separación inferior */
+        @apply text-xl; /* Tamaño de fuente */
+        @apply bg-gray-300; /* Fondo blanco */
+        @apply text-black; /* Texto negro */
+        @apply p-1.5; /* Espaciado dentro del párrafo */
+        @apply rounded-lg; /* Bordes redondeados */
+        @apply text-center; /* Centrar el texto */
+        @apply w-auto; /* Ajusta el tamaño del párrafo según el contenido */
+        @apply mx-auto; /* Centra el párrafo en la pantalla */
+        @apply shadow-md; /* Sombra sutil para el párrafo */
+        @apply block;
     }
     
     form {
@@ -115,33 +110,35 @@
         .field {
             @apply flex;
             @apply flex-col;
-            gap: var(--padding-y)
+            @apply gap-[var(--padding-y)]
         }
     }
-    
+    /* Estilos base para el input*/
     input {
-        font-family: inherit;
-        font-size: 1rem;
-        transition: font-size 1s;
+        @apply font-[inherit];
+        @apply bg-gray-200;
+        @apply text-base;
+        @apply outline-none;
+        @apply transition-all duration-1000;
     }
-    
+    /* Estilos para el placeholder */
     input::placeholder {
-        visibility: hidden;
+        @apply invisible;
     }
-    
-    @media (min-width: 200px) {
-        input:hover {
-            background-color: #ededed;
-            border: 0px;
-            font-size: 1rem;
-        }
-        input:hover::placeholder {
-            visibility: visible;
-        }
+    /* Estilos hover para el input */
+    input:hover {
+        @apply bg-white;
+        @apply border-0;
+        @apply text-base;
+    }
+    /*Estilos hover para el placeholder*/
+    input:hover::placeholder {
+        @apply visible;
     }
 
     a {
         @apply cursor-pointer;
+        @apply bg-amber-700;
     }
 }
 

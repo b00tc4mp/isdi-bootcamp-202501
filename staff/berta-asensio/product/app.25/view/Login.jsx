@@ -44,11 +44,21 @@ export function Login({onUserLoggedIn, onReturnClick}) {
         <form onSubmit={handleLoginSubmit}>
             <div className="field">
                 <label htmlFor="username">Username</label>
-                <input type="text" id="username"/>
+                <input 
+                    type="text" 
+                    id="username"
+                    className="input"
+                    placeholder="Introduce your username"
+                />
             </div>
             <div className="field">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password"/>
+                <input 
+                    type="password"
+                    id="password"
+                    className="input"
+                    placeholder="Introduce your password"
+                />
             </div>
 
             <button type="submit">Login</button>

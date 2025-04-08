@@ -71,8 +71,8 @@ export function Homepage ({ onUserLoggedOut }) {
     console.debug('Home -> render')
 
     return <div className="Homepage">
-        <header>
-            <img src="doc\images\logo-bee-you.png" alt="Bee logo" className="bee-logo" onClick={handleHomeClick}/>
+        <header className="bg-[var(--primary-color)] flex justify-between items-center w-full py-[var(--padding-y)] px-[var(--padding-x)] box-border">
+            <img src="doc\images\logo-bee-you.png" alt="Bee logo" className="bee-logo-register-login" onClick={handleHomeClick}/>
             
             <h2 onClick={handleUserClick}>{username}</h2>
 
@@ -88,7 +88,7 @@ export function Homepage ({ onUserLoggedOut }) {
                 <Route path="/" element={<Posts />} />
             </Routes>
         </main>
-        <footer>
+        <footer className="bg-[var(--primary-color)] fixed w-full bottom-0 items-center flex justify-center py-[var(--padding-y)] px-[var(--padding-x)] box-border">
             {pathname === '/' && <button onClick={handleCreatePostClick}>+</button>}
         </footer>
     </div>
