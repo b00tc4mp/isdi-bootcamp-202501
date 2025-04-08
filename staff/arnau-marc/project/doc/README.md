@@ -70,7 +70,7 @@ Game
 - author (User.id)
 - season (Season.id, optional)
 - status (string, enum: scheduled | finished)
-- title (string, max length 200)
+- title (string, min length 1, max length 200)
 - participants ([User.id])
 - date (Date)
 - place (string)
@@ -80,12 +80,14 @@ Game
 - modifiedAt (Date)
 
 Season
-- id (uuid)
+- id (string, uuid)
 - startDate (Date)
 - endDate (Date)
-- name (string)
+- name (string, min length 1, max length 20)
 - maxGames (number)
 - participants([User.id])
+- createdAt (Date)
+- modifiedAt (Date)
 
 ## Technologies
 
