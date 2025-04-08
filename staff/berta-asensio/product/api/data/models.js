@@ -11,6 +11,7 @@ import { Schema, model, Types } from 'mongoose'
 
 const { ObjectId } = Types
 
+
 /*
 CREACIÓN DE ESQUEMAS (user y post)
 */
@@ -55,10 +56,37 @@ const user = new Schema({
     }
 })
 
+const comment = new Schema({
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    text: {
+        type: String,
+        minLength: 1,
+        maxLength: 200
+    },
+    likes: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
 const post = new  Schema({
     author: {
         type: ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
 
     },
     image: {
@@ -86,6 +114,54 @@ const post = new  Schema({
     modifiedAt: {
         type: Date,
         default: null
+    },
+    comments: [comment]
+})
+
+const message = new Schema({
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    text: {
+        type: String,
+        minLength: 1,
+        maxLength: 1000
+    },
+    likes: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const chat = new Schema({
+    participants: [{
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    }],
+    title: {
+        type: String
+    },
+    messages: [message],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 
@@ -95,8 +171,14 @@ Esto convierte los esquemas user y post en modelos User y Post, listos para ser 
  */
 const User = model('User', user)
 const Post = model('Post', post)
+const Comment = model('Comment', comment)
+const Message = model('Message', message)
+const Chat = model('Chat', chat)
 
 export {
     User,
-    Post
+    Post,
+    Comment,
+    Message,
+    Chat
 }

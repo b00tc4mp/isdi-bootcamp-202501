@@ -9,7 +9,7 @@ EXTRACCIONES:
 */
 import mongoose from 'mongoose'
 import { errors } from 'com' 
-import { User, Post } from './models.js'
+import { User, Post, Comment, Message, Chat } from './models.js'
 
 const { SystemError } = errors
 
@@ -36,4 +36,7 @@ export {
     data,
     User,
     Post,
+    Comment,
+    Message,
+    Chat
 }
