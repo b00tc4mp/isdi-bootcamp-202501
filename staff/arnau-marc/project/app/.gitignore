@@ -1,47 +1,36 @@
-# 👉 Documentación
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# 👉 Dependencias
+# dependencies
 node_modules/
 
-# 👉 Expo
+# Expo
 .expo/
-.expo-shared/
 dist/
 web-build/
 expo-env.d.ts
 
-# 👉 Archivos nativos
+# Native
 *.orig.*
 *.jks
 *.p8
 *.p12
 *.key
-*.pem
 *.mobileprovision
 
-# 👉 Archivos locales de entorno
-.env
-.env.*
-.env*.local
-
-# 👉 Metro y caché
+# Metro
 .metro-health-check*
-.cache/
-metro-cache/
-tmp/
 
-# 👉 Archivos de debug
+# debug
 npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# 👉 Archivos del sistema
+# macOS
 .DS_Store
-Thumbs.db
+*.pem
 
-# 👉 TypeScript (si en algún momento usás TS)
+# local env files
+.env*.local
+
+# typescript
 *.tsbuildinfo
-
-# 👉 Configuración de VSCode (opcional)
-.vscode/

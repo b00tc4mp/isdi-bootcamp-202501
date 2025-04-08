@@ -1,9 +1,14 @@
-import { View, Text } from 'react-native'
+import React from 'react'
+import { View, Text, Button } from 'react-native'
 
-export default function ClassificationScreen() {
+import { styles } from './ClaissificationStyles'
+
+export default function ClassificationScreen({ navigation }) {
   return (
-    <View className="flex-1 justify-center items-center bg-white">
-      <Text className="text-xl font-bold text-indigo-600">Classification Screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Classification</Text>
+      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
     </View>
-  )
+  );
 }
+
