@@ -1,4 +1,4 @@
-# Aplicacion de recetas
+# Aplicacion CocinArte (falta definir nombre)
 
 ## Intro
 
@@ -12,11 +12,9 @@ Explorar recetas creadas por otros usuarios.
 
 Ver los ingredientes y pasos detallados para cada receta.
 
-Crear, editar y eliminar tus publicaciones fácilmente.
+Crear, editar y eliminar tus publicaciones.
 
-Acceder desde cualquier dispositivo gracias a su diseño responsivo.
-
-El objetivo principal del proyecto es ofrecer una herramienta accesible que fomente la cocina casera, organizando las recetas de forma clara y permitiendo compartirlas con una comunidad.
+El objetivo principal del proyecto es ofrecer una herramienta que fomente la cocina casera, organizando las recetas de forma clara y permitiendo compartirlas.
 
 
 ## Funnctional
@@ -95,6 +93,8 @@ El objetivo principal del proyecto es ofrecer una herramienta accesible que fome
 ### Blocks
 - App
 - API
+- Com
+- Doc
 
 ### Data Model
 
@@ -107,7 +107,7 @@ User
 - createdAt (Date)
 - modifiedAt (Date)
 
-Post
+Recipe
 - id (string, uuid)
 - author (User.id)
 - image (string, max length 1000)
@@ -115,13 +115,25 @@ Post
 - createdAt (Date)
 - modifiedAt (Date)
 - likes ([User.id])
+- tiempo de coccion(number)
+- tiempo estimado por receta(number)
+- paso a paso(string)
 
 ### Technologies
 
 
-- HTML / CSS / JS
+- HTML / Tailwind? / JS
 - React / Vite
 - Express / Node
+
+- MongoDB
+
+- Mongoose
+
+Autenticacion y seguridad.
+
+- JWT(JSON web Token)
+- bcrypt.
 
 ### Code Coverage
 
