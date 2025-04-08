@@ -18,23 +18,25 @@ Unregistered User
 
 Registered User
 
-- login (Login)
 - update user info (Profile)
-- logout
 - register van
 - update van
 - delete van
 - search for location and dates (Home)
+- save van to favorites (Van Profile)
 - filter for features (Home)
 - view available vans (Home)
-- book trip (Trip Profile or Van Profile?)
+- request book trip (Trip Profile or Van Profile?)
+- accept or decline trip (Exchange Home)
+- chat when request is sent (Messages Home) Requester can only chat if host answers
 - view user profile (Profile)
 - view van profile (Van Profile)
 - view van book progress in calendar (Van Profile)
 - view loggedInUser trip progress (Trip Profile)
 - view loggedInUser book history (Profile)
+- view loggedInUser chat history
 - view van book history
-- comment van
+- comment van when completed trip only?
 - rate trip/van
 
 ### UIUX Design
@@ -47,14 +49,14 @@ Registered User
 
 - App
 - API
-- DB?
-- Com (error, validation, etc)
+- DB
 
 ### Packages
 
 - app (...)
 - api (...)
 - doc (documentation)
+- com (validations, errors)
 
 ### Data Model
 
@@ -78,22 +80,22 @@ Van
 - id (string, uuid)
 - name (string, validations)
 - features {
-  windows (number, validations),
-  doors (number, validations),
-  heating (boolean),
-  airConditioning (boolean),
-  bedCount (number, validations)
-  insideKitchen (boolean),
-  fridge (boolean),
-  bathroom (enum: 'portable','fixed')
-  fuelType(enum:'petrol', 'diesel', 'electric', 'hybrid')
-  storage (number, validations)
-  brand (string, validations)
-  model (string, validations)
-  year (number, validations)
-  accessible (boolean)
-  [comment]: <> (should some features be optional or all must be filled when registering the van)
-  }
+  - windows (number, validations),
+  - doors (number, validations),
+  - heating (boolean),
+  - airConditioning (boolean),
+  - bedCount (number, validations)
+  - insideKitchen (boolean),
+  - fridge (boolean),
+  - bathroom (enum: 'portable','fixed')
+  - fuelType(enum:'petrol', 'diesel', 'electric', 'hybrid')
+  - storage (number, validations)
+  - brand (string, validations)
+  - model (string, validations)
+  - year (number, validations)
+  - accessible (boolean)
+    [comment]: <> (should some features be optional or all must be filled when registering the van)
+    }
 - legal [Doc.id]
 - owner (User.id)
 - currentTrip (Trip.id)
@@ -109,15 +111,15 @@ Van
 - rating [number, min 0, max 5]
 - comments [Comment.id]
 - location: {
-  address (string),
-  city (string),
-  region (string),
-  country (string),
-  coordinates: {
-  lat (number),
-  lng (number)
-  }
-  }
+  - address (string),
+  - city (string),
+  - region (string),
+  - country (string),
+  - coordinates: {
+  - lat (number),
+  - lng (number)
+    }
+    }
 
 Trip
 
@@ -132,15 +134,15 @@ Trip
 - price (number,validations)
 - issues [Doc.id]
 - location {
-  address (string),
-  city (string),
-  region (string),
-  country (string),
-  coordinates: {
-  lat (number),
-  lng (number)
-  }
-  }
+  - address (string),
+  - city (string),
+  - region (string),
+  - country (string),
+    coordinates: {
+  - lat (number),
+  - lng (number)
+    }
+    }
 - agreements [Doc.id]
 - rating [number, min 0 , max 5]
 - paymentDone (boolean)
@@ -148,8 +150,7 @@ Trip
 - paymentMethod (enum: 'road points','currency')
 - createdAt (Date)
 - modifiedAt (Date)
-  [comment]: <> (The owner has to validate the trip?)
-- confirmed? (boolean)
+- status (enum: 'pending' || 'approved' || 'rejected')
 
 Doc
 
@@ -178,7 +179,8 @@ Comment
 - React
 - Node
 - NestJS/Express
-- GraphQL/MongoDB
+- GraphQL
+- MongoDB
 - Mocha/Chai
 - C8
 - Monocart
