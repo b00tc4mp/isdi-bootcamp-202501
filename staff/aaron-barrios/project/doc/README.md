@@ -74,14 +74,14 @@ User (Registered)
 User 
   - id (UUID)
   - role (string, enum: ('anonymous', 'regular', 'moderator'))
-  - alias (string)
-  - password  (string) (hashed)
   - name? (string)
   - lastName? (string)
+  - alias (string)
+  - password  (string) (hashed)
   - level? (string, enum: ('beginner', 'intermediate', 'advanced'))
   - interests? ([string])
   - createdAt (date)
-  - updatedAt? (date)
+  - modifiedAt? (date)
   - workouts? ([Workout.id])
   - routines? ([Routine.id]) --> //with populate check if completed
 
@@ -113,28 +113,28 @@ Workout
 WorkoutProgress (conjunto de workoutProgress) -> poder borrar el punto
   - user (User.id)
   - workout (Workout.id) 
-  - createdAt (date)
   - weightUsed (number)
+  - createdAt (date)
   - notes? (string) (???)
 
 
 Routine
 - id (UUID)
+- createdBy? (User.id)
 - name (string)
 - goal (string) //gain strength, resistance, etc
 - muscle group (string)
-- type (number/string, enum: 1 (home) | 2: (gym) | 3: (outside))
+- locationType (number/string, enum: 1 (home) | 2: (gym) | 3: (outside))
 - difficulty (number/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
+- status (number/string, enum: 1 (accepted) | 2: (pending) | 3: (declined))
 - description? (string)
 - image? (string)
 - duration (string)
 - frequencySuggestion? (string)
-- status (number/string, enum: 1 (accepted) | 2: (pending) | 3: (declined))
 - likes ([User.id])
 - saves ([User.id])
 - createdAt (date)
 - modifiedAt (date)
-- createdBy? (User.id)
 - workouts ([RutineWorkout])
 
 RoutineWorkout 
