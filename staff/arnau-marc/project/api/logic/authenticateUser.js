@@ -5,8 +5,8 @@ import bcrypt from 'bcryptjs'
 // TO DO ERRORS const { SystemError, NotFoundError, CredentialsError } = errors
 
 export const authenticateUser = (username, password) => {
-    validate.username = (username)
-    validate.password = (password)
+   // validate.username = (username) // TODO
+    // validate.password = (password) // TODO
 
     return User.findone({ username }).lean()
         .catch(error => { throw new Error(error.message)}) // TODO SystemError
