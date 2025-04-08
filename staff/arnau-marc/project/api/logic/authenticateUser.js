@@ -1,4 +1,4 @@
-import { errors, validate } from 'com' // TODO VALIDATIONS
+//import { errors, validate } from 'com' // TODO VALIDATIONS
 import { User } from '../data/index.js' // TODO MODELS
 import bcrypt from 'bcryptjs'
 

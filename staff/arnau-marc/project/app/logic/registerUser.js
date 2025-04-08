@@ -31,4 +31,3 @@ export const registerUser = (name, surname, email, username, password) => {
         })
 }
 
-

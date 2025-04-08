@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { logic } from '../logic/index.js'; // Asegúrate de que este archivo esté configurado correctamente
+import { logic } from '../../logic'; // Asegúrate de que este archivo esté configurado correctamente
+import styles from './RegisterStyles.js'; // Asegúrate de tener los estilos adecuados
 
-export function Register({ onLoginClick, onRegisterSubmit }) {
+const Register = ({ navigation }) => {  // Usamos 'navigation' directamente
   const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -11,17 +13,18 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
   const handleRegisterSubmit = () => {
     try {
       // Realizamos el registro de usuario con los valores de los estados
-      logic.registerUser(name, email, username, password)
+      logic.registerUser(name, surname, email, username, password)
         .then(() => {
           // Limpiamos los campos del formulario
           setName('');
+          setSurname('');
           setEmail('');
           setUsername('');
           setPassword('');
 
           // Mostramos un mensaje de éxito
           Alert.alert('Registro exitoso 🎉', '¡Inicia sesión ahora!', [
-            { text: 'OK', onPress: onRegisterSubmit },
+            { text: 'OK', onPress: () => navigation.navigate('Login') }, // Navegamos al login
           ]);
         })
         .catch((error) => {
@@ -49,6 +52,13 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
         value={name}
         onChangeText={setName}
         placeholder="Your name..."
+        style={styles.input}
+      />
+        {/* Campo para apellido */}
+        <TextInput
+        value={surname}
+        onChangeText={setSurname}
+        placeholder="Your surname..."
         style={styles.input}
       />
 
@@ -82,11 +92,11 @@ export function Register({ onLoginClick, onRegisterSubmit }) {
       <Button title="Register" onPress={handleRegisterSubmit} />
 
       {/* Enlace para ir al login */}
-      <TouchableOpacity onPress={onLoginClick}>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.link}>Login</Text>
       </TouchableOpacity>
     </View>
   );
-}
+};
 
-
+export default Register;
