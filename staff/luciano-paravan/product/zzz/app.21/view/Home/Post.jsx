@@ -89,11 +89,11 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
     console.debug('Post -> render')
 
     return <article className="post">
-    <h3 className="px-[var(--padding-x)] cursor-pointer" onClick={handleUsernameClick}>{post.author.username}</h3>
+    <h3 onClick={handleUsernameClick}>{post.author.username}</h3>
 
-    <img className="w-full" src={post.image} />
+    <img src={post.image} />
 
-    {view === '' && <p className="px-[var(--padding-x)]">{post.text}</p>}
+    {view === '' && <p>{post.text}</p>}
 
     {view === 'edit-text' && <form onSubmit={handleEditTextSubmit}>
         <label htmlFor="text">Text</label>
@@ -103,7 +103,7 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
         </form>}
 
     
-    <div cclassName="px-[var(--padding-x)] flex justify-between">
+    <div className="post-footer">
         <time>{post.createdAt.toISOString()}</time>
         
         <button onClick={handleToggleLikeClick}>{`${post.liked? '❤️' : '🤍'}(${post.likesCount})`}</button>

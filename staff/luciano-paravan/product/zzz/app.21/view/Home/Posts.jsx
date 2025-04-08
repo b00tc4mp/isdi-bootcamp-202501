@@ -11,7 +11,7 @@ export function Posts({ targetUserId }) {
         console.debug('Post -> useEffect')
 
         loadPosts()
-    }, [targetUserId])
+    }, [])
     
     const loadPosts = () => {
         try {
