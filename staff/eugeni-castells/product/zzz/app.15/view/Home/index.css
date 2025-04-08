@@ -1,0 +1,21 @@
+.home-footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  background-color: var(--primary-color);
+  padding: 0.5rem;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-post-button {
+  padding: 1rem;
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}

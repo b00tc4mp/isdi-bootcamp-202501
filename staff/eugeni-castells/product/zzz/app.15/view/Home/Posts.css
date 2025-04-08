@@ -1,0 +1,6 @@
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding-bottom: 100px;
+}

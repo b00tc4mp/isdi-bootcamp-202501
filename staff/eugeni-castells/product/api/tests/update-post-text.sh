@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/posts/text/67dfe4148c0f8b230ed9182c -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RmZTQxNDhjMGY4YjIzMGVkOTE4MmEiLCJpYXQiOjE3NDI5MTMzNTR9.TCoNLaA_1fsgdmKKAX_BmIoZFoLe7k4AA4spTuKQc34'  -d '{"text":"jwt is so cool!"}' -H 'Content-Type: application/json' -v
