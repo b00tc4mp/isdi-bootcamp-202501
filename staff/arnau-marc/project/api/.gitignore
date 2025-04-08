@@ -13,6 +13,9 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
+<<<<<<< HEAD
 # Package json
+=======
+>>>>>>> 52b9ef6989770ad1a027149d140562f628205e42
 package-lock.json
 package.json

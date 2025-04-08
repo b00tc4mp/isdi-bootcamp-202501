@@ -1,12 +1,22 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export const data = {
-    get token(){
-        const id = JSON.parse(sessionStorage.token || 'null')
-
-        return id
+    // Obtener el token
+    get token() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const value = await AsyncStorage.getItem('token');
+                resolve(value ? JSON.parse(value) : null);
+            } catch (error) {
+                reject(error);
+            }
+        });
     },
-    set token(id){
-        const json = JSON.stringify(id)
 
-        sessionStorage.token = json
-    },
-}
+    // Establecer el token
+    set token(id) {
+        AsyncStorage.setItem('token', JSON.stringify(id)).catch((error) => {
+            console.error("Error saving token: ", error);
+        });
+    }
+};

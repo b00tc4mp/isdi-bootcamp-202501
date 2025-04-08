@@ -1,5 +1,5 @@
 import { User } from '../data/index.js' // TODO
-import { errors, validate } from 'com' //TODO
+//import { errors, validate } from 'com' //TODO
 import bcrypt from 'bcryptjs'
 
 // TODO errors
