@@ -11,27 +11,23 @@ App to create poker matches, you can join your friends to create events and visu
 ### Use Cases
 
 Admin
-- Register
-- Login
-- Logout
-- Participate on a event
-- Remove participation on a event
+- Participate on a game
+- Remove participation on a game
+- List games
+- Visualize game
 - Visualize clasification
 - Visualize profile
-- Visualize others profile
+- Visualize others profiles
 - Visualize historic matches
-- Create event
-- Cancel create event
-- Cancel event
-- Set event result
-- Change event result
+- Create game
+- Edit game
+- Cancel game (remove)
+- Set game result
+- Change game result
 
-User
-- Register
-- Login
-- Logout
-- Participate on a event
-- Remove participation on a event
+Player
+- Participate on a game
+- Remove participation on a game
 - Visualize clasification
 - Visualize profile
 - Visualize others profile
@@ -58,55 +54,46 @@ User
 
 ### Data Model
 
-User / admin
+User 
 - id (string, uuid)
-- admin (boolean)
+- role (string, enum: regular | admin)
 - name (string, min length 1, max length 20)
+- surname (string, min length 1, max length 20)
 - email (string, max length 30)
 - username (string, min length 3, max length 20)
 - password (string, min length 8, max length 20)
-- gamesWon (number)
-- gamesPlayed (number)
-- createdAt (Date)
-
-Event 
-- id (string, uuid)
-- author (userId)
-- text (string, max length 200)
-- participants ([userId])
-- date of event (Date)
-- place (string)
-- winner (userId)
 - createdAt (Date)
 - modifiedAt (Date)
 
-Classification
-- participants([userId])
-- order of participants (string [username])
-- gamesPlayed ([userId.gamesPlayed])
-- wins ([userId.wins])
-- points ([userId.points])
-
-Profile
+Game 
 - id (string, uuid)
-- username (string)
-- gamesWon (number)
-- gamesPlayed (number)
+- author (User.id)
+- season (Season.id, optional)
+- status (string, enum: scheduled | finished)
+- title (string, max length 200)
+- participants ([User.id])
+- date (Date)
+- place (string)
+- winner (User.id)
+- points (number)
+- createdAt (Date)
+- modifiedAt (Date)
+
+Season
+- id (uuid)
+- startDate (Date)
+- endDate (Date)
+- name (string)
+- maxGames (number)
+- participants([User.id])
 
 ## Technologies
 
-- HTML 
-- Style (ReactNative) 
-- JS
-- ReactNative 
-- Expo
-
-- Express 
-- Node
-- MongoDB/SH
-- Mongoose
-- Mocha & Chai
-- JWT
+- ReactNative / Expo
+- Node / Express 
+- MongoDB / Mongoose
+- Mocha / Chai
+- JWT / bcrypt
 
 ### Code Coverage
 
