@@ -1,14 +1,10 @@
-import { validate, errors } from 'com'
-const { SystemError } = errors
+// import { validate, errors } from 'com'
+// const { SystemError } = errors
 
-import { SystemError } from "../../com/errors"
+// import { SystemError } from "../../com/errors"
 
 export const registerUser = (name, surname, email, username, password) => {
-    validate.name(name)
-    validate.surname(surname)
-    validate.email(email)
-    validate.username(username)
-    validate.password(password)
+    
 
     return fetch('http://localhost:8080/users', { // tipar la URL
         method: 'POST', 
