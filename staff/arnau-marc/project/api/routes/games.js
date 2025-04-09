@@ -18,6 +18,12 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
       .then(gameId => res.status(201).json({ gameId }))
   }))
   
+  // Funcion para obtener los posts
+  games.get('/', authHandler, withErrorHandling((req, res) => {
+    return logic.getGames()
+      .then(games => res.json({ games }))
+  }))
+
   /*
   // Unirse a una partida
   games.post('/:gameId/join', authHandler, withErrorHandling((req, res) => {

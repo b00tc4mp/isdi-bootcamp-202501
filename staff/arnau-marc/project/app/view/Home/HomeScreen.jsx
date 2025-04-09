@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button} from 'react-native'
+import { View, Text, Button, FlatList, Alert} from 'react-native'
 import styles from './HomeStyle.js'
 import { logic } from '../../logic/index.js'
 
 const Home = ({ navigation }) => {
   const [username, setUsername] = useState('')
+  const [games, setGames] = useState([])
 
   // Usamos useEffect para cargar el username cuando el componente se monta
   useEffect(() => {
@@ -17,11 +18,19 @@ const Home = ({ navigation }) => {
           console.error(error)
           Alert.alert('Error ❌', error.message)
         })
+
+      fetchGames()
     } catch (error) {
       console.error(error)
       Alert.alert('Error ❌', error.message)
     }
   }, [])
+
+  const fetchGames = () => {
+    logic.getGames()
+      .then(({games}) => setGames(games))
+      .catch(error => Alert.alert('Error ❌', error.message))
+  }
 
   // Función para manejar el logout
   const handleLogoutClick = () => {
@@ -74,9 +83,23 @@ const Home = ({ navigation }) => {
       <View style={styles.main}>
         <Button title="Go to Profile" onPress={handleUserClick} />
         <Button title="Go to Classification" onPress={handleClassificationClick} />
-        <Button title="Add a Game" onPress={handleAddGameClick} />
+        <Button title="Create Game" onPress={handleAddGameClick} />
       </View>
+        {/* Lista de partidas */}
+        <FlatList
+      data={games}
+      keyExtractor={(item) => item.id}
+      ListEmptyComponent={<Text>No games yet</Text>}
+      renderItem={({ item }) => (
+        <View style={{ padding: 10 }}>
+        <Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
+        <Text>{item.date}</Text>
+        </View>
+       )}
+/>
     </View>
+    
+
   )
 }
 

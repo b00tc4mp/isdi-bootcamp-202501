@@ -1,4 +1,4 @@
-import { data } from '../../data/index.js'
+import { data } from '../../data'
 
 export const createGame = (title, date, place, season) => {
   return data.token

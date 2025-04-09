@@ -7,7 +7,7 @@ const CreateGameScreen = ({ navigation }) => {
   const [title, setTitle] = useState('')
   const [date, setDate] = useState('')
   const [place, setPlace] = useState('')
-
+  
   const handleSubmitCreateGame = () => {
     logic.createGame( title, date, place )
       .then(() => {
