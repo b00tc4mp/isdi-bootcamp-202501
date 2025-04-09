@@ -1,62 +1,62 @@
-import React from 'react';
-import { View, Text, Button} from 'react-native';
+import React, { useState, useEffect } from 'react'
+import { View, Text, Button} from 'react-native'
 import styles from './HomeStyle.js'
-import { logic } from '../../logic/index.js';
+import { logic } from '../../logic/index.js'
 
 const Home = ({ navigation }) => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('')
 
   // Usamos useEffect para cargar el username cuando el componente se monta
   useEffect(() => {
-    console.debug('Home -> useEffect');
+    console.debug('Home -> useEffect')
 
     try {
       logic.getUsername()
         .then((username) => setUsername(username))
         .catch((error) => {
-          console.error(error);
-          Alert.alert('Error ❌', error.message);
-        });
+          console.error(error)
+          Alert.alert('Error ❌', error.message)
+        })
     } catch (error) {
-      console.error(error);
-      Alert.alert('Error ❌', error.message);
+      console.error(error)
+      Alert.alert('Error ❌', error.message)
     }
-  }, []);
+  }, [])
 
   // Función para manejar el logout
   const handleLogoutClick = () => {
     try {
-      logic.logoutUser();
-      navigation.navigate('Login');  // Navegamos a la pantalla de Login
-      Alert.alert('Bye, See You soon!!');
+      logic.logoutUser()
+      navigation.navigate('Login')  // Navegamos a la pantalla de Login
+      Alert.alert('Bye, See You soon!!')
     } catch (error) {
-      console.error(error);
-      Alert.alert('Error ❌', error.message);
+      console.error(error)
+      Alert.alert('Error ❌', error.message)
     }
-  };
+  }
 
   // Función para navegar a la pantalla de perfil
   const handleUserClick = () => {
     try {
-      const userId = logic.getUserId();
-      navigation.navigate('Profile', { userId });  // Navegamos a la pantalla de Profile
+      const userId = logic.getUserId()
+      navigation.navigate('Profile', { userId })  // Navegamos a la pantalla de Profile
     } catch (error) {
-      console.error(error);
-      Alert.alert('Error ❌', error.message);
+      console.error(error)
+      Alert.alert('Error ❌', error.message)
     }
-  };
+  }
 
   // Función para navegar a la pantalla de clasificación
   const handleClassificationClick = () => {
-    navigation.navigate('Classification');  // Navegamos a la pantalla de Classification
-  };
+    navigation.navigate('Classification')  // Navegamos a la pantalla de Classification
+  }
 
   // Función para navegar a la pantalla de crear juego
   const handleAddGameClick = () => {
-    navigation.navigate('CreateGame');  // Navegamos a la pantalla de CreateGame
-  };
+    navigation.navigate('CreateGame')  // Navegamos a la pantalla de CreateGame
+  }
 
-  console.debug('Home -> render');
+  console.debug('Home -> render')
 
   return (
     <View style={styles.container}>
@@ -77,7 +77,7 @@ const Home = ({ navigation }) => {
         <Button title="Add a Game" onPress={handleAddGameClick} />
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

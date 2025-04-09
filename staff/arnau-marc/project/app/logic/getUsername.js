@@ -2,13 +2,19 @@ import { data } from '../data/index.js'
 // TODO IMPORT ERRORS
 
 export const getUsername = () => {
-    const { token } = data
-    
-    return fetch ('http://localhost:8080/users/self/username', {
-        method: 'GET',
-        headers: {
-            Authorization : `Bearer ${ token }`
+    return data.token
+    .then(token => {
+        if (!token) {
+            throw new Error('Token not found');
         }
+
+        // Hacemos la solicitud con el token
+        return fetch('http://localhost:8080/users/self/username', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,  // Agregamos el token en los headers de la solicitud
+            },
+        });
     })
         .catch(error => { throw new Error(error.message)})
         .then(response => {

@@ -3,7 +3,7 @@ import { User } from '../data/index.js'
 
 // const { SystemError, NotFoundError } = errors
 
-export const getUserName = userId => {
+export const getUsername = (userId) => {
    // validate.id?
 
    return User.findById(userId).lean()
