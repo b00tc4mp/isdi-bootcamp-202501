@@ -14,9 +14,6 @@ Users can register, progress through interactive levels, see their progress, com
 ### Use Cases
 
 User:
-- register
-- login
-- logout
 - view personal profile
 - view personal progress
 - play level
@@ -39,15 +36,13 @@ User:
 - **App** 
 - **API** 
 - **DB** 
-- **Com**
-- **Doc** 
 
 ### 📦 Packages
 
 - `app` (front-end with React and CSS/Tailwind)
-- `api` (server with Node/Express)
-- `doc` (documentation)
+- `api` (server with Node/Express, MongoDB, Mongoose)
 - `com` (validations, errors)
+- `doc` (documentation)
 
 ### 📊 Data Model
 
@@ -60,8 +55,8 @@ User:
   username: (string, min length 3, max length 20),
   password: (string, min length 8, max length 30),
   createdAt: (Date)
-  generalProgression: ([level.id]),
-  currentLevelProgression: ({level.id, progression})
+  generalProgress: ([Level.id]),
+  currentLevel: (Level.id)
 }
 ```
 
@@ -69,9 +64,9 @@ User:
 ```js
 {
   id: (string, uuid),
-  typeLevel: (string), // example: "quiz", "dragAndDrop", "fillInBlank"
+  type: (string), // example: "quiz", "dragAndDrop", "fillInBlank"
   description: (string, max length 300),
-  levelBody: (string), // content of the test or challenge
+  body: (string), // content of the test or challenge
   expectedResult: (string), // o structure for validation
   difficulty: (number)
 }
@@ -79,10 +74,11 @@ User:
 
 ### 🧰 Technologies
 
-- **Frontend:** React + Vite, TailwindCSS
+- **Frontend:** React + Vite + TailwindCSS
 - **Backend:** Node.js + Express
-- **Data Base:** MongoDB 
-- **Testing:** Mocha + Chai
+- **Data Base:** MongoDB + Mongoose
+- **Testing:** Mocha + Chai + c8
+- **Security:** JWT + Bcryptjs
 
 ### ✅ Code Coverage
 
