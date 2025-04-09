@@ -8,7 +8,7 @@ export const deletePost = postId => {
 
     const { token } = data
 
-    return fetch(`http://localhost:8080/posts/${postId}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${token}`

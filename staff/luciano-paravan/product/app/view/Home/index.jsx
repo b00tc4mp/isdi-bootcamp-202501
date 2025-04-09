@@ -7,8 +7,11 @@ import { Profile } from './Profile.jsx'
 import { Search } from './Search.jsx'
 
 import { logic } from '../../logic/index.js'
+import { useContext } from '../../context.js'
 
 export function Home ({ onUserLoggedOut }) {
+    const { alert, confirm } = useContext()
+    
     const [username, setUsername] = useState('')
     
     const navigate = useNavigate()
@@ -33,15 +36,19 @@ export function Home ({ onUserLoggedOut }) {
     },[])
 
     const handleLogoutClick = () => {
-        try {
-            logic.logoutUser()
-
-            onUserLoggedOut()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
+        confirm('Logout?')
+        .then(accepted => {
+            if (accepted)
+                try {
+                    logic.logoutUser()
+        
+                    onUserLoggedOut()
+                } catch (error) {
+                    console.error(error)
+        
+                    alert(error.message)
+                }
+        })
     }
 
     const handleAddPostClick = () => navigate('/create-post')

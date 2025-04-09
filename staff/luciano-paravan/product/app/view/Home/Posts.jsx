@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-
 import { Post } from './Post.jsx'
-
 import { logic } from '../../logic/index.js'
+import { useContext } from '../../context.js'
 
 export function Posts({ targetUserId }) {
+    const { alert } = useContext()
+    
     const [posts, setPosts] = useState([])
 
     useEffect(() => {

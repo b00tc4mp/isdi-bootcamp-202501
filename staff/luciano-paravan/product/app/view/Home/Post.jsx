@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { logic } from '../../logic/index.js'
+import { useContext } from '../../context.js'
 
 export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPostTextEdited }) {
+    const { alert, confirm } = useContext()
+
     const [view, setView] = useState('')
 
     const navigate = useNavigate()
@@ -37,21 +40,24 @@ export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPos
     }*/
 
     const handleDeleteClick = () => {
-        if (confirm('Delete post?')) {
-            try {
-                logic.deletePost(post.id)
-                    .then(() => onPostDeleted())
-                    .catch(error => {
+        confirm('Delete post?')
+            .then(accepted => {
+                if (accepted)
+                    try {
+                        logic.deletePost(post.id)
+                            .then(() => onPostDeleted())
+                            .catch(error => {
+                                console.error(error)
+        
+                                alert(error.message)
+                            })
+                    } catch (error) {
                         console.error(error)
-
+            
                         alert(error.message)
-                    })
-            } catch (error) {
-                console.error(error)
-    
-                alert(error.message)
-            }
-        }
+                    }
+            })
+            
     }
 
     const handleEditTextClick = () => setView('edit-text')

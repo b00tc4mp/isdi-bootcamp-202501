@@ -1,8 +1,11 @@
 import { logic } from '../../logic/index'
+import { useContext } from '../../context'
 
 export function CreatePost ({ onPostCreated, onPostCreateCancelled }) {
     
     const handleFormSubmit = event => {
+        const { alert } = useContext()
+
         event.preventDefault()
         
         try {
@@ -33,13 +36,19 @@ export function CreatePost ({ onPostCreated, onPostCreateCancelled }) {
     console.debug('CreatePost -> render')
     
     return <section>
-    <form className='createPostForm' onSubmit={handleFormSubmit}>
-        <label htmlFor="image">url image</label>
-        <input type="url" id="image" />
-        <label htmlFor="text">Text:</label>
-        <input type="text" id="text"/>
+    <form className="createPostForm" onSubmit={handleFormSubmit}>
+        <div className="field">
+            <label htmlFor="image">url image</label>
+            <input type="url" id="image" />
+        </div>
+        
+        <div className="field">
+            <label htmlFor="text">Text:</label>
+            <input type="text" id="text"/>
+        </div>
+        
+        <button className="secondary" type="button" onClick={handleCancelClick}>Cancel</button>
         <button type="submit">Create</button>
     </form>
-    <a onClick={handleCancelClick}>Cancel</a>
 </section>
 }

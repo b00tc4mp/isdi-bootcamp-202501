@@ -1,8 +1,8 @@
 import { logic } from '../logic'
-import { useContext } from '../context.js'
+import { Alert } from './Alert'
 
 export function Login ({ onNavigateToRegister, onUserLoggedIn }) {
-    const {alert} = useContext() //Es el alert que personalizamos, le hace sombra al alerta global
+    const [feedback, setFeedback] = useState('')
 
     const handleLoginSubmit = event => {
         event.preventDefault()
@@ -24,17 +24,21 @@ export function Login ({ onNavigateToRegister, onUserLoggedIn }) {
                 .catch(error => {
                     console.error(error)
 
-                    alert(error.message)
+                    //alert(error.message)
+                    setFeedback(error.message)
                 })
 
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            //alert(error.message)
+            setFeedback(error.message)
         }
     }
 
     const handleRegisterClick = () => onNavigateToRegister()
+
+    const handleAlertAccepted = () => setFeedback('')
 
     console.debug('Login -> render')
 
@@ -56,6 +60,7 @@ export function Login ({ onNavigateToRegister, onUserLoggedIn }) {
             </form>
             <a onClick={handleRegisterClick} className="block bg-transparent text-color border border-color rounded px-4 py-1 m-4 text-center">Register</a>
 
+            {feedback && <Alert title="Oops" message={feedback} onAccept={handleAlertAccepted} />}
         </div>
     </>
 }
