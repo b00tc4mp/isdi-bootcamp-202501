@@ -8,7 +8,7 @@ export const authenticateUser = (username, password) => {
    // validate.username = (username) // TODO
     // validate.password = (password) // TODO
 
-    return User.findone({ username }).lean()
+    return User.findOne({ username }).lean()
         .catch(error => { throw new Error(error.message)}) // TODO SystemError
         .then(user=>{
             if(!user) throw new Error(error.message) // TODO NotFoundError

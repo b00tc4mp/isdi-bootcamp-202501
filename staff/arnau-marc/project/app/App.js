@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from './view/Home/HomeScreen';
+import Home from './view/Home/HomeScreen';
 import Login from './view/Login/LoginScreen';
 import Register from './view/Register/RegisterScreen';
 import ProfileScreen from './view/Profile/ProfileScreen';
@@ -18,7 +18,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="CreateGame" component={CreateGameScreen} />
         <Stack.Screen name="Classification" component={ClassificationScreen} />
