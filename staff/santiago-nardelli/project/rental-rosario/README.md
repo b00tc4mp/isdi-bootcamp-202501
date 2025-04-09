@@ -43,6 +43,71 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 Este proyecto consiste en una página web para la búsqueda y gestión de alquileres temporales en la ciudad de Rosario, Argentina. Los usuarios podrán buscar propiedades en el mapa de la ciudad, aplicar filtros, y ver detalles de cada propiedad. Además, los administradores podrán gestionar las propiedades a través de un panel de administración, con funcionalidades de agregar, editar y eliminar propiedades.
 
+## Casos de Uso
+
+### 1. **Registro de Usuario**
+- **Objetivo**: Permitir que nuevos usuarios se registren en la plataforma para acceder a las funcionalidades de búsqueda de propiedades.
+- **Flujo**:
+  1. El usuario accede a la página de registro.
+  2. Rellena el formulario con su nombre, correo electrónico y contraseña.
+  3. El sistema valida los datos y crea una nueva cuenta.
+  4. El usuario recibe un mensaje de éxito y es redirigido a la página de inicio de sesión.
+
+### 2. **Inicio de Sesión (Login)**
+- **Objetivo**: Permitir que los usuarios registrados inicien sesión en la plataforma.
+- **Flujo**:
+  1. El usuario accede a la página de inicio de sesión.
+  2. Ingresa su correo electrónico y contraseña.
+  3. El sistema valida las credenciales.
+  4. Si son correctas, el usuario es redirigido a la página de inicio con acceso completo a la plataforma.
+  5. Si las credenciales son incorrectas, el sistema muestra un mensaje de error.
+
+### 3. **Recuperación de Contraseña**
+- **Objetivo**: Permitir que los usuarios recuperen su contraseña en caso de olvido.
+- **Flujo**:
+  1. El usuario accede a la página de recuperación de contraseña.
+  2. Ingresa su correo electrónico asociado a la cuenta.
+  3. El sistema envía un correo electrónico con un enlace para restablecer la contraseña.
+  4. El usuario hace clic en el enlace y es redirigido a una página donde puede ingresar una nueva contraseña.
+  5. El sistema valida la nueva contraseña y permite al usuario iniciar sesión con la nueva clave.
+
+### 4. **Acceso y Funcionalidades del Dashboard para Administradores**
+- **Objetivo**: Permitir a los administradores gestionar las propiedades (crear, editar, eliminar).
+- **Flujo**:
+  1. El administrador inicia sesión con sus credenciales.
+  2. Accede al **Dashboard de Administración**.
+  3. Desde el dashboard, el administrador puede:
+     - **Ver la lista de propiedades**: Visualizar todas las propiedades existentes.
+     - **Crear una propiedad nueva**: Ingresar los detalles de una propiedad (título, descripción, ubicación, características, etc.) y añadirla al sistema.
+     - **Editar una propiedad existente**: Modificar los detalles de una propiedad (por ejemplo, cambiar el precio, actualizar la descripción, modificar la disponibilidad).
+     - **Eliminar una propiedad**: Eliminar una propiedad que ya no esté disponible o que deba ser retirada de la plataforma.
+  4. Las acciones realizadas en el dashboard se reflejan inmediatamente en el sistema, lo que permite a los usuarios ver los cambios al actualizar la página.
+
+### 5. **Visualización de Propiedades para Usuarios Comunes**
+- **Objetivo**: Permitir que los usuarios sin privilegios de administrador busquen, vean y filtren propiedades disponibles.
+- **Flujo**:
+  1. El usuario accede a la página principal con el mapa interactivo.
+  2. Utiliza los filtros para buscar propiedades según el tipo, características, precio, etc.
+  3. El usuario puede ver una lista de propiedades en formato de tarjetas, con información como precio, ubicación y características.
+  4. Al hacer clic en una propiedad, el usuario accede a la página de detalles de la propiedad con más información (descripción, imágenes, disponibilidad, etc.).
+  5. El sistema permite visualizar las propiedades disponibles en tiempo real.
+
+### 6. **Visualización de Detalles de Propiedad**
+- **Objetivo**: Permitir que los usuarios vean los detalles completos de una propiedad.
+- **Flujo**:
+  1. El usuario selecciona una propiedad desde el mapa o desde la lista de propiedades.
+  2. El sistema muestra una vista detallada de la propiedad seleccionada, incluyendo:
+     - Título, descripción, imágenes y características.
+     - Ubicación en el mapa.
+     - Precio y disponibilidad.
+
+
+
+### Blocks
+
+- App (the client-side application)
+- API (the server-side API)
+- DB (the database)
 ## Tecnologías Utilizadas
 
 - **Frontend**: 

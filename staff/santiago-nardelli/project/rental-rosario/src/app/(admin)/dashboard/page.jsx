@@ -1,36 +1,95 @@
-export default function Dashboard(){
-    return(
-        <>
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-            <p className="text-gray-600">Welcome to the admin dashboard!</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-4">
-            <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-2">Users</h2>
-                <p className="text-gray-600">Manage and view user data.</p>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-2">Orders</h2>
-                <p className="text-gray-600">Track and manage orders.</p>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-2">Reports</h2>
-                <p className="text-gray-600">View system reports and analytics.</p>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-2">Settings</h2>
-                <p className="text-gray-600">Configure system settings.</p>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-2">Notifications</h2>
-                <p className="text-gray-600">Manage notifications and alerts.</p>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-2">Support</h2>
-                <p className="text-gray-600">Access support and help resources.</p>
-            </div>
-        </div>
-        </>
-    )
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation"; // Importa el enrutador de Next.js
+
+
+export default function Dashboard() {
+  const [selectedOption, setSelectedOption] = useState("view");
+  const router = useRouter(); // Inicializa el enrutador
+
+  const handleNavigation = (path) => {
+    // Aquí puedes agregar lógica adicional antes de navegar
+    console.log(`Navegando a: ${path}`);
+    router.push(path); // Navegación programática con el enrutador de Next.js
+  };
+  const renderContent = () => {
+    switch (selectedOption) {
+      case "view":
+        return <div>Lista de propiedades</div>;
+      case "create":
+        return <div>Formulario para crear una nueva propiedad</div>;
+      case "edit":
+        return <div>Formulario para editar una propiedad existente</div>;
+      case "delete":
+        return <div>Confirmación para eliminar una propiedad</div>;
+      default:
+        return <div>Opción no válida</div>;
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", height: "100vh" }}>
+      <aside
+        style={{
+          width: "250px",
+          backgroundColor: "#f4f4f4",
+          padding: "20px",
+          boxShadow: "2px 0 5px rgba(0,0,0,0.1</div>)",
+        }}
+      >
+        <h2>Dashboard</h2>
+        <ul style={{ listStyle: "none", padding: 0 }}>
+          <li
+            style={{
+              margin: "10px 0",
+              cursor: "pointer",
+              color: selectedOption === "view" ? "blue" : "black",
+            }}
+            onClick={() => setSelectedOption("view")}
+          >
+            Ver propiedades
+          </li>
+          <li
+            style={{
+              margin: "10px 0",
+              cursor: "pointer",
+              color: selectedOption === "create" ? "blue" : "black",
+            }}
+            onClick={() => setSelectedOption("create")}
+          >
+            Crear propiedad
+          </li>
+          <li
+            style={{
+              margin: "10px 0",
+              cursor: "pointer",
+              color: selectedOption === "edit" ? "blue" : "black",
+            }}
+            onClick={() => setSelectedOption("edit")}
+          >
+            Editar propiedad
+          </li>
+          <li
+            style={{
+              margin: "10px 0",
+              cursor: "pointer",
+              color: selectedOption === "delete" ? "blue" : "black",
+            }}
+            onClick={() => setSelectedOption("delete")}
+          >
+            Eliminar propiedad
+          </li>
+          <li
+            style={{ margin: "10px 0", cursor: "pointer" }}
+            onClick={() => handleNavigation("/")}
+          >
+            <span style={{ color: "black", textDecoration: "none" }}>
+              Ir a inicio
+            </span>
+          </li>
+        </ul>
+      </aside>
+      <main style={{ flex: 1, padding: "20px" }}>{renderContent()}</main>
+    </div>
+  );
 }
