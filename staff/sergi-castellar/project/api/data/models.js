@@ -1,0 +1,225 @@
+import { Schema, model, Types } from 'mongoose'
+
+const { ObjectId } = Types
+
+const user = new Schema({
+    name: {
+        type: String,
+        minLength: 1,
+        maxLength: 50,
+        required: true
+    },
+    email: {
+        type: String,
+        minLength: 6,
+        maxLength: 40,
+        required: true,
+        unique: true,
+        //TODO regex email
+    },
+    username: {
+        type: String,
+        minLength: 3,
+        maxLength: 20,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        minLength: 8,
+        maxLength: 72,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const couple = new Schema({
+    members: [{
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    }],
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const diaryEntry = new Schema({
+    couple: {
+        type: ObjectId,
+        ref: 'Couple',
+        required: true
+    },
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    text: {
+        type: String,
+        minLength: 1,
+        maxLength: 2000,
+        required: true
+    },
+    reaction: {
+        type: String,
+        minLength: 1,
+        maxLength: 10
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const calendarEvent = new Schema({
+    couple: {
+        type: ObjectId,
+        ref: 'Couple',
+        required: true
+    },
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    title: {
+        type: String,
+        minLength: 1,
+        maxLength: 100,
+        required: true
+    },
+    description: {
+        type: String,
+        minLength: 1,
+        maxLength: 1000,
+        required: true
+    },
+    eventDate: {
+        type: Date,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const listItem = new Schema({
+    text: {
+        type: String,
+        minLength: 1,
+        maxLength: 500,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const list = new Schema({
+    couple: {
+        type: ObjectId,
+        ref: 'Couple',
+        required: true
+    },
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    title: {
+        type: String,
+        minLength: 1,
+        maxLength: 100
+    },
+    items: [listItem],
+    color: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const feelings = new Schema({
+    couple: {
+        type: ObjectId,
+        ref: 'Couple',
+        required: true
+    },
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    emotion: {
+        type: String,
+        minLength: 1,
+        maxLength: 50,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
+const User = model('User', user)
+const Couple = model('Couple', couple)
+const DiaryEntry = model('DiaryEntry', diaryEntry)
+const CalendarEvent = model('CalendarEvent', calendarEvent)
+const ListItem = model('ListItem', listItem)
+const List = model('List', list)
+const Feelings = model('Feelings', feelings)
+
+export {
+    User,
+    Couple,
+    DiaryEntry,
+    CalendarEvent,
+    ListItem,
+    List,
+    Feelings
+}
