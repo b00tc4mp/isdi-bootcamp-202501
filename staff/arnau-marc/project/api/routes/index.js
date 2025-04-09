@@ -1,5 +1,7 @@
-import { users } from "./users.js";
+import { users } from "./users.js"
+import { games } from "./games.js"
 
 export {
-    users
+    users,
+    games
 }

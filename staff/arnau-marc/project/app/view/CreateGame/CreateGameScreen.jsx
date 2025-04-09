@@ -1,44 +1,51 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button} from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, TextInput, Button, Alert } from 'react-native'
 import styles from './CreateGameStyles'
+import { logic } from '../../logic/index'
 
-export default function CreateGameScreen({ navigation }) {
-  const [gameName, setGameName] = useState('');
-  const [gameDate, setGameDate] = useState('');
-  const [gameDescription, setGameDescription] = useState('');
+const CreateGameScreen = ({ navigation }) => {
+  const [title, setTitle] = useState('')
+  const [date, setDate] = useState('')
+  const [place, setPlace] = useState('')
 
-  const handleCreateGame = () => {
-    console.log('Game Created:', gameName, gameDate, gameDescription);
-    navigation.navigate('Home');
-  };
+  const handleSubmitCreateGame = () => {
+    logic.createGame( title, date, place )
+      .then(() => {
+        Alert.alert('Success', 'Game created successfully 🎉')
+        navigation.navigate('Home')
+      })
+      .catch(error => {
+        console.error(error)
+        Alert.alert('Error ❌', error.message)
+      })
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Create Game</Text>
-      
+
       <TextInput
-        value={gameName}
-        onChangeText={setGameName}
-        placeholder="Game Name"
         style={styles.input}
+        placeholder="Title"
+        value={title}
+        onChangeText={setTitle}
       />
       <TextInput
-        value={gameDate}
-        onChangeText={setGameDate}
-        placeholder="Game Date (YYYY-MM-DD)"
         style={styles.input}
+        placeholder="Date (YYYY-MM-DD)"
+        value={date}
+        onChangeText={setDate}
       />
       <TextInput
-        value={gameDescription}
-        onChangeText={setGameDescription}
-        placeholder="Game Description"
-        multiline
-        numberOfLines={4}
         style={styles.input}
+        placeholder="Place"
+        value={place}
+        onChangeText={setPlace}
       />
-      
-      <Button title="Create Game" onPress={handleCreateGame} />
+
+      <Button title="Create" onPress={handleSubmitCreateGame} />
     </View>
-  );
+  )
 }
 
+export default CreateGameScreen
