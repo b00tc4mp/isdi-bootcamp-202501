@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 
 // TODO errors
 
-export const registerUser = (name, email, username, surname, password) =>{
+export const registerUser = (name, surname, email, username,  password) =>{
     // TODO validates, name, minLength, maxLength, email, username, password
 
     return bcrypt.hash(password, 10)

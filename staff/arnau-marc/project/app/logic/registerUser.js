@@ -1,15 +1,16 @@
-import { validate, errors } from 'com'
-const { SystemError } = errors
+//import { validate} from '../../com/validate.js'
+//import { errors } from '../../com/errors.js'
+//const { SystemError } = errors
 
-import { SystemError } from "../../com/errors"
 
 export const registerUser = (name, surname, email, username, password) => {
+   /*
     validate.name(name)
     validate.surname(surname)
     validate.email(email)
     validate.username(username)
     validate.password(password)
-
+*/
     return fetch('http://localhost:8080/users', { // tipar la URL
         method: 'POST', 
         headers: {
@@ -17,7 +18,7 @@ export const registerUser = (name, surname, email, username, password) => {
         },
         body: JSON.stringify({ name, surname, email, username, password })
     })
-        .catch(error => { throw new SystemError(error.message) })
+        .catch(error => { throw new Error(error.message) })
 
         .then(response => {
             console.log(response.status)
@@ -26,7 +27,7 @@ export const registerUser = (name, surname, email, username, password) => {
                 return
 
             return response.json()
-                .catch(error => { throw new SystemError(error.message) })
+                .catch(error => { throw new Error(error.message) })
                 .then(body => {
                     const { error, message } = body
                     // const error = body.error
