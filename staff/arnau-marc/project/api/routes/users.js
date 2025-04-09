@@ -27,3 +27,11 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req,res) => {
             res.json({ token })
         })
 }))
+
+// Endpoint for getUsername
+users.get('/self/username', authHandler, withErrorHandling((req,res) => {
+    const { userId } = req
+
+    return logic.getUsername(userId)
+        .then(username => res.json({ username }))
+}))
