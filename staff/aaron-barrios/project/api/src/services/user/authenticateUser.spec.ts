@@ -1,17 +1,17 @@
 import 'dotenv/config'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
-import { errors } from 'staff/aaron-barrios/project/com/index.js'
+import { errors } from 'com'
 
 import { data, User } from '../../data/index.js'
 import authenticateUser from './authenticateUser.js'
 
 const { NotFoundError, CredentialsError } = errors
 
-const { MONGO_URL, MONGO_DB_NAME } = process.env
+const { MONGO_URI, MONGO_DB_NAME } = process.env
 
 describe('authenticateUser', () => {
-    before(() => data.connect(MONGO_URL!, MONGO_DB_NAME!))
+    before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => User.deleteMany({}))
 

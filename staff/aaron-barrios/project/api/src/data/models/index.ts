@@ -4,12 +4,10 @@ import { WorkoutProgress } from './workoutProgress.js'
 import { RoutineWorkout } from './routineWorkout.js'
 import { Routine } from './routine.js'
 
-const models = {
+export {
     User,
     Workout,
     WorkoutProgress,
     RoutineWorkout,
     Routine
 }
-
-export default models

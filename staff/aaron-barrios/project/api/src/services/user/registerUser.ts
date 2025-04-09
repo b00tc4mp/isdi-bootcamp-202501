@@ -1,6 +1,7 @@
-import { IUser, User } from '../../data/models/models.js'
+import { IUser } from '../../data/types.js'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
+import { User } from '../../data/models/index.js'
 
 const { SystemError, DuplicityError } = errors
 
@@ -10,7 +11,7 @@ const registerUser = (
     alias: string,
     email: string,
     password: string
-) => {
+): Promise<void> => {
     validate.name(name)
     validate.name(lastName)
     validate.alias(alias)

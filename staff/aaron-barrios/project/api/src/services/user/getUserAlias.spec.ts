@@ -10,10 +10,10 @@ import getUserAlias from './getUserAlias.js'
 const { NotFoundError } = errors
 const { ObjectId } = Types
 
-const { MONGO_URL, MONGO_DB_NAME } = process.env
+const { MONGO_URI, MONGO_DB_NAME } = process.env
 
 describe('getUserAlias', () => {
-    before(() => data.connect(MONGO_URL!, MONGO_DB_NAME!))
+    before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => User.deleteMany({}))
 

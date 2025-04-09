@@ -3,14 +3,14 @@ import { data, User } from '../../data/index.js'
 import registerUser from './registerUser.js'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
-import { errors } from 'staff/aaron-barrios/project/com/index.js'
+import { errors } from 'com'
 
 const { DuplicityError } = errors
 
-const { MONGO_URL, MONGO_DB_NAME } = process.env
+const { MONGO_URI, MONGO_DB_NAME } = process.env
 
 describe('registerUser', () => {
-    before(() => data.connect(MONGO_URL!, MONGO_DB_NAME!))
+    before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => User.deleteMany({}))
 
