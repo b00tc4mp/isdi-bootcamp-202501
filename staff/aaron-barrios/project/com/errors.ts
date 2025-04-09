@@ -1,8 +1,8 @@
-class NotFountError extends Error {
+class NotFoundError extends Error {
     constructor(message: string) {
         super(message)
 
-        this.name = "NotFountError"
+        this.name = "NotFoundError"
     }
 }
 
@@ -61,7 +61,7 @@ const errors = {
     SystemError,
     OwnershipError,
     CredentialsError,
-    NotFountError
+    NotFoundError
 }
 
 export default errors

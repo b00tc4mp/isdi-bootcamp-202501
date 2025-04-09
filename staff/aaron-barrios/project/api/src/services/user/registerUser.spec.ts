@@ -1,9 +1,9 @@
 import 'dotenv/config'
-import { data, User } from '../data/index.js'
+import { data, User } from '../../data/index.js'
 import registerUser from './registerUser.js'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
-import { errors } from 'com'
+import { errors } from 'staff/aaron-barrios/project/com/index.js'
 
 const { DuplicityError } = errors
 

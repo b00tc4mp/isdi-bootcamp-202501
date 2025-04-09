@@ -1,12 +1,12 @@
 import 'dotenv/config'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
-import { errors } from 'com'
+import { errors } from 'staff/aaron-barrios/project/com/index.js'
 
-import { data, User } from '../data/index.js'
+import { data, User } from '../../data/index.js'
 import authenticateUser from './authenticateUser.js'
 
-const { NotFountError, CredentialsError } = errors
+const { NotFoundError, CredentialsError } = errors
 
 const { MONGO_URL, MONGO_DB_NAME } = process.env
 
@@ -41,7 +41,7 @@ describe('authenticateUser', () => {
         return authenticateUser('masha', 'mamama')
             .catch(error => catchedError = error)
             .finally(() => {
-                expect(catchedError).to.be.instanceOf(NotFountError)
+                expect(catchedError).to.be.instanceOf(NotFoundError)
                 expect(catchedError.message).to.equal('User not found!')
             })
     })

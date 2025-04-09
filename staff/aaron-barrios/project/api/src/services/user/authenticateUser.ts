@@ -1,8 +1,8 @@
-import { User } from '../data/models.js'
+import { User } from '../../data/models.js'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 
-const { SystemError, CredentialsError, NotFountError } = errors
+const { SystemError, CredentialsError, NotFoundError } = errors
 
 const authenticateUser = (
     alias: string,
@@ -14,7 +14,7 @@ const authenticateUser = (
     return User.findOne({ alias }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
-            if (!user) throw new NotFountError('User not found!')
+            if (!user) throw new NotFoundError('User not found!')
 
             return bcrypt.compare(password, user.password)
                 .catch(error => { throw new SystemError(error.message) })

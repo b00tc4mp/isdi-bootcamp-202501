@@ -4,10 +4,10 @@ import { errors } from 'com'
 import bcrypt from 'bcryptjs'
 import { Types } from 'mongoose'
 
-import { data, User } from '../data/index.js'
+import { data, User } from '../../data/index.js'
 import getUserAlias from './getUserAlias.js'
 
-const { NotFountError } = errors
+const { NotFoundError } = errors
 const { ObjectId } = Types
 
 const { MONGO_URL, MONGO_DB_NAME } = process.env
@@ -42,7 +42,7 @@ describe('getUserAlias', () => {
         return getUserAlias(new ObjectId().toString())
             .catch(error => catchedError = error)
             .finally(() => {
-                expect(catchedError).to.be.instanceOf(NotFountError)
+                expect(catchedError).to.be.instanceOf(NotFoundError)
                 expect(catchedError.message).to.equal('User not found!')
             })
     })
