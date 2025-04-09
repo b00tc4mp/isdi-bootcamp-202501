@@ -1,0 +1,13 @@
+article {
+    h3, p, .post-footer {
+        padding: var(--padding-y) var(--padding-x);
+    }
+    img {
+        width: 100%;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+    }
+}

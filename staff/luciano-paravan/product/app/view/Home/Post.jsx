@@ -1,0 +1,125 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import { logic } from '../../logic/index.js'
+import { useContext } from '../../context.js'
+
+export function Post({ post, onPostLikeToggled, onPostDeleted, onSavePost, onPostTextEdited }) {
+    const { alert, confirm } = useContext()
+
+    const [view, setView] = useState('')
+
+    const navigate = useNavigate()
+
+    const handleToggleLikeClick = () => {
+        try {
+            logic.toggleLikePost(post.id)
+                .then(()=>onPostLikeToggled())
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+            
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+    
+    /*const handleSaveClick = () => {
+        try {
+            logic.savePost(post.id)
+
+            onSavePost()
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }*/
+
+    const handleDeleteClick = () => {
+        confirm('Delete post?')
+            .then(accepted => {
+                if (accepted)
+                    try {
+                        logic.deletePost(post.id)
+                            .then(() => onPostDeleted())
+                            .catch(error => {
+                                console.error(error)
+        
+                                alert(error.message)
+                            })
+                    } catch (error) {
+                        console.error(error)
+            
+                        alert(error.message)
+                    }
+            })
+            
+    }
+
+    const handleEditTextClick = () => setView('edit-text')
+
+    const handleEditTextCancelClick = () => setView('')
+
+    const handleEditTextSubmit = event => {
+        event.preventDefault()
+        
+        try {
+            const { target: form } = event
+
+            const { text: { value: text } } = form
+
+            logic.updatePostText(post.id, text)
+                .then(()=>{
+                    onPostTextEdited()
+                    setView('')
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+        
+            alert(error.message)
+        }
+            
+    }
+
+    const handleUsernameClick = () => navigate(`/${post.author.username}`, { state: { userId: post.author.id} })
+
+    console.debug('Post -> render')
+
+    return <article className="post">
+    <h3 className="px-[var(--padding-x)] cursor-pointer" onClick={handleUsernameClick}>{post.author.username}</h3>
+
+    <img className="w-full" src={post.image} />
+
+    {view === '' && <p className="px-[var(--padding-x)]">{post.text}</p>}
+
+    {view === 'edit-text' && <form onSubmit={handleEditTextSubmit}>
+        <label htmlFor="text">Text</label>
+        <input type="text" id="text" defaultValue={post.text}/>
+        <button onClick={handleEditTextCancelClick}>Cancel</button>
+        <button type="submit">Save</button>
+        </form>}
+
+    
+    <div cclassName="px-[var(--padding-x)] flex justify-between">
+        <time>{post.createdAt.toISOString()}</time>
+        
+        <button onClick={handleToggleLikeClick}>{`${post.liked? '❤️' : '🤍'}(${post.likesCount})`}</button>
+        
+        {post.own && <button onClick={handleDeleteClick}>🗑️</button>}
+
+        {post.own && <button onClick={handleEditTextClick}>📝</button>}
+
+        {/*<button onClick={handleSaveClick}>Save Post 🏷️</button>*/}
+    </div>
+
+</article>
+}

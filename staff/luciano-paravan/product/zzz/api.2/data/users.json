@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Peter Pannnnnnnn",
+        "email": "peter@pan.com",
+        "username": "peterpan",
+        "password": "123123123",
+        "createdAt": "2025-03-07T11:31:12.786Z",
+        "modifiedAt": null,
+        "id": "m7yp34lurs6"
+    },
+    {
+        "name": "Wendy Darling",
+        "email": "wendy@darling.com",
+        "username": "wendydarling",
+        "password": "123123123",
+        "createdAt": "2025-03-07T11:49:28.393Z",
+        "modifiedAt": null,
+        "id": "m7ypqlzdwy"
+    },
+    {
+        "name": "Campa Nilla",
+        "email": "campa@nilla.com",
+        "username": "campanilla",
+        "password": "123123123",
+        "createdAt": "2025-03-12T20:17:21.405Z",
+        "modifiedAt": null,
+        "id": "m86d30fxc1t"
+    },
+    {
+        "name": "Campa Nilla",
+        "email": "campa@nilla.com",
+        "username": "campanilla",
+        "password": "123123123",
+        "createdAt": "2025-03-12T20:17:43.689Z",
+        "modifiedAt": null,
+        "id": "m86d3hmxlqh"
+    },
+    {
+        "name": "Pepito Griilo",
+        "email": "pepito@grillo.com",
+        "username": "pepitogrillo",
+        "password": "123123123",
+        "createdAt": "2025-03-13T09:43:35.333Z",
+        "modifiedAt": null,
+        "id": "m875vu05c6j"
+    },
+    {
+        "name": "Diego Armando",
+        "email": "diego@armando.com",
+        "username": "eldiego",
+        "password": "123123123",
+        "createdAt": "2025-03-15T01:20:37.732Z",
+        "modifiedAt": null,
+        "id": "m89isq5gxm9"
+    },
+    {
+        "name": "claudia",
+        "email": "claudia@gmail.com",
+        "username": "laclaudia",
+        "password": "123123123",
+        "createdAt": "2025-03-17T23:14:21.830Z",
+        "modifiedAt": null,
+        "id": "m8dolwjqml"
+    }
+]
