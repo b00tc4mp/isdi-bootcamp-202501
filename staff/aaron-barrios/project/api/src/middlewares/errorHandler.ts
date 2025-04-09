@@ -1,25 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
-// import loggers from '../logs/index.js'
 
 import { StatusCode } from './types.js'
 import { errors } from 'com'
-// import loggers from '../logs/index.js' // -> FIX
-import {ZodError} from 'zod'
+// import loggers from '../logs/index.js'
+import { ZodError } from 'zod'
 import jwt from 'jsonwebtoken'
 
 const { JsonWebTokenError, TokenExpiredError } = jwt
-
-const isZodError = (error: Error): error is ZodError =>
-    error instanceof ZodError
-
-const parsedError = (error: Error): unknown => {
-    if(isZodError(error)) {
-        return {
-            name: ValidationError.name,
-            message: error.errors.map((error) => error.message).join(', ')
-        }
-    }
-}
 
 const {
     CredentialsError,
@@ -43,14 +30,14 @@ const errorHandler =
 
         let status: StatusCode = 500
         let errorName: string = SystemError.name
-        // let { message } = Error //??? fix
+        let { message } = error
 
         switch (true) {
             case error instanceof ValidationError:
                 status = 400
                 errorName = error.constructor.name
                 break
-            case error instanceof CredentialsError || AuthorizationError:
+            case error instanceof CredentialsError || error instanceof AuthorizationError:
                 status = 401
                 errorName = error.constructor.name
                 break
@@ -68,24 +55,22 @@ const errorHandler =
                 break
             case error instanceof TokenExpiredError:
                 status = 401
-                errorName = AuthorizationError //.name??
-                // message = 'expired JWT'
+                errorName = AuthorizationError.name
+                message = 'expired JWT'
                 break
             case error instanceof JsonWebTokenError:
                 status = 401
-                errorName = AuthorizationError //.name??
-                // message = 'invalid JWT signature'
+                errorName = AuthorizationError.name
+                message = 'invalid JWT signature'
+                break
+            case error instanceof ZodError:
+                status = 400
+                errorName = ValidationError.name
+                message = error.errors.map((error) => error.message).join(', ')
                 break
         }
 
-        res.status(status).json({
-            error: status === 500
-                ? SystemError.name
-                : isZodError(error)
-                    ? parsedError(error) // -> .name FIX
-                    : error.constructor.name,
-            message: isZodError(error) ? parsedError(error) : error.message //.message -> FIX
-        })
+        res.status(status).json({ error: errorName, message })
     }
 
 export default errorHandler

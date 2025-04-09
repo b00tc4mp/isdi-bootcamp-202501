@@ -1,6 +1,6 @@
-import {constant} from 'com'
-import {model, Schema, Types} from "mongoose"
-import {IUser} from "../interfaces/IUser.js"
+import { constant } from 'com'
+import { model, Schema, Types } from "mongoose"
+import { IUser } from "../types.js"
 
 const { ObjectId } = Types
 

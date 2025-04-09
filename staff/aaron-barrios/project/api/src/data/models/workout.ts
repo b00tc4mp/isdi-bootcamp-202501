@@ -1,5 +1,5 @@
-import {model, Schema, Types} from "mongoose"
-import {IWorkout} from "../interfaces/IWorkout.js"
+import { model, Schema, Types } from "mongoose"
+import { IWorkout } from "../types.js"
 
 const { ObjectId } = Types
 
