@@ -29,7 +29,7 @@ const user = new Schema<IUser>({
     lastName: {
         type: String,
         required: true,
-        minlength: 1,
+        minlength: 3,
         maxlength: 20
     },
     email: {

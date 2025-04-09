@@ -1,9 +1,25 @@
-import { errors } from 'com'
 import { Request, Response, NextFunction } from 'express'
 // import loggers from '../logs/index.js'
 
-import jwt from 'jsonwebtoken'
 import { StatusCode } from './types.js'
+import { errors } from 'com'
+// import loggers from '../logs/index.js' // -> FIX
+import {ZodError} from 'zod'
+import jwt from 'jsonwebtoken'
+
+const { JsonWebTokenError, TokenExpiredError } = jwt
+
+const isZodError = (error: Error): error is ZodError =>
+    error instanceof ZodError
+
+const parsedError = (error: Error): unknown => {
+    if(isZodError(error)) {
+        return {
+            name: ValidationError.name,
+            message: error.errors.map((error) => error.message).join(', ')
+        }
+    }
+}
 
 const {
     CredentialsError,
@@ -12,12 +28,11 @@ const {
     DuplicityError,
     SystemError,
     ValidationError,
-    NotFountError
+    NotFoundError
 } = errors
 
-const { JsonWebTokenError, TokenExpiredError } = jwt
 
-export const errorHandler =
+const errorHandler =
     (
         error: Error,
         _req: Request,
@@ -43,7 +58,7 @@ export const errorHandler =
                 status = 403
                 errorName = error.constructor.name
                 break
-            case error instanceof NotFountError:
+            case error instanceof NotFoundError:
                 status = 404
                 errorName = error.constructor.name
                 break
@@ -64,7 +79,13 @@ export const errorHandler =
         }
 
         res.status(status).json({
-            error: status === 500 ? SystemError.name : error.constructor.name,
-            message: error.message
+            error: status === 500
+                ? SystemError.name
+                : isZodError(error)
+                    ? parsedError(error) // -> .name FIX
+                    : error.constructor.name,
+            message: isZodError(error) ? parsedError(error) : error.message //.message -> FIX
         })
     }
+
+export default errorHandler
