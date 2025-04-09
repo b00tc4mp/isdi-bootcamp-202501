@@ -10,9 +10,9 @@ export const users = Router()
 
 // Endpoint for register user
 users.post('/', jsonBodyParser, withErrorHandling((req, res) => {
-    const { name, surname, username , email, password } = req.body 
+    const { name, surname, email,  username ,  password } = req.body 
 
-    return logic.registerUser(name, surname, username, email, password )
+    return logic.registerUser(name, surname, email, username,  password )
         .then(() => res.status(201).send())
 }))
 
