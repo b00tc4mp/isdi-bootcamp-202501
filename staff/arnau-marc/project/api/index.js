@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 
-import { users } from './routes/index.js' // TODO GAME, SEASON
+import { games, users } from './routes/index.js' // TODO GAME, SEASON
 import { errorHandler } from './middlewares/index.js'
 
 import { data } from './data/index.js'
@@ -19,7 +19,7 @@ data.connect(MONGO_URL, MONGO_DB)
         api.get('/', (req, res) => res.send('Hello, API!'))
 
         api.use('/users', users)
-        // api.use('/game', game)
+        api.use('/games', games)
         // api.use('/season', season)
 
 
