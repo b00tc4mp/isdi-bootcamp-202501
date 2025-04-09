@@ -5,13 +5,13 @@ const { ObjectId } = Types
 
 export interface IUser {
     id: string
-    role: string
+    role: 'moderator' | 'regular' | 'anonym',
     name: string
     lastName: string
     email: string
     alias: string
     password: string
-    level: string
+    level?: string
     interests?: string[]
     createdAt: Date,
     modifiedAt: Date,
@@ -44,7 +44,8 @@ const user = new Schema<IUser>({
         required: true,
         match: constant.NAME_REGEX,
         minlength: 1,
-        maxlength: 16
+        maxlength: 16,
+        unique: true
     },
     password: {
         type: String,

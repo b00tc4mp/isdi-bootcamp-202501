@@ -9,8 +9,7 @@ const registerUser = (
     lastName: string,
     alias: string,
     email: string,
-    password: string,
-    level: string
+    password: string
 ) => {
     validate.name(name)
     validate.name(lastName)
@@ -26,13 +25,12 @@ const registerUser = (
                 lastName,
                 email,
                 alias,
-                password: hash,
-                level
+                password: hash
             }
 
             return User.create(newUser)
                 .catch(error => {
-                    if (error.code === 11000) throw new DuplicityError('user already exists')
+                    if (error.code === 11000) throw new DuplicityError('User already exists!')
 
                     throw new SystemError(error.message)
                 })
