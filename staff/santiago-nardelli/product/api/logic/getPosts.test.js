@@ -1,19 +1,22 @@
+import 'dotenv/config.js';
 import { getPosts } from "./getPosts.js";
 import { data } from "../data/index.js";
 
 
 console.info('TEST getPosts')
-data.connect("mongodb://localhost:27017", "test")
+const { URL_MONGO, DB_NAME } = process.env;
+
+data.connect(URL_MONGO, DB_NAME)
 
 
 .then(() => {
   try {
 
     let result2 = null
-    return getPosts("67e06791a55dec8bc9ffd616")
+    return getPosts('67eced98d0ea40b4a36604c7')
     .then((result)=> result2 = result)
     .finally(() => {
-      console.assert(result2 instanceof Array, ' result2 is a array');
+      console.assert(result2 instanceof Array, ' result2 is an array');
     });
   } catch (error) {
     console.error(error);

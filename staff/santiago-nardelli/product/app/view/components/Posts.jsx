@@ -3,15 +3,14 @@ import { Post } from "./Post.jsx";
 
 import { logic } from "../../logic/logic.js";
 
-export function Posts() {
+export function Posts({userSearchId}) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     console.debug("Posts -> useEffect");
 
     try {
-      logic
-        .getPosts()
+     ( userSearchId ? logic.getUserPosts(userSearchId) : logic.getPosts())
         .then((posts) => setPosts(posts))
         .catch((error) => {
           console.error(error);
@@ -26,8 +25,7 @@ export function Posts() {
 
   const handleToggleLikeClick = () => {
     try {
-      logic
-        .getPosts()
+      ( userSearchId ? logic.getUserPosts(userSearchId) : logic.getPosts())
         .then((posts) => setPosts(posts))
         .catch((error) => {
           console.error(error);

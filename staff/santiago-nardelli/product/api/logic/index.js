@@ -5,16 +5,18 @@ import { createPost } from "./createPost.js";
 import { deletePost } from "./deletePost.js";
 import { toggleLikePost } from "./toggleLikePost.js";
 import { modifyPost } from "./modifyPost.js";
-import { getUserName } from "./getUserName.js";
+import { getUserUsername } from "./getUserUsername.js";
+import { getUserPosts } from "./getUserPosts.js";
 
 export const logic = {
   authenticateUser,
   registerUser,
-  getUserName,
+  getUserUsername,
 
   getPosts,
   createPost,
   deletePost,
   toggleLikePost,
   modifyPost,
+  getUserPosts,
 };

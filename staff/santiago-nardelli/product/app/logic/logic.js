@@ -2,13 +2,15 @@ import { registerUser } from "./functions/registerUser";
 import { loginUser } from "./functions/loginUser";
 import { logoutUser } from "./functions/logoutUser";
 import { isUserLoggedIn } from "./functions/isUserLoggedIn";
-import { getUserName } from "./functions/getUserName";
+import { getUserUsername } from "./functions/getUserUsername";
+import { getUserId } from "./functions/getUserId";
 
 import { createPost } from "./functions/createPost";
 import { getPosts } from "./functions/getPosts";
 import { deletePost } from "./functions/deletePost";
 import { modifyPost } from "./functions/modifyPost";
 import { toggleLikePost } from "./functions/toggleLikePost";
+import { getUserPosts } from "./functions/getUserPosts";
 
 
 
@@ -17,11 +19,13 @@ export const logic = {
   loginUser,
   logoutUser,
   isUserLoggedIn,
-  getUserName,
+  getUserUsername,
+  getUserId,
 
   createPost,
   getPosts,
   deletePost,
   modifyPost,
-  toggleLikePost
+  toggleLikePost,
+  getUserPosts,
 };

@@ -6,7 +6,7 @@ const { SystemError } = errors;
 export const getUserName = () => {
   const { token } = data;
 
-  return fetch("http://localhost:3000/users/self/name", {
+  return fetch("http://localhost:3000/user/self/name", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

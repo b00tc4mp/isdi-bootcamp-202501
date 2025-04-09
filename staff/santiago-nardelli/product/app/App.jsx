@@ -1,61 +1,126 @@
+import { useState, useEffect } from "react";
+import { Route, Routes, useNavigate, Navigate } from "react-router";
+import { Landing } from "./view/Landing.jsx";
+import { Register } from "./view/Register.jsx";
+import { Login } from "./view/Login.jsx";
+import { Home } from "./view/Home.jsx";
 
-/**
- * Este componente va a manejar mis vistas y navegacion en consecuente con los eventos de los botones de Register, Login y Logout
- */
-import { useState, useEffect } from 'react'
-import  {Landing}  from './view/Landing.jsx'
-import  {Register}  from './view/Register.jsx'
-import { Login } from './view/Login.jsx'
-import  {Home}  from './view/Home.jsx'
+import { logic } from "./logic/logic.js";
+function App() {
+  const [loggedIn, setLoggedIn] = useState(null);
+  const [showLanding, setShowLanding] = useState(true);
 
-import {logic} from './logic/logic.js'
- function App() {
-  
-    // Manejo el estado de las vistas con useState y seteo la vista inicial en 'landing' 
-    const [view, setView] = useState('landing')
+  const navigate = useNavigate();
 
+  // Centralizar las rutas
+  const ROUTES = {
+    LANDING: "/landing",
+    REGISTER: "/register",
+    LOGIN: "/login",
+    HOME: "/",
+  };
 
-    useEffect(() => {
-        try {
-            const loggedIn = logic.isUserLoggedIn()
+  useEffect(() => {
+    try {
+      const loggedIn = logic.isUserLoggedIn();
 
-            loggedIn && setView('home')
-        } catch (error) {
-            console.error(error)
+      setLoggedIn(loggedIn);
 
-            alert(error.messsage)
-        }
-    }, [])
+    } catch (error) {
+      console.error(error);
 
-    // Creo las funciones que manejan los eventos de los botones de Register, Login y Logout
-    // Cambiando la vista a 'register', 'login' y 'home' respectivamente
-    const handleRegisterClick = () => setView('register')
+      alert(error.messsage);
+    }
+  }, []);
 
-    const handleLoginClick = () => setView('login')
+  const handleNavigateToRegister = () => {
+    setShowLanding(false);
+    navigate(ROUTES.REGISTER);
+  };
 
-    const handleRegisterSubmit = () => setView('login')
+  const handleNavigateToLogin = () => {
+    setShowLanding(false);
+    navigate(ROUTES.LOGIN);
+  };
 
-    const handleLoginSubmit = () => setView('home')
+  const handleRegisterSubmit = () => {
+    setShowLanding(false);
+    navigate(ROUTES.LOGIN);
+  };
 
-    const handleLogoutClick = () => setView('login')
+  const handleUserLoggedIn = () => {
+    setShowLanding(false);
+    setLoggedIn(true);
+    navigate(ROUTES.HOME);
+  };
 
-    console.debug('App -> render')
+  const handleUserLoggedOut = () => {
+    setShowLanding(false);
+    setLoggedIn(false);
+    navigate(ROUTES.LOGIN);
+  };
 
+  console.debug("App -> render");
 
+  return (
+    <>
+      {loggedIn !== null && 
+        <Routes>
+          <Route
+            path={ROUTES.LANDING}
+            element={
+              loggedIn ? (
+                <Navigate to="/" />
+              ) : (
+                <Landing
+                  onRegisterClick={handleNavigateToRegister}
+                  onLoginClick={handleNavigateToLogin}
+                />
+              )
+            }
+          />
 
+          <Route
+            path={ROUTES.REGISTER}
+            element={
+              loggedIn ? (
+                <Navigate to="/" />
+              ) : (
+                <Register
+                  onLoginClick={handleNavigateToLogin}
+                  onRegisterSubmit={handleRegisterSubmit}
+                />
+              )
+            }
+          />
 
-    // Renderizo las vistas de Landing, Register, Login y Home segun el estado de la vista
-    //las manejo con un condicional relacionado al estado de la vista
-    return <>
+          <Route
+            path={ROUTES.LOGIN}
+            element={
+              loggedIn ? (
+                <Navigate to={ROUTES.HOME} />
+              ) : (
+                <Login
+                  onRegisterClick={handleNavigateToRegister}
+                  onLoginSubmit={handleUserLoggedIn}
+                />
+              )
+            }
+          />
 
-       
-        {view === 'landing' && <Landing onRegisterClick={handleRegisterClick} onLoginClick={handleLoginClick} />}
-
-        {view === 'register' && <Register onLoginClick={handleLoginClick} onRegisterSubmit={handleRegisterSubmit} />}
-
-        {view === 'login' && <Login onRegisterClick={handleRegisterClick} onLoginSubmit={handleLoginSubmit} />}
-
-        {view === 'home' && <Home onLogoutClick={handleLogoutClick} />}
+          <Route
+            path="/*"
+            element={
+              loggedIn ? (
+                <Home onLogoutClick={handleUserLoggedOut} />
+              ) : (
+                <Navigate to={`${showLanding ? ROUTES.LANDING : ROUTES.LOGIN}`} />
+              )
+            }
+          />
+        </Routes>
+      }
     </>
+  );
 }
-export default App
+export default App;

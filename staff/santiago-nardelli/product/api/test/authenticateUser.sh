@@ -2,8 +2,8 @@
 
 
 # Store the URL and data in variables for better readability and maintainability
-URL="http://localhost:3000/users/auth"
-DATA='{"email":"rodri@depaul.com","password":"123456"}'
+URL="http://localhost:3000/user/auth"
+DATA='{"email":"diego@maradona.com","password":"123123123"}'
 
 # Use the variables in the curl command
 curl -X POST "$URL" -H 'Content-Type: application/json' -d "$DATA" -v

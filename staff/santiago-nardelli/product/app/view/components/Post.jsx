@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {useNavigate} from "react-router"
 import { logic } from "../../logic/logic.js";
 
 export function Post({
@@ -9,6 +10,8 @@ export function Post({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(post.title);
+
+  const navigate = useNavigate()
 
   const handleToggleLikeClick = () => {
     try {
@@ -83,11 +86,14 @@ export function Post({
     }
   };
 
+const handleUsernameClick = () => {navigate(`/${post.author.name}`, {state : {userId: post.author.id}})}//==> me redirige a la pagina de perfil del usuario que ha creado el post
+  //==> le paso el id del usuario logueado desde el login 
+
   console.debug("Post -> render");
 
   return (
     <article className="post-card">
-      <h3 className="post-author">{post.author.name}</h3>
+      <h3 onClick={handleUsernameClick} className="post-author">{post.author.name}</h3>
       {isEditing ? (
         <>
           <img src={post.image} alt={post.title} className="post-image" />
