@@ -24,6 +24,15 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
       .then(games => res.json({ games }))
   }))
 
+  // Funcion para participar y desapuntarse
+  games.patch('/:gameId/participation', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { gameId } = req.params
+
+    return logic.toggleParticipation(userId, gameId)
+      .then(() => res.status(204).send())
+  }))
+
   /*
   // Unirse a una partida
   games.post('/:gameId/join', authHandler, withErrorHandling((req, res) => {

@@ -6,6 +6,7 @@ import { isUserLoggedIn } from "./isUserLoggedIn.js"
 
 import { createGame } from "./games/createGame.js"
 import { getGames } from "./games/getGames.js"
+import { toggleParticipation } from "./games/toggleParticipation.js"
 
 export const logic = {
     loginUser,
@@ -15,5 +16,6 @@ export const logic = {
     isUserLoggedIn,
 
     createGame,
-    getGames
+    getGames,
+    toggleParticipation
 }

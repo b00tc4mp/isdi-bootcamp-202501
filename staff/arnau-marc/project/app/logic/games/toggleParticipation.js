@@ -3,7 +3,7 @@ import { data } from '../../data/index.js'
 
 //const { SystemError } = errors
 
-export const toggleParticipation = gameId => {
+export const toggleParticipation = ( gameId ) => {
   //  validate.id(gameId, 'gameId')
 
     return data.token
