@@ -45,7 +45,7 @@ exports.validate = {
     password(password, explain = 'password') {
         this.text(password, explain);
         this.minLength(password, 5, explain);
-        this.maxLength(password, 16, explain);
+        this.maxLength(password, 30, explain);
     },
     url(url, explain = 'url') {
         this.string(url, explain);

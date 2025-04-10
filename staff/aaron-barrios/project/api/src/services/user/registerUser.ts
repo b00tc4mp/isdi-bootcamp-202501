@@ -8,14 +8,14 @@ const { SystemError, DuplicityError } = errors
 const registerUser = (
     name: string,
     lastName: string,
-    alias: string,
     email: string,
+    alias: string,
     password: string
 ): Promise<void> => {
     validate.name(name)
     validate.name(lastName)
-    validate.alias(alias)
     validate.email(email)
+    validate.alias(alias)
     validate.password(password)
 
     return bcrypt.hash(password, 10)

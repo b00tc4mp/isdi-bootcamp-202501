@@ -21,7 +21,7 @@ const createWorkout = (
             if (!user) throw new NotFoundError('User not found!')
 
             const newWorkout: Partial<IWorkout> = {
-                author,
+                // author,
                 name,
                 muscleGroup,
                 description

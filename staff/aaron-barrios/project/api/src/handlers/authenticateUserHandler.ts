@@ -1,6 +1,6 @@
 import { Response } from "express"
 import createFunctionalHandler from "../middlewares/createFunctionalHandler.js"
-import { CustomRequestBody } from "../types.js"
+import { CustomRequestBody } from "../data/types.js"
 import services from "../services/index.js"
 
 type AuthUserData = {

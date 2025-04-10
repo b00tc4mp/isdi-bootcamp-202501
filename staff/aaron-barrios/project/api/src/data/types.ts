@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose"
-
+import { Request } from "express"
 
 // --- TYPES DE LOS DATOS TRANSPORTE (DTO) => BASE DE DATOS
 export interface IUser {
@@ -69,4 +69,10 @@ export interface IRoutine {
     createdAt: Date
     modifiedAt: Date
     workouts: IRoutineWorkout[]
+}
+
+export type UserFromRequest = Omit<IUser, "id">
+
+export interface CustomRequestBody<T> extends Request {
+    body: T;
 }

@@ -22,7 +22,7 @@ export const registerUserSchema = object({
     password: z
         .string()
         .min(3, 'Password must be at least 6 characters')
-        .max(30, 'Password must be at last 30 characters')
+        .max(50, 'Password must be at last 50 characters')
 })
 
 export const authenticateUserSchema = object({
@@ -33,7 +33,7 @@ export const authenticateUserSchema = object({
     password: z
         .string()
         .min(3, 'Password must be at least 6 characters')
-        .max(30, 'Password must be at last 30 characters')
+        .max(50, 'Password must be at last 50 characters')
 })
 
 export type RegisterUserInput = z.infer<typeof registerUserSchema>

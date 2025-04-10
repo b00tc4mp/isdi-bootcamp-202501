@@ -9,13 +9,14 @@ const { DuplicityError } = errors
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
-describe('registerUser', () => {
+describe.only('registerUser', () => {
     before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => User.deleteMany({}))
 
     //--- HAPPY PATH ---
     it('succeds on new user', () => {
+        debugger
         let result2: void
 
         return registerUser('Manu', 'Barzi', 'manu@barzi.com', 'manu', 'mamama')

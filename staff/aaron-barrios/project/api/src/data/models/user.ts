@@ -36,7 +36,7 @@ const user = new Schema<IUser>({
         type: String,
         required: true,
         minlength: 3,
-        maxlength: 30
+        maxlength: 80
     },
     createdAt: {
         type: Date,
