@@ -87,16 +87,23 @@ const Home = ({ navigation }) => {
       </View>
         {/* Lista de partidas */}
         <FlatList
-      data={games}
-      keyExtractor={(item) => item.id}
-      ListEmptyComponent={<Text>No games yet</Text>}
-      renderItem={({ item }) => (
-        <View style={{ padding: 10 }}>
-        <Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
-        <Text>{item.date}</Text>
-        </View>
-       )}
+  data={games}
+  keyExtractor={(item) => item.id}
+  renderItem={({ item }) => (
+    <View style={{ marginVertical: 10 }}>
+      <Text>{item.title} - {item.date}</Text>
+      <Button
+        title="Toggle Participation"
+        onPress={() => {
+          logic.toggleParticipation(item._id)
+            .then(() => fetchGames()) // recarga la lista
+            .catch(error => Alert.alert('Error ❌', error.message));
+        }}
+      />
+    </View>
+  )}
 />
+
     </View>
     
 
