@@ -1,4 +1,4 @@
-import { Game, User, Season } from '../../data/models/Game.js'
+import { Game, User, Season } from '../../data/index.js'
 
 export const setGameWinner = (adminId, gameId, winnerId) => {
   return User.findById(adminId)
@@ -11,6 +11,7 @@ export const setGameWinner = (adminId, gameId, winnerId) => {
       if (!game) throw new Error('Game not found')
 
       if (!game.participants.includes(winnerId)) {
+        debugger
         throw new Error('Winner must be one of the participants')
       }
 

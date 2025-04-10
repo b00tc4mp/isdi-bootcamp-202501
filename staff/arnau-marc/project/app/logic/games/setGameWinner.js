@@ -1,7 +1,7 @@
 import { data } from '../../data'
 
 
-export const setWinner = (gameId, winnerId) => {
+export const setGameWinner = (gameId, winnerId) => {
   return data.token
     .then(token => {
       return fetch(`http://localhost:8080/games/${gameId}/winner`, {
@@ -13,6 +13,7 @@ export const setWinner = (gameId, winnerId) => {
         body: JSON.stringify({ winnerId }),
       })
     })
+    .catch(error => { throw new Error(error.message) })
     .then(response => {
       if (response.status === 204) return
       return response.json().then(body => { throw new Error(body.message) })

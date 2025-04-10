@@ -4,7 +4,8 @@ import { View, Text, Button, FlatList, Alert, ActivityIndicator} from 'react-nat
 import styles from './Home.styles.js'
 import { logic } from '../../logic/index.js'
 
-import { Modal } from '../../components/index.js'
+import { CustomModal } from '../../components/index.js'
+
 const Home = ({ navigation }) => {
   const [username, setUsername] = useState('')
   const [games, setGames] = useState([])
@@ -13,6 +14,7 @@ const Home = ({ navigation }) => {
   const [userRole, setUserRole] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedGameId, setSelectedGameId] = useState(null)
+  const [winnerInput, setWinnerInput] = useState('')
 
   // Usamos useEffect para cargar el username cuando el componente se monta
 
@@ -59,6 +61,12 @@ const Home = ({ navigation }) => {
         })
     }, [])
 
+    const fetchGames = () => {
+      logic.getGames()
+        .then(({ games }) => setGames(games))
+        .catch(error => Alert.alert('Error ❌', error.message))
+    }
+
   // Función para manejar el logout
   const handleLogoutClick = () => {
     try {
@@ -93,9 +101,29 @@ const Home = ({ navigation }) => {
   }
 
   const openWinnerModal = (gameId) => {
-    setSelectedGameId(gameId) // Guarda el ID de la partida que quieres editar
+    setSelectedGameId(gameId)
+    setWinnerInput('') // Guarda el ID de la partida que quieres editar
     setModalVisible(true)     // Hace visible el modal (lo muestra en pantalla)
   }
+
+  const handleConfirmWinner = () => {
+    if (!winnerInput.trim()) {
+      return Alert.alert('Error', 'Please enter a valid username')
+    }
+
+    logic.setGameWinner(selectedGameId, winnerInput)
+      .then(() => {
+        setModalVisible(false)
+        setWinnerInput('')
+        fetchGames()
+        Alert.alert('✅ Ganador asignado correctamente')
+      })
+      .catch(error => {
+        Alert.alert('Error ❌', error.message)
+        setModalVisible(false)
+      })
+  }
+  
 
   if (loading) {
     return (
@@ -135,26 +163,27 @@ const Home = ({ navigation }) => {
               />
               {userRole === 'admin' && item.status === 'scheduled' &&  (
               <Button
-                title="Set Winner"
-                onPress={() => {
-                  <Button
-                  title="Set Winner"
-                  onPress={() => openWinnerModal(item._id)}
-                  color="#d2691e"
-                />
-              }}
+              title="Set Winner"
+              onPress={() => openWinnerModal(item._id)}
+              color="#d2691e"
               />
-              )}
+              )
+              }
             </View>
           )
         }}
         />
-          <Modal
-             visible={modalVisible}
-             onClose={() => setModalVisible(false)}
-             gameId={selectedGameId}
-             onWinnerSet={fetchGames}
-          />
+        <CustomModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          onConfirm={handleConfirmWinner}
+          inputValue={winnerInput}
+          setInputValue={setWinnerInput}
+          title="Set Winner Username"
+          placeholder="Winner username"
+          confirmText="Confirm"
+          cancelText="Cancel"
+      />
     </View>
 
   )

@@ -1,5 +1,5 @@
-import { Modal } from './Modal.jsx'
+import { CustomModal } from './Modal.jsx'
 
-export {
-    Modal,
+export  {
+    CustomModal,
 }

@@ -9,6 +9,7 @@ import { getUserRole } from './users/getUserRole.js'
 import { createGame } from "./games/createGame.js"
 import { getGames } from "./games/getGames.js"
 import { toggleParticipation } from "./games/toggleParticipation.js"
+import { setGameWinner } from "./games/setGameWinner.js"
 
 import { requestAdminRole } from './profile/requestAdminRole.js'
 
@@ -23,6 +24,7 @@ export const logic = {
 
     createGame,
     getGames,
+    setGameWinner,
     toggleParticipation,
 
     requestAdminRole
