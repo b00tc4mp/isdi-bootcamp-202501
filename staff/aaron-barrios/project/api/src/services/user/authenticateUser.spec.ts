@@ -1,10 +1,10 @@
-import 'dotenv/config'
-import { expect } from 'chai'
-import bcrypt from 'bcryptjs'
-import { errors } from 'com'
+import "dotenv/config"
+import { expect } from "chai"
+import bcrypt from "bcryptjs"
+import { errors } from "com"
 
-import { data, User } from '../../data/index.js'
-import authenticateUser from './authenticateUser.js'
+import { data, User } from "../../data/"
+import authenticateUser from "./authenticateUser"
 
 const { NotFoundError, CredentialsError } = errors
 

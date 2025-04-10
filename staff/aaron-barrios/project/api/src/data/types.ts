@@ -1,7 +1,9 @@
 import { ObjectId } from "mongoose"
 
+
+// --- TYPES DE LOS DATOS TRANSPORTE (DTO) => BASE DE DATOS
 export interface IUser {
-    id: string
+    id: ObjectId
     role: 'moderator' | 'regular' | 'anonym',
     name: string
     lastName: string

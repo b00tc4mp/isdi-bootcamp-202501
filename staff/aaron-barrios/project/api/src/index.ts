@@ -25,7 +25,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
 
         api.disable('x-powered-by') //-> que era esto?
 
-        const PORT = process.env.PORT || 8080
+        const PORT = process.env.PORT || 7070
 
         api.use(morganMiddleware)
 
@@ -38,5 +38,5 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
 
         api.use(errorHandler)
 
-        api.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`))
+        api.listen(PORT, () => console.log(`Listening on port:${PORT}`))
     })

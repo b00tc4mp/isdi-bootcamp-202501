@@ -1,4 +1,3 @@
-// import { ObjectId } from 'mongoose'
 import { User, Workout } from '../../data/models/index.js'
 import { IWorkout } from '../../data/types.js'
 import { errors, validate } from 'com'
@@ -9,13 +8,11 @@ const createWorkout = (
     author: string,
     name: string,
     muscleGroup: string,
-    difficulty: string,
     description: string
 ) => {
     validate.id(author)
     validate.name(name)
     validate.text(muscleGroup)
-    validate.text(difficulty)
     validate.text(description)
 
     return User.findById(author).lean()
@@ -24,10 +21,9 @@ const createWorkout = (
             if (!user) throw new NotFoundError('User not found!')
 
             const newWorkout: Partial<IWorkout> = {
-                // author,
+                author,
                 name,
                 muscleGroup,
-                difficulty,
                 description
             }
 

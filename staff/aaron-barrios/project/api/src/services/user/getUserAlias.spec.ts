@@ -1,11 +1,11 @@
-import 'dotenv/config'
-import { expect } from 'chai'
-import { errors } from 'com'
-import bcrypt from 'bcryptjs'
-import { Types } from 'mongoose'
+import "dotenv/config"
+import { expect } from "chai"
+import { errors } from "com"
+import bcrypt from "bcryptjs"
+import { Types } from "mongoose"
 
-import { data, User } from '../../data/index.js'
-import getUserAlias from './getUserAlias.js'
+import { data, User } from "../../data"
+import getUserAlias from "./getUserAlias"
 
 const { NotFoundError } = errors
 const { ObjectId } = Types

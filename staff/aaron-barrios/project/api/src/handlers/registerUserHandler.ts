@@ -9,3 +9,9 @@
 // );
 
 // export default registerUserHandler
+
+const registerUserHandler = () => {
+
+}
+
+export default registerUserHandler
