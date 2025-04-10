@@ -19,7 +19,7 @@ export const userRouter = Router()
 
 // --- REGISTER USER METHOD ---
 userRouter.post(
-    '/users',
+    '/',
     jsonBodyParser,
     validationHandler(registerUserSchema),
     registerUserHandler

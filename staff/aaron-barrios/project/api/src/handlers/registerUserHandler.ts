@@ -1,10 +1,11 @@
-// import { Response } from 'express'
-// import { CustomRequestBody, UserFromRequest } from '../types.js'
-// import service from '../services/index.js'
-// import createFunctionalHandler from '../middlewares/createFunctionalHandler.js'
+// const registerUserHandler = createFunctionalHandler<UserFromRequest>(
+//     (req, res: Response) => {
+//         const { name, lastName, alias, email, password } = (req as CustomRequestBody<UserFromRequest>).body;
 
-const registerUserHandler = () => {
+//         return service.registerUser(name, lastName, alias, email, password).then(() => {
+//             res.status(201).send();
+//         });
+//     }
+// );
 
-}
-
-export default registerUserHandler
+// export default registerUserHandler

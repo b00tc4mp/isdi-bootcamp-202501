@@ -1,14 +1,12 @@
 import 'dotenv/config'
 import express, { Request, Response } from 'express'
-// import registerUserHandler from './handlers/registerUserHandler.js'
+
 import errorHandler from './middlewares/errorHandler.js'
 import loggers from './logs/index.js'
-// import validationHandler from './middlewares/validationHandler.js'
 
-// import {
-//     registerUserSchema
-// } from './data/schemas/zodSchemas.js'
 import { data } from './data/index.js'
+
+import { userRouter } from './routes/users.js'
 
 const { morganMiddleware } = loggers
 
@@ -27,11 +25,11 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
 
         api.disable('x-powered-by') //-> que era esto?
 
-        const PORT = process.env.PORT || 7500
+        const PORT = process.env.PORT || 8080
 
         api.use(morganMiddleware)
 
-        // const jsonBodyParser = json()
+        api.use("/users", userRouter);
 
         // api.get('/', (req, res) => res.send('Hello, API!'))
         api.get("/ping", (_req: Request, res: Response) => {

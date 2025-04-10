@@ -13,6 +13,7 @@
     "test-inspect": "mocha --inspect-brk dist/services/**/*.spec.js",
     "compile": "npx tsc --watch",
     "compile-test": "npx tsc && mocha dist/services/**/*.spec.js",
+    "dev": "npm run build && npm run start:dev",
     "clean": "rm -rf dist && find src -name '*.js' -delete"
   },
   "author": "",
@@ -38,6 +39,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
+    "morgan": "^1.10.0",
     "winston": "^3.17.0",
     "zod": "^3.24.2"
   }

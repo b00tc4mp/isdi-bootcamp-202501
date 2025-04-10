@@ -5,6 +5,5 @@ curl -X POST http://localhost:8080/users \
             "lastName":"Pereira",
             "email":"fran@kie.com",
             "alias":"frankie",
-            "password":"fafafa",
-            "level":"Veteran"
+            "password":"fafafa"
         }' -v
