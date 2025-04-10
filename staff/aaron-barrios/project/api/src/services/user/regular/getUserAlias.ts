@@ -1,4 +1,4 @@
-import { User } from '../../data/models/index.js'
+import { User } from '../../../data/models'
 import { errors, validate } from 'com'
 
 const { NotFoundError, SystemError } = errors

@@ -4,7 +4,7 @@ import { Request } from "express"
 // --- TYPES DE LOS DATOS TRANSPORTE (DTO) => BASE DE DATOS
 export interface IUser {
     id: ObjectId
-    role: 'moderator' | 'regular' | 'anonym',
+    role: 'moderator' | 'moderator' | 'anonym'
     name: string
     lastName: string
     email: string
@@ -19,7 +19,7 @@ export interface IUser {
 }
 
 export interface IWorkout {
-    id: string
+    id: ObjectId
     author: ObjectId
     name: string
     muscleGroup: string
@@ -29,7 +29,7 @@ export interface IWorkout {
     images: string[]
     likes: ObjectId[]
     saves: ObjectId[]
-    status: string
+    status: 'pending' | 'accepted' | 'declined'
     createdAt: Date
 }
 
@@ -41,7 +41,7 @@ export interface IWorkoutProgress {
 }
 
 export interface IRoutineWorkout {
-    id: string
+    id: ObjectId
     workout: ObjectId
     order?: number
     sets?: number
@@ -52,7 +52,7 @@ export interface IRoutineWorkout {
 }
 
 export interface IRoutine {
-    id: string
+    id: ObjectId
     author: ObjectId
     name: string
     goal: string
@@ -62,7 +62,7 @@ export interface IRoutine {
     description: string
     image: string
     duration: number
-    status: string
+    status: 'pending' | 'accepted' | 'declined'
     frequencySuggestion?: string
     likes: ObjectId[]
     saves: ObjectId[]

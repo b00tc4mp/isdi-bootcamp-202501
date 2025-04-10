@@ -1,5 +1,5 @@
 import "dotenv/config"
-import { data, User } from "../../data"
+import { data, User } from "../../../data"
 import registerUser from "./registerUser"
 import { expect } from "chai"
 import bcrypt from "bcryptjs"
@@ -9,7 +9,8 @@ const { DuplicityError } = errors
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
-describe.only('registerUser', () => {
+
+describe('registerUser', () => {
     before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => User.deleteMany({}))

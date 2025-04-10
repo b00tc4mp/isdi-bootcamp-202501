@@ -3,7 +3,7 @@ import { expect } from "chai"
 import bcrypt from "bcryptjs"
 import { errors } from "com"
 
-import { data, User } from "../../data/"
+import { data, User } from "../../../data"
 import authenticateUser from "./authenticateUser"
 
 const { NotFoundError, CredentialsError } = errors
@@ -35,7 +35,7 @@ describe('authenticateUser', () => {
     })
 
     // --- NOTFOUND ERROR PATH ---
-    it('succeds on authentication', () => {
+    it('fails on NOTFOUND USER ERROR PATH', () => {
         let catchedError: Error
 
         return authenticateUser('masha', 'mamama')
@@ -47,7 +47,7 @@ describe('authenticateUser', () => {
     })
 
     // --- CREDENTIALS ERROR PATH ---
-    it('succeds on authentication', () => {
+    it('fails on CREDENTIALS ERROR PATH', () => {
         let catchedError: Error
 
         return User.create({
@@ -57,11 +57,11 @@ describe('authenticateUser', () => {
             alias: 'euge',
             password: 'eueueu'
         })
-            .then(() => authenticateUser('eugeni', 'eueueu'))
+            .then(() => authenticateUser('euge', 'soyIdiota'))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(CredentialsError)
-                expect(catchedError.message).to.equal('Wrong credentials!')
+                expect(catchedError.message).to.equal('Wrong Credentials!')
             })
     })
 

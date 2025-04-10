@@ -1,13 +1,13 @@
 import {
     reviewWorkout
-} from './moderator/index.js'
+} from './user/moderator'
 
 
 import {
     registerUser,
     authenticateUser,
     getUserAlias
-} from './user/index.js'
+} from './user/regular'
 
 
 const services = {

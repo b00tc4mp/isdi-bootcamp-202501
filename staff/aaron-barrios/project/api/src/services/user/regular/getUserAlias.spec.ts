@@ -4,7 +4,7 @@ import { errors } from "com"
 import bcrypt from "bcryptjs"
 import { Types } from "mongoose"
 
-import { data, User } from "../../data"
+import { data, User } from "../../../data"
 import getUserAlias from "./getUserAlias"
 
 const { NotFoundError } = errors

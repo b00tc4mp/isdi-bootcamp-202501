@@ -1,7 +1,7 @@
-import { IUser } from '../../data/types.js'
+import { IUser } from '../../../data/types'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
-import { User } from '../../data/models/index.js'
+import { User } from '../../../data/models'
 
 const { SystemError, DuplicityError } = errors
 

@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import { User } from '../../data/models/index.js'
+import { User } from '../../../data/models'
 import { errors, validate } from 'com'
 
 const { SystemError, CredentialsError, NotFoundError } = errors
