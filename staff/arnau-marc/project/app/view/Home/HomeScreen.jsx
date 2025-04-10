@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Button, FlatList, Alert, ActivityIndicator} from 'react-native'
+
 import styles from './Home.styles.js'
 import { logic } from '../../logic/index.js'
 
+import { Modal } from '../../components/index.js'
 const Home = ({ navigation }) => {
   const [username, setUsername] = useState('')
   const [games, setGames] = useState([])
   const [userId, setUserId] = useState('')
   const [loading, setLoading] = useState(true)
+  const [userRole, setUserRole] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
+  const [selectedGameId, setSelectedGameId] = useState(null)
 
   // Usamos useEffect para cargar el username cuando el componente se monta
 
@@ -18,13 +23,34 @@ const Home = ({ navigation }) => {
       Promise.all([
         logic.getUsername(),
         logic.getUserId(),
+        logic.getUserRole(),
         logic.getGames(),
         setLoading(false)
       ])
-        .then(([username, userId, { games }]) => {
+        .then(([username, userId,role, { games }]) => {
           setUsername(username)
           setUserId(userId)
+          setUserRole(role)
           setGames(games)
+          navigation.setOptions({
+            headerTitle: () => (
+              <View style={styles.usernameText}>
+                 <Button title= {username} onPress={handleUserClick} />
+              </View>
+            ),
+            headerTitleAlign: 'center',
+            headerBackVisible: false,
+            headerLeft: () => (
+              <Text style={styles.homeText}>
+                HOME
+              </Text>
+            ),
+            headerRight: () => (
+              <View style={styles.headerRightContainer}>
+                <Button title="Logout" onPress={handleLogoutClick} />
+              </View>
+            ),
+          })
         })
         .catch(error => {
           console.error(error)
@@ -32,12 +58,6 @@ const Home = ({ navigation }) => {
           Alert.alert('Error ❌', error.message)
         })
     }, [])
-
-  const fetchGames = () => {
-    logic.getGames()
-      .then(({games}) => setGames(games))
-      .catch(error => Alert.alert('Error ❌', error.message))
-  }
 
   // Función para manejar el logout
   const handleLogoutClick = () => {
@@ -72,6 +92,11 @@ const Home = ({ navigation }) => {
     navigation.navigate('CreateGame')  // Navegamos a la pantalla de CreateGame
   }
 
+  const openWinnerModal = (gameId) => {
+    setSelectedGameId(gameId) // Guarda el ID de la partida que quieres editar
+    setModalVisible(true)     // Hace visible el modal (lo muestra en pantalla)
+  }
+
   if (loading) {
     return (
       <View style={styles.container}>
@@ -85,17 +110,6 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.homeClick} onPress={() => navigation.navigate('Home')}>
-          HOME
-        </Text>
-        <Text style={styles.profileClick} onPress={handleUserClick}>
-          🙋 {username}
-        </Text>
-
-        <Button title="Logout" onPress={handleLogoutClick} />
-      </View>
-
       <View style={styles.main}>
         <Button title="Go to Profile" onPress={handleUserClick} />
         <Button title="Go to Classification" onPress={handleClassificationClick} />
@@ -119,10 +133,28 @@ const Home = ({ navigation }) => {
                     .catch(error => Alert.alert('Error ❌', error.message))
                 }}
               />
+              {userRole === 'admin' && item.status === 'scheduled' &&  (
+              <Button
+                title="Set Winner"
+                onPress={() => {
+                  <Button
+                  title="Set Winner"
+                  onPress={() => openWinnerModal(item._id)}
+                  color="#d2691e"
+                />
+              }}
+              />
+              )}
             </View>
           )
         }}
-      />
+        />
+          <Modal
+             visible={modalVisible}
+             onClose={() => setModalVisible(false)}
+             gameId={selectedGameId}
+             onWinnerSet={fetchGames}
+          />
     </View>
 
   )

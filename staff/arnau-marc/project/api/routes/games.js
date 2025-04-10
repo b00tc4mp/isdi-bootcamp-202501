@@ -33,32 +33,12 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
       .then(() => res.status(204).send())
   }))
 
-  /*
-  // Unirse a una partida
-  games.post('/:gameId/join', authHandler, withErrorHandling((req, res) => {
-    const { userId } = req
-    const { gameId } = req.params
-  
-    return logic.joinGame(userId, gameId)
-      .then(() => res.status(200).send())
-  }))
-  
-  // Desapuntarse de una partida
-  games.post('/:gameId/leave', authHandler, withErrorHandling((req, res) => {
-    const { userId } = req
-    const { gameId } = req.params
-  
-    return logic.leaveGame(userId, gameId)
-      .then(() => res.status(200).send())
-  }))
-  
-  // Establecer ganador (solo admin)
-  games.post('/:gameId/winner', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-    const { userId } = req
+  // EndPoint para setear ganador
+  games.patch('/:gameId/winner', authHandler, withErrorHandling((req, res) => {
     const { gameId } = req.params
     const { winnerId } = req.body
+    const { userId } = req
   
     return logic.setGameWinner(userId, gameId, winnerId)
-      .then(() => res.status(200).send())
+      .then(() => res.status(204).send())
   }))
-*/

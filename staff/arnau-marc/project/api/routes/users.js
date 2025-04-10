@@ -35,3 +35,11 @@ users.get('/self/username', authHandler, withErrorHandling((req,res) => {
     return logic.getUsername(userId)
         .then(username => res.json({ username }))
 }))
+
+// GET user role
+users.get('/self/role', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+  
+    return logic.getUserRole(userId)
+      .then(role => res.json({ role }))
+  }))

@@ -1,13 +1,20 @@
-export const setGameWinner = (eventId, winnerId) => {
-    return fetch(`http://localhost:8080/events/${eventId}/winner`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ winnerId })
-    }).then(res => {
-      if (!res.ok) throw new Error('Could not set winner')
-      return res.json()
+import { data } from '../../data'
+
+
+export const setWinner = (gameId, winnerId) => {
+  return data.token
+    .then(token => {
+      return fetch(`http://localhost:8080/games/${gameId}/winner`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ winnerId }),
+      })
     })
-  }
+    .then(response => {
+      if (response.status === 204) return
+      return response.json().then(body => { throw new Error(body.message) })
+    })
+}

@@ -4,6 +4,7 @@ import { logoutUser } from './users/logoutUser.js'
 import { registerUser } from './users/registerUser.js'
 import { isUserLoggedIn } from './users/isUserLoggedIn.js'
 import { getUserId } from './users/getUserId.js'
+import { getUserRole } from './users/getUserRole.js'
 
 import { createGame } from "./games/createGame.js"
 import { getGames } from "./games/getGames.js"
@@ -16,6 +17,7 @@ export const logic = {
     getUsername,
     isUserLoggedIn,
     getUserId,
+    getUserRole,
 
     createGame,
     getGames,

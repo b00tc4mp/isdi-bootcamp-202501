@@ -24,6 +24,21 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: '100%',
   },
+  headerRightContainer: {
+    paddingRight: 15, // Ajusta el valor según el espacio que quieras
+  },
+  usernameText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  
+  homeText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingLeft: 15,
+    
+  },
 });
 
 export default styles;
