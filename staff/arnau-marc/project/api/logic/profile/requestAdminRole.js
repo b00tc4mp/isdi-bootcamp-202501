@@ -1,11 +1,13 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import { User } from '../../data/index.js'
-//import { errors, validate } from 'com'
+// import { errors, validate } from 'com'
 
-//const { SystemError, NotFoundError, AuthorizationError, ConflictError } = errors
+// const { SystemError, NotFoundError, AuthorizationError, ConflictError } = errors
 
 export const requestAdminRole = (userId, secretWord) => {
-    //validate.id(userId, 'user id')
-    //validate.string(secretWord, 'secret word')
+    // validate.id(userId, 'user id')
+    // validate.string(secretWord, 'secret word')
 
     return User.findById(userId)
         .catch(error => { throw new Error(error.message) })
@@ -22,5 +24,6 @@ export const requestAdminRole = (userId, secretWord) => {
             user.role = 'admin'
             return user.save()
                 .catch(error => { throw new Error(error.message) })
+                .then(() => {})
         })
 }
