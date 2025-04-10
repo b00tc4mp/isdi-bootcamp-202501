@@ -1,13 +1,13 @@
 import 'dotenv/config'
-import express, { json, Request, Response } from 'express'
-import registerUserHandler from './handlers/registerUserHandler.js'
+import express, { Request, Response } from 'express'
+// import registerUserHandler from './handlers/registerUserHandler.js'
 import errorHandler from './middlewares/errorHandler.js'
 import loggers from './logs/index.js'
-import validationHandler from './middlewares/validationHandler.js'
+// import validationHandler from './middlewares/validationHandler.js'
 
-import {
-    registerUserSchema
-} from './data/schemas/zodSchemas.js'
+// import {
+//     registerUserSchema
+// } from './data/schemas/zodSchemas.js'
 import { data } from './data/index.js'
 
 const { morganMiddleware } = loggers
@@ -31,20 +31,12 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
 
         api.use(morganMiddleware)
 
-        const jsonBodyParser = json()
+        // const jsonBodyParser = json()
 
         // api.get('/', (req, res) => res.send('Hello, API!'))
         api.get("/ping", (_req: Request, res: Response) => {
             res.json({ message: "pong 🏓" });
         })
-
-        // --- REGISTER USER METHOD ---
-        api.post(
-            '/users',
-            jsonBodyParser,
-            validationHandler(registerUserSchema),
-            registerUserHandler
-        )
 
         api.use(errorHandler)
 

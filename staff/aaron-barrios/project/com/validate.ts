@@ -1,5 +1,5 @@
-import { constant } from './constant.js'
-import errors from './errors.js'
+import { constant } from "./constant"
+import errors from "./errors"
 
 const { ValidationError } = errors
 

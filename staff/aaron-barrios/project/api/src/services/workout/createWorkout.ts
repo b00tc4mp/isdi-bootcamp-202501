@@ -1,5 +1,6 @@
 // import { ObjectId } from 'mongoose'
-import { IWorkout, User, Workout } from '../../data/models/models.js'
+import { User, Workout } from '../../data/models/index.js'
+import { IWorkout } from '../../data/types.js'
 import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors

@@ -1,13 +1,13 @@
+import bcrypt from 'bcryptjs'
 import { User } from '../../data/models/index.js'
 import { errors, validate } from 'com'
-import bcrypt from 'bcryptjs'
 
 const { SystemError, CredentialsError, NotFoundError } = errors
 
 const authenticateUser = (
     alias: string,
     password: string
-) => {
+): Promise<string> => {
     validate.alias(alias)
     validate.password(password)
 

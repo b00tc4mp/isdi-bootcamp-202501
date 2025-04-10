@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { errors } from 'com'
-import { User, Workout, WorkoutProgress, RoutineWorkout, Routine } from './models/models.js'
+import { User, Workout, WorkoutProgress, RoutineWorkout, Routine } from './models/index.js'
 
 const { SystemError } = errors
 
