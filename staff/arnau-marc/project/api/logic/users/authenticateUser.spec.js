@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { data, User } from '../data/index.js'
+import { data, User } from '../../data/index.js'
 import { authenticateUser } from './authenticateUser.js'
 import { expect } from 'chai'
 import { CredentialsError, NotFoundError } from 'com/errors.js'

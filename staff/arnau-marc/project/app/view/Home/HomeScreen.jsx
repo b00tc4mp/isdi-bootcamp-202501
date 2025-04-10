@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button, FlatList, Alert} from 'react-native'
+import { View, Text, Button, FlatList, Alert, ActivityIndicator} from 'react-native'
 import styles from './Home.styles.js'
 import { logic } from '../../logic/index.js'
 
@@ -7,27 +7,31 @@ const Home = ({ navigation }) => {
   const [username, setUsername] = useState('')
   const [games, setGames] = useState([])
   const [userId, setUserId] = useState('')
+  const [loading, setLoading] = useState(true)
 
   // Usamos useEffect para cargar el username cuando el componente se monta
-  useEffect(() => {
-    console.debug('Home -> useEffect')
 
-    try {
-      logic.getUsername()
-        .then((username) => setUsername(username))
-        .catch((error) => {
+    useEffect(() => {
+      console.debug('Home -> useEffect')
+    
+      // Cargamos todo en paralelo
+      Promise.all([
+        logic.getUsername(),
+        logic.getUserId(),
+        logic.getGames(),
+        setLoading(false)
+      ])
+        .then(([username, userId, { games }]) => {
+          setUsername(username)
+          setUserId(userId)
+          setGames(games)
+        })
+        .catch(error => {
           console.error(error)
+          setLoading(false)
           Alert.alert('Error ❌', error.message)
         })
-        const userId = logic.getUserId()
-        setUserId(userId)
-
-        fetchGames()
-    } catch (error) {
-      console.error(error)
-      Alert.alert('Error ❌', error.message)
-    }
-  }, [])
+    }, [])
 
   const fetchGames = () => {
     logic.getGames()
@@ -68,6 +72,15 @@ const Home = ({ navigation }) => {
     navigation.navigate('CreateGame')  // Navegamos a la pantalla de CreateGame
   }
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#1E90FF" />
+        <Text> ♥️ ♠️ ♣️ ♦️ Cargando Pokapp...  🂽 🂡</Text>
+      </View>
+    )
+  }
+
   console.debug('Home -> render')
 
   return (
@@ -102,7 +115,7 @@ const Home = ({ navigation }) => {
                 title={isParticipant ? 'Cancel' : 'Participate'}
                 onPress={() => {
                   logic.toggleParticipation(item._id)
-                    .then(() => fetchGames())
+                    .then(() => logic.getGames().then(({ games }) => setGames(games)))
                     .catch(error => Alert.alert('Error ❌', error.message))
                 }}
               />
