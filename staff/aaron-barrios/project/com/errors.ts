@@ -54,6 +54,14 @@ class ValidationError extends Error {
     }
 }
 
+class StatusError extends Error {
+    constructor(message: string) {
+        super(message)
+
+        this.name = "StatusError"
+    }
+}
+
 const errors = {
     ValidationError,
     AuthorizationError,
@@ -61,7 +69,8 @@ const errors = {
     SystemError,
     OwnershipError,
     CredentialsError,
-    NotFoundError
+    NotFoundError,
+    StatusError
 }
 
 export default errors

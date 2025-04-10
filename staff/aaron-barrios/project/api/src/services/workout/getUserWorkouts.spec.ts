@@ -1,12 +1,12 @@
-import 'dotenv/config'
-import { data, User, Workout } from '../../data'
-import getWorkouts from './getWorkouts'
-import { expect } from 'chai'
-import * as chai from 'chai'
-import chaiAsPromised from 'chai-as-promised'
-import { Types } from 'mongoose'
-import { errors } from 'com'
-import { IWorkout } from '../../data/types'
+import "dotenv/config"
+import { data, User, Workout } from "../../data"
+import getUserWorkouts from "./getUserWorkouts"
+import { expect } from "chai"
+import * as chai from "chai"
+import chaiAsPromised from "chai-as-promised"
+import { Types } from "mongoose"
+import { errors } from "com"
+import { IWorkout } from "../../data/types"
 
 chai.use(chaiAsPromised)
 
@@ -50,7 +50,7 @@ describe('getWorkouts', () => {
                 workout = _workout
                 workout2 = _workout2
             })
-            .then(() => getWorkouts(user2.id))
+            .then(() => getUserWorkouts(user2.id))
             .then(workouts => returnedWorkouts = workouts as Array<IWorkout>)
             .finally(() => {
                 expect(returnedWorkouts).to.be.instanceOf(Array)

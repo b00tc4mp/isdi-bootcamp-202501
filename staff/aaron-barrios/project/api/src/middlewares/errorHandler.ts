@@ -15,7 +15,8 @@ const {
     DuplicityError,
     SystemError,
     ValidationError,
-    NotFoundError
+    NotFoundError,
+    StatusError
 } = errors
 
 
@@ -33,7 +34,7 @@ const errorHandler =
         let { message } = error
 
         switch (true) {
-            case error instanceof ValidationError:
+            case error instanceof ValidationError || error instanceof StatusError:
                 status = 400
                 errorName = error.constructor.name
                 break

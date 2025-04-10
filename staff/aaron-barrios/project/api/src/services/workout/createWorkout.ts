@@ -29,13 +29,8 @@ const createWorkout = (
 
             newWorkout.status = 'pending'
 
-            // ---WARNING ---
-            // -> ESTO ESTÁ MAL -> DEBERIA CAMBIARLE EL STATUS A PENDING E IR
-            // A LA FEED DE REVIEW DE ADMIN (CREO OTRA DB???)
-
-            //if workout.status === 'accepted':
-            // return Workout.create(newWorkout)
-            //     .catch(error => { throw new SystemError(error.message) })     
+            return Workout.create(newWorkout)
+                .catch(error => { throw new SystemError(error.message) })
         })
 }
 

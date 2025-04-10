@@ -1,13 +1,16 @@
-import { User, Workout } from "../../data/index.js"
+import { User, Workout } from "../../../data/"
 import { validate, errors } from "com"
-import { UserType } from "../types.js"
+import { UserType } from "../../types"
 
-const { SystemError, NotFoundError } = errors
+const { NotFoundError, SystemError } = errors
 
-const getWorkouts = (
+const getModeratorWorkouts = (
     userId: string
 ): Promise<object> => {
     validate.id(userId)
+
+    //--- WARNING ---
+    //¡¡ESPECIFICAR QUE SOLO TRAIGA LOS EJERCICIOS CON STATE PENDING!!!
 
     return Promise.all([
         User.findById(userId).lean(),
@@ -26,4 +29,4 @@ const getWorkouts = (
         .catch(error => { throw new SystemError(error.message) })
 }
 
-export default getWorkouts
+export default getModeratorWorkouts
