@@ -1,10 +1,13 @@
-import { authenticateUser } from "./authenticateUser.js"
-import { registerUser } from './registerUser.js'
-import { getUsername } from './getUsername.js'
+import { authenticateUser } from "./users/authenticateUser.js"
+import { registerUser } from './users/registerUser'
+import { getUsername } from './users/getUsername.js'
 
 import { createGame } from "./games/createGame.js"
 import { getGames } from "./games/getGames.js"
 import { toggleParticipation } from "./games/toggleParticipation.js"
+import { setGameWinner } from "./games/setGameWinner.js"
+
+import { requestAdminRole } from "./profile/requestAdminRole.js"
 
 export const logic = {
     authenticateUser,
@@ -13,5 +16,8 @@ export const logic = {
 
     createGame,
     getGames,
-    toggleParticipation
+    toggleParticipation,
+    setGameWinner,
+
+    requestAdminRole,
 }

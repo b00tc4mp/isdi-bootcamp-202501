@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Button, Alert } from 'react-native'
-import styles from './CreateGameStyles'
+import styles from './CreateGame.styles'
 import { logic } from '../../logic/index'
 
 const CreateGameScreen = ({ navigation }) => {

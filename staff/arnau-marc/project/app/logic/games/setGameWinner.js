@@ -1,8 +1,8 @@
 export const setGameWinner = (eventId, winnerId) => {
-    return fetch(http://localhost:8080/events/${eventId}/winner, {
+    return fetch(`http://localhost:8080/events/${eventId}/winner`, {
       method: 'PATCH',
       headers: {
-        'Authorization': Bearer ${token},
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ winnerId })
