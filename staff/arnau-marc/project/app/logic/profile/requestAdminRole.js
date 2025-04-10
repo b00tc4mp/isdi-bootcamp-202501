@@ -1,4 +1,4 @@
-import { data } from '../data/index.js'
+import { data } from '../../data/index.js'
 //import { errors, validate } from 'com'
 
 //const { SystemError } = errors
@@ -11,7 +11,7 @@ export const requestAdminRole = (secretWord) => {
         if (!token) {
           throw new Error('Token not found')
         }
-        return fetch(`http://localhost:8080/users/admin-request`, {
+        return fetch(`http://localhost:8080/profiles/admin-request`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,

@@ -6,8 +6,9 @@ const { ObjectId } = Types
 const user = new Schema({
     role: {
         type: String,
-        //required: true,
-        // enum: regular | admin
+        required: true,
+        enum: ['regular', 'admin'],
+        default: 'regular',
         // match: TODO
     },
     name: {
