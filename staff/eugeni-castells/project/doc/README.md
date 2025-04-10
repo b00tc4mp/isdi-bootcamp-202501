@@ -25,18 +25,17 @@ Registered User
 - search for location and dates (Home)
 - save van to favorites (Van Profile)
 - filter for features (Home)
-- view available vans (Home)
 - request book trip (Trip Profile or Van Profile?)
-- accept or decline trip (Exchange Home)
-- chat when request is sent (Messages Home) Requester can only chat if host answers
+- accept or decline trip request (Exchange Home)
+- chat when request is sent (Messages Home) Requester can only chat if host answers (everything chatted outside the app chat doesn't get covered for the insurance)
 - view user profile (Profile)
 - view van profile (Van Profile)
 - view van book progress in calendar (Van Profile)
-- view loggedInUser trip progress (Trip Profile)
-- view loggedInUser book history (Profile)
-- view loggedInUser chat history
+- view own trip progress (Trip Profile)
+- view own book history (Profile)
+- view own chat history
 - view van book history
-- comment van when completed trip only?
+- comment van when completed trip only
 - rate trip/van
 
 ### UIUX Design
@@ -63,14 +62,13 @@ Registered User
 User
 
 - id (string, uuid)
-- admin (boolean)
+- role (string, enum: regular,moderator,admin)
 - name (string, validations)
 - username (string, validations)
 - email (string, validation)
-- vans [van.Id]
-- currentTrip (trip.id)
-  [comment]: <> (This currentTrip is the user booking another van. The trips of the vans the user have are in the van's profile, not the user. )
-- tripsHistory [trip.Id]
+- password (string, validation)
+- vans ([Van.Id])
+- trips ([Trip.Id])
 - createdAt (Date)
 - modifiedAt (Date)
 - roadPoints (number,validations)
@@ -79,74 +77,44 @@ Van
 
 - id (string, uuid)
 - name (string, validations)
-- features {
-  - windows (number, validations),
-  - doors (number, validations),
-  - heating (boolean),
-  - airConditioning (boolean),
-  - bedCount (number, validations)
-  - insideKitchen (boolean),
-  - fridge (boolean),
-  - bathroom (enum: 'portable','fixed')
-  - fuelType(enum:'petrol', 'diesel', 'electric', 'hybrid')
-  - storage (number, validations)
-  - brand (string, validations)
-  - model (string, validations)
-  - year (number, validations)
-  - accessible (boolean)
-    [comment]: <> (should some features be optional or all must be filled when registering the van)
-    }
-- legal [Doc.id]
-- owner (User.id)
-- currentTrip (Trip.id)
-- images [string]
-- tripHistory [Trip.id]
+- windows (number, validations),
+- doors (number, validations),
+- heating (boolean),
+- airConditioning (boolean),
+- bedCount (number, validations)
+- insideKitchen (boolean),
+- fridge (boolean),
+- toilet (enum: 'portable','fixed', 'none')
+- shower (string enum 'inside,'outside','none')
+- fuelType(string enum:'petrol', 'diesel', 'electric', 'hybrid')
+- storage (number, validations)
+- brand (string, validations)
+- model (string, validations)
+- year (number, validations)
+- accessible (boolean)
+- legal ([Doc.id])
+- images ([string])
+- trips ([Trip.id])
 - createdAt (Date)
 - modifiedAt (Date)
-- available (boolean)
-  [comment]: <> (should I have both available and availableDates or only availableDates and then return available when retrieved?)
-- availableDates [Date]
 - price (num, validations)
-  [comment]: <> (should I make price variable depending on the number of days and other variables? If so, how do I have to put it on data model)
-- rating [number, min 0, max 5]
-- comments [Comment.id]
-- location: {
-  - address (string),
-  - city (string),
-  - region (string),
-  - country (string),
-  - coordinates: {
-  - lat (number),
-  - lng (number)
-    }
-    }
+- reviews ([Review.id])
+- location [Location.id]
 
 Trip
 
 - id (string, uuid)
 - startDate (Date)
 - endDate (Date)
-- ensurance [Doc.id]
 - van (Van.id)
 - van owner (User.id)
 - user/renter (User.id)
-- active (boolean)
 - price (number,validations)
 - issues [Doc.id]
-- location {
-  - address (string),
-  - city (string),
-  - region (string),
-  - country (string),
-    coordinates: {
-  - lat (number),
-  - lng (number)
-    }
-    }
+- location (Location.id)
+<!-- location should be the pickup location? -->
 - agreements [Doc.id]
-- rating [number, min 0 , max 5]
-- paymentDone (boolean)
-- paymentReceived (boolean)
+  paymentStatus (string enum: 'pending' || 'payed' || 'rejected')
 - paymentMethod (enum: 'road points','currency')
 - createdAt (Date)
 - modifiedAt (Date)
@@ -158,33 +126,34 @@ Doc
 - createdAt (Date)
 - modifiedAt (Date)
 - content (string)
-- attachedTo [User.id || Van.id || Trip.id]
-- author (User.id) || [User.id]
+- author (User.id)
+- third (User.id optional)
 
-Comment
+Review
+
+- rating (number, min 0, max 5)
+- comment (string, validations)
+- author (User.id)
+
+Location
 
 - id (string, uuid)
-- createdAt (Date)
-- modifiedAt (Date)
-- content (string)
-- author (User.id)
-- van (Van.id)
+- address (string),
+- city (string),
+- region (string),
+- country (string),
+- lat (number),
+- lng (number)
 
 ### Technologies
 
-- HTML/CSS/JS
-- Tailwind
-- Ionic?
+- React Native/TamaGUI??
 - Typescript
-- React
-- Node
-- NestJS/Express
-- GraphQL
+- Node/NestJS
+- GraphQL?
 - MongoDB
-- Mocha/Chai
-- C8
-- Monocart
-- JWT
+- Mocha/Chai/C8
+- JWT/bcryptjs
 
 ## Planning
 
