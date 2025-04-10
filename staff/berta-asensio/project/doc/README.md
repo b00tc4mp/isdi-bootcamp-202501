@@ -2,7 +2,9 @@
 
 ## Intro
 
-Little breakfast es una aplicación móvil dirigida a familias que desean un servicio de desayuno diario para sus hijos de primaria en el colegio. Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijos y realizar los pedidos desde la app de manera fácil. 
+Little breakfast es una aplicación móvil dirigida a familias que desean un servicio de desayuno diario para sus hijos de primaria en el colegio.
+En muchas familias, las mañanas son ajetreadas y puede ser un reto diario preparar el desayuno para sus hijos. Little breakfast pretende solucionar este problema ofreciendo una forma sencilla y fiable de garantizar un desayuno nutritivo y elaborado diariamiente para los niños.
+Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijos y realizar los pedidos desde la app de manera fácil, rápida y económica.
 
 ![](https://media.giphy.com/media/jhzar9OuWE6fq2wHL3/giphy.gif?cid=790b76117idtvpv2k9ng2aoxpxzz0n0rsw3i0zxdmp878j1m&ep=v1_gifs_search&rid=giphy.gif&ct=g)
 
@@ -10,30 +12,24 @@ Little breakfast es una aplicación móvil dirigida a familias que desean un ser
 
 ### Use Cases
 
-#### User (Parents)
+#### Customer(Parents)
 
-- Register
-- Login
-- Logout
 - See menu options
 - Place orders
-- View order historial ?
-- Create form child ?
-- Edit child data
 - Cancel order
-- See money cart
-- View generated invoices ?
+- See credit
+- Add credit 
+- View order historial
+- View generated invoices(planned)
 
-#### Client (Child) ???
+#### Provider (planned)
 
-- Technical sheet:
-    - Nombre
-    - Apellidos
-    - Edad
-    - Colegio
-    - 
+- Manage menus
+- View and manage orders
+- View and manage invoices (planned)
 
-*Diagrama de flujo del proceso de pedidos y entregas, desde que el padre realiza el pedido hasta que el niño recibe el desayuno.
+
+*Diagrama de flujo del proceso de pedidos, desde que el padre realiza el pedido hasta que el niño recibe el desayuno.
 
 
 ### UIUX Design
@@ -68,30 +64,34 @@ Little breakfast es una aplicación móvil dirigida a familias que desean un ser
 
 ### Data Model
 
-User(parent)
+User
 - id (string, uuid)
-- name (string, minLength 1, maxLength 50): nombre completo del padre
-- email (string, email): correo electrónico de padre
-- username (necesario?)
-- password(string): contraseña del padre
--createdAt (Date)
--modifiedAt (Date)
+- role(string, enum: customer | provider)
+- name (string, minLength 1, maxLength 50)
+- email (string, email)
+- password(string)
+- createdAt (Date)
+- modifiedAt (Date)
 
-Child:
-- id (string, uuid): indentificador único para el hijo
-- name (string, minLength 1, maxLength 30): nombre del niño
-- como establecer relación con User?
-- age (number): edad del niño
-- allergies(array of strings): alergias alimentarias
+Menu
 
-Order:
-- id(string, uuid): identificador único para el pedido
-- childId(string, uuid): referencia al niño
-- menuOptions (array of strings): opciones de menú seleccionadas
-- status (string): Estado del pedido (pendiente, en camino, entregado, cancelado)
-- deliveryDay(Date): fecha de entrega
--createdAt (Date): fecha realización pedido
-- modifiedAt(Date): fecha ultima modificación
+- id(string, uuid)
+- ordinal (number)
+- name (string)
+- description (string)
+- allergens (array of strings)
+- categories (array of strings: vegetarian | vegan | halal )
+- price (number)
+
+Order
+
+- id(string, uuid, identificador único para el pedido)
+- menu (Menu.id)
+- note (String, name of child and school)
+- status (string, estado del pedido: pendiente|en camino|entregado|cancelado)
+- deliveryDate(Date, fecha de entrega)
+- createdAt (Date, fecha realización pedido)
+- modifiedAt(Date, fecha ultima modificación)
 
 ### Technologies
 
@@ -107,4 +107,6 @@ Order:
 
 ### Code Coverage
 Testings
+
+
 
