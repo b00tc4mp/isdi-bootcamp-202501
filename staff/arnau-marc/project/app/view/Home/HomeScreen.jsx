@@ -95,7 +95,7 @@ const Home = ({ navigation }) => {
       <Button
         title="Toggle Participation"
         onPress={() => {
-          logic.toggleParticipation(item._id)
+          logic.toggleParticipation(item.id)
             .then(() => fetchGames()) // recarga la lista
             .catch(error => Alert.alert('Error ❌', error.message));
         }}
@@ -103,10 +103,7 @@ const Home = ({ navigation }) => {
     </View>
   )}
 />
-
     </View>
-    
-
   )
 }
 
