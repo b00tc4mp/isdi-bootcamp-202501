@@ -6,6 +6,7 @@ import { logic } from '../../logic/index.js'
 const Home = ({ navigation }) => {
   const [username, setUsername] = useState('')
   const [games, setGames] = useState([])
+  const [userId, setUserId] = useState('')
 
   // Usamos useEffect para cargar el username cuando el componente se monta
   useEffect(() => {
@@ -18,8 +19,10 @@ const Home = ({ navigation }) => {
           console.error(error)
           Alert.alert('Error ❌', error.message)
         })
+        const userId = logic.getUserId()
+        setUserId(userId)
 
-      fetchGames()
+        fetchGames()
     } catch (error) {
       console.error(error)
       Alert.alert('Error ❌', error.message)
@@ -87,23 +90,31 @@ const Home = ({ navigation }) => {
       </View>
         {/* Lista de partidas */}
         <FlatList
-  data={games}
-  keyExtractor={(item) => item.id}
-  renderItem={({ item }) => (
-    <View style={{ marginVertical: 10 }}>
-      <Text>{item.title} - {item.date}</Text>
-      <Button
-        title="Toggle Participation"
-        onPress={() => {
-          logic.toggleParticipation(item.id)
-            .then(() => fetchGames()) // recarga la lista
-            .catch(error => Alert.alert('Error ❌', error.message));
+
+
+
+        data={games}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => {
+          const isParticipant = item.participants.includes(userId)
+
+          return (
+            <View style={{ marginVertical: 10 }}>
+              <Text>{item.title} - {item.date}</Text>
+              <Button
+                title={isParticipant ? 'Cancel' : 'Participate'}
+                onPress={() => {
+                  logic.toggleParticipation(item._id)
+                    .then(() => fetchGames())
+                    .catch(error => Alert.alert('Error ❌', error.message))
+                }}
+              />
+            </View>
+          )
         }}
       />
     </View>
-  )}
-/>
-    </View>
+
   )
 }
 
