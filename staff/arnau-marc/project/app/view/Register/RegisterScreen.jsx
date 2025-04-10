@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { logic } from '../../logic'; // Asegúrate de que este archivo esté configurado correctamente
-import styles from './RegisterStyles.js'; // Asegúrate de tener los estilos adecuados
+import styles from './Register.styles.js'; // Asegúrate de tener los estilos adecuados
 
 const Register = ({ navigation }) => {  // Usamos 'navigation' directamente
   const [name, setName] = useState('');

@@ -1,4 +1,4 @@
-import { User } from '../data/index.js'
+import { User } from '../../data/index.js'
 //import { validate, errors } from 'com'
 
 // const { SystemError, NotFoundError } = errors

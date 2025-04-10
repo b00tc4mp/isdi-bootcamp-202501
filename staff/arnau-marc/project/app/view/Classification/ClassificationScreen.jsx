@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Button } from 'react-native'
 
-import { styles } from './ClaissificationStyles'
+import { styles } from './Classification.styles.js'
 
 export default function ClassificationScreen({ navigation }) {
   return (

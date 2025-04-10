@@ -1,5 +1,5 @@
 //import { errors, validate } from 'com' // TODO VALIDATIONS
-import { User } from '../data/index.js' // TODO MODELS
+import { User } from '../../data/index.js' // TODO MODELS
 import bcrypt from 'bcryptjs'
 
 // TO DO ERRORS const { SystemError, NotFoundError, CredentialsError } = errors

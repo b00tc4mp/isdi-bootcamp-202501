@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { logic } from '../../logic'; // Asegúrate de que este archivo esté configurado correctamente
-import styles from './LoginStyles.js'
+import styles from './Login.styles.js'
 
 const Login = ({ navigation }) => {  // Cambia 'route' a 'navigation'
     const [username, setUsername] = useState('');

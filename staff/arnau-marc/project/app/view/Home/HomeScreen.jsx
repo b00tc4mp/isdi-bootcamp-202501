@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Button, FlatList, Alert} from 'react-native'
-import styles from './HomeStyle.js'
+import styles from './Home.styles.js'
 import { logic } from '../../logic/index.js'
 
 const Home = ({ navigation }) => {
@@ -90,9 +90,6 @@ const Home = ({ navigation }) => {
       </View>
         {/* Lista de partidas */}
         <FlatList
-
-
-
         data={games}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {

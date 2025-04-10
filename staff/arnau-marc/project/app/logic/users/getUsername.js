@@ -1,4 +1,4 @@
-import { data } from '../data/index.js'
+import { data } from '../../data/index.js'
 // TODO IMPORT ERRORS
 
 export const getUsername = () => {

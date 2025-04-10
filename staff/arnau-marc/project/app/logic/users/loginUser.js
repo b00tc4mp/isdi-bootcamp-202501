@@ -1,5 +1,5 @@
 //import { SystemError } from '../../com/errors'
-import { data } from '../data'
+import { data } from '../../data'
 //import { validate, errors } from 'com'
 
 export const loginUser = (username, password) => {
