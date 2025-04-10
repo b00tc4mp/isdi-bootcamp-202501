@@ -8,7 +8,7 @@ export const registerUser = (name, surname, email, username,  password) =>{
     // TODO validates, name, minLength, maxLength, email, username, password
 
     return bcrypt.hash(password, 10)
-        .catch(error => { throw new Error(error.message) }) // TODO SystemError
+        .catch(error => { throw new  Error(error.message) }) // TODO SystemError
         .then(hash=> {
             const player = {
                 name,

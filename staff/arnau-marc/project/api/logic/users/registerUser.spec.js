@@ -16,7 +16,7 @@ describe('registerUser', () => {
     it('succeeds on new user', () => { 
         let result2 
 
-        return registerUser('arnau', 'ar@nau.com', 'arnau', '123123123') 
+        return registerUser('arnau',  'ar@nau.com', 'arnau', '123123123') 
             .then(result => result2 = result)
             .finally(() => expect(result2).to.be.undefined) 
             .then(() => User.findOne({ username: 'arnau' }).lean()) 
