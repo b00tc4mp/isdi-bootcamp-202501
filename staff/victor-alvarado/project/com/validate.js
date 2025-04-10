@@ -43,23 +43,5 @@ export const validate = {
         this.string(id, explain)
         if (id.length !== 24) throw new ValidationError(`invalid ${explain} length`)
     },
-    cookingTime(cookingTime, explain = 'cookingTime') {
-        if (typeof cookingTime !== 'number' || cookingTime <= 0) {
-            throw new ValidationError(`invalid ${explain} value, must be a positive number`)
-        }
-
-    },
-    estimatedTime(estimatedTime, explain = 'estimatedTime') {
-        if (typeof estimatedTime !== 'number' || estimatedTime <= 0) {
-            throw new ValidationError(`invalid ${explain} value, must be a positive number`)
-        }
-    }
-
-
-
-
-
-
-
 
 }

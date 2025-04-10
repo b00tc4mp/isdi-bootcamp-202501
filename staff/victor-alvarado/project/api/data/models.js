@@ -3,7 +3,6 @@ import { Schema, model, Types } from 'mongoose'
 
 const { ObjectId } = Types
 
-// Esquema de usuario
 const user = new Schema({
     name: {
         type: String,
@@ -32,7 +31,7 @@ const user = new Schema({
         maxLength: 100,
     },
     createdAt: {
-        type: Date, // <- estaba "Type"
+        type: Date,
         required: true,
         default: Date.now
     },
@@ -55,35 +54,25 @@ const recipe = new Schema({
         maxLength: 500,
         required: true,
     },
-    text: {
+    title: {
         type: String,
         required: true,
-        maxLength: 500,
+        maxLength: 100
     },
+    description: {
+        type: String,
+        required: true,
+        maxLength: 2000
+    },
+    likes: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
     cookingTime: {
         type: Number,
         required: true,
         min: 1
     },
-    estimatedTime: {
-        type: Number,
-        required: true,
-        min: 1
-    },
-    steps: [{
-        type: String,
-        required: true,
-        maxLength: 1000
-    }],
-    ingredients: [{
-        type: String,
-        required: true,
-        maxLength: 200
-    }],
-    likes: [{
-        type: ObjectId,
-        ref: 'User'
-    }],
     createdAt: {
         type: Date,
         required: true,
