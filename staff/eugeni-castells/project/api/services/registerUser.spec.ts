@@ -3,11 +3,11 @@ import { expect } from "chai";
 import { data, User } from "../data";
 import { registerUser } from "./index.js";
 
-const { MONGO_URI, MONGO_DB } = process.env;
+const { MONGO_URI, MONGO_DB_TEST } = process.env;
 
 describe("registerUser", () => {
   before(() => {
-    data.connect(MONGO_URI!, MONGO_DB!);
+    data.connect(MONGO_URI!, MONGO_DB_TEST!);
   });
 
   beforeEach(() => {
