@@ -12,7 +12,8 @@
     "inspect": "node --inspect-brk .",
     "test-inspect": "mocha --inspect-brk dist/services/**/*.spec.js",
     "compile": "npx tsc --watch",
-    "compile-test": "npx tsc && mocha dist/services/**/*.spec.js"
+    "compile-test": "npx tsc && mocha dist/services/**/*.spec.js",
+    "clean": "rm -rf dist && find src -name '*.js' -delete"
   },
   "author": "",
   "license": "ISC",
