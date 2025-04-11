@@ -1,5 +1,5 @@
-// import { createContext, useContext as useContextFromReact } from 'react'
+import { createContext, useContext as useContextFromReact } from "react";
 
-// export const Context = createContext()
+export const Context = createContext()
 
-// export const useContext = () => useContextFromReact(Context)
+export const useContext = () => useContextFromReact(Context)

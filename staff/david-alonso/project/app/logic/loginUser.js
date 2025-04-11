@@ -1,11 +1,11 @@
 import { data } from '../data'
-import { errors, validate } from 'com'
+import { errors, validate } from '../../com'
 
 const { SystemError } = errors
 
 // Funcion para Iniciar sesion
-export const loginUser = (username, password) => {
-    validate.username(email, 'email')
+export const loginUser = (email, password) => {
+    validate.email(email, 'email')
     validate.password(password, 'password')
 
     return fetch(`http://localhost:8080/users/auth`, {
@@ -13,7 +13,7 @@ export const loginUser = (username, password) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
@@ -27,6 +27,7 @@ export const loginUser = (username, password) => {
 
                         data.token = token
                     })
+
 
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })

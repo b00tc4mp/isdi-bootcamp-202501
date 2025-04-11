@@ -1,5 +1,5 @@
-import { useContext } from '../context'
 import { logic } from '../logic/index.js'
+import { useContext } from '../context'
 
 
 export function Register({ onNavigateToLogin, onUserRegistered }) {
@@ -35,6 +35,7 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
             alert(error.message)
         }
     }
+
 
     const handleLoginClick = () => onNavigateToLogin()
 

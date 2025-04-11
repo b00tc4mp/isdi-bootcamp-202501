@@ -1,4 +1,4 @@
-import { errors, validate } from 'com'
+import { errors, validate } from '../../com'
 
 const { SystemError } = errors
 
@@ -16,6 +16,7 @@ export const registerUser = (name, email, password) => {
         },
         body: JSON.stringify({ name, email, password })
     })
+
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
             console.log(response.status)

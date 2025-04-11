@@ -4,12 +4,11 @@
 import { useContext } from '../context.js'
 import { logic } from '../logic/index.js'
 
-
-export function VehicleRecord({ onNavigateToLogin, onVehicleRecord }) {
+export function VehicleRegister({ onNavigateToLogin, onVehicleReegister }) {
 
     // const { alert } = useContext()
 
-    const handleVehicleRecordSubmit = event => {
+    const handleVehicleRegisterSubmit = event => {
         event.preventDefault()
 
         // try {
@@ -47,7 +46,7 @@ export function VehicleRecord({ onNavigateToLogin, onVehicleRecord }) {
         <h1 className="text-2xl m-5">REGISTRO VEHICULO</h1>
 
         <div className="">
-            <form onSubmit={handleVehicleRecordSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
+            <form onSubmit={handleVehicleRegisterSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
 
                 <div className="flex gap-4">
                     <button type="click" className="flex-1 border border-gray-300 rounded-lg p-2 cursor-pointer">Coche</button>
