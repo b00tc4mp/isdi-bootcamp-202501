@@ -1,0 +1,65 @@
+import { useContext } from '../context'
+import { logic } from '../logic/index.js'
+
+
+export function Register({ onNavigateToLogin, onUserRegistered }) {
+
+    const { alert } = useContext()
+
+    const handleRegisterSubmit = event => {
+        event.preventDefault()
+
+        try {
+            const { target: form } = event
+
+            const {
+                name: { value: name },
+                email: { value: email },
+                password: { value: password }
+            } = form
+
+            logic.registerUser(name, email, password)
+                .then(() => {
+                    form.reset()
+
+                    onUserRegistered()
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handleLoginClick = () => onNavigateToLogin()
+
+    console.debug('Register -> render')
+
+    return <div className="flex flex-col p-20 justify-center items-center">
+        <h1 className="text-2xl m-5">REGISTRO</h1>
+
+        <div className="">
+            <form onSubmit={handleRegisterSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
+
+                <input type="text" id="name" placeholder="Name" className="w-full border border-gray-300 rounded-lg p-2 " />
+
+                <input type="email" id="email" placeholder="E-mail" className="w-full border border-gray-300 rounded-lg p-2 " />
+
+                <input type="text" id="password" placeholder="Password" className="w-full border border-gray-300 rounded-lg p-2" />
+
+                <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700">SIGUIENTE</button>
+
+                <div className="flex justify-center">
+                    <a onClick={handleLoginClick} className="underline">LOGIN</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+}
