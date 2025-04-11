@@ -7,7 +7,7 @@ import { User, Game, Season } from './models.js'
 const data = {
     connect(url, dbName) {
         return mongoose.connect(`${url}/${dbName}`)
-            .catch(error => new SystemError(error.message))
+            .catch(error => { throw new Error(error.message) })
     },
 
     disconnect() {

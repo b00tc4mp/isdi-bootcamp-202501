@@ -14,7 +14,7 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
     const { title, date, place, season } = req.body
   
-    return logic.createGame(userId, title, date, place, season)
+    return logic.createGame(userId, title, season, date, place, season)
       .then(gameId => res.status(201).json({ gameId }))
   }))
   
@@ -36,13 +36,13 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
   // EndPoint para setear ganador
   games.patch('/:gameId/winner', authHandler, jsonBodyParser,  withErrorHandling((req, res) => {
     const { gameId } = req.params
-    const { winnerId } = req.body
+    const { winnerUsername } = req.body
     const { userId } = req
 
-    if (!winnerId || typeof winnerId !== 'string') {
+    if (!winnerUsername || typeof winnerUsername !== 'string') {
       throw new Error('Invalid or missing winnerId')
     }
   
-    return logic.setGameWinner(userId, gameId, winnerId)
+    return logic.setGameWinner(userId, gameId, winnerUsername)
       .then(() => res.status(204).send())
   }))

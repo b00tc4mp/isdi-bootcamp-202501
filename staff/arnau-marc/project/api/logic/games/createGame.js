@@ -1,6 +1,6 @@
 import { User, Game } from '../../data/index.js'
 
-export const createGame = (userId, title, date, place, season) => {
+export const createGame = (userId, title, season, date, place) => {
   if (!title || !date || !place) throw new Error('Missing required fields')
 
   return User.findById(userId)

@@ -5,11 +5,12 @@ import { logic } from '../../logic/index'
 
 const CreateGameScreen = ({ navigation }) => {
   const [title, setTitle] = useState('')
+  const [season, setSeason] = useState('')
   const [date, setDate] = useState('')
   const [place, setPlace] = useState('')
   
   const handleSubmitCreateGame = () => {
-    logic.createGame( title, date, place )
+    logic.createGame( title, season, date, place )
       .then(() => {
         Alert.alert('Success', 'Game created successfully 🎉')
         navigation.navigate('Home')
@@ -29,6 +30,12 @@ const CreateGameScreen = ({ navigation }) => {
         placeholder="Title"
         value={title}
         onChangeText={setTitle}
+      />
+       <TextInput
+        style={styles.input}
+        placeholder="Season"
+        value={season}
+        onChangeText={setSeason}
       />
       <TextInput
         style={styles.input}

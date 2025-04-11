@@ -1,6 +1,6 @@
 import { data } from '../../data'
 
-export const createGame = (title, date, place, season) => {
+export const createGame = (title, season, date, place) => {
   return data.token
     .then(token => {
       if (!token) throw new Error('No token found')
@@ -11,7 +11,7 @@ export const createGame = (title, date, place, season) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ title, date, place, season }),
+        body: JSON.stringify({ title, season, date, place}),
       })
     })
     .catch(error => {
