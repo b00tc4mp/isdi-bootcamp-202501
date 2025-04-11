@@ -1,22 +1,22 @@
-//import { errors, validate } from 'com' // TODO VALIDATIONS
-import { User } from '../../data/index.js' // TODO MODELS
+import { errors, validate } from 'com'
+import { User } from '../../data/index.js'
 import bcrypt from 'bcryptjs'
 
-// TO DO ERRORS const { SystemError, NotFoundError, CredentialsError } = errors
+const { SystemError, NotFoundError, CredentialsError } = errors
 
 export const authenticateUser = (username, password) => {
-   // validate.username = (username) // TODO
-    // validate.password = (password) // TODO
+    validate.username = (username)
+    validate.password = (password)
 
     return User.findOne({ username }).lean()
-        .catch(error => { throw new Error(error.message)}) // TODO SystemError
+        .catch(error => { throw new SystemError(error.message)})
         .then(user=>{
-            if(!user) throw new  Error(error.message) // TODO NotFoundError
+            if(!user) throw new NotFoundError(error.message)
 
             return bcrypt.compare(password, user.password)
-                .catch(error => { throw new Error(error.message)})
+                .catch(error => { throw new CredentialsError(error.message)})
                 .then(match => {
-                    if(!match) throw new Error('Wrong credentials') // TODO CredentialsError
+                    if(!match) throw new CredentialsError('Wrong credentials')
 
                     return user._id.toString()
                 })
