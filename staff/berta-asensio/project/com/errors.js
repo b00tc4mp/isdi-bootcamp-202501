@@ -38,12 +38,30 @@ class CredentialsError extends Error {
     }
 }
 
+class OwnershipError extends Error {
+    constructor(message) {
+        super(message)
+
+        this.name = this.constructor.name
+    }
+}
+
+class AuthorizationError extends Error {
+    constructor(message) {
+        super(message)
+
+        this.name = this.constructor.name
+    }
+}
+
 export {
     SystemError,
     ValidationError,
     DuplicityError,
     NotFoundError,
-    CredentialsError
+    CredentialsError,
+    OwnershipError,
+    AuthorizationError
 }
 
 const errors = {
@@ -51,7 +69,9 @@ const errors = {
     ValidationError,
     DuplicityError,
     NotFoundError,
-    CredentialsError
+    CredentialsError,
+    OwnershipError,
+    AuthorizationError
 }
 
 export default errors

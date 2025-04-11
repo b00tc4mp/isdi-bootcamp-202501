@@ -27,3 +27,11 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
             res.json({ token })
         })
 }))
+
+//Ruta para traer nombre usuario
+users.get('/self/name', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getUserName(userId)
+        .then(userName => res.json({ userName }))
+}))
