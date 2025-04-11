@@ -1,9 +1,9 @@
 import { model, Schema, Types } from "mongoose"
-import { IWorkoutProgress } from "../types.js"
+import { WorkoutProgressDocType } from "../types.js"
 
 const { ObjectId } = Types
 
-const workoutProgress = new Schema<IWorkoutProgress>({
+const workoutProgress = new Schema<WorkoutProgressDocType>({
     user: {
         type: ObjectId,
         ref: 'User',
@@ -25,7 +25,7 @@ const workoutProgress = new Schema<IWorkoutProgress>({
     }
 })
 
-const WorkoutProgress = model<IWorkoutProgress>('WorkoutProgress', workoutProgress)
+const WorkoutProgress = model<WorkoutProgressDocType>('WorkoutProgress', workoutProgress)
 
 export {
     WorkoutProgress

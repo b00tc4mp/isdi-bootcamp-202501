@@ -1,13 +1,13 @@
 import { Workout, User } from "../../data"
 import { validate, errors } from "com"
-import { editWorkoutType } from "../types"
+import { EditWorkoutType } from "../types"
 
 const { NotFoundError, OwnershipError, StatusError, SystemError } = errors
 
 const editWorkout = (
     userId: string,
     workoutId: string,
-    updates: editWorkoutType
+    updates: EditWorkoutType
 ): Promise<void> => {
     validate.id(userId)
     validate.id(workoutId)

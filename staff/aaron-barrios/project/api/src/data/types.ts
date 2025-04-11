@@ -2,8 +2,8 @@ import { ObjectId } from "mongoose"
 import { Request } from "express"
 
 // --- TYPES DE LOS DATOS TRANSPORTE (DTO) => BASE DE DATOS
-export interface IUser {
-    id: ObjectId
+export type UserDocType = {
+    _id: ObjectId
     role: 'moderator' | 'moderator' | 'anonym'
     name: string
     lastName: string
@@ -16,10 +16,11 @@ export interface IUser {
     modifiedAt: Date,
     workouts: ObjectId[]
     routines: ObjectId[]
+    __v: number
 }
 
-export interface IWorkout {
-    id: ObjectId
+export type WorkoutDocType = {
+    _id: ObjectId
     author: ObjectId
     name: string
     muscleGroup: string
@@ -31,17 +32,19 @@ export interface IWorkout {
     saves: ObjectId[]
     status: 'pending' | 'accepted' | 'declined'
     createdAt: Date
+    __v: number
 }
 
-export interface IWorkoutProgress {
+export type WorkoutProgressDocType = {
     user: ObjectId
     workout: ObjectId
     weightUsed: number
     date: Date
+    __v: number
 }
 
-export interface IRoutineWorkout {
-    id: ObjectId
+export type RoutineWorkoutDocType = {
+    _id: ObjectId
     workout: ObjectId
     order?: number
     sets?: number
@@ -49,10 +52,11 @@ export interface IRoutineWorkout {
     time?: number
     weight?: number
     restTime?: number
+    __v: number
 }
 
-export interface IRoutine {
-    id: ObjectId
+export type RoutineDocType = {
+    _id: ObjectId
     author: ObjectId
     name: string
     goal: string
@@ -68,11 +72,12 @@ export interface IRoutine {
     saves: ObjectId[]
     createdAt: Date
     modifiedAt: Date
-    workouts: IRoutineWorkout[]
+    workouts: RoutineWorkoutDocType[]
+    __v: number
 }
 
-export type UserFromRequest = Omit<IUser, "id">
+// export type UserFromRequest = Omit<IUser, "id">
 
-export interface CustomRequestBody<T> extends Request {
-    body: T;
-}
+// export type CustomRequestBody<T> extends Request = {
+//     body: T;
+// }

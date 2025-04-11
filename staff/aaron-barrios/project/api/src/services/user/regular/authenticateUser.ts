@@ -1,13 +1,14 @@
 import bcrypt from 'bcryptjs'
 import { User } from '../../../data/models'
 import { errors, validate } from 'com'
+import { AuthUserType } from '../../types'
 
 const { SystemError, CredentialsError, NotFoundError } = errors
 
 const authenticateUser = (
     alias: string,
     password: string
-): Promise<string> => {
+): Promise<AuthUserType> => {
     validate.alias(alias)
     validate.password(password)
 
@@ -21,7 +22,10 @@ const authenticateUser = (
                 .then(match => {
                     if (!match) throw new CredentialsError('Wrong Credentials!')
 
-                    return user._id.toString()
+                    return {
+                        id: user._id.toString(),
+                        role: user.role
+                    }
                 })
         })
 }

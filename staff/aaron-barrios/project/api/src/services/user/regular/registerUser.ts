@@ -1,4 +1,4 @@
-import { IUser } from '../../../data/types'
+import { UserDocType } from '../../../data/types'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 import { User } from '../../../data/models'
@@ -21,7 +21,7 @@ const registerUser = (
     return bcrypt.hash(password, 10)
         .catch(error => { throw new SystemError(error.message) })
         .then(hash => {
-            const newUser: Partial<IUser> = {
+            const newUser: Partial<UserDocType> = {
                 name,
                 lastName,
                 email,

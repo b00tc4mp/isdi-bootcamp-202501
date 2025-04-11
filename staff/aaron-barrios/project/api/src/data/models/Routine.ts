@@ -1,9 +1,9 @@
 import { model, Schema, Types } from "mongoose"
-import { IWorkout } from "../types.js"
+import { RoutineDocType } from "../types.js"
 
 const { ObjectId } = Types
 
-const workout = new Schema<IWorkout>({
+const routine = new Schema<RoutineDocType>({
     author: {
         type: ObjectId,
         ref: 'User',
@@ -16,13 +16,19 @@ const workout = new Schema<IWorkout>({
         maxlength: 30,
         unique: true
     },
+    goal: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 20
+    },
     muscleGroup: {
         type: String,
         required: true,
         minlength: 3,
         maxlength: 20
     },
-    type: {
+    locationType: {
         type: String,
         required: true,
         minlength: 3,
@@ -34,16 +40,20 @@ const workout = new Schema<IWorkout>({
         minlength: 3,
         maxlength: 16
     },
+    duration: {
+        type: Number,
+        required: true,
+    },
     description: {
         type: String,
         required: true,
         minlength: 10,
         maxlength: 500
     },
-    images: [{
+    image: {
         type: String,
         required: true
-    }],
+    },
     likes: [{
         type: ObjectId,
         ref: 'User'
@@ -56,15 +66,29 @@ const workout = new Schema<IWorkout>({
         type: String,
         required: true
     },
+    frequencySuggestion: {
+        type: String,
+        minlength: 3,
+        maxlength: 20
+    },
     createdAt: {
         type: Date,
         required: true,
         default: Date.now
-    }
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    },
+    workouts: [{
+        type: ObjectId,
+        ref: 'RoutineWorkout',
+        required: true
+    }]
 })
 
-const Workout = model<IWorkout>('Workout', workout)
+const Routine = model<RoutineDocType>('Routine', routine)
 
 export {
-    Workout
+    Routine
 }

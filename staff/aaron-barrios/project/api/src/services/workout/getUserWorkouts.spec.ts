@@ -7,6 +7,7 @@ import chaiAsPromised from "chai-as-promised"
 import { Types } from "mongoose"
 import { errors } from "com"
 import { IWorkout } from "../../data/types"
+import { WorkoutType } from "../types"
 
 chai.use(chaiAsPromised)
 
@@ -22,13 +23,11 @@ describe('getWorkouts', () => {
             User.deleteMany({}),
             Workout.deleteMany({})
         ])
-
-
     })
 
     //--- HAPPY PATH ---
     it('succeds on getting Workouts', () => {
-        let returnedWorkouts: Array<IWorkout>
+        let returnedWorkouts: Array<WorkoutType>
         let user: { id: string }, user2: { id: string }
         let workout: object, workout2: object
 
@@ -50,8 +49,8 @@ describe('getWorkouts', () => {
                 workout = _workout
                 workout2 = _workout2
             })
-            .then(() => getUserWorkouts(user2.id))
-            .then(workouts => returnedWorkouts = workouts as Array<IWorkout>)
+            .then(() => getUserWorkouts(user2.id, user.id))
+            .then(workouts => returnedWorkouts = workouts)
             .finally(() => {
                 expect(returnedWorkouts).to.be.instanceOf(Array)
                 expect(returnedWorkouts).to.have.lengthOf(2)

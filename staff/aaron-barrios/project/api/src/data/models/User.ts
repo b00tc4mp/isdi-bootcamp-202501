@@ -1,10 +1,10 @@
 import { constant } from 'com'
 import { model, Schema, Types } from "mongoose"
-import { IUser } from "../types.js"
+import { UserDocType } from "../types.js"
 
 const { ObjectId } = Types
 
-const user = new Schema<IUser>({
+const user = new Schema<UserDocType>({
     name: {
         type: String,
         required: true,
@@ -57,7 +57,7 @@ const user = new Schema<IUser>({
     }]
 })
 
-const User = model<IUser>('User', user)
+const User = model<UserDocType>('User', user)
 
 export {
     User

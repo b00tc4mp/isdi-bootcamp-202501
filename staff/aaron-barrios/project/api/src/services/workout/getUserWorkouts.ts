@@ -1,13 +1,14 @@
 import { User, Workout } from "../../data/"
 import { validate, errors } from "com"
 import { WorkoutType } from "../types"
+import { ObjectId } from "mongoose"
 
 const { SystemError, NotFoundError } = errors
 
 const getUserWorkouts = (
     userId: string,
     targetUserId: string
-): Promise<{ user: object, workouts: WorkoutType[] }> => {
+): Promise<WorkoutType[]> => {
     validate.id(userId)
     validate.id(targetUserId)
 
@@ -17,8 +18,8 @@ const getUserWorkouts = (
         Workout.find({ author: targetUserId, status: 'accepted' })
             .select('-__v')
             .sort('-createdAt')
-            .populate('author', 'alias level').
-            lean()
+            .populate('author', 'alias level')
+            .lean()
     ])
         .catch(error => { throw new SystemError(error.message) })
         .then(([user, targetUser, workouts]) => {
@@ -30,7 +31,7 @@ const getUserWorkouts = (
             //utilizo la variable author para evitar tener que poner un any en cada propiedad de author y 
             //utilizo unkwnon porque author no tiene estrictamente esas propiedades, entonces de esa forma lo "calmo"
             const sanitizedWorkouts = workouts.map<WorkoutType>(workout => {
-                const author = workout.author as unknown as { _id: any; alias: string; level?: string }
+                const author = workout.author as unknown as { _id: ObjectId; alias: string; level?: string }
 
                 return {
                     id: workout._id.toString(),
@@ -55,13 +56,7 @@ const getUserWorkouts = (
             })
 
 
-            return {
-                user: {
-                    id: targetUser._id.toString(),
-                    alias: targetUser.alias
-                },
-                workouts: sanitizedWorkouts
-            }
+            return sanitizedWorkouts
         })
 
 }

@@ -13,16 +13,16 @@ describe.only('createWorkout', () => {
 
     beforeEach(() => User.deleteMany({}))
 
-    // --- HAPPY PATH ---
-    // it('succeeds on createWorkout', () => {
-    //     return createWorkout('67eac3e1cb202d76cec69964', 'press bench', 'chest', 'best workout to grow chest')
-    //         .then(() => Workout.find({ author: '67eac3e1cb202d76cec69964' }).lean())
-    //         .then(workout => {
-    //             expect(workout).not.to.be.undefined
-    //             expect(workout[0].name).to.equal('press bench')
-    //             expect(workout[0].muscleGroup).to.equal('chest')
-    //         })
-    // })
+    //--- HAPPY PATH---
+    it('succeeds on createWorkout', () => {
+        return createWorkout('67eac3e1cb202d76cec69964', 'press bench', 'chest', 'best workout to grow chest')
+            .then(() => Workout.find({ author: '67eac3e1cb202d76cec69964' }).lean())
+            .then(workout => {
+                expect(workout).not.to.be.undefined
+                expect(workout[0].name).to.equal('press bench')
+                expect(workout[0].muscleGroup).to.equal('chest')
+            })
+    })
 
 
     // // --- CASE DOES NOT FIND USER ---

@@ -5,6 +5,8 @@ import { errors } from "com"
 
 import { data, User } from "../../../data"
 import authenticateUser from "./authenticateUser"
+import { AuthUserType } from "../../types"
+import { UserDocType } from "../../../data/types"
 
 const { NotFoundError, CredentialsError } = errors
 
@@ -17,7 +19,8 @@ describe('authenticateUser', () => {
 
     // --- HAPPY PATH ---
     it('succeds on authentication', () => {
-        let returnedUserId: string
+        let returnedUserData: AuthUserType
+        let createdUser: UserDocType | null
 
         return bcrypt.hash('eueueu', 10)
             .then(hashedPassword => User.create({
@@ -27,11 +30,13 @@ describe('authenticateUser', () => {
                 alias: 'euge',
                 password: hashedPassword
             }))
+            .then(user => createdUser = user)
             .then(() => authenticateUser('euge', 'eueueu'))
-            .then(userId => returnedUserId = userId)
-            .finally(() => expect(returnedUserId).to.be.a.string)
-            .then(() => User.findOne({ alias: 'euge' }).lean())
-            .then(user => expect(user?._id.toString()).to.equal(returnedUserId))
+            .then(userData => returnedUserData = userData)
+            .finally(() => {
+                expect(returnedUserData.id).to.equal(createdUser?._id.toString())
+                expect(returnedUserData.role).to.equal('regular')
+            })
     })
 
     // --- NOTFOUND ERROR PATH ---

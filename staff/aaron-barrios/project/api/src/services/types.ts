@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose"
 
 
 // --- TYPES DE LOS DATOS DE NEGOCIO (SERVICIO)
-export interface UserType {
+export type UserType = {
     id: string
     name: string
     lastName: string
@@ -13,7 +13,12 @@ export interface UserType {
     createdAt: Date
 }
 
-export interface WorkoutType {
+export type AuthUserType = {
+    id: string
+    role: string
+}
+
+export type WorkoutType = {
     id: string            // => añado los ids para interacciones clave o navegaciones
     name: string
     muscleGroup: string
@@ -37,7 +42,7 @@ export interface WorkoutType {
     savedByMe?: boolean   // => si el usuario actual lo ha guardado
 }
 
-export interface editWorkoutType {
+export type EditWorkoutType = { //RORO pattern (used when there are variable parameters)
     name?: string
     muscleGroup?: string
     type?: string
@@ -45,3 +50,4 @@ export interface editWorkoutType {
     description?: string
     images?: string[]
 }
+
