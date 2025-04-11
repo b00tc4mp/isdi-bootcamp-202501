@@ -18,6 +18,13 @@ export type AuthUserType = {
     role: string
 }
 
+export type TokenPayload = {
+    sub: {
+        id: string
+        role: string
+    }
+}
+
 export type WorkoutType = {
     id: string            // => añado los ids para interacciones clave o navegaciones
     name: string

@@ -4,9 +4,8 @@ import getUserWorkouts from "./getUserWorkouts"
 import { expect } from "chai"
 import * as chai from "chai"
 import chaiAsPromised from "chai-as-promised"
-import { Types } from "mongoose"
 import { errors } from "com"
-import { IWorkout } from "../../data/types"
+
 import { WorkoutType } from "../types"
 
 chai.use(chaiAsPromised)
@@ -36,8 +35,8 @@ describe('getWorkouts', () => {
             { name: 'Frank', lastName: 'Pereira', email: 'fran@kie.com', alias: 'frankie', password: 'fafafa' }
         ])
             .then(([_user, _user2]) => {
-                user = _user
-                user2 = _user2
+                user = { id: _user._id.toString() }
+                user2 = { id: _user2._id.toString() }
             })
             .then(() => {
                 return Workout.insertMany([

@@ -1,16 +1,19 @@
 import { ObjectId } from 'mongoose'
 import { User, Workout } from '../../data/models/index.js'
-import { IWorkout } from '../../data/types.js'
+import { WorkoutDocType } from '../../data/types.js'
 import { errors, validate } from 'com'
+import { Schema } from 'mongoose'
+
+const { Types: { ObjectId } } = Schema
 
 const { SystemError, NotFoundError } = errors
 
 const createWorkout = (
-    author: ObjectId,
+    author: string,
     name: string,
     muscleGroup: string,
     description: string
-) => {
+): Promise<void> => {
     validate.name(name)
     validate.text(muscleGroup)
     validate.text(description)
@@ -20,18 +23,18 @@ const createWorkout = (
         .then(user => {
             if (!user) throw new NotFoundError('User not found!')
 
-            const newWorkout: Partial<IWorkout> = {
-                author,
+            const newWorkout: Pick<WorkoutDocType, "author" | "name" | "muscleGroup" | "description" | "status"> = {
+                author: new ObjectId(author),
                 name,
                 muscleGroup,
-                description
+                description,
+                status: "pending"
             }
-
-            newWorkout.status = 'pending'
 
             return Workout.create(newWorkout)
                 .catch(error => { throw new SystemError(error.message) })
         })
+        .then(() => { })
 }
 
 export default createWorkout

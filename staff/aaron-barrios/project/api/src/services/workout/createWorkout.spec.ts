@@ -8,14 +8,14 @@ const { NotFoundError } = errors
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
-describe.only('createWorkout', () => {
+describe('createWorkout', () => {
     before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => User.deleteMany({}))
 
     //--- HAPPY PATH---
     it('succeeds on createWorkout', () => {
-        return createWorkout('67eac3e1cb202d76cec69964', 'press bench', 'chest', 'best workout to grow chest')
+        return createWorkout('67f7ead50be2993a41072cfa', 'press bench', 'chest', 'best workout to grow chest')
             .then(() => Workout.find({ author: '67eac3e1cb202d76cec69964' }).lean())
             .then(workout => {
                 expect(workout).not.to.be.undefined

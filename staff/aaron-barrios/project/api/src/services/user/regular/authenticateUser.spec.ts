@@ -35,7 +35,7 @@ describe('authenticateUser', () => {
             .then(userData => returnedUserData = userData)
             .finally(() => {
                 expect(returnedUserData.id).to.equal(createdUser?._id.toString())
-                expect(returnedUserData.role).to.equal('regular')
+                expect(returnedUserData.role).to.equal("regular")
             })
     })
 

@@ -10,7 +10,6 @@ const registerUser = (
     lastName: string,
     email: string,
     alias: string,
-    level: string,
     password: string
 ): Promise<void> => {
     validate.name(name)
@@ -27,7 +26,6 @@ const registerUser = (
                 lastName,
                 email,
                 alias,
-                level: "beginner",
                 password: hash
             }
 

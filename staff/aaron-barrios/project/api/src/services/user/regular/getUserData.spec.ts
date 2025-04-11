@@ -7,8 +7,6 @@ import getUserData from "./getUserData"
 
 import { Types } from "mongoose"
 import { errors } from "com"
-import { string } from "zod"
-import { level } from "winston"
 
 const { NotFoundError } = errors
 const { ObjectId } = Types
@@ -50,6 +48,11 @@ describe("getUserData", () => {
         let catchedError: Error
 
         return getUserData(new ObjectId().toString())
+            .catch(error => catchedError = error)
+            .finally(() => {
+                expect(catchedError).to.be.instanceOf(NotFoundError)
+                expect(catchedError.message).to.equal('User not found!')
+            })
     })
 
     afterEach(() => User.deleteMany({}))

@@ -20,7 +20,7 @@ describe('registerUser', () => {
         debugger
         let result2: void
 
-        return registerUser("Manu", "Barzi", "manu@barzi.com", "manu", "intermediate", "mamama")
+        return registerUser("Manu", "Barzi", "manu@barzi.com", "manu", "mamama")
             .then(result => result2 = result)
             .finally(() => expect(result2).to.be.undefined)
             .then(() => User.findOne({ alias: "manu" }).lean())
@@ -47,12 +47,11 @@ describe('registerUser', () => {
                     lastName: "Barzi",
                     email: "manu@barzi.com",
                     alias: "manu",
-                    level: "intermediate",
                     password: hashedPassword
                 })
             })
 
-            .then(() => registerUser("Manu", "Barzi", "manu@barzi.com", "manu", "intermediate", "mamama"))
+            .then(() => registerUser("Manu", "Barzi", "manu@barzi.com", "manu", "mamama"))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(DuplicityError)
