@@ -4,6 +4,8 @@ import { authenticateUser } from './authenticateUser.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
+console.log(MONGO_URL, MONGO_DB)
+
 console.info('TEST authenticateUser')
 
 data.connect(MONGO_URL, MONGO_DB)
@@ -11,7 +13,7 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let id2
 
-            return authenticateUser('dallen@31.com', '123123123')
+            return authenticateUser('lo@la.com', '123123123')
                 .then(id => id2 = id)
                 .finally(() => console.assert(typeof id2 === 'string', 'userId is a string'))
 

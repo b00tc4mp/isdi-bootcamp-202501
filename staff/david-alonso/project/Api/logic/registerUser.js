@@ -12,10 +12,16 @@ export const registerUser = (name, email, password) => {
     validate.email(email)
     validate.password(password)
 
-    return bcrypt.hash(password, 10)
+    return User.findOne({ $or: [{ email }] })
         .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (user) throw new DuplicityError('user already exists')
 
-        .then(has => {
+            return bcrypt.hash(password, 10)
+                .catch(error => { throw new SystemError(error.message) })
+        })
+
+        .then(hash => {
             const user = {
                 name: name,
                 email: email,

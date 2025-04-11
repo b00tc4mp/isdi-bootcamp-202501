@@ -1,6 +1,5 @@
-import { registerUser } from "./registerUser"
-import { authenticateUser } from "./authenticateUser"
-
+import { authenticateUser } from './authenticateUser.js'
+import { registerUser } from './registerUser.js'
 
 export const logic = {
     registerUser,

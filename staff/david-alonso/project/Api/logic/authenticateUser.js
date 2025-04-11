@@ -1,4 +1,4 @@
-import { User } from '../data/index.js'
+import { User } from '../data/models.js'
 import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 

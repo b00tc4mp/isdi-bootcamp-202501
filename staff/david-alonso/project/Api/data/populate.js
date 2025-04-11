@@ -2,6 +2,7 @@ import 'dotenv/config'
 import { data, User } from './index.js'
 import bcrypt from 'bcryptjs'
 
+
 const { MONGO_URL, MONGO_DB } = process.env
 
 data.connect(MONGO_URL, MONGO_DB)
@@ -17,8 +18,14 @@ data.connect(MONGO_URL, MONGO_DB)
                         name: 'Dallen',
                         email: 'dallen@31.com',
                         password: hash
+                    },
+                    {
+                        name: 'Yuki',
+                        email: 'Yuki@31.com',
+                        password: hash
                     }
                 ])
             })
+
     })
     .finally(() => data.disconnect())

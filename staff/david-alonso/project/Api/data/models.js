@@ -1,8 +1,5 @@
-import { constant } from 'com/constant.js'
-import { Schema, model, Types } from 'mongoose'
-
-const { ObjectId } = Types
-
+import { constant } from "com"
+import { Schema, model } from "mongoose"
 
 const user = new Schema({
     name: {
@@ -36,73 +33,9 @@ const user = new Schema({
 
 })
 
-
-const vehicle = new Schema({
-    //     ????
-    id: {
-        type: ObjectId,
-        ref: 'Vehicle'
-    },
-    // COCHE-MOTO-SC    ????
-    type: {
-        type: String,
-
-        required: true
-    },
-    // G-D-E-H    ????
-    supplyType: {
-        type: String,
-
-        required: true
-    },
-    // MARCA
-    brand: {
-        type: String,
-        required: true,
-        maxLength: 20
-    },
-    // MODELO
-    model: {
-        type: String,
-        required: true,
-        maxLength: 20
-    },
-    // AÑO
-    year: {
-        type: Number,
-        required: true
-    },
-    // MATRICULA
-    licensePlate: {
-        type: String,
-        required: true,
-        maxLength: 10
-    },
-    // KM
-    km: {
-        type: Number,
-        required: true,
-        maxLength: 10
-    },
-    // FECHA ITV
-    inspectionDate: {
-        type: Date,
-        required: true
-    },
-    // COLOR
-    color: {
-        type: String,
-        required: true,
-        maxLength: 20
-    }
-
-})
-
 const User = model('User', user)
 
-// const Vehicle = model('Vehicle', vehicle)
-
-// export {
-//     User,
-//     Vehicle
-// }
+export {
+    User,
+    // Vehicle
+}

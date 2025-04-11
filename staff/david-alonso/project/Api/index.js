@@ -13,7 +13,7 @@ data.connect(MONGO_URL, MONGO_DB)
 
         api.use(cors())
 
-        api.get('/', (req, res) => res.semd('Hello, API!'))
+        api.get('/', (req, res) => res.send('Hello, API!'))
 
         // api.use('/users', users)
 
