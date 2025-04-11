@@ -5,7 +5,9 @@ import errorHandler from "./middlewares/errorHandler"
 import loggers from "./logs/index"
 
 import { data } from "./data/index"
+
 import { userRouter } from "./routes/users"
+import { workoutRouter } from "./routes/workouts"
 
 const { morganMiddleware } = loggers
 
@@ -29,8 +31,12 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
 
         api.use(morganMiddleware)
 
+        // api.use(express.json())
+
+        // --- ROUTES --- 
         api.use("/users", userRouter)
-        // api.use("/workouts", userRouter)
+        api.use("/workouts", workoutRouter)
+
 
         // api.get("/", (req, res) => res.send("Hello, API!"))
         api.get("/ping", (_req: Request, res: Response) => {
