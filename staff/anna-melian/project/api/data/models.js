@@ -34,6 +34,10 @@ const user = new Schema({
         type: Date,
         required: true,
         default: Date.now
+    }, gems: {
+        type: Number,
+        required: true,
+        default: 0
     },
     modifiedAt: {
         type: Date,

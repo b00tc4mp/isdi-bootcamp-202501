@@ -3,9 +3,9 @@ Organize your tasks by assigning a specific time to each one. You can take break
 
 ## Introduction
 
-In **TimeArt**, your objective is to complete the set time, which will reward you with collectible gems, while giving up might make you lose them! Your timers will be saved in your history so you can track your successes or failures.
+In **TimeArt**, your objective is to complete the set time you choose, destined to complete a task. Succed will reward you with collectible gems, while giving up might make you lose them! Your timers will be saved in your history so you can track your successes or failures.
 
-While the timer is running, you’re allowed to take a few breaks from the time you’ve set. And once you complete your goal, you’ll be able to add extra time up to twice — just in case you want to keep your concentration strong. ⏳💎
+While the timer is running, you’re allowed to take a few breaks with the time you’ve set. And once you complete your goal, you’ll be able to add extra time — just in case you want to keep your concentration strong. ⏳💎
 
 ![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExejVlYXg2OTYydHd6enZyNGIxY2lqM2pka2xpOHh1OHF5Y211eGJtMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/QdVmkR04rz7vbT3cx9/giphy.gif)
 
@@ -18,12 +18,12 @@ User:
 - Login
 - Logout
 - Create timer with a inital maxim duration of 120 minuts
-- Pause timer with the previously set time and allowd pauses since de total time (initial set time + pauses + extra time) is under 240 minutes (Timer page ⏳)
-- Add extra time allowed since the total time (initial set time + pauses + extra time) is under 240 (Timer page ⏳)
-- Exit timer (Timer page ⏳)
-- View my history where is information of all timers (history page)
-- Modified user data (Settings page)
-- Notifications and Sound configuration (Settings page ⚙️)
+- Pause timer with the previously set time up to 10 minutes, allowing a maximum of 8 pasues (Timer page ⏳)
+- Add extra time allowed since the total time (initial set time + extra time) is under 240 minutes (Timer page ⏳)
+- Exit the timer (Timer page ⏳)
+- See your history, which contains information about all past timers (history page 📄)
+- Modified user data (Settings page ⚙️)
+- Change the notifications and sound configuration (Settings page ⚙️)
 
 
 ### UIUX Design
@@ -36,7 +36,6 @@ User:
 
 - App
 - API
-- DB
 - COM
 - DOC
 
@@ -45,7 +44,6 @@ User:
 - app (...)
 - api (...)
 - com (...)
-- doc (documentation)
 
 ### Data Model
 
@@ -58,7 +56,7 @@ email: (string, max length 30)
 username: (string, min length 3, max length 20)
 password: (string, min length 8, max length 20)
 createdAt: (Date)
-?modifiedAt: (Date)
+modifiedAt?: (Date)
 gems: (number, min 0)
 }
 ```
@@ -67,14 +65,16 @@ gems: (number, min 0)
 ```js
 {
 id: (string, uuid)
+author: (ObjectId, ref: user.id)
 time: (number, max 120, min 5)
 start: (Date)
 end: (Date)
-status: (string, creating | active | exit | pause | extraTime  )
-pause: (number, max 10)
+status: (string, enum: creating | active | exit | pause | extraTime | end )
+pause: (number, max 10, min 0)
 pauses: (number, max 8)
-?extraTime: (number, max 115, min 5)
-?extras: (number max 2)
+extraTime?: (number, max 120, min 5)
+extras?: (number)
+tag:(string)
 createdAt: (Date)
 }
 ```
@@ -85,8 +85,10 @@ createdAt: (Date)
 - HTML / CSS / JS
 - React / Vite, TailwindCSS
 - Express / Node.js
-- Testing: Mocha + Chai
-- Data Base: MongoDb
+- Mocha + Chai
+- MongoDb / Mongoose
+- jwt
+- bcrypt
 
 ### Code Coverage
 
