@@ -6,15 +6,20 @@ import {
 } from "../data/schemas/zodSchemas"
 import registerUserHandler from "../handlers/registerUserHandler"
 import authenticateUserHandler from "../handlers/authenticateUserHandler"
+import getUserDataHandler from "../handlers/getUserDataHandler"
 import jsonBodyParser from "../middlewares/jsonBodyParser"
-// import authHandler from "../middlewares/authHandler.js"
+import authHandler from "../middlewares/authHandler.js"
 
 //instancia que creamos que utilizaremos para la llamada de cada petición a la API
 export const userRouter = Router()
 
 
 // --- GET USER ALIAS METHOD ---
-// userRouter.get("/self/alias', authHandler, getUserAliasHandler)
+userRouter.get(
+    "/self/data",
+    authHandler,
+    getUserDataHandler
+)
 
 
 // --- REGISTER USER METHOD ---
