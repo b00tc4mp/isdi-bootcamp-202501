@@ -57,7 +57,6 @@ const timer = new Schema({
         required: true,
         max: 120,
         min: 5,
-        match: constant.NUMBER_REGEX,
     },
     start: {
         type: Date,
@@ -70,23 +69,21 @@ const timer = new Schema({
     status: {
         type: String,
         enum: ['created', 'active', 'exit', 'pause', 'extraTime', 'end'],
+        default: 'created',
         required: true,
     },
     pause: {
         type: Number,
-        match: constant.NUMBER_REGEX,
         max: 10,
         min: 2,
     },
     pauses: {
         type: Number,
-        match: constant.NUMBER_REGEX,
         max: 8,
         min: 0,
     },
     extraTime: {
         type: Number,
-        match: constant.NUMBER_REGEX,
         max: 120,
         min: 5,
     },

@@ -6,9 +6,9 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     console.debug('Landing -> render')
     return <div>
         <h1>TimeArt</h1>
-        <button onClick={handleRegisterClick}>Login</button>
+        <button onClick={handleLoginClick}>Login</button>
         <p>or</p>
-        <button onClick={handleLoginClick}>Register</button>
+        <button onClick={handleRegisterClick}>Register</button>
 
     </div>
 }

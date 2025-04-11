@@ -11,9 +11,9 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let result2 = null
 
-            return createTimer('67f891682903cfec8fd90a55', 70, 'Work')
+            return createTimer('67f891682903cfec8fd90a55', 70, 5, 'Work')
                 .then(result => result2 = result)
-                .finally(() => console.assert(result2 === 'created', 'result is status = created'))
+                .finally(() => console.assert(result2 === undefined, 'result is undfined'))
         } catch (error) {
             console.error(error);
         }

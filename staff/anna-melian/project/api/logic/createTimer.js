@@ -3,10 +3,11 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const createTimer = (userId, time, tag) => {
+export const createTimer = (userId, time, pause, tag) => {
     validate.id(userId, 'userId')
     validate.time(time, 'time')
     validate.tag(tag, 'tag')
+    validate.pause(pause, 'pause')
 
     return User.findById(userId).lean()
         .catch(error => { throw new SystemError(error.message) })
@@ -16,18 +17,13 @@ export const createTimer = (userId, time, tag) => {
             const timer = {
                 author: userId,
                 time: time,
+                pause: pause,
                 tag: tag,
-                status: 'created'
             }
 
             return Timer.create(timer)
                 .catch(error => { throw new SystemError(error.message) })
 
         })
-        .then((createdTimer) => {
-            if (createdTimer.status !== 'created') {
-                throw new ValidationError(`Invalid status: ${createdTimer.status}`)
-            }
-            return createdTimer.status
-        })
+        .then(() => { })
 }

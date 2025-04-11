@@ -18,41 +18,91 @@ describe('createTimer', () => {
     beforeEach(() => Promise.all([User.deleteMany({}), Timer.deleteMany({})]))
 
     it('succeeds on existing user', () => {
-        let timerStatus
         let user
         let timer
 
-        return Promise.all([
-            User.create({
-                name: 'Harry Potter',
-                email: 'harry@potter.com',
-                username: 'GryffindorSeeker',
-                password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
-            })
-        ])
+        return Promise.all([User.create({
+            name: 'Harry Potter',
+            email: 'harry@potter.com',
+            username: 'GryffindorSeeker',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        })])
+
             .then(([_user]) => {
                 user = _user
             })
             .then(() => Promise.all([
-                Timer.create({ author: user.id, time: 50, tag: 'Study', status: 'created', createdAt: new Date(2025, 1, 11) })
+                Timer.create({ author: user.id, time: 50, pause: 3, tag: 'Study', status: 'created', createdAt: new Date(2025, 1, 11) })
             ]))
             .then(([_timer]) => {
                 timer = _timer
             })
-            .then(() => createTimer(user.id, 50, 'Study'))
-            .then(status => timerStatus = status)
-            .finally(() => {
-                expect(timerStatus).to.be.a('string')
-                expect(timerStatus).to.equal('created')
-
-            })
+            .then(() => createTimer(user.id, 50, 3, 'Study'))
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(timer => {
+                expect(timer.status).to.be.a('string')
+                expect(timer.status).to.equal('created')
                 expect(timer.time).to.equal(50)
+                expect(timer.pause).to.equal(3)
                 expect(timer.tag).to.equal('Study')
             })
 
     })
+
+    it('falis on non-existing user', () => {
+        let catchedError
+
+        return createTimer(new ObjectId().toString(), 80, 10, 'Work')
+            .catch(error => catchedError = error)
+            .finally(() => {
+                expect(catchedError).to.be.instanceOf(NotFoundError)
+                expect(catchedError.message).to.equal('user not found')
+            })
+    })
+
+    it('fails on invalid user id', () => {
+
+        expect(() => createTimer(123, 90, 10, 'Yoga')).to.throw(ValidationError, 'invalid userId type')
+        expect(() => createTimer('123', 100, 10, 'Exercice')).to.throw(ValidationError, 'invalid userId length')
+        expect(() => createTimer(' '.repeat(24), 110, 10, 'Play')).to.throw(ValidationError, 'invalid userId syntax')
+    })
+
+    it('fails on invalid time', () => {
+        return User.create({
+            name: 'Harry Potter',
+            email: 'harry@potter.com',
+            username: 'GryffindorSeeker',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        })
+            .then(() => User.findOne({ username: 'GryffindorSeeker' }).lean())
+            .then(user => {
+                expect(() => createTimer(user._id.toString(), '90', 10, 'Yoga')).to.throw(ValidationError, 'invalid time type')
+                expect(() => createTimer(user._id.toString(), 140, 10, 'Exercice')).to.throw(ValidationError, 'invalid time maxValue')
+                expect(() => createTimer(user._id.toString(), 3, 10, 'Exercice')).to.throw(ValidationError, 'invalid time minValue')
+                expect(() => createTimer(user._id.toString(), -4, 10, 'Play')).to.throw(ValidationError, 'invalid time syntax')
+            })
+
+    })
+
+    it('fails on invalid pause', () => {
+        return User.create({
+            name: 'Harry Potter',
+            email: 'harry@potter.com',
+            username: 'GryffindorSeeker',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        })
+            .then(() => User.findOne({ username: 'GryffindorSeeker' }).lean())
+            .then(user => {
+                expect(() => createTimer(user._id.toString(), 90, '10', 'Yoga')).to.throw(ValidationError, 'invalid time type')
+                expect(() => createTimer(user._id.toString(), 110, 15, 'Exercice')).to.throw(ValidationError, 'invalid time maxValue')
+                expect(() => createTimer(user._id.toString(), 35, 1, 'Exercice')).to.throw(ValidationError, 'invalid time minValue')
+                expect(() => createTimer(user._id.toString(), -5, 10, 'Play')).to.throw(ValidationError, 'invalid time syntax')
+            })
+
+    })
+
+
+
     afterEach(() => User.deleteMany({}))
 
     after(() => data.disconnect())

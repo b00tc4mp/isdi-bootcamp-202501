@@ -6,10 +6,25 @@ import { Register } from './view/Register.jsx'
 import { Login } from './view/Login.jsx'
 import { Timer } from './view/Timer/index.jsx'
 
+import { logic } from './logic/index.js'
+
 function App() {
+    const [loggedIn, setLoggedIn] = useState(null)
     const [showLanding, setShowLanding] = useState(true)
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        try {
+            const loggedIn = logic.isUserLoggedIn()
+
+            setLoggedIn(loggedIn)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.messsage)
+        }
+    }, [])
 
     const handleNavigateToRegister = () => {
         setShowLanding(false)
@@ -21,19 +36,34 @@ function App() {
         navigate('/login')
     }
 
+    const handleUserRegistered = () => {
+        setShowLanding(false)
+        navigate('/login')
+    }
+
+    const handleUserLoggedIn = () => {
+        setShowLanding(false)
+        setLoggedIn(true)
+        navigate('/create-timer')
+    }
+
+    const handleUserLoggedOut = () => {
+        setShowLanding(false)
+        setLoggedIn(false)
+        navigate('/login')
+    }
+
     console.debug('App -> render')
 
     return <>
-        <Routes>
-            <Route path="/register" element={<Register onNavigateToLogin={handleNavigateToLogin} />} />
+        {loggedIn !== null && <Routes>
+            <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
 
-            <Route path="/login" element={<Login onNavigateToRegister={handleNavigateToRegister} />} />
+            <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
 
-            <Route path="/" element={<Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
+            <Route path='/*' element={loggedIn ? <Timer onUserLoggedOut={handleUserLoggedOut} /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
 
-            <Route path="/*" element={<Timer />} />
-
-        </Routes>
+        </Routes>}
 
 
 

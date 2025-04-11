@@ -48,36 +48,31 @@ User:
 ### Data Model
 
 #### User
-```js
-{
-id: string (string, uuid)
-name: (string, min length 1, max length 20)
-email: (string, max length 30)
-username: (string, min length 3, max length 20)
-password: (string, min length 8, max length 20)
-createdAt: (Date)
-modifiedAt?: (Date)
-gems: (number, min 0)
-}
-```
+
+- id string (string, uuid)
+- name (string, min length 1, max length 20)
+- email (string, max length 30)
+- username (string, min length 3, max length 20)
+- password (string, min length 8, max length 20)
+- createdAt (Date)
+- modifiedAt (Date, optional)
+- gems (number, min 0)
+
 
 #### Timer
-```js
-{
-id: (string, uuid)
-author: (ObjectId, ref: user.id)
-time: (number, max 120, min 5)
-start: (Date)
-end: (Date)
-status: (string, enum: created | active | exit | pause | extraTime | end )
-pause: (number, max 10, min 2)
-pauses: (number, max 8)
-extraTime?: (number, max 120, min 5)
-extras?: (number)
-tag:(string, max lenght)
-createdAt: (Date)
-}
-```
+
+- id (string, uuid)
+- author (ObjectId,User.id)
+- time (number, max 120, min 5)
+- startDate (Date)
+- endDate (Date)
+- status (string, enum: created | active | exit | pause | extraTime | end )
+- pauseTime (number, max 10, min 2)
+- pausesCount (number, max 8)
+- extraTimes (array of number, max 120, min 5)
+- tag(string, max length)
+- createdAt (Date)
+
 
 
 ### Technologies

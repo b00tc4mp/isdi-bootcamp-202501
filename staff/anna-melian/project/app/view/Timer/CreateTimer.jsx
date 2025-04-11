@@ -1,4 +1,19 @@
-export function CreateTimer() {
+import { logic } from '../../logic/index.js'
+export function CreateTimer({ onUserLoggedOut }) {
+
+    const handleLogoutClick = () => {
+        const accepted = confirm('Logout?')
+        if (accepted) {
+            logic.logoutUser()
+
+            onUserLoggedOut()
+        } else {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
 
     console.debug('CreateTimer -> render')
 
@@ -10,6 +25,7 @@ export function CreateTimer() {
                 <p>00</p>
                 <p>GEM</p>
             </div>
+            <button type="button" onClick={handleLogoutClick}>Logout</button>
         </header>
 
         <main>
@@ -22,4 +38,5 @@ export function CreateTimer() {
             <button>Start</button>
         </main>
     </div>
+
 }

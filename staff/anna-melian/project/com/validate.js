@@ -61,5 +61,12 @@ export const validate = {
         this.maxValue(time, 120, explain)
         this.minValue(time, 5, explain)
 
+    },
+    pause(pause, explain = 'pause') {
+        this.number(pause, explain)
+        if (!constant.NUMBER_REGEX.test(pause)) throw new ValidationError(`invalid ${explain} syntax`)
+        this.maxValue(pause, 10, explain)
+        this.minValue(pause, 2, explain)
+
     }
 }
