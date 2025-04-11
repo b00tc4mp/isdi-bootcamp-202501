@@ -19,3 +19,10 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
             res.json({ token })
         })
 }))
+
+users.post('/', jsonBodyParser, withErrorHandling((req, res) => {
+    const { name, email, username, password } = req.body
+
+    return logic.registerUser(name, email, username, password)
+        .then(() => res.status(201).send())
+}))

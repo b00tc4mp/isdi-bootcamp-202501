@@ -1,8 +1,14 @@
-export function Landing() {
+export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
+    const handleRegisterClick = () => onNavigateToRegister()
+
+    const handleLoginClick = () => onNavigateToLogin()
+
+    console.debug('Landing -> render')
     return <div>
-        <button>Login</button>
+        <h1>TimeArt</h1>
+        <button onClick={handleRegisterClick}>Login</button>
         <p>or</p>
-        <button>Register</button>
+        <button onClick={handleLoginClick}>Register</button>
 
     </div>
 }

@@ -1,6 +1,6 @@
 import mongoose, { Types } from 'mongoose'
 import { errors } from 'com'
-import { User } from './models.js'
+import { User, Timer } from './models.js'
 
 const { SystemError } = errors
 
@@ -18,4 +18,5 @@ const data = {
 export {
     data,
     User,
+    Timer
 }
