@@ -34,10 +34,14 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
   }))
 
   // EndPoint para setear ganador
-  games.patch('/:gameId/winner', authHandler, withErrorHandling((req, res) => {
+  games.patch('/:gameId/winner', authHandler, jsonBodyParser,  withErrorHandling((req, res) => {
     const { gameId } = req.params
     const { winnerId } = req.body
     const { userId } = req
+
+    if (!winnerId || typeof winnerId !== 'string') {
+      throw new Error('Invalid or missing winnerId')
+    }
   
     return logic.setGameWinner(userId, gameId, winnerId)
       .then(() => res.status(204).send())

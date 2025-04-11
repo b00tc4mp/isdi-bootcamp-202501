@@ -1,33 +1,41 @@
-import React, { useState } from 'react'
-import { View, Text, Button, Alert, Modal, TextInput } from 'react-native'
-import { logic } from '../../logic'  // Asegúrate de importar correctamente la función de lógica
+import React, { useState, useEffect } from 'react'
+import { View, Text, Button, Alert } from 'react-native'
+import { logic } from '../../logic'
 import styles from './Profile.styles.js'
+import { CustomModal } from '../../components/index.js'  
 
 export default function ProfileScreen({ navigation }) {
-  const [userRole, setUserRole] = useState('regular')  // Estado para el rol del usuario
-  const [secretWord, setSecretWord] = useState('')  // Estado para la palabra secreta
-  const [modalVisible, setModalVisible] = useState(false)  // Estado para mostrar/ocultar el modal
+  const [userRole, setUserRole] = useState('regular')
+  const [modalVisible, setModalVisible] = useState(false)
+  const [secretWord, setSecretWord] = useState('')
 
-  // Función para manejar la solicitud de rol de admin
+  useEffect(() => {
+    logic.getUserRole()
+      .then((role) => setUserRole(role))
+      .catch((error) => Alert.alert('Error ❌', error.message))
+  }, [])
+
+
   const handleRequestAdminRole = () => {
-    setModalVisible(true)  // Muestra el modal para ingresar la palabra secreta
+    setModalVisible(true)
   }
 
-  const handleModalClose = () => {
-    setModalVisible(false)  // Cierra el modal sin hacer nada
-  }
-
-  const handleModalSubmit = () => {
+  const handleModalConfirm = () => {
     if (secretWord) {
-      logic.requestAdminRole(secretWord)  // Verifica si la función se llama correctamente
+      logic.requestAdminRole(secretWord)
         .then(() => {
-          setUserRole('admin')  // Actualizar el rol localmente
+          // Volvemos a consultar el rol desde el backend después de la actualización
+          return logic.getUserRole()
+        })
+        .then((role) => {
+          setUserRole(role)
           Alert.alert('Success', 'Your role has been updated to admin.')
-          setModalVisible(false)  // Cierra el modal
+          setModalVisible(false)
+          setSecretWord('') // limpiamos el input
         })
         .catch((error) => {
           Alert.alert('Error ❌', error.message || 'Something went wrong.')
-          setModalVisible(false)  // Cierra el modal
+          setModalVisible(false)
         })
     }
   }
@@ -35,29 +43,21 @@ export default function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
-      <Text>Your current role: {userRole}</Text> 
+      <Text>Your current role: {userRole}</Text>
       <Button title='Go to Home' onPress={() => navigation.navigate('Home')} />
       <Button title='Request Admin Role' onPress={handleRequestAdminRole} />
 
-      
-      <Modal
-        transparent={true}
-        animationType="slide"j
+      <CustomModal
         visible={modalVisible}
-        onRequestClose={handleModalClose}
-      >
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Enter Secret Word</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter the secret word"
-            value={secretWord}
-            onChangeText={setSecretWord}  // Actualiza el estado con el texto ingresado
-          />
-          <Button title='Cancel' onPress={handleModalClose} />
-          <Button title='OK' onPress={handleModalSubmit} />
-        </View>
-      </Modal>
+        onClose={() => setModalVisible(false)}
+        onConfirm={handleModalConfirm}
+        inputValue={secretWord}
+        setInputValue={setSecretWord}
+        title="Enter Secret Word"
+        placeholder="Enter the secret word"
+        confirmText="OK"
+        cancelText="Cancel"
+      />
     </View>
   )
 }
