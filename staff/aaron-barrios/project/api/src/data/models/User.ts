@@ -11,6 +11,11 @@ const user = new Schema<UserDocType>({
         minlength: 1,
         maxlength: 20
     },
+    role: {
+        type: String,
+        enum: ["moderator", "regular", "anonym"],
+        default: "regular"
+    },
     lastName: {
         type: String,
         required: true,
@@ -34,8 +39,8 @@ const user = new Schema<UserDocType>({
     },
     level: {
         type: String,
-        required: true,
-        enum: ["beginner", "intermediate", "veteran"]
+        enum: ["beginner", "intermediate", "veteran"],
+        default: "beginner"
     },
     password: {
         type: String,

@@ -33,7 +33,7 @@ export const authenticateUserSchema = object({
     password: z
         .string()
         .min(3, 'Password must be at least 6 characters')
-        .max(50, 'Password must be at last 50 characters')
+        .max(80, 'Password must be at last 80 characters')
 })
 
 export const createWorkoutSchema = object({

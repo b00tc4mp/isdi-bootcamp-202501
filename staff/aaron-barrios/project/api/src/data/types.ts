@@ -3,7 +3,7 @@ import { ObjectId } from "mongoose"
 // --- TYPES DE LOS DATOS TRANSPORTE (DTO) => BASE DE DATOS
 export type UserDocType = {
     _id: ObjectId
-    role: 'moderator' | 'moderator' | 'anonym'
+    role: 'moderator' | 'regular' | 'anonym'
     name: string
     lastName: string
     email: string

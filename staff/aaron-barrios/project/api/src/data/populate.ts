@@ -1,0 +1,1 @@
+// db.users.insertOne({ name: 'eu', lastName: 'geni', email: 'eu@geni.com', alias: 'euge', password:'123123123'})
