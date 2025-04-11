@@ -1,5 +1,7 @@
 import { data } from '../../data/index.js'
-// TODO IMPORT ERRORS
+import { errors, validate } from '../../validations/index.js'
+
+const { SystemError } = errors
 
 export const getUsername = () => {
     return data.token

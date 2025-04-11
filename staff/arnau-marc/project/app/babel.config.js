@@ -1,9 +1,21 @@
-// babel.config.js
+
 export default function (api) {
-  api.cache(true);
+  api.cache(true)
+
   return {
     presets: ['babel-preset-expo'],
-    // Elimina cualquier referencia a nativewind aquí
-    // plugins: ['nativewind/babel'],  // Elimina esta línea si está presente
-  };
-};
+    plugins: [
+      ['module-resolver', {
+        extensions: ['.js', '.jsx'],
+        alias: {
+          com: '../com',           // ✅ correcto: com está fuera de app
+          '@logic': './logic',     // ✅ porque babel.config.js está en app/
+          '@view': './view',
+          '@data': './data',
+          '@util': './util',
+          '@assets': './assets'
+        }
+      }]
+    ]
+  }
+}
