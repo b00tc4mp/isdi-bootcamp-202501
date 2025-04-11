@@ -123,6 +123,22 @@ const Home = ({ navigation }) => {
         setModalVisible(false)
       })
   }
+
+  const handleDeleteGame = (gameId) => {
+    if(window.confirm('Delete Game?')){
+    return logic.deleteGame(gameId)
+      .catch(error => {
+        Alert.alert(error.message)
+      })
+      .then(() =>{
+        return logic.getGames()
+          .then(({games}) => setGames(games))
+          .catch(error => Alert.alert('Error ❌', error.message))
+      }
+      )
+    }else{ return }
+
+  }
   
 
   if (loading) {
@@ -165,6 +181,14 @@ const Home = ({ navigation }) => {
               <Button
               title="Set Winner"
               onPress={() => openWinnerModal(item._id)}
+              color="#d2691e"
+              />
+              )
+              }
+               {userRole === 'admin' && item.status === 'scheduled' &&  (
+              <Button
+              title="Delete Game"
+              onPress={() => handleDeleteGame(item._id)}
               color="#d2691e"
               />
               )

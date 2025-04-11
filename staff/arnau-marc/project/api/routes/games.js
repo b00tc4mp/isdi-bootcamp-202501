@@ -46,3 +46,12 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     return logic.setGameWinner(userId, gameId, winnerUsername)
       .then(() => res.status(204).send())
   }))
+
+// EndPoint para borrar juego 
+  games.delete('/:gameId', authHandler, withErrorHandling((req, res) => {
+    const { gameId } = req.params
+    const { userId } = req
+    
+    return logic.deleteGame(gameId, userId)
+      .then(() => res.status(204).send())
+  }))
