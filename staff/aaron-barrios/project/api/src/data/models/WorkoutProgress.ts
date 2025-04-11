@@ -6,12 +6,12 @@ const { ObjectId } = Types
 const workoutProgress = new Schema<WorkoutProgressDocType>({
     user: {
         type: ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true
     },
     workout: {
         type: ObjectId,
-        ref: 'Workout',
+        ref: "Workout",
         required: true
     },
     weightUsed: {
@@ -25,7 +25,7 @@ const workoutProgress = new Schema<WorkoutProgressDocType>({
     }
 })
 
-const WorkoutProgress = model<WorkoutProgressDocType>('WorkoutProgress', workoutProgress)
+const WorkoutProgress = model<WorkoutProgressDocType>("WorkoutProgress", workoutProgress)
 
 export {
     WorkoutProgress

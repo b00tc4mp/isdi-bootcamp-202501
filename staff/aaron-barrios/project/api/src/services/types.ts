@@ -26,7 +26,7 @@ export type WorkoutType = {
     difficulty: string
     description: string
     images: string[]
-    status: 'pending' | 'accepted' | 'declined'
+    status: "pending" | "accepted" | "declined"
     createdAt: Date
 
     author: {

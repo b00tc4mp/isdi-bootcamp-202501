@@ -4,7 +4,7 @@ import { errors, validate } from 'com'
 const { NotFoundError, SystemError } = errors
 
 const getUserAlias = (userId: string): Promise<string> => {
-    validate.id(userId, 'userId')
+    validate.id(userId)
 
     return User.findById(userId).lean()
         .catch(error => { throw new SystemError(error.message) })

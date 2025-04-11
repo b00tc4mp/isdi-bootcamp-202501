@@ -6,7 +6,7 @@ const { ObjectId } = Types
 const routine = new Schema<RoutineDocType>({
     author: {
         type: ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true
     },
     name: {
@@ -56,15 +56,16 @@ const routine = new Schema<RoutineDocType>({
     },
     likes: [{
         type: ObjectId,
-        ref: 'User'
+        ref: "User"
     }],
     saves: [{
         type: ObjectId,
-        ref: 'User'
+        ref: "User"
     }],
     status: {
         type: String,
-        required: true
+        required: true,
+        enum: ["pending", "accepted", "declined"]
     },
     frequencySuggestion: {
         type: String,
@@ -82,12 +83,12 @@ const routine = new Schema<RoutineDocType>({
     },
     workouts: [{
         type: ObjectId,
-        ref: 'RoutineWorkout',
+        ref: "RoutineWorkout",
         required: true
     }]
 })
 
-const Routine = model<RoutineDocType>('Routine', routine)
+const Routine = model<RoutineDocType>("Routine", routine)
 
 export {
     Routine

@@ -6,7 +6,7 @@ const { ObjectId } = Types
 const workout = new Schema<WorkoutDocType>({
     author: {
         type: ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true
     },
     name: {
@@ -46,15 +46,16 @@ const workout = new Schema<WorkoutDocType>({
     }],
     likes: [{
         type: ObjectId,
-        ref: 'User'
+        ref: "User"
     }],
     saves: [{
         type: ObjectId,
-        ref: 'User'
+        ref: "User"
     }],
     status: {
         type: String,
-        required: true
+        required: true,
+        enum: ["pending", "accepted", "declined"]
     },
     createdAt: {
         type: Date,
@@ -63,7 +64,7 @@ const workout = new Schema<WorkoutDocType>({
     }
 })
 
-const Workout = model<WorkoutDocType>('Workout', workout)
+const Workout = model<WorkoutDocType>("Workout", workout)
 
 export {
     Workout

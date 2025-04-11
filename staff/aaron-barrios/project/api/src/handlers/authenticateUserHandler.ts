@@ -1,16 +1,11 @@
-import { Response } from "express"
+import { Request, Response } from "express"
 import createFunctionalHandler from "../middlewares/createFunctionalHandler.js"
-import { CustomRequestBody } from "../data/types.js"
 import services from "../services/index.js"
 
-type AuthUserData = {
-    alias: string
-    password: string
-}
 
-const authenticateUserHandler = createFunctionalHandler<AuthUserData>(
-    (req, res: Response) => {
-        const { alias, password } = (req as CustomRequestBody<AuthUserData>).body
+const authenticateUserHandler = createFunctionalHandler(
+    (req: Request, res: Response) => {
+        const { alias, password } = req.body
 
         return services.authenticateUser(alias, password).then(userId => {
             res.json(userId)

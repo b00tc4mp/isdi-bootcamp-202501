@@ -1,5 +1,4 @@
 import { ObjectId } from "mongoose"
-import { Request } from "express"
 
 // --- TYPES DE LOS DATOS TRANSPORTE (DTO) => BASE DE DATOS
 export type UserDocType = {
@@ -10,7 +9,7 @@ export type UserDocType = {
     email: string
     alias: string
     password: string
-    level?: string
+    level: 'beginner' | 'intermediate' | 'veteran'
     interests?: string[]
     createdAt: Date,
     modifiedAt: Date,
@@ -75,9 +74,3 @@ export type RoutineDocType = {
     workouts: RoutineWorkoutDocType[]
     __v: number
 }
-
-// export type UserFromRequest = Omit<IUser, "id">
-
-// export type CustomRequestBody<T> extends Request = {
-//     body: T;
-// }

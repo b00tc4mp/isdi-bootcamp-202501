@@ -7,7 +7,7 @@ const { ObjectId } = Types
 const routineWorkout = new Schema<RoutineWorkoutDocType>({
     workout: {
         type: ObjectId,
-        ref: 'Workout',
+        ref: "Workout",
         required: true
     },
     order: {
@@ -36,7 +36,7 @@ const routineWorkout = new Schema<RoutineWorkoutDocType>({
     }
 })
 
-const RoutineWorkout = model<RoutineWorkoutDocType>('RoutineWorkout', routineWorkout)
+const RoutineWorkout = model<RoutineWorkoutDocType>("RoutineWorkout", routineWorkout)
 
 export {
     RoutineWorkout

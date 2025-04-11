@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from "express"
 
-import { StatusCode } from './types.js'
-import { errors } from 'com'
-// import loggers from '../logs/index.js'
-import { ZodError } from 'zod'
-import jwt from 'jsonwebtoken'
+import { StatusCode } from "./types.js"
+import { errors } from "com"
+import { ZodError } from "zod"
+import jwt from "jsonwebtoken"
+import loggers from "../logs/index.js"
 
+const { logger } = loggers
 const { JsonWebTokenError, TokenExpiredError } = jwt
 
 const {
@@ -57,21 +58,23 @@ const errorHandler =
             case error instanceof TokenExpiredError:
                 status = 401
                 errorName = AuthorizationError.name
-                message = 'expired JWT'
+                message = "expired JWT"
                 break
             case error instanceof JsonWebTokenError:
                 status = 401
                 errorName = AuthorizationError.name
-                message = 'invalid JWT signature'
+                message = "invalid JWT signature"
                 break
             case error instanceof ZodError:
                 status = 400
                 errorName = ValidationError.name
-                message = error.errors.map((error) => error.message).join(', ')
+                message = error.errors.map((error) => error.message).join(", ")
                 break
         }
 
         res.status(status).json({ error: errorName, message })
+
+        logger.error(error) // => envia los errores a la consola
     }
 
 export default errorHandler

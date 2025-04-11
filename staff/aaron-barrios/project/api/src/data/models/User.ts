@@ -32,6 +32,11 @@ const user = new Schema<UserDocType>({
         maxlength: 16,
         unique: true
     },
+    level: {
+        type: String,
+        required: true,
+        enum: ["beginner", "intermediate", "veteran"]
+    },
     password: {
         type: String,
         required: true,
@@ -49,15 +54,15 @@ const user = new Schema<UserDocType>({
     },
     workouts: [{
         type: ObjectId,
-        ref: 'Workout'
+        ref: "Workout"
     }],
     routines: [{
         type: ObjectId,
-        ref: 'Routine'
+        ref: "Routine"
     }]
 })
 
-const User = model<UserDocType>('User', user)
+const User = model<UserDocType>("User", user)
 
 export {
     User

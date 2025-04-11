@@ -20,42 +20,43 @@ describe('registerUser', () => {
         debugger
         let result2: void
 
-        return registerUser('Manu', 'Barzi', 'manu@barzi.com', 'manu', 'mamama')
+        return registerUser("Manu", "Barzi", "manu@barzi.com", "manu", "intermediate", "mamama")
             .then(result => result2 = result)
             .finally(() => expect(result2).to.be.undefined)
-            .then(() => User.findOne({ alias: 'manu' }).lean())
+            .then(() => User.findOne({ alias: "manu" }).lean())
             .then(user => {
                 expect(user).to.exist
-                expect(user?.name).to.equal('Manu')
-                expect(user?.lastName).to.equal('Barzi')
-                expect(user?.email).to.equal('manu@barzi.com')
-                expect(user?.alias).to.equal('manu')
+                expect(user?.name).to.equal("Manu")
+                expect(user?.lastName).to.equal("Barzi")
+                expect(user?.email).to.equal("manu@barzi.com")
+                expect(user?.alias).to.equal("manu")
 
-                return bcrypt.compare('mamama', user!.password!)
+                return bcrypt.compare("mamama", user!.password!)
             })
             .then(match => expect(match).to.be.true)
     })
 
     //--- DUPLICITY ERROR PATH ---
-    it('fails on existing user', () => {
+    it("fails on existing user", () => {
         let catchedError: Error
 
-        return bcrypt.hash('mamama', 10)
+        return bcrypt.hash("mamama", 10)
             .then(hashedPassword => {
                 return User.create({
-                    name: 'Manu',
-                    lastName: 'Barzi',
-                    email: 'manu@barzi.com',
-                    alias: 'manu',
+                    name: "Manu",
+                    lastName: "Barzi",
+                    email: "manu@barzi.com",
+                    alias: "manu",
+                    level: "intermediate",
                     password: hashedPassword
                 })
             })
 
-            .then(() => registerUser('Manu', 'Barzi', 'manu@barzi.com', 'manu', 'mamama'))
+            .then(() => registerUser("Manu", "Barzi", "manu@barzi.com", "manu", "intermediate", "mamama"))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(DuplicityError)
-                expect(catchedError.message).to.equal('User already exists!')
+                expect(catchedError.message).to.equal("User already exists!")
             })
     })
 

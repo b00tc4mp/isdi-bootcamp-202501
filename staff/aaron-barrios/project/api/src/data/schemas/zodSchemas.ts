@@ -36,5 +36,17 @@ export const authenticateUserSchema = object({
         .max(50, 'Password must be at last 50 characters')
 })
 
+export const createWorkoutSchema = object({
+    alias: z
+        .string()
+        .min(1, 'Alias must be at least 1 character')
+        .max(16, 'Alias must be at last 16 characters'),
+    password: z
+        .string()
+        .min(3, 'Password must be at least 6 characters')
+        .max(50, 'Password must be at last 50 characters')
+})
+
 export type RegisterUserInput = z.infer<typeof registerUserSchema>
 export type userAuthInput = z.infer<typeof authenticateUserSchema>
+export type CreateWorkoutInput = z.infer<typeof createWorkoutSchema>

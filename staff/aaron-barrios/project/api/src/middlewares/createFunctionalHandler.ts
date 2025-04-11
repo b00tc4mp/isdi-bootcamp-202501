@@ -1,10 +1,9 @@
-import { NextFunction, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import { AsyncHandler } from "./types.js"
-import { CustomRequestBody } from '../data/types.js'
 
-const createFunctionalHandler = <T>(callback: AsyncHandler<T>) => {
+const createFunctionalHandler = (callback: AsyncHandler) => {
     return (
-        req: CustomRequestBody<T> /*| ICustomRequest*/,
+        req: Request,
         res: Response,
         next: NextFunction) => {
         return callback(req, res).catch(next)

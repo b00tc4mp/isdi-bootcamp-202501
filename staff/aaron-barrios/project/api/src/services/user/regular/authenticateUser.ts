@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs'
+
 import { User } from '../../../data/models'
 import { errors, validate } from 'com'
 import { AuthUserType } from '../../types'

@@ -1,8 +1,8 @@
-import { User } from './user.js'
-import { Workout } from './workout.js'
-import { WorkoutProgress } from './workoutProgress.js'
-import { RoutineWorkout } from './routineWorkout.js'
-import { Routine } from './routine.js'
+import { User } from './User'
+import { Workout } from './Workout'
+import { WorkoutProgress } from './WorkoutProgress'
+import { RoutineWorkout } from './RoutineWorkout'
+import { Routine } from './Routine'
 
 export {
     User,
