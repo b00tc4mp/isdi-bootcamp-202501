@@ -53,8 +53,9 @@ data.connect(MONGO_URL, MONGO_DB)
                         startDate: new Date(2025, 2, 1),
                         endDate: new Date(2025, 5, 1),
                         name: 'Winter Season',
+                        games: [game1, game2],
                         maxGames: 10,
-                        participants: [game1, game2],
+                        participants: [arnau.id, marc.id],
                         createdAt: new Date(2025, 2, 1),
                         modifiedAt: new Date()
                     },
@@ -62,8 +63,9 @@ data.connect(MONGO_URL, MONGO_DB)
                         startDate: new Date(2025, 6, 1),
                         endDate: new Date(2025, 9, 1),
                         name: 'Summer Season',
+                        games: [game1, game2],
                         maxGames: 10,
-                        participants: [game1, game2],
+                        participants: [marc.id, arnau.id],
                         createdAt: new Date(2025, 6, 1),
                         modifiedAt: new Date()
                     }

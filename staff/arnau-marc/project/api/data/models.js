@@ -67,6 +67,7 @@ const game = new Schema({
     season: {
         type: ObjectId,
         ref: 'Season',
+        required: true
     },
     status: {
         type: String,
@@ -129,6 +130,10 @@ const season = new Schema({
         minLength: 1,
         maxLength: 20,
         // match: TODO
+    },
+    games: {
+        type: ObjectId,
+        ref: 'Game'
     },
     maxGames: {
         type: Number,
