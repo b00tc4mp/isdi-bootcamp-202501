@@ -1,10 +1,10 @@
-//import { SystemError } from '../../com/errors'
+import { validate } from 'com'
 import { data } from '../../data'
 //import { validate, errors } from 'com'
 
 export const loginUser = (username, password) => {
-    //validate.username(username)
-    //validate.password(password)
+    validate.username(username)
+    validate.password(password)
 
     return fetch('http://localhost:8080/users/auth', {
         method: 'POST',

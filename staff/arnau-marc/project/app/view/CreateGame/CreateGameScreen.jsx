@@ -39,7 +39,7 @@ const CreateGameScreen = ({ navigation }) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Date (YYYY-MM-DD)"
+        placeholder="Date (DD-MM-YYYY)"
         value={date}
         onChangeText={setDate}
       />

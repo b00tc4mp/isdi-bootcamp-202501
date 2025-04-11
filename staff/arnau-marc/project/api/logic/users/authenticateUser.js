@@ -11,7 +11,7 @@ export const authenticateUser = (username, password) => {
     return User.findOne({ username }).lean()
         .catch(error => { throw new Error(error.message)}) // TODO SystemError
         .then(user=>{
-            if(!user) throw new  Error(error.message) // TODO NotFoundError
+            if(!user) throw new Error(error.message) // TODO NotFoundError
 
             return bcrypt.compare(password, user.password)
                 .catch(error => { throw new Error(error.message)})

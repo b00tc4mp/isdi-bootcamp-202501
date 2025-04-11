@@ -1,5 +1,6 @@
-// import { constant } from 'com' TODO
+import { constant }   from 'com'
 import { Schema, model, Types } from 'mongoose'
+
 
 const { ObjectId } = Types
 
@@ -16,21 +17,21 @@ const user = new Schema({
         required: true,
         minLength: 1,
         maxLength: 20,
-        // match: TODO
+        match: constant.EMPTY_OR_BLANK_REGEX && constant.NAME_REGEX
     },
     surname: {
         type: String,
         required: true,
         minLength: 1,
         maxLength: 20,
-        // match: TODO
+        match: constant.EMPTY_OR_BLANK_REGEX && constant.NAME_REGEX
     },
     email: {
         type: String,
         required: true,
         maxLength: 30,
-        unique: true
-        // match: TODO,
+        unique: true,
+        match: constant.EMPTY_OR_BLANK_REGEX && constant.EMAIL_REGEX
     },
     username: {
         type: String,
@@ -38,7 +39,7 @@ const user = new Schema({
         minLength: 3,
         maxLength: 20,
         unique: true,
-        // match: TODO
+        match: constant.EMPTY_OR_BLANK_REGEX && constant.USERNAME_REGEX
     },
     password: {
         type: String,
@@ -65,22 +66,23 @@ const game = new Schema({
         required: true
     },
     season: {
-        type: ObjectId,
+        type: String,
         ref: 'Season',
-        required: true
+        required: true,
+        match: constant.EMPTY_OR_BLANK_REGEX_MONGOOSE
     },
     status: {
         type: String,
         required: true,
-        // enum: scheduled | finished
+        enum: ['scheduled' , 'finished']
         // match: TODO
     },
     title: {
         type: String,
         minLength: 1,
         maxLength: 200,
-        required: true
-        // match: TODO
+        required: true,
+        match: constant.EMPTY_OR_BLANK_REGEX_MONGOOSE
     },
     participants: [{
         type: ObjectId,
@@ -88,14 +90,15 @@ const game = new Schema({
     }],
     date: {
         type: Date,
-        required: true
+        required: true,
+        match: constant.EMPTY_OR_BLANK_REGEX && constant.DATE_REGEX 
     },
     place: {
         type: String,
         minLength: 1,
         maxLength: 200,
-        required: true
-        // match: TODO
+        required: true,
+        match: constant.EMPTY_OR_BLANK_REGEX && constant.NAME_REGEX
     },
     winner: {
         type: ObjectId,
@@ -122,14 +125,15 @@ const season = new Schema({
     },
     endDate: {
         type: Date,
-        required: true
+        required: true,
+        match: constant.DATE_REGEX
     },
     name: {
         type: String,
         required: true,
         minLength: 1,
         maxLength: 20,
-        // match: TODO
+       
     },
     games: {
         type: ObjectId,
