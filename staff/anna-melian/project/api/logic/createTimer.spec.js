@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { data, User, Timer } from '../data/index.js'
 import { createTimer } from './createTimer.js'
-import { ValidationError, NotFoundError } from 'com/errors.js'
+import { ValidationError, NotFoundError, DuplicityError } from 'com/errors.js'
 import { expect } from 'chai'
 import * as chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
@@ -19,7 +19,6 @@ describe('createTimer', () => {
 
     it('succeeds on existing user', () => {
         let user
-        let timer
 
         return Promise.all([User.create({
             name: 'Harry Potter',
@@ -32,18 +31,15 @@ describe('createTimer', () => {
                 user = _user
             })
             .then(() => Promise.all([
-                Timer.create({ author: user.id, time: 50, pause: 3, tag: 'Study', status: 'created', createdAt: new Date(2025, 1, 11) })
+                Timer.create({ author: user.id, time: 50, pauseTime: 3, tag: 'Study', status: 'created', createdAt: new Date(2025, 1, 11) })
             ]))
-            .then(([_timer]) => {
-                timer = _timer
-            })
-            .then(() => createTimer(user.id, 50, 3, 'Study'))
+
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(timer => {
                 expect(timer.status).to.be.a('string')
                 expect(timer.status).to.equal('created')
                 expect(timer.time).to.equal(50)
-                expect(timer.pause).to.equal(3)
+                expect(timer.pauseTime).to.equal(3)
                 expect(timer.tag).to.equal('Study')
             })
 
@@ -84,7 +80,7 @@ describe('createTimer', () => {
 
     })
 
-    it('fails on invalid pause', () => {
+    it('fails on invalid pauseTime', () => {
         return User.create({
             name: 'Harry Potter',
             email: 'harry@potter.com',
@@ -93,17 +89,65 @@ describe('createTimer', () => {
         })
             .then(() => User.findOne({ username: 'GryffindorSeeker' }).lean())
             .then(user => {
-                expect(() => createTimer(user._id.toString(), 90, '10', 'Yoga')).to.throw(ValidationError, 'invalid time type')
-                expect(() => createTimer(user._id.toString(), 110, 15, 'Exercice')).to.throw(ValidationError, 'invalid time maxValue')
-                expect(() => createTimer(user._id.toString(), 35, 1, 'Exercice')).to.throw(ValidationError, 'invalid time minValue')
-                expect(() => createTimer(user._id.toString(), -5, 10, 'Play')).to.throw(ValidationError, 'invalid time syntax')
+                expect(() => createTimer(user._id.toString(), 90, '10', 'Yoga')).to.throw(ValidationError, 'invalid pause type')
+                expect(() => createTimer(user._id.toString(), 110, 15, 'Exercice')).to.throw(ValidationError, 'invalid pause maxValue')
+                expect(() => createTimer(user._id.toString(), 35, 1, 'Exercice')).to.throw(ValidationError, 'invalid pause minValue')
+                expect(() => createTimer(user._id.toString(), 70, -10, 'Play')).to.throw(ValidationError, 'invalid pause syntax')
+            })
+
+    })
+
+    it('fails on invalid tag', () => {
+        return User.create({
+            name: 'Harry Potter',
+            email: 'harry@potter.com',
+            username: 'GryffindorSeeker',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        })
+            .then(() => User.findOne({ username: 'GryffindorSeeker' }).lean())
+            .then(user => {
+                expect(() => createTimer(user._id.toString(), 90, 10, 123)).to.throw(ValidationError, 'invalid tag type')
+                expect(() => createTimer(user._id.toString(), 110, 7, 'Exerciceeeeeeeeeeeeeeeee')).to.throw(ValidationError, 'invalid tag maxLength')
+                expect(() => createTimer(user._id.toString(), 35, 1, 'Do')).to.throw(ValidationError, 'invalid tag minLength')
+                expect(() => createTimer(user._id.toString(), 70, 10, 'Play tennis')).to.throw(ValidationError, 'invalid tag syntax')
+            })
+
+    })
+
+    it('falis on user already have a timer created', () => {
+        let user
+        let timer
+
+        return Promise.all([User.create({
+            name: 'Hermione Granger',
+            email: 'hermione@granger.com',
+            username: 'Granger',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        })])
+
+            .then(([_user]) => {
+                user = _user
+            })
+            .then(() => Promise.all([
+                Timer.create({ author: user.id, time: 50, pauseTime: 3, tag: 'Study', status: 'created', createdAt: new Date(2025, 1, 11) })
+            ]))
+            .then(([_timer]) => {
+                timer = _timer
+            })
+            .then(() => User.findOne({ username: 'Granger' }).lean())
+            .then(user => {
+                createTimer(user._id.toString(), 80, 10, 'Work')
+                    .catch(error => catchedError = error)
+                    .then(() => {
+                        expect(catchedError).to.be.instanceOf(DuplicityError)
+                        expect(catchedError.message).to.equal('a timer already created')
+                    })
             })
 
     })
 
 
-
-    afterEach(() => User.deleteMany({}))
+    afterEach(() => User.deleteMany({}), Timer.deleteMany({}))
 
     after(() => data.disconnect())
 })

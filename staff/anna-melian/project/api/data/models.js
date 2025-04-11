@@ -58,11 +58,11 @@ const timer = new Schema({
         max: 120,
         min: 5,
     },
-    start: {
+    startDate: {
         type: Date,
         default: null,
     },
-    end: {
+    endDate: {
         type: Date,
         default: null,
     },
@@ -72,26 +72,19 @@ const timer = new Schema({
         default: 'created',
         required: true,
     },
-    pause: {
+    pauseTime: {
         type: Number,
         max: 10,
         min: 2,
     },
-    pauses: {
+    pausesCount: {
         type: Number,
         max: 8,
         min: 0,
     },
-    extraTime: {
-        type: Number,
-        max: 120,
-        min: 5,
-    },
-    extras: {
-        type: Number,
-        match: constant.NUMBER_REGEX,
-        max: 2,
-        min: 0,
+    extraTimes: {
+        type: Array,
+        default: []
     },
     tag: {
         type: String,
