@@ -8,7 +8,7 @@ import registerUserHandler from "../handlers/registerUserHandler"
 import authenticateUserHandler from "../handlers/authenticateUserHandler"
 import getUserDataHandler from "../handlers/getUserDataHandler"
 import jsonBodyParser from "../middlewares/jsonBodyParser"
-import authHandler from "../middlewares/authHandler.js"
+import authHandler from "../middlewares/authHandler"
 
 //instancia que creamos que utilizaremos para la llamada de cada petición a la API
 export const userRouter = Router()
