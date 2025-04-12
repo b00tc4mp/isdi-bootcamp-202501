@@ -1,5 +1,5 @@
-import { validate } from "./validate.js";
-import constant from "./constants.js";
-import errors from "./errors.js";
+import { validate } from "./validate";
+import constant from "./constants";
+import errors from "./errors";
 
 export { validate, errors, constant };

@@ -1,5 +1,5 @@
-import constant from "./constants.js";
-import { ValidationError } from "./errors.ts";
+import constant from "./constants";
+import { ValidationError } from "./errors";
 
 export const validate = {
   string: function (string: string, explain: string): void {
@@ -24,7 +24,12 @@ export const validate = {
   password: function (password: string, explain: string) {
     this.text(password, explain);
     this.minLength(password, 8, explain);
-    this.maxLength(password, 20, explain);
+    this.maxLength(password, 50, explain);
+  },
+  hashedPassword: function (password: string, explain: string) {
+    this.text(password, explain);
+    this.minLength(password, 50, explain);
+    this.maxLength(password, 100, explain);
   },
   maxLength: function (
     value: string,
