@@ -9,11 +9,11 @@
     "build": "tsc",
     "build:dev": "tsc -w",
     "test": "mocha services/*.spec.ts",
+    "populate": "node dist/data/populate.js",
     "inspect": "node --inspect-brk .",
     "test-inspect": "mocha --inspect-brk dist/services/**/*.spec.js",
     "compile": "npx tsc --watch",
     "compile-test": "npx tsc && mocha dist/services/**/*.spec.js",
-    "dev": "npm run build && npm run start:dev",
     "clean": "rm -rf dist"
   },
   "author": "",
