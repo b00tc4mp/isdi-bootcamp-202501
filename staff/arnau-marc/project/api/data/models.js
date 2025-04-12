@@ -89,7 +89,7 @@ const game = new Schema({
         ref: 'User'
     }],
     date: {
-        type: Date,
+        type: String,
         required: true,
         match: constant.EMPTY_OR_BLANK_REGEX && constant.DATE_REGEX 
     },
@@ -128,9 +128,15 @@ const season = new Schema({
         required: true,
         match: constant.DATE_REGEX
     },
+    status: {
+        type: String,
+        required: true,
+        enum: ['active' , 'finished']
+    },
     name: {
         type: String,
         required: true,
+        unique: true,
         minLength: 1,
         maxLength: 20,
        
@@ -139,10 +145,10 @@ const season = new Schema({
         type: ObjectId,
         ref: 'Game'
     },
-    maxGames: {
-        type: Number,
-        required: true
-    },
+    // maxGames: {
+    //     type: Number,
+    //     required: true
+    // },
     participants: [{
         type: ObjectId,
         ref: 'User'

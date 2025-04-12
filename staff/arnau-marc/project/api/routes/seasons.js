@@ -7,3 +7,35 @@ import { logic } from '../logic/index.js'
 const { JWT_SECRET } = process.env 
 
 export const seasons = Router()
+
+// Endpoint para calcular la tabla de classificación
+seasons.get('/:name/leaderboard', authHandler, withErrorHandling((req, res) => {
+    const { id: seasonName } = req.params
+
+    return logic.getSeasonLeaderboard(seasonName)
+        .then(leaderboard => res.json(leaderboard))
+}))
+
+// Marcar una season como finalizada (solo admin)
+seasons.patch('/:id/finish', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { id: seasonId } = req.params
+  
+    return logic.finishSeason(userId, seasonId)
+      .then(() => res.status(204).send())
+  }))
+
+  // Obtener la última temporada activa
+seasons.get('/latest', authHandler, withErrorHandling((req, res) => {
+    return logic.getLatestSeason()
+      .then(season => res.json(season))
+  }))
+  
+  // Crear nueva season (solo admin)
+seasons.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+  const { userId } = req
+  const { name, startDate, endDate } = req.body
+
+  return logic.createSeason(userId, { name, startDate, endDate })
+    .then(() => res.status(201).send())
+}))

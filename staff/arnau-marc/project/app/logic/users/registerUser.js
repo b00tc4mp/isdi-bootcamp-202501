@@ -1,5 +1,5 @@
-import { validate} from '../../com/validate.js'
-import { errors } from '../../com/errors.js'
+import { validate, errors} from '../../validations/index.js'
+
 const { SystemError } = errors
 
 

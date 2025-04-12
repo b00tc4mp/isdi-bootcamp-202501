@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Button, Alert } from 'react-native'
 import styles from './CreateGame.styles.js'
-import { logic } from '../../logic/index'
+import { logic } from '../../logic/index.js'
 
 const CreateGameScreen = ({ navigation }) => {
   const [title, setTitle] = useState('')

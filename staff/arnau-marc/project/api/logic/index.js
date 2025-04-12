@@ -11,6 +11,11 @@ import { deleteGame } from "./games/deleteGame.js"
 
 import { requestAdminRole } from "./profile/requestAdminRole.js"
 
+import { getSeasonLeaderboard } from "./season/getSeasonLeaderboard.js"
+import { finishSeason } from "./season/finishSeason.js"
+import { getLatestSeason } from "./season/getLatestSeason.js"
+import { createSeason } from "./season/createSeason.js"
+
 export const logic = {
     authenticateUser,
     registerUser,
@@ -24,4 +29,9 @@ export const logic = {
     deleteGame,
 
     requestAdminRole,
+
+    getSeasonLeaderboard,
+    finishSeason,
+    getLatestSeason,
+    createSeason,
 }

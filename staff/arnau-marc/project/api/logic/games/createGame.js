@@ -6,7 +6,7 @@ export const createGame = (userId, title, season, date, place) => {
   return User.findById(userId)
     .then(user => {
       if (!user) throw new Error('User not found')
-      //if (user.role !== 'admin') throw new Error('Only admins can create games')
+      if (user.role !== 'admin') throw new Error('Only admins can create games')
 
       const newGame = new Game({
         author: userId,

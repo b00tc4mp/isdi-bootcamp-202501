@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, View, Text, TextInput, Button } from 'react-native'
 import styles from './Modal.styles.js'
 
-export  function CustomModal({ visible, onClose, onConfirm, inputValue,setInputValue,title = 'Enter text',placeholder = 'Type here...',confirmText = 'Confirm',cancelText = 'Cancel', }) {
+export  function CustomModal({ visible, onClose, onConfirm, inputValue,setInputValue,title = 'Enter text',placeholder = 'Type here...',confirmText = 'Confirm',cancelText = 'Cancel',  showInput = true, }) {
   return (
     <Modal
     animationType="slide"
