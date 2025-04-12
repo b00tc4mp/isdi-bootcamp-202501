@@ -7,23 +7,25 @@ const { MONGO_URI, MONGO_DB_TEST } = process.env;
 
 describe("registerUser", () => {
   before(() => {
-    data.connect(MONGO_URI!, MONGO_DB_TEST!);
+    return data.connect(MONGO_URI!, MONGO_DB_TEST!);
   });
 
   beforeEach(() => {
-    User.deleteMany({});
+    return User.deleteMany({});
   });
 
   it("succeeds on registering user", () => {
+    debugger;
     return registerUser("Eugeni", "euge", "eu@ge.com", "123123123")
       .then(() => User.findOne({ name: "Eugeni" }).lean())
       .then((user) => expect(user?.name).to.equal("Eugeni"));
   });
+
   afterEach(() => {
-    User.deleteMany({});
+    return User.deleteMany({});
   });
 
   after(() => {
-    data.disconnect();
+    return data.disconnect();
   });
 });

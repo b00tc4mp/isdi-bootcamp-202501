@@ -15,7 +15,7 @@ interface IUser {
   name: string;
   username: string;
   email: string;
-  password: string; //should be type Password?
+  password: string;
   vans: ObjectId[];
   trips: ObjectId[];
   createdAt: Date;

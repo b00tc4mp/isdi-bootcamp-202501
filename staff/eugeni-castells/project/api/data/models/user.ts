@@ -18,7 +18,7 @@ const user = new Schema<IUser>({
     match: constant.EMAIL_REGEX,
     unique: true,
   },
-  password: { type: String, match: constant.PASSWORD_REGEX, required: true },
+  password: { type: String, required: true },
   role: {
     type: String,
     enum: ["regular", "moderator", "admin"],

@@ -1,10 +1,9 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import createFunctionalHandler from "../middlewares/createHandler";
-import { UserFromRequest, CustomRequestBody } from "../types";
-import { registerUser } from "../services";
+import { registerUser } from "../service";
 
-export const registerUserHandler = createFunctionalHandler<UserFromRequest>(
-  (req: CustomRequestBody<UserFromRequest>, res: Response) => {
+export const registerUserHandler = createFunctionalHandler(
+  (req: Request, res: Response) => {
     const { name, username, email, password } = req.body;
 
     return registerUser(name, username, email, password).then(() => {

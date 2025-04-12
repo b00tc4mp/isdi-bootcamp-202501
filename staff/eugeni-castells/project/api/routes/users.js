@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRouter = void 0;
+const express_1 = require("express");
+const jsonBodyParser_1 = require("../middlewares/jsonBodyParser");
+const zodSchemas_1 = require("../data/schemas/zodSchemas");
+const registerUserHandler_1 = require("../handlers/registerUserHandler");
+const validationHandler_1 = require("../middlewares/validationHandler");
+exports.userRouter = (0, express_1.Router)();
+exports.userRouter.post("/", jsonBodyParser_1.jsonBodyParser, (0, validationHandler_1.validationHandler)(zodSchemas_1.registerUserSchema), registerUserHandler_1.registerUserHandler);
+exports.userRouter.post("/", jsonBodyParser_1.jsonBodyParser, (0, validationHandler_1.validationHandler)(zodSchemas_1.userAuthSchema));

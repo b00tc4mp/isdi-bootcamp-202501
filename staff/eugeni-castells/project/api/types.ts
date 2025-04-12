@@ -9,7 +9,3 @@ export interface IUser {
 }
 
 export type UserFromRequest = Omit<IUser, "id">;
-
-export interface CustomRequestBody<T> extends Request {
-  body: T;
-}

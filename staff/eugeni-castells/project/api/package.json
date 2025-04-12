@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "mocha services/*.spec.ts",
+    "start": "npx tsc && node .",
+    "test": "mocha service/*.spec.js",
     "inspect": "node --inspect-brk .",
-    "test-inspect": "mocha --inspect-brk services/*.spec.ts"
+    "test-inspect": "mocha --inspect-brk service/*.spec.js",
+    "compile-test": "npx tsc && mocha service/*.spec.js",
+    "compile": "npx tsc --watch"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +30,7 @@
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.13.2"
+    "mongoose": "^8.13.2",
+    "zod": "^3.24.2"
   }
 }
