@@ -7,7 +7,6 @@ const { ObjectId } = Types
 const user = new Schema<UserDocType>({
     name: {
         type: String,
-        required: true,
         minlength: 1,
         maxlength: 20
     },
@@ -18,16 +17,8 @@ const user = new Schema<UserDocType>({
     },
     lastName: {
         type: String,
-        required: true,
-        minlength: 3,
+        minlength: 1,
         maxlength: 20
-    },
-    email: {
-        type: String,
-        required: true,
-        match: constant.EMAIL_REGEX,
-        maxlength: 30,
-        unique: true
     },
     alias: {
         type: String,
@@ -37,16 +28,27 @@ const user = new Schema<UserDocType>({
         maxlength: 16,
         unique: true
     },
-    level: {
+    email: {
         type: String,
-        enum: ["beginner", "intermediate", "veteran"],
-        default: "beginner"
+        required: true,
+        match: constant.EMAIL_REGEX,
+        maxlength: 30,
+        unique: true
     },
     password: {
         type: String,
         required: true,
         minlength: 3,
         maxlength: 80
+    },
+    level: {
+        type: String,
+        enum: ["beginner", "intermediate", "veteran"],
+        default: "beginner"
+    },
+    interests: {
+        type: [String],
+        default: []
     },
     createdAt: {
         type: Date,
@@ -65,6 +67,18 @@ const user = new Schema<UserDocType>({
         type: ObjectId,
         ref: "Routine"
     }]
+})
+
+// => middleware to remove default properties if user = moderator | anonym
+user.pre('validate', function (next) {
+    if (this.role !== 'regular') {
+        this.level = undefined
+        this.interests = undefined
+        this.workouts = undefined
+        this.routines = undefined
+    }
+
+    next()
 })
 
 const User = model<UserDocType>("User", user)

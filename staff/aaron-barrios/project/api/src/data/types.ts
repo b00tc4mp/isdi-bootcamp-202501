@@ -4,17 +4,17 @@ import { ObjectId } from "mongoose"
 export type UserDocType = {
     _id: ObjectId
     role: 'moderator' | 'regular' | 'anonym'
-    name: string
-    lastName: string
+    name?: string
+    lastName?: string
     email: string
     alias: string
     password: string
-    level: 'beginner' | 'intermediate' | 'veteran'
+    level?: 'beginner' | 'intermediate' | 'veteran'
     interests?: string[]
     createdAt: Date,
-    modifiedAt: Date,
-    workouts: ObjectId[]
-    routines: ObjectId[]
+    modifiedAt?: Date,
+    workouts?: ObjectId[]
+    routines?: ObjectId[]
     __v: number
 }
 
@@ -24,7 +24,7 @@ export type WorkoutDocType = {
     name: string
     muscleGroup: string
     type: string
-    difficulty: string
+    difficulty: 'easy' | 'medium' | 'hard'
     description: string
     images: string[]
     likes: ObjectId[]
