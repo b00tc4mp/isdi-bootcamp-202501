@@ -4,9 +4,10 @@ import services from "../services";
 
 const registerUserHandler = createFunctionalHandler(
     (req: Request, res: Response) => {
-        const { name, lastName, alias, email, level, password } = req.body;
+        const { alias, email, password } = req.body;
 
-        return services.registerUser(name, lastName, alias, email, level, password).then(() => {
+        console.log("📥 Body recibido en registerUserHandler:", req.body)
+        return services.registerUser(alias, email, password).then(() => {
             res.status(201).send();
         });
     }
