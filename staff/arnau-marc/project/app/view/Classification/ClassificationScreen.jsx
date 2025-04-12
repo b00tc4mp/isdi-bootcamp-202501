@@ -34,13 +34,29 @@ export default function ClassificationScreen({ navigation }) {
         setError(err.message)
       })
   }, [])
-
   const handleFinishSeason = () => {
     logic.finishSeason(season._id)
       .then(() => {
-        setSeason(null)
-        setLeaderboard([])
-        setError('No hay ninguna temporada activa actualmente')
+        // Recargar la season finalizada para ver quién ganó
+        return logic.getSeasonById(season._id)
+      })
+      .then(seasonEnded => {
+        const winnerId = seasonEnded.winner
+  
+        if (winnerId) {
+          return logic.getUserById(winnerId)
+            .then(user => {
+              window.alert(`Temporada finalizada 🎉\nGanador: ${user.username}`)
+              setSeason(null)
+              setLeaderboard([])
+              setError('No hay ninguna temporada activa actualmente')
+            })
+        } else {
+          window.alert('Temporada finalizada. No hubo ganador.')
+          setSeason(null)
+          setLeaderboard([])
+          setError('No hay ninguna temporada activa actualmente')
+        }
       })
       .catch(err => window.alert(`Error al finalizar: ${err.message}`))
   }

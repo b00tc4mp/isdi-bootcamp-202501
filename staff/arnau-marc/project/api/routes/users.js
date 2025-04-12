@@ -43,3 +43,14 @@ users.get('/self/role', authHandler, withErrorHandling((req, res) => {
     return logic.getUserRole(userId)
       .then(role => res.json({ role }))
   }))
+
+// Obtener info básica de un usuario por ID
+users.get('/:id', authHandler, withErrorHandling((req, res) => {
+    const { id } = req.params
+  
+    return User.findById(id).lean()
+      .then(user => {
+        if (!user) throw new NotFoundError('User not found')
+        res.json({ id: user._id.toString(), username: user.username })
+      })
+  }))

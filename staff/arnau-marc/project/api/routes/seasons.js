@@ -39,3 +39,11 @@ seasons.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
   return logic.createSeason(userId, { name, startDate, endDate })
     .then(() => res.status(201).send())
 }))
+
+// Obtener una season por ID
+seasons.get('/:id', authHandler, withErrorHandling((req, res) => {
+  const { id: seasonId } = req.params
+
+  return logic.getSeasonById(seasonId)
+    .then(season => res.json(season))
+}))

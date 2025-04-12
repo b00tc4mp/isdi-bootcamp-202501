@@ -24,7 +24,6 @@ export const getSeasonLeaderboard = (seasonName) => {
                 }
             })
         
-
             // Devolver como array ordenado
             return Object.entries(leaderboard)
                 .map(([userId, points]) => ({ userId, points}))

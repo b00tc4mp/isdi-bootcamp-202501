@@ -145,6 +145,10 @@ const season = new Schema({
         type: ObjectId,
         ref: 'Game'
     },
+    winner: {
+        type: ObjectId,
+        ref: 'User',
+    },  
     // maxGames: {
     //     type: Number,
     //     required: true

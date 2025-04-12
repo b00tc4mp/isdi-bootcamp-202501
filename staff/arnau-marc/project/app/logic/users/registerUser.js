@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-import { validate, errors} from '../../validations/index.js'
-
-const { SystemError } = errors
-=======
 import { errors, validate } from '../../validations/index.js'
->>>>>>> 5db12c2891bf9e80234498fd35bbf696a393d142
 
 const { SystemError } = errors
 

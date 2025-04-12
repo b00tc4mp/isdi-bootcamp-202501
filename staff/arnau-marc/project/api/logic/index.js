@@ -15,6 +15,7 @@ import { getSeasonLeaderboard } from "./season/getSeasonLeaderboard.js"
 import { finishSeason } from "./season/finishSeason.js"
 import { getLatestSeason } from "./season/getLatestSeason.js"
 import { createSeason } from "./season/createSeason.js"
+import { getSeasonById } from "./season/getSeasonById.js"
 
 export const logic = {
     authenticateUser,
@@ -34,4 +35,5 @@ export const logic = {
     finishSeason,
     getLatestSeason,
     createSeason,
+    getSeasonById
 }
