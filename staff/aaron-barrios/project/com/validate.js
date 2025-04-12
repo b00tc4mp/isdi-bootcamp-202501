@@ -45,7 +45,7 @@ exports.validate = {
     password(password, explain = 'password') {
         this.text(password, explain);
         this.minLength(password, 5, explain);
-        this.maxLength(password, 30, explain);
+        this.maxLength(password, 80, explain);
     },
     url(url, explain = 'url') {
         this.string(url, explain);
@@ -56,5 +56,11 @@ exports.validate = {
         this.text(id, explain);
         if (!constant_1.constant.OBJECT_ID_REGEX.test(id))
             throw new ValidationError(`invalid ${explain} syntax`);
+    },
+    token(token, explain = 'token') {
+        this.string(token, explain);
+        if (!constant_1.constant.TOKEN_REGEX.test(token)) {
+            throw new ValidationError(`invalid ${explain} syntax`);
+        }
     }
 };
