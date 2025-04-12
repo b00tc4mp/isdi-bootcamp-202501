@@ -20,16 +20,14 @@ describe('registerUser', () => {
         debugger
         let result2: void
 
-        return registerUser("Manu", "Barzi", "manu@barzi.com", "manu", "mamama")
+        return registerUser("manu", "manu@barzi.com", "mamama")
             .then(result => result2 = result)
             .finally(() => expect(result2).to.be.undefined)
             .then(() => User.findOne({ alias: "manu" }).lean())
             .then(user => {
                 expect(user).to.exist
-                expect(user?.name).to.equal("Manu")
-                expect(user?.lastName).to.equal("Barzi")
-                expect(user?.email).to.equal("manu@barzi.com")
                 expect(user?.alias).to.equal("manu")
+                expect(user?.email).to.equal("manu@barzi.com")
 
                 return bcrypt.compare("mamama", user!.password!)
             })
@@ -51,7 +49,7 @@ describe('registerUser', () => {
                 })
             })
 
-            .then(() => registerUser("Manu", "Barzi", "manu@barzi.com", "manu", "mamama"))
+            .then(() => registerUser("manu", "manu@barzi.com", "mamama"))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(DuplicityError)

@@ -18,7 +18,7 @@ const getUserData = (
 
             return {
                 alias: user.alias,
-                level: user.level
+                level: user.level ?? "beginner" // => Provides a default value for undefined
             }
         })
 }

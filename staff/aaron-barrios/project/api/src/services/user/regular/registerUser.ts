@@ -6,26 +6,20 @@ import { User } from '../../../data/models'
 const { SystemError, DuplicityError } = errors
 
 const registerUser = (
-    name: string,
-    lastName: string,
-    email: string,
     alias: string,
+    email: string,
     password: string
 ): Promise<void> => {
-    validate.name(name)
-    validate.name(lastName)
-    validate.email(email)
     validate.alias(alias)
+    validate.email(email)
     validate.password(password)
 
     return bcrypt.hash(password, 10)
         .catch(error => { throw new SystemError(error.message) })
         .then(hash => {
             const newUser: Partial<UserDocType> = {
-                name,
-                lastName,
-                email,
                 alias,
+                email,
                 password: hash
             }
 
