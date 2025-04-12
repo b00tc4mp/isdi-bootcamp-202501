@@ -14,7 +14,7 @@ const { NotFoundError, ValidationError } = errors
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
-describe('getWorkouts', () => {
+describe('get User Workouts', () => {
     before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => {

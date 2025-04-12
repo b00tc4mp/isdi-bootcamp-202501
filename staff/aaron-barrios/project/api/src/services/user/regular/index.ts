@@ -1,9 +1,9 @@
 import registerUser from './registerUser'
 import authenticateUser from './authenticateUser'
-import getUserAlias from './getUserAlias'
+import getUserData from './getUserData'
 
 export {
     registerUser,
     authenticateUser,
-    getUserAlias
+    getUserData
 }

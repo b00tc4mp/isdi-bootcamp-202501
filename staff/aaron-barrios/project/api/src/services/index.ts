@@ -6,7 +6,7 @@ import {
 import {
     registerUser,
     authenticateUser,
-    getUserAlias
+    getUserData
 } from './user/regular'
 
 
@@ -15,7 +15,7 @@ const services = {
 
     registerUser,
     authenticateUser,
-    getUserAlias
+    getUserData
 }
 
 export default services
