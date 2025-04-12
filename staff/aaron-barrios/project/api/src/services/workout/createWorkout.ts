@@ -1,19 +1,21 @@
-import { ObjectId } from 'mongoose'
-import { User, Workout } from '../../data/models/index.js'
-import { WorkoutDocType } from '../../data/types.js'
+// import { Types } from 'mongoose'
+// const { ObjectId } = Types
+
+import { User, Workout } from '../../data/models'
+import { WorkoutDocType } from '../../data/types'
 import { errors, validate } from 'com'
+
 import { Schema } from 'mongoose'
-
 const { Types: { ObjectId } } = Schema
-
 const { SystemError, NotFoundError } = errors
 
 const createWorkout = (
     author: string,
     name: string,
     muscleGroup: string,
-    description: string
+    description: string,
 ): Promise<void> => {
+    validate.id(author)
     validate.name(name)
     validate.text(muscleGroup)
     validate.text(description)

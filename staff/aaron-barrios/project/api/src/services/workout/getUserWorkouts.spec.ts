@@ -1,16 +1,18 @@
 import "dotenv/config"
-import { data, User, Workout } from "../../data"
-import getUserWorkouts from "./getUserWorkouts"
 import { expect } from "chai"
 import * as chai from "chai"
 import chaiAsPromised from "chai-as-promised"
-import { errors } from "com"
+import bcrypt from 'bcryptjs'
+import { Types } from "mongoose"
 
-import { WorkoutType } from "../types"
+import { data, User, Workout } from "../../data"
+import getUserWorkouts from "./getUserWorkouts"
+import { errors } from "com"
 
 chai.use(chaiAsPromised)
 
-const { NotFoundError, ValidationError } = errors
+const { NotFoundError } = errors
+const { ObjectId } = Types
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
@@ -25,42 +27,35 @@ describe('get User Workouts', () => {
     })
 
     //--- HAPPY PATH ---
-    it('succeds on getting Workouts', () => {
-        let returnedWorkouts: Array<WorkoutType>
-        let user: { id: string }, user2: { id: string }
-        let workout: object, workout2: object
+    it('succeeds on getting Workouts', async () => {
+        const hashedPassword = await bcrypt.hash('123123', 10)
 
-        return User.insertMany([
-            { name: 'Manu', lastName: 'Barzi', email: 'manu@barzi.com', alias: 'manu', password: 'mamama' },
-            { name: 'Frank', lastName: 'Pereira', email: 'fran@kie.com', alias: 'frankie', password: 'fafafa' }
+        const [_user, _user2] = await User.insertMany([
+            { name: 'Manu', lastName: 'Barzi', email: 'ma@nu.com', alias: 'manu', password: hashedPassword, role: 'regular', level: 'beginner', interests: [], createdAt: new Date(), modifiedAt: null },
+            { name: 'Frank', lastName: 'Pereira', email: 'fran@kie.com', alias: 'frankie', password: hashedPassword, role: 'regular', level: 'intermediate', interests: [], createdAt: new Date(), modifiedAt: null }
         ])
-            .then(([_user, _user2]) => {
-                user = { id: _user._id.toString() }
-                user2 = { id: _user2._id.toString() }
-            })
-            .then(() => {
-                return Workout.insertMany([
-                    { author: user.id, name: 'bench press', muscleGroup: 'chest', description: 'workout 1' },
-                    { author: user2.id, name: 'bench press', muscleGroup: 'chest', description: 'workout 2' }
-                ])
-            })
-            .then(([_workout, _workout2]) => {
-                workout = _workout
-                workout2 = _workout2
-            })
-            .then(() => getUserWorkouts(user2.id, user.id))
-            .then(workouts => returnedWorkouts = workouts)
-            .finally(() => {
-                expect(returnedWorkouts).to.be.instanceOf(Array)
-                expect(returnedWorkouts).to.have.lengthOf(2)
 
-                let returnedWorkout = returnedWorkouts[0]
-                expect(returnedWorkout.author.toString()).to.equal(user2.id)
-                // expect(returnedWorkout.name).to.equal(workout2.name)
-                // expect(returnedWorkout.muscleGroup).to.equal(musc)
-                // expect(returnedWorkout.description).to.equal()
+        const user = { id: _user._id.toString() }
+        const user2 = { id: _user2._id.toString() }
 
-            })
+        await Workout.insertMany([
+            { author: user.id, name: 'bench press', muscleGroup: 'chest', description: 'workout 1', difficulty: 'easy', type: 'strength', status: 'accepted' },
+            { author: user2.id, name: 'idc', muscleGroup: 'chest', description: 'workout 2', difficulty: 'easy', type: 'strength', status: 'accepted' }
+        ])
+
+        const returnedWorkouts = await getUserWorkouts(user.id, user.id)
+
+        expect(returnedWorkouts).to.be.instanceOf(Array)
+        expect(returnedWorkouts).to.have.lengthOf(1)
+        expect(returnedWorkouts[0].author.id).to.equal(user.id)
+
+    })
+
+    //--- NOTFOUND USER ERROR PATH ---
+    it('fails on existingUser', () => {
+        return expect(
+            getUserWorkouts(new ObjectId().toString(), new ObjectId().toString())
+        ).to.be.rejectedWith(NotFoundError, 'User not found!')
     })
 
     afterEach(() => {
