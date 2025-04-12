@@ -1,1 +1,3 @@
-import {} from "./zodSchemas.js";
+import { AuthenticationUserInput, RegisterUserInput } from "./zodSchemas.js";
+
+export { AuthenticationUserInput, RegisterUserInput };

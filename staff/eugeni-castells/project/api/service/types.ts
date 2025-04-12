@@ -1,0 +1,25 @@
+export type NewVanInfo = {
+  model: string;
+  brand: string;
+  year: Date;
+  images?: string[];
+  accessible?: boolean;
+  price?: number;
+  reviews?: string[];
+  location: string;
+  legal?: string[];
+  trips?: string[];
+  windows: number;
+  doors: number;
+  heating?: boolean;
+  airConditioning?: boolean;
+  bedCount: number;
+  insideKitchen?: boolean;
+  fridge?: boolean;
+  // toilet?: "fixed" | "portable" | "none";
+  // shower: "inside" | "outside" | "none";
+  // fuelType: "petrol" | "diesel" | "electric" | "hybrid";
+  storage?: number;
+  createdAt?: Date;
+  modifiedAt?: Date | null;
+};

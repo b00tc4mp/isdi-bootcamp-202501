@@ -1,8 +1,6 @@
 import { constant } from "com";
-import { Schema, model, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IUser } from "../interface";
-
-const { ObjectId } = Types;
 
 const user = new Schema<IUser>({
   name: { type: String, required: true, match: constant.NAME_REGEX },
@@ -27,7 +25,7 @@ const user = new Schema<IUser>({
   },
   vans: [
     {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       required: false,
       unique: true,
       ref: "Van",
@@ -35,7 +33,7 @@ const user = new Schema<IUser>({
   ],
   trips: [
     {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       required: false,
       unique: true,
       ref: "Trip",

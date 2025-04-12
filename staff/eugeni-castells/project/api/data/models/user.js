@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const com_1 = require("com");
 const mongoose_1 = require("mongoose");
-const { ObjectId } = mongoose_1.Types;
 const user = new mongoose_1.Schema({
     name: { type: String, required: true, match: com_1.constant.NAME_REGEX },
     username: {
@@ -27,7 +26,7 @@ const user = new mongoose_1.Schema({
     },
     vans: [
         {
-            type: ObjectId,
+            type: mongoose_1.Schema.Types.ObjectId,
             required: false,
             unique: true,
             ref: "Van",
@@ -35,7 +34,7 @@ const user = new mongoose_1.Schema({
     ],
     trips: [
         {
-            type: ObjectId,
+            type: mongoose_1.Schema.Types.ObjectId,
             required: false,
             unique: true,
             ref: "Trip",

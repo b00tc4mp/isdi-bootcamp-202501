@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Van = void 0;
 const mongoose_1 = require("mongoose");
-const { ObjectId } = mongoose_1.Types;
 const van = new mongoose_1.Schema({
     model: {
         type: String,
@@ -22,16 +21,16 @@ const van = new mongoose_1.Schema({
     price: { type: Number, min: 0, max: 1000 },
     reviews: [
         {
-            type: ObjectId,
+            type: mongoose_1.Schema.Types.ObjectId,
             required: true,
             unique: true,
             ref: "Review",
         },
     ],
-    location: { type: ObjectId, required: true, ref: "Location" },
+    location: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: "Location" },
     legal: [
         {
-            type: ObjectId,
+            type: mongoose_1.Schema.Types.ObjectId,
             required: false,
             unique: true,
             ref: "Doc",
@@ -39,7 +38,7 @@ const van = new mongoose_1.Schema({
     ],
     trips: [
         {
-            type: ObjectId,
+            type: mongoose_1.Schema.Types.ObjectId,
             required: false,
             unique: true,
             ref: "Trip",

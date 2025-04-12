@@ -11,6 +11,7 @@ import {
 } from "./types.js";
 
 interface IUser {
+  _id: ObjectId;
   role: Roles;
   name: string;
   username: string;
@@ -24,6 +25,7 @@ interface IUser {
 }
 
 interface IVan {
+  _id: ObjectId;
   windows: number;
   doors: number;
   heating: boolean;
@@ -50,6 +52,7 @@ interface IVan {
 }
 
 interface ITrip {
+  _id: ObjectId;
   startDate: Date;
   endDate: Date;
   van: ObjectId;

@@ -1,7 +1,5 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IVan } from "../interface";
-
-const { ObjectId } = Types;
 
 const van = new Schema<IVan>({
   model: {
@@ -22,16 +20,16 @@ const van = new Schema<IVan>({
   price: { type: Number, min: 0, max: 1000 },
   reviews: [
     {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       unique: true,
       ref: "Review",
     },
   ],
-  location: { type: ObjectId, required: true, ref: "Location" },
+  location: { type: Schema.Types.ObjectId, required: true, ref: "Location" },
   legal: [
     {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       required: false,
       unique: true,
       ref: "Doc",
@@ -39,7 +37,7 @@ const van = new Schema<IVan>({
   ],
   trips: [
     {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       required: false,
       unique: true,
       ref: "Trip",
