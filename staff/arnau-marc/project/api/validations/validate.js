@@ -1,6 +1,6 @@
 import { constant } from './constant.js'
 
-import { ValidationError } from './errors.js'
+import  ValidationError  from './errors.js'
 
 export const validate = {
     string(string, explain) {
@@ -64,4 +64,5 @@ export const validate = {
         this.minLength(place, 1, explain)
         this.maxLength(place, 40, explain)
     },
+
 }

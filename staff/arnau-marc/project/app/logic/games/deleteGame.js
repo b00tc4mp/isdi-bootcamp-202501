@@ -1,12 +1,14 @@
 import { data } from '../../data/index.js'
-// import errors, validate
+import { errors, validate } from '../../validations/index.js'
+
+const { SystemError, ValidationError } = errors
 
 export const deleteGame = (gameId) => {
-    // validate
+    validate.id(gameId, 'gameId')
 
     return data.token
         .then(token => {
-            if (!token) throw new Error(error.message)
+            if (!token) throw new ValidationError(error.message)
             
             return fetch(`http://localhost:8080/games/${gameId}`, {
                 method: 'DELETE',
@@ -15,18 +17,18 @@ export const deleteGame = (gameId) => {
                 }
             })
         })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => { 
             console.log(response.status)
 
             if (response.status === 204) return
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    throw new SystemError(message)
                 })
         })
 }
