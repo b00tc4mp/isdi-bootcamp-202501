@@ -13,6 +13,7 @@ import { setGameWinner } from "./games/setGameWinner.js"
 import { deleteGame } from './games/deleteGame.js'
 
 import { requestAdminRole } from './profile/requestAdminRole.js'
+import { getUserStats } from './profile/getUserStats.js'
 
 import { finishSeason } from './season/finishSeason.js'
 import { getLatestSeason } from './season/getLastSeason.js'
@@ -35,6 +36,7 @@ export const logic = {
     deleteGame,
 
     requestAdminRole,
+    getUserStats,
 
     finishSeason,
     getLatestSeason,
