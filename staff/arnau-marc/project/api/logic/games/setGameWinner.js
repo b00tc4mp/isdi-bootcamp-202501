@@ -1,9 +1,16 @@
 import { Game, User, Season } from '../../data/index.js'
+import { errors, validate } from '../../validations/index.js'
+
+const { AuthorizationError, NotFoundError, ValidationError } = errors
 
 export const setGameWinner = (adminId, gameId, winnerUsername) => {
+  validate.id(adminId, 'adminId')
+  validate.id(gameId, 'gameId')
+  validate.username(winnerUsername, 'winnerUsername')
+
   return User.findById(adminId).lean()
     .then(admin => {
-      if (!admin || admin.role !== 'admin') throw new Error('Only admins can set winners')
+      if (!admin || admin.role !== 'admin') throw new AuthorizationError('Only admins can set winners')
 
       return Promise.all([
         Game.findById(gameId),
@@ -11,11 +18,11 @@ export const setGameWinner = (adminId, gameId, winnerUsername) => {
       ])
     })
     .then(([game ,user]) => {
-      if (!game) throw new Error('Game not found')
-      if (!user) throw new Error('User not found')
+      if (!game) throw new NotFoundError('Game not found')
+      if (!user) throw new NotFoundError('User not found')
 
       if (!game.participants.toString().includes(user._id.toString())) {
-        throw new Error('Winner must be one of the participants')
+        throw new ValidationError('Winner must be one of the participants')
       }
 
       return User.find({ _id: { $in: game.participants } })

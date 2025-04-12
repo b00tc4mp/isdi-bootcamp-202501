@@ -1,13 +1,13 @@
 import { data } from '../../data/index.js'
-import { errors, validate } from '../../validations/index.js'
+import { errors } from '../../validations/index.js'
 
-const { SystemError } = errors
+const { SystemError, AuthorizationError } = errors
 
 export const getUsername = () => {
     return data.token
     .then(token => {
         if (!token) {
-            throw new Error('Token not found');
+            throw new AuthorizationError('Token not found');
         }
 
         // Hacemos la solicitud con el token
@@ -18,22 +18,22 @@ export const getUsername = () => {
             },
         });
     })
-        .catch(error => { throw new Error(error.message)})
+        .catch(error => { throw new SystemError(error.message)})
         .then(response => {
             if (response.status === 200)
                 return response.json()
-                    .catch(error => { throw new Error(error.message)})
+                    .catch(error => { throw new SystemError(error.message)})
                     .then(body => {
                         const { username } = body
 
                         return username
                     })
             return response.json()
-                    .catch(error => { throw new Error(error.message)})
+                    .catch(error => { throw new SystemError(error.message)})
                     .then(body => {
                         const{ error, message } = body
 
-                        throw new Error(error.message)
+                        throw new SystemError(error.message)
                     })
         })
 }

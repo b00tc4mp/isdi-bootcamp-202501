@@ -1,9 +1,13 @@
 import { data } from '../../data/index.js'
 
+import { errors } from '../../validations/index.js'
+
+const { SystemError, AuthorizationError } = errors
+
 export const getUserRole = () => {
   return data.token
     .then(token => {
-      if (!token) throw new Error('Token not found')
+      if (!token) throw new AuthorizationError('Token not found')
 
       return fetch('http://localhost:8080/users/self/role', {
         method: 'GET',
@@ -18,7 +22,7 @@ export const getUserRole = () => {
       } else {
         return response.json().then(body => {
           const { message } = body
-          throw new Error(message)
+          throw new SystemError(message)
         })
       }
     })
@@ -27,6 +31,6 @@ export const getUserRole = () => {
       return role
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new SystemError(error.message)
     })
 }

@@ -1,10 +1,12 @@
-// app/logic/getGames.js
 import { data } from '../../data'
+import { errors } from '../../validations/index.js'
+
+const { SystemError, ValidationError } = errors
 
 export const getGames = () => {
   return data.token
     .then(token => {
-      if (!token) throw new Error('Token not found')
+      if (!token) throw new ValidationError('Token not found')
 
       return fetch('http://localhost:8080/games', {
         method: 'GET',
@@ -14,19 +16,19 @@ export const getGames = () => {
       })
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new SystemError(error.message)
     })
     .then(response => {
       if (response.status === 200) {
         return response.json()
-          .catch(error => { throw new Error(error.message) })
+          .catch(error => { throw new SystemError(error.message) })
       }
 
       return response.json()
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
         .then(body => {
           const { error, message } = body
-          throw new Error(message)
+          throw new SystemError(message)
         })
     })
 }

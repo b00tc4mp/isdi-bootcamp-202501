@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 import { validate, errors} from '../../validations/index.js'
 
 const { SystemError } = errors
+=======
+import { errors, validate } from '../../validations/index.js'
+>>>>>>> 5db12c2891bf9e80234498fd35bbf696a393d142
 
+const { SystemError } = errors
 
 export const registerUser = (name, surname, email, username, password) => {
     validate.name(name)
@@ -17,7 +22,7 @@ export const registerUser = (name, surname, email, username, password) => {
         },
         body: JSON.stringify({ name, surname, email, username, password })
     })
-        .catch(error => { throw new Error(error.message) })
+        .catch(error => { throw new SystemError(error.message) })
 
         .then(response => {
             console.log(response.status)
@@ -26,12 +31,12 @@ export const registerUser = (name, surname, email, username, password) => {
                 return
 
             return response.json()
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
                     // const error = body.error
                     // const message = body.message
-                    throw new Error(message)
+                    throw new SystemError(message)
                 })
         })
 }

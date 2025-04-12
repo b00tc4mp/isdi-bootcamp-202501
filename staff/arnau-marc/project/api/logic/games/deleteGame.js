@@ -1,22 +1,25 @@
-import { Game, User } from '../../data/index.js'
-// import errors, validate
+import { User, Game } from '../../data/index.js'
+import { errors, validate } from '../../validations/index.js'
+
+const { SystemError, NotFoundError, AuthorizationError } = errors
 
 export const deleteGame = (gameId, userId) => {
-    // validate
+    validate.id(gameId, 'gameId')
+    validate.id(userId, 'userId')
 
     return User.findById(userId)
-        .catch(error => { throw new Error(error.message) }) 
+        .catch(error => { throw new SystemError(error.message) }) 
         .then(user => {
-            if (!user) throw new Error('user not found')
-            if (user.role !== 'admin') throw new Error('only admin can delete a game')      
+            if (!user) throw new NotFoundError('user not found')
+            if (user.role !== 'admin') throw new AuthorizationError('only admin can delete a game')      
                 
             return Game.findById(gameId)
-                .catch(error => { throw new Error(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(game => {
-                    if (!game) throw new Error('game not found')
+                    if (!game) throw new NotFoundError('game not found')
                     
                     return Game.deleteOne({ _id: gameId })
-                        .catch(error => { throw new Error(error.message) })
+                        .catch(error => { throw new SystemError(error.message) })
                 })    
         })
         .then (() => {})
