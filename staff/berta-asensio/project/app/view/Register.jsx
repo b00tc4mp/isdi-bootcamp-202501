@@ -1,7 +1,7 @@
-import { ValidationError } from 'com/errors'
 import { logic } from '../logic/index'
 import { errors } from 'com'
 
+const { SystemError, ValidationError } = errors
 
 
 export function Register ({ onReturnClick, onUserRegistered }) {

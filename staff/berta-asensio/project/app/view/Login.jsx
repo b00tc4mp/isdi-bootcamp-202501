@@ -1,9 +1,6 @@
-import { errors } from 'com'
 import { logic } from '../logic/index'
 
-const { SystemError } = errors
-
-export function Login({ onNavigateToRegister, onUserLoggedIn }) {
+export function Login({ onReturnClick, onUserLoggedIn }) {
 
     const handleLoginSubmit = event => {
         event.preventDefault()
@@ -24,10 +21,8 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
                 })
                 .catch(error => {
                     console.error(error)
-                    if(error instanceof SystemError)
-                        alert('DANGER: ' + error.message)
-                    else 
-                        alert('Warning: ' + error.message)
+                    
+                    alert(error.message)
                 }) 
         } catch (error) {
             console.error(error)
@@ -36,7 +31,7 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
         }
     }
 
-    const handleRegisterClick = () => onNavigateToRegister()
+    const handleReturnClick = () => onReturnClick()
 
     console.debug('Login page renderized')
 
@@ -46,17 +41,26 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
         <form onSubmit={handleLoginSubmit}>
             <div className="field">
                 <label htmlFor="email">Email</label>
-                <input type="text" id="Email" placeholder="Your email" />
+                <input 
+                    type="text" 
+                    id="email"
+                    className="input"
+                    placeholder="Your email" 
+                />
             </div>
 
             <div className="field">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" placeholder="Your password" />
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Your password" 
+                />
             </div>
 
             <button type="submit">Login</button>
         </form>
 
-        <a onClick={handleRegisterClick}>Register</a>
+        <a onClick={handleReturnClick}>Return</a>
     </div>
 }

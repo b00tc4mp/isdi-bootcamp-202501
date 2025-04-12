@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { data, User } from '../data/index.js'
+import { data, User, Menu } from '../data/index.js'
 import bcrypt from 'bcryptjs'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -7,7 +7,8 @@ const { MONGO_URL, MONGO_DB } = process.env
 data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         return Promise.all([
-            User.deleteMany({})
+            User.deleteMany({}),
+            Menu.deleteMany({})
         ])
             .then(() => bcrypt.hash('123123aa', 10))
             .then(hash => {
@@ -39,7 +40,36 @@ data.connect(MONGO_URL, MONGO_DB)
                     }
                 ])
             })
+            .then(() => {
+                return Menu.insertMany([
+                    {
+                        ordinal: 1,
+                        name: 'Traditional',
+                        description: 'Sandwitx',
+                        allergens: ['gluten'],
+                        categories: ['regular'],
+                        price: 2.50
+                    },
+                    {
+                        ordinal: 2,
+                        name: 'Traditional +',
+                        description: 'Sandwitx + fruit',
+                        allergens: ['gluten'],
+                        categories: ['regular'],
+                        price: 3.50
+                    },
+                    {
+                        ordinal: 3,
+                        name: 'Traditional extra +',
+                        description: 'Sandwitx + fruit + yogurt',
+                        allergens: ['gluten', 'lactose'],
+                        categories: ['regular'],
+                        price: 4
+                    }
+                ])
+            })
     })
+
     .finally(() => data.disconnect())
 
     // node data/populate.js

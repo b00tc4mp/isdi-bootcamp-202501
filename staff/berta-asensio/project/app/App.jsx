@@ -6,6 +6,7 @@ import { Register } from './view/Register'
 import { Login }from './view/Login'
 
 import { logic } from './logic/index'
+import { Home } from './view/Home'
 // import { Context } from './context'
 
 function App() {
@@ -28,6 +29,22 @@ function App() {
     navigate('/')
    }
 
+   const handleUserRegistered = () => {
+    setShowLanding(false)
+    navigate('/login')
+   }
+
+   const handleUserLoggedIn = () => {
+    setShowLanding(false)
+    navigate('/home')
+   }
+
+   const handleLogoutClick = () => {
+    setShowLanding(true)
+    navigate('/')
+   }
+
+
    console.debug('App renderized')
 
     return <div>
@@ -39,12 +56,18 @@ function App() {
             
             {/*Ruta a Register*/}
             <Route path="/register" element={<Register
-                onReturnClick={handleReturnClick} />} />
+            onUserRegistered={handleUserRegistered}
+            onReturnClick={handleReturnClick} />} />
 
             {/*Ruta a Login*/}
             <Route path="/login" element={<Login
-                onNavigateToRegister={handleNavigateToRegister} />} />
-            
+                onUserLoggedIn={handleUserLoggedIn}
+                onReturnClick={handleReturnClick} />} />
+
+            {/*Ruta a Home*/}
+            <Route path="/home/*" element={<Home
+            onUserLoggedOut={handleLogoutClick} />} />
+                  
         </Routes>
     </div>
 

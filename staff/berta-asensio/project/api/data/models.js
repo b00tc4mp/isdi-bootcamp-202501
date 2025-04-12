@@ -36,8 +36,44 @@ const user = new Schema({
     }
 })
 
+const menu = new Schema({
+    ordinal: {
+    type: Number,
+    required: true
+    },
+    name: {
+        type: String, 
+        required: true,
+        minLength: 1,
+        maxLength: 200
+    },
+    description: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 500
+    },
+    allergens: {
+        type: [String],
+        required: true,
+        default: []
+    },
+    categories: {
+        type: [String],
+        enum: ['regular', 'vegetarian', 'vegan', 'halal'],
+        required: true,
+        default: []
+    },
+    price: {
+        type: Number,
+        required: true
+    }
+})
+
 const User = model('User', user)
+const Menu = model('Menu', menu)
 
 export {
-    User
+    User,
+    Menu
 }

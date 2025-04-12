@@ -33,5 +33,5 @@ users.get('/self/name', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.getUserName(userId)
-        .then(userName => res.json({ userName }))
+        .then(userName => res.json({ name: userName }))
 }))

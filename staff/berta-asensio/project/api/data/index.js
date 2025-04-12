@@ -1,7 +1,7 @@
 //CONEXIÓN A MONGODB
 import mongoose from 'mongoose'
 import { SystemError } from '../../com/errors.js'
-import { User } from './models.js'
+import { User, Menu } from './models.js'
 
 const data = {
     connect(url, dbName) {
@@ -17,5 +17,6 @@ const data = {
 
 export {
     data,
-    User
+    User,
+    Menu
 }
