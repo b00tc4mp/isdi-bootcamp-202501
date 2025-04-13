@@ -3,19 +3,26 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const getLevel = (userId, levelId) => {
+export const getLevels = (userId) => {
     validate.id(userId, 'userId')
-    validate.id(levelId, 'levelId')
 
     return Promise.all([
         User.findById(userId).lean(),
-        Level.findById(levelId).select('-__v').lean()
+        Level.find().select('-__v').lean()
     ])
         .catch(error => { throw new SystemError(error.message) })
-        .then(([user, level]) => {
+        .then(([user, levels]) => {
             if (!user) throw new NotFoundError('user not found')
-            if (!level) throw new NotFoundError('level not found')
 
-            return level
+            console.log(levels)
+
+            levels.forEach(level => {
+                level.id = level._id.toString()
+                delete level._id
+
+                level.isBlocked = !(user.currentLevel === level.id)
+            })
+
+            return levels
         })
 }

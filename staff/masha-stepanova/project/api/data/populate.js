@@ -14,20 +14,23 @@ data.connect(MONGO_URL, MONGO_DB_TEST)
     .then(() => {
         return Level.insertMany([
             {
+                name: 'Basic conditions',
                 type: 'quiz',
-                description: 'Evalúa tu comprensión sobre condiciones básicas.',
+                description: 'Test your understanding of basic conditions.',
                 body: 'let a = 10; let b = 8; if (a > 2) b += a; console.log(b);',
                 expectedResult: '18'
             },
             {
+                name: 'Sum variables',
                 type: 'fillInBlank',
-                description: 'Completa la línea de código para obtener la suma de dos números.',
+                description: 'Complete the line of code to obtain the sum of two numbers.',
                 body: `const num1 = 5; const num2 = 3;\n// add two numbers\nconst sum = ___;\nconsole.log('The sum of ' + num1 + ' and ' + num2 + ' is: ' + sum);`,
                 expectedResult: 'num1 + num2'
             },
             {
+                name: `Loop 'for'`,
                 type: 'quiz',
-                description: 'Practica cómo usar bucles for.',
+                description: `Practice using 'for' loops.`,
                 body: `let total = 0;\nfor (let i = 0; i < 3; i++) {\n  total += i;\n}\nconsole.log(total);`,
                 expectedResult: '3'
             }

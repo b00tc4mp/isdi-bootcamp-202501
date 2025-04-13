@@ -47,13 +47,17 @@ const user = new Schema({
         ref: 'Level'
     }],
     currentLevel: {
-        type: ObjectId,
+        type: String,
         ref: 'Level'
     }
 })
 
 const level = new Schema({
     type: {
+        type: String,
+        required: true
+    },
+    name: {
         type: String,
         required: true
     },
@@ -68,6 +72,11 @@ const level = new Schema({
         required: true,
         minLength: 5,
         maxLength: 300
+    },
+    resultOptions: {
+        type: Array,
+        minLength: 3,
+        maxLength: 7
     },
     expectedResult: {
         type: String,

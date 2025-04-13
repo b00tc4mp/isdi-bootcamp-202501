@@ -4,6 +4,9 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router'
 
 import { useContext } from '../context'
 
+import { Ranking } from './Ranking'
+import { Levels } from './Levels'
+
 export function Home(onNavigateToProfile, onUserLoggedOut) {
     const { alert } = useContext()
 
@@ -28,8 +31,34 @@ export function Home(onNavigateToProfile, onUserLoggedOut) {
         }
     }, [])
 
+    const handleLevelClick = () => {
+        try {
+            const levelId = logic.getLevelId()
+
+            //TODO change the path name
+
+            navigate(`${levelId}`, { state: { levelId } })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
     return <>
-        <p>Hello, {username}!</p>
+        <header>
+            <p>Logo</p>
+            <p>Hello, {username}!</p>
+        </header>
+
+        <main>
+            <Routes>
+                <Route path="/" element={<><Ranking /> <Levels /></>} />
+
+
+            </Routes>
+        </main>
+
     </>
 
 }
