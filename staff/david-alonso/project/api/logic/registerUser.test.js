@@ -13,7 +13,7 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let result2 = null
 
-            return registerUser('Yuki', 'yu@ki.com', '123123123')
+            return registerUser('Paco', 'pa@co.com', '123123123')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {

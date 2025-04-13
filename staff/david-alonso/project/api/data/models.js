@@ -33,9 +33,59 @@ const user = new Schema({
 
 })
 
+const vehicle = new Schema({
+    marca: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 30
+    },
+    modelo: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 30
+    },
+    año: {
+        type: Number,
+        required: true,
+        minLength: 1,
+        maxLength: 30
+    },
+    matricula: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 30
+    },
+    km: {
+        type: Number,
+        required: true,
+        minLength: 1,
+        maxLength: 30
+    },
+    itv: {
+        type: Date,
+        required: true,
+    },
+
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+
+})
+
 const User = model('User', user)
+const Vehicle = model('Vehicle', vehicle)
+
 
 export {
     User,
-    // Vehicle
+    Vehicle
 }
