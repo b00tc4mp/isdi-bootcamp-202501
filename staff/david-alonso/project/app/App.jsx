@@ -4,12 +4,14 @@ import { Routes, Route, useNavigate, Navigate } from "react-router"
 import { Register } from './view/Register'
 import { Login } from "./view/Login"
 import { VehicleRegister } from './view/VehicleRegister'
+import { Home } from "./view/Home/Index.jsx"
+import { Menu } from "./view/Home/Menu"
 
 import { Context } from './context'
+import { logic } from "./logic/index.js"
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(null)
-    const [showLanding, setShowLanding] = useState(true)
     const [alertMessage, setAlertMessage] = useState('')
     const [confirmMessage, setConfirmMessage] = useState('')
     const [confirmState, setConfirmState] = useState(null)
@@ -17,15 +19,15 @@ function App() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // try {
-        //     const loggedIn = logic.isUserLoggedIn()
+        try {
+            const loggedIn = logic.isUserLoggedIn()
 
-        //     setLoggedIn(loggedIn)
-        // } catch (error) {
-        //     console.error(error)
+            setLoggedIn(loggedIn)
+        } catch (error) {
+            console.error(error)
 
-        //     alert(error.messsage)
-        // }
+            alert(error.messsage)
+        }
     }, [])
 
     // Cambia hacia la pagina de Registro para rgistrarse
@@ -46,6 +48,11 @@ function App() {
         navigate('/login')
     }
 
+    const handleVehicleRegistered = () => {
+        // setShowLanding(false)
+        navigate('/')
+    }
+
     // Cambia hacia la pagina de Home despues de hacer login
     const handleUserLoggedIn = () => {
         // setShowLanding(false)
@@ -53,9 +60,14 @@ function App() {
         navigate('/')
     }
     // ****
-    const handleVehicleRegister = () => {
-        // setShowLanding(false)
-        navigate('/')
+    const handleNavigateVehicleRegister = () => {
+
+        navigate('/vehicleRegister')
+    }
+
+    const handleNavigateToMenu = () => {
+
+        navigate('/menu')
     }
 
     // Cambia hacia la pagina de Landing al cerrar sesion
@@ -93,19 +105,25 @@ function App() {
         alert: handleShowAlert,
         confirm: handleShowConfirm
     }}>
-        {/* loggedIn !== null &&  */}
-
-        <Routes>
-
-            <Route path="/vehicleRegister" element={loggedIn ? <Navigate to="/" /> : <VehicleRegister onNavigateToLogin={handleNavigateToLogin} onVehicleRecord={handleVehicleRegister} />} />
-
-            <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
+        {loggedIn !== null && <Routes>
 
             <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
+            {/* /login: Muestra el login si no está logueado. Si ya está logueado, lo manda al home / */}
 
-            {/* <Route path='/*' element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to='/login' />} /> */}
+            <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
+            {/* /register: Muestra el registro si no está logueado. Si ya está logueado, lo manda al home / */}
 
-        </Routes>
+            <Route path="/vehicleRegister" element={<VehicleRegister onVehicleRegistered={handleVehicleRegistered} />} />
+            {/* /vehicleRegister: Muestra el registroVehiculo si no está logueado. Si ya está logueado, lo manda al home / */}
+
+            <Route path="/menu" element={<Menu onNavigateToMenu={handleNavigateToMenu} onUserLoggedOut={handleUserLoggedOut} />} />
+            {/* /vehicleRegister: Muestra el registroVehiculo si no está logueado. Si ya está logueado, lo manda al home / */}
+
+            <Route path='/*' element={loggedIn ? <Home handleNavigateVehicleRegister={handleNavigateVehicleRegister} /> : <Navigate to='/login' />} />
+            {/* Si ponemos una ruta que no existe y esta logeado lo mandamos a home /. Si no lo esta se le envia a /login */}
+
+
+        </Routes>}
 
         {/* {alertMessage && <Alert title="⚠️" message={alertMessage} onAccepted={handleAlertAccepted} />}
         {confirmMessage && <Confirm title="❓" message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />} */}

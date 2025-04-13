@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@layer base {
+
+    html {
+        @apply bg-gray-700
+    }
+
+    h1 {
+        @apply text-white
+    }
+
+}

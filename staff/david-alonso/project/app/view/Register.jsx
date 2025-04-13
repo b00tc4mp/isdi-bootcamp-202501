@@ -1,6 +1,6 @@
 import { logic } from '../logic/index.js'
 import { useContext } from '../context'
-
+import { Link } from 'react-router'
 
 export function Register({ onNavigateToLogin, onUserRegistered }) {
 
@@ -37,8 +37,6 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
     }
 
 
-    const handleLoginClick = () => onNavigateToLogin()
-
     console.debug('Register -> render')
 
     return <div className="flex flex-col p-20 justify-center items-center">
@@ -47,16 +45,16 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
         <div className="">
             <form onSubmit={handleRegisterSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
 
-                <input type="text" id="name" placeholder="Name" className="w-full border border-gray-300 rounded-lg p-2 " />
+                <input type="text" id="name" placeholder="Name" className="w-full border border-gray-400 rounded-lg p-2 " />
 
-                <input type="email" id="email" placeholder="E-mail" className="w-full border border-gray-300 rounded-lg p-2 " />
+                <input type="email" id="email" placeholder="E-mail" className="w-full border border-gray-400 rounded-lg p-2 " />
 
-                <input type="text" id="password" placeholder="Password" className="w-full border border-gray-300 rounded-lg p-2" />
+                <input type="text" id="password" placeholder="Password" className="w-full border border-gray-400 rounded-lg p-2" />
 
-                <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700">SIGUIENTE</button>
+                <button type="submit" className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-800">SIGUIENTE</button>
 
                 <div className="flex justify-center">
-                    <a onClick={handleLoginClick} className="underline">LOGIN</a>
+                    <Link to="/login" className='underline text-black' >LOGIN</Link>
                 </div>
             </form>
         </div>

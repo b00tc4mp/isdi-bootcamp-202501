@@ -1,5 +1,6 @@
 import { logic } from '../logic/index.js'
 import { useContext } from '../context'
+import { Link } from 'react-router'
 
 export function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
@@ -45,15 +46,16 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
         <div className="">
             <form onSubmit={handleLoginSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
 
-                <input type="email" id="email" placeholder="Email" className="w-full border border-gray-300 rounded-lg p-2 " />
+                <input type="email" id="email" placeholder="Email" className="w-full border border-gray-400 rounded-lg p-2 " />
 
-                <input type="password" id="password" placeholder="Password" className="w-full border border-gray-300 rounded-lg p-2" />
+                <input type="password" id="password" placeholder="Password" className="w-full border border-gray-400 rounded-lg p-2" />
 
-                <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700">SIGUIENTE</button>
+                <button type="submit" className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-800 ">SIGUIENTE</button>
 
                 <div className="flex justify-center">
-                    <a onClick={handleRegisterClick} className="underline">REGISTRO</a>
+                    <Link to="/register" className="underline text-black">REGISTRO</Link>
                 </div>
+
             </form>
         </div>
 
