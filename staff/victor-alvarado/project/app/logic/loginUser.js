@@ -1,7 +1,7 @@
 import { data } from '../data'
 import { errors, validate } from 'com'
 
-const { SystemError } = errrors
+const { SystemError } = errors
 
 export const loginUser = (username, password) => {
     validate.username(username)

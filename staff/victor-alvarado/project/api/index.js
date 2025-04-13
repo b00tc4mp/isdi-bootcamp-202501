@@ -1,21 +1,26 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import 'dotenv/config'
+import express from 'express'
+import cors from 'cors'
 
-// Cargar las variables de entorno
-dotenv.config();
+import { users } from './routes/index.js'
+import { errorHandler } from './handlers/index.js'
+import { data } from './data/index.js'
 
-const app = express();
+const { PORT, MONGO_URL, MONGO_DB } = process.env
 
-// Habilitar CORS
-app.use(cors());
+data.connect(MONGO_URL, MONGO_DB)
+    .catch(console.error)
+    .then(() => {
+        const api = express()
 
-// Definir una ruta de ejemplo
-app.get('/', (req, res) => {
-    res.send('¡Hola, mundo!');
-});
+        api.use(cors())
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
+        api.get('/', (req, res) => res.send('Hello, World!'))
+
+        api.use('/users', users)
+
+
+        api.use(errorHandler)
+
+        api.listen(PORT, () => console.log(`API running on post ${PORT}`))
+    })
