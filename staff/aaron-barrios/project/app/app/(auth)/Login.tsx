@@ -1,36 +1,69 @@
-import { TextInput, StyleSheet } from "react-native"
-import { Button } from "react-native"
-
+import { useState } from "react"
+import { TextInput, StyleSheet, Button, Alert } from "react-native"
 import { Text, View } from "@/components/Themed"
+import { useRouter } from "expo-router"
+
+import loginUser from "@/services/loginUser"
+import { errors } from '@/com'
+
+const { SystemError, ValidationError } = errors
 
 export default function Login() {
+  const [alias, setAlias] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
+
+  const handleLogin = () => {
+    try {
+      // Lógica asíncrona
+      loginUser(alias, password)
+        .then(() => {
+          setAlias('');
+          setPassword('');
+
+          Alert.alert('Welcome back!', `Welcome back! ${alias}`);
+          router.replace('/(auth)/Home' as any)
+        })
+        .catch((error) => {
+          console.error(error);
+
+          if (error instanceof SystemError)
+            Alert.alert('⛔', error.message);
+          else
+            Alert.alert('⚠️ Error inesperado', error.message || 'Ups...');
+        });
+    } catch (error) {
+      console.error(error);
+
+      if (error instanceof ValidationError)
+        Alert.alert('❌ Validación', error.message);
+      else
+        Alert.alert('⛔ Error fatal', error instanceof Error ? error.message : 'Algo salió mal');
+    }
+  }
+
   return (
     <View style={styles.container2}>
       <Text style={styles.title}>LOGIN</Text>
-
       <View style={styles.container}>
-
-
         <TextInput
           placeholder="ALIAS"
-          // onChangeText={setAlias}
-          // value={alias}
+          onChangeText={setAlias}
+          value={alias}
           style={styles.input}
           autoCapitalize="none"
         />
         <TextInput
           placeholder="PASSWORD"
-          // onChangeText={setPassword}
-          // value={password}
+          onChangeText={setPassword}
+          value={password}
           secureTextEntry
           style={styles.input}
         />
-
-        <Button title="LOG IN" />
-        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+        <Button title="LOG IN" onPress={handleLogin} />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -52,12 +85,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginBottom: 12
   },
-  subtitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 24,
-    alignSelf: "center"
-  },
   input: {
     height: 40,
     borderWidth: 1,
@@ -66,15 +93,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 16,
     backgroundColor: "#fff"
-  },
-  link: {
-    color: "blue",
-    marginTop: 8,
-    textAlign: "center"
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   }
 })

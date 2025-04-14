@@ -3,18 +3,18 @@ import { useRouter } from "expo-router"
 
 import { Text, View } from "@/components/Themed"
 
-export default function LandingScreen() {
+export default function Home() {
   const router = useRouter()
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Landing</Text>
+      <Text style={styles.title}>Home</Text>
       <View style={styles.container}>
+        <Text style={styles.title}>Welcome Back Mate!</Text>
         <View style={styles.button}>
           <Button title="LOG IN" onPress={() => router.push("/(auth)/Login" as any)} />
         </View>
         <Button title="REGISTER" onPress={() => router.push("/(auth)/Register" as any)} />
-
       </View>
     </View>
   )

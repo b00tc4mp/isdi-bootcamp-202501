@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { TextInput, StyleSheet, Button, Alert } from 'react-native'
+import { Text, View } from '@/components/Themed'
 import { useRouter } from 'expo-router'
 
-import { Text, View } from '@/components/Themed'
-import { errors } from '@/com'
 import registerUser from '@/services/registerUser'
+import { errors } from '@/com'
 
 const { SystemError, ValidationError } = errors
 
@@ -24,7 +24,9 @@ export default function Register() {
           setPassword('');
 
           Alert.alert('✅ Registro exitoso', 'Ya puedes iniciar sesión');
-          router.replace('/(auth)/login' as any)
+          router.replace('/(auth)/Login' as any)
+          //se pone replace y no push por que push añade la nueva ruta al historial de navegacion
+          //mientras que el replace la sustituye, lo cual hace que el usuario no pueda volver atrás con el back button
         })
         .catch((error) => {
           console.error(error);
