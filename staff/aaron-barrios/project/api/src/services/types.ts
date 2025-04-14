@@ -29,10 +29,10 @@ export type WorkoutType = {
     id: string            // => añado los ids para interacciones clave o navegaciones
     name: string
     muscleGroup: string
-    type: string
-    difficulty: string
+    type?: string
+    difficulty?: string
     description: string
-    images: string[]
+    images?: string[]
     status: "pending" | "accepted" | "declined"
     createdAt: Date
 

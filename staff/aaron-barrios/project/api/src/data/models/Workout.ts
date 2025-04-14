@@ -24,13 +24,11 @@ const workout = new Schema<WorkoutDocType>({
     },
     type: {
         type: String,
-        required: true,
         minlength: 3,
         maxlength: 20
     },
     difficulty: {
         type: String,
-        required: true,
         minlength: 3,
         maxlength: 16
     },

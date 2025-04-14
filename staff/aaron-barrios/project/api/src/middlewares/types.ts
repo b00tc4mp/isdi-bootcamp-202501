@@ -6,3 +6,5 @@ export type AsyncHandler = (
     req: Request,
     res: Response
 ) => Promise<void>
+
+export type AuthHandlerRequest = Request & { userId: string }

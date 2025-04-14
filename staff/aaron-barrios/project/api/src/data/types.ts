@@ -23,12 +23,12 @@ export type WorkoutDocType = {
     author: ObjectId
     name: string
     muscleGroup: string
-    type: string
-    difficulty: 'easy' | 'medium' | 'hard'
+    type?: string
+    difficulty?: 'easy' | 'medium' | 'hard'
     description: string
-    images: string[]
-    likes: ObjectId[]
-    saves: ObjectId[]
+    images?: string[]
+    likes?: ObjectId[]
+    saves?: ObjectId[]
     status: 'pending' | 'accepted' | 'declined'
     createdAt: Date
     __v: number
