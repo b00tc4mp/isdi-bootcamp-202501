@@ -17,12 +17,23 @@ users.post('/', jsonBodyParser, withErrorHandling((req, res) => {
 }))
 
 // Endpoint for authenticate user
+// users.post('/auth2', jsonBodyParser, withErrorHandling((req,res) => {
+//     const { username, password } = req.body
+
+//     return logic.authenticateUser(username, password)
+//         .then(id => {
+//             const token = jwt.sign({ sub: id }, JWT_SECRET)
+
+//             res.json({ token })
+//         })
+// }))
+
 users.post('/auth', jsonBodyParser, withErrorHandling((req,res) => {
     const { username, password } = req.body
 
     return logic.authenticateUser(username, password)
-        .then(id => {
-            const token = jwt.sign({ sub: id }, JWT_SECRET)
+        .then(({id , role }) => {
+            const token = jwt.sign({ sub: id , role}, JWT_SECRET)
 
             res.json({ token })
         })

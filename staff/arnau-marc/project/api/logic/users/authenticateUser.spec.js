@@ -7,23 +7,33 @@ import { CredentialsError, NotFoundError } from 'com/errors.js'
 const { MONGO_URL, MONGO_DB } = process.env
 
 describe('authenticateUser' , () => {
-    before(() => data.connect(MONGO_DB, MONGO_URL))
+    before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => User.deleteMany({})) 
 
     // Test 1: Prueba que authenticateUser funciona correctamente cuando el usuario y la contraseña son validos.
-    it('succeeds on existing user', () => { 
-        let returnedUserId 
-
+    it.only('succeeds on existing user', () => { 
+        let returnedUserId , returnedUserRole
+        
+        debugger
         return User.create({ 
-            name: 'Arnau Romero',
+            name: 'Arnau',
+            surname: 'Romero',
             email: 'arnau@romero.com',
             username: 'arnau',
             password: '$2b$10$UOFDt5V3swVqWGRlX3Jt4Or3ESx50L2TlBjROP6WUxX.2zpMLEl4O'
         })
             .then(() => authenticateUser('arnau', '123123123')) 
-            .then(userId => returnedUserId = userId) 
-            .finally(() => expect(returnedUserId).to.be.a.string) 
+            .then(({id: userId , role }) => {
+                debugger
+                returnedUserId = userId
+                returnedUserRole = role
+            })
+        
+            .finally(() =>{
+                expect(returnedUserId).to.be.a.string
+                expect(returnedUserRole).to.equal('regular')
+            }) 
             .then(() => User.findOne({username: 'arnau'}).lean()) 
             .then(user => expect(user._id.toString()).to.equal(returnedUserId)) 
     })
