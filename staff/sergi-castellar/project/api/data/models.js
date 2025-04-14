@@ -47,6 +47,11 @@ const couple = new Schema({
         ref: 'User',
         required: true
     }],
+    dateStart: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
     createdAt: {
         type: Date,
         required: true,

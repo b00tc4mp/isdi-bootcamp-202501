@@ -1,0 +1,2 @@
+curl -X DELETE http://localhost:8080/users/self \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2Y4ZTJiMTg3MDJiNTdjOGVjNGZjMDMiLCJpYXQiOjE3NDQzNjQ0OTd9.yvezCI65ZmYmFuZ2Q-Rbbew6HspMnBxf-A7KADupJTQ' -v

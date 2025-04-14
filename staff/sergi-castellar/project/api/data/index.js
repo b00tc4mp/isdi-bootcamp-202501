@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
 import { User, Couple, DiaryEntry, CalendarEvent, ListItem, List, Feelings } from './models.js'
+import { errors } from 'com'
+
+const { SystemError } = errors
 
 const data = {
     connect(url, dbName) {

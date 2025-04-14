@@ -2,8 +2,9 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 
-import { users } from './routes/index.js'
 import { data } from './data/index.js'
+import { errorHandler } from './handlers/errorHandler.js'
+import { users, couples } from './routes/index.js'
 
 const { PORT, MONGO_URL, MONGO_DB } = process.env
 
@@ -16,7 +17,10 @@ data.connect(MONGO_URL, MONGO_DB)
 
         api.get('/', (req, res) => res.send('Hello, World!'))
 
-        // TODO api.use routes y handlers
+        api.use('/users', users)
+        api.use('/couples', couples)
+
+        api.use(errorHandler)
 
         api.listen(PORT, () => console.log(`API running on post ${PORT}`))
     })

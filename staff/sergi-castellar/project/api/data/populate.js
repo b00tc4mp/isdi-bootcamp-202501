@@ -40,9 +40,9 @@ data.connect(MONGO_URL, MONGO_DB)
     })
     .then(([user1, user2, user3, user4, user5, user6]) => {
         return Promise.all([
-            Couple.insertOne({ members: [user1._id, user2._id] }),
-            Couple.insertOne({ members: [user3._id, user4._id] }),
-            Couple.insertOne({ members: [user5._id, user6._id] })
+            Couple.insertOne({ members: [user1._id, user2._id], dateStart: new Date('2023-04-14') }),
+            Couple.insertOne({ members: [user3._id, user4._id], dateStart: new Date('2024-04-14') }),
+            Couple.insertOne({ members: [user5._id, user6._id], dateStart: new Date('2025-04-14') })
         ])
             .then(() => {
                 return Promise.all([
