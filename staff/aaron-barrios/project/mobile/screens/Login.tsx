@@ -1,19 +1,47 @@
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../navigation/appNavigator'
+import { useState } from 'react'
+
+import loginUser from '../services/loginUser'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>
 
 export default function Login({ navigation }: Props) {
+    const [alias, setAlias] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleLogin = async () => {
+        try {
+            await loginUser(alias, password)
+            Alert.alert('Login exitoso', 'Bienvenido de nuevo 👋')
+            // Aquí luego navegamos a Home cuando lo tengas
+        } catch (error: any) {
+            Alert.alert('Error', error.message)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>TZEND</Text>
             <Text style={styles.subtitle}>LOGIN</Text>
 
-            <TextInput placeholder="ALIAS" style={styles.input} />
-            <TextInput placeholder="PASSWORD" secureTextEntry style={styles.input} />
+            <TextInput
+                placeholder="ALIAS"
+                onChangeText={setAlias}
+                value={alias}
+                style={styles.input}
+                autoCapitalize="none"
+            />
+            <TextInput
+                placeholder="PASSWORD"
+                onChangeText={setPassword}
+                value={password}
+                secureTextEntry
+                style={styles.input}
+            />
 
-            <Button title="SIGN IN" onPress={() => console.log('login logic')} />
+            <Button title="LOG IN" onPress={handleLogin} />
 
             <TouchableOpacity onPress={() => navigation.navigate('Register', {
                 alias: '',

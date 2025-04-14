@@ -2,10 +2,23 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    // "noImplicitAny": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "esModuleInterop": true,
-    // "forceConsistentCasingInFileNames": true
+    "baseUrl": ".",
+    "paths": {
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@data/*": [
+        "data/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@screens/*": [
+        "screens/*"
+      ],
+      "@navigation/*": [
+        "navigation/*"
+      ]
+    }
   }
 }

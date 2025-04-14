@@ -12,7 +12,7 @@ const { ObjectId } = Types
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
-describe.only("delete Workout", () => {
+describe("delete Workout", () => {
     before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => Promise.all([

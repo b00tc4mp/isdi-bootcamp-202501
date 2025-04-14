@@ -1,20 +1,37 @@
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../navigation/appNavigator'
+import { useState } from 'react'
+
+import registerUser from '../services/registerUser'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Register'>
 
 export default function Register({ navigation }: Props) {
+    const [alias, setAlias] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleRegister = async () => {
+        try {
+            await registerUser(alias, email, password)
+            Alert.alert('Registro exitoso', 'Ya puedes iniciar sesión.')
+            navigation.navigate('Login', { alias, password }) // paso opcional de props
+        } catch (error: any) {
+            Alert.alert('Error', error.message)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>TZEND</Text>
             <Text style={styles.subtitle}>REGISTER</Text>
 
-            <TextInput placeholder="ALIAS" style={styles.input} />
-            <TextInput placeholder="EMAIL" style={styles.input} />
-            <TextInput placeholder="PASSWORD" secureTextEntry style={styles.input} />
+            <TextInput placeholder="ALIAS" onChangeText={setAlias} value={alias} style={styles.input} />
+            <TextInput placeholder="EMAIL" onChangeText={setEmail} value={email} keyboardType="email-address" style={styles.input} />
+            <TextInput placeholder="PASSWORD" onChangeText={setPassword} value={password} secureTextEntry style={styles.input} />
 
-            <Button title="CREATE ACCOUNT" onPress={() => console.log('register logic')} />
+            <Button title="CREATE ACCOUNT" onPress={handleRegister} />
 
             <TouchableOpacity onPress={() => navigation.navigate('Login', {
                 alias: '',
