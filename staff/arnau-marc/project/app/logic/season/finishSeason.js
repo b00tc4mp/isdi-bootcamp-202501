@@ -1,4 +1,4 @@
-import { data } from '../../data'
+import { data } from '../../data/index.js'
 import { SystemError } from '../../validations/index.js'
 
 export const finishSeason = (seasonId) => {

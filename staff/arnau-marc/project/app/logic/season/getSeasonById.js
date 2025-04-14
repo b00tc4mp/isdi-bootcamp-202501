@@ -1,4 +1,4 @@
-import { data } from '../../data'
+import { data } from '../../data/index.js'
 import { errors } from '../../validations/index.js'
 
 const { SystemError } = errors
