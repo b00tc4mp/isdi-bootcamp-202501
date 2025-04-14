@@ -1,278 +1,219 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-
-
 # Proyecto de Alquileres Temporales en Rosario
 
-## Descripción
+## Índice
+1. [Descripción](#descripción)
+2. [Casos de Uso](#casos-de-uso)
+3. [Tecnologías Utilizadas](#tecnologías-utilizadas)
+4. [Arquitectura del Proyecto](#arquitectura-del-proyecto)
+5. [Estructura de la Base de Datos](#estructura-de-la-base-de-datos)
+6. [Rutas de la API](#rutas-de-la-api)
+7. [Vistas del Frontend](#vistas-del-frontend)
+8. [Funciones Principales](#funciones-principales)
+9. [Configuración de la API](#configuración-de-la-api)
+10. [Contribuciones](#contribuciones)
+11. [Licencia](#licencia)
 
-Este proyecto consiste en una página web para la búsqueda y gestión de alquileres temporales en la ciudad de Rosario, Argentina. Los usuarios podrán buscar propiedades en el mapa de la ciudad, aplicar filtros, y ver detalles de cada propiedad. Además, los administradores podrán gestionar las propiedades a través de un panel de administración, con funcionalidades de agregar, editar y eliminar propiedades.
+---
+
+## Descripción
+Este proyecto consiste en una página web para la búsqueda y gestión de alquileres temporales en la ciudad de Rosario, Argentina. Los usuarios podrán buscar propiedades en el mapa de la ciudad, aplicar filtros, y ver detalles de cada propiedad. Además, los administradores tendrán acceso a un panel de administración para gestionar las propiedades (agregar, editar y eliminar).
+
+---
 
 ## Casos de Uso
+### 1. Registro de Usuario
+**Objetivo:** Permitir que nuevos admins se registren en la plataforma.
 
-### 1. **Registro de Usuario**
-- **Objetivo**: Permitir que nuevos usuarios se registren en la plataforma para acceder a las funcionalidades de búsqueda de propiedades.
-- **Flujo**:
-  1. El usuario accede a la página de registro.
-  2. Rellena el formulario con su nombre, correo electrónico y contraseña.
-  3. El sistema valida los datos y crea una nueva cuenta.
-  4. El usuario recibe un mensaje de éxito y es redirigido a la página de inicio de sesión.
+**Flujo:**
+- El admin accede a la página de registro.
+- Completa un formulario con nombre, correo electrónico y contraseña.
+- El sistema valida los datos y crea una nueva cuenta.
+- El usuario recibe un mensaje de éxito y es redirigido a la página de inicio de sesión.
 
-### 2. **Inicio de Sesión (Login)**
-- **Objetivo**: Permitir que los usuarios registrados inicien sesión en la plataforma.
-- **Flujo**:
-  1. El usuario accede a la página de inicio de sesión.
-  2. Ingresa su correo electrónico y contraseña.
-  3. El sistema valida las credenciales.
-  4. Si son correctas, el usuario es redirigido a la página de inicio con acceso completo a la plataforma.
-  5. Si las credenciales son incorrectas, el sistema muestra un mensaje de error.
+### 2. Inicio de Sesión
+**Objetivo:** Permitir que los usuarios registrados accedan a la plataforma.
 
-### 3. **Recuperación de Contraseña**
-- **Objetivo**: Permitir que los usuarios recuperen su contraseña en caso de olvido.
-- **Flujo**:
-  1. El usuario accede a la página de recuperación de contraseña.
-  2. Ingresa su correo electrónico asociado a la cuenta.
-  3. El sistema envía un correo electrónico con un enlace para restablecer la contraseña.
-  4. El usuario hace clic en el enlace y es redirigido a una página donde puede ingresar una nueva contraseña.
-  5. El sistema valida la nueva contraseña y permite al usuario iniciar sesión con la nueva clave.
+**Flujo:**
+- El usuario ingresa sus credenciales en la página de inicio de sesión.
+- Si las credenciales son válidas, se redirige a la página principal con acceso completo.
 
-### 4. **Acceso y Funcionalidades del Dashboard para Administradores**
-- **Objetivo**: Permitir a los administradores gestionar las propiedades (crear, editar, eliminar).
-- **Flujo**:
-  1. El administrador inicia sesión con sus credenciales.
-  2. Accede al **Dashboard de Administración**.
-  3. Desde el dashboard, el administrador puede:
-     - **Ver la lista de propiedades**: Visualizar todas las propiedades existentes.
-     - **Crear una propiedad nueva**: Ingresar los detalles de una propiedad (título, descripción, ubicación, características, etc.) y añadirla al sistema.
-     - **Editar una propiedad existente**: Modificar los detalles de una propiedad (por ejemplo, cambiar el precio, actualizar la descripción, modificar la disponibilidad).
-     - **Eliminar una propiedad**: Eliminar una propiedad que ya no esté disponible o que deba ser retirada de la plataforma.
-  4. Las acciones realizadas en el dashboard se reflejan inmediatamente en el sistema, lo que permite a los usuarios ver los cambios al actualizar la página.
+### 3. Recuperación de Contraseña
+**Objetivo:** Facilitar el restablecimiento de contraseñas olvidadas.
 
-### 5. **Visualización de Propiedades para Usuarios Comunes**
-- **Objetivo**: Permitir que los usuarios sin privilegios de administrador busquen, vean y filtren propiedades disponibles.
-- **Flujo**:
-  1. El usuario accede a la página principal con el mapa interactivo.
-  2. Utiliza los filtros para buscar propiedades según el tipo, características, precio, etc.
-  3. El usuario puede ver una lista de propiedades en formato de tarjetas, con información como precio, ubicación y características.
-  4. Al hacer clic en una propiedad, el usuario accede a la página de detalles de la propiedad con más información (descripción, imágenes, disponibilidad, etc.).
-  5. El sistema permite visualizar las propiedades disponibles en tiempo real.
+**Flujo:**
+- El usuario solicita restablecer su contraseña.
+- El sistema envía un enlace por correo electrónico.
+- El usuario crea una nueva contraseña a través del enlace proporcionado.
 
-### 6. **Visualización de Detalles de Propiedad**
-- **Objetivo**: Permitir que los usuarios vean los detalles completos de una propiedad.
-- **Flujo**:
-  1. El usuario selecciona una propiedad desde el mapa o desde la lista de propiedades.
-  2. El sistema muestra una vista detallada de la propiedad seleccionada, incluyendo:
-     - Título, descripción, imágenes y características.
-     - Ubicación en el mapa.
-     - Precio y disponibilidad.
+### 4. Dashboard de Administración
+**Objetivo:** Permitir a los administradores gestionar propiedades.
 
+**Funciones:**
+- Crear, editar y eliminar propiedades.
+- Visualizar la lista completa de propiedades.
 
+### 5. Visualización de Propiedades
+**Objetivo:** Ofrecer a los usuarios una experiencia interactiva para buscar y ver propiedades disponibles.
 
-### Blocks
+**Flujo:**
+- Búsqueda de propiedades mediante filtros dinámicos.
+- Visualización de detalles, incluyendo ubicación y características.
 
-- App (the client-side application)
-- API (the server-side API)
-- DB (the database)
+---
+
 ## Tecnologías Utilizadas
+### **Frontend**
+- **Next.js** (React Framework)
+- **Leaflet** (Mapas interactivos)
+- **CSS/Tailwind** (Diseño de interfaz)
 
-- **Frontend**: 
-  - Next.js (React)
-  - Leaflet (para el mapa interactivo)
-  - CSS/Tailwind (para el diseño de la interfaz)
+### **Backend**
+- **MongoDB** (Base de datos NoSQL)
+- **Mongoose** (ODM para MongoDB)
 
-- **Backend**:
-  - Express.js (servidor web)
-  - MongoDB (base de datos NoSQL)
-  - Mongoose (ODM para MongoDB)
-  
-- **Autenticación**:
-  - JWT (JSON Web Tokens) para la autenticación de usuarios y administradores
+
+### **Autenticación**
+- **JWT** (JSON Web Tokens)
+
+---
 
 ## Arquitectura del Proyecto
+El proyecto sigue una arquitectura en capas con separación clara entre el frontend, backend y base de datos.
 
-El proyecto está basado en una arquitectura de **separación en capas**. Las capas son las siguientes:
+### Frontend
+- Construido con Next.js, permite renderizado SSR y CSR.
 
-1. **Frontend**: 
-   - La interfaz de usuario está construida en Next.js, que permite la creación de páginas tanto del lado del cliente como del servidor.
-   
-2. **Backend**:
-   - **API RESTful**: La API se maneja con Express.js y proporciona las rutas necesarias para la interacción entre el cliente y la base de datos.
-   
-3. **Base de Datos**:
-   - MongoDB almacena los datos de las propiedades, usuarios y administradores.
-   - Mongoose se utiliza para la definición de esquemas y la interacción con MongoDB.
+### Backend
+- API gestionada mediante las rutas de API de Next.js.
 
-4. **Autenticación**:
-   - Los usuarios y administradores están autenticados usando JWT, permitiendo sesiones seguras para la administración de la plataforma.
+### Base de Datos
+- MongoDB almacena datos de propiedades, usuarios y administradores.
+- Mongoose facilita la definición de esquemas y consultas.
+
+---
 
 ## Estructura de la Base de Datos
+### **Propiedad**
+```json
+{
+  "titulo": "Departamento en el centro",
+  "descripcion": "Cómodo departamento de 2 habitaciones...",
+  "direccion": "Calle Falsa 123",
+  "coordenadas": { "latitud": -32.94682, "longitud": -60.63932 },
+  "tipo": "Departamento",
+  "caracteristicas": ["Piscina", "Gimnasio"],
+  "precio": 50000,
+  "disponibilidad": true,
+  "imagenes": ["url1.jpg", "url2.jpg"]
+}
+```
 
-### Modelos de Datos (Mongoose Schemas)
+### **Usuario**
+```json
+{
+  "nombre": "Juan Pérez",
+  "email": "juan@example.com",
+  "contraseña": "hashed-password",
+  "rol": "usuario",
+  "fechaRegistro": "2025-04-11"
+}
+```
 
-1. **Propiedad**:
-   - `titulo`: String
-   - `descripcion`: String
-   - `direccion`: String
-   - `coordenadas`: {
-       latitud: Number,
-       longitud: Number
-     }
-   - `tipo`: String (apartamento, casa, etc.)
-   - `caracteristicas`: [String] (ej. piscina, gimnasio, etc.)
-   - `precio`: Number
-   - `disponibilidad`: Boolean (si la propiedad está disponible para alquilar)
-   - `imagenes`: [String] (URLs de imágenes de la propiedad)
-   
-2. **Usuario**:
-   - `nombre`: String
-   - `email`: String
-   - `contraseña`: String (hash de la contraseña)
-   - `rol`: String (usuario o admin)
-   - `fechaRegistro`: Date
-
-3. **Reserva**: (a conciderar a futuro)
-   - `usuarioId`: ObjectId (referencia al Usuario)
-   - `propiedadId`: ObjectId (referencia a Propiedad)
-   - `fechaInicio`: Date
-   - `fechaFin`: Date
-   - `estado`: String (pendiente, confirmada, cancelada)
+---
 
 ## Rutas de la API
+### **Estructura de Archivos de la API en Next.js**
+```
+/pages
+  |-- /api
+      |-- /propiedades
+          |-- index.js       # Rutas para listar y crear propiedades
+          |-- [id].js        # Rutas para actualizar y eliminar propiedades
+      |-- /usuarios
+          |-- registro.js    # Registro de usuarios
+          |-- login.js       # Inicio de sesión
+```
+### **Propiedades**
+- `GET /api/propiedades` - Obtener todas las propiedades.
+- `GET /api/propiedades/:id` - Obtener detalles de una propiedad.
+- `POST /api/propiedades` - Crear una nueva propiedad (admin).
+- `PUT /api/propiedades/:id` - Actualizar una propiedad (admin).
+- `DELETE /api/propiedades/:id` - Eliminar una propiedad (admin).
 
-### Rutas para Propiedades
-- `GET /api/propiedades`: Obtener todas las propiedades.
-- `GET /api/propiedades/:id`: Obtener detalles de una propiedad específica.
-- `POST /api/propiedades`: Crear una nueva propiedad (solo admin).
-- `PUT /api/propiedades/:id`: Modificar una propiedad existente (solo admin).
-- `DELETE /api/propiedades/:id`: Eliminar una propiedad (solo admin).
-  
-### Rutas para Usuarios
-- `POST /api/usuarios/registro`: Registrar un nuevo usuario.
-- `POST /api/usuarios/login`: Iniciar sesión con email y contraseña.
+### **Usuarios**
+- `POST /api/usuarios/registro` - Registrar un nuevo usuario.
+- `POST /api/usuarios/login` - Iniciar sesión.
 
-### Rutas para Reservas (a conciderar a futuro)
-- `GET /api/reservas`: Obtener todas las reservas de un usuario.
-- `POST /api/reservas`: Crear una nueva reserva.
-  
-### Rutas de Administración
-- `GET /api/admin/propiedades`: Obtener todas las propiedades (solo admin).
-- `POST /api/admin/propiedades`: Crear propiedad (solo admin).
-- `PUT /api/admin/propiedades/:id`: Modificar propiedad (solo admin).
-- `DELETE /api/admin/propiedades/:id`: Eliminar propiedad (solo admin).
+---
 
 ## Vistas del Frontend
+### Página de Inicio
+- Mapa interactivo con propiedades destacadas.
+- Filtros dinámicos para buscar propiedades.
 
-1. **Página de Inicio**: 
-   - Muestra un mapa interactivo de Rosario donde los usuarios pueden buscar propiedades al continuo de un slogan("Encuentra tu espacio perfecto en Rosario, ¡alójate hoy!"), buscamos una pagina de inicio llamativa e interactiva
-   - Filtros de búsqueda: tipo de propiedad, características, rango de precio.
-   - Listado de propiedades formato cards(productos)
+### Página de Detalles de Propiedad(a conciderar)
+- Visualización completa de una propiedad seleccionada.
 
-2. **Página de Detalles de Propiedad**:
-   - Al hacer clic en una propiedad en el mapa o en las tarjetas, se abre una vista con los detalles completos de la propiedad.
+### Página de Registro e Inicio de Sesión
+- Formularios para registrar usuarios o iniciar sesión.
 
-3. **Página de Registro/Inicio de sesión**:
-   - Formulario de registro para nuevos usuarios.
-   - Formulario de inicio de sesión para usuarios existentes.
+### Dashboard de Administración
+- Gestión de propiedades (crear, editar, eliminar).
 
-4. **Dashboard de Administrador**:
-   - Solo accesible por administradores.
-   - Se pueden agregar, editar y eliminar propiedades.
-   - Visualización de todas las propiedades con opciones de gestión.
+---
 
 ## Funciones Principales
+1. **Interacción con el Mapa:**
+   - Moverse por Rosario y seleccionar propiedades en diferentes ubicaciones.
 
-1. **Interacción con el Mapa**:
-   - Los usuarios pueden moverse por el mapa de Rosario para encontrar propiedades en diferentes ubicaciones.
-   
-2. **Filtros de Búsqueda**:
-   - Los filtros permiten seleccionar el tipo de propiedad, las características (piscina, gimnasio, etc.) y el rango de precio.
-   
-3. **Registro e Inicio de Sesión**:
-   - Los usuarios pueden registrarse y luego iniciar sesión para ver las propiedades y realizar reservas.
-   - Los administradores tienen acceso a un panel de administración para gestionar las propiedades.
+2. **Filtros de Búsqueda:**
+   - Tipo de propiedad y características.
 
-4. **Panel de Administración**:
-   - Solo accesible por administradores.
-   - Permite agregar, editar o eliminar propiedades.
+3. **Autenticación:**
+   - Registro, inicio de sesión y manejo de roles (usuario y administrador).
 
-5. **Sistema de Reservas**:
-   - Los usuarios pueden realizar reservas de propiedades disponibles.(a considerar a futuro)
-   
+4. **Panel de Administración:**
+   - Acceso exclusivo para administradores.
+
+---
+
 ## Configuración de la API
+### **Instalación del Proyecto**
+```bash
+# Clonar el repositorio
+git clone <URL-del-repo>
 
-1. **Instalación de dependencias**:
-   ```sh
-   npx create-next-app@latest
-   npm install express mongoose dotenv jsonwebtoken bcryptjs
+# Instalar dependencias
+npm install
 
-   ```
+# Configurar variables de entorno
+cp .env.example .env
+```
 
+### **Ejecución del Proyecto**
+```bash
+# Iniciar el servidor
+npm run dev
+```
 
-## Separacion de componentes SSR // CSR
+---
 
-### SSR (Server-Side-Components)
+## Contribuciones
+1. Haz un fork del repositorio.
+2. Crea una nueva rama: `git checkout -b feature/nueva-funcionalidad`.
+3. Realiza tus cambios y haz un commit: `git commit -m 'Añade nueva funcionalidad'`.
+4. Haz un push a tu rama: `git push origin feature/nueva-funcionalidad`.
+5. Abre un Pull Request.
 
-1. **Pagina de Inicio**:
-   - La página de inicio puede mostrar una lista de propiedades destacadas que puedes obtener directamente desde tu base de datos al momento de cargar la página. Esto es ideal para SSR, ya que los usuarios pueden ver las propiedades de inmediato sin esperar a que se cargue el contenido dinámicamente.
+---
 
-2. **Pagina de deatlle de propiedad**
-   -Pagina con informacion descriptiva de la propiedad(Imagenes/detalle/link de redireccion a Arbnb)
-
-
-### CSR (Client-Side-Render) utilizando dynamic de Next.js con { ssr: false }. leyenda use client
-
-1. **Mapa interactivo**:(A conciderar)
-
-   - Mapa interactivo (con Leaflet o Mapbox) : El mapa es una funcionalidad interactiva que depende de la ubicación geográfica del usuario y la visualización dinámica de propiedades en el mapa. Este tipo de componentes interactivos generalmente no necesitan ser renderizados del lado del servidor porque el contenido se genera dinámicamente en función de las acciones del usuario (movimiento del mapa, selección de áreas, filtrado de propiedades). Cargar el componente del mapa solo en el cliente, usando algo como dynamic de Next.js con la opción { ssr: false } para evitar que se renderice en el servidor.
-
-2. **Filtro de busqueda**:
-
-   - Si los filtros de búsqueda son altamente interactivos y requieren que se actualicen de manera dinámica sin necesidad de recargar la página o hacer una nueva solicitud al servidor (por ejemplo, filtrando las propiedades según el precio, las características, etc.), entonces estos podrían ser más eficientes si se manejan solo en el cliente.
-
-   - Solución: Puedes cargar los filtros en el cliente y usar estado local para gestionar los cambios y hacer solicitudes a la API para obtener resultados filtrados sin necesidad de una renderización en el servidor.
-
-3. **Detalle de propiedad**
-
-   - Si los detalles de las propiedades incluyen imágenes, videos o datos cargados de manera asíncrona (como información que proviene de una API o base de datos), es más eficiente renderizarlos del lado del cliente después de la primera carga inicial.
+## Licencia
+Este proyecto está bajo la Licencia MIT. Para más información, consulta el archivo LICENSE.
 
 
-4. **Autenticacion de User y Gestion de estado (Rol Admin/User)**
 
-   - Los estados de autenticación y el rol del usuario pueden cambiar dinámicamente en función de las interacciones del usuario (como iniciar sesión o registrarse). Este proceso es mejor gestionado en el cliente, ya que no necesitas hacer un renderizado en el servidor para saber si el usuario está autenticado o no.
+NEXT FONTS
+decidir de usar sustand o redux 
 
-   - Solución: Puedes almacenar la información del usuario en un contexto de React o en el estado global, y hacer que las peticiones a la API para obtener o actualizar datos se realicen solo del lado del cliente.
+NEXT AUTH
+
