@@ -1,7 +1,7 @@
 import { Game, Season } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
 
-const { ValidationError, SystemError, NotFoundError } = errors
+const { SystemError, NotFoundError } = errors
 
 export const getUserStats = (userId) => {
   validate.id(userId, 'user id')
