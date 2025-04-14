@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 import { User, Trip, Van, Doc, Location, Review } from "./models/index.js";
 import {
-  IUser,
-  IDoc,
-  ILocation,
-  IPoint,
-  IReview,
-  ITrip,
-  IVan,
-} from "./interface.js";
+  UserDocType,
+  DocDocType,
+  LocationDocType,
+  PointDocType,
+  ReviewDocType,
+  TripDocType,
+  VanDocType,
+} from "./types.js";
 import { errors } from "com";
 
 const { SystemError } = errors;
@@ -33,11 +33,11 @@ export {
   Doc,
   Location,
   Review,
-  IUser,
-  IDoc,
-  ILocation,
-  IPoint,
-  IReview,
-  ITrip,
-  IVan,
+  UserDocType,
+  DocDocType,
+  LocationDocType,
+  PointDocType,
+  ReviewDocType,
+  TripDocType,
+  VanDocType,
 };
