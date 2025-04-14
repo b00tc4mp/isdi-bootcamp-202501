@@ -10,7 +10,7 @@ export const seasons = Router()
 
 // Endpoint para calcular la tabla de classificación
 seasons.get('/:name/leaderboard', authHandler, withErrorHandling((req, res) => {
-    const { id: seasonName } = req.params
+    const { name: seasonName } = req.params
 
     return logic.getSeasonLeaderboard(seasonName)
         .then(leaderboard => res.json(leaderboard))
