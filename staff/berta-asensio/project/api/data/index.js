@@ -1,7 +1,9 @@
 //CONEXIÓN A MONGODB
 import mongoose from 'mongoose'
-import { SystemError } from '../../com/errors.js'
+import { errors } from 'com'
 import { User, Menu } from './models.js'
+
+const { SystemError } = errors
 
 const data = {
     connect(url, dbName) {

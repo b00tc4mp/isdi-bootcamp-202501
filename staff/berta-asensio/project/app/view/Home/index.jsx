@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router'
 
-import { Menu } from './Menu'
+import { Menus } from './Menus'
 import { Orders } from './Orders'
 import { logic } from '../../logic/index'
 
@@ -40,7 +40,7 @@ export function Home({ onUserLoggedOut }) {
     }
 
     const handleNavigateToMenu = () => {
-        navigate('/menu')
+        navigate('/menus')
     }
 
     const handleNavigateToOrders = () => {
@@ -64,7 +64,7 @@ export function Home({ onUserLoggedOut }) {
         </header>
         <main>
             <Routes>
-                <Route path="/menu" element={<Menu />} />
+                <Route path="/menus" element={<Menus />} />
                 <Route path="/orders" element={<Orders />} />
             </Routes>
         </main>

@@ -7,7 +7,7 @@ import { logic } from '../logic/index.js'
 export const menus = Router()
 
 //Ruta para traer los menús
-menus.get('/', authHandler, withErrorHandling((req, res) => {
+menus.get('/menus', authHandler, withErrorHandling((req, res) => {
 
     return logic.getMenus()
         .then(menus => res.json(menus))
