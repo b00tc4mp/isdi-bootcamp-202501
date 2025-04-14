@@ -42,16 +42,16 @@ export default function RootLayout() {
     return null
   }
 
-  return <RootLayoutNav />
+  return <AppNavigator />
 }
 
-function RootLayoutNav() {
+function AppNavigator() {
   const colorScheme = useColorScheme()
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>
     </ThemeProvider>
