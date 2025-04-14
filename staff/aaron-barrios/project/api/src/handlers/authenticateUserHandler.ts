@@ -13,7 +13,7 @@ const authenticateUserHandler = createFunctionalHandler(
 
         return services.authenticateUser(alias, password)
             .then(user => {
-                const payload = { sub: { id: user.id.toString(), role: user.role } }
+                const payload = { sub: user.id, role: user.role }
                 const token = jwt.sign(payload, JWT_SECRET!)
 
                 res.json({

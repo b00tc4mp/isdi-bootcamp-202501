@@ -20,8 +20,8 @@ const authHandler = (
         //5️ Extraemos el `id` de dentro del `sub`
         // Aquí asumimos que cuando firmaste el token hiciste: jwt.sign({ sub: { id, role } }, ...)
         //le digo que la req es la mia custom que tiene una       propiedad userId para igualarlo al que extraigo del sub
-        const decode = jwt.verify(token, JWT_SECRET!) as unknown as { sub: { id: string, role: string } };
-        (req as AuthHandlerRequest).userId = decode.sub.id as string
+        const payload = jwt.verify(token, JWT_SECRET!) as unknown as { sub: string, role: string }
+        (req as AuthHandlerRequest).userId = payload.sub as string
 
         next()
     } catch (error) {
