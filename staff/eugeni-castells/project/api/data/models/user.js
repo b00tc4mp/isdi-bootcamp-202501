@@ -28,7 +28,6 @@ const user = new mongoose_1.Schema({
         {
             type: mongoose_1.Schema.Types.ObjectId,
             required: false,
-            unique: true,
             ref: "Van",
         },
     ],
@@ -36,7 +35,6 @@ const user = new mongoose_1.Schema({
         {
             type: mongoose_1.Schema.Types.ObjectId,
             required: false,
-            unique: true,
             ref: "Trip",
         },
     ],
@@ -48,6 +46,11 @@ const user = new mongoose_1.Schema({
     modifiedAt: {
         type: Date,
         default: null,
+    },
+    location: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        required: true,
+        ref: "Location",
     },
     roadPoints: {
         type: Number,

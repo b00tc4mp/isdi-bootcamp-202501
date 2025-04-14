@@ -1,7 +1,10 @@
-import { Schema, model } from "mongoose";
-import { IVan } from "../interface";
+import { Schema, model, Types } from "mongoose";
+import { VanDocType } from "../types";
+import { pointSchema } from "./point";
 
-const van = new Schema<IVan>({
+const { ObjectId } = Types;
+
+const van = new Schema<VanDocType>({
   model: {
     type: String,
     required: true,
@@ -14,32 +17,32 @@ const van = new Schema<IVan>({
     maxLength: 15,
     required: true,
   },
+  description: {
+    type: String,
+  },
   year: { type: Date, required: true },
   images: [{ type: String, minLength: 10, maxLength: 100 }],
   accessible: { type: Boolean },
   price: { type: Number, min: 0, max: 1000 },
-  reviews: [
-    {
-      type: Schema.Types.ObjectId,
-      required: true,
-      unique: true,
-      ref: "Review",
-    },
-  ],
-  location: { type: Schema.Types.ObjectId, required: true, ref: "Location" },
+  reviews: {
+    type: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    default: [],
+  },
+
+  location: { type: Schema.Types.ObjectId, ref: "Location" },
+  point: {
+    type: pointSchema,
+    required: false,
+  },
   legal: [
     {
       type: Schema.Types.ObjectId,
-      required: false,
-      unique: true,
       ref: "Doc",
     },
   ],
   trips: [
     {
       type: Schema.Types.ObjectId,
-      required: false,
-      unique: true,
       ref: "Trip",
     },
   ],
@@ -73,4 +76,6 @@ const van = new Schema<IVan>({
   },
 });
 
-export const Van = model<IVan>("Van", van);
+van.index({ point: "2dsphere" });
+
+export const Van = model<VanDocType>("Van", van);

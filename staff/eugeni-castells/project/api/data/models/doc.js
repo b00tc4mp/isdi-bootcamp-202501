@@ -2,10 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Doc = void 0;
 const mongoose_1 = require("mongoose");
-const { ObjectId } = mongoose_1.Types;
 const doc = new mongoose_1.Schema({
     content: { type: String, required: true },
-    author: { type: ObjectId, ref: "User", required: true },
+    author: { type: mongoose_1.Schema.Types.ObjectId, ref: "User" },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -16,9 +15,7 @@ const doc = new mongoose_1.Schema({
         default: null,
     },
     third: {
-        type: {
-            ObjectId,
-        },
+        type: mongoose_1.Schema.Types.ObjectId,
         ref: "User",
     },
 });

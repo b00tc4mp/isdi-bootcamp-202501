@@ -1,10 +1,8 @@
 import { Schema, model, Types } from "mongoose";
-import { IReview } from "../interface.js";
+import { ReviewDocType } from "../types.js";
 
-const { ObjectId } = Types;
-
-const review = new Schema<IReview>({
-  author: { type: ObjectId, ref: "User", required: true },
+const review = new Schema<ReviewDocType>({
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   rating: { type: [Number], min: 0, max: 5 },
   comment: { type: String, minlength: 3, maxLength: 500 },
   createdAt: {

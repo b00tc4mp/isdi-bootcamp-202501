@@ -7,9 +7,11 @@ exports.pointSchema = new mongoose_1.Schema({
         type: String,
         enum: ["Point"],
         required: true,
+        default: "Point",
     },
     coordinates: {
         type: [Number],
         required: true,
     },
 });
+exports.pointSchema.index({ point: "2dsphere" });

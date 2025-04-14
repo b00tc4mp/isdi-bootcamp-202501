@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Van = void 0;
 const mongoose_1 = require("mongoose");
+const point_1 = require("./point");
+const { ObjectId } = mongoose_1.Types;
 const van = new mongoose_1.Schema({
     model: {
         type: String,
@@ -15,32 +17,31 @@ const van = new mongoose_1.Schema({
         maxLength: 15,
         required: true,
     },
+    description: {
+        type: String,
+    },
     year: { type: Date, required: true },
     images: [{ type: String, minLength: 10, maxLength: 100 }],
     accessible: { type: Boolean },
     price: { type: Number, min: 0, max: 1000 },
-    reviews: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            required: true,
-            unique: true,
-            ref: "Review",
-        },
-    ],
-    location: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: "Location" },
+    reviews: {
+        type: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Review" }],
+        default: [],
+    },
+    location: { type: mongoose_1.Schema.Types.ObjectId, ref: "Location" },
+    point: {
+        type: point_1.pointSchema,
+        required: false,
+    },
     legal: [
         {
             type: mongoose_1.Schema.Types.ObjectId,
-            required: false,
-            unique: true,
             ref: "Doc",
         },
     ],
     trips: [
         {
             type: mongoose_1.Schema.Types.ObjectId,
-            required: false,
-            unique: true,
             ref: "Trip",
         },
     ],
@@ -73,4 +74,5 @@ const van = new mongoose_1.Schema({
         default: null,
     },
 });
+van.index({ point: "2dsphere" });
 exports.Van = (0, mongoose_1.model)("Van", van);

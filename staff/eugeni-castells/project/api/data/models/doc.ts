@@ -1,11 +1,9 @@
-import { Schema, model, Types } from "mongoose";
-import { IDoc } from "../interface.js";
+import { Schema, model } from "mongoose";
+import { DocDocType } from "../types.js";
 
-const { ObjectId } = Types;
-
-const doc = new Schema<IDoc>({
+const doc = new Schema<DocDocType>({
   content: { type: String, required: true },
-  author: { type: ObjectId, ref: "User", required: true },
+  author: { type: Schema.Types.ObjectId, ref: "User" },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -16,9 +14,7 @@ const doc = new Schema<IDoc>({
     default: null,
   },
   third: {
-    type: {
-      ObjectId,
-    },
+    type: Schema.Types.ObjectId,
     ref: "User",
   },
 });

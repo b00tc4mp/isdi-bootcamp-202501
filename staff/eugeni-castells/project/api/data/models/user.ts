@@ -1,8 +1,8 @@
 import { constant } from "com";
 import { Schema, model } from "mongoose";
-import { IUser } from "../interface";
+import { UserDocType } from "../types";
 
-const user = new Schema<IUser>({
+const user = new Schema<UserDocType>({
   name: { type: String, required: true, match: constant.NAME_REGEX },
   username: {
     type: String,
@@ -27,7 +27,6 @@ const user = new Schema<IUser>({
     {
       type: Schema.Types.ObjectId,
       required: false,
-      unique: true,
       ref: "Van",
     },
   ],
@@ -35,7 +34,6 @@ const user = new Schema<IUser>({
     {
       type: Schema.Types.ObjectId,
       required: false,
-      unique: true,
       ref: "Trip",
     },
   ],
@@ -48,6 +46,11 @@ const user = new Schema<IUser>({
     type: Date,
     default: null,
   },
+  location: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "Location",
+  },
   roadPoints: {
     type: Number,
     match: /^([1-9]?[0-9]{1,4}|100000)$/,
@@ -56,4 +59,4 @@ const user = new Schema<IUser>({
   },
 });
 
-export const User = model<IUser>("User", user);
+export const User = model<UserDocType>("User", user);

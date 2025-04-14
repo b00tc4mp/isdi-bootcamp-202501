@@ -1,25 +1,21 @@
-import { constant } from "com";
 import { Schema, model, Types } from "mongoose";
-import { ITrip } from "../interface.js";
+import { TripDocType } from "../types.js";
 
-const { ObjectId } = Types;
-
-const trip = new Schema<ITrip>({
+const trip = new Schema<TripDocType>({
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
-  van: { type: ObjectId, required: true, ref: "Van" },
-  vanOwner: { type: ObjectId, required: true, ref: "User" },
-  renter: { type: ObjectId, required: true, ref: "User" },
-  issues: [{ type: ObjectId, ref: "Doc" }],
+  van: { type: Schema.Types.ObjectId, ref: "Van" },
+  vanOwner: { type: Schema.Types.ObjectId, ref: "User" },
+  renter: { type: Schema.Types.ObjectId, ref: "User" },
+  issues: [{ type: Schema.Types.ObjectId, ref: "Doc" }],
   paymentStatus: { type: String, enum: ["pending", "payed", "rejected"] },
   paymentMethod: { type: String, enum: ["road points", "currency"] },
-  confirmStatus: { type: String, enum: ["pending", "payed", "rejected"] },
+  confirmStatus: { type: String, enum: ["pending", "accepted", "rejected"] },
   price: { type: Number, min: 0, max: 1000 },
-  location: [{ type: ObjectId, required: true, ref: "Location" }],
+  location: [{ type: Schema.Types.ObjectId, ref: "Location" }],
   agreements: [
     {
-      type: ObjectId,
-      required: false,
+      type: Schema.Types.ObjectId,
       ref: "Doc",
     },
   ],
@@ -34,4 +30,4 @@ const trip = new Schema<ITrip>({
   },
 });
 
-export const Trip = model<ITrip>("Trip", trip);
+export const Trip = model<TripDocType>("Trip", trip);

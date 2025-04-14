@@ -1,14 +1,17 @@
 import { Schema } from "mongoose";
-import { IPoint } from "../interface.js";
+import { PointDocType } from "../types.js";
 
-export const pointSchema = new Schema<IPoint>({
+export const pointSchema = new Schema<PointDocType>({
   type: {
     type: String,
     enum: ["Point"],
     required: true,
+    default: "Point",
   },
   coordinates: {
     type: [Number],
     required: true,
   },
 });
+
+pointSchema.index({ point: "2dsphere" });
