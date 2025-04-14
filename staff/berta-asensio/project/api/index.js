@@ -3,7 +3,7 @@ import express from 'express' //framework para crear el servidor
 import cors from 'cors' //permite que el frontend pueda acceder a las peticiones de backend
 
 import { users } from './routes/users.js'
-// import { menus } from './routes/menus'
+import { menus } from './routes/menus.js'
 // import { orders } from './routes/orders'
 
 import { errorHandler } from './handlers/errorHandler.js'
@@ -22,6 +22,7 @@ data.connect(MONGO_URL, MONGO_DB)
         api.get('/', (req, res) => res.send('Little breakfast is here!'))
 
         api.use('/users', users)
+        api.use('/menus', menus)
 
         api.use(errorHandler)
 

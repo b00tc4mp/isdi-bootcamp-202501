@@ -1,7 +1,7 @@
 import { users } from './users.js'
-import { menu } from './menu.js'
+import { menus } from './menus.js'
 
 export {
     users,
-    menu
+    menus
 }

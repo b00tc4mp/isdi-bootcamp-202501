@@ -44,28 +44,77 @@ data.connect(MONGO_URL, MONGO_DB)
                 return Menu.insertMany([
                     {
                         ordinal: 1,
-                        name: 'Traditional',
-                        description: 'Sandwitx',
-                        allergens: ['gluten'],
+                        name: 'Jamón dulce',
+                        description: 'Bocadillo de jamón dulce',
+                        allergens: [],
                         categories: ['regular'],
+                        breadOptions: ['gluten', 'sin gluten', 'integral'],
                         price: 2.50
                     },
                     {
                         ordinal: 2,
-                        name: 'Traditional +',
-                        description: 'Sandwitx + fruit',
-                        allergens: ['gluten'],
-                        categories: ['regular'],
-                        price: 3.50
+                        name: 'Queso',
+                        description: 'Bocadillo de queso',
+                        allergens: ['lactosa'],
+                        categories: ['regular', 'vegetariano', 'halal'],
+                        breadOptions: ['gluten', 'sin gluten', 'integral'],
+                        price: 2.5
                     },
                     {
                         ordinal: 3,
-                        name: 'Traditional extra +',
-                        description: 'Sandwitx + fruit + yogurt',
-                        allergens: ['gluten', 'lactose'],
+                        name: 'Jamón serrano',
+                        description: 'Bocadillo de jamón serrano',
+                        allergens: [],
                         categories: ['regular'],
-                        price: 4
+                        breadOptions: ['gluten', 'sin gluten', 'integral'],
+                        price: 2.5
+                    },
+                    {
+                        ordinal: 4,
+                        name: 'Atún y aceitunas',
+                        description: 'Bocadillo de atún con aceitunas',
+                        allergens: ['pescado'],
+                        categories: ['regular', 'halal'],
+                        breadOptions: ['gluten', 'sin gluten', 'integral'],
+                        price: 2.5
+                    },
+                    {
+                        ordinal: 5,
+                        name: 'Tortilla francesa',
+                        description: 'Bocadillo de tortilla a la francesa',
+                        allergens: ['huevo'],
+                        categories: ['regular', 'vegetariano', 'halal'],
+                        breadOptions: ['gluten', 'sin gluten', 'integral'],
+                        price: 2.5
+                    },
+                    {
+                        ordinal: 6,
+                        name: 'Vegetal',
+                        description: 'Bocadillo de lechuga, tomate y huevo duro',
+                        allergens: ['huevo'],
+                        categories: ['regular', 'vegetariano', 'halal'],
+                        breadOptions: ['gluten', 'sin gluten', 'integral'],
+                        price: 2.5
+                    },
+                    {
+                        ordinal: 7,
+                        name: 'Vegetal con frutos secos',
+                        description: 'Bocadillo de verdura con queso y nueces',
+                        allergens: ['lactosa', 'frutos de cáscara'],
+                        categories: ['regular', 'vegetariano', 'halal'],
+                        breadOptions: ['gluten', 'sin gluten', 'integral'],
+                        price: 2.5
+                    },
+                    {
+                        ordinal: 8,
+                        name: 'Vegetal con aguacate',
+                        description: 'Bocadillo de aguacate, tomate y limón',
+                        allergens: [],
+                        categories: ['regular', 'vegetariano', 'halal'],
+                        breadOptions: ['gluten', 'sin gluten', 'integral'],
+                        price: 2.5
                     }
+
                 ])
             })
     })

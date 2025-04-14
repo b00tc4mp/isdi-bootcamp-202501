@@ -60,9 +60,14 @@ const menu = new Schema({
     },
     categories: {
         type: [String],
-        enum: ['regular', 'vegetarian', 'vegan', 'halal'],
+        enum: ['regular', 'vegetariano', 'vegano', 'halal'],
         required: true,
         default: []
+    },
+    breadOptions: {
+        type: [String],
+        enum: ['gluten', 'sin gluten', 'integral'],
+        default: ['gluten']
     },
     price: {
         type: Number,
