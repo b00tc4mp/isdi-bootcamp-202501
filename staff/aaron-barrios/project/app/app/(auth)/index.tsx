@@ -1,17 +1,20 @@
-import { StyleSheet } from "react-native"
-import { Button } from "react-native"
+import { Button, StyleSheet } from "react-native"
+import { useRouter } from "expo-router";
 
 import { Text, View } from "@/components/Themed"
 
 export default function LandingScreen() {
+  const router = useRouter()
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Landing</Text>
       <View style={styles.container}>
         <View style={styles.button}>
-          <Button title="LOG IN" /*onPress={() => navigation.navigate('Login', { alias: '', password: '' }) }*/ />
+          <Button title="LOG IN" onPress={() => router.push("/(auth)/login" as any)} />
         </View>
-        <Button title="REGISTER" /*onPress={() => navigation.navigate('Register', { alias: '', email: '', password: '' })} */ />
+        <Button title="REGISTER" onPress={() => router.push("/(auth)/register" as any)} />
+
       </View>
     </View>
   );

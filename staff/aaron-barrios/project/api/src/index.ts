@@ -1,11 +1,11 @@
 import "dotenv/config"
 import express, { Request, Response } from "express"
+import cors from "cors"
 
 import errorHandler from "./middlewares/errorHandler"
 import loggers from "./logs/index"
 
 import { data } from "./data/index"
-
 import { userRouter } from "./routes/users"
 import { workoutRouter } from "./routes/workouts"
 
@@ -27,11 +27,16 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
 
         api.disable("x-powered-by") //-> que era esto?
 
-        const PORT = process.env.PORT || 7070
+        const PORT = process.env.PORT || 8080
 
         api.use(morganMiddleware)
 
-        // api.use(express.json())
+        // ✅ ACTIVA CORS (para permitir llamadas desde tu frontend Expo Web)
+        api.use(cors({
+            origin: 'http://localhost:8081', // ⚠️ o el puerto que use Expo Web
+            credentials: true
+        }))
+
 
         // --- ROUTES --- 
         api.use("/users", userRouter)
