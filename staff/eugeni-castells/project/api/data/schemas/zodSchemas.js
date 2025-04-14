@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.vanSchema = exports.userAuthSchema = exports.registerUserSchema = void 0;
+exports.registerVanSchema = exports.userAuthSchema = exports.registerUserSchema = void 0;
 const zod_1 = require("zod");
 const com_1 = require("com");
 const { OBJECT_ID_REGEX } = com_1.constant;
@@ -19,6 +19,19 @@ exports.registerUserSchema = (0, zod_1.object)({
         .string()
         .min(8, "password must be at least 8 characters long")
         .max(50, "password cannot have more than 25 characters"),
+    city: zod_1.z
+        .string()
+        .min(2, "city must have at least 2 characters")
+        .max(30, "city cannot surpass 30 characters"),
+    address: zod_1.z
+        .string()
+        .min(5, "address must have at least 2 characters")
+        .max(30, "address cannot surpasse 30 characters"),
+    country: zod_1.z
+        .string()
+        .min(3, "region must have at least 2 characters")
+        .max(20, "region cannot surpass 20 characters"),
+    point: zod_1.z.number().array().length(2),
 });
 exports.userAuthSchema = (0, zod_1.object)({
     email: zod_1.z.string().email("invalid email address"),
@@ -27,7 +40,7 @@ exports.userAuthSchema = (0, zod_1.object)({
         .min(6, "Password must be at least 6 characters long")
         .max(50, "Password cannot pass from 25 characters"),
 });
-exports.vanSchema = zod_1.z.object({
+exports.registerVanSchema = zod_1.z.object({
     model: zod_1.z.string().min(3).max(30),
     brand: zod_1.z.string().min(3).max(15),
     year: zod_1.z.string().refine((val) => {

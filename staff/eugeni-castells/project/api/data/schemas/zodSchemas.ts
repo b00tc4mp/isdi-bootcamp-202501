@@ -19,6 +19,19 @@ export const registerUserSchema = object({
     .string()
     .min(8, "password must be at least 8 characters long")
     .max(50, "password cannot have more than 25 characters"),
+  city: z
+    .string()
+    .min(2, "city must have at least 2 characters")
+    .max(30, "city cannot surpass 30 characters"),
+  address: z
+    .string()
+    .min(5, "address must have at least 2 characters")
+    .max(30, "address cannot surpasse 30 characters"),
+  country: z
+    .string()
+    .min(3, "region must have at least 2 characters")
+    .max(20, "region cannot surpass 20 characters"),
+  point: z.number().array().length(2),
 });
 
 export const userAuthSchema = object({
