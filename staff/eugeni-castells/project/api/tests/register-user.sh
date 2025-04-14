@@ -1,1 +1,1 @@
-curl -X POST -d '{"name":"marc","email":"marc@gmail.com","username":"marcusRashford","password":"123123123"}' -H 'Content-Type: application/json' http://localhost:8080/users -v
+curl http://localhost:8080/users -H 'Content-Type: application/json' -d '{"name":"marc","email":"ma@rcgmail.com","username":"marcusRashford","password":"123123123","city":"Barcelona","address":"carrer gran de sant andreu","country":"Spain", "point":[40,74]}' -v
