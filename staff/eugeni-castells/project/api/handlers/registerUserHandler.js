@@ -7,8 +7,17 @@ exports.registerUserHandler = void 0;
 const createHandler_1 = __importDefault(require("../middlewares/createHandler"));
 const service_1 = require("../service");
 exports.registerUserHandler = (0, createHandler_1.default)((req, res) => {
-    const { name, username, email, password } = req.body;
-    return (0, service_1.registerUser)(name, username, email, password).then(() => {
+    const { name, username, email, password, city, address, country, point } = req.body;
+    return (0, service_1.registerUser)({
+        name,
+        username,
+        email,
+        password,
+        city,
+        country,
+        point,
+        address,
+    }).then(() => {
         res.status(201).send();
     });
 });
