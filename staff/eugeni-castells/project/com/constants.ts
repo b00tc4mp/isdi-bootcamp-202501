@@ -8,6 +8,7 @@ const constant = {
   PASSWORD_REGEX: /^(?=.*[A-Z])(?=.*[^a-zA-Z\s])\S{8,20}$/,
   NAME_REGEX: /^(?!.* {2,})[A-Za-zÀ-ÿ ]{2,20}$/,
   USERNAME_REGEX: /^(?!.* {2,})[A-Za-zÀ-ÿ0-9 ]{2,20}$/,
+  MAX_DISTANCE: 50,
 };
 
 export default constant;
