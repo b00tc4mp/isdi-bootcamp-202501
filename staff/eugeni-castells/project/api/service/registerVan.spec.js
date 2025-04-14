@@ -5,7 +5,7 @@ const chai_1 = require("chai");
 const data_1 = require("../data");
 const registerVan_1 = require("./registerVan");
 const { MONGO_URI, MONGO_DB_TEST } = process.env;
-describe.only("registerVan", () => {
+describe("registerVan", () => {
     before(() => {
         return data_1.data.connect(MONGO_URI, MONGO_DB_TEST);
     });
@@ -49,6 +49,7 @@ describe.only("registerVan", () => {
             username: "euge",
             email: "eu@ge.com",
             password: "123123123",
+            location: "123123123123123123123234",
         })
             .then(() => data_1.User.findOne({ name: "Eugeni" }).lean())
             .then((user) => {

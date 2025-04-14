@@ -13,8 +13,21 @@ describe("registerUser", () => {
         return data_1.User.deleteMany({});
     });
     it("succeeds on registering user", () => {
+        const newUserInfo = {
+            name: "Eugeni",
+            username: "euge",
+            email: "eu@ge.com",
+            password: "123123123",
+            address: "gran de sant andreu 368",
+            city: "Barcelona",
+            country: "Spain",
+            point: {
+                type: "Point", // <-- ara TypeScript sap que això és el literal "Point"
+                coordinates: [2.1734, 41.3851],
+            },
+        };
         debugger;
-        return (0, index_js_1.registerUser)("Eugeni", "euge", "eu@ge.com", "123123123")
+        return (0, index_js_1.registerUser)(newUserInfo)
             .then(() => data_1.User.findOne({ name: "Eugeni" }).lean())
             .then((user) => (0, chai_1.expect)(user === null || user === void 0 ? void 0 : user.name).to.equal("Eugeni"));
     });

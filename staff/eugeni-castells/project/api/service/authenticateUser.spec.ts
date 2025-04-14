@@ -19,6 +19,8 @@ describe("authenticateUser", () => {
       name: "Eugeni",
       username: "euge",
       email: "eu@ge.com",
+      address: "carr gran de sant andreu",
+      location: "111111111111111c111a1111",
       password: "$2b$12$XePBJgFgYNcwFk9X2YFJK.MIEE7soiPZznIqeameT9PWuhDG3dHEa",
     }).then((_user) => {
       return authenticateUser(_user.email, "123123123").then((id) => {

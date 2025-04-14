@@ -2,7 +2,7 @@ import "dotenv/config";
 import { expect } from "chai";
 import { data, User, Van } from "../data";
 import { registerVan } from "./registerVan";
-import { NewVanInfo } from "./types";
+import { Toilet, Shower, Fuel } from "../data/types";
 
 const { MONGO_URI, MONGO_DB_TEST } = process.env;
 
@@ -41,9 +41,9 @@ describe("registerVan", () => {
       bedCount: 3,
       insideKitchen: false,
       fridge: true,
-      toilet: "fixed",
-      shower: "outside",
-      fuelType: "petrol",
+      toilet: "fixed" as Toilet,
+      shower: "outside" as Shower,
+      fuelType: "petrol" as Fuel,
       storage: 78,
     };
     debugger;
@@ -52,6 +52,7 @@ describe("registerVan", () => {
       username: "euge",
       email: "eu@ge.com",
       password: "123123123",
+      location: "123123123123123123123234",
     })
       .then(() => User.findOne({ name: "Eugeni" }).lean())
       .then((user) => {

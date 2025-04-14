@@ -1,40 +1,53 @@
 import { validate } from "com";
 import bcrypt from "bcryptjs";
-import { User } from "../data/index.js";
+import { User, Location } from "../data/index.js";
 import { DuplicityError, SystemError } from "com/errors";
-import { IUser } from "../data/index.js";
+import { UserDocType, LocationDocType } from "../data/index.js";
+import { NewUserInfo } from "./types.js";
 
-export const registerUser = (
-  name: string,
-  username: string,
-  email: string,
-  password: string
-): Promise<void> => {
+export const registerUser = (newUserInfo: NewUserInfo): Promise<void> => {
+  const { username, name, email, password, city, country, address, point } =
+    newUserInfo;
   validate.username(username, "username");
+  validate.text(city, "city");
+  validate.minLength(city, 2, "city min length");
+  validate.text(country, "country");
+  validate.maxLength(city, 25, "city max length");
+  validate.minLength(country, 2, "country min length");
+  validate.maxLength(country, 25, "country max length");
+
   validate.email(email, "email");
   validate.password(password, "password");
   validate.text(name, "name");
   validate.minLength(name, 3, "name");
   validate.maxLength(name, 15, "name");
 
-  return User.findOne({ $or: [{ email }, { username }] })
-    .lean()
+  let locationSend: LocationDocType;
+
+  return Promise.all([
+    User.findOne({ $or: [{ email }, { username }] }).lean(),
+    Location.create({ city, country, point: { coordinates: point }, address }),
+  ])
     .catch((error) => {
       throw new SystemError(error.message);
     })
-    .then((user) => {
+    .then(([user, _locationSend]) => {
       if (user) throw new DuplicityError("user already exists");
+
+      locationSend = _locationSend;
+
       return bcrypt
         .hash(password, 10)
         .catch((error) => {
           throw new SystemError(error.message);
         })
         .then((hashedPassword) => {
-          const newUser: Partial<IUser> = {
+          const newUser: Partial<UserDocType> = {
             name,
             username,
             email,
             password: hashedPassword,
+            location: locationSend._id,
           };
 
           return User.create(newUser).catch((error) => {

@@ -12,11 +12,12 @@ describe("getUserUsername", () => {
     beforeEach(() => {
         return data_1.User.deleteMany({});
     });
-    it("succeeds on authenticating user", () => {
+    it("succeeds on getting user username", () => {
         return data_1.User.create({
             name: "Eugeni",
             username: "euge",
             email: "eu@ge.com",
+            location: "111111111111111111111111",
             password: "$2b$12$XePBJgFgYNcwFk9X2YFJK.MIEE7soiPZznIqeameT9PWuhDG3dHEa",
         }).then((_user) => {
             return (0, index_js_1.getUserUsername)(_user._id.toString()).then((username) => {

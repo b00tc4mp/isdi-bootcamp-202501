@@ -1,3 +1,5 @@
+import { Fuel, Shower, Toilet } from "../data/types";
+
 export type NewVanInfo = {
   model: string;
   brand: string;
@@ -16,10 +18,21 @@ export type NewVanInfo = {
   bedCount: number;
   insideKitchen?: boolean;
   fridge?: boolean;
-  // toilet?: "fixed" | "portable" | "none";
-  // shower: "inside" | "outside" | "none";
-  // fuelType: "petrol" | "diesel" | "electric" | "hybrid";
+  toilet?: Toilet;
+  shower: Shower;
+  fuelType: Fuel;
   storage?: number;
   createdAt?: Date;
   modifiedAt?: Date | null;
+};
+
+export type NewUserInfo = {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+  address: string;
+  country: string;
+  city: string;
+  point: { type: "Point"; coordinates: [number, number] };
 };
