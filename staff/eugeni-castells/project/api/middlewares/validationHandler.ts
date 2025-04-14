@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodSchema } from "zod";
 
-export const validationHandler = <T>(schema: ZodSchema) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+export const validationHandler = (schema: ZodSchema) => {
+  return (req: Request, _res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body);
 

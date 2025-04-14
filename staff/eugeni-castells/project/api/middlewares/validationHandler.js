@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validationHandler = void 0;
 const validationHandler = (schema) => {
-    return (req, res, next) => {
+    return (req, _res, next) => {
         try {
             schema.parse(req.body);
             next();
