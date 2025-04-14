@@ -8,7 +8,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Landing'>
 export default function Landing({ navigation }: Props) {
     return (
         <View>
-            <Text>Esto es El Pollo 🐔 desde React Native</Text>
+            <Text>React Native Landing</Text>
             <Button title="Iniciar sesión" onPress={() => navigation.navigate('Login', { alias: '', password: '' })} />
             <Button title="Registrarse" onPress={() => navigation.navigate('Register', { alias: '', email: '', password: '' })} />
         </View>

@@ -12,7 +12,7 @@ export type UserDocType = {
     level?: 'beginner' | 'intermediate' | 'veteran'
     interests?: string[]
     createdAt: Date,
-    modifiedAt?: Date,
+    modifiedAt?: Date | null,
     workouts?: ObjectId[]
     routines?: ObjectId[]
     __v: number
@@ -70,7 +70,7 @@ export type RoutineDocType = {
     likes: ObjectId[]
     saves: ObjectId[]
     createdAt: Date
-    modifiedAt: Date
+    modifiedAt: Date | null
     workouts: RoutineWorkoutDocType[]
     __v: number
 }
