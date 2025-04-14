@@ -9,7 +9,7 @@ export const validate = {
     notBlankString(text, explain) {
         this.string(text, explain)
 
-        if (constant.NOT_EMPTY_OR_BLANK_REGEX.test(text)) throw new ValidationError(`invalid ${explain} syntax`)
+        if (!constant.NOT_EMPTY_OR_BLANK_REGEX.test(text)) throw new ValidationError(`invalid ${explain} syntax`)
     },
     maxLength(value, maxLength, explain) {
         if (value.length > maxLength) throw new ValidationError(`invalid ${explain} maximum length`)

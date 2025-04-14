@@ -46,13 +46,22 @@ class AuthorizationError extends Error {
     }
 }
 
+class NoMatchError extends Error {
+    constructor(message) {
+        super(message)
+
+        this.name = this.constructor.name
+    }
+}
+
 export {
     SystemError,
     DuplicityError,
     CredentialsError,
     NotFoundError,
     ValidationError,
-    AuthorizationError
+    AuthorizationError,
+    NoMatchError
 }
 
 const errors = {
@@ -61,7 +70,8 @@ const errors = {
     CredentialsError,
     NotFoundError,
     ValidationError,
-    AuthorizationError
+    AuthorizationError,
+    NoMatchError
 }
 
 export default errors
