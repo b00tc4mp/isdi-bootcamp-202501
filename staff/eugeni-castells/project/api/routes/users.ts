@@ -7,6 +7,7 @@ import {
 } from "../data/schemas/zodSchemas";
 import { registerUserHandler } from "../handlers/registerUserHandler";
 import { validationHandler } from "../middlewares/validationHandler";
+import authHandler from "../middlewares/authHandler";
 import { registerVanHandler } from "../handlers/registerVanHandler";
 import { getUserUsernameHandler } from "../handlers/getUserUsernameHandler";
 
@@ -21,7 +22,7 @@ userRouter.post(
 
 userRouter.post(
   "/van",
-  //authHandler,
+  authHandler,
   jsonBodyParser,
   validationHandler(registerVanSchema),
   registerVanHandler
