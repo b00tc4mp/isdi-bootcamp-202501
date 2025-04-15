@@ -1,5 +1,5 @@
 import { User, Season } from '../../data/index.js'
-import { validate, errors } from 'com'
+import { validate, errors } from '../../validations/index.js'
 
 const { AuthorizationError, SystemError, DuplicityError } = errors
 
@@ -16,7 +16,7 @@ export const createSeason = (userId, { name, startDate, endDate }) => {
       if (existing) throw new DuplicityError('There is already an active season')
     })
     .then(() => Season.create({
-      name,
+      name: name.toLowerCase(),
       startDate,
       endDate,
       status: 'active',

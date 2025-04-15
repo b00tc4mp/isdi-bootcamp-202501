@@ -22,9 +22,9 @@ export const createGame = (userId, title, season, date, place) => {
       const newGame = new Game({
         author: userId,
         title,
+        season: season || null,
         date,
         place,
-        season: season || null,
         status: 'scheduled',
         participants: [],
         winner: null,

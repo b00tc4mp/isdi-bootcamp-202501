@@ -1,5 +1,5 @@
 import { User, Season, Game } from '../../data/index.js'
-import { errors } from 'com'
+import { errors } from '../../validations/index.js'
 
 const { SystemError, NotAllowedError, NotFoundError } = errors
 

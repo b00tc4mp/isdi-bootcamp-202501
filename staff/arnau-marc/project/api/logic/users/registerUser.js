@@ -3,7 +3,7 @@ import { errors, validate } from '../../validations/index.js'
 import bcrypt from 'bcryptjs'
 const { SystemError, DuplicityError } = errors
 
-export const registerUser = (name, surname, email, username,  password) =>{
+export const registerUser = (name, surname, email, username, password) =>{
     validate.name(name)
     validate.surname(surname)
     validate.email(email)

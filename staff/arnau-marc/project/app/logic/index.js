@@ -17,7 +17,7 @@ import { requestAdminRole } from './profile/requestAdminRole.js'
 import { getUserStats } from './profile/getUserStats.js'
 
 import { finishSeason } from './season/finishSeason.js'
-import { getLatestSeason } from './season/getLastSeason.js'
+import { getLatestSeason } from './season/getLatestSeason.js'
 import { getSeasonLeaderboard } from './season/getSeasonLeaderboard.js'
 import { createSeason } from './season/createSeason.js'
 import { getSeasonById } from './season/getSeasonById.js'

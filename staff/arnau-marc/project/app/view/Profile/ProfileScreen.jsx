@@ -24,7 +24,6 @@ export default function ProfileScreen({ navigation }) {
       .finally(() => setLoading(false))
   }, [])
 
-
   const handleRequestAdminRole = () => {
     setModalVisible(true)
   }
@@ -73,7 +72,6 @@ export default function ProfileScreen({ navigation }) {
             <Text style={styles.stat}>Partidas jugadas: {stats.gamesPlayed}</Text>
             <Text style={styles.stat}>Partidas ganadas: {stats.gamesWon}</Text>
             <Text style={styles.stat}>Porcentaje de victoria: {stats.winRate}%</Text>
-            <Text style={styles.stat}>Posición promedio: {stats.averagePosition}</Text>
           </>
         ) : (
           <Text style={styles.noStats}>No hay estadísticas disponibles.</Text>
