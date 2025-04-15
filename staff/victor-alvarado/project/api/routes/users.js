@@ -34,9 +34,9 @@ users.get('/self/username', authHandler, withErrorHandling((req, res) => {
         .then(username => res.json({ username }))
 }))
 
-users.get('/:targetUserId/posts', authHandler, withErrorHandling((req, res) => {
+users.get('/:targetUserId/recipes', authHandler, withErrorHandling((req, res) => {
     const { userId, params: { targetUserId } } = req
 
-    return logic.getUserPosts(userId, targetUserId)
-        .then(posts => res.json(posts))
+    return logic.getUserRecipes(userId, targetUserId)
+        .then(recipes => res.json(recipes))
 }))

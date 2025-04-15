@@ -3,6 +3,14 @@ import { loginUser } from './loginUser.js'
 import { logoutUser } from './logoutUser.js'
 import { isUserLoggedIn } from './isUserLoggedIn.js'
 import { getUserUsername } from './getUserUsername.js'
+import { getUserId } from './getUserId.js'
+
+import { createRecipe } from './createRecipe.js'
+import { getRecipe } from './getRecipe.js'
+import { deleteRecipe } from './deleteRecipe.js'
+import { updateRecipeText } from './updateRecipeText.js'
+import { toggleLikeRecipe } from './toggleLikeRecipe.js'
+import { getUserRecipe } from './getUserRecipe.js'
 
 
 export const logic = {
@@ -10,5 +18,13 @@ export const logic = {
     loginUser,
     logoutUser,
     isUserLoggedIn,
-    getUserUsername
+    getUserUsername,
+    getUserId,
+
+    createRecipe,
+    getRecipe,
+    deleteRecipe,
+    updateRecipeText,
+    toggleLikeRecipe,
+    getUserRecipe
 }

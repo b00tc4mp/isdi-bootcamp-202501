@@ -44,4 +44,12 @@ export const validate = {
         if (id.length !== 24) throw new ValidationError(`invalid ${explain} length`)
     },
 
+    minValue(value, minValue, explain = 'value') {
+        if (value < minValue) throw new ValidationError(`invalid ${explain} minValue`)
+    },
+
+    number(value, explain = 'value') {
+        if (typeof value !== 'number') throw new ValidationError(`invalid ${explain} type`)
+    }
+
 }

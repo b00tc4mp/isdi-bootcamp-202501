@@ -1,11 +1,13 @@
 import { User, Recipe } from '../data/index.js'
 import { errors, validate } from 'com'
 
-const { SystemError, NotFoundError } = errors
+const { SystemError, NotFoundError, OwnershipError } = errors
 
-export const toggleLikeRecipe = (userId, recipeId) => {
+export const updateRecipeDescription = (userId, recipeId, description) => {
     validate.id(userId, 'userId')
     validate.id(recipeId, 'recipeId')
+    validate.text(description, 'description')
+    validate.maxLength(description, 400, 'description')
 
     return Promise.all([
         User.findById(userId).lean(),
@@ -16,17 +18,16 @@ export const toggleLikeRecipe = (userId, recipeId) => {
             if (!user) throw new NotFoundError('user not found')
             if (!recipe) throw new NotFoundError('recipe not found')
 
-            const { likes } = recipe
+            if (recipe.author.toString() !== userId) throw new OwnershipError('user is not author of recipe')
 
-            const index = likes.findIndex(userObjectId => userObjectId.toString() === userId)
-
-            if (index < 0)
-                likes.push(userId)
-            else
-                likes.splice(index, 1)
-
-            return Recipe.updateOne({ _id: recipeId }, { $set: { likes } })
+            return Recipe.updateOne({ _id: recipeId }, {
+                $set: {
+                    description,
+                    modifiedAt: new Date
+                }
+            })
                 .catch(error => { throw new SystemError(error.message) })
-                .then(() => { })
+
         })
+        .then(() => { })
 }
