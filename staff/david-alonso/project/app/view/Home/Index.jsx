@@ -1,28 +1,17 @@
-import { useState, useEffect } from "react"
 import { Routes, Route, useLocation, useNavigate } from "react-router"
+
+import { Vehicles } from "./Vehicles.jsx"
+
+import { useEffect, useState } from 'react'
+import { getVehicles } from '../../logic/getVehicles.js'
 
 import { logic } from "../../logic/index.js"
 import { Link } from "react-router"
 
 export function Home({ handleNavigateVehicleRegister }) {
     // const { alert, confirm } = useContext()
-
-    const navigate = useNavigate()
-
     const { pathname } = useLocation()
 
-    useEffect(() => {
-        console.debug('Home -> useEffect')
-
-        // ??????
-        // Crear logica para mostrar el numbre de usuario
-        try {
-
-        } catch (error) {
-
-        }
-
-    })
 
     const handleAddVehicle = () => {
 
@@ -49,11 +38,11 @@ export function Home({ handleNavigateVehicleRegister }) {
             <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl text-white">RIDECARE</h1>
         </header>
 
-        <main className="flex-grow w-full pt-30 ">
+        <main className="flex-grow w-full pt-25 ">
 
-            <div className="mx-auto p-10 bg-blue-300 rounded-2xl shadow-xl/30 mb-7">COCHE</div>
-
-            <div className="mx-auto p-10 bg-red-300 rounded-2xl shadow-xl/30">MOTO</div>
+            <Routes>
+                <Route path="/" element={<Vehicles />} />
+            </Routes>
 
         </main>
 

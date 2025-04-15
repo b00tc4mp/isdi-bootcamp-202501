@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate, Navigate } from "react-router"
 import { Register } from './view/Register'
 import { Login } from "./view/Login"
 import { VehicleRegister } from './view/VehicleRegister'
+import { Vehicles } from "./view/Home/Vehicles.jsx"
 import { Home } from "./view/Home/Index.jsx"
 import { Menu } from "./view/Home/Menu"
 
@@ -118,6 +119,8 @@ function App() {
 
             <Route path="/menu" element={<Menu onNavigateToMenu={handleNavigateToMenu} onUserLoggedOut={handleUserLoggedOut} />} />
             {/* /vehicleRegister: Muestra el registroVehiculo si no está logueado. Si ya está logueado, lo manda al home / */}
+
+            <Route path="/vehicles" element={<Vehicles />} />
 
             <Route path='/*' element={loggedIn ? <Home handleNavigateVehicleRegister={handleNavigateVehicleRegister} /> : <Navigate to='/login' />} />
             {/* Si ponemos una ruta que no existe y esta logeado lo mandamos a home /. Si no lo esta se le envia a /login */}

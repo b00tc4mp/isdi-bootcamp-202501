@@ -1,11 +1,8 @@
-// import { useContext } from "react"
-// import { logic } from "../logic/index.js"
-
 import { logic } from '../logic/index.js'
 import { Link } from 'react-router'
+import { useState } from "react"
 
-
-export function VehicleRegister({ onNavigateToLogin, onVehicleRegistered }) {
+export function VehicleRegister({ onVehicleRegistered }) {
 
     // const { alert } = useContext()
 
@@ -19,14 +16,15 @@ export function VehicleRegister({ onNavigateToLogin, onVehicleRegistered }) {
                 marca: { value: marca },
                 modelo: { value: modelo },
                 año: { value: año },
+                color: { value: color },
                 matricula: { value: matricula },
                 km: { value: km },
                 itv: { value: itv }
             } = form
 
-            console.log(itv, typeof itv)
+            const author = logic.getUserId()
 
-            logic.registerVehicle(marca, modelo, parseInt(año), matricula, parseInt(km), new Date(itv))
+            logic.registerVehicle(marca, modelo, parseInt(año), color, matricula, parseInt(km), new Date(itv), author)
                 .then(() => {
                     form.reset()
 
@@ -42,6 +40,11 @@ export function VehicleRegister({ onNavigateToLogin, onVehicleRegistered }) {
 
             alert(error.message)
         }
+    }
+
+    // TRANSFORMAMOS LO ESCRITO EN LOS FORMULARIOS EN MAYUSCULAS
+    const handleInputUppercase = (event) => {
+        event.target.value = event.target.value.toUpperCase()
     }
 
 
@@ -64,9 +67,9 @@ export function VehicleRegister({ onNavigateToLogin, onVehicleRegistered }) {
                     <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">Scooter</button>
                 </div>
 
-                <input type="text" id="marca" placeholder="Marca" className="w-full border border-gray-400 rounded-lg p-2 " />
+                <input type="text" id="marca" placeholder="Marca" onInput={handleInputUppercase} className="w-full border border-gray-400 rounded-lg p-2 " />
 
-                <input type="text" id="modelo" placeholder="Modelo" className="w-full border border-gray-400 rounded-lg p-2 " />
+                <input type="text" id="modelo" placeholder="Modelo" onInput={handleInputUppercase} className="w-full border border-gray-400 rounded-lg p-2 " />
 
                 <div className="flex gap-4">
                     <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">G</button>
@@ -81,7 +84,7 @@ export function VehicleRegister({ onNavigateToLogin, onVehicleRegistered }) {
                     <input type="color" id="color" placeholder="Color" className="w-full h-11 border border-gray-400 rounded-lg p-2 " />
                 </div>
 
-                <input type="text" id="matricula" placeholder="Matricula" className="w-full border border-gray-400 rounded-lg p-2" />
+                <input type="text" id="matricula" placeholder="Matricula" onInput={handleInputUppercase} className="w-full border border-gray-400 rounded-lg p-2" />
 
                 <div className="flex gap-4">
                     <input type="number" id="km" placeholder="KM" className="w-full border border-gray-400 rounded-lg p-2 " />

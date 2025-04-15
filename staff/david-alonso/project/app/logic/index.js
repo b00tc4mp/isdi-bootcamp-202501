@@ -3,13 +3,16 @@ import { loginUser } from './loginUser'
 import { isUserLoggedIn } from "./isUserLoggedin"
 import { logoutUser } from "./logoutUser"
 import { registerVehicle } from "./registerVehicle"
-logoutUser
+import { getVehicles } from "./getVehicles"
+import { getUserId } from "./getUserId"
 
 export const logic = {
     registerUser,
     loginUser,
     isUserLoggedIn,
     logoutUser,
-    registerVehicle
+    registerVehicle,
+    getVehicles,
+    getUserId
 }
 
