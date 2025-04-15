@@ -21,7 +21,8 @@ export function Levels() {
         }
     }, [])
 
-    return <section>
+
+    return <div className="overflow-auto height-200px bg-yellow" >
         {levels.map(level => <Level key={level.id} level={level} />)}
-    </section>
+    </div >
 }

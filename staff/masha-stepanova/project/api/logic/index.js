@@ -3,6 +3,7 @@ import { registerUser } from './registerUser.js'
 import { getUserUsername } from './getUserUsername.js'
 import { getLevel } from './getLevel.js'
 import { getLevels } from './getLevels.js'
+import { isLevelPassed } from './isLevelPassed.js'
 
 export const logic = {
     authenticateUser,
@@ -10,5 +11,7 @@ export const logic = {
     getUserUsername,
 
     getLevel,
-    getLevels
+    getLevels,
+    getLevel,
+    isLevelPassed
 }

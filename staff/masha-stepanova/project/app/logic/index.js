@@ -4,6 +4,8 @@ import { registerUser } from './registerUser'
 import { getUserUsername } from './getUserUsername'
 import { getUserId } from './getUserId'
 import { getLevels } from './getLevels'
+import { logoutUser } from './logoutUser'
+import { isLevelPassed } from './isLevelPassed'
 
 export const logic = {
     loginUser,
@@ -11,5 +13,8 @@ export const logic = {
     registerUser,
     getUserUsername,
     getUserId,
-    getLevels
+    logoutUser,
+
+    getLevels,
+    isLevelPassed
 }

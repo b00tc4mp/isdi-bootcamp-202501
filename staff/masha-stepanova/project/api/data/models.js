@@ -47,7 +47,7 @@ const user = new Schema({
         ref: 'Level'
     }],
     currentLevel: {
-        type: String,
+        type: ObjectId,
         ref: 'Level'
     }
 })

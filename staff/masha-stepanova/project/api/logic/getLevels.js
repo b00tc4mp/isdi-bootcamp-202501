@@ -14,13 +14,11 @@ export const getLevels = (userId) => {
         .then(([user, levels]) => {
             if (!user) throw new NotFoundError('user not found')
 
-            console.log(levels)
-
             levels.forEach(level => {
                 level.id = level._id.toString()
                 delete level._id
 
-                level.isBlocked = !(user.currentLevel === level.id)
+                level.isBlocked = !(user.currentLevel.toString() === level.id)
             })
 
             return levels

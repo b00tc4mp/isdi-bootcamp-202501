@@ -6,8 +6,11 @@ import { useContext } from '../context'
 
 import { Ranking } from './Ranking'
 import { Levels } from './Levels'
+import { Profile } from './Profile'
 
-export function Home(onNavigateToProfile, onUserLoggedOut) {
+// TODO logic.logoutUser()
+
+export function Home({ onNavigateToProfile, onUserLoggedOut }) {
     const { alert } = useContext()
 
     const [username, setUsername] = useState('')
@@ -31,29 +34,32 @@ export function Home(onNavigateToProfile, onUserLoggedOut) {
         }
     }, [])
 
-    const handleLevelClick = () => {
-        try {
-            const levelId = logic.getLevelId()
+    // const handleLevelClick = () => {
+    //     try {
+    //         const levelId = logic.getLevelId()
 
-            //TODO change the path name
+    //         //TODO change the path name
 
-            navigate(`${levelId}`, { state: { levelId } })
-        } catch (error) {
-            console.error(error)
+    //         navigate(`${levelId}`, { state: { levelId } })
+    //     } catch (error) {
+    //         console.error(error)
 
-            alert(error.message)
-        }
-    }
+    //         alert(error.message)
+    //     }
+    // }
+
+    const handleUsernameClick = () => navigate('/profile')
 
     return <>
         <header>
             <p>Logo</p>
-            <p>Hello, {username}!</p>
+            <p onClick={handleUsernameClick}>Hello, {username}!</p>
         </header>
 
         <main>
             <Routes>
                 <Route path="/" element={<><Ranking /> <Levels /></>} />
+                <Route path="/profile" element={<Profile onUserLoggedOut={onUserLoggedOut} />} />
 
 
             </Routes>

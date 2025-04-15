@@ -33,3 +33,12 @@ users.get('/self/username', authHandler, withErrorHandling((req, res) => {
     return logic.getUserUsername(userId)
         .then(username => res.json({ username }))
 }))
+
+users.patch('/:levelId', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId, params: { levelId } } = req
+
+    const { userAnswer } = req.body
+
+    return logic.isLevelPassed(userId, levelId, userAnswer)
+        .then(isPassed => res.json(isPassed))
+}))

@@ -18,6 +18,7 @@ data.connect(MONGO_URL, MONGO_DB_TEST)
                 type: 'quiz',
                 description: 'Test your understanding of basic conditions.',
                 body: 'let a = 10; let b = 8; if (a > 2) b += a; console.log(b);',
+                resultOptions: ['12', '23', '34', '18'],
                 expectedResult: '18'
             },
             {
@@ -32,6 +33,7 @@ data.connect(MONGO_URL, MONGO_DB_TEST)
                 type: 'quiz',
                 description: `Practice using 'for' loops.`,
                 body: `let total = 0;\nfor (let i = 0; i < 3; i++) {\n  total += i;\n}\nconsole.log(total);`,
+                resultOptions: ['1', '2', '3', '4'],
                 expectedResult: '3'
             }
         ])
