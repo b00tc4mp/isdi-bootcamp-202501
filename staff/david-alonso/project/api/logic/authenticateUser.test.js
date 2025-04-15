@@ -4,8 +4,6 @@ import { authenticateUser } from './authenticateUser.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-console.log(MONGO_URL, MONGO_DB)
-
 console.info('TEST authenticateUser')
 
 data.connect(MONGO_URL, MONGO_DB)

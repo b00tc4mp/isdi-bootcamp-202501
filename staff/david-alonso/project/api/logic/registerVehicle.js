@@ -5,11 +5,12 @@ import { Vehicle } from '../data/models.js'
 const { SystemError, DuplicityError } = errors
 
 // REGISTRO DE VEHICULO
-export const registerVehicle = (marca, modelo, año, matricula, km, itv) => {
+export const registerVehicle = (marca, modelo, año, color, matricula, km, itv, author) => {
     validate.text(marca, 'marca')
     validate.text(modelo, 'modelo')
     validate.number(año, 'año')
-    validate.text(matricula, 'matricula')
+    validate.text(color, 'color')
+    validate.matricula(matricula, 'matricula')
     validate.number(km, 'km')
     validate.date(itv, 'itv')
 
@@ -28,9 +29,11 @@ export const registerVehicle = (marca, modelo, año, matricula, km, itv) => {
                 marca,
                 modelo,
                 año,
+                color,
                 matricula,
                 km,
-                itv
+                itv,
+                author
             }
 
             // Inserta el objeto vehicle en la colección data.vehicles y devuelve el resultado

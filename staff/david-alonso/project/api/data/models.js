@@ -52,23 +52,28 @@ const vehicle = new Schema({
         minLength: 1,
         maxLength: 30
     },
+    color: {
+        type: String,
+        required: true,
+    },
     matricula: {
         type: String,
         required: true,
-        minLength: 1,
-        maxLength: 30
     },
     km: {
         type: Number,
         required: true,
         minLength: 1,
-        maxLength: 30
+        maxLength: 10
     },
     itv: {
         type: Date,
         required: true,
     },
-
+    author: {
+        type: String,
+        required: true
+    },
     createdAt: {
         type: Date,
         required: true,

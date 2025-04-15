@@ -4,8 +4,6 @@ import { registerUser } from './registerUser.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-console.log(MONGO_URL, MONGO_DB)
-
 console.info('TEST registerUser')
 
 data.connect(MONGO_URL, MONGO_DB)
