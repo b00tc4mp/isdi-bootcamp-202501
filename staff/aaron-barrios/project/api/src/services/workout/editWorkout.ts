@@ -37,6 +37,11 @@ const editWorkout = (
             if (workout.status !== "pending")
                 throw new StatusError("Only pending workouts can be edited.")
 
+            Object.assign(workout, updates)
+
+            //asigno las propiedades correctamente al documento workout 
+            //para luego al guardarlo (save) que persistan los cambios
+
             return workout.save()
                 .catch(error => { throw new SystemError(error.message) })
         })
