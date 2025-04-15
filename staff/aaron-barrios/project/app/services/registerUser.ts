@@ -1,4 +1,5 @@
-import { errors, validate } from '../com'
+// import { errors, validate } from '../com'
+import { errors, validate } from 'com'
 import getEnv from '../data/constants'
 
 const { SystemError } = errors

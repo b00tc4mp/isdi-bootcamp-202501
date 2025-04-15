@@ -8,7 +8,7 @@ cd D:\MONGODB\mongodb-win32-x86_64-windows-8.0.5
 bin\mongod.exe --dbpath data
 
 - levantar mongosh
- D:\MONGODB\mongosh-2.4.2-win32-x64\bin\mongosh.exe
+ D:\MONGODB\mongosh-2.4.2-win32-x64\bin\mongosh.exe mongodb://localhost/tzend-test
 
 - limpiar/compilar typescript
 npm run build:dev
