@@ -1,5 +1,5 @@
 import { data } from '../data'
-import { errors } from '../com'
+import { errors } from 'com'
 import getEnv from '../data/constants'
 
 const { SystemError } = errors

@@ -4,7 +4,7 @@ import { Text, View } from "@/components/Themed"
 import { useRouter } from "expo-router"
 
 import loginUser from "@/services/loginUser"
-import { errors } from '@/com'
+import { errors } from 'com'
 
 const { SystemError, ValidationError } = errors
 
