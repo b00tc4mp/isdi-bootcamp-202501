@@ -25,36 +25,50 @@ export function Register({onNavigateToLogin, onUserRegistered}) {
                 })
                 .catch(error => {
                     console.error(error)
+
                     alert(error.message)
                 })
 
         } catch (error) {
             console.error(error)
+
             alert(error.message)
         }
     }
 
     const handleLoginClick = () => onNavigateToLogin()
 
-    return <>
-    <h1>Logo</h1>
-    <div>
-        <form id="register-form" onSubmit={handleRegisterSubmit}>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" placeholder="name"/>
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" placeholder="username"/>
-            <label htmlFor="email">E-mail</label>
-            <input type="email" id="email" placeholder="e-mail"/>
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" placeholder="********"/>
-            <label htmlFor="password2">Confirm password</label>
-            <input type="password" id="password2" placeholder="********"/>
-            <div className="buttons-div">
-                <a onClick={handleLoginClick}>I already have an account</a>
-                <button type="submit" form="register-form">Register</button>
+    return (
+        <div className="bg-pink-100 min-h-screen flex flex-col items-center justify-center py-10 px-4">
+            <img className="w-32 h-auto mb-6" src="../assets/asset_no_border_logo.png" alt="CoupleApp logo" />
+            <div className="border-4 border-rose-300 bg-rose-100 p-8 rounded-3xl shadow-xl w-full max-w-md">
+                <form id="register-form" onSubmit={handleRegisterSubmit} className="space-y-6">
+                    <div>
+                        <label htmlFor="name" className="block text-lg font-medium text-gray-700">Name</label>
+                        <input type="text" id="name" placeholder="Name" className="mt-2 w-full px-4 py-2 rounded-lg border-2 bg-yellow-50 border-rose-300 focus:outline-none focus:ring-2 focus:ring-pink-300 shadow-sm bg-moonlight-100" />
+                    </div>
+                    <div>
+                        <label htmlFor="username" className="block text-lg font-medium text-gray-700">Username</label>
+                        <input type="text" id="username" placeholder="Username" className="mt-2 w-full px-4 py-2 rounded-lg border-2 bg-yellow-50 border-rose-300 focus:outline-none focus:ring-2 focus:ring-pink-300 shadow-sm" />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block text-lg font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" placeholder="Email" className="mt-2 w-full px-4 py-2 rounded-lg border-2 bg-yellow-50 border-rose-300 focus:outline-none focus:ring-2 focus:ring-pink-300 shadow-sm" />
+                    </div>
+                    <div>
+                        <label htmlFor="password" className="block text-lg font-medium text-gray-700">Password</label>
+                        <input type="password" id="password" placeholder="********" className="mt-2 w-full px-4 py-2 rounded-lg border-2 bg-yellow-50 border-rose-300 focus:outline-none focus:ring-2 focus:ring-pink-300 shadow-sm" />
+                    </div>
+                    <div>
+                        <label htmlFor="password2" className="block text-lg font-medium text-gray-700">Confirm Password</label>
+                        <input type="password" id="password2" placeholder="********" className="mt-2 w-full px-4 py-2 rounded-lg border-2 bg-yellow-50 border-rose-300 focus:outline-none focus:ring-2 focus:ring-pink-300 shadow-sm" />
+                    </div>
+                    <div className="flex flex-col justify-between items-center">
+                        <a onClick={handleLoginClick} className="text-pink-500 hover:underline text-sm pb-4">I already have an account</a>
+                        <button type="submit" form="register-form" className="bg-pink-500 text-white py-2 px-6 rounded-lg hover:bg-pink-600 transition duration-200">Register</button>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-    </>
+        </div>
+    )
 }

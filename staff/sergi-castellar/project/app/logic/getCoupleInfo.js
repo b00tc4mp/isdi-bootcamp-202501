@@ -18,7 +18,7 @@ export const getCoupleInfo = () => {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { partnerName, daysInRelationship } = body.user
+                        const { partnerName, daysInRelationship } = body.status
 
                         return { partnerName, daysInRelationship }
                     })
