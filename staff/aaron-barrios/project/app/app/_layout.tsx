@@ -7,14 +7,13 @@ import { useEffect } from "react"
 import "react-native-reanimated"
 
 import { useColorScheme } from "@/components/useColorScheme"
+import { useSession } from "@/hooks/useSession"
 
 export {
-  // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from "expo-router"
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "(screens)",
 }
 
@@ -27,7 +26,6 @@ export default function RootLayout() {
     ...FontAwesome.font,
   })
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error
   }, [error])
@@ -38,20 +36,21 @@ export default function RootLayout() {
     }
   }, [loaded])
 
-  if (!loaded) {
-    return null
-  }
+  if (!loaded) return null
 
   return <AppNavigator />
 }
 
 function AppNavigator() {
   const colorScheme = useColorScheme()
+  const { isAuthenticated, loading } = useSession()
+
+  if (loading) return null // O un spinner si prefieres
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={isAuthenticated ? "(tabs)" : "(auth)"} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>
     </ThemeProvider>

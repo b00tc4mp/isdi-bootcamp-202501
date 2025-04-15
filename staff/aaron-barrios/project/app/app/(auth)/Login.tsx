@@ -22,7 +22,7 @@ export default function Login() {
           setPassword('');
 
           Alert.alert('Welcome back!', `Welcome back! ${alias}`);
-          router.replace('/(auth)/Home' as any)
+          router.replace('/(tabs)' as any)
         })
         .catch((error) => {
           console.error(error);
