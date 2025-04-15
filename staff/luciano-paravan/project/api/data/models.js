@@ -22,6 +22,11 @@ const user = new Schema({
         unique: true,
         match: constant.EMAIL_REGEX
     },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
     password: {
         type: String,
         required: true,
