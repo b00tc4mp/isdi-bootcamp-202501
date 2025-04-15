@@ -1,5 +1,5 @@
 import { Season } from '../../data/index.js'
-import { errors } from 'com'
+import { errors } from '../../validations/index.js'
 
 const { NotFoundError, SystemError } = errors
 

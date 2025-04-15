@@ -1,11 +1,12 @@
 import { User, Season } from '../../data/index.js'
-import { validate, errors } from 'com'
+import { validate, errors } from '../../validations/index.js'
 
 const { AuthorizationError, SystemError, DuplicityError } = errors
 
 export const createSeason = (userId, { name, startDate, endDate }) => {
-  validate.text(name, 'name')
-
+  validate.id(userId, 'userId')
+ 
+  
   return User.findById(userId).lean()
     .catch(err => { throw new SystemError(err.message) })
     .then(user => {

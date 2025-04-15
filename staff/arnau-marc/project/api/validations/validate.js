@@ -1,6 +1,8 @@
 import { constant } from './constant.js'
 
-import  ValidationError  from './errors.js'
+import { errors } from './index.js'
+
+const { ValidationError } = errors
 
 export const validate = {
     string(string, explain) {

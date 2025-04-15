@@ -2,7 +2,9 @@ import 'dotenv/config'
 import { data, User } from '../../data/index.js'
 import { authenticateUser } from './authenticateUser.js'
 import { expect } from 'chai'
-import { CredentialsError, NotFoundError } from 'com/errors.js'
+import { errors } from '../../validations/index.js'
+
+const { NotFoundError, CredentialsError } = errors
 
 const { MONGO_URL, MONGO_DB } = process.env
 
@@ -12,10 +14,9 @@ describe('authenticateUser' , () => {
     beforeEach(() => User.deleteMany({})) 
 
     // Test 1: Prueba que authenticateUser funciona correctamente cuando el usuario y la contraseña son validos.
-    it.only('succeeds on existing user', () => { 
+    it('succeeds on existing user', () => { 
         let returnedUserId , returnedUserRole
         
-        debugger
         return User.create({ 
             name: 'Arnau',
             surname: 'Romero',
@@ -25,7 +26,6 @@ describe('authenticateUser' , () => {
         })
             .then(() => authenticateUser('arnau', '123123123')) 
             .then(({id: userId , role }) => {
-                debugger
                 returnedUserId = userId
                 returnedUserRole = role
             })
@@ -40,10 +40,10 @@ describe('authenticateUser' , () => {
 
     it('fails on non-existing user', () => { // TEST 2: Falla si el usuario no existe
         let catchedError 
-
         return authenticateUser('kakaroto', '123123123')
             .catch(error => catchedError = error) 
             .finally(() => {
+    
                 expect(catchedError).to.be.instanceOf(NotFoundError) 
                 expect(catchedError.message).to.equal('user not found') 
             })
@@ -53,7 +53,8 @@ describe('authenticateUser' , () => {
         let catchedError
 
         return User.create({ // Crear un usuario en la base de datos.
-            name: 'Arnau Romero',
+            name: 'Arnau',
+            surname: 'Romero',
             email: 'arnau@romero.com',
             username: 'arnau_sots',
             password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
@@ -62,10 +63,9 @@ describe('authenticateUser' , () => {
             .catch(error => catchedError = error) // Capturamos el error
             .finally(() => { 
                 expect(catchedError).to.be.instanceOf(CredentialsError) // Verifica que sea una instancia de CredentialsError
-                expect(catchedError.message).to.equal('wrong credentials') // Verificamos que el mensaje sea 'wrong credentials
+                expect(catchedError.message).to.equal('Wrong credentials') // Verificamos que el mensaje sea 'wrong credentials
             })
     })
-
     afterEach(() => User.deleteMany({})) // Borramos los usarios después de cada test para que no haya interferencias entre tests.
 
     after(() => data.disconnect()) // Cerramos la conexion con la base de datos cuando terminen los tests.

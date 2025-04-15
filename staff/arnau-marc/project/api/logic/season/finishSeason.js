@@ -1,9 +1,12 @@
 import { User, Season, Game } from '../../data/index.js'
-import { errors } from 'com'
+import { errors, validate } from '../../validations/index.js'
 
 const { SystemError, NotAllowedError, NotFoundError } = errors
 
 export const finishSeason = (userId, seasonId) => {
+  validate.id(userId, 'userId')
+  validate.id(seasonId, 'seasonId')
+  
   return User.findById(userId).lean()
     .catch(error => { throw new SystemError(error.message) })
     .then(user => {

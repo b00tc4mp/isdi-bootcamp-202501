@@ -9,7 +9,7 @@ export const getUsername = (userId) => {
    return User.findById(userId).lean()
         .catch(error => { throw new  SystemError(error.message) })
         .then(user => {
-            if (!user) throw new NotFoundError(error.message)
+            if (!user) throw new NotFoundError('User not found')
 
             return user.username
         })

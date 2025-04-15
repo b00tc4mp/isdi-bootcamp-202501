@@ -53,6 +53,14 @@ class AuthorizationError extends Error {
         this.name = this.constructor.name
     }
 }
+
+class NotAllowedError extends Error {
+    constructor(message) {
+        super(message)
+
+        this.name = this.constructor.name
+    }
+}
 const errors = {
     DuplicityError,
     CredentialsError,
@@ -60,7 +68,8 @@ const errors = {
     OwnershipError,
     SystemError,
     ValidationError,
-    AuthorizationError
+    AuthorizationError,
+    NotAllowedError
 }
 
 export default errors

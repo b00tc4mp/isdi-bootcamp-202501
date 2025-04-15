@@ -35,7 +35,9 @@ export const loginUser = (username, password) => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new SystemError(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

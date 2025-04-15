@@ -1,7 +1,7 @@
 import { Game, User } from '../../data/index.js'
-import { errors } from 'com'
+import { errors, validate } from '../../validations/index.js'
 
-const { NotFoundError, SystemError } = errors
+const { SystemError } = errors
 
 export const getSeasonLeaderboard = (seasonName) => {
     return Game.find({ season: seasonName, status: 'finished'}).lean()
