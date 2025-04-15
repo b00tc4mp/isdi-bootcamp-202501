@@ -16,18 +16,6 @@ users.post('/', jsonBodyParser, withErrorHandling((req, res) => {
         .then(() => res.status(201).send())
 }))
 
-// Endpoint for authenticate user
-// users.post('/auth2', jsonBodyParser, withErrorHandling((req,res) => {
-//     const { username, password } = req.body
-
-//     return logic.authenticateUser(username, password)
-//         .then(id => {
-//             const token = jwt.sign({ sub: id }, JWT_SECRET)
-
-//             res.json({ token })
-//         })
-// }))
-
 users.post('/auth', jsonBodyParser, withErrorHandling((req,res) => {
     const { username, password } = req.body
 
@@ -65,3 +53,20 @@ users.get('/:id', authHandler, withErrorHandling((req, res) => {
         res.json({ id: user._id.toString(), username: user.username })
       })
   }))
+
+  // Obtener los usernames de participants segun sus Ids
+
+  users.post('/usernames', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+    const { ids } = req.body
+
+    if (!Array.isArray(ids)) throw new TypeError('ids must be an array')
+
+    return User.find({ _id: { $in: ids } }).lean()
+        .then(users => {
+            const usernames = users.map(user => ({
+                id: user._id.toString(),
+                username: user.username
+            }))
+            res.json({ usernames })
+        })
+}))

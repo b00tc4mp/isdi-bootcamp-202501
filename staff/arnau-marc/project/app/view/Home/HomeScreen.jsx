@@ -12,9 +12,10 @@ const Home = ({ navigation }) => {
   const [userId, setUserId] = useState('')
   const [loading, setLoading] = useState(true)
   const [userRole, setUserRole] = useState('')
+  
   const [modalVisible, setModalVisible] = useState(false)
-  const [selectedGameId, setSelectedGameId] = useState(null)
-  const [winnerInput, setWinnerInput] = useState('')
+  const [selectedGame, setSelectedGame] = useState(null)
+  const [userMap, setUserMap] = useState({})
 
   // Usamos useEffect para cargar el username cuando el componente se monta
 
@@ -100,21 +101,27 @@ const Home = ({ navigation }) => {
     navigation.navigate('CreateGame')  // Navegamos a la pantalla de CreateGame
   }
 
-  const openWinnerModal = (gameId) => {
-    setSelectedGameId(gameId)
-    setWinnerInput('') // Guarda el ID de la partida que quieres editar
-    setModalVisible(true)     // Hace visible el modal (lo muestra en pantalla)
+  const openWinnerModal = (game) => {
+    if (!Array.isArray(game.participants)) {
+      Window.alert('Error', 'Este juego no tiene participantes válidos')
+      return
+    }
+    setSelectedGame(game)
+    logic.getUsernamesByIds(game.participants)
+      .then(userArray => {
+        const map = {}
+        userArray.forEach(({ id, username }) => map[id] = username)
+        setUserMap(map)
+        setModalVisible(true)
+      })
+      .catch(error => Alert.alert('Error cargando participantes', error.message))
   }
 
-  const handleConfirmWinner = () => {
-    if (!winnerInput.trim()) {
-      return Alert.alert('Error', 'Please enter a valid username')
-    }
-
-    logic.setGameWinner(selectedGameId, winnerInput)
+  const handleConfirmWinner = (winnerId) => {
+    logic.setGameWinner(selectedGame._id, winnerId)
       .then(() => {
         setModalVisible(false)
-        setWinnerInput('')
+        setSelectedGame(null)
         fetchGames()
         Alert.alert('✅ Ganador asignado correctamente')
       })
@@ -197,19 +204,22 @@ const Home = ({ navigation }) => {
           )
         }}
         />
-        <CustomModal
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          onConfirm={handleConfirmWinner}
-          inputValue={winnerInput}
-          setInputValue={setWinnerInput}
-          title="Set Winner Username"
-          placeholder="Winner username"
-          confirmText="Confirm"
-          cancelText="Cancel"
+      <CustomModal
+        visible={modalVisible}
+        onClose={() => {
+          setModalVisible(false)
+          setSelectedGame(null)
+        }}
+        onConfirm={handleConfirmWinner}
+        title="Selecciona al ganador"
+        cancelText="Cancelar"
+        showInput={false}
+        options={selectedGame?.participants.map(id => ({
+          label: userMap[id] || `ID: ${id.slice(0, 4)}`,
+          value: id
+        })) || []}
       />
     </View>
-
   )
 }
 
