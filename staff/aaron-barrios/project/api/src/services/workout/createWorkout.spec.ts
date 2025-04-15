@@ -13,6 +13,8 @@ const { ObjectId } = Types
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
 describe('create Workout', () => {
+    debugger
+
     before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => Promise.all([
@@ -55,10 +57,9 @@ describe('create Workout', () => {
                     }
                 ])
             })
-            // @tsignore
             .then(([manu, frankie]) => {
                 return createWorkout(manu.id, 'press bench', 'chest', 'best workout to grow chest')
-                    .then(() => Workout.find({ author: '67eac3e1cb202d76cec69964' }).lean())
+                    .then(() => Workout.find({ author: manu.id }).lean())
                     .then(workout => {
                         expect(workout).not.to.be.undefined
                         expect(workout[0].name).to.equal('press bench')

@@ -1,11 +1,10 @@
-import { model, Schema, Types } from "mongoose"
+import { model, Schema } from "mongoose"
 import { WorkoutDocType } from "../types.js"
 
-const { ObjectId } = Types
 
 const workout = new Schema<WorkoutDocType>({
     author: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
@@ -43,11 +42,11 @@ const workout = new Schema<WorkoutDocType>({
         required: true
     }],
     likes: [{
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User"
     }],
     saves: [{
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User"
     }],
     status: {

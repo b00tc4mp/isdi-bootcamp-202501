@@ -1,16 +1,15 @@
-import { model, Schema, Types } from "mongoose"
+import { model, Schema } from "mongoose"
 import { WorkoutProgressDocType } from "../types.js"
 
-const { ObjectId } = Types
 
 const workoutProgress = new Schema<WorkoutProgressDocType>({
     user: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
     workout: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Workout",
         required: true
     },

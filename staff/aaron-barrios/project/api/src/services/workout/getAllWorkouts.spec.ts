@@ -6,8 +6,9 @@ import bcrypt from 'bcryptjs'
 import { Types } from "mongoose"
 
 import { data, User, Workout } from "../../data"
-import getUserWorkouts from "./getUserWorkouts"
+import getAllWorkouts from "./getAllWorkouts"
 import { errors } from "com"
+import { debug } from "winston"
 
 chai.use(chaiAsPromised)
 
@@ -16,7 +17,7 @@ const { ObjectId } = Types
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
-describe('get User Workouts', () => {
+describe('get All Workouts', () => {
     before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => {
@@ -26,8 +27,9 @@ describe('get User Workouts', () => {
         ])
     })
 
+
     //--- HAPPY PATH ---
-    it('succeeds on getting User Workouts', async () => {
+    it('succeeds on getting All Workouts', async () => {
         const hashedPassword = await bcrypt.hash('123123', 10)
 
         const [_user, _user2] = await User.insertMany([
@@ -43,18 +45,18 @@ describe('get User Workouts', () => {
             { author: user2.id, name: 'idc', muscleGroup: 'chest', description: 'workout 2', difficulty: 'easy', type: 'strength', status: 'accepted' }
         ])
 
-        const returnedWorkouts = await getUserWorkouts(user.id, user.id)
+        const returnedWorkouts = await getAllWorkouts(user.id)
 
-        expect(returnedWorkouts).to.be.instanceOf(Array)
-        expect(returnedWorkouts).to.have.lengthOf(1)
-        expect(returnedWorkouts[0].author.id).to.equal(user.id)
+        expect(returnedWorkouts.workouts).to.be.instanceOf(Array)
+        expect(returnedWorkouts.workouts).to.have.lengthOf(2)
+        expect(returnedWorkouts.workouts[0].author.id).to.equal(user.id)
 
     })
 
     //--- NOTFOUND USER ERROR PATH ---
     it('fails on existingUser', () => {
         return expect(
-            getUserWorkouts(new ObjectId().toString(), new ObjectId().toString())
+            getAllWorkouts(new ObjectId().toString())
         ).to.be.rejectedWith(NotFoundError, 'User not found!')
     })
 

@@ -5,8 +5,7 @@ import { User, Workout } from '../../data/models'
 import { WorkoutDocType } from '../../data/types'
 import { errors, validate } from 'com'
 
-import { Schema } from 'mongoose'
-const { Types: { ObjectId } } = Schema
+import { Types } from 'mongoose'
 const { SystemError, NotFoundError } = errors
 
 const createWorkout = (
@@ -25,8 +24,8 @@ const createWorkout = (
         .then(user => {
             if (!user) throw new NotFoundError('User not found!')
 
-            const newWorkout: Pick<WorkoutDocType, "author" | "name" | "muscleGroup" | "description" | "status"> = {
-                author: new ObjectId(author),
+            const newWorkout: Partial<WorkoutDocType> = {
+                author: new Types.ObjectId(author),
                 name,
                 muscleGroup,
                 description,

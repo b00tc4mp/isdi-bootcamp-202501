@@ -1,8 +1,8 @@
-import { ObjectId } from "mongoose"
+import { Types } from "mongoose"
 
 // --- TYPES DE LOS DATOS TRANSPORTE (DTO) => BASE DE DATOS
 export type UserDocType = {
-    _id: ObjectId
+    _id: Types.ObjectId
     role: 'moderator' | 'regular' | 'anonym'
     name?: string
     lastName?: string
@@ -13,38 +13,38 @@ export type UserDocType = {
     interests?: string[]
     createdAt: Date,
     modifiedAt?: Date | null,
-    workouts?: ObjectId[]
-    routines?: ObjectId[]
+    workouts?: Types.ObjectId[]
+    routines?: Types.ObjectId[]
     __v: number
 }
 
 export type WorkoutDocType = {
-    _id: ObjectId
-    author: ObjectId
+    _id: Types.ObjectId
+    author: Types.ObjectId
     name: string
     muscleGroup: string
     type?: string
     difficulty?: 'easy' | 'medium' | 'hard'
     description: string
     images?: string[]
-    likes?: ObjectId[]
-    saves?: ObjectId[]
+    likes?: Types.ObjectId[]
+    saves?: Types.ObjectId[]
     status: 'pending' | 'accepted' | 'declined'
     createdAt: Date
     __v: number
 }
 
 export type WorkoutProgressDocType = {
-    user: ObjectId
-    workout: ObjectId
+    user: Types.ObjectId
+    workout: Types.ObjectId
     weightUsed: number
     date: Date
     __v: number
 }
 
 export type RoutineWorkoutDocType = {
-    _id: ObjectId
-    workout: ObjectId
+    _id: Types.ObjectId
+    workout: Types.ObjectId
     order?: number
     sets?: number
     reps?: number
@@ -55,8 +55,8 @@ export type RoutineWorkoutDocType = {
 }
 
 export type RoutineDocType = {
-    _id: ObjectId
-    author: ObjectId
+    _id: Types.ObjectId
+    author: Types.ObjectId
     name: string
     goal: string
     muscleGroup: string
@@ -67,8 +67,8 @@ export type RoutineDocType = {
     duration: number
     status: 'pending' | 'accepted' | 'declined'
     frequencySuggestion?: string
-    likes: ObjectId[]
-    saves: ObjectId[]
+    likes: Types.ObjectId[]
+    saves: Types.ObjectId[]
     createdAt: Date
     modifiedAt: Date | null
     workouts: RoutineWorkoutDocType[]

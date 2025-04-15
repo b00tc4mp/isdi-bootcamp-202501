@@ -1,11 +1,9 @@
-import { model, Schema, Types } from "mongoose"
+import { model, Schema } from "mongoose"
 import { RoutineDocType } from "../types.js"
-
-const { ObjectId } = Types
 
 const routine = new Schema<RoutineDocType>({
     author: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
@@ -55,11 +53,11 @@ const routine = new Schema<RoutineDocType>({
         required: true
     },
     likes: [{
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User"
     }],
     saves: [{
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User"
     }],
     status: {
@@ -82,7 +80,7 @@ const routine = new Schema<RoutineDocType>({
         default: null
     },
     workouts: [{
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "RoutineWorkout",
         required: true
     }]
