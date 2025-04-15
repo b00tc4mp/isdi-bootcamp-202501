@@ -7,7 +7,7 @@ export const getOwnCouple = (userId) => {
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
-            return Couple.findOne({ members: { $in: [userId] } }).lean()
+            return Couple.findOne({ members: userId }).lean()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(couple => {
                     if (!couple) throw new NotFoundError('couple not found')

@@ -35,7 +35,8 @@ describe('getCoupleInfo', () => {
                 partnerId = partner._id.toString()
                 return Couple.create({
                     members: [userId, partnerId],
-                    dateStart: new Date('2024-04-14')
+                    dateStart: Date.now() - 31536000000 // To be exactly 365 days ago from Date.now
+
                 })
             })
             .then(couple => {

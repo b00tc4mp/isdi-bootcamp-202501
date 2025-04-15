@@ -2,6 +2,7 @@ import { authenticateUser } from "./authenticateUser.js"
 import { createCouple } from "./createCouple.js"
 import { deleteUser } from "./deleteUser.js"
 import { editUser } from "./editUser.js"
+import { getCoupleEvents } from "./getCoupleEvents.js"
 import { getCoupleInfo } from "./getCoupleInfo.js"
 import { getOwnCouple } from "./getOwnCouple.js"
 import { getSelfUser } from "./getSelfUser.js"
@@ -12,6 +13,7 @@ export const logic = {
     createCouple,
     deleteUser,
     editUser,
+    getCoupleEvents,
     getCoupleInfo,
     getOwnCouple,
     getSelfUser,

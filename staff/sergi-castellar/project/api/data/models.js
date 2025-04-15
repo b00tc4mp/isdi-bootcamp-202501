@@ -1,4 +1,5 @@
 import { Schema, model, Types } from 'mongoose'
+import { constant } from 'com'
 
 const { ObjectId } = Types
 
@@ -15,7 +16,7 @@ const user = new Schema({
         maxLength: 40,
         required: true,
         unique: true,
-        //TODO regex email
+        match: constant.EMAIL_REGEX
     },
     username: {
         type: String,

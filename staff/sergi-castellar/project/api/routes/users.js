@@ -26,7 +26,7 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
 
     return logic.authenticateUser(username, password)
         .then(id => {
-            const token = jwt.sign({ sub: id }, JWT_SECRET)
+            const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: '188d' })
 
             res.json({ token })
         })
@@ -36,18 +36,14 @@ users.delete('/self', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.deleteUser(userId)
-        .then(() => {
-
-        })
+        .then(() => res.status(204).send())
 }))
 
-users.patch('/self', authHandler, withErrorHandling((req, res) => {
+users.patch('/self', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.editUser(userId)
-        .then(() => {
-
-        })
+        .then(() => res.status(204).send())
 }))
 
 

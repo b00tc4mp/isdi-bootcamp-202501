@@ -1,0 +1,2 @@
+curl -X GET 'http://localhost:8080/couples/self/events?startDate=2025-04-01&endDate=2025-012-01' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZlMTBjMDA1MDAzMjkxMmJkYmFkMWQiLCJpYXQiOjE3NDQ3MDkyOTIsImV4cCI6MTc2MDk1MjQ5Mn0._UHygeqLtBCoacZSFqz-MQc1TwPaUJFXdTFvjt-cZF4' -v

@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { data, User } from "../data/index.js";
+import { data, User } from "../data/index.js"
 import { registerUser } from "./registerUser.js"
 import { expect } from 'chai'
 import { DuplicityError } from 'com/errors.js'

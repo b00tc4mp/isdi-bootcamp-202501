@@ -1,6 +1,6 @@
-import { User } from './../data/index.js';
+import { User } from './../data/index.js'
 import { validate, errors } from 'com'
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs'
 
 const { DuplicityError, SystemError } = errors
 
@@ -18,7 +18,7 @@ export const registerUser = (name, email, username, password) => {
                 email: email,
                 username: username,
                 password: hash
-            };
+            }
 
             return User.create(user)
                 .catch(error => {
@@ -28,4 +28,4 @@ export const registerUser = (name, email, username, password) => {
                 })
         })
         .then(() => { })
-};
+}
