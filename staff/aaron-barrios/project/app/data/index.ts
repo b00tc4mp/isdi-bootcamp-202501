@@ -1,11 +1,29 @@
-export const data = {
-    _token: undefined as string | undefined,
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-    get token() {
-        return this._token
+export const data = {
+    async getToken(): Promise<string | null> {
+        try {
+            const value = await AsyncStorage.getItem('token')
+            return value
+        } catch (error) {
+            console.error('Error retrieving token:', error)
+            return null
+        }
     },
 
-    set token(value: string | undefined) {
-        this._token = value
+    async setToken(value: string): Promise<void> {
+        try {
+            await AsyncStorage.setItem('token', value)
+        } catch (error) {
+            console.error('Error saving token:', error)
+        }
+    },
+
+    async removeToken(): Promise<void> {
+        try {
+            await AsyncStorage.removeItem('token')
+        } catch (error) {
+            console.error('Error removing token:', error)
+        }
     }
 }

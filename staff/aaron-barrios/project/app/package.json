@@ -7,7 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "web-clear": "expo start --web -- --clear",
+    "web-clear": "expo start --web --clear --reset-cache",
     "test": "jest --watchAll"
   },
   "jest": {
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-navigation/native": "^7.0.14",
     "com": "file:../com",
     "expo": "~52.0.43",

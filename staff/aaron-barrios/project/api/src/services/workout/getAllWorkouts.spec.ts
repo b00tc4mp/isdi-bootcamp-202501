@@ -41,8 +41,8 @@ describe('get All Workouts', () => {
         const user2 = { id: _user2._id.toString() }
 
         await Workout.insertMany([
-            { author: user.id, name: 'bench press', muscleGroup: 'chest', description: 'workout 1', difficulty: 'easy', type: 'strength', status: 'accepted' },
-            { author: user2.id, name: 'idc', muscleGroup: 'chest', description: 'workout 2', difficulty: 'easy', type: 'strength', status: 'accepted' }
+            { author: _user.id, name: 'bench press', muscleGroup: 'chest', description: 'workout 1', difficulty: 'easy', type: 'strength', status: 'accepted' },
+            { author: _user2.id, name: 'idc', muscleGroup: 'chest', description: 'workout 2', difficulty: 'easy', type: 'strength', status: 'accepted' }
         ])
 
         const returnedWorkouts = await getAllWorkouts(user.id)

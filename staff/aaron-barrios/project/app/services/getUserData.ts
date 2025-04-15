@@ -5,7 +5,7 @@ import getEnv from '../data/constants'
 const { SystemError } = errors
 
 const getUserData = (): Promise<{ alias: string; level?: string }> => {
-    const token = data.token
+    const token = data.getToken()
     const { apiUrl } = getEnv()
 
     return fetch(`${apiUrl}/users/self`, {

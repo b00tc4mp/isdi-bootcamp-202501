@@ -16,7 +16,6 @@ export default function Register() {
 
   const handleRegister = () => {
     try {
-      // Lógica asíncrona
       registerUser(alias, email, password)
         .then(() => {
           setAlias('');
@@ -103,4 +102,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor: '#fff'
   }
-});
+})
+
+Register.displayName = "Register"

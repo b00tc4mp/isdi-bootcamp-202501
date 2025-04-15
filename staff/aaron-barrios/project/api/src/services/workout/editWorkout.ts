@@ -37,7 +37,7 @@ const editWorkout = (
             if (workout.status !== "pending")
                 throw new StatusError("Only pending workouts can be edited.")
 
-            return Workout.updateOne({ _id: workoutId }, { $set: updates })
+            return workout.save()
                 .catch(error => { throw new SystemError(error.message) })
         })
         .then(() => { })

@@ -6,8 +6,22 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "sourceMap": true
+    // "esModuleInterop": true,
+    // "skipLibCheck": true
   },
+  // "compilerOptions": {
+  //   "target": "esnext",
+  //   "module": "esnext",
+  //   "jsx": "react",
+  //   "sourceMap": true,
+  //   "noEmit": true,
+  //   "strict": true,
+  //   "allowSyntheticDefaultImports": true,
+  //   "esModuleInterop": true,
+  //   "skipLibCheck": true
+  // }
   "include": [
     "**/*.ts",
     "**/*.tsx",
