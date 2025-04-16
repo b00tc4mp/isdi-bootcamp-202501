@@ -10,7 +10,7 @@ export const users = Router()
 
 // Endpoint for register user
 users.post('/', jsonBodyParser, withErrorHandling((req, res) => {
-    const { name, surname, email,  username ,  password } = req.body 
+    const { name, surname, email,  username,  password } = req.body 
 
     return logic.registerUser(name, surname, email, username,  password )
         .then(() => res.status(201).send())
@@ -20,15 +20,15 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req,res) => {
     const { username, password } = req.body
 
     return logic.authenticateUser(username, password)
-        .then(({id , role }) => {
-            const token = jwt.sign({ sub: id , role}, JWT_SECRET)
+        .then(({ id , role }) => {
+            const token = jwt.sign({ sub: id, role }, JWT_SECRET)
 
             res.json({ token })
         })
 }))
 
 // Endpoint for getUsername
-users.get('/self/username', authHandler, withErrorHandling((req,res) => {
+users.get('/self/username', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.getUsername(userId)
@@ -40,7 +40,11 @@ users.get('/self/role', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
   
     return logic.getUserRole(userId)
-      .then(role => res.json({ role }))
+      .then(({ id, role }) => {
+        const token = jwt.sign({ sub: id, role }, JWT_SECRET)
+        
+        res.json({ token })
+      })
   }))
 
 // Obtener info básica de un usuario por ID

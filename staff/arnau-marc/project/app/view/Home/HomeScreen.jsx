@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
         logic.getGames(),
         setLoading(false)
       ])
-        .then(([username, userId,role, { games }]) => {
+        .then(([username, userId, role, { games }]) => {
           setUsername(username)
           setUserId(userId)
           setUserRole(role)

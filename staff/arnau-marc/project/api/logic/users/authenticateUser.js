@@ -20,8 +20,8 @@ export const authenticateUser = (username, password) => {
                     if(!match) throw new CredentialsError('Wrong credentials')
 
                     return {
-                         id: user._id.toString(),
-                         role: user.role
+                        id: user._id.toString(),
+                        role: user.role
                     }
                 })
         })

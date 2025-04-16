@@ -15,7 +15,7 @@ profiles.patch('/admin-request', authHandler, jsonBodyParser, withErrorHandling(
   
     // Llamar a la lógica para actualizar el rol a admin
     return logic.requestAdminRole(userId, secretWord)
-      .then(() => res.status(200).send('User role updated to admin'))
+      .then(() => res.status(204).send('User role updated to admin'))
       .catch((error) => {
         res.status(400).send(error.message)  // En caso de error, devolvemos el mensaje del error
       })

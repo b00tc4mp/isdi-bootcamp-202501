@@ -2,10 +2,9 @@ import { User } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
 import { Error as MongooseError } from 'mongoose'
 
-const { ValidationError, CastError } = MongooseError
+const { ValidationError} = MongooseError
 
-
-const { NotFoundError, SystemError } = errors
+const { NotFoundError } = errors
 
 export function getUserRole(userId) {
   validate.id(userId, 'userId')
@@ -16,7 +15,9 @@ export function getUserRole(userId) {
         if (!['admin', 'regular'].includes(user.role)) {
           throw new ValidationError("your role is not expected")
         }
-      return user.role
+      return {
+        id: user._id.toString(),
+        role: user.role
+    }
     })
- 
 }
