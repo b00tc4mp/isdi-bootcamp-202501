@@ -4,7 +4,7 @@ import { View, Text, Button, FlatList, Alert, ActivityIndicator} from 'react-nat
 import styles from './Home.styles.js'
 import { logic } from '../../logic/index.js'
 
-import { CustomModal } from '../../components/index.js'
+import { CustomModal, NavBar } from '../../components/index.js'
 
 const Home = ({ navigation }) => {
   const [username, setUsername] = useState('')
@@ -220,6 +220,7 @@ const Home = ({ navigation }) => {
           value: id
         })) || []}
       />
+      <NavBar navigation={navigation} />
     </View>
   )
 }
