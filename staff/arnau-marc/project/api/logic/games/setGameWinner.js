@@ -3,10 +3,10 @@ import { errors, validate } from '../../validations/index.js'
 
 const { NotAllowedError, NotFoundError, ValidationError } = errors
 
-export const setGameWinner = (adminId, gameId, winnerUsername) => {
+export const setGameWinner = (adminId, gameId, winnerId) => {
   validate.id(adminId, 'adminId')
   validate.id(gameId, 'gameId')
-  validate.username(winnerUsername, 'winnerUsername')
+  validate.id(winnerId, 'winnerId')
 
   return User.findById(adminId).lean()
     .then(admin => {
@@ -14,7 +14,7 @@ export const setGameWinner = (adminId, gameId, winnerUsername) => {
 
       return Promise.all([
         Game.findById(gameId),
-        User.findOne({ username: winnerUsername }).lean(),
+        User.findById(winnerId).lean(),
       ])
     })
     .then(([game ,user]) => {

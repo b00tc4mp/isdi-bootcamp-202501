@@ -15,8 +15,7 @@ const Login = ({ navigation }) => {  // Cambia 'route' a 'navigation'
                     setUsername('')
                     setPassword('')
                     navigation.navigate('Home')
-                    //Alert.alert('Welcome back!', `Welcome back! ${username}`)
-                    window.alert(`Welcome back!\nWelcome back! ${username}`)
+                  
                 })
                 .catch(error => {
                     console.error(error)

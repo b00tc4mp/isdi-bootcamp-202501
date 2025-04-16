@@ -2,7 +2,7 @@ import { data } from '../../data/index.js'
 import { extractPayloadFromJWT } from '../../util/extractPayloadFromJWT.js'
 import { errors } from '../../validations/index.js'
 
-const { SystemError, AuthorizationError } = errors
+const { SystemError} = errors
 
 export const getUserRole = () => {
  return data.token

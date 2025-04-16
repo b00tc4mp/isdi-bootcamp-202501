@@ -106,10 +106,6 @@ const Home = ({ navigation }) => {
   }
 
   const openWinnerModal = (game) => {
-    if (!Array.isArray(game.participants)) {
-      window.alert('Error', 'Este juego no tiene participantes válidos')
-      return
-    }
     setSelectedGame(game)
     logic.getUsernamesByIds(game.participants)
       .then(userArray => {
@@ -192,7 +188,7 @@ const Home = ({ navigation }) => {
               {userRole === 'admin' && item.status === 'scheduled' &&  (
               <Button
               title="Set Winner"
-              onPress={() => openWinnerModal(item._id)}
+              onPress={() => openWinnerModal(item)}
               color="#d2691e"
               />
               )
