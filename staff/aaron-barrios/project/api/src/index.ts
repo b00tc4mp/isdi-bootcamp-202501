@@ -32,10 +32,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
         api.use(morganMiddleware)
 
         // ✅ ACTIVA CORS (para permitir llamadas desde tu frontend Expo Web)
-        api.use(cors({
-            origin: 'http://localhost:8081', // ⚠️ o el puerto que use Expo Web
-            credentials: true
-        }))
+        api.use(cors())
 
 
         // --- ROUTES --- 

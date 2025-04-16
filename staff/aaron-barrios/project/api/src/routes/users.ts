@@ -9,11 +9,14 @@ import authenticateUserHandler from "../handlers/authenticateUserHandler"
 import getUserDataHandler from "../handlers/getUserDataHandler"
 import jsonBodyParser from "../middlewares/jsonBodyParser"
 import authHandler from "../middlewares/authHandler"
+import generateAnonymUserHandler from "../handlers/generateAnonymUserHandler"
+import cleanUpUserIfTokenExpired from "../middlewares/cleanUpUserIfTokenExpired"
 
 //instancia que creamos que utilizaremos para la llamada de cada petición a la API
 export const userRouter = Router()
 
 
+// -------------------- REGULAR USER ------------------
 // --- GET USER ALIAS METHOD ---
 userRouter.get(
     "/self/data",
@@ -37,4 +40,13 @@ userRouter.post(
     jsonBodyParser,
     validationHandler(authenticateUserSchema),
     authenticateUserHandler
+)
+
+
+// -------------------- ANONYM USER ------------------
+// --- GENERATE ANONYM USER METHOD ---
+userRouter.post(
+    "/auth/anon",
+    cleanUpUserIfTokenExpired,
+    generateAnonymUserHandler
 )

@@ -1,19 +1,32 @@
-const generateAnonymUser = () => {
+import jwt from 'jsonwebtoken'
 
-    // ---WARNING ---
-    // SI WORKOUT.STATE === PENDING (GETMODERATORWORKOUTS) -> FEED WORKOUTS
+import { User } from '../../../data'
+import { errors } from 'com'
 
-    //if workout.status === 'accepted':
-    // return Workout.create(targetWorkout)
-    //     .catch(error => { throw new SystemError(error.message) })
+const { SystemError } = errors
 
+const generateAnonymUser = (): Promise<void> => {
+    const timestamp = Date.now()
 
-    //--- WARNING --- 
-    // YO(MODERADOR) LE CAMBIO EL ESTADO A DECLINED ENTONCES SI ES DECLINED: 
-    //if workout.status === 'declined':
-    // return Workout.deleteOne(targetWorkout)
-    //     .catch(error => { throw new SystemError(error.message) })
+    const anonymUserData = {
+        alias: `anon_${timestamp}`,
+        role: 'anonym',
+        createdAt: new Date()
+    }
 
+    return User.create(anonymUserData)
+        .then(user => {
+            return jwt.sign(
+                { sub: user._id.toString(), role: user.role },
+                process.env.JWT_SECRET!,
+                { expiresIn: '1h' }
+            )
+        })
+        .catch(error => {
+            console.error(error)
+            throw new SystemError('Failed to create anonymous user')
+        })
+        .then(() => { })
 }
 
 export default generateAnonymUser

@@ -28,6 +28,7 @@ export const authenticateUserSchema = object({
         .max(80, 'Password must be at last 80 characters')
 })
 
+
 export const createWorkoutSchema = object({
     alias: z
         .string()
