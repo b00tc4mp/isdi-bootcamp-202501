@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User } from '../data'
-import { errors } from 'com'
 
 const { SECRET, ANONYM_TOKEN_TTL_SECONDS = '3600' } = process.env
 

@@ -43,6 +43,12 @@ const errorHandler =
                 status = 401
                 errorName = error.constructor.name
                 break
+            case error instanceof AuthorizationError && error.message === "Session expired. Anonymous user deleted.":
+                status = 401
+                errorName = error.constructor.name
+                message = "anonymous-session-expired"
+                logger.warn("🔐 Anonymous session expired. User deleted.")
+                break
             case error instanceof OwnershipError:
                 status = 403
                 errorName = error.constructor.name

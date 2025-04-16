@@ -1,6 +1,3 @@
-import { ObjectId } from "mongoose"
-
-
 // --- TYPES DE LOS DATOS DE NEGOCIO (SERVICIO)
 export type UserType = {
     id: string
@@ -57,4 +54,3 @@ export type EditWorkoutType = { //RORO pattern (used when there are variable par
     description?: string
     images?: string[]
 }
-

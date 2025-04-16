@@ -7,6 +7,7 @@ import {
 import registerUserHandler from "../handlers/registerUserHandler"
 import authenticateUserHandler from "../handlers/authenticateUserHandler"
 import getUserDataHandler from "../handlers/getUserDataHandler"
+import getCurrentUserHandler from "../handlers/getCurrentUserHandler"
 import jsonBodyParser from "../middlewares/jsonBodyParser"
 import authHandler from "../middlewares/authHandler"
 import generateAnonymUserHandler from "../handlers/generateAnonymUserHandler"
@@ -17,11 +18,18 @@ export const userRouter = Router()
 
 
 // -------------------- REGULAR USER ------------------
-// --- GET USER ALIAS METHOD ---
+// --- GET USER DATA METHOD ---
 userRouter.get(
     "/self/data",
     authHandler,
     getUserDataHandler
+)
+
+// --- GET CURRENT USER METHOD ---
+userRouter.get(
+    "/self",
+    authHandler,
+    getCurrentUserHandler
 )
 
 
