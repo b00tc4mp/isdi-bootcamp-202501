@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { Router } from 'express'
+import { User } from '../data/index.js'
 
 import { jsonBodyParser, withErrorHandling, authHandler } from '../middlewares/index.js'
 import { logic } from '../logic/index.js'

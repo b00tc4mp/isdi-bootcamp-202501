@@ -89,9 +89,9 @@ const game = new Schema({
         ref: 'User'
     }],
     date: {
-        type: String,
+        type: Date,
         required: true,
-        match: constant.EMPTY_OR_BLANK_REGEX && constant.DATE_REGEX 
+       // match: constant.EMPTY_OR_BLANK_REGEX && constant.DATE_REGEX 
     },
     place: {
         type: String,

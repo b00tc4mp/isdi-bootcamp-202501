@@ -12,9 +12,9 @@ export const games = Router()
 // Crear partida (solo admin)
 games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
-    const { title, season, date, place } = req.body
+    const { title, season, formattedDate, place } = req.body
   
-    return logic.createGame(userId, title, season, date, place)
+    return logic.createGame(userId, title, season, formattedDate, place)
       .then(gameId => res.status(201).json({ gameId }))
   }))
   
@@ -36,14 +36,10 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
   // EndPoint para setear ganador
   games.patch('/:gameId/winner', authHandler, jsonBodyParser,  withErrorHandling((req, res) => {
     const { gameId } = req.params
-    const { winnerUsername } = req.body
+    const { winnerId } = req.body
     const { userId } = req
-
-    if (!winnerUsername || typeof winnerUsername !== 'string') {
-      throw new Error('Invalid or missing winnerUsername')
-    }
   
-    return logic.setGameWinner(userId, gameId, winnerUsername)
+    return logic.setGameWinner(userId, gameId, winnerId)
       .then(() => res.status(204).send())
   }))
 

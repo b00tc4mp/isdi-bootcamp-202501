@@ -4,9 +4,9 @@ import { errors, validate } from '../../validations/index.js'
 
 const { SystemError, ValidationError } = errors
 
-export const setGameWinner = (gameId, winnerUsername) => {
+export const setGameWinner = (gameId, winnerId) => {
   validate.id(gameId, 'gameId')
-  validate.username(winnerUsername, 'winnerUsername')
+  validate.id(winnerId, 'winnerId')
 
   return data.token
     .then(token => {
@@ -18,7 +18,7 @@ export const setGameWinner = (gameId, winnerUsername) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ winnerUsername }),
+        body: JSON.stringify({ winnerId }),
       })
     })
     .catch(error => { throw new SystemError(error.message) })
