@@ -1,12 +1,15 @@
 import { data } from '../../data/index.js'
 import { SystemError } from '../../validations/index.js'
+import  Constants  from 'expo-constants'
+
+const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 export const getSeasonLeaderboard = (seasonName) => {
     return data.token
     .then((token) =>{
         if (!token) throw new Error('No token found')
 
-        return fetch(`http://localhost:8080/seasons/${seasonName}/leaderboard`, {
+        return fetch(`${API_BASE_URL}/seasons/${seasonName}/leaderboard`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }

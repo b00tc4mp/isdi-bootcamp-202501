@@ -1,4 +1,7 @@
 import { errors, validate } from '../../validations/index.js'
+import  Constants  from 'expo-constants'
+
+const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 const { SystemError } = errors
 
@@ -9,7 +12,7 @@ export const registerUser = (name, surname, email, username, password) => {
     validate.username(username)
     validate.password(password)
 
-    return fetch('http://localhost:8080/users', { // tipar la URL
+    return fetch(`${API_BASE_URL}/users`, { // tipar la URL
         method: 'POST', 
         headers: {
             'Content-Type' : 'application/json'

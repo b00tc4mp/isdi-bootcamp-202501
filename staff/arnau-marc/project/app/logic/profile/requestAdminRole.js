@@ -1,5 +1,8 @@
 import { data } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
+import  Constants  from 'expo-constants'
+
+const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 const { SystemError, AuthorizationError } = errors
 
@@ -11,7 +14,7 @@ export const requestAdminRole = (secretWord) => {
         if (!token) {
           throw new AuthorizationError('Token not found')
         }
-        return fetch(`http://localhost:8080/profiles/admin-request`, {
+        return fetch(`${API_BASE_URL}/profiles/admin-request`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,

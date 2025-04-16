@@ -1,5 +1,8 @@
 import { data } from '../../data/index.js'
 import { errors } from '../../validations/index.js'
+import  Constants  from 'expo-constants'
+
+const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 const { SystemError, AuthorizationError } = errors
 
@@ -8,7 +11,7 @@ export const getUserStats = () => {
     .then(token => {
       if (!token) throw new AuthorizationError('Token not found')
 
-      return fetch('http://localhost:8080/profiles/stats', {
+      return fetch(`${API_BASE_URL}/profiles/stats`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

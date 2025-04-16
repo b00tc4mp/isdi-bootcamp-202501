@@ -1,12 +1,15 @@
 import { data } from '../../data'
-import { validate, errors } from '../../validations/index.js'
+import { errors } from '../../validations/index.js'
+import  Constants  from 'expo-constants'
+
+const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 const { SystemError } = errors
 
 export const getUserById = (userId) => {
   return data.token
     .then((token) => { 
-        return fetch(`http://localhost:8080/users/${userId}`, {
+        return fetch(`${API_BASE_URL}/users/${userId}`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }

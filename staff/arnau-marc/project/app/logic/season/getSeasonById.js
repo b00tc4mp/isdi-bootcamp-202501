@@ -1,12 +1,15 @@
 import { data } from '../../data/index.js'
 import { errors } from '../../validations/index.js'
+import  Constants  from 'expo-constants'
+
+const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 const { SystemError } = errors
 
 export const getSeasonById = (seasonId) => {
   return data.token
   .then(() => {
-    return fetch(`http://localhost:8080/seasons/${seasonId}`, {
+    return fetch(`${API_BASE_URL}/seasons/${seasonId}`, {
         headers: {
           'Authorization': `Bearer ${data.token}`
         }

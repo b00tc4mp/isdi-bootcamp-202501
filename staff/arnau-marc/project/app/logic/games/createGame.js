@@ -1,5 +1,8 @@
 import { data } from '../../data'
 import { errors, validate } from '../../validations/index.js'
+import  Constants  from 'expo-constants'
+
+const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 const { SystemError, AuthorizationError } = errors
 
@@ -16,7 +19,7 @@ export const createGame = (title, season, place, date) => {
     .then(token => {
       if (!token) throw new AuthorizationError('No token found')
 
-      return fetch('http://localhost:8080/games', {
+      return fetch(`${API_BASE_URL}/games`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

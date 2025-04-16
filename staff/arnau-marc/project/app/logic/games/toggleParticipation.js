@@ -1,5 +1,8 @@
 import { data } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
+import  Constants  from 'expo-constants'
+
+const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 const { SystemError, AuthorizationError } = errors
 
@@ -12,7 +15,7 @@ export const toggleParticipation = ( gameId ) => {
           throw new AuthorizationError('Token not found')
         }
 
-        return fetch(`http://localhost:8080/games/${gameId}/participation`, {
+        return fetch(`${API_BASE_URL}/${gameId}/participation`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${token}`
