@@ -1,4 +1,4 @@
-import { Game, User, Season } from '../../data/index.js'
+import { Game, User } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
 
 const { AuthorizationError, NotFoundError, ValidationError } = errors
