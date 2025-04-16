@@ -6,6 +6,7 @@ import { isUserLoggedIn } from './users/isUserLoggedIn.js'
 import { getUserId } from './users/getUserId.js'
 import { getUserRole } from './users/getUserRole.js'
 import { getUserById } from './users/getUserById.js'
+import { getUsernamesByIds } from './users/getUsernameByIds.js'
 
 import { createGame } from "./games/createGame.js"
 import { getGames } from "./games/getGames.js"
@@ -31,6 +32,7 @@ export const logic = {
     getUserId,
     getUserRole,
     getUserById,
+    getUsernamesByIds,
 
     createGame,
     getGames,
