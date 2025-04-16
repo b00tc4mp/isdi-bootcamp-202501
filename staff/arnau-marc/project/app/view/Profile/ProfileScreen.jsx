@@ -20,7 +20,8 @@ export default function ProfileScreen({ navigation }) {
         setUserRole(role)
         setStats(stats)
       })
-      .catch((error) => Alert.alert('Error ❌', error.message))
+      .catch((error) => window.alert(`Error ❌\n${error.message}`))
+      //Alert.alert('Error ❌', error.message))
       .finally(() => setLoading(false))
   }, [])
 
@@ -42,7 +43,8 @@ export default function ProfileScreen({ navigation }) {
           setSecretWord('') // limpiamos el input
         })
         .catch((error) => {
-          Alert.alert('Error ❌', error.message || 'Something went wrong.')
+          //Alert.alert('Error ❌', error.message || 'Something went wrong.')
+          window.alert(`Error ❌\n${error.message || 'Something went wrong.'}`)
           setModalVisible(false)
         })
     }

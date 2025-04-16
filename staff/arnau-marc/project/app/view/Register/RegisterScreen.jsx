@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { logic } from '../../logic'; // Asegúrate de que este archivo esté configurado correctamente
-import styles from './Register.styles.js'; // Asegúrate de tener los estilos adecuados
+import React, { useState } from 'react'
+import { View, Text, TextInput, Button, TouchableOpacity, Alert, StyleSheet } from 'react-native'
+import { logic } from '../../logic' // Asegúrate de que este archivo esté configurado correctamente
+import styles from './Register.styles.js' // Asegúrate de tener los estilos adecuados
 
 const Register = ({ navigation }) => {  // Usamos 'navigation' directamente
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
+  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleRegisterSubmit = () => {
     try {
@@ -16,32 +16,36 @@ const Register = ({ navigation }) => {  // Usamos 'navigation' directamente
       logic.registerUser(name, surname, email, username, password)
         .then(() => {
           // Limpiamos los campos del formulario
-          setName('');
-          setSurname('');
-          setEmail('');
-          setUsername('');
-          setPassword('');
+          setName('')
+          setSurname('')
+          setEmail('')
+          setUsername('')
+          setPassword('')
 
           // Mostramos un mensaje de éxito
-          Alert.alert('Registro exitoso 🎉', '¡Inicia sesión ahora!', [
-            { text: 'OK', onPress: () => navigation.navigate('Login') }, // Navegamos al login
-          ]);
+          //Alert.alert('Registro exitoso 🎉', '¡Inicia sesión ahora!', [
+            //{ text: 'OK', onPress: () => navigation.navigate('Login') }, // Navegamos al login
+          //])
+          window.alert('Registro exitoso 🎉\n¡Inicia sesión ahora!')
+          navigation.navigate('Login') 
         })
         .catch((error) => {
-          console.error(error);
+          console.error(error)
 
           // Mostramos un mensaje de error
-          Alert.alert('Error ❌', error.message);
-        });
+          //Alert.alert('Error ❌', error.message)
+          window.alert(`Error ❌\n${error.message}`)
+        })
     } catch (error) {
-      console.error(error);
+      console.error(error)
 
       // Mostramos un mensaje de error en caso de excepciones
-      Alert.alert('Error ❌', error.message);
+      //Alert.alert('Error ❌', error.message)
+      window.alert(`Error ❌\n${error.message}`)
     }
-  };
+  }
 
-  console.debug('Register -> render');
+  console.debug('Register -> render')
 
   return (
     <View style={styles.container}>
@@ -96,7 +100,7 @@ const Register = ({ navigation }) => {  // Usamos 'navigation' directamente
         <Text style={styles.link}>Login</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

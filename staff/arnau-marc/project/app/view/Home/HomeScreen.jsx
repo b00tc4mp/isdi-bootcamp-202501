@@ -58,14 +58,16 @@ const Home = ({ navigation }) => {
         .catch(error => {
           console.error(error)
           setLoading(false)
-          Alert.alert('Error ❌', error.message)
+          //Alert.alert('Error ❌', error.message)
+          window.alert(`Error ❌\n${error.message}`)
         })
     }, [])
 
     const fetchGames = () => {
       logic.getGames()
         .then(({ games }) => setGames(games))
-        .catch(error => Alert.alert('Error ❌', error.message))
+        .catch(error => window.alert(`Error ❌\n${error.message}`))
+        //Alert.alert('Error ❌', error.message))
     }
 
   // Función para manejar el logout
@@ -76,7 +78,8 @@ const Home = ({ navigation }) => {
       Alert.alert('Bye, See You soon!!')
     } catch (error) {
       console.error(error)
-      Alert.alert('Error ❌', error.message)
+      //Alert.alert('Error ❌', error.message)
+      window.alert(`Error ❌\n${error.message}`)
     }
   }
 
@@ -87,7 +90,8 @@ const Home = ({ navigation }) => {
       navigation.navigate('Profile', { userId })  // Navegamos a la pantalla de Profile
     } catch (error) {
       console.error(error)
-      Alert.alert('Error ❌', error.message)
+      //Alert.alert('Error ❌', error.message)
+      window.alert(`Error ❌\n${error.message}`)
     }
   }
 
@@ -98,12 +102,12 @@ const Home = ({ navigation }) => {
 
   // Función para navegar a la pantalla de crear juego
   const handleAddGameClick = () => {
-    navigation.navigate('CreateGame')  // Navegamos a la pantalla de CreateGame
+    navigation.navigate('CreateGame') // Navegamos a la pantalla de CreateGame
   }
 
   const openWinnerModal = (game) => {
     if (!Array.isArray(game.participants)) {
-      Window.alert('Error', 'Este juego no tiene participantes válidos')
+      window.alert('Error', 'Este juego no tiene participantes válidos')
       return
     }
     setSelectedGame(game)
@@ -114,7 +118,8 @@ const Home = ({ navigation }) => {
         setUserMap(map)
         setModalVisible(true)
       })
-      .catch(error => Alert.alert('Error cargando participantes', error.message))
+      .catch(error => window.alert('Error cargando participantes\n' + error.message))
+      //Alert.alert('Error cargando participantes', error.message))
   }
 
   const handleConfirmWinner = (winnerId) => {
@@ -126,7 +131,8 @@ const Home = ({ navigation }) => {
         Alert.alert('✅ Ganador asignado correctamente')
       })
       .catch(error => {
-        Alert.alert('Error ❌', error.message)
+        //Alert.alert('Error ❌', error.message)
+        window.alert(`Error ❌\n${error.message}`)
         setModalVisible(false)
       })
   }
@@ -140,14 +146,13 @@ const Home = ({ navigation }) => {
       .then(() =>{
         return logic.getGames()
           .then(({games}) => setGames(games))
-          .catch(error => Alert.alert('Error ❌', error.message))
+          .catch(error => window.alert(`Error ❌\n${error.message}`))
+          //Alert.alert('Error ❌', error.message))
       }
       )
-    }else{ return }
-
+    } else { return }
   }
   
-
   if (loading) {
     return (
       <View style={styles.container}>

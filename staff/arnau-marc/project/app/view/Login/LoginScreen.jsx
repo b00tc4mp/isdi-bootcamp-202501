@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { logic } from '../../logic'; // Asegúrate de que este archivo esté configurado correctamente
+import React, { useState } from 'react'
+import { View, Text, TextInput, Button, TouchableOpacity, Alert, StyleSheet } from 'react-native'
+import { logic } from '../../logic' // Asegúrate de que este archivo esté configurado correctamente
 import styles from './Login.styles.js'
 
 const Login = ({ navigation }) => {  // Cambia 'route' a 'navigation'
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
     // Maneja el submit del login
     const handleLoginSubmit = () => {
         try {
             logic.loginUser(username, password)
                 .then(() => {
-                    setUsername('');
-                    setPassword('');
+                    setUsername('')
+                    setPassword('')
                     navigation.navigate('Home')
-                    Alert.alert('Welcome back!', `Welcome back! ${username}`);
+                    //Alert.alert('Welcome back!', `Welcome back! ${username}`)
+                    window.alert(`Welcome back!\nWelcome back! ${username}`)
                 })
                 .catch(error => {
-                    console.error(error);
-                    Alert.alert('Error ❌', `Error: ${error.message}`);
-                });
+                    console.error(error)
+                    //Alert.alert('Error ❌', `Error: ${error.message}`)
+                    window.alert(`Error ❌\n${error.message}`)
+                })
         } catch (error) {
-            console.error(error);
-            Alert.alert('Error ❌', `Error: ${error.message}`);
+            console.error(error)
+            //Alert.alert('Error ❌', `Error: ${error.message}`)
+            window.alert(`Error ❌\n${error.message}`)
         }
-    };
+    }
 
     return (
         <View style={styles.container}>
@@ -51,9 +54,9 @@ const Login = ({ navigation }) => {  // Cambia 'route' a 'navigation'
                 <Text style={styles.link}>Don't have an account? Register</Text>
             </TouchableOpacity>
         </View>
-    );
+    )
 }
 
-export default Login;
+export default Login
 
 

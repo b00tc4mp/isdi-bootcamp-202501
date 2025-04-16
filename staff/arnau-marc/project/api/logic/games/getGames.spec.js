@@ -33,7 +33,7 @@ describe('getGames', () => {
         status: 'finished',
         title: 'game 2',
         participants: [],
-        date: '25-04-2025',
+        date: '23-05-2025',
         place: 'bodeguita',
         winner: authorId,
         points: 2

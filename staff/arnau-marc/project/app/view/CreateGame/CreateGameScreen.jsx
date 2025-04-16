@@ -12,12 +12,14 @@ const CreateGameScreen = ({ navigation }) => {
   const handleSubmitCreateGame = () => {
     logic.createGame( title, season, date, place )
       .then(() => {
-        Alert.alert('Success', 'Game created successfully 🎉')
+        //Alert.alert('Success', 'Game created successfully 🎉')
+        window.alert('Success\nGame created successfully 🎉')
         navigation.navigate('Home')
       })
       .catch(error => {
         console.error(error)
-        Alert.alert('Error ❌', error.message)
+        //Alert.alert('Error ❌', error.message)
+        window.alert(`Error ❌\n${error.message}`)
       })
   }
 
