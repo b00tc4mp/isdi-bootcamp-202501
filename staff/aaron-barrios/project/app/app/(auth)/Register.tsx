@@ -1,49 +1,66 @@
 import { useState } from 'react'
-import { TextInput, StyleSheet, Button, Alert } from 'react-native'
+import { TextInput, StyleSheet, Button, Alert, Pressable } from 'react-native'
 import { Text, View } from '@/components/Themed'
 import { useRouter } from 'expo-router'
 
 import registerUser from '@/services/registerUser'
+import authAnonymUser from '@/services/authAnonymUser'
 import { errors } from 'com'
 
 const { SystemError, ValidationError } = errors
 
 export default function Register() {
-  const [alias, setAlias] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [alias, setAlias] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const router = useRouter()
 
   const handleRegister = () => {
     try {
       registerUser(alias, email, password)
         .then(() => {
-          setAlias('');
-          setEmail('');
-          setPassword('');
+          setAlias('')
+          setEmail('')
+          setPassword('')
 
-          Alert.alert('✅ Registro exitoso', 'Ya puedes iniciar sesión');
+          Alert.alert('✅ Registro exitoso', 'Ya puedes iniciar sesión')
           router.replace('/(auth)/Login' as any)
           //se pone replace y no push por que push añade la nueva ruta al historial de navegacion
           //mientras que el replace la sustituye, lo cual hace que el usuario no pueda volver atrás con el back button
         })
         .catch((error) => {
-          console.error(error);
+          console.error(error)
 
           if (error instanceof SystemError)
-            Alert.alert('⛔', error.message);
+            Alert.alert('⛔', error.message)
           else
-            Alert.alert('⚠️ Error inesperado', error.message || 'Ups...');
-        });
+            Alert.alert('⚠️ Error inesperado', error.message || 'Ups...')
+        })
     } catch (error) {
-      console.error(error);
+      console.error(error)
 
       if (error instanceof ValidationError)
-        Alert.alert('❌ Validación', error.message);
+        Alert.alert('❌ Validación', error.message)
       else
-        Alert.alert('⛔ Error fatal', error instanceof Error ? error.message : 'Algo salió mal');
+        Alert.alert('⛔ Error fatal', error instanceof Error ? error.message : 'Algo salió mal')
     }
-  };
+  }
+
+  const handleAnonymousAccess = () => {
+    authAnonymUser()
+      .then(() => {
+        Alert.alert("👤 Anonym mode", "You have logged as a guest")
+        router.replace("/(anonym)" as any) // 🚀 redirige a tu layout anónimo
+      })
+      .catch(error => {
+        console.error(error)
+        if (error instanceof SystemError) {
+          Alert.alert("⛔ Error", error.message)
+        } else {
+          Alert.alert("⚠️ Ups...", error.message || "Something went wrong...")
+        }
+      })
+  }
 
 
   return (
@@ -75,9 +92,17 @@ export default function Register() {
         style={styles.input}
       />
 
-      <Button title="REGISTER" onPress={handleRegister} />
+      <View style={styles.button}>
+        <Button title="REGISTER" onPress={handleRegister} />
+      </View>
+
+      <Button title="LOG IN" onPress={() => router.push("/(auth)/Login" as any)} />
+
+      <Pressable onPress={handleAnonymousAccess}>
+        <Text style={styles.link}>Enter as a guest</Text>
+      </Pressable>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -101,6 +126,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 16,
     backgroundColor: '#fff'
+  },
+  link: {
+    fontSize: 16,
+    color: "#007aff",
+    textDecorationLine: "underline",
+    marginTop: 12
+  },
+  button: {
+    marginBottom: 16
   }
 })
 

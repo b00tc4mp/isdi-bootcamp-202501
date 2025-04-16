@@ -3,16 +3,24 @@ import { useRouter } from "expo-router"
 
 import { Text, View } from "@/components/Themed"
 
+import { logoutUser } from "@/services/logoutUser"
+
 export default function Home() {
     const router = useRouter()
+
+    const handleLogout = () => {
+        logoutUser()
+        router.replace("/(auth)/Login")
+    }
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Home</Text>
+            <Button title="Logout" onPress={handleLogout} />
             <View style={styles.container}>
-                <Text style={styles.title}>Welcome Back Mate!</Text>
+                <Text style={styles.title}>Welcome Back!</Text>
                 <View style={styles.button}>
-                    <Button title="LOG IN" onPress={() => router.push("/(tabs)/Profile" as any)} />
+                    {/* <Button title="LOG IN" onPress={() => router.push("/(tabs)/Profile" as any)} /> */}
                 </View>
             </View>
         </View>

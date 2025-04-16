@@ -15,67 +15,27 @@ function TabBarIcon(props: {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
 }
 
-export default function TabLayout() {
+export function ModeratorLayout() {
   const colorScheme = useColorScheme()
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        headerShown: false,
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Workouts"
-        options={{
-          title: "Workouts",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
-        name="Routines"
-        options={{
-          title: "Routines",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
-        name="Breakdown"
-        options={{
-          title: "Breakdown",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
-        name="Profile"
-        options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="Review"
+        options={{
+          title: "Review",
+          tabBarIcon: ({ color }) => <TabBarIcon name="check-circle" color={color} />,
         }}
       />
     </Tabs>

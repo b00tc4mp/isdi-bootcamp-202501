@@ -8,6 +8,7 @@ import "react-native-reanimated"
 
 import { useColorScheme } from "@/components/useColorScheme"
 import { useSession } from "@/hooks/useSession"
+import { data } from "@/data"
 
 export {
   ErrorBoundary,
@@ -17,7 +18,7 @@ export const unstable_settings = {
   initialRouteName: "(screens)",
 }
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+// Evita que el splash screen desaparezca antes de cargar
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -43,14 +44,32 @@ export default function RootLayout() {
 
 function AppNavigator() {
   const colorScheme = useColorScheme()
-  const { isAuthenticated, loading } = useSession()
+  const { isAuthenticated, loading, role } = useSession()
 
-  if (loading) return null // O un spinner si prefieres
+  useEffect(() => {
+    data.getToken().then(token => {
+      console.log("🔐 Token actual:", token)
+    })
+  }, [])
+
+  if (loading) return null // Spinner opcional
+
+  let screenName: string
+
+  if (!isAuthenticated) {
+    screenName = "(auth)"
+  } else if (role === "anonym") {
+    screenName = "(anon)"
+  } else if (role === "moderator") {
+    screenName = "(mod)"
+  } else {
+    screenName = "(tabs)"
+  }
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={isAuthenticated ? "(tabs)" : "(auth)"} />
+        <Stack.Screen name={screenName} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>
     </ThemeProvider>

@@ -12,7 +12,7 @@ export default function Workout() {
             <View style={styles.container}>
                 <Text style={styles.title}>Workout Feed</Text>
                 <View style={styles.button}>
-                    <Button title="Create Workout" onPress={() => router.push("/(tabs)/Routines" as any)} />
+                    {/* <Button title="Create Workout" onPress={() => router.push("/(tabs)/Routines" as any)} /> */}
                 </View>
             </View>
         </View>

@@ -1,81 +1,45 @@
-import React from "react"
-import FontAwesome from "@expo/vector-icons/FontAwesome"
-import { Link, Tabs } from "expo-router"
-import { Pressable } from "react-native"
-
-import Colors from "@/constants/Colors"
+import { Tabs } from "expo-router"
+import { FontAwesome5 } from "@expo/vector-icons"
 import { useColorScheme } from "@/components/useColorScheme"
-import { useClientOnlyValue } from "@/components/useClientOnlyValue"
+import Colors from "@/constants/Colors"
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"]
+  name: React.ComponentProps<typeof FontAwesome5>["name"]
   color: string
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
+  return <FontAwesome5 size={24} style={{ marginBottom: -4 }} {...props} />
 }
 
-export default function TabLayout() {
+//mirar libreria => https://icons.expo.fyi
+
+export default function AnonLayout() {
   const colorScheme = useColorScheme()
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        headerShown: false,
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          title: "Anonym_Home",
+          tabBarIcon: ({ color }) => <TabBarIcon name="anonym_home" color={color} />,
         }}
       />
       <Tabs.Screen
         name="Workouts"
         options={{
           title: "Workouts",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="dumbbell" color={color} />,
         }}
       />
-
       <Tabs.Screen
         name="Routines"
         options={{
           title: "Routines",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
-        name="Breakdown"
-        options={{
-          title: "Breakdown",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
-        name="Profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
         }}
       />
     </Tabs>

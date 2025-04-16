@@ -1,10 +1,11 @@
 import { useState } from "react"
-import { TextInput, StyleSheet, Button, Alert } from "react-native"
+import { TextInput, StyleSheet, Button, Alert, Pressable } from "react-native"
 import { Text, View } from "@/components/Themed"
 import { useRouter } from "expo-router"
 
 import loginUser from "@/services/loginUser"
-import { errors } from 'com'
+import authAnonymUser from "@/services/authAnonymUser"
+import { errors } from "com"
 
 const { SystemError, ValidationError } = errors
 
@@ -15,31 +16,49 @@ export default function Login() {
 
   const handleLogin = () => {
     try {
-      // Lógica asíncrona
       loginUser(alias, password)
-        .then(() => {
-          setAlias('');
-          setPassword('');
+        .then(token => {
+          console.log("🎉 Token guardado:", token)
 
-          Alert.alert('Welcome back!', `Welcome back! ${alias}`);
+          setAlias('')
+          setPassword('')
+
+          Alert.alert('Welcome back!', `Welcome back! ${alias}`)
           router.replace('/(tabs)' as any)
         })
-        .catch((error) => {
-          console.error(error);
+        .catch(error => {
+          console.error(error)
 
           if (error instanceof SystemError)
-            Alert.alert('⛔', error.message);
+            Alert.alert('⛔', error.message)
           else
-            Alert.alert('⚠️ Error inesperado', error.message || 'Ups...');
-        });
+            Alert.alert('⚠️ Error inesperado', error.message || 'Ups...')
+        })
+
     } catch (error) {
-      console.error(error);
+      console.error(error)
 
       if (error instanceof ValidationError)
-        Alert.alert('❌ Validación', error.message);
+        Alert.alert('❌ Validación', error.message)
       else
-        Alert.alert('⛔ Error fatal', error instanceof Error ? error.message : 'Algo salió mal');
+        Alert.alert('⛔ Error fatal', error instanceof Error ? error.message : 'Algo salió mal')
     }
+  }
+
+  const handleAnonymousAccess = () => {
+    authAnonymUser()
+      .then(() => {
+        Alert.alert("👤 Anonym mode", "You have logged as a guest")
+        router.replace("/(anonym)" as any) // 🚀 redirige a tu layout anónimo
+      })
+      .catch(error => {
+        console.error(error)
+        if (error instanceof SystemError) {
+          Alert.alert("⛔ Error", error.message)
+        } else {
+          Alert.alert("⚠️ Ups...", error.message || "Something went wrong...")
+        }
+      })
   }
 
   return (
@@ -60,7 +79,16 @@ export default function Login() {
           secureTextEntry
           style={styles.input}
         />
-        <Button title="LOG IN" onPress={handleLogin} />
+
+        <View style={styles.button}>
+          <Button title="LOG IN" onPress={handleLogin} />
+        </View>
+
+        <Button title="Register" onPress={() => router.push("/(auth)/Register" as any)} />
+
+        <Pressable onPress={handleAnonymousAccess}>
+          <Text style={styles.link}>Enter as a guest</Text>
+        </Pressable>
       </View>
     </View>
   )
@@ -93,5 +121,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 16,
     backgroundColor: "#fff"
-  }
+  },
+  link: {
+    fontSize: 16,
+    color: "#007aff",
+    textDecorationLine: "underline",
+    marginTop: 12
+  },
+  button: {
+    marginBottom: 16
+  },
 })

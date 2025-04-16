@@ -12,7 +12,8 @@ export default function Profile() {
             <View style={styles.container}>
                 <Text style={styles.title}>Your Data!</Text>
                 <View style={styles.button}>
-                    <Button title="Create Workout" onPress={() => router.push("/(tabs)/Home" as any)} />
+                    <Button title="User data" onPress={() => router.push("/(tabs)/Home" as any)} />
+                    <Button title="Change data" onPress={() => router.push("/(tabs)/Home" as any)} />
                 </View>
             </View>
         </View>
