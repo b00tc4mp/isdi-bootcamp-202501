@@ -2,27 +2,22 @@ import { useEffect, useState } from 'react'
 import { Level } from './Level'
 import { logic } from '../logic'
 
-export function Levels() {
+export function Levels({ onLevelSelected }) {
     const [levels, setLevels] = useState([])
 
     useEffect(() => {
-        try {
-            logic.getLevels()
-                .then(levels => setLevels(levels))
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
+        logic.getLevels()
+            .then(setLevels)
+            .catch(console.error)
     }, [])
 
-
-    return <div className="overflow-auto height-200px bg-yellow" >
-        {levels.map(level => <Level key={level.id} level={level} />)}
-    </div >
+    return (
+        <div className="grid gap-4 max-h-[400px] overflow-y-auto py-2">
+            {levels.map(level => (
+                <div key={level.id} onClick={() => onLevelSelected(level)} className="cursor-pointer">
+                    <Level level={level} clickable />
+                </div>
+            ))}
+        </div>
+    )
 }

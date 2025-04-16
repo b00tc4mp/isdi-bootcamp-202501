@@ -46,6 +46,10 @@ const user = new Schema({
         type: ObjectId,
         ref: 'Level'
     }],
+    score: {
+        type: Number,
+        default: 0
+    },
     currentLevel: {
         type: ObjectId,
         ref: 'Level'

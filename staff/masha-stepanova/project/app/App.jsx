@@ -24,8 +24,7 @@ function App() {
 
     useEffect(() => {
         try {
-            const loggedIn = false
-            logic.isUserLoggedIn()
+            const loggedIn = logic.isUserLoggedIn()
 
             setLoggedIn(loggedIn)
         } catch (error) {

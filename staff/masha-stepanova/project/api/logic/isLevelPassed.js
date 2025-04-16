@@ -29,16 +29,22 @@ export const isLevelPassed = (userId, levelId, userAnswer) => {
                     .then(levelIds => {
                         let index = levelIds.findIndex(objectId => objectId._id.toString() === levelId)
 
-                        user.generalProgress.push(level._id)
+                        if (!(user.generalProgress.find(levelObjectId => levelObjectId._id.toString() === levelId))) {
+                            user.generalProgress.push(level._id)
 
-                        const generalProgress = user.generalProgress
+                            const generalProgress = user.generalProgress
 
-                        const currentLevel = user.currentLevel = levelIds[index + 1]
+                            const score = user.score + level.difficulty
 
-                        return User.updateOne({ _id: userId }, { $set: { generalProgress, currentLevel } })
+                            const currentLevel = user.currentLevel = levelIds[index + 1]
+
+                            return User.updateOne({ _id: userId }, { $set: { generalProgress, currentLevel, score } })
+                        }
                     })
                     .catch(error => { throw new SystemError(error.message) })
             }
         })
         .then(() => levelIsPassed)
 }
+
+

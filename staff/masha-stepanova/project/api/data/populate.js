@@ -26,7 +26,8 @@ data.connect(MONGO_URL, MONGO_DB_TEST)
                 type: 'fillInBlank',
                 description: 'Complete the line of code to obtain the sum of two numbers.',
                 body: `const num1 = 5; const num2 = 3;\n// add two numbers\nconst sum = ___;\nconsole.log('The sum of ' + num1 + ' and ' + num2 + ' is: ' + sum);`,
-                expectedResult: 'num1 + num2'
+                expectedResult: 'num1 + num2',
+                difficulty: 2
             },
             {
                 name: `Loop 'for'`,
