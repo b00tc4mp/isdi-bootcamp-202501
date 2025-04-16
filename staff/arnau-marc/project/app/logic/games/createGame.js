@@ -3,10 +3,14 @@ import { errors, validate } from '../../validations/index.js'
 
 const { SystemError, AuthorizationError } = errors
 
-export const createGame = (title, season, date, place) => {
+export const createGame = (title, season, place, date) => {
   validate.title(title, 'title')
   validate.season(season, 'season')
   validate.place(place, 'place')
+ 
+  const [day, month, year] = date.split('-')
+  const formattedDate = new Date(`${year} , ${month} , ${day}`) 
+
 
   return data.token
     .then(token => {
@@ -18,7 +22,7 @@ export const createGame = (title, season, date, place) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ title, season, date, place}),
+        body: JSON.stringify({ title, season, formattedDate, place}),
       })
     })
     .catch(error => {

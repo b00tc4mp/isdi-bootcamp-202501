@@ -12,9 +12,9 @@ export const games = Router()
 // Crear partida (solo admin)
 games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
-    const { title, season, date, place } = req.body
+    const { title, season, formattedDate, place } = req.body
   
-    return logic.createGame(userId, title, season, date, place)
+    return logic.createGame(userId, title, season, formattedDate, place)
       .then(gameId => res.status(201).json({ gameId }))
   }))
   
