@@ -18,7 +18,7 @@ games.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
       .then(gameId => res.status(201).json({ gameId }))
   }))
   
-  // Funcion para obtener los posts
+  // Funcion para obtener los games
   games.get('/', authHandler, withErrorHandling((req, res) => {
     return logic.getGames()
       .then(games => res.json({ games }))

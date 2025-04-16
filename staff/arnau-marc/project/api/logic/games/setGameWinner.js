@@ -1,7 +1,7 @@
 import { Game, User } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
 
-const { AuthorizationError, NotFoundError, ValidationError } = errors
+const { NotAllowedError, NotFoundError, ValidationError } = errors
 
 export const setGameWinner = (adminId, gameId, winnerUsername) => {
   validate.id(adminId, 'adminId')
@@ -10,7 +10,7 @@ export const setGameWinner = (adminId, gameId, winnerUsername) => {
 
   return User.findById(adminId).lean()
     .then(admin => {
-      if (!admin || admin.role !== 'admin') throw new AuthorizationError('Only admins can set winners')
+      if (!admin || admin.role !== 'admin') throw new NotAllowedError('Only admins can set winners')
 
       return Promise.all([
         Game.findById(gameId),

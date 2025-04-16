@@ -1,11 +1,11 @@
 import { User, Game } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
 
-const { ValidationError, NotFoundError, AuthorizationError } = errors
+const { ValidationError, NotFoundError, AuthorizationError, NotAllowedError } = errors
 
 export const createGame = (userId, title, season, date, place) => {
   if (!title || !date || !place) throw new ValidationError('Missing required fields')
-  
+ 
   validate.id(userId, 'userId')
   validate.title(title)
   validate.season(season)
@@ -16,7 +16,7 @@ export const createGame = (userId, title, season, date, place) => {
 
       if (!user) throw new NotFoundError('User not found')
 
-      if (user.role !== 'admin') throw new AuthorizationError('Only admins can create games')
+      if (user.role !== 'admin') throw new NotAllowedError('Only admins can create games')
 
       const newGame = new Game({
         author: userId,

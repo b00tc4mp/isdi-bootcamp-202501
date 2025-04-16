@@ -1,7 +1,7 @@
 import { User, Game } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
 
-const { SystemError, NotFoundError, ValidationError } = errors
+const { SystemError, NotFoundError, NotAllowedError } = errors
 
 export const toggleParticipation = (userId, gameId) => {
     validate.id(userId, 'userId')
@@ -15,7 +15,7 @@ export const toggleParticipation = (userId, gameId) => {
         .then(([user, game]) => {
             if (!user) throw new NotFoundError('User not found')
             if (!game) throw new NotFoundError('Game not found')
-            if (game.status !== 'scheduled') throw new ValidationError('Cannot toggle participation in a finished game')
+            if (game.status !== 'scheduled') throw new NotAllowedError('Cannot toggle participation in a finished game')
 
             const { participants } = game
 

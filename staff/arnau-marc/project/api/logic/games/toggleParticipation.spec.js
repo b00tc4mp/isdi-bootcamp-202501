@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import { errors } from '../../validations/index.js'
 import { Types } from 'mongoose'
 
-const { SystemError, NotFoundError, ValidationError } = errors
+const { NotFoundError, NotAllowedError } = errors
 const { ObjectId } = Types
 const { MONGO_URL, MONGO_DB } = process.env
 
@@ -44,7 +44,7 @@ describe('toggleParticipation', () => {
       .then(() => Game.findById(gameId).lean())
       .then(game => {
         expect(game.participants.map(p => p.toString())).to.include(userId.toString())
-})
+      })
 
   })
 
@@ -154,7 +154,7 @@ describe('toggleParticipation', () => {
       .then(() => toggleParticipation(userId.toString(), gameId.toString()))
       .catch(error => catchedError = error)
       .finally(() => {
-        expect(catchedError).to.be.instanceOf(ValidationError)
+        expect(catchedError).to.be.instanceOf(NotAllowedError)
         expect(catchedError.message).to.equal('Cannot toggle participation in a finished game')
       })
   })

@@ -2,10 +2,8 @@ import 'dotenv/config'
 import { data, Game } from '../../data/index.js'
 import { getGames } from './getGames.js'
 import { expect } from 'chai'
-import { errors } from '../../validations/index.js'
 import { Types } from 'mongoose'
 
-const { SystemError } = errors
 const { ObjectId } = Types
 const { MONGO_URL, MONGO_DB } = process.env
 

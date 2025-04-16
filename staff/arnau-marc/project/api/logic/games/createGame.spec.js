@@ -3,8 +3,11 @@ import { data, Game, User } from '../../data/index.js'
 import { createGame } from './createGame.js'
 import { expect } from 'chai'
 import { errors } from '../../validations/index.js'
+import { Types } from 'mongoose'
 
-const { AuthorizationError, NotFoundError, ValidationError } = errors
+const { ObjectId } = Types
+
+const { NotFoundError, ValidationError, NotAllowedError } = errors
 const { MONGO_URL, MONGO_DB } = process.env
 
 describe('createGame', () => {
@@ -20,7 +23,7 @@ describe('createGame', () => {
     const season = 'season 1'
     const date = '22-04-2025'
     const place = 'Casa Arnau'
-
+    
     return User.create({
       name: 'arnau',
       surname: 'romero',
@@ -29,15 +32,15 @@ describe('createGame', () => {
       role: 'admin',
       password: '123123123'
     })
-      .then(user => createGame(user.id, title, season, date, place))
+      .then(user => createGame(user._id.toString(), title, season, date, place))
       .then(game => {
         expect(game).to.exist
-        expect(game.title).to.equal(title)
-        expect(game.season).to.equal(season)
-        expect(game.date).to.equal(date)
-        expect(game.place).to.equal(place)
+        expect(game.title).to.equal('Poker Night')
+        expect(game.season).to.equal('season 1')
+        expect(game.date).to.equal('22-04-2025')
+        expect(game.place).to.equal('Casa Arnau')
         expect(game.status).to.equal('scheduled')
-        expect(game.author.toString()).to.be.a('string')
+        
       })
   })
 
@@ -52,10 +55,10 @@ describe('createGame', () => {
       role: 'regular',
       password: '123123123'
     })
-      .then(user => createGame(user.id, 'timbita', 'season 1', '22-04-2025', 'casa roca'))
+      .then(user => createGame(user.id, 'timbita', 'season 1', '22-04-2025', 'casa roca') )
       .catch(error => catchedError = error)
       .finally(() => {
-        expect(catchedError).to.be.instanceOf(AuthorizationError)
+        expect(catchedError).to.be.instanceOf(NotAllowedError)
         expect(catchedError.message).to.equal('Only admins can create games')
       })
   })
@@ -71,12 +74,24 @@ describe('createGame', () => {
       role: 'admin',
       password: '123123123'
     })
-      .then(user => createGame(user.id, '', 'season 1', '', ''))
+      .then(user => createGame(user._id.toString(), '', 'season 1', '', ''))
       .catch(error => catchedError = error)
       .finally(() => {
         expect(catchedError).to.be.instanceOf(ValidationError)
         expect(catchedError.message).to.equal('Missing required fields')
       })
+  })
+
+  it('Fail: User not Found', () => {
+    let catchedError
+
+    return createGame(new ObjectId().toString(), 'title', 'season', '22-04-2025', 'casita')
+      .catch(error =>  catchedError = error)
+      .finally(() => {
+        expect(catchedError).to.be.instanceOf(NotFoundError)
+        expect(catchedError.message).to.equal('User not found')
+      })
+
   })
 
   afterEach(() => Promise.all([

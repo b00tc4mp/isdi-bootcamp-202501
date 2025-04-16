@@ -54,17 +54,19 @@ export const validate = {
     title(title, explain = 'title') {
         this.text(title, explain)
         this.minLength(title, 1, explain)
-        this.maxLength(title, 40, explain)
+        this.maxLength(title, 15, explain)
     },
     season(season, explain = 'season') {
         this.text(season, explain)
         this.minLength(season, 1, explain)
-        this.maxLength(season, 40, explain)
+        this.maxLength(season, 15, explain)
+        if(!constant.SEASON_PLACE_REGEX) throw new ValidationError('Only letters, numbers and spaces allowed. No leading/trailing spaces or symbols.')
     },
     place(place, explain = 'place') {
         this.text(place, explain)
         this.minLength(place, 1, explain)
-        this.maxLength(place, 40, explain)
+        this.maxLength(place, 15, explain)
+        if(!constant.SEASON_PLACE_REGEX) throw new ValidationError('Only letters, numbers and spaces allowed. No leading/trailing spaces or symbols.')
     },
 
 }

@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import { errors } from '../../validations/index.js'
 import { Types } from 'mongoose'
 
-const { NotFoundError, AuthorizationError, SystemError } = errors
+const { NotFoundError, NotAllowedError} = errors
 const { ObjectId } = Types
 const { MONGO_URL, MONGO_DB } = process.env
 
@@ -78,7 +78,7 @@ describe('deleteGame', () => {
       .then(() => deleteGame(gameId.toString(), marcId.toString()))
       .catch(error => catchedError = error)
       .finally(() => {
-        expect(catchedError).to.be.instanceOf(AuthorizationError)
+        expect(catchedError).to.be.instanceOf(NotAllowedError)
         expect(catchedError.message).to.equal('only admin can delete a game')
       })
   })

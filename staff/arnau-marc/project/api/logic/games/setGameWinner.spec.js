@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import { errors } from '../../validations/index.js'
 import { Types } from 'mongoose'
 
-const { AuthorizationError, NotFoundError, ValidationError } = errors
+const { NotAllowedError, NotFoundError, ValidationError } = errors
 const { ObjectId } = Types
 const { MONGO_URL, MONGO_DB } = process.env
 
@@ -96,7 +96,7 @@ describe('setGameWinner', () => {
       .then(() => setGameWinner(userId.toString(), gameId.toString(), 'lita_lenta'))
       .catch(error => catchedError = error)
       .finally(() => {
-        expect(catchedError).to.be.instanceOf(AuthorizationError)
+        expect(catchedError).to.be.instanceOf(NotAllowedError)
         expect(catchedError.message).to.equal('Only admins can set winners')
       })
   })
@@ -149,7 +149,7 @@ describe('setGameWinner', () => {
         status: 'scheduled'
       })
     ])
-      .then(() => setGameWinner(adminId.toString(), gameId.toString(), 'nonexistent_user'))
+      .then(() => setGameWinner(adminId.toString(), gameId.toString(), 'user'))
       .catch(error => catchedError = error)
       .finally(() => {
         expect(catchedError).to.be.instanceOf(NotFoundError)
@@ -159,7 +159,7 @@ describe('setGameWinner', () => {
 
   it('fails if winner is not a participant', () => {
     const adminId = new ObjectId()
-    const outsiderId = new ObjectId()
+    const notParticipantId = new ObjectId()
     const gameId = new ObjectId()
     let catchedError
 
@@ -174,7 +174,7 @@ describe('setGameWinner', () => {
         password: '123123123'
       }),
       User.create({
-        _id: outsiderId,
+        _id: notParticipantId,
         name: 'lita',
         surname: 'lenta',
         email: 'lita@test.com',

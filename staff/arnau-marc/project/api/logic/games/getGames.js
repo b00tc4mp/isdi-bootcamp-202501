@@ -9,3 +9,4 @@ export const getGames = () => {
     .lean()
     .catch(error => { throw new SystemError('Error retrieving events: ' + error.message) })
 }
+
