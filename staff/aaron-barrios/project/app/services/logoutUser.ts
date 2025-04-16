@@ -1,5 +1,5 @@
 import { data } from '../data'
 
 export const logoutUser = () => {
-    data.token = ''
+    data.removeToken()
 }
