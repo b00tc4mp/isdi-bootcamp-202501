@@ -32,6 +32,15 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "apiUrl": "http://localhost:8080",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e6501c95-ae44-470f-82e5-bc27698422a7"
+      }
     }
   }
 }

@@ -13,6 +13,7 @@ const registerUser = (
     validate.password(password)
 
     const { apiUrl } = getEnv()
+    debugger
 
     return fetch(`${apiUrl}/users`, {
         method: 'POST',
@@ -21,12 +22,12 @@ const registerUser = (
         },
         body: JSON.stringify({ alias, email, password })
     })
-        .catch(error => { throw new SystemError(error.message) })
+        .catch(error => { debugger; throw new SystemError(error.message) })
         .then(response => {
             if (response.status === 201) return // HAPPY PATH
 
             return response.json()
-                .catch(error => { throw new SystemError(error.message) })
+                .catch(error => { debugger; throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
                     const constructor = errors[error as keyof typeof errors] || SystemError
