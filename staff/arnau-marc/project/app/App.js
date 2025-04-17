@@ -9,6 +9,7 @@ import Register from './view/Register/RegisterScreen';
 import ProfileScreen from './view/Profile/ProfileScreen';
 import CreateGameScreen from './view/CreateGame/CreateGameScreen';
 import ClassificationScreen from './view/Classification/ClassificationScreen';
+import ClassificationHistoric from './view/Classification/ClassificationHistoric';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerLeft: () => null }} />
         <Stack.Screen name="CreateGame" component={CreateGameScreen} options={{ headerLeft: () => null }} />
         <Stack.Screen name="Classification" component={ClassificationScreen} options={{ headerLeft: () => null }} />
+        <Stack.Screen name='ClassificationHistoric' component={ClassificationHistoric} options={{ headerLeft: () => null }} />
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>
