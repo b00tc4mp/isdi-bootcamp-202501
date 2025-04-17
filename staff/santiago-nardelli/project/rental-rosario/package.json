@@ -7,11 +7,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "inspect": "export NODE_OPTIONS='--inspect' && next dev"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
-    "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
     "next": "15.2.4",

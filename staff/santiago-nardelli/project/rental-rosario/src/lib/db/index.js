@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import 'dotenv/config'
-
 
 const { DATABASE_URL, DATABASE_NAME } = process.env;
 
 // Validación de variables de entorno críticas
 if (!DATABASE_URL) {
-  throw new Error("DATABASE_URL no está definido en el archivo de configuración");
+  throw new Error(
+    "DATABASE_URL no está definido en el archivo de configuración"
+  );
 }
 
 // Usar una conexión global para evitar múltiples conexiones en desarrollo
@@ -18,20 +18,27 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
+  //console.debug(`connecting to ${DATABASE_URL}/${DATABASE_NAME}`);
+
   if (cached.conn) {
     return cached.conn;
-  }//==> cached.conn es null, significa que no hay conexión activa, por lo que se procede a crear una nueva conexión
+  } //==> cached.conn es null, significa que no hay conexión activa, por lo que se procede a crear una nueva conexión
 
   if (!cached.promise) {
-    //Verificar esta construccion 
-    const connectionString = DATABASE_NAME ? `${DATABASE_URL}/${DATABASE_NAME}` : DATABASE_URL;
+    //Verificar esta construccion
+    const connectionString = DATABASE_NAME
+      ? `${DATABASE_URL}/${DATABASE_NAME}`
+      : DATABASE_URL;
 
-
-
-    cached.promise = mongoose.connect(connectionString).then((mongoose) => {
-      console.log("Conectado a la base de datos");
-      return mongoose;
-    });
+    cached.promise = mongoose
+      .connect(connectionString, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then((mongoose) => {
+        console.log("Conectado a la base de datos");
+        return mongoose;
+      });
   }
 
   try {
