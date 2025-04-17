@@ -11,7 +11,8 @@ export const finishSeason = (seasonId) => {
     return fetch(`${API_BASE_URL}/seasons/${seasonId}/finish`, {
       method: 'PATCH',
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
       }
     })
   })

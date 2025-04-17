@@ -9,10 +9,10 @@ const { JWT_SECRET } = process.env
 export const seasons = Router()
 
 // Endpoint para calcular la tabla de classificación
-seasons.get('/:name/leaderboard', authHandler, withErrorHandling((req, res) => {
-    const { name: seasonName } = req.params
+seasons.get('/:id/leaderboard', authHandler, withErrorHandling((req, res) => {
+    const { id: seasonId } = req.params
 
-    return logic.getSeasonLeaderboard(seasonName)
+    return logic.getSeasonLeaderboard(seasonId)
         .then(leaderboard => res.json(leaderboard))
 }))
 

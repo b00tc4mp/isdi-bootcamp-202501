@@ -25,7 +25,7 @@ export default function ClassificationScreen({ navigation }) {
         if (!season) throw new Error('No hay ninguna temporada activa actualmente')
         setSeason(season)
         setError(null)
-        return logic.getSeasonLeaderboard(season.name)
+        return logic.getSeasonLeaderboard(season._id)
       })
       .then(setLeaderboard)
       .catch(err => {

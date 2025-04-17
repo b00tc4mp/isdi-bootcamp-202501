@@ -27,15 +27,27 @@ export const finishSeason = (userId, seasonId) => {
           const leaderboard = {}
 
           games.forEach(game => {
+            // Asegurar que todos los participantes existan en el leaderboard
             game.participants.forEach(userId => {
-              if (!leaderboard[userId]) leaderboard[userId] = 0
+                const id = userId.toString()
+                if (!leaderboard[id]) leaderboard[id] = 0
             })
-
+        
             if (game.winner) {
-              if (!leaderboard[game.winner]) leaderboard[game.winner] = 0
-              leaderboard[game.winner] += game.points || 0
+                const winnerId = game.winner.toString()
+                
+                // Asegurar entrada para el ganador
+                if (!leaderboard[winnerId]) leaderboard[winnerId] = 0
+                // Sumar puntos al ganador
+                leaderboard[winnerId] += game.points || 0
+        
+                // Restar medio punto a los que no ganan
+                game.participants.forEach(userId => {
+                    const id = userId.toString()
+                    if (id !== winnerId) leaderboard[id] -= 0.5
+                })
             }
-          })
+        })
 
           //  Determinar el jugador con más puntos
           const sorted = Object.entries(leaderboard)
@@ -49,6 +61,11 @@ export const finishSeason = (userId, seasonId) => {
           season.winner = winnerEntry?.userId || null
 
           return season.save()
+            .catch(error => { throw new SystemError(error.message)})
+            .then(() => {})
         })
+        
     })
+    
+    
 }

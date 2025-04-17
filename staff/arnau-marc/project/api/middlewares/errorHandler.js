@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
         
 // Extraemos clases de error personalizadas desde el módulo de errores
 //const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError, AuthorizationError } = errors;
-const { JsonWebTokenError, TokenExpiredError } = jwt
+const { JsonWebTokenError } = jwt
 
         // Middleware para manejar errores
  export const errorHandler = (error, req, res, next) => {
@@ -27,13 +27,9 @@ const { JsonWebTokenError, TokenExpiredError } = jwt
     } else if (error instanceof Error) {
         status = 403;
         errorName = error.constructor.name;
-    }else if (error instanceof Error) {
-        status = 401
-        errorName = AuthorizationError.name
-        message = 'expired JWT'
     } else if (error instanceof Error) {
         status = 401
-        errorName = AuthorizationError.name
+        errorName = JsonWebTokenError.name
         message = 'invalid JWT'
     }
 

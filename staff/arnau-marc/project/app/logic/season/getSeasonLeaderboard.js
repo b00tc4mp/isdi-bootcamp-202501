@@ -4,12 +4,12 @@ import  Constants  from 'expo-constants'
 
 const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
-export const getSeasonLeaderboard = (seasonName) => {
+export const getSeasonLeaderboard = (seasonId) => {
   return data.getToken()
     .then((token) =>{
         if (!token) throw new Error('No token found')
 
-        return fetch(`${API_BASE_URL}/seasons/${seasonName}/leaderboard`, {
+        return fetch(`${API_BASE_URL}/seasons/${seasonId}/leaderboard`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }

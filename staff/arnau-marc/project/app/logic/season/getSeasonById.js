@@ -8,10 +8,12 @@ const { SystemError } = errors
 
 export const getSeasonById = (seasonId) => {
   return data.getToken()
-  .then(() => {
+  .then((token) => {
+    if (!token) throw new Error('No token found')
+      
     return fetch(`${API_BASE_URL}/seasons/${seasonId}`, {
         headers: {
-          'Authorization': `Bearer ${data.token}`
+          'Authorization': `Bearer ${token}`
         }
       })
    }) 

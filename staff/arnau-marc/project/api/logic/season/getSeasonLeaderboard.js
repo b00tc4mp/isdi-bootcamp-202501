@@ -3,8 +3,8 @@ import { errors, validate } from '../../validations/index.js'
 
 const { SystemError } = errors
 
-export const getSeasonLeaderboard = (seasonName) => {
-    return Game.find({ season: seasonName, status: 'finished'}).lean()
+export const getSeasonLeaderboard = (seasonId) => {
+    return Game.find({ seasonId: seasonId, status: 'finished'}).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(games => {
             if (!games.length) return []

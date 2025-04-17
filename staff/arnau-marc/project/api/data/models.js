@@ -74,7 +74,6 @@ const game = new Schema({
     seasonId: {
         type: ObjectId,
         ref: 'Season',
-        required: true,
     },
     status: {
         type: String,
