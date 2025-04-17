@@ -29,7 +29,8 @@ export const loginUser = (username, password) => {
                     .then(body => {
                         const { token } = body
 
-                        data.token = token
+                        return data.setToken(token)
+                        .catch(error => { throw new SystemError(error.message) })
                     })
 
             return response.json()

@@ -7,11 +7,11 @@ const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 const { SystemError, AuthorizationError } = errors
 
 export const getUserStats = () => {
-  return data.token
+  return data.getToken()
     .then(token => {
       if (!token) throw new AuthorizationError('Token not found')
 
-      return fetch(`${API_BASE_URL}/profiles/stats`, {
+      return fetch(`${API_BASE_URL}/users/stats`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

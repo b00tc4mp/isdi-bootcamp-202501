@@ -11,11 +11,11 @@ export const setGameWinner = (gameId, winnerId) => {
   validate.id(gameId, 'gameId')
   validate.id(winnerId, 'winnerId')
 
-  return data.token
+  return data.getToken()
     .then(token => {
       if (!token) throw new ValidationError('Token not found')
 
-      return fetch(`${API_BASE_URL}/${gameId}/winner`, {
+      return fetch(`${API_BASE_URL}/games/${gameId}/winner`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

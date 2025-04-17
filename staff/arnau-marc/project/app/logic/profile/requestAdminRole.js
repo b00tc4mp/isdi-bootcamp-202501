@@ -9,12 +9,13 @@ const { SystemError, AuthorizationError } = errors
 export const requestAdminRole = (secretWord) => {
     validate.string(secretWord, 'secret word')
 
-    return data.token
+    return data.getToken()
+    .catch(error => { throw new SystemError(error.message) })
     .then(token => {
         if (!token) {
           throw new AuthorizationError('Token not found')
         }
-        return fetch(`${API_BASE_URL}/profiles/admin-request`, {
+        return fetch(`${API_BASE_URL}/users/admin-request`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -25,7 +26,16 @@ export const requestAdminRole = (secretWord) => {
     })
     .catch(error => { throw new SystemError(error.message) })
     .then(response => {
-        if (response.status === 204) return
+        if(response.status === 200)
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+
+                .then(body => {
+                    const { token } = body
+
+                   return data.setToken(token)
+                   .catch(error => { throw new SystemError(error.message) })
+                })
 
         return response.json()
             .catch(error => { throw new SystemError(error.message) })

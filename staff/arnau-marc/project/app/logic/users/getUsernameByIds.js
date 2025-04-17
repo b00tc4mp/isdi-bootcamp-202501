@@ -9,7 +9,7 @@ const { SystemError } = errors
 export const getUsernamesByIds = (ids) => {
   if (!Array.isArray(ids)) throw new SystemError('ids must be an array')
 
-  return data.token
+    return data.getToken()
     .then(token =>
        fetch(`${API_BASE_URL}/users/usernames`, {
         method: 'POST',

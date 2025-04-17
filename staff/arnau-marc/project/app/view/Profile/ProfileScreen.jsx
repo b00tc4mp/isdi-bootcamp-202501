@@ -42,10 +42,12 @@ export default function ProfileScreen({ navigation }) {
   const handleModalConfirm = () => {
     if (secretWord) {
       logic.requestAdminRole(secretWord)
-        .then(() => {
+        /*
+      .then(() => {
           // Volvemos a consultar el rol desde el backend después de la actualización
           return logic.changeUserRole()
         })
+          */
         .then(() => {
           return logic.getUserRole()
         })

@@ -5,7 +5,7 @@ import  Constants  from 'expo-constants'
 const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 export const getLatestSeason = () => {
-  return data.token
+  return data.getToken()
   .then((token) => {
     if (!token) throw new Error('No token found')
 

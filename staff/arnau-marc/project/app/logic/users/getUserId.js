@@ -5,7 +5,7 @@ import { errors } from '../../validations/index.js'
 const { SystemError } = errors
 
 export const getUserId = () => {
-  return data.token
+  return data.getToken()
     .then(token => {
       if (!token) throw new SystemError('Token not found')
 
