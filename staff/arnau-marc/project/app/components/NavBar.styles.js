@@ -5,17 +5,26 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingVertical: 10,
-    backgroundColor: '#f5f5f5',
+    height: 60,
+    backgroundColor: '#ffffff',
     borderTopWidth: 1,
-    borderColor: '#ddd',
+    borderTopColor: '#e0e0e0',
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    elevation: 8, // sombra en Android
+    shadowColor: '#000', // sombra en iOS
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4
   },
   button: {
-    fontSize: 24,
-    color: '#333',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  icon: {
+    fontSize: 26,
+    color: '#333'
   }
 })

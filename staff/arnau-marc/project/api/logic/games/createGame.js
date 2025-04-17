@@ -18,7 +18,7 @@ export const createGame = (userId, title, season, date, place) => {
 
       if (user.role !== 'admin') throw new NotAllowedError('Only admins can create games')
       
-      return Season.find({ name: season }).lean()
+      return Season.findOne({ name: season }).lean()
     })
     .then(season => {
       const newGame = new Game({

@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, Platform } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import styles from './CreateGame.styles.js'
 import { logic } from '../../logic'
-import { CustomModal } from '../../components'
+import { CustomModal, NavBar } from '../../components'
 
 export default function CreateGameScreen({ navigation }) {
   const [title, setTitle] = useState('')
@@ -116,6 +116,7 @@ export default function CreateGameScreen({ navigation }) {
         showInput={false}
         options={seasonOptions}
       />
+      <NavBar navigation={navigation} />
     </View>
   )
 }

@@ -11,7 +11,7 @@ export const getUserStats = (userId) => {
     .then(season => {
       if (!season) throw new NotFoundError('No active season found')
 
-      return Game.find({ season: season.name, status: 'finished' }).lean()
+      return Game.find({ seasonId: season._id, status: 'finished' }).lean()
     })
     .then(games => {
       let gamesPlayed = 0
