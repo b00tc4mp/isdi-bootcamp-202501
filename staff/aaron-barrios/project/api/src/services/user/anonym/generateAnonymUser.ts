@@ -15,16 +15,16 @@ const generateAnonymUser = (): Promise<void> => {
     }
 
     return User.create(anonymUserData)
+        .catch(error => {
+            console.error(error)
+            throw new SystemError('Failed to create anonymous user')
+        })
         .then(user => {
             return jwt.sign(
                 { sub: user._id.toString(), role: user.role },
                 process.env.JWT_SECRET!,
                 { expiresIn: '1h' }
             )
-        })
-        .catch(error => {
-            console.error(error)
-            throw new SystemError('Failed to create anonymous user')
         })
         .then(() => { })
 }

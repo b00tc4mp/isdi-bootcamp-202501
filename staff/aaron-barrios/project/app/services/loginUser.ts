@@ -24,6 +24,7 @@ const loginUser = (alias: string, password: string): Promise<void> => {
                     .then(body => {
                         const { token } = body
                         return data.setToken(token).then(() => token)
+                            .catch(error => { throw new SystemError(error.message) })
                     })
 
             return response.json()

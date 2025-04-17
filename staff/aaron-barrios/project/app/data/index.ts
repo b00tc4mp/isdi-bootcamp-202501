@@ -1,4 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { errors } from 'com'
+
+const { SystemError } = errors
 
 export const data = {
     async getToken(): Promise<string | null> {
@@ -6,8 +9,7 @@ export const data = {
             const value = await AsyncStorage.getItem('token')
             return value
         } catch (error) {
-            console.error('Error retrieving token:', error)
-            return null
+            throw new SystemError((error as Error).message)
         }
     },
 
@@ -15,7 +17,7 @@ export const data = {
         try {
             await AsyncStorage.setItem('token', value)
         } catch (error) {
-            console.error('Error saving token:', error)
+            throw new SystemError((error as Error).message)
         }
     },
 
@@ -23,7 +25,7 @@ export const data = {
         try {
             await AsyncStorage.removeItem('token')
         } catch (error) {
-            console.error('Error removing token:', error)
+            throw new SystemError((error as Error).message)
         }
     }
 }

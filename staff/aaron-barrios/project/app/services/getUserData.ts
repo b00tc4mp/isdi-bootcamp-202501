@@ -6,9 +6,11 @@ const { SystemError } = errors
 
 const getUserData = (): Promise<{ alias: string; level?: string }> => {
     const token = data.getToken()
-    const { apiUrl } = getEnv()
+        .catch(error => { throw new SystemError(error.message) })
 
-    return fetch(`${apiUrl}/users/self`, {
+    // const { apiUrl } = getEnv()
+
+    return fetch('http://127.0.0.1:8080/users/auth/self', {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
