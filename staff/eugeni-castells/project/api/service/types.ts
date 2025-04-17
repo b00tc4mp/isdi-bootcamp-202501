@@ -28,11 +28,21 @@ export type NewVanInfo = {
 
 export type NewUserInfo = {
   name: string;
-  username: string;
+  lastName: string;
   email: string;
   password: string;
   address: string;
   country: string;
   city: string;
   point: { type: "Point"; coordinates: [number, number] };
+};
+
+export type AuthUserType = {
+  id: string;
+  role: string;
+};
+
+export type ReturnedFullName = {
+  name: string;
+  lastName: string;
 };

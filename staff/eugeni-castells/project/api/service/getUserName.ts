@@ -1,8 +1,8 @@
 import { validate } from "com";
 import { User } from "../data";
 import { NotFoundError, SystemError } from "com/errors";
-
-export const getUserUsername = (userId: string): Promise<string> => {
+import { ReturnedFullName } from "./types";
+export const getUserName = (userId: string): Promise<ReturnedFullName> => {
   validate.id(userId, "user id");
 
   return (async () => {
@@ -17,6 +17,6 @@ export const getUserUsername = (userId: string): Promise<string> => {
       throw new SystemError((error as Error).message);
     }
 
-    return user.username;
+    return { name: user.name, lastName: user.lastName };
   })();
 };

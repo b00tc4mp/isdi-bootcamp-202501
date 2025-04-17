@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserUsername = void 0;
+exports.getUserName = void 0;
 const com_1 = require("com");
 const data_1 = require("../data");
 const errors_1 = require("com/errors");
-const getUserUsername = (userId) => {
+const getUserName = (userId) => {
     com_1.validate.id(userId, "user id");
     return (() => __awaiter(void 0, void 0, void 0, function* () {
         let user;
@@ -26,7 +26,7 @@ const getUserUsername = (userId) => {
             console.error(error);
             throw new errors_1.SystemError(error.message);
         }
-        return user.username;
+        return { name: user.name, lastName: user.lastName };
     }))();
 };
-exports.getUserUsername = getUserUsername;
+exports.getUserName = getUserName;

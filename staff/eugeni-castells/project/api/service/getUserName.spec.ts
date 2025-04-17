@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { expect } from "chai";
 import { data, User } from "../data";
-import { getUserUsername } from "./index.js";
-
+import { getUserName } from "./index.js";
+import { ReturnedFullName } from "./types";
 const { MONGO_URI, MONGO_DB_TEST } = process.env;
 
 describe("getUserUsername", () => {
@@ -22,9 +22,11 @@ describe("getUserUsername", () => {
       location: "111111111111111111111111",
       password: "$2b$12$XePBJgFgYNcwFk9X2YFJK.MIEE7soiPZznIqeameT9PWuhDG3dHEa",
     }).then((_user) => {
-      return getUserUsername(_user._id.toString()).then((username) => {
-        expect(username).to.equal("euge");
-      });
+      return getUserName(_user._id.toString()).then(
+        (fullName: ReturnedFullName) => {
+          expect(fullName.name).to.equal("euge");
+        }
+      );
     });
   });
   afterEach(() => {

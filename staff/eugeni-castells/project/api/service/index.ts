@@ -1,6 +1,7 @@
 import { registerUser } from "./registerUser.js";
 import { authenticateUser } from "./authenticateUser.js";
-import { getUserUsername } from "./getUserUsername.js";
+import { getUserName } from "./getUserName.js";
 import { registerVan } from "./registerVan.js";
+import { getVans } from "./getVans.js";
 
-export { registerUser, authenticateUser, getUserUsername, registerVan };
+export { registerUser, authenticateUser, getUserName, registerVan, getVans };

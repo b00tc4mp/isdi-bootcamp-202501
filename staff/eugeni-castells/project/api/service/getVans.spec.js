@@ -20,10 +20,13 @@ mocha_1.describe.only("getVans", () => {
         return data_1.data.connect(MONGO_URI, MONGO_DB_TEST);
     });
     beforeEach(() => {
-        return Promise.all([data_1.User.deleteMany({}), data_1.Van.deleteMany({})]);
+        return Promise.all([
+            data_1.User.deleteMany({}),
+            data_1.Van.deleteMany({}),
+            data_1.Location.deleteMany({}),
+        ]);
     });
     it("succeeds on retrieving vans", () => __awaiter(void 0, void 0, void 0, function* () {
-        debugger;
         const location = yield data_1.Location.create({
             city: "Test City",
             country: "Test Country",
@@ -104,7 +107,11 @@ mocha_1.describe.only("getVans", () => {
         });
     }));
     afterEach(() => {
-        return Promise.all([data_1.User.deleteMany({}), data_1.Van.deleteMany({})]);
+        return Promise.all([
+            data_1.User.deleteMany({}),
+            data_1.Van.deleteMany({}),
+            data_1.Location.deleteMany({}),
+        ]);
     });
     after(() => {
         return data_1.data.disconnect();

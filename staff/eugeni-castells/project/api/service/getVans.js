@@ -13,36 +13,40 @@ exports.getVans = void 0;
 const com_1 = require("com");
 const data_1 = require("../data");
 const errors_1 = require("com/errors");
-const com_2 = require("com");
-const { MAX_DISTANCE } = com_2.constant;
 const getVans = (userId) => {
     com_1.validate.id(userId, "user id");
     return (() => __awaiter(void 0, void 0, void 0, function* () {
+        var _a;
         try {
             const returnedUser = yield data_1.User.findById(userId).lean();
             if (!returnedUser)
                 throw new errors_1.NotFoundError("user not found");
-            const location = yield data_1.Location.findById(returnedUser.location).lean();
-            const vans = yield data_1.Van.find({
-                "location.point": {
+            const location = yield data_1.Location.findById(returnedUser.location._id).lean();
+            if (!((_a = location === null || location === void 0 ? void 0 : location.point) === null || _a === void 0 ? void 0 : _a.coordinates))
+                throw new errors_1.NotFoundError("user location not found or incomplete");
+            const nearbyLocations = yield data_1.Location.find({
+                point: {
                     $nearSphere: {
                         $geometry: {
                             type: "Point",
-                            coordinates: location === null || location === void 0 ? void 0 : location.point.coordinates,
+                            coordinates: location.point.coordinates,
                         },
                         $maxDistance: 50 * 1000,
                     },
                 },
+            }).select("_id");
+            const locationIds = nearbyLocations.map((loc) => loc._id);
+            const vans = yield data_1.Van.find({
+                location: { $in: locationIds },
             })
                 .lean()
                 .select("-__v")
                 .sort("-createdAt");
-            return vans.map((van) => van);
+            return vans;
         }
         catch (error) {
-            const err = error;
             console.error(error);
-            throw new errors_1.SystemError(err.message);
+            throw new errors_1.SystemError(error.message);
         }
     }))();
 };

@@ -2,12 +2,13 @@ import { validate, errors } from "com";
 import { User } from "../data";
 import { CredentialsError, NotFoundError } from "com/errors";
 import bcrypt from "bcryptjs";
+import { AuthUserType } from "./types";
 const { SystemError } = errors;
 
 export const authenticateUser = (
   email: string,
   password: string
-): Promise<string> => {
+): Promise<AuthUserType> => {
   validate.email(email, "authenticate email");
   validate.password(password, "authenticate password");
 
@@ -29,6 +30,6 @@ export const authenticateUser = (
       throw new SystemError((error as Error).message);
     }
 
-    return user._id.toString();
+    return { id: user._id.toString(), role: user.role };
   })();
 };

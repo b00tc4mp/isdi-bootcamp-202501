@@ -6,9 +6,9 @@ import { UserDocType, LocationDocType } from "../data/index.js";
 import { NewUserInfo } from "./types.js";
 
 export const registerUser = (newUserInfo: NewUserInfo): Promise<void> => {
-  const { username, name, email, password, city, country, address, point } =
+  const { lastName, name, email, password, city, country, address, point } =
     newUserInfo;
-  validate.username(username, "username");
+  validate.username(lastName, "lastName");
   validate.text(city, "city");
   validate.minLength(city, 2, "city min length");
   validate.text(country, "country");
@@ -25,7 +25,7 @@ export const registerUser = (newUserInfo: NewUserInfo): Promise<void> => {
   let locationSend: LocationDocType;
 
   return Promise.all([
-    User.findOne({ $or: [{ email }, { username }] }).lean(),
+    User.findOne({ $or: [{ email }] }).lean(),
     Location.create({ city, country, point: { coordinates: point }, address }),
   ])
     .catch((error) => {
@@ -44,7 +44,6 @@ export const registerUser = (newUserInfo: NewUserInfo): Promise<void> => {
         .then((hashedPassword) => {
           const newUser: Partial<UserDocType> = {
             name,
-            username,
             email,
             password: hashedPassword,
             location: locationSend._id,

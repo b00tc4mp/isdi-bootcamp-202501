@@ -15,7 +15,7 @@ describe("registerUser", () => {
     it("succeeds on registering user", () => {
         const newUserInfo = {
             name: "Eugeni",
-            username: "euge",
+            lastName: "Castells",
             email: "eu@ge.com",
             password: "123123123",
             address: "gran de sant andreu 368",

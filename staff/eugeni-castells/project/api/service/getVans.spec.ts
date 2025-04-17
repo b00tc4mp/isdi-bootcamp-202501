@@ -12,12 +12,14 @@ describe.only("getVans", () => {
   });
 
   beforeEach(() => {
-    return Promise.all([User.deleteMany({}), Van.deleteMany({})]);
+    return Promise.all([
+      User.deleteMany({}),
+      Van.deleteMany({}),
+      Location.deleteMany({}),
+    ]);
   });
 
   it("succeeds on retrieving vans", async () => {
-    debugger;
-
     const location = await Location.create({
       city: "Test City",
       country: "Test Country",
@@ -105,7 +107,11 @@ describe.only("getVans", () => {
   });
 
   afterEach(() => {
-    return Promise.all([User.deleteMany({}), Van.deleteMany({})]);
+    return Promise.all([
+      User.deleteMany({}),
+      Van.deleteMany({}),
+      Location.deleteMany({}),
+    ]);
   });
 
   after(() => {

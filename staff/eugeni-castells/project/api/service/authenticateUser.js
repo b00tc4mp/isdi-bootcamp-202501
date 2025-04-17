@@ -36,7 +36,7 @@ const authenticateUser = (email, password) => {
             console.error(error);
             throw new SystemError(error.message);
         }
-        return user._id.toString();
+        return { id: user._id.toString(), role: user.role };
     }))();
 };
 exports.authenticateUser = authenticateUser;

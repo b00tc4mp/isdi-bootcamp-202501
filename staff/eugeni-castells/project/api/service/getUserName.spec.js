@@ -20,8 +20,8 @@ describe("getUserUsername", () => {
             location: "111111111111111111111111",
             password: "$2b$12$XePBJgFgYNcwFk9X2YFJK.MIEE7soiPZznIqeameT9PWuhDG3dHEa",
         }).then((_user) => {
-            return (0, index_js_1.getUserUsername)(_user._id.toString()).then((username) => {
-                (0, chai_1.expect)(username).to.equal("euge");
+            return (0, index_js_1.getUserName)(_user._id.toString()).then((fullName) => {
+                (0, chai_1.expect)(fullName.name).to.equal("euge");
             });
         });
     });
