@@ -14,10 +14,10 @@ export const createTimer = (userId, time, pauseTime, tag) => {
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return Timer.findOne({ author: userId, status: 'created' })
+            return Timer.findOne({ author: userId, status: { $not: { $in: ['end', 'exit'] } } })
                 .catch(error => { throw new SystemError(error.message) })
                 .then(oldTimer => {
-                    if (oldTimer) throw new DuplicityError('a timer already created')
+                    if (oldTimer) throw new DuplicityError('a timer already in progress')
                     const timer = {
                         author: userId,
                         time: time,

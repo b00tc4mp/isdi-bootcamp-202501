@@ -1,0 +1,1 @@
+curl -X GET http://localhost:8080/users/self/gems -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODAwYjY4NmNkNGIyMDA2MzQ4YjkxYmEiLCJpYXQiOjE3NDQ4NzcyMDUsImV4cCI6MTc0NDk2MzYwNX0.iosQjqmeGD6lRB1jQuW0KIhFIqThcjmYS84bVRL4e0I' -v

@@ -14,13 +14,12 @@ data.connect(MONGO_URL, MONGO_DB)
             .then(hash => {
                 return User.insertMany([
                     { name: 'Anna', email: 'an@na.com', username: 'Anneta', password: hash },
-                    { name: 'Hermione Granger', email: 'hermione@granger.com', username: 'Granger', password: hash }
+                    { name: 'Hermione Granger', email: 'hermione@granger.com', username: 'Granger', password: hash, gems: 30 }
                 ])
             })
             .then(([anna, hermione]) => {
                 return Timer.insertMany([
-                    { author: anna.id, time: 60, pauseTime: 5, pausesCount: 2, tag: 'Study', status: 'created', createdAt: new Date(2025, 1, 11) },
-                    { author: hermione.id, time: 90, pauseTime: 7, pausesCount: 4, tag: 'Memomry', status: 'created', createdAt: new Date(2025, 0, 11) }
+                    { author: anna.id, time: 60, startDate: new Date, pauseTime: 5, pausesCount: 2, tag: 'Study', status: 'active', createdAt: new Date(2025, 1, 11) }
                 ])
             })
     })

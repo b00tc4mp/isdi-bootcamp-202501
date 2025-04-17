@@ -34,6 +34,12 @@ class ValidationError extends Error {
     }
 }
 
+class TimerError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
 class AuthorizationError extends Error {
     constructor(message) {
         super(message)
@@ -49,6 +55,7 @@ export {
     OwnershipError,
     SystemError,
     ValidationError,
+    TimerError,
     AuthorizationError
 }
 
@@ -59,6 +66,7 @@ const errors = {
     OwnershipError,
     SystemError,
     ValidationError,
+    TimerError,
     AuthorizationError
 }
 

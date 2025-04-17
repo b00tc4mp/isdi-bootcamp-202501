@@ -26,3 +26,10 @@ users.post('/', jsonBodyParser, withErrorHandling((req, res) => {
     return logic.registerUser(name, email, username, password)
         .then(() => res.status(201).send())
 }))
+
+users.get('/self/gems', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getUserGems(userId)
+        .then(gems => res.json({ gems }))
+}))

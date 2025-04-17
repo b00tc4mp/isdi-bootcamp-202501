@@ -114,7 +114,7 @@ describe('createTimer', () => {
 
     })
 
-    it('falis on user already have a timer created', () => {
+    it('falis on user already have a timer in progress', () => {
         let user
         let timer
 
@@ -140,14 +140,14 @@ describe('createTimer', () => {
                     .catch(error => catchedError = error)
                     .then(() => {
                         expect(catchedError).to.be.instanceOf(DuplicityError)
-                        expect(catchedError.message).to.equal('a timer already created')
+                        expect(catchedError.message).to.equal('a timer already in progress')
                     })
             })
 
     })
 
 
-    afterEach(() => User.deleteMany({}), Timer.deleteMany({}))
+    afterEach(() => Promise.all([User.deleteMany({}), Timer.deleteMany({})]))
 
     after(() => data.disconnect())
 })
