@@ -2,7 +2,6 @@ import { User, Season, Game } from '../../data/index.js'
 
 import { errors, validate } from '../../validations/index.js'
 
-
 const { SystemError, NotAllowedError, NotFoundError } = errors
 
 export const finishSeason = (userId, seasonId) => {

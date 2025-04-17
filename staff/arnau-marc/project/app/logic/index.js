@@ -7,15 +7,14 @@ import { getUserId } from './users/getUserId.js'
 import { getUserRole } from './users/getUserRole.js'
 import { getUserById } from './users/getUserById.js'
 import { getUsernamesByIds } from './users/getUsernameByIds.js'
+import { requestAdminRole } from './users/requestAdminRole.js'
+import { getUserStats } from './users/getUserStats.js'
 
 import { createGame } from "./games/createGame.js"
 import { getGames } from "./games/getGames.js"
 import { toggleParticipation } from "./games/toggleParticipation.js"
 import { setGameWinner } from "./games/setGameWinner.js"
 import { deleteGame } from './games/deleteGame.js'
-
-import { requestAdminRole } from './profile/requestAdminRole.js'
-import { getUserStats } from './profile/getUserStats.js'
 
 import { finishSeason } from './season/finishSeason.js'
 import { getLatestSeason } from './season/getLatestSeason.js'
@@ -33,6 +32,8 @@ export const logic = {
     getUserRole,
     getUserById,
     getUsernamesByIds,
+    requestAdminRole,
+    getUserStats,
 
     createGame,
     getGames,
@@ -40,13 +41,9 @@ export const logic = {
     toggleParticipation,
     deleteGame,
 
-    requestAdminRole,
-    getUserStats,
-
     finishSeason,
     getLatestSeason,
     getSeasonLeaderboard,
     createSeason,
     getSeasonById
-
 }
