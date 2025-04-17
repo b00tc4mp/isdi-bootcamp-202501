@@ -3,7 +3,7 @@ import { useRouter } from "expo-router"
 
 import { Text, View } from "@/components/Themed"
 
-import { logoutUser } from "@/services/logoutUser"
+import logoutUser from "@/services/logoutUser"
 
 export default function Home() {
     const router = useRouter()

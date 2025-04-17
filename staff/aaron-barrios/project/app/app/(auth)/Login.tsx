@@ -46,10 +46,10 @@ export default function Login() {
   }
 
   const handleAnonymousAccess = () => {
-    debugger; authAnonymUser()
+    authAnonymUser()
       .then(() => {
         Alert.alert("👤 Anonym mode", "You have logged as a guest")
-        router.replace("/(anon)" as any) // 🚀 redirige a tu layout anónimo
+        router.replace("/(anonym)" as any) // 🚀 redirige a tu layout anónimo
       })
       .catch(error => {
         console.error(error)

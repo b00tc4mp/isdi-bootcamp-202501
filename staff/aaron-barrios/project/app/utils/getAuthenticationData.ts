@@ -1,7 +1,7 @@
 import { data } from "@/data"
 import { jwtDecode } from "jwt-decode"
 
-export const getAuthenticationData = async (): Promise<{ token: string, role: string } | null> => {
+const getAuthenticationData = async (): Promise<{ token: string, role: string } | null> => {
     const token = await data.getToken()
     if (!token) return null
 
@@ -16,3 +16,5 @@ export const getAuthenticationData = async (): Promise<{ token: string, role: st
         return null
     }
 }
+
+export default getAuthenticationData

@@ -4,7 +4,7 @@ import { useEffect } from "react"
 
 import { Text, View } from "@/components/Themed"
 
-import { getAuthenticationData } from "@/utils/getAuthenticationData"
+import getAuthenticationData from "@/utils/getAuthenticationData"
 
 export default function Profile() {
     const router = useRouter()

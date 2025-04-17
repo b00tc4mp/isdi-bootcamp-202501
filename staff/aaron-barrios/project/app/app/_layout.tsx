@@ -7,7 +7,7 @@ import * as SplashScreen from "expo-splash-screen"
 import { useEffect, useState } from "react"
 import "react-native-reanimated"
 
-import { getAuthenticationData } from "@/utils/getAuthenticationData"
+import getAuthenticationData from "@/utils/getAuthenticationData"
 import { data } from "@/data"
 
 export {

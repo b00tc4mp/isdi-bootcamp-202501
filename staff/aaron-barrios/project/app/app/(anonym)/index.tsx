@@ -1,11 +1,11 @@
-import { Button, StyleSheet } from "react-native"
+import { Button, StyleSheet, Alert } from "react-native"
 import { useRouter } from "expo-router"
 import { useEffect } from "react"
 
 import { Text, View } from "@/components/Themed"
 
-import { logoutUser } from "@/services/logoutUser"
-import { getAuthenticationData } from "@/utils/getAuthenticationData"
+import deleteAnonymUser from "@/services/deleteAnonymUser"
+import getAuthenticationData from "@/utils/getAuthenticationData"
 
 export default function Anonym_Home() {
     const router = useRouter()
@@ -18,16 +18,23 @@ export default function Anonym_Home() {
         })
     }, [])
 
-    const handleLogout = () => {
-        logoutUser()
-        router.replace("/(auth)/Login")
+    const handleExit = () => {
+        deleteAnonymUser()
+            .then(() => {
+                Alert.alert("Bye!", "Your anonymous session has ended.")
+                router.replace("/(auth)")
+            })
+            .catch(error => {
+                console.error(error)
+                Alert.alert("Error", error.message || "Oops, couldn't exit anonymous mode.")
+            })
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Home</Text>
 
-            <Button title="Exit" onPress={handleLogout} />
+            <Button title="Exit" onPress={handleExit} />
             <View style={styles.container}>
                 <Text style={styles.title}>You are a guest!</Text>
                 <View style={styles.button}>

@@ -11,6 +11,7 @@ import getCurrentUserHandler from "../handlers/getCurrentUserHandler"
 import jsonBodyParser from "../middlewares/jsonBodyParser"
 import authHandler from "../middlewares/authHandler"
 import generateAnonymUserHandler from "../handlers/generateAnonymUserHandler"
+import deleteAnonymUserHandler from "../handlers/deleteAnonymUserHandler"
 import cleanUpUserIfTokenExpired from "../middlewares/cleanUpUserIfTokenExpired"
 
 //instancia que creamos que utilizaremos para la llamada de cada petición a la API
@@ -57,4 +58,11 @@ userRouter.post(
     "/auth/anon",
     cleanUpUserIfTokenExpired,
     generateAnonymUserHandler
+)
+
+// --- DELETE ANONYM USER METHOD ---
+userRouter.delete(
+    "/auth/anon",
+    authHandler,
+    deleteAnonymUserHandler
 )

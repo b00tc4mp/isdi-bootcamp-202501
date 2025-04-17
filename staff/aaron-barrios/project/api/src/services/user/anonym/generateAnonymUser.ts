@@ -4,11 +4,11 @@ import { errors } from 'com'
 
 const { SystemError } = errors
 
-export function generateAnonymUser(): Promise<string> {
+function generateAnonymUser(): Promise<string> {
     const timestamp = Date.now()
 
     return User.create({
-        alias: 'temporal1',
+        alias: `a${timestamp}`,
         email: `anon${timestamp}@anon.com`,
         password: `anonPassword${timestamp}`,
         role: "anonym"
@@ -20,7 +20,7 @@ export function generateAnonymUser(): Promise<string> {
             const token = jwt.sign(
                 { sub: user._id.toString(), role: user.role },
                 process.env.JWT_SECRET!,
-                { expiresIn: "2h" }
+                { expiresIn: "23h" }
             )
 
             return token

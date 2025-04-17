@@ -1,5 +1,7 @@
 import { data } from '../data'
 
-export const logoutUser = () => {
+const logoutUser = () => {
     data.removeToken()
 }
+
+export default logoutUser
