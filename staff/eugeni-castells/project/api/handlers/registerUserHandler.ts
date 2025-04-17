@@ -4,12 +4,12 @@ import { registerUser } from "../service";
 
 export const registerUserHandler = createFunctionalHandler(
   (req: Request, res: Response) => {
-    const { name, username, email, password, city, address, country, point } =
+    const { name, lastName, email, password, city, address, country, point } =
       req.body;
 
     return registerUser({
       name,
-      username,
+      lastName,
       email,
       password,
       city,
