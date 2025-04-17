@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { data } from "./data";
-import { userRouter } from "./routes/users";
+import { userRouter, vanRouter } from "./routes";
 import errorHandler from "./middlewares/errorHandler";
 import loggers from "./loggers/index";
 
@@ -31,6 +31,8 @@ data
     api.use(cors());
 
     api.use("/users", userRouter);
+
+    api.use("/vans", vanRouter);
 
     api.use(errorHandler);
 

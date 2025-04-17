@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npx tsc && node .",
     "test": "mocha service/*.spec.js",
-    "inspect": "node --inspect-brk .",
+    "inspect": "npx tsc && node --inspect-brk .",
     "test-inspect": "mocha --inspect-brk service/*.spec.js",
     "compile-test": "npx tsc && mocha service/*.spec.js",
     "compile": "npx tsc --watch",
