@@ -9,12 +9,9 @@ const { JWT_SECRET } = process.env;
 const authHandler = (req, _res, next) => {
     try {
         const { authorization } = req.headers;
-        if (!authorization || !authorization.startsWith("Bearer ")) {
-            throw new Error("Authorization header missing or malformed");
-        }
         const token = authorization.slice(7);
-        const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
-        req.userId = decoded.sub;
+        const payload = jsonwebtoken_1.default.verify(token, JWT_SECRET);
+        req.userId = payload.sub;
         next();
     }
     catch (error) {
