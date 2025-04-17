@@ -8,9 +8,7 @@ const authAnonymUser = (): Promise<void> => {
     return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/auth/anon`, {
         method: "POST"
     })
-        .catch(error => {
-            throw new SystemError(error.message)
-        })
+        .catch(error => { throw new SystemError(error.message) })
         .then(async response => {
             const contentType = response.headers.get("Content-Type") || ""
 
@@ -22,20 +20,19 @@ const authAnonymUser = (): Promise<void> => {
 
             if (response.status === 201) {
                 const { token } = body
-                return data.setToken(token)
+                return data.setToken(token) // => HAPPY PATH
             }
 
-            const { error, message } = body
+            const { message } = body
 
-            // 🔐 Si el backend nos avisa de expiración de usuario anónimo
+            //si el backend nos avisa de que ha expirado el token del anonym user:
             if (message === "anonymous-session-expired") {
                 await data.removeToken()
                 router.replace("/") // o a landing
                 throw new AuthorizationError("Tu sesión anónima expiró. Redirigiendo…")
             }
 
-            const Constructor = (errors as any)[error] || AuthorizationError
-            throw new Constructor(message)
+            throw new AuthorizationError('Error al generar usuario anonimo!')
         })
 }
 

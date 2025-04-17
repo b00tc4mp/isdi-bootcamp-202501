@@ -1,4 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome"
+import { useColorScheme } from "@/components/useColorScheme"
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native"
 import { useFonts } from "expo-font"
 import { Stack } from "expo-router"
@@ -6,7 +7,6 @@ import * as SplashScreen from "expo-splash-screen"
 import { useEffect, useState } from "react"
 import "react-native-reanimated"
 
-import { useColorScheme } from "@/components/useColorScheme"
 import { getAuthenticationData } from "@/utils/getAuthenticationData"
 import { data } from "@/data"
 
@@ -61,17 +61,23 @@ function AppNavigator() {
 
   if (loading) return null
 
+
   let screenName: string
 
   if (!role) {
     screenName = "(auth)"
+    console.log(`role: ${role}`)
   } else if (role === "anonym") {
     screenName = "(anon)"
+    console.log(`role: ${role}`)
   } else if (role === "moderator") {
     screenName = "(mod)"
+    console.log(`role: ${role}`)
   } else {
     screenName = "(tabs)"
+    console.log(`role: ${role}`)
   }
+
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

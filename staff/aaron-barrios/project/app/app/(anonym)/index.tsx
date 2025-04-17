@@ -1,12 +1,22 @@
 import { Button, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
+import { useEffect } from "react"
 
 import { Text, View } from "@/components/Themed"
 
 import { logoutUser } from "@/services/logoutUser"
+import { getAuthenticationData } from "@/utils/getAuthenticationData"
 
 export default function Anonym_Home() {
     const router = useRouter()
+
+    useEffect(() => {
+        getAuthenticationData().then(data => {
+            if (data?.role !== 'anonym') {
+                router.replace('/(auth)')
+            }
+        })
+    }, [])
 
     const handleLogout = () => {
         logoutUser()

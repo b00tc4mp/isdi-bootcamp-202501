@@ -18,7 +18,7 @@ export default function Login() {
     try {
       loginUser(alias, password)
         .then(token => {
-          console.log("🎉 Token guardado:", token)
+          // console.log("🎉 Token guardado:", token)
 
           setAlias('')
           setPassword('')
@@ -46,10 +46,10 @@ export default function Login() {
   }
 
   const handleAnonymousAccess = () => {
-    authAnonymUser()
+    debugger; authAnonymUser()
       .then(() => {
         Alert.alert("👤 Anonym mode", "You have logged as a guest")
-        router.replace("/(anonym)" as any) // 🚀 redirige a tu layout anónimo
+        router.replace("/(anon)" as any) // 🚀 redirige a tu layout anónimo
       })
       .catch(error => {
         console.error(error)
