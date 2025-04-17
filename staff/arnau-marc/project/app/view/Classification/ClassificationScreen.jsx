@@ -25,7 +25,12 @@ export default function ClassificationScreen({ navigation }) {
         if (!season) throw new Error('No hay ninguna temporada activa actualmente')
         setSeason(season)
         setError(null)
-        return logic.getSeasonLeaderboard(season._id)
+        return season
+      })
+      .then(season => {
+        if (season && season._id) {
+          return logic.getSeasonLeaderboard(season._id)
+        }
       })
       .then(setLeaderboard)
       .catch(err => {
@@ -34,6 +39,7 @@ export default function ClassificationScreen({ navigation }) {
         setError(err.message)
       })
   }, [])
+  
   const handleFinishSeason = () => {
     logic.finishSeason(season._id)
       .then(() => {
@@ -106,6 +112,10 @@ export default function ClassificationScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Classification</Text>
+      <Button
+        title='Ir a Clasificación Histórica'
+        onPress={() => navigation.replace('ClassificationHistoric')}
+      />
 
       {season && <Text style={{ fontSize: 16, marginBottom: 10 }}>Season: {season.name}</Text>}
 

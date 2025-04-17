@@ -40,18 +40,17 @@ seasons.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     .then(() => res.status(201).send())
 }))
 
+// Obtener la sesion historica
+seasons.get('/historic', authHandler, withErrorHandling((req, res) => {
+  
+  return logic.getSeasonHistoric()
+  .then(leaderboard => res.json(leaderboard))
+}))
+
 // Obtener una season por ID
 seasons.get('/:id', authHandler, withErrorHandling((req, res) => {
   const { id: seasonId } = req.params
 
   return logic.getSeasonById(seasonId)
     .then(season => res.json(season))
-}))
-
-// Obtener la sesion historica
-seasons.get('/historic', authHandler, withErrorHandling((req, res) => {
-  const { userId } = req
-
-  return logic.getSeasonHistoric()
-    .then(leaderboard => res.json(leaderboard))
 }))
