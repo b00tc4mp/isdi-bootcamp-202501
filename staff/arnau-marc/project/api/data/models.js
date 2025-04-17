@@ -65,11 +65,16 @@ const game = new Schema({
         ref: 'User',
         required: true
     },
-    season: {
+    seasonName: {
         type: String,
         ref: 'Season',
         required: true,
         match: constant.EMPTY_OR_BLANK_REGEX_MONGOOSE
+    },
+    seasonId: {
+        type: ObjectId,
+        ref: 'Season',
+        required: true,
     },
     status: {
         type: String,

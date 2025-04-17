@@ -21,7 +21,7 @@ export const finishSeason = (userId, seasonId) => {
       if (!season) throw new NotFoundError('Season not found')
 
       //  Buscar todos los juegos finalizados de esta season
-      return Game.find({ season: seasonId, status: 'finished' }).lean()
+      return Game.find({ seasonId: seasonId, status: 'finished' }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(games => {
           const leaderboard = {}
