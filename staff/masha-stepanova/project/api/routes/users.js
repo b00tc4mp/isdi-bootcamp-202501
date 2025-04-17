@@ -42,3 +42,17 @@ users.patch('/:levelId', authHandler, jsonBodyParser, withErrorHandling((req, re
     return logic.isLevelPassed(userId, levelId, userAnswer)
         .then(isPassed => res.json(isPassed))
 }))
+
+users.get('/ranking/self', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getUserRanking(userId)
+        .then(position => res.json(position))
+}))
+
+users.get('/ranking', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getGlobalRanking(userId)
+        .then(ranking => res.json(ranking))
+}))

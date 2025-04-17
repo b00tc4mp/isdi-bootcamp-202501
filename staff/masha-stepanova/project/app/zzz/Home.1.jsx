@@ -4,9 +4,9 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router'
 
 import { useContext } from '../context'
 
-import { Ranking } from './Ranking'
-import { Levels } from './Levels'
-import { Profile } from './Profile'
+import { Ranking } from '../view/Ranking'
+import { Levels } from '../view/Levels'
+import { Profile } from '../view/Profile'
 
 // TODO logic.logoutUser()
 

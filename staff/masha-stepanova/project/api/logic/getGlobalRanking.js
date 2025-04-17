@@ -3,7 +3,7 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const getUserRankingPosition = (userId) => {
+export const getGlobalRanking = userId => {
     validate.id(userId)
 
     return Promise.all([
@@ -14,8 +14,20 @@ export const getUserRankingPosition = (userId) => {
         .then(([allUsers, currentUser]) => {
             if (!currentUser) throw new NotFoundError('user not found')
 
-            allUsers.sort((a, b) => a.score - b.score)
+            allUsers.sort((a, b) => b.score - a.score)
 
-            console.log(allUsers)
+            allUsers.forEach((user, i) => {
+                let position
+
+                if (i > -1) {
+                    position = i + 1
+                } else throw new NotFoundError('user not found in global ranking')
+
+                delete user.score
+
+                user.position = position
+            })
+
+            return allUsers
         })
 }

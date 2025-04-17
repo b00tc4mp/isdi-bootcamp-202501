@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Level } from './Level'
+import { Level } from '../view/Level'
 import { logic } from '../logic'
 
 export function Levels() {

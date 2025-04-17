@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useContext } from '../context'
-import { EndLevelScreen } from './endLevelScreen'
+import { EndLevelScreen } from '../view/endLevelScreen'
 
 import { logic } from '../logic'
 

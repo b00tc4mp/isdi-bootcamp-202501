@@ -1,21 +1,21 @@
 import 'dotenv/config'
 import { data } from '../data/index.js'
-import { getUserRankingPosition } from './getUserRankingPosition.js'
+import { getUserRanking } from './getUserRanking.js'
 
 const { MONGO_URL, MONGO_DB_TEST } = process.env
 
-console.info('TEST getUserRankingPosition')
+console.info('TEST getUserRanking')
 
 data.connect(MONGO_URL, MONGO_DB_TEST)
     .then(() => {
         try {
-            let levels2
+            let position2
 
-            return getUserRankingPosition('67ffc63d85ccbf2713ce0dee')
-                .then(levels => levels2 = levels)
+            return getUserRanking('67ffc63d85ccbf2713ce0def')
+                .then(position => position2 = position)
                 .finally(() => {
-                    console.log(levels2)
-                    console.assert(levels2 instanceof Array, 'levels2 is an array')
+                    console.log(position2)
+                    console.assert(position2 instanceof Object, 'position2 is an object')
                 })
         } catch (error) {
             console.error(error)
