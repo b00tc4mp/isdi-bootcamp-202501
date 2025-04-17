@@ -1,11 +1,14 @@
 import React from "react"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
-import { Link, Tabs } from "expo-router"
+import { Link, Tabs, router } from "expo-router"
 import { Pressable } from "react-native"
+import { useEffect } from "react"
 
 import Colors from "@/constants/Colors"
 import { useColorScheme } from "@/components/useColorScheme"
 import { useClientOnlyValue } from "@/components/useClientOnlyValue"
+
+import isUserLoggedIn from "@/services/isUserLoggedIn"
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -17,6 +20,13 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme()
+
+  useEffect(() => {
+    isUserLoggedIn().then(isLogged => {
+      if (!isLogged) router.replace("/(auth)")
+    })
+  }, [])
+
 
   return (
     <Tabs

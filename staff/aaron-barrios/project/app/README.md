@@ -3,11 +3,11 @@ isdi-bootcamp-202501
 
 --- APP ---
 
-- lanzar app 
+- lanzar expo (web)
 npm run web / npm run web-clear / npx expo start
 
-- debuggear app
+- debuggear app (native debugger tools)
 abrir android studio => abrir developer tools => lanzar movil => npm run android => abrir debugger (Ctrl + M en device)
 
-- cold boot
+- cold boot (fake terminal)
 esperar que se abra el terminal fake => npx expo start => poner "a" en terminal

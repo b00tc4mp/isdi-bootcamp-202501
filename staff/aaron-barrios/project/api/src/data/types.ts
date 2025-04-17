@@ -29,7 +29,7 @@ export type WorkoutDocType = {
     images?: string[]
     likes?: Types.ObjectId[]
     saves?: Types.ObjectId[]
-    status: 'pending' | 'accepted' | 'declined'
+    status: 'pending' | 'accepted' | 'declined' //add revising => if community votes to change smthing or want to remove it
     createdAt: Date
     __v: number
 }
@@ -65,7 +65,7 @@ export type RoutineDocType = {
     description: string
     image: string
     duration: number
-    status: 'pending' | 'accepted' | 'declined'
+    status: 'pending' | 'accepted' | 'declined' //add revising => if community votes to change smthing or want to remove it
     frequencySuggestion?: string
     likes: Types.ObjectId[]
     saves: Types.ObjectId[]

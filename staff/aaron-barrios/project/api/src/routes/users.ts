@@ -51,6 +51,23 @@ userRouter.post(
     authenticateUserHandler
 )
 
+// --- GET USER WORKOUTS METHOD --- (WIP)
+userRouter.post(
+    "/:targetUserId/workouts",
+    jsonBodyParser,
+    // validationHandler(authenticateUserSchema),
+    // authenticateUserHandler
+)
+
+// --- GET USER WORKOUTS METHOD --- (WIP)
+userRouter.post(
+    "/:targetUserId/routines",
+    jsonBodyParser,
+    // validationHandler(authenticateUserSchema),
+    // authenticateUserHandler
+)
+
+
 
 // -------------------- ANONYM USER ------------------
 // --- GENERATE ANONYM USER METHOD ---

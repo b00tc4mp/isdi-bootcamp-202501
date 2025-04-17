@@ -9,9 +9,51 @@ import jsonBodyParser from "../middlewares/jsonBodyParser"
 
 export const workoutRouter = Router()
 
+
+// --- GET WORKOUT BY ID METHOD ---
+workoutRouter.get(
+    "/:workoutId",
+    jsonBodyParser,
+    // validationHandler(createWorkoutSchema),
+    //createWorkoutHandler
+)
+
+// --- GET ALL WORKOUTS METHOD ---
+workoutRouter.get(
+    "/",
+    jsonBodyParser,
+    // validationHandler(createWorkoutSchema),
+    //createWorkoutHandler
+)
+
+// --- CREATE WORKOUT METHOD ---
 workoutRouter.post(
     "/",
     jsonBodyParser,
-    validationHandler(createWorkoutSchema),
+    // validationHandler(createWorkoutSchema),
+    //createWorkoutHandler
+)
+
+//  ----- TOGGLE LIKE WORKOUT METHOD-----
+workoutRouter.patch(
+    '/:postId/likes',
+    jsonBodyParser,
+    //validationHandler(createWorkoutSchema),
+    //createWorkoutHandler
+)
+
+//  ----- SAVE WORKOUT METHOD-----
+workoutRouter.patch(
+    '/:postId/saves',
+    jsonBodyParser,
+    //validationHandler(createWorkoutSchema),
+    //createWorkoutHandler
+)
+
+//  ----- EDIT WORKOUT METHOD-----
+workoutRouter.patch(
+    '/:postId/update',
+    jsonBodyParser,
+    //validationHandler(createWorkoutSchema),
     //createWorkoutHandler
 )

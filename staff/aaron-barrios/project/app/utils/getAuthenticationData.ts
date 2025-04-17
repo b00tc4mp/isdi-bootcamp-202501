@@ -7,6 +7,7 @@ const getAuthenticationData = async (): Promise<{ token: string, role: string } 
 
     try {
         const decoded: any = jwtDecode(token)
+        console.log(token)
         return {
             token,
             role: decoded?.role ?? "unknown"
