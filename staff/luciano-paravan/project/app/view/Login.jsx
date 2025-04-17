@@ -52,7 +52,7 @@ export function Login ({ onNavigateToRegister, onUserLoggedIn }) {
                 
                 <div className="field">
                     <label htmlFor="password">Password</label>
-                    <input type="text" id="password" placeholder="password" />
+                    <input type="password" id="password" placeholder="password" />
                 </div>
 
                 <button type="submit" className="btn-primary">Login</button>

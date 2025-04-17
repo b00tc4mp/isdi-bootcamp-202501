@@ -55,22 +55,22 @@ class AuthorizationError extends Error {
 }
 
 export {
-    SystemError,
-    CredentialsError,
     DuplicityError,
+    CredentialsError,
     NotFoundError,
-    ValidationError,
     OwnershipError,
+    SystemError,
+    ValidationError,
     AuthorizationError
 }
 
 const errors = {
-    SystemError,
-    CredentialsError,
     DuplicityError,
+    CredentialsError,
     NotFoundError,
-    ValidationError,
     OwnershipError,
+    SystemError,
+    ValidationError,
     AuthorizationError
 }
 

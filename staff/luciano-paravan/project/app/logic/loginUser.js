@@ -12,7 +12,7 @@ export const loginUser = (username, password) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(username, password)
+        body: JSON.stringify({ username, password })
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
@@ -28,9 +28,9 @@ export const loginUser = (username, password) => {
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
-                    const { error, message } = body
+                    const { errorName, message } = body
 
-                    const constructor = errors[error]
+                    const constructor = errors[errorName]
 
                     throw new constructor(message)
                 })

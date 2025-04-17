@@ -13,6 +13,8 @@ data.connect(MONGO_URL, DB_NAME)
     .then(() => {
         const api = express()
 
+        api.use(cors())
+
         api.get('/', (req, res) => res.send('API is working ❤️'))
 
         api.use('/users', users)
