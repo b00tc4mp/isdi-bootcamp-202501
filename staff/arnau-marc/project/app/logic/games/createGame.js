@@ -15,7 +15,7 @@ export const createGame = (title, season, place, date) => {
   const formattedDate = new Date(`${year} , ${month} , ${day}`) 
 
 
-  return data.token
+  return data.getToken()
     .then(token => {
       if (!token) throw new AuthorizationError('No token found')
 

@@ -7,7 +7,7 @@ const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 const { SystemError } = errors
 
 export const getUserById = (userId) => {
-  return data.token
+  return data.getToken()
     .then((token) => { 
         return fetch(`${API_BASE_URL}/users/${userId}`, {
             headers: {

@@ -9,7 +9,7 @@ const { SystemError, ValidationError } = errors
 export const deleteGame = (gameId) => {
     validate.id(gameId, 'gameId')
 
-    return data.token
+    return data.getToken()
         .then(token => {
             if (!token) throw new ValidationError(error.message)
             

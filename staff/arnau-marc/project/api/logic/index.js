@@ -1,16 +1,14 @@
 import { authenticateUser } from "./users/authenticateUser.js"
 import { registerUser } from './users/registerUser.js'
 import { getUsername } from './users/getUsername.js'
-import { getUserRole } from './users/getUserRole.js'
+import { requestAdminRole } from "./users/requestAdminRole.js"
+import { getUserStats } from "./users/getUserStats.js"
 
 import { createGame } from "./games/createGame.js"
 import { getGames } from "./games/getGames.js"
 import { toggleParticipation } from "./games/toggleParticipation.js"
 import { setGameWinner } from "./games/setGameWinner.js"
 import { deleteGame } from "./games/deleteGame.js"
-
-import { requestAdminRole } from "./profile/requestAdminRole.js"
-import { getUserStats } from "./profile/getUserStats.js"
 
 import { getSeasonLeaderboard } from "./season/getSeasonLeaderboard.js"
 import { finishSeason } from "./season/finishSeason.js"
@@ -22,16 +20,14 @@ export const logic = {
     authenticateUser,
     registerUser,
     getUsername,
-    getUserRole,
+    requestAdminRole,
+    getUserStats,
 
     createGame,
     getGames,
     toggleParticipation,
     setGameWinner,
     deleteGame,
-
-    requestAdminRole,
-    getUserStats,
 
     getSeasonLeaderboard,
     finishSeason,

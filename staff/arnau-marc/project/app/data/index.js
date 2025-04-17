@@ -1,22 +1,32 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { errors } from '../validations/index.js'
+
+const { SystemError } = errors
+
 export const data = {
     // Obtener el token
-    get token() {
-        return new Promise(async (resolve, reject) => {
+    getToken() {
+        return (async () => {
             try {
                 const value = await AsyncStorage.getItem('token')
-                resolve(value ? JSON.parse(value) : null)
+
+                return value ? JSON.parse(value) : null
+
             } catch (error) {
-                reject(error)
+                throw new SystemError(error.message)
             }
-        })
+        })()
     },
 
     // Establecer el token
-    set token(id) {
-        AsyncStorage.setItem('token', JSON.stringify(id)).catch((error) => {
-            console.error("Error saving token: ", error)
-        })
+    setToken(id) {
+        return (async () => {
+            try {
+                await AsyncStorage.setItem('token', JSON.stringify(id))
+            } catch (error) {
+                throw new SystemError(error.message)
+            }
+        })()     
     }
 }

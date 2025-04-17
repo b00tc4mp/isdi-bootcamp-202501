@@ -1,3 +1,3 @@
 import { data } from '../../data/index.js'
 
-export const logoutUser = () => { data.token = null }
+export const logoutUser = () => { return data.setToken(null) }

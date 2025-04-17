@@ -7,7 +7,7 @@ const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 const { SystemError, ValidationError } = errors
 
 export const getGames = () => {
-  return data.token
+  return data.getToken()
     .then(token => {
       if (!token) throw new ValidationError('Token not found')
 

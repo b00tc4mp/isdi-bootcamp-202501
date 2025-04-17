@@ -36,16 +36,31 @@ users.get('/self/username', authHandler, withErrorHandling((req, res) => {
         .then(username => res.json({ username }))
 }))
 
-// GET user role
-users.get('/self/role', authHandler, withErrorHandling((req, res) => {
+// Endpoint para actualizar el rol a admin
+users.patch('/admin-request', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
+    const { secretWord } = req.body  // Recibimos la palabra secreta desde el cuerpo de la solicitud
   
-    return logic.getUserRole(userId)
-      .then(({ id, role }) => {
-        const token = jwt.sign({ sub: id, role }, JWT_SECRET)
+    // Llamar a la lógica para actualizar el rol a admin
+    return logic.requestAdminRole(userId, secretWord)
+      .then(() => {
+        const token = jwt.sign({ sub: userId, role : 'admin'}, JWT_SECRET)
         
         res.json({ token })
       })
+      .catch((error) => {
+        res.status(400).send(error.message)  // En caso de error, devolvemos el mensaje del error
+      })
+  }))
+
+  // Endpoint para generar stats de usuario
+  users.get('/stats', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+  
+    // Llamar a la lógica para generar stats del usuario
+    return logic.getUserStats(userId)
+      .then(stats => res.json(stats))
+      .catch(error => res.status(400).send(error.message))
   }))
 
 // Obtener info básica de un usuario por ID

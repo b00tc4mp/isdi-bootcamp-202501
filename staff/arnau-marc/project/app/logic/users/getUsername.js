@@ -7,7 +7,7 @@ const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 const { SystemError, AuthorizationError } = errors
 
 export const getUsername = () => {
-    return data.token
+    return data.getToken()
     .then(token => {
         if (!token) {
             throw new AuthorizationError('Token not found');

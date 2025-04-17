@@ -41,7 +41,7 @@ export default {
     },
     extra: {
       apiBaseUrl: process.env.API_BASE_URL?.includes('localhost')
-        ? `http://${getLocalIp()}:8080`
+        ? process.env.API_BASE_URL.replace('localhost', getLocalIp()) 
         : process.env.API_BASE_URL
     }
   }

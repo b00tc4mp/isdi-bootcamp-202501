@@ -1,3 +1,3 @@
 import { data } from '../../data/index.js'
 
-export const isUserLoggedIn = () => !!data.token
+export const isUserLoggedIn = () =>  { return !!data.setToken() }

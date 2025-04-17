@@ -9,13 +9,13 @@ const { SystemError, AuthorizationError } = errors
 export const toggleParticipation = ( gameId ) => {
     validate.id(gameId, 'gameId')
 
-    return data.token
+    return data.getToken()
     .then(token => {
         if (!token) {
           throw new AuthorizationError('Token not found')
         }
 
-        return fetch(`${API_BASE_URL}/${gameId}/participation`, {
+        return fetch(`${API_BASE_URL}/games/${gameId}/participation`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${token}`

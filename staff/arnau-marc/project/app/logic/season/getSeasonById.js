@@ -7,7 +7,7 @@ const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 const { SystemError } = errors
 
 export const getSeasonById = (seasonId) => {
-  return data.token
+  return data.getToken()
   .then(() => {
     return fetch(`${API_BASE_URL}/seasons/${seasonId}`, {
         headers: {
