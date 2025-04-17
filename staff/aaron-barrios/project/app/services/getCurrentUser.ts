@@ -1,9 +1,7 @@
 import { errors } from 'com'
-import getEnv from '@/data/constants'
 import { data } from '@/data'
 import { UserDocType } from '../../api/src/data/types'
 
-const { apiUrl } = getEnv()
 const { SystemError, AuthorizationError } = errors
 
 
@@ -17,7 +15,7 @@ const getCurrentUser = (): Promise<Omit<UserDocType, 'password' | '__v' | '_id'>
         .then(token => {
             if (!token) throw new AuthorizationError('No token found')
 
-            return fetch(`${apiUrl}/users/self`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/self`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

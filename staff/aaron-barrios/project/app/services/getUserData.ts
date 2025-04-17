@@ -1,6 +1,5 @@
 import { data } from '../data'
 import { errors } from 'com'
-import getEnv from '../data/constants'
 
 const { SystemError } = errors
 
@@ -8,9 +7,7 @@ const getUserData = (): Promise<{ alias: string; level?: string }> => {
     const token = data.getToken()
         .catch(error => { throw new SystemError(error.message) })
 
-    // const { apiUrl } = getEnv()
-
-    return fetch('http://127.0.0.1:8080/users/auth/self', {
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/auth/self`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`

@@ -1,15 +1,13 @@
 import { data } from '../data'
 import { errors, validate } from 'com'
-import getEnv from '../data/constants'
 
 const { SystemError } = errors
-const { apiUrl } = getEnv()
 
 const loginUser = (alias: string, password: string): Promise<void> => {
     validate.alias(alias)
     validate.password(password)
 
-    return fetch(`${apiUrl}/users/auth`, {
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/auth`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

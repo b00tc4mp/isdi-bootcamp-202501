@@ -1,14 +1,11 @@
 import { errors } from "com"
-import getEnv from "@/data/constants"
 import { data } from "@/data"
 import { router } from "expo-router"
 
 const { SystemError, AuthorizationError } = errors
 
 const authAnonymUser = (): Promise<void> => {
-    const { apiUrl } = getEnv()
-
-    return fetch(`${apiUrl}/users/auth/anon`, {
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/auth/anon`, {
         method: "POST"
     })
         .catch(error => {

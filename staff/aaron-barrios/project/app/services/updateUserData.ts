@@ -1,9 +1,7 @@
 import { errors } from 'com'
-import getEnv from '@/data/constants'
 import { data } from '@/data'
 import { UserType } from '../../api/src/services/types'
 
-const { apiUrl } = getEnv()
 const { SystemError, AuthorizationError } = errors
 
 const updateUserData = (
@@ -14,7 +12,7 @@ const updateUserData = (
         .then(token => {
             if (!token) throw new AuthorizationError('No token found')
 
-            return fetch(`${apiUrl}/users/self`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/self`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

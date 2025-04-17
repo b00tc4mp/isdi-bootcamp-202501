@@ -1,5 +1,4 @@
 import { errors, validate } from 'com'
-import getEnv from '../data/constants'
 
 const { SystemError } = errors
 
@@ -12,9 +11,8 @@ const registerUser = (
     validate.email(email)
     validate.password(password)
 
-    const { apiUrl } = getEnv()
 
-    return fetch(`${apiUrl}/users`, {
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

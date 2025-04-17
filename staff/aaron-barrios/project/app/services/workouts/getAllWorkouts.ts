@@ -1,17 +1,15 @@
 import { errors } from 'com'
-import getEnv from '@/data/constants'
 import { data } from '@/data'
 import { WorkoutType } from '../../../api/src/services/types'
 
 const { SystemError, AuthorizationError } = errors
-const { apiUrl } = getEnv()
 
 const getAllWorkouts = (): Promise<WorkoutType[]> => {
     return data.getToken()
         .then(token => {
             if (!token) throw new AuthorizationError('No token found')
 
-            return fetch(`${apiUrl}/workouts`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
