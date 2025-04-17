@@ -18,21 +18,24 @@ const authAnonymUser = (): Promise<void> => {
 
             const body = await response.json()
 
+            // console.log("🔍 Response status:", response.status)
+            // console.log("🔍 Response body:", body)
+
             if (response.status === 201) {
                 const { token } = body
                 return data.setToken(token) // => HAPPY PATH
             }
 
-            const { message } = body
+            const { error, message } = body
 
             //si el backend nos avisa de que ha expirado el token del anonym user:
             if (message === "anonymous-session-expired") {
                 await data.removeToken()
-                router.replace("/") // o a landing
+                router.replace("/(anonym)")
                 throw new AuthorizationError("Tu sesión anónima expiró. Redirigiendo…")
             }
 
-            throw new AuthorizationError('Error al generar usuario anonimo!')
+            throw new SystemError(error.message)
         })
 }
 

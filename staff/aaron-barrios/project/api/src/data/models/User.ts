@@ -23,7 +23,7 @@ const user = new Schema<UserDocType>({
     alias: {
         type: String,
         required: true,
-        match: constant.NAME_REGEX,
+        match: constant.ALIAS_REGEX,
         minlength: 1,
         maxlength: 16,
         unique: true

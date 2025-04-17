@@ -1,32 +1,30 @@
 import jwt from 'jsonwebtoken'
-
 import { User } from '../../../data'
 import { errors } from 'com'
 
 const { SystemError } = errors
 
-const generateAnonymUser = (): Promise<void> => {
+export function generateAnonymUser(): Promise<string> {
     const timestamp = Date.now()
 
-    const anonymUserData = {
-        alias: `anon_${timestamp}`,
-        role: 'anonym',
-        createdAt: new Date()
-    }
-
-    return User.create(anonymUserData)
-        .catch(error => {
-            console.error(error)
-            throw new SystemError('Failed to create anonymous user')
-        })
+    return User.create({
+        alias: 'temporal1',
+        email: `anon${timestamp}@anon.com`,
+        password: `anonPassword${timestamp}`,
+        role: "anonym"
+    })
+        .catch(error => { throw new SystemError(error.message) })
         .then(user => {
-            return jwt.sign(
+            console.log("✅ Usuario anónimo creado:", user)
+
+            const token = jwt.sign(
                 { sub: user._id.toString(), role: user.role },
                 process.env.JWT_SECRET!,
-                { expiresIn: '1h' }
+                { expiresIn: "2h" }
             )
+
+            return token
         })
-        .then(() => { })
 }
 
 export default generateAnonymUser
