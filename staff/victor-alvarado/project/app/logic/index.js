@@ -8,7 +8,7 @@ import { getUserId } from './getUserId.js'
 import { createRecipe } from './createRecipe.js'
 import { getRecipe } from './getRecipe.js'
 import { deleteRecipe } from './deleteRecipe.js'
-import { updateRecipeText } from './updateRecipeText.js'
+import { updateRecipeDescription } from './updateRecipeDescription.js'
 import { toggleLikeRecipe } from './toggleLikeRecipe.js'
 import { getUserRecipe } from './getUserRecipe.js'
 
@@ -24,7 +24,7 @@ export const logic = {
     createRecipe,
     getRecipe,
     deleteRecipe,
-    updateRecipeText,
+    updateRecipeDescription,
     toggleLikeRecipe,
     getUserRecipe
 }

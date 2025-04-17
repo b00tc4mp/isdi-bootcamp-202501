@@ -1,3 +1,8 @@
+import { data } from '../data/index.js'
+import { errors, validate } from 'com'
+
+const { SystemError } = errors
+
 export const deleteRecipe = recipeId => {
     validate.id(recipeId, 'recipeId')
 
@@ -18,7 +23,9 @@ export const deleteRecipe = recipeId => {
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
+
                     const constructor = errors[error]
+
                     throw new constructor(message)
                 })
         })

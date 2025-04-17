@@ -15,7 +15,8 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(null)
     const [showLanding, setShowLanding] = useState(true)
     const [alertMessage, setAlertMessage] = useState('')
-    const [confirmMessage, setConfirmMessage] = useState(null)
+    const [confirmMessage, setConfirmMessage] = useState('')
+    const [confirmState, setConfirmState] = useState(null)
 
     const navigate = useNavigate()
 
@@ -32,7 +33,6 @@ function App() {
     }, [])
 
     const handleNavigateToRegister = () => {
-        setShowLanding(false)
         navigate('/register')
     }
 
@@ -43,8 +43,7 @@ function App() {
 
     const handleUserRegistered = () => {
         setShowLanding(false)
-        setLoggedIn(true)
-        navigate('/')
+        navigate('/login')
     }
 
     const handleUserLoggedIn = () => {

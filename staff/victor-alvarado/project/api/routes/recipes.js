@@ -31,6 +31,15 @@ recipes.delete('/:recipeId', authHandler, withErrorHandling((req, res) => {
         .then(() => res.status(204).send())
 }))
 
+recipes.patch('/:recipeId/likes', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    const { recipeId } = req.params
+
+    return logic.toggleLikeRecipe(userId, recipeId)
+        .then(() => res.status(204).send())
+}))
+
 recipes.patch('/:recipeId/description', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
 

@@ -3,12 +3,12 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-export const updateRecipeText = (recipeId, description) => {
+export const updateRecipeDescription = (recipeId, description) => {
     validate.id(recipeId, 'recipeId')
 
     const { token } = data
 
-    return fetch(`${import.meta.env.VIE_API_URL}/recipes/${recipeId}/description`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/recipes/${recipeId}/description`, {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${token}`,
