@@ -9,7 +9,8 @@ import { registerUserHandler } from "../handlers/registerUserHandler";
 import { validationHandler } from "../middlewares/validationHandler";
 import authHandler from "../middlewares/authHandler";
 import { registerVanHandler } from "../handlers/registerVanHandler";
-import { getUserUsernameHandler } from "../handlers/getUserUsernameHandler";
+import { getUserNameHandler } from "../handlers/getUserNameHandler";
+import { authenticateUserHandler } from "../handlers/authenticateUserHandler";
 
 export const userRouter = Router();
 
@@ -28,11 +29,16 @@ userRouter.post(
   registerVanHandler
 );
 
-userRouter.post("/auth", jsonBodyParser, validationHandler(userAuthSchema));
+userRouter.post(
+  "/auth",
+  jsonBodyParser,
+  validationHandler(userAuthSchema),
+  authenticateUserHandler
+);
 
 userRouter.get(
   "/self/username",
   jsonBodyParser,
-  //authHandler,
-  getUserUsernameHandler
+  authHandler,
+  getUserNameHandler
 );

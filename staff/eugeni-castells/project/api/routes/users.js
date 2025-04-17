@@ -11,11 +11,10 @@ const registerUserHandler_1 = require("../handlers/registerUserHandler");
 const validationHandler_1 = require("../middlewares/validationHandler");
 const authHandler_1 = __importDefault(require("../middlewares/authHandler"));
 const registerVanHandler_1 = require("../handlers/registerVanHandler");
-const getUserUsernameHandler_1 = require("../handlers/getUserUsernameHandler");
+const getUserNameHandler_1 = require("../handlers/getUserNameHandler");
+const authenticateUserHandler_1 = require("../handlers/authenticateUserHandler");
 exports.userRouter = (0, express_1.Router)();
 exports.userRouter.post("/", jsonBodyParser_1.jsonBodyParser, (0, validationHandler_1.validationHandler)(zodSchemas_1.registerUserSchema), registerUserHandler_1.registerUserHandler);
 exports.userRouter.post("/van", authHandler_1.default, jsonBodyParser_1.jsonBodyParser, (0, validationHandler_1.validationHandler)(zodSchemas_1.registerVanSchema), registerVanHandler_1.registerVanHandler);
-exports.userRouter.post("/auth", jsonBodyParser_1.jsonBodyParser, (0, validationHandler_1.validationHandler)(zodSchemas_1.userAuthSchema));
-exports.userRouter.get("/self/username", jsonBodyParser_1.jsonBodyParser, 
-//authHandler,
-getUserUsernameHandler_1.getUserUsernameHandler);
+exports.userRouter.post("/auth", jsonBodyParser_1.jsonBodyParser, (0, validationHandler_1.validationHandler)(zodSchemas_1.userAuthSchema), authenticateUserHandler_1.authenticateUserHandler);
+exports.userRouter.get("/self/username", jsonBodyParser_1.jsonBodyParser, authHandler_1.default, getUserNameHandler_1.getUserNameHandler);
