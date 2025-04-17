@@ -55,3 +55,9 @@ seasons.get('/historic', authHandler, withErrorHandling((req, res) => {
   return logic.getSeasonHistoric()
     .then(leaderboard => res.json(leaderboard))
 }))
+
+// Obtener las seasons finalizadas
+seasons.get('/finished', authHandler, withErrorHandling((req, res) => {
+  return logic.getFinishedSeasons()
+    .then(finishedSeasons => res.json(finishedSeasons))
+}))
