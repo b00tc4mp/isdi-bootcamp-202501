@@ -47,3 +47,11 @@ seasons.get('/:id', authHandler, withErrorHandling((req, res) => {
   return logic.getSeasonById(seasonId)
     .then(season => res.json(season))
 }))
+
+// Obtener la sesion historica
+seasons.get('/historic', authHandler, withErrorHandling((req, res) => {
+  const { userId } = req
+
+  return logic.getSeasonHistoric()
+    .then(leaderboard => res.json(leaderboard))
+}))
