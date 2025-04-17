@@ -19,7 +19,7 @@ type UserDocType = {
   location: Types.ObjectId;
   role: Roles;
   name: string;
-  username: string;
+  lastName: string;
   email: string;
   password: string;
   vans: Types.ObjectId[];

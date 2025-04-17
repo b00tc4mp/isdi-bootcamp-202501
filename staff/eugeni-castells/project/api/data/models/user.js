@@ -5,12 +5,7 @@ const com_1 = require("com");
 const mongoose_1 = require("mongoose");
 const user = new mongoose_1.Schema({
     name: { type: String, required: true, match: com_1.constant.NAME_REGEX },
-    username: {
-        type: String,
-        required: true,
-        match: com_1.constant.USERNAME_REGEX,
-        unique: true,
-    },
+    lastName: { type: String, match: com_1.constant.NAME_REGEX },
     email: {
         type: String,
         required: true,

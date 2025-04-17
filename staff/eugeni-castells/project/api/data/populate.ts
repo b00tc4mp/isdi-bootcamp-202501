@@ -1,7 +1,7 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
-import { data } from "."; // Connecta a MongoDB
-import { User, Van, Trip } from "./models"; // Assegura’t que aquí s’importen correctament
+import { data } from ".";
+import { User, Van, Trip, Location } from "./models";
 import { Types } from "mongoose";
 import { UserDocType } from "./index";
 
@@ -10,61 +10,93 @@ const { MONGO_URI, MONGO_DB_APP } = process.env;
 data
   .connect(MONGO_URI!, MONGO_DB_APP!)
   .then(() =>
-    Promise.all([User.deleteMany({}), Van.deleteMany({}), Trip.deleteMany({})])
+    Promise.all([
+      User.deleteMany({}),
+      Van.deleteMany({}),
+      Trip.deleteMany({}),
+      Location.deleteMany({}),
+    ])
   )
-  .then(() => bcrypt.hash("123123", 10))
+  .then(() => bcrypt.hash("123123123", 10))
   .then(async (hashedPassword) => {
     const locationId = new Types.ObjectId(); // Assumim una location comuna
     const docId = new Types.ObjectId();
+
+    const [frankieLocation, manuLocation, aaronLocation, luchoLocation] =
+      await Location.insertMany([
+        {
+          address: "carrer joanic",
+          city: "barcelona",
+          country: "Spain",
+          point: { type: "Point", coordinates: [2.1613, 41.4075] },
+        },
+        {
+          address: "carrer del carme",
+          city: "barcelona",
+          country: "Spain",
+          point: { type: "Point", coordinates: [2.1703, 41.3829] },
+        },
+        {
+          address: "carrer major de cornellà",
+          city: "cornellà",
+          country: "Spain",
+          point: { type: "Point", coordinates: [2.0753, 41.3596] },
+        },
+        {
+          address: "plaza cataluña",
+          city: "santa fe",
+          country: "argentina",
+          point: { type: "Point", coordinates: [-60.7096, -31.6361] },
+        },
+      ]);
 
     const [frankie, manu, aaron, lucho] = await User.insertMany<
       Partial<UserDocType>
     >([
       {
         name: "Frankie",
-        username: "frankie",
         email: "fran@kie.com",
         password: hashedPassword,
         role: "regular",
         createdAt: new Date(),
-        location: locationId,
+        location: frankieLocation._id,
         roadPoints: 1500,
         vans: [],
         trips: [],
       },
       {
         name: "Manu",
-        username: "manu",
+
         email: "ma@nu.com",
         password: hashedPassword,
         role: "regular",
         createdAt: new Date(),
-        location: locationId,
+        location: manuLocation._id,
         roadPoints: 800,
         vans: [],
         trips: [],
       },
       {
         name: "Aaron",
-        username: "aaron",
+
         email: "aa@ron.com",
         password: hashedPassword,
         role: "regular",
         createdAt: new Date(),
         modifiedAt: null,
-        location: locationId,
+        location: aaronLocation._id,
         roadPoints: 1200,
         vans: [],
         trips: [],
       },
       {
         name: "Luciano",
-        username: "Lucho",
+
         email: "lu@cho.com",
         password: hashedPassword,
         role: "moderator",
         createdAt: new Date(2023, 8, 17),
-        location: locationId,
+        location: luchoLocation._id,
         roadPoints: 0,
         vans: [],
         trips: [],
@@ -81,11 +113,7 @@ data
         accessible: true,
         price: 150,
         reviews: [],
-        location: locationId,
-        point: {
-          type: "Point",
-          coordinates: [2.1699, 41.3874], // Barcelona
-        },
+        location: manuLocation._id,
         legal: [docId],
         trips: [],
         windows: 4,
@@ -111,11 +139,7 @@ data
         accessible: false,
         price: 120,
         reviews: [],
-        location: locationId,
-        point: {
-          type: "Point",
-          coordinates: [2.1734, 41.3851], // Barcelona
-        },
+        location: frankieLocation._id,
         legal: [],
         trips: [],
         windows: 3,
@@ -141,11 +165,7 @@ data
         accessible: true,
         price: 180,
         reviews: [],
-        location: locationId,
-        point: {
-          type: "Point",
-          coordinates: [2.18, 41.4], // Barcelona
-        },
+        location: aaronLocation._id,
         legal: [],
         trips: [],
         windows: 5,
@@ -166,11 +186,13 @@ data
 
     manu.vans![0] = van1._id;
 
-    frankie.vans![0] != van2._id;
+    frankie.vans![0] = van2._id;
 
     aaron.vans![0] = van3._id;
 
-    const trip1 = await Trip.create({
+    await Promise.all([manu.save(), frankie.save(), aaron.save()]);
+
+    await Trip.create({
       startDate: new Date(2024, 5, 1),
       endDate: new Date(2024, 5, 15),
       van: van3._id,
@@ -179,7 +201,7 @@ data
       issues: [],
       paymentStatus: "payed",
       paymentMethod: "currency",
-      confirmStatus: "payed",
+      confirmStatus: "accepted",
       price: 300,
       location: [locationId],
       agreements: [docId],

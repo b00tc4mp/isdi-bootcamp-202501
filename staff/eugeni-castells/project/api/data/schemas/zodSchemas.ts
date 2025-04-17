@@ -10,10 +10,6 @@ export const registerUserSchema = object({
     .string()
     .min(2, "name must be at least 2 characters")
     .max(25, "name cannot have more than 25 characters"),
-  username: z
-    .string()
-    .min(2, "username must be at least 2 characters long")
-    .max(25, "name cannot have more than 25 characters"),
   email: z.string().email("invalid email address"),
   password: z
     .string()

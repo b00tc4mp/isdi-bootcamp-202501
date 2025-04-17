@@ -14,4 +14,3 @@ exports.pointSchema = new mongoose_1.Schema({
         required: true,
     },
 });
-exports.pointSchema.index({ point: "2dsphere" });

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Van = void 0;
 const mongoose_1 = require("mongoose");
 const point_1 = require("./point");
-const { ObjectId } = mongoose_1.Types;
 const van = new mongoose_1.Schema({
     model: {
         type: String,

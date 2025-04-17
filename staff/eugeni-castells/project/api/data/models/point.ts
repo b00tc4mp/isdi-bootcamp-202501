@@ -13,5 +13,3 @@ export const pointSchema = new Schema<PointDocType>({
     required: true,
   },
 });
-
-pointSchema.index({ point: "2dsphere" });

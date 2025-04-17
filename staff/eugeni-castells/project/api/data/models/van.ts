@@ -2,8 +2,6 @@ import { Schema, model, Types } from "mongoose";
 import { VanDocType } from "../types";
 import { pointSchema } from "./point";
 
-const { ObjectId } = Types;
-
 const van = new Schema<VanDocType>({
   model: {
     type: String,

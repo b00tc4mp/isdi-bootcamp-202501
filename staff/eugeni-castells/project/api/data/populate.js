@@ -14,63 +14,90 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const _1 = require("."); // Connecta a MongoDB
-const models_1 = require("./models"); // Assegura’t que aquí s’importen correctament
+const _1 = require(".");
+const models_1 = require("./models");
 const mongoose_1 = require("mongoose");
 const { MONGO_URI, MONGO_DB_APP } = process.env;
 _1.data
     .connect(MONGO_URI, MONGO_DB_APP)
-    .then(() => Promise.all([models_1.User.deleteMany({}), models_1.Van.deleteMany({}), models_1.Trip.deleteMany({})]))
-    .then(() => bcryptjs_1.default.hash("123123", 10))
+    .then(() => Promise.all([
+    models_1.User.deleteMany({}),
+    models_1.Van.deleteMany({}),
+    models_1.Trip.deleteMany({}),
+    models_1.Location.deleteMany({}),
+]))
+    .then(() => bcryptjs_1.default.hash("123123123", 10))
     .then((hashedPassword) => __awaiter(void 0, void 0, void 0, function* () {
     const locationId = new mongoose_1.Types.ObjectId(); // Assumim una location comuna
     const docId = new mongoose_1.Types.ObjectId();
+    const [frankieLocation, manuLocation, aaronLocation, luchoLocation] = yield models_1.Location.insertMany([
+        {
+            address: "carrer joanic",
+            city: "barcelona",
+            country: "Spain",
+            point: { type: "Point", coordinates: [2.1613, 41.4075] },
+        },
+        {
+            address: "carrer del carme",
+            city: "barcelona",
+            country: "Spain",
+            point: { type: "Point", coordinates: [2.1703, 41.3829] },
+        },
+        {
+            address: "carrer major de cornellà",
+            city: "cornellà",
+            country: "Spain",
+            point: { type: "Point", coordinates: [2.0753, 41.3596] },
+        },
+        {
+            address: "plaza cataluña",
+            city: "santa fe",
+            country: "argentina",
+            point: { type: "Point", coordinates: [-60.7096, -31.6361] },
+        },
+    ]);
     const [frankie, manu, aaron, lucho] = yield models_1.User.insertMany([
         {
             name: "Frankie",
-            username: "frankie",
             email: "fran@kie.com",
             password: hashedPassword,
             role: "regular",
             createdAt: new Date(),
-            location: locationId,
+            location: frankieLocation._id,
             roadPoints: 1500,
             vans: [],
             trips: [],
         },
         {
             name: "Manu",
-            username: "manu",
             email: "ma@nu.com",
             password: hashedPassword,
             role: "regular",
             createdAt: new Date(),
-            location: locationId,
+            location: manuLocation._id,
             roadPoints: 800,
             vans: [],
             trips: [],
         },
         {
             name: "Aaron",
-            username: "aaron",
             email: "aa@ron.com",
             password: hashedPassword,
             role: "regular",
             createdAt: new Date(),
             modifiedAt: null,
-            location: locationId,
+            location: aaronLocation._id,
             roadPoints: 1200,
             vans: [],
             trips: [],
         },
         {
             name: "Luciano",
-            username: "Lucho",
             email: "lu@cho.com",
             password: hashedPassword,
             role: "moderator",
             createdAt: new Date(2023, 8, 17),
-            location: locationId,
+            location: luchoLocation._id,
             roadPoints: 0,
             vans: [],
             trips: [],
@@ -86,11 +113,7 @@ _1.data
             accessible: true,
             price: 150,
             reviews: [],
-            location: locationId,
-            point: {
-                type: "Point",
-                coordinates: [2.1699, 41.3874], // Barcelona
-            },
+            location: manuLocation._id,
             legal: [docId],
             trips: [],
             windows: 4,
@@ -116,11 +139,7 @@ _1.data
             accessible: false,
             price: 120,
             reviews: [],
-            location: locationId,
-            point: {
-                type: "Point",
-                coordinates: [2.1734, 41.3851], // Barcelona
-            },
+            location: frankieLocation._id,
             legal: [],
             trips: [],
             windows: 3,
@@ -146,11 +165,7 @@ _1.data
             accessible: true,
             price: 180,
             reviews: [],
-            location: locationId,
-            point: {
-                type: "Point",
-                coordinates: [2.18, 41.4], // Barcelona
-            },
+            location: aaronLocation._id,
             legal: [],
             trips: [],
             windows: 5,
@@ -169,9 +184,10 @@ _1.data
         },
     ]);
     manu.vans[0] = van1._id;
-    frankie.vans[0] != van2._id;
+    frankie.vans[0] = van2._id;
     aaron.vans[0] = van3._id;
-    const trip1 = yield models_1.Trip.create({
+    yield Promise.all([manu.save(), frankie.save(), aaron.save()]);
+    yield models_1.Trip.create({
         startDate: new Date(2024, 5, 1),
         endDate: new Date(2024, 5, 15),
         van: van3._id,
@@ -180,7 +196,7 @@ _1.data
         issues: [],
         paymentStatus: "payed",
         paymentMethod: "currency",
-        confirmStatus: "payed",
+        confirmStatus: "accepted",
         price: 300,
         location: [locationId],
         agreements: [docId],

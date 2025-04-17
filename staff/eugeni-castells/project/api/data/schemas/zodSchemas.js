@@ -10,10 +10,6 @@ exports.registerUserSchema = (0, zod_1.object)({
         .string()
         .min(2, "name must be at least 2 characters")
         .max(25, "name cannot have more than 25 characters"),
-    username: zod_1.z
-        .string()
-        .min(2, "username must be at least 2 characters long")
-        .max(25, "name cannot have more than 25 characters"),
     email: zod_1.z.string().email("invalid email address"),
     password: zod_1.z
         .string()
