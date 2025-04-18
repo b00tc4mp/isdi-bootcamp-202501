@@ -17,6 +17,7 @@ users.post('/', jsonBodyParser, withErrorHandling((req, res) => {
         .then(() => res.status(201).send())
 }))
 
+// Endpoint for authenticateUser
 users.post('/auth', jsonBodyParser, withErrorHandling((req,res) => {
     const { username, password } = req.body
 
@@ -53,40 +54,48 @@ users.patch('/admin-request', authHandler, jsonBodyParser, withErrorHandling((re
       })
   }))
 
-  // Endpoint para generar stats de usuario
-  users.get('/stats', authHandler, withErrorHandling((req, res) => {
-    const { userId } = req
+// Endpoint para generar stats de usuario
+users.get('/stats', authHandler, withErrorHandling((req, res) => {
+  const { userId } = req
   
-    // Llamar a la lógica para generar stats del usuario
-    return logic.getUserStats(userId)
-      .then(stats => res.json(stats))
-      .catch(error => res.status(400).send(error.message))
-  }))
+  // Llamar a la lógica para generar stats del usuario
+  return logic.getUserStats(userId)
+    .then(stats => res.json(stats))
+    .catch(error => res.status(400).send(error.message))
+}))
+
+// Endpoint para estadísticas históricas del usuario
+users.get('/stats/historic', authHandler, withErrorHandling((req, res) => {
+  const { userId } = req
+
+  return logic.getUserHistoricStats(userId)
+    .then(stats => res.json(stats))
+}))
 
 // Obtener info básica de un usuario por ID
 users.get('/:id', authHandler, withErrorHandling((req, res) => {
-    const { id } = req.params
+  const { id } = req.params
   
-    return User.findById(id).lean()
-      .then(user => {
-        if (!user) throw new NotFoundError('User not found')
-        res.json({ id: user._id.toString(), username: user.username })
+  return User.findById(id).lean()
+    .then(user => {
+      if (!user) throw new NotFoundError('User not found')
+      res.json({ id: user._id.toString(), username: user.username })
+    })
+}))
+
+// Obtener los usernames de participants segun sus Ids
+
+users.post('/usernames', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+  const { ids } = req.body
+
+  if (!Array.isArray(ids)) throw new TypeError('ids must be an array')
+
+  return User.find({ _id: { $in: ids } }).lean()
+      .then(users => {
+        const usernames = users.map(user => ({
+          id: user._id.toString(),
+            username: user.username
+        }))
+          res.json({ usernames })
       })
-  }))
-
-  // Obtener los usernames de participants segun sus Ids
-
-  users.post('/usernames', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-    const { ids } = req.body
-
-    if (!Array.isArray(ids)) throw new TypeError('ids must be an array')
-
-    return User.find({ _id: { $in: ids } }).lean()
-        .then(users => {
-            const usernames = users.map(user => ({
-                id: user._id.toString(),
-                username: user.username
-            }))
-            res.json({ usernames })
-        })
 }))

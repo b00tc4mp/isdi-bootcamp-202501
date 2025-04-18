@@ -9,6 +9,7 @@ import { getUserById } from './users/getUserById.js'
 import { getUsernamesByIds } from './users/getUsernameByIds.js'
 import { requestAdminRole } from './users/requestAdminRole.js'
 import { getUserStats } from './users/getUserStats.js'
+import { getUserHistoricStats } from './users/getUserHistoricStats.js'
 
 import { createGame } from "./games/createGame.js"
 import { getGames } from "./games/getGames.js"
@@ -36,6 +37,7 @@ export const logic = {
     getUsernamesByIds,
     requestAdminRole,
     getUserStats,
+    getUserHistoricStats,
 
     createGame,
     getGames,

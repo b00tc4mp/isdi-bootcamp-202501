@@ -1,18 +1,13 @@
-import { Game, Season } from '../../data/index.js'
+import { Game } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
 
-const { SystemError, NotFoundError } = errors
+const { SystemError } = errors
 
-export const getUserStats = (userId) => {
+export const getUserHistoricStats = (userId) => {
   validate.id(userId, 'userId')
 
-  return Season.findOne({ status: 'active' })
+  return Game.find({ status: 'finished', seasonId: { $ne: null } }).lean()
     .catch(error => { throw new SystemError(error.message) })
-    .then(season => {
-      if (!season) throw new NotFoundError('No active season found')
-
-      return Game.find({ seasonId: season._id, status: 'finished' }).lean()
-    })
     .then(games => {
       let gamesPlayed = 0
       let gamesWon = 0
@@ -45,6 +40,4 @@ export const getUserStats = (userId) => {
         points
       }
     })
-}  
-
-export default getUserStats
+}

@@ -5,7 +5,6 @@ import { logic } from '../../logic/index.js'
 import { CustomModal, NavBar } from '../../components/index.js'
 
 import  styles  from './Classification.styles.js'
-import { getFinishedSeasons } from '../../logic/season/getFinishedSeasons.js'
 
 export default function ClassificationScreen({ navigation }) {
   const [leaderboard, setLeaderboard] = useState([])
@@ -151,19 +150,7 @@ export default function ClassificationScreen({ navigation }) {
       onPress={() => openSeasonModal(seasonFinished)}
       />
 
-      {season && <Text style={{ fontSize: 16, marginBottom: 10 }}>Season: {season.name}</Text>}
-
-      {season && renderHeader()}
-
-      {season && (
-        <FlatList
-          data={leaderboard}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderItem}
-        />
-      )}
-
-      {!season && (
+{!season && (
         <>
           <Text style={{ marginVertical: 20, fontSize: 16, color: 'gray' }}>
             {error || 'No hay temporada activa en este momento'}
@@ -182,6 +169,18 @@ export default function ClassificationScreen({ navigation }) {
           title='Finalizar temporada'
           color='red'
           onPress={handleFinishSeason}
+        />
+      )}
+
+      {season && <Text style={{ fontSize: 16, marginBottom: 10 }}>Season: {season.name}</Text>}
+
+      {season && renderHeader()}
+
+      {season && (
+        <FlatList
+          data={leaderboard}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderItem}
         />
       )}
 

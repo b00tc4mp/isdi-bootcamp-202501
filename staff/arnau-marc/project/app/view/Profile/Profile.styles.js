@@ -37,15 +37,17 @@ const styles = StyleSheet.create({
     color: '#888'
   },
 
-  // NUEVOS ESTILOS PARA LAS CARDS DE ESTADÍSTICAS
+  // Estilos para cards de estadísticas
   statsCardsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     flexWrap: 'wrap',
-    gap: 12
+    gap: 8,
+    marginTop: 10
   },
   statCard: {
-    flexBasis: '30%',
+    width: '23%',
     backgroundColor: '#f0f0f0',
     borderRadius: 12,
     paddingVertical: 20,
