@@ -5,6 +5,7 @@ import { logic } from '../../logic/index.js'
 import { CustomModal, NavBar } from '../../components/index.js'
 
 import  styles  from './Classification.styles.js'
+import { getFinishedSeasons } from '../../logic/season/getFinishedSeasons.js'
 
 export default function ClassificationScreen({ navigation }) {
   const [leaderboard, setLeaderboard] = useState([])
@@ -12,13 +13,20 @@ export default function ClassificationScreen({ navigation }) {
   const [userRole, setUserRole] = useState(null)
   const [error, setError] = useState(null)
 
+  const [seasonFinished, setSeasonFinished] = useState(null)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [newSeasonName, setNewSeasonName] = useState('')
+  const [showFinishedSeasonsModal, setShowFinishedSeasonsModal] = useState(false)
+  const [seasonMap, setSeasonMap] = useState({})
 
   useEffect(() => {
     logic.getUserRole()
       .then(setUserRole)
       .catch(console.error)
+
+    logic.getFinishedSeasons()
+      .then(setSeasonFinished)
+      .catch(error => window.alert(error.message))
 
     logic.getLatestSeason()
       .then(season => {
@@ -93,6 +101,27 @@ export default function ClassificationScreen({ navigation }) {
       })
   }
 
+  const openSeasonModal = (seasonArray) => {
+    if (!seasonArray || seasonArray.length === 0) {
+      window.alert('No hay temporadas finalizadas disponibles')
+      return
+    }
+  
+    const map = {}
+    seasonArray.forEach(({ id, seasonName }) => {
+      map[id] = seasonName
+    })
+  
+    setSeasonMap(map)
+    setShowFinishedSeasonsModal(true)
+    
+  }
+
+  const handleSelectFinishedSeasons = (seasonId) => {
+    setShowFinishedSeasonsModal(false)
+    navigation.navigate('ClassificationFinishedSeasons', { seasonId })
+  }
+
   const renderHeader = () => (
     <View style={styles.rowHeader}>
       <Text style={styles.cellRank}>#</Text>
@@ -115,6 +144,11 @@ export default function ClassificationScreen({ navigation }) {
       <Button
         title='Ir a Clasificación Histórica'
         onPress={() => navigation.replace('ClassificationHistoric')}
+      />
+
+      <Button 
+      title='Mostrar temporadas antiguas'
+      onPress={() => openSeasonModal(seasonFinished)}
       />
 
       {season && <Text style={{ fontSize: 16, marginBottom: 10 }}>Season: {season.name}</Text>}
@@ -151,10 +185,6 @@ export default function ClassificationScreen({ navigation }) {
         />
       )}
 
-      <View style={{ marginTop: 20 }}>
-        <Button title='Go to Home' onPress={() => navigation.navigate('Home')} />
-      </View>
-
       <CustomModal
         visible={showCreateModal}
         onClose={() => setShowCreateModal(false)}
@@ -166,6 +196,21 @@ export default function ClassificationScreen({ navigation }) {
         confirmText='Crear'
         cancelText='Cancelar'
         showInput={true}
+      />
+    
+      <CustomModal 
+        visible={showFinishedSeasonsModal}
+        onClose={() => setShowFinishedSeasonsModal(false)}
+        onConfirm={handleSelectFinishedSeasons}
+        title='Selecciona temporada'
+        cancelText='Cancelar'
+        showInput={false}
+        options={
+          seasonFinished?.map(season => ({
+          label: seasonMap[season.id],
+          value: season.id
+        })) || []
+      } 
       />
       <NavBar navigation={navigation} />
     </View>

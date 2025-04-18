@@ -50,8 +50,13 @@ seasons.get('/historic', authHandler, withErrorHandling((req, res) => {
 // Obtener las seasons finalizadas
 seasons.get('/finished', authHandler, withErrorHandling((req, res) => {
   return logic.getFinishedSeasons()
-    .then(finishedSeasons => res.json(finishedSeasons))
-
+  .then(seasons => {
+    const returnedSeasons = seasons.map(season => ({
+        id: season._id.toString(),
+        seasonName: season.name
+    }))
+    res.json({ returnedSeasons })
+})
 }))
 
 // Obtener una season por ID
