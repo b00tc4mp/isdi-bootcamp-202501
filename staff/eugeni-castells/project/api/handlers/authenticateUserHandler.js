@@ -14,6 +14,6 @@ exports.authenticateUserHandler = (0, createHandler_1.default)((req, res) => {
     return (0, service_1.authenticateUser)(email, password).then((user) => {
         const payload = { sub: user.id, role: user.role };
         const token = jsonwebtoken_1.default.sign(payload, JWT_SECRET);
-        res.json({ token });
+        res.status(200).json({ token });
     });
 });

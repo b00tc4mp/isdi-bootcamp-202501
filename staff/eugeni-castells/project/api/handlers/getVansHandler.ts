@@ -8,7 +8,7 @@ export const getVansHandler = createFunctionalHandler(
     const { userId } = req as AuthHandlerRequest;
 
     return getVans(userId).then((vans) => {
-      res.json({ vans });
+      res.json(vans);
     });
   }
 );

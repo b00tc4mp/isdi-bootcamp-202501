@@ -14,7 +14,7 @@ const user = new Schema<UserDocType>({
   password: { type: String, required: true },
   role: {
     type: String,
-    enum: ["regular", "moderator", "admin"],
+    enum: ["regular", "anonym", "admin"],
     required: true,
     default: "regular",
   },

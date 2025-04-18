@@ -15,9 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticateUser = void 0;
 const com_1 = require("com");
 const data_1 = require("../data");
-const errors_1 = require("com/errors");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const { SystemError } = com_1.errors;
+const { SystemError, NotFoundError, CredentialsError } = com_1.errors;
 const authenticateUser = (email, password) => {
     com_1.validate.email(email, "authenticate email");
     com_1.validate.password(password, "authenticate password");
@@ -27,10 +26,10 @@ const authenticateUser = (email, password) => {
         try {
             user = yield data_1.User.findOne({ email }).lean();
             if (!user)
-                throw new errors_1.NotFoundError("user not found");
+                throw new NotFoundError("user not found");
             isUserMatched = yield bcryptjs_1.default.compare(password, user.password);
             if (!isUserMatched)
-                throw new errors_1.CredentialsError("wrong credentials");
+                throw new CredentialsError("wrong credentials");
         }
         catch (error) {
             console.error(error);

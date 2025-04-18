@@ -1,9 +1,8 @@
 import { validate, errors } from "com";
 import { User } from "../data";
-import { CredentialsError, NotFoundError } from "com/errors";
 import bcrypt from "bcryptjs";
 import { AuthUserType } from "./types";
-const { SystemError } = errors;
+const { SystemError, NotFoundError, CredentialsError } = errors;
 
 export const authenticateUser = (
   email: string,

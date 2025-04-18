@@ -9,6 +9,6 @@ const index_1 = require("../service/index");
 exports.getVansHandler = (0, createHandler_1.default)((req, res) => {
     const { userId } = req;
     return (0, index_1.getVans)(userId).then((vans) => {
-        res.json({ vans });
+        res.json(vans);
     });
 });

@@ -14,7 +14,7 @@ export const authenticateUserHandler = createFunctionalHandler(
       const payload = { sub: user.id, role: user.role };
       const token = jwt.sign(payload, JWT_SECRET!);
 
-      res.json({ token });
+      res.status(200).json({ token });
     });
   }
 );
