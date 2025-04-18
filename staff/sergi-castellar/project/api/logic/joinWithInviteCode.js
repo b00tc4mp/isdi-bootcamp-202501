@@ -29,7 +29,9 @@ export const joinWithInviteCode = (userId, inviteCode) => {
                     return Couple.create({ members: [dbInviteCode.createdBy, userId] })
                         .catch(error => { throw new SystemError(error.message) })
                         .then(couple => {
-                            return InviteCode.deleteOne({ code: inviteCode })
+                            const [user1Id, user2Id] = couple.members
+
+                            return InviteCode.deleteMany({ createdBy: { $in: [user1Id, user2Id] } })
                                 .catch(error => { throw new SystemError(error.message) })
                                 .then(() => {
                                     return {

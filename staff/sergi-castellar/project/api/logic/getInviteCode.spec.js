@@ -32,8 +32,7 @@ describe('getInviteCode', () => {
                 return getInviteCode(userId)
             })
             .then(code => {
-                expect(code.id).to.equal(inviteCodeId)
-                expect(code.code).to.equal('COUPLE-374fd5ae4a0a83a87832')
+                expect(code).to.equal('COUPLE-374fd5ae4a0a83a87832')
             })
     })
 

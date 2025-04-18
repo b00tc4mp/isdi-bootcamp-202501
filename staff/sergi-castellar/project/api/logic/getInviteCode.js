@@ -15,10 +15,7 @@ export const getInviteCode = (userId) => {
             return InviteCode.findOne({ createdBy: userId }).lean()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(existingCode => {
-                    if (existingCode) return {
-                        id: existingCode._id.toString(),
-                        code: existingCode.code
-                    }
+                    if (existingCode) return existingCode.code
 
                     const newCode = `COUPLE-${randomBytes(10).toString('hex')}`
 

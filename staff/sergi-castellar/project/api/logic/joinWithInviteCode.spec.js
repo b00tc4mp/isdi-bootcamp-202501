@@ -7,7 +7,7 @@ import { NotFoundError, NotAllowedError, NotSingleError } from 'com/errors.js'
 const { MONGO_URL, MONGO_DB } = process.env
 
 describe('joinWithInviteCode', () => {
-    let userId, partnerId, randomUserId, creatorId, coupleId, inviteCodeId
+    let userId, partnerId, objectUserId, objectPartnerId, randomUserId, inviteCodeId
 
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
@@ -23,6 +23,7 @@ describe('joinWithInviteCode', () => {
             password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
         })
             .then(user => {
+                objectUserId = user._id
                 userId = user._id.toString()
                 return User.create({
                     name: 'Jane Doe',
@@ -32,6 +33,7 @@ describe('joinWithInviteCode', () => {
                 })
             })
             .then(partner => {
+                objectPartnerId = partner._id
                 partnerId = partner._id.toString()
                 return InviteCode.create({
                     code: 'COUPLE-374fd5ae4a0a83a87832',
@@ -51,6 +53,11 @@ describe('joinWithInviteCode', () => {
             })
             .then(code => {
                 expect(code).to.be.null
+                return InviteCode.find({ createdBy: { $in: [objectUserId, objectPartnerId] } })
+            })
+            .then(codes => {
+                expect(codes).to.be.instanceOf(Array)
+                expect(codes).to.have.lengthOf(0)
             })
     })
 
@@ -193,6 +200,4 @@ describe('joinWithInviteCode', () => {
     })
 
     after(() => data.disconnect())
-
-    //TODO comprobar que se borre invitecode
 })
