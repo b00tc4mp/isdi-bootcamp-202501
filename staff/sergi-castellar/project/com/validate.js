@@ -61,6 +61,11 @@ export const validate = {
         this.minLength(text, minLength, explain)
 
         this.maxLength(text, maxLength, explain)
+    },
+    inviteCode(inviteCode, explain) {
+        this.notBlankString(inviteCode, explain)
+
+        if (!constant.INVITE_CODE_REGEX.test(inviteCode)) throw new ValidationError(`invalid ${explain} syntax`)
     }
 }
 

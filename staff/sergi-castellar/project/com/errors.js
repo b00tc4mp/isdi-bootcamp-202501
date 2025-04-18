@@ -54,6 +54,22 @@ class NoMatchError extends Error {
     }
 }
 
+class NotSingleError extends Error {
+    constructor(message) {
+        super(message)
+
+        this.name = this.constructor.name
+    }
+}
+
+class NotAllowedError extends Error {
+    constructor(message) {
+        super(message)
+
+        this.name = this.constructor.name
+    }
+}
+
 export {
     SystemError,
     DuplicityError,
@@ -61,7 +77,9 @@ export {
     NotFoundError,
     ValidationError,
     AuthorizationError,
-    NoMatchError
+    NoMatchError,
+    NotSingleError,
+    NotAllowedError
 }
 
 const errors = {
@@ -71,7 +89,9 @@ const errors = {
     NotFoundError,
     ValidationError,
     AuthorizationError,
-    NoMatchError
+    NoMatchError,
+    NotSingleError,
+    NotAllowedError
 }
 
 export default errors
