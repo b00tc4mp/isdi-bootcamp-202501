@@ -1,14 +1,12 @@
 import { validate, errors } from "@/com";
-import getEnv from "@/data/getEnv";
 const { SystemError } = errors;
 import { data } from "@/data";
-export const loginUser = (email: string, password: string): Promise<string> => {
-  // const { apiUrl } = getEnv();
 
+export const loginUser = (email: string, password: string): Promise<void> => {
   validate.email(email);
   validate.password(password);
 
-  return fetch(`http://10.0.2.2:8080/users/auth`, {
+  return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/auth`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -21,6 +19,8 @@ export const loginUser = (email: string, password: string): Promise<string> => {
       throw new SystemError(err.message);
     })
     .then((response) => {
+      console.log(response.status);
+
       if (response.status === 200)
         return response
           .json()
@@ -32,7 +32,7 @@ export const loginUser = (email: string, password: string): Promise<string> => {
           .then((body) => {
             const { token } = body;
 
-            return data.setToken(token).then(() => token);
+            return data.setToken(token);
           });
       return response
         .json()

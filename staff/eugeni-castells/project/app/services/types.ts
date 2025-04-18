@@ -5,4 +5,5 @@ export type RegisterUserInputType = {
   address: string;
   city: string;
   country: string;
+  coordinates?: [number, number];
 };

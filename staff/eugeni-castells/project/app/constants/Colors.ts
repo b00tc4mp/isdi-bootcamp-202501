@@ -6,6 +6,9 @@ export const Colors = {
     buttonText: "#FFFFFF", // text del botó sobre fons blau
     tint: "#2f95dc", // afegeix aquesta línia
     headingText: "#FFFFFF",
+    tabItemBackground: "#FEFCFB",
+    tabItemLine: "#191919",
+    tabItemFocused: "#3B82F6",
   },
   dark: {
     background: "#121212",

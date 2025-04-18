@@ -5,16 +5,10 @@ import { errors } from "@/com";
 const { SystemError } = errors;
 
 const { EXPO_PUBLIC_API_URL } = process.env;
-/*const watchID = navigator.geolocation.watchPosition((position) => {
-  doSomething(position.coords.latitude, position.coords.longitude);
-});
-The watchPosition() method returns an ID number that can be used to uniquely identify the requested position watcher; you use this value in tandem with the clearWatch() method to stop watching the user's location.
 
-js
-Copy to Clipboard
-navigator.geolocation.clearWatch(watchID);*/
 export const registerUser = (userInfo: RegisterUserInputType) => {
-  const { name, email, password, address, city, country } = userInfo;
+  const { name, email, password, address, city, country, coordinates } =
+    userInfo;
 
   validate.email(email);
   validate.password(password);
@@ -23,7 +17,7 @@ export const registerUser = (userInfo: RegisterUserInputType) => {
   validate.text(city, "city");
   validate.text(country, "country");
 
-  return fetch(`http://localhost:8080/users`, {
+  return fetch(`${EXPO_PUBLIC_API_URL}/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userInfo),
