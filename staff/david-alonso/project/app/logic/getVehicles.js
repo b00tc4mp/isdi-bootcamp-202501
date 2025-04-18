@@ -11,7 +11,7 @@ export const getVehicles = () => {
     const { token } = data
     const userId = logic.getUserId()
 
-    return fetch(`http://localhost:8080/vehicles/${userId}`, {
+    return fetch(`http://localhost:8080/vehicles/user/${userId}`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`

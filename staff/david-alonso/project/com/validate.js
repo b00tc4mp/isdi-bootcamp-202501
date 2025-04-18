@@ -8,6 +8,14 @@ export const validate = {
         if (typeof string !== 'string') throw new ValidationError(`invalid ${explain} type`)
     },
 
+    number(number, explain = 'number') {
+        if (typeof number !== 'number') throw new ValidationError(`invalid ${explain} type`)
+    },
+
+    date(date, explain = 'date') {
+        if (typeof date !== 'object') throw new ValidationError(`invalid ${explain} type`)
+    },
+
     // Comprobamos que sea tipo Texto
     text(text, explain = 'text') {
         this.string(text, explain)
@@ -18,6 +26,13 @@ export const validate = {
     name(name, explain = 'name') {
         this.text(name, explain)
         if (!constant.NAME_REGEX.test(name)) throw new ValidationError(`invalid ${explain} syntax`)
+    },
+
+    // Comprueba que la matricula sea valida
+    matricula(matricula, explain = 'matricula') {
+        this.text(matricula, explain)
+        if (!constant.MATRICULA_REGEX.test(matricula)) throw new ValidationError(`invalid ${explain} syntax`)
+        this.maxLength(matricula, 7, explain)
     },
 
     // Comprueba que sea tipo Email

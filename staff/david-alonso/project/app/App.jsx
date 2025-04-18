@@ -8,6 +8,7 @@ import { Vehicles } from "./view/Home/Vehicles.jsx"
 import { Home } from "./view/Home/Index.jsx"
 import { Menu } from "./view/Home/Menu"
 
+import { ProfileVehicle } from "./view/Home/ProfileVehicle.jsx"
 import { Context } from './context'
 import { logic } from "./logic/index.js"
 
@@ -106,7 +107,9 @@ function App() {
         alert: handleShowAlert,
         confirm: handleShowConfirm
     }}>
-        {loggedIn !== null && <Routes>
+
+        {/* {loggedIn !== null && <Routes> */}
+        {<Routes>
 
             <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
             {/* /login: Muestra el login si no está logueado. Si ya está logueado, lo manda al home / */}
@@ -121,6 +124,8 @@ function App() {
             {/* /vehicleRegister: Muestra el registroVehiculo si no está logueado. Si ya está logueado, lo manda al home / */}
 
             <Route path="/vehicles" element={<Vehicles />} />
+
+            <Route path="/vehicle/:id" element={<ProfileVehicle />} />
 
             <Route path='/*' element={loggedIn ? <Home handleNavigateVehicleRegister={handleNavigateVehicleRegister} /> : <Navigate to='/login' />} />
             {/* Si ponemos una ruta que no existe y esta logeado lo mandamos a home /. Si no lo esta se le envia a /login */}

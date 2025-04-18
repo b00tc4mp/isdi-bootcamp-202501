@@ -3,11 +3,11 @@
 @layer base {
 
     html {
-        @apply bg-gray-700
+        @apply bg-gray-700 text-white
     }
 
-    h1 {
-        @apply text-white
+    form {
+        @apply text-black
     }
 
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getVehicles } from '../../logic/getVehicles'
+import { useNavigate } from 'react-router'
 
 export const Vehicles = () => {
     const [vehicles, setVehicles] = useState([])
@@ -9,7 +10,7 @@ export const Vehicles = () => {
     useEffect(() => {
         getVehicles()
             .then(data => {
-                // console.log('Vehículos recibidos:', data)
+
                 setVehicles(data)
             })
             .catch(error => {
@@ -18,6 +19,12 @@ export const Vehicles = () => {
             });
     }, []);
 
+    const navigate = useNavigate();
+
+    const handleClick = (matricula) => {
+        navigate(`/vehicle/${matricula}`);
+    };
+
     return (
         <div>
             {vehicles.length === 0 ? (
@@ -25,10 +32,10 @@ export const Vehicles = () => {
             ) : (
                 <section className="flex flex-col">
                     {vehicles.map(vehicle => (
-                        <div key={vehicle.id}
-                            className=" bg-zinc-500 rounded-2xl p-4 mb-5 border-4 flex justify-between "
-                            style={{ borderColor: vehicle.color }}
-                        // style={{ backgroundColor: vehicle.color }}
+                        <div key={vehicle.id} onClick={() => handleClick(vehicle.id)}
+                            className=" bg-zinc-500 rounded-2xl p-4 mb-5 flex justify-between opacity-80 "
+                            // style={{ borderColor: vehicle.color }}
+                            style={{ backgroundColor: vehicle.color }}
                         >
                             <div className="flex flex-col">
                                 <h2 className="text-lg font-bold mb-5">{vehicle.marca} - {vehicle.modelo}</h2>

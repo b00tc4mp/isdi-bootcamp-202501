@@ -1,9 +1,13 @@
+
 import jwt from 'jsonwebtoken'
 import { Router } from 'express'
+import { ObjectId } from 'mongodb'
 
 import { authHandler, withErrorHandling, jsonBodyParser } from '../handlers/index.js'
 
 import { logic } from '../logic/index.js'
+
+import { Vehicle } from '../data/models.js'
 
 const { JWT_SECRET } = process.env
 
@@ -17,10 +21,24 @@ vehicles.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => 
         .then(() => res.status(201).send())
 }))
 
-// DEVOLVER LOS VEHICULOS GUARDADOS
-vehicles.get('/:userId', authHandler, withErrorHandling((req, res) => {
-    const { userId } = req
+// DEVOLVER LOS VEHICULOS GUARDADOS DE UN USUARIO
+vehicles.get('/user/:userId', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req.params
 
     return logic.getVehicles(userId)
         .then(vehicles => res.json(vehicles))
+}))
+
+// OBTENER UN VEHICULO POR ID
+vehicles.get('/:id', authHandler, withErrorHandling((req, res) => {
+    const { id } = req.params;
+
+    // Convierte el id de la URL a ObjectId
+    const objectId = new ObjectId(id)
+
+    return Vehicle.findById(objectId)  // Aquí usamos el objectId para la búsqueda
+        .then(vehicle => {
+            if (!vehicle) return res.status(404).send('No encontrado');
+            res.json(vehicle);
+        });
 }))
