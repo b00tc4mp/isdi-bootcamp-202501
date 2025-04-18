@@ -9,8 +9,9 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
+import { getRoleFromToken } from "@/data";
 import { isUserLoggedIn } from "@/services";
-
+import { useUserStore } from "./stores/userStore";
 import { useColorScheme } from "@/components/useColorScheme";
 import { Alert } from "react-native";
 
@@ -48,18 +49,24 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return <App />;
 }
 
-function RootLayoutNav() {
+function App() {
   const colorScheme = useColorScheme();
+
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
         const loggedIn = await isUserLoggedIn();
-        setLoggedIn(loggedIn);
+
+        if (loggedIn) {
+          const { role } = await getRoleFromToken();
+          useUserStore.getState().setRole(role);
+          setLoggedIn(true);
+        }
       } catch (error) {
         console.error(error);
         const err = error as Error;
@@ -72,11 +79,12 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name={!loggedIn ? "(auth)" : "(tabs)"}
-          options={{ headerShown: false }}
-        />
+      <Stack screenOptions={{ headerShown: false }}>
+        {!loggedIn ? (
+          <Stack.Screen name={"(auth)"} options={{ headerShown: false }} />
+        ) : (
+          <Stack.Screen name={"(tabs)"} options={{ headerShown: false }} />
+        )}
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>
     </ThemeProvider>

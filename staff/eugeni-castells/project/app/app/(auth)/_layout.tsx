@@ -4,7 +4,7 @@ import { View, StyleSheet } from "react-native";
 export default function AuthLayout() {
   return (
     <View style={styles.container}>
-      <Stack />
+      <Stack screenOptions={{ headerShown: false }} />
     </View>
   );
 }

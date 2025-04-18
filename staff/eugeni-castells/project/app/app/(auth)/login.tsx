@@ -15,7 +15,9 @@ export default function LoginForm() {
 
   const handleLogIn = () => {
     try {
-      return loginUser(email, password).then((token) => console.log(token));
+      return loginUser(email, password).then(() => {
+        router.replace("/(tabs)");
+      });
     } catch (error) {
       console.error(error);
 

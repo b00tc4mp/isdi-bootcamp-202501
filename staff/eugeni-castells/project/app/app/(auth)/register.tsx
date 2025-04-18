@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { StyleSheet, View, TextInput, Button, Alert } from "react-native";
-import { registerUser } from "../../services";
 import { useRouter } from "expo-router";
+import {
+  checkLocationPermit,
+  registerUser,
+  getRealTimeLocation,
+} from "@/services";
+import * as Location from "expo-location";
 
 export const register = () => {
   const [name, setName] = useState("");
@@ -18,28 +23,57 @@ export const register = () => {
     router.push("/(auth)/login");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    let permission;
+    let coordinates;
+
     try {
-      const newUserInfo = {
-        name,
-        lastName,
-        email,
-        country,
-        city,
-        address,
-        password,
-      };
+      permission = await checkLocationPermit();
+    } catch (error) {
+      const err = error as Error;
 
-      return registerUser(newUserInfo).catch((error) => {
-        console.error(error);
+      Alert.alert(err.message);
+    }
 
+    if (!permission!.granted) {
+      try {
+        permission = await Location.requestForegroundPermissionsAsync();
+      } catch (error) {
         const err = error as Error;
 
         Alert.alert(err.message);
-      });
-    } catch (error) {
-      console.error(error);
+      }
+    }
 
+    if (permission?.status === "granted") {
+      try {
+        coordinates = await getRealTimeLocation();
+      } catch (error) {
+        const err = error as Error;
+
+        Alert.alert(err.message);
+        return;
+      }
+    }
+
+    const newUserInfo = {
+      name,
+      lastName,
+      email,
+      country,
+      city,
+      address,
+      password,
+      coordinates: [coordinates!.latitude, coordinates!.longitude] as [
+        number,
+        number
+      ],
+      // coordinates,
+    };
+
+    try {
+      await registerUser(newUserInfo);
+    } catch (error) {
       const err = error as Error;
 
       Alert.alert(err.message);

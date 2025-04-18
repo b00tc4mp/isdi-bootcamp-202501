@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { slides } from "./Content/Landing";
 import { NotFoundError } from "@/com/errors";
+import { getRoleFromToken } from "./utils/getRoleFromToken";
 
 export const data = {
   async getToken(): Promise<string | null> {
@@ -28,4 +29,4 @@ export const data = {
   },
 };
 
-export { slides };
+export { slides, getRoleFromToken };
