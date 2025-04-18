@@ -3,10 +3,10 @@ import { errors } from 'com'
 
 const { SystemError } = errors
 
-export const getCoupleInfo = () => {
+export const generateInviteCode = () => {
     const { token } = data
 
-    return fetch(`${import.meta.env.VITE_API_URL}/couples/info`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/couples/invite`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
@@ -18,11 +18,10 @@ export const getCoupleInfo = () => {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { partnerName, daysInRelationship } = body.status
+                        const { inviteCode } = body
 
-                        return { partnerName, daysInRelationship }
+                        return inviteCode
                     })
-
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {

@@ -1,18 +1,18 @@
-import { Routes, Route, useNavigate } from "react-router"
+import { Routes, Route, useNavigate } from 'react-router'
 
-import { Calendar } from "./Calendar"
-import { Diary } from "./Diary"
-import { Feelings } from "./Feelings"
-import { FunctionSelect } from "./FunctionSelect"
-import { Lists } from "./Lists"
+import { Calendar } from './Calendar'
+import { Diary } from './Diary'
+import { Feelings } from './Feelings'
+import { MainMenu } from './MainMenu'
+import { Lists } from './Lists'
 
-import { logic } from "../../logic"
+import { logic } from '../../logic'
 
 export function Home({ onUserLoggedOut }) {
   const navigate = useNavigate()
 
   const handleLogoutClick = () => {
-    const accepted = confirm("Do you want to logout?")
+    const accepted = confirm('Do you want to logout?')
     if (accepted)
       try {
         logic.logoutUser()
@@ -25,20 +25,24 @@ export function Home({ onUserLoggedOut }) {
       }
   }
 
+  const handleCoupleCreated = () => {
+    navigate('/home')
+  }
+
   const handleCalendarClick = () => {
-    navigate("/calendar")
+    navigate('/calendar')
   }
 
   const handleListsClick = () => {
-    navigate("/lists")
+    navigate('/lists')
   }
 
   const handleDiaryClick = () => {
-    navigate("/diary")
+    navigate('/diary')
   }
 
   const handleFeelingsClick = () => {
-    navigate("/feelings")
+    navigate('/feelings')
   }
 
   return (
@@ -53,7 +57,9 @@ export function Home({ onUserLoggedOut }) {
       </div>
 
       <Routes>
-        <Route path='/home' element={<FunctionSelect onCalendarClick={handleCalendarClick} onListsClick={handleListsClick} onDiaryClick={handleDiaryClick} onFeelingsClick={handleFeelingsClick} />} />
+        <Route path='/invite' element={<InviteScreen onCoupleCreated={handleCoupleCreated} />} />
+
+        <Route path='/home' element={<MainMenu onCalendarClick={handleCalendarClick} onListsClick={handleListsClick} onDiaryClick={handleDiaryClick} onFeelingsClick={handleFeelingsClick} />} />
 
         <Route path='/calendar' element={<Calendar />} />
 

@@ -3,10 +3,10 @@ import { errors } from 'com'
 
 const { SystemError } = errors
 
-export const getCoupleInfo = () => {
+export const isUserInCouple = () => {
     const { token } = data
 
-    return fetch(`${import.meta.env.VITE_API_URL}/couples/info`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/couples/couple-status`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
@@ -18,9 +18,9 @@ export const getCoupleInfo = () => {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { partnerName, daysInRelationship } = body.status
+                        const { status } = body
 
-                        return { partnerName, daysInRelationship }
+                        return status
                     })
 
             return response.json()
