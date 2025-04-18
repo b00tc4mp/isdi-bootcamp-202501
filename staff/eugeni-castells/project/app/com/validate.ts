@@ -26,10 +26,10 @@ export const validate = {
     this.minLength(password, 8, "password");
     this.maxLength(password, 50, "password");
   },
-  hashedPassword: function (password: string) {
-    this.text(password, "password");
-    this.minLength(password, 50, "password");
-    this.maxLength(password, 100, "password");
+  hashedPassword: function (password: string, explain: string) {
+    this.text(password, explain);
+    this.minLength(password, 50, explain);
+    this.maxLength(password, 100, explain);
   },
   maxLength: function (
     value: string,
@@ -48,12 +48,12 @@ export const validate = {
       throw new ValidationError("invalid " + explain + " range error");
   },
   url(url: string, explain: string): void {
-    this.string(url, explain);
+    this.string(url, "url");
     if (!constant.URL_REGEX.test(url))
       throw new ValidationError(`invalid url syntax`);
   },
   id(id: string, explain: string): void {
-    this.text(id, explain);
+    this.text(id, "id");
 
     if (!constant.OBJECT_ID_REGEX.test(id))
       throw new ValidationError(`invalid id as ObjectId syntax`);

@@ -9,6 +9,11 @@ class NotFoundError extends Error {
   }
 }
 
+class LocationError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
 class CredentialsError extends Error {
   constructor(message: string) {
     super(message);
@@ -56,6 +61,7 @@ const errors = {
   DuplicityError,
   ValidationError,
   AuthorizationError,
+  LocationError,
 };
 
 export default errors;
