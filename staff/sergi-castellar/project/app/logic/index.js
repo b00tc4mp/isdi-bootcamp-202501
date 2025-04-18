@@ -4,6 +4,7 @@ import { getCoupleInfo } from './getCoupleInfo'
 import { getCurrentUser } from './getCurrentUser'
 import { isUserInCouple } from './isUserInCouple'
 import { isUserLoggedIn } from './isUserLoggedIn'
+import { joinWithInviteCode } from './joinWithInviteCode'
 import { loginUser } from './loginUser'
 import { logoutUser } from './logoutUser'
 import { registerUser } from './registerUser'
@@ -15,6 +16,7 @@ export const logic = {
     getCurrentUser,
     isUserInCouple,
     isUserLoggedIn,
+    joinWithInviteCode,
     loginUser,
     logoutUser,
     registerUser

@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react"
-import { Routes, Route, useNavigate, Navigate } from "react-router"
+import { useState, useEffect } from 'react'
+import { Routes, Route, useNavigate, Navigate } from 'react-router'
 
-import { Landing } from "./view/Landing"
-import { Register } from "./view/Register"
-import { Login } from "./view/Login"
-import { Home } from "./view/Home"
+import { Landing } from './view/Landing'
+import { Register } from './view/Register'
+import { Login } from './view/Login'
+import { Home } from './view/Home'
 
-import { logic } from "./logic"
+import { logic } from './logic'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null)
@@ -28,32 +28,32 @@ function App() {
 
   const handleNavigateToRegister = () => {
     setShowLanding(false)
-    navigate("/register")
+    navigate('/register')
   }
 
   const handleNavigateToLogin = () => {
     setShowLanding(false)
-    navigate("/login")
+    navigate('/login')
   }
 
   const handleUserRegistered = () => {
     setShowLanding(false)
-    navigate("/login")
+    navigate('/login')
   }
 
   const handleUserLoggedIn = () => {
     setLoggedIn(true)
     setShowLanding(false)
-    navigate("/home")
+    navigate('/home')
   }
 
   const handleUserLoggedOut = () => {
     setLoggedIn(false)
     setShowLanding(false)
-    navigate("/login")
+    navigate('/login')
   }
 
-  console.debug("App -> render")
+  console.debug('App -> render')
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 export function Calendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date())
@@ -19,13 +19,13 @@ export function Calendar() {
 
   const prevMonthDays = []
   for (let i = 0; i < daysNeededBefore; i++) {
-    prevMonthDays.push("")
+    prevMonthDays.push('')
   }
 
   const allDaysInGrid = [...prevMonthDays, ...daysInMonth]
 
-  const monthNameAndYear = `${currentMonth.toLocaleString("en-US", {
-    month: "long",
+  const monthNameAndYear = `${currentMonth.toLocaleString('en-US', {
+    month: 'long',
   })} ${currentMonth.getFullYear()}`
 
   const handlePrevMonth = () => {
@@ -76,7 +76,7 @@ export function Calendar() {
 
           const isToday = new Date().toLocaleDateString() === day.toLocaleDateString()
           return (
-            <div key={index} className={`p-2 cursor-pointer ${isToday ? "bg-blue-200" : "text-gray-700"}`} onClick={() => handleDayClick(day)}>
+            <div key={index} className={`p-2 cursor-pointer ${isToday ? 'bg-blue-200' : 'text-gray-700'}`}>
               <span>{day.getDate()}</span>
             </div>
           )
