@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { Couple, User, DiaryEntry, CalendarEvent, List, ListItem, Feelings, data } from './../data/index.js'
+import { Couple, User, DiaryEntry, CalendarEvent, List, ListItem, Feelings, data, InviteCode } from './../data/index.js'
 import bcrypt from 'bcryptjs'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -7,12 +7,14 @@ const { MONGO_URL, MONGO_DB } = process.env
 data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         return Promise.all([
-            User.deleteMany({}),
+            CalendarEvent.deleteMany({}),
             Couple.deleteMany({}),
             DiaryEntry.deleteMany({}),
-            CalendarEvent.deleteMany({}),
+            Feelings.deleteMany({}),
+            InviteCode.deleteMany({}),
+            ListItem.deleteMany({}),
             List.deleteMany({}),
-            Feelings.deleteMany({})
+            User.deleteMany({}),
         ])
     })
     .then(() => {
@@ -25,7 +27,9 @@ data.connect(MONGO_URL, MONGO_DB)
             { name: "Pepi To", email: "pepito@gmail.com", username: "pepito", password: hash },
             { name: "Pepi Ta", email: "pepita@gmail.com", username: "pepita", password: hash },
             { name: "Macare Na", email: "macarena@gmail.com", username: "macarena", password: hash },
-            { name: "Macare No", email: "macareno@gmail.com", username: "macareno", password: hash }
+            { name: "Macare No", email: "macareno@gmail.com", username: "macareno", password: hash },
+            { name: "Sergi", email: "sergi@gmail.com", username: "sergi", password: hash },
+            { name: "Olga", email: "olga@gmail.com", username: "olga", password: hash }
         ])
     })
     .then(() => {

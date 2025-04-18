@@ -4,21 +4,21 @@ import { logic } from '../logic/index.js'
 
 export const couples = Router()
 
-couples.get('/self', authHandler, withErrorHandling((req, res) => {
+couples.get('/', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.getOwnCouple(userId)
         .then(couple => res.json({ couple }))
 }))
 
-couples.get('/self/info', authHandler, withErrorHandling((req, res) => {
+couples.get('/info', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.getCoupleInfo(userId)
         .then(status => res.json({ status }))
 }))
 
-couples.get('/self/events', authHandler, withErrorHandling((req, res) => {
+couples.get('/events', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
     const { startDate, endDate } = req.query
 
@@ -26,30 +26,22 @@ couples.get('/self/events', authHandler, withErrorHandling((req, res) => {
         .then(events => res.json({ events }))
 }))
 
+couples.get('/invite', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getInviteCode(userId)
+        .then(inviteCode => res.json({ inviteCode }))
+}))
+
 couples.post('/', withErrorHandling((req, res) => {
     //TODO
     return logic.createCouple
 }))
 
+couples.post('/join', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { code } = req.body
 
-// get('/couple/self/events', authHandler, withErrorHandling((req, res) => {
-//     const { userId } = req
-
-//     if (!startDate || !endDate) {
-//         return res.status(400).json({ error: 'End and start dates needed' })
-//     }
-
-//     try {
-//         return getEventsForCouple(coupleId, new Date(startDate), new Date(endDate))
-//         .then() res.status(200).json(events)
-//     } catch (err) {
-//         return res.status(500).json({ error: 'Hubo un error al obtener los eventos' })
-//     }
-// }))
-
-// couples.post('/', jsonBodyParser, withErrorHandling((req, res) => {
-//     // const { userId1, userId2 } = req.body
-
-//     return logic.createCouple(userId1, userId2)
-//         .then(() => res.status(201).send())
-// }))
+    return logic.joinWithInviteCode(userId, code)
+        .then(couple => res.json({ couple }))
+}))

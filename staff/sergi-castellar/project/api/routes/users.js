@@ -7,11 +7,18 @@ const { JWT_SECRET } = process.env
 
 export const users = Router()
 
-users.get('/self', authHandler, withErrorHandling((req, res) => {
+users.get('/', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.getSelfUser(userId)
         .then(user => res.json({ user }))
+}))
+
+users.get('/couple-status', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getIfUserIsInCouple(userId)
+        .then(status => res.json({ status }))
 }))
 
 users.post('/', jsonBodyParser, withErrorHandling((req, res) => {
@@ -32,30 +39,16 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
         })
 }))
 
-users.delete('/self', authHandler, withErrorHandling((req, res) => {
+users.delete('/', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.deleteUser(userId)
         .then(() => res.status(204).send())
 }))
 
-users.patch('/self', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+users.patch('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.editUser(userId)
         .then(() => res.status(204).send())
 }))
-
-
-/*
-
-GET / users / self // Obtener los detalles del usuario autenticado.
-
-GET / users /: userId // Obtener un usuario específico por su userId. cambiarlo por partner como self??? couples/self/partner O users/partner???
-
-GET / users / self / feelings // Obtener los feelings del usuario autenticado.
-
-DELETE / users /: userId // Eliminar un usuario específico por su userId.
-
-PATCH / users /: userId // Modificar los detalles de un usuario específico por su userId.
-*/

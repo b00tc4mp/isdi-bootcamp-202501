@@ -64,6 +64,24 @@ const couple = new Schema({
     }
 })
 
+const inviteCode = new Schema({
+    code: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    createdBy: {
+        type: Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    }
+})
+
 const diaryEntry = new Schema({
     couple: {
         type: ObjectId,
@@ -214,6 +232,7 @@ const feelings = new Schema({
 
 const User = model('User', user)
 const Couple = model('Couple', couple)
+const InviteCode = model('InviteCode', inviteCode)
 const DiaryEntry = model('DiaryEntry', diaryEntry)
 const CalendarEvent = model('CalendarEvent', calendarEvent)
 const ListItem = model('ListItem', listItem)
@@ -223,6 +242,7 @@ const Feelings = model('Feelings', feelings)
 export {
     User,
     Couple,
+    InviteCode,
     DiaryEntry,
     CalendarEvent,
     ListItem,
