@@ -5,7 +5,7 @@ const { NotFoundError, SystemError } = errors
 
 const getUserAlias = (
     userId: string
-): Promise<{ alias: string}> => {
+): Promise<{ alias: string }> => {
     validate.id(userId)
 
     return User.findById(userId).lean()

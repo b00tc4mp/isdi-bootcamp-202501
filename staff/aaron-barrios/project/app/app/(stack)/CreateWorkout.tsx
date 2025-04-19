@@ -18,6 +18,7 @@ export default function CreateWorkout() {
     const router = useRouter()
     const [name, setName] = useState("")
     const [muscleGroup, setMuscleGroup] = useState("")
+    const [image, setImage] = useState("")
     const [type, setType] = useState("")
     const [difficulty, setDifficulty] = useState("")
     const [description, setDescription] = useState("")
@@ -50,6 +51,9 @@ export default function CreateWorkout() {
 
             <Text style={styles.label}>Muscle Group</Text>
             <TextInput style={styles.input} value={muscleGroup} onChangeText={setMuscleGroup} />
+
+            <Text style={styles.label}>Feed Image</Text>
+            <TextInput style={styles.input} value={image} onChangeText={setImage} />
 
             <Text style={styles.label}>Type</Text>
             <TextInput style={styles.input} value={type} onChangeText={setType} />

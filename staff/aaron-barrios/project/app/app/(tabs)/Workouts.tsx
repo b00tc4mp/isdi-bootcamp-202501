@@ -19,9 +19,9 @@ import { WorkoutType } from "com/types"
 export default function Workouts() {
     const router = useRouter()
     const [workouts, setWorkouts] = useState<WorkoutType[]>([])
-    const [loading, setLoading] = useState(true)
-    const [refreshing, setRefreshing] = useState(false)
-    const [selectedGroup, setSelectedGroup] = useState<string>("")
+    const [loading, setLoading] = useState(true) //=> state to control first entry to the screen
+    const [refreshing, setRefreshing] = useState(false) //=> state to control refreshes (pulls) to the screen
+    const [selectedGroup, setSelectedGroup] = useState<string>("") //=> state to control filters applied to the screen
 
     const loadWorkouts = () => {
         setLoading(true)
