@@ -8,6 +8,7 @@ import { joinWithInviteCode } from './joinWithInviteCode'
 import { loginUser } from './loginUser'
 import { logoutUser } from './logoutUser'
 import { registerUser } from './registerUser'
+import { setCoupleStartDate } from './setCoupleStartDate'
 
 export const logic = {
     generateInviteCode,
@@ -19,5 +20,6 @@ export const logic = {
     joinWithInviteCode,
     loginUser,
     logoutUser,
-    registerUser
+    registerUser,
+    setCoupleStartDate
 }

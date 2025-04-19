@@ -6,7 +6,8 @@ import { Diary } from './Diary'
 import { Feelings } from './Feelings'
 import { MainMenu } from './MainMenu'
 import { Lists } from './Lists'
-import { InviteScreen } from '../InviteScreen'
+import { InviteScreen } from './InviteScreen'
+import { SetDateStart } from './SetDateStart'
 
 import { logic } from '../../logic'
 
@@ -16,6 +17,7 @@ export function Home({ onUserLoggedOut }) {
 
   const [isInCouple, setIsInCouple] = useState(null)
   const [isInCoupleLoaded, setIsInCoupleLoaded] = useState(false)
+  const [hasDateStart, setHasDateStart] = useState(null)
 
   useEffect(() => {
     try {
@@ -23,24 +25,34 @@ export function Home({ onUserLoggedOut }) {
         .isUserInCouple()
         .then((result) => {
           setIsInCouple(result)
-          setIsInCoupleLoaded(true)
 
-          if (result && location.pathname === '/invite') {
-            navigate('/home', { replace: true })
+          if (!result) {
+            setIsInCoupleLoaded(true)
+            if (location.pathname !== '/invite') {
+              navigate('/invite', { replace: true })
+            }
+            return
           }
 
-          if (!result && location.pathname !== '/invite') {
-            navigate('/invite', { replace: true })
-          }
+          // Si está en pareja, comprobamos si tiene fecha
+          logic.getCoupleInfo().then(({ daysInRelationship }) => {
+            const hasDate = daysInRelationship > 0
+            setHasDateStart(hasDate)
+            setIsInCoupleLoaded(true)
+
+            if (!hasDate && location.pathname !== '/set-date-start') {
+              navigate('/set-date-start', { replace: true })
+            } else if (hasDate && location.pathname === '/invite') {
+              navigate('/home', { replace: true })
+            }
+          })
         })
         .catch((error) => {
           console.error(error)
-
           alert(error.message)
         })
     } catch (error) {
       console.error(error)
-
       alert(error.message)
     }
   }, [location.pathname, navigate])
@@ -89,7 +101,17 @@ export function Home({ onUserLoggedOut }) {
       </div>
 
       <Routes>
-        {isInCouple ? (
+        {!isInCouple ? (
+          <>
+            <Route path='/invite' element={<InviteScreen />} />
+            <Route path='/*' element={<Navigate to='/invite' />} />
+          </>
+        ) : !hasDateStart ? (
+          <>
+            <Route path='/set-date-start' element={<SetDateStart />} />
+            <Route path='/*' element={<Navigate to='/set-date-start' />} />
+          </>
+        ) : (
           <>
             <Route path='/home' element={<MainMenu onCalendarClick={handleCalendarClick} onListsClick={handleListsClick} onDiaryClick={handleDiaryClick} onFeelingsClick={handleFeelingsClick} />} />
             <Route path='/calendar' element={<Calendar />} />
@@ -97,11 +119,7 @@ export function Home({ onUserLoggedOut }) {
             <Route path='/diary' element={<Diary />} />
             <Route path='/feelings' element={<Feelings />} />
             <Route path='/invite' element={<Navigate to='/home' />} />
-          </>
-        ) : (
-          <>
-            <Route path='/invite' element={<InviteScreen />} />
-            <Route path='*' element={<Navigate to='/invite' />} />
+            <Route path='/set-date-start' element={<Navigate to='/home' />} />
           </>
         )}
       </Routes>

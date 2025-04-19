@@ -21,8 +21,7 @@ export const registerUser = (name, email, username, password, password2) => {
         .then(response => {
             console.log(response.status)
 
-            if (response.status === 201)
-                return
+            if (response.status === 201) return
 
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })

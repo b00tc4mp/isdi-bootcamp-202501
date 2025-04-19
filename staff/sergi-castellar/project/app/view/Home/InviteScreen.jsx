@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { logic } from '../logic'
+import { logic } from '../../logic'
 
 export function InviteScreen() {
   const [code, setCode] = useState('')
@@ -17,6 +17,7 @@ export function InviteScreen() {
       })
       .catch((error) => {
         console.error(error)
+
         alert(error.message)
       })
   }
@@ -29,6 +30,7 @@ export function InviteScreen() {
       })
       .catch((error) => {
         console.error(error)
+
         alert(error.message)
       })
   }

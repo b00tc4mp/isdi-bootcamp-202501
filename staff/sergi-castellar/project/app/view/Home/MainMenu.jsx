@@ -51,7 +51,7 @@ export function MainMenu({ onCalendarClick, onListsClick, onDiaryClick, onFeelin
   const handleFeelingsClick = () => onFeelingsClick()
 
   return (
-    <div className='bg-pink-100 flex flex-col items-center justify-center space-y-4'>
+    <div className='bg-pink-100 min-h-screen flex flex-col items-center justify-start space-y-4'>
       <h2 className='text-3xl font-bold text-center text-gray-800'>Welcome again, {user ? user.username : ''}</h2>
       <div className='text-center bg-white p-4 rounded-3xl shadow-lg max-w-md mx-auto'>
         <div className='flex justify-center items-center space-x-2'>
