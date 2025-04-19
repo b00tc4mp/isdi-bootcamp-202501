@@ -1,56 +1,95 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "expo-router"
-import { FlatList, Image, StyleSheet, ActivityIndicator } from "react-native"
+import {
+    FlatList,
+    Image,
+    StyleSheet,
+    ActivityIndicator,
+    RefreshControl,
+    Pressable,
+    Button,
+    Platform
+} from "react-native"
+import { Picker } from "@react-native-picker/picker"
 import { Text, View } from "@/components/Themed"
-import { Button } from "react-native"
 
-import { getAllWorkouts } from "@/services/workouts"
+import getAllWorkouts from "@/services/workouts/getAllWorkouts"
 import { WorkoutType } from "com/types"
 
 export default function Workouts() {
     const router = useRouter()
     const [workouts, setWorkouts] = useState<WorkoutType[]>([])
     const [loading, setLoading] = useState(true)
+    const [refreshing, setRefreshing] = useState(false)
+    const [selectedGroup, setSelectedGroup] = useState<string>("")
 
-    useEffect(() => {
+    const loadWorkouts = () => {
+        setLoading(true)
         getAllWorkouts()
             .then(data => setWorkouts(data))
             .catch(error => console.error("Failed to fetch workouts:", error))
             .finally(() => setLoading(false))
+    }
+
+    const handleRefresh = () => {
+        setRefreshing(true)
+        getAllWorkouts()
+            .then(data => setWorkouts(data))
+            .catch(error => console.error("Failed to refresh workouts:", error))
+            .finally(() => setRefreshing(false))
+    }
+
+    useEffect(() => {
+        loadWorkouts()
     }, [])
 
     return (
-        <View style={styles.container} >
-            <Text style={styles.title}> Workouts </Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Workouts</Text>
 
-            < View style={styles.dropdown} >
-                <Text>Muscle Group ⌄</Text>
+            <View style={styles.dropdownContainer}>
+                <Picker
+                    selectedValue={selectedGroup}
+                    onValueChange={(itemValue) => setSelectedGroup(itemValue)}
+                    style={styles.picker}
+                >
+                    <Picker.Item label="All Muscle Groups" value="" />
+                    <Picker.Item label="Chest" value="chest" />
+                    <Picker.Item label="Back" value="back" />
+                    <Picker.Item label="Legs" value="legs" />
+                    <Picker.Item label="Buttocks" value="buttocks" />
+                    <Picker.Item label="Arms" value="arms" />
+                </Picker>
             </View>
 
-            < View style={styles.filters} >
+            <View style={styles.filters}>
                 <FilterChip label="Popular" />
                 <FilterChip label="Most saved" />
                 <FilterChip label="Recent" />
                 <FilterChip label="Type" />
             </View>
 
-            < Button title="+ Add Workout" /*onPress={() => router.push("/(tabs)/Workouts/Create")
-            } *//>
+            <Button
+                title="+ Add Workout"
+                onPress={() => router.push("/(stack)/CreateWorkout" as any)}
+            />
 
-            {
-                loading ? (
-                    <ActivityIndicator size="large" color="#888" style={{ marginTop: 20 }
-                    } />
-                ) : (
-                    <FlatList
-                        data={workouts}
-                        keyExtractor={item => item.id}
-                        contentContainerStyle={styles.list}
-                        renderItem={({ item }) => (
+            {loading ? (
+                <ActivityIndicator size="large" color="#888" style={{ marginTop: 20 }} />
+            ) : (
+                <FlatList
+                    data={workouts}
+                    keyExtractor={item => item.id}
+                    contentContainerStyle={styles.list}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                    }
+                    renderItem={({ item }) => (
+                        <Pressable onPress={() => item.id && router.push(`/(tabs)/Workouts/${item.id}` as any)}>
                             <View style={styles.card}>
                                 <Image
                                     style={styles.image}
-                                    source={{ uri: item.images?.[0] ?? "https://via.placeholder.com/80" }}
+                                    source={{ uri: item.images?.[0] ?? "https://via.placeholder.com/120" }}
                                 />
                                 <View style={styles.info}>
                                     <Text style={styles.name}>{item.name}</Text>
@@ -62,18 +101,18 @@ export default function Workouts() {
                                     </View>
                                 </View>
                             </View>
-                        )}
-
-                    />
-                )}
+                        </Pressable>
+                    )}
+                />
+            )}
         </View>
     )
 }
 
 function FilterChip({ label }: { label: string }) {
     return (
-        <View style={styles.chip} >
-            <Text style={styles.chipText}> {label} </Text>
+        <View style={styles.chip}>
+            <Text style={styles.chipText}>{label}</Text>
         </View>
     )
 }
@@ -88,12 +127,16 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 16,
     },
-    dropdown: {
+    dropdownContainer: {
         backgroundColor: "#ddd",
-        padding: 8,
         borderRadius: 8,
         marginBottom: 12,
-        alignSelf: "flex-start",
+        alignSelf: "stretch",
+        overflow: "hidden"
+    },
+    picker: {
+        height: Platform.OS === "ios" ? 200 : 40,
+        width: "100%",
     },
     filters: {
         flexDirection: "row",
@@ -116,25 +159,30 @@ const styles = StyleSheet.create({
     },
     card: {
         flexDirection: "row",
-        marginBottom: 12,
+        marginBottom: 16,
         backgroundColor: "#eee",
-        borderRadius: 12,
-        padding: 12,
+        borderRadius: 16,
+        padding: 16,
         alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
     },
     image: {
-        width: 80,
-        height: 80,
+        width: 100,
+        height: 100,
         backgroundColor: "#bbb",
-        borderRadius: 8,
-        marginRight: 12,
+        borderRadius: 12,
+        marginRight: 16,
     },
     info: {
         flex: 1,
     },
     name: {
         fontWeight: "bold",
-        fontSize: 16,
+        fontSize: 18,
     },
     stats: {
         flexDirection: "row",

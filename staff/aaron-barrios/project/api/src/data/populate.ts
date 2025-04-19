@@ -12,7 +12,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
         User.deleteMany({}),
         Workout.deleteMany({})
     ]))
-    .then(() => bcrypt.hash('123123', 10))
+    .then(() => bcrypt.hash('mamama', 10))
     .then(hashedPassword => {
         return User.insertMany([
             {

@@ -59,7 +59,7 @@ describe("delete Workout", () => {
                 description: "best workout to grow chest",
                 difficulty: "easy",
                 type: "strength",
-                status: "accepted",
+                status: "pending",
                 createdAt: new Date()
             },
             {

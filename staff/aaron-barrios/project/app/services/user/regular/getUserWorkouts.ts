@@ -4,12 +4,12 @@ import { WorkoutType } from 'com/types'
 
 const { SystemError, AuthorizationError } = errors
 
-const getUserWorkouts = (userId: string): Promise<WorkoutType[]> => {
+const getUserWorkouts = (targetUserId: string): Promise<WorkoutType[]> => {
     return data.getToken()
         .then(token => {
             if (!token) throw new AuthorizationError('No token found')
 
-            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts/user/${userId}`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts/user/${targetUserId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

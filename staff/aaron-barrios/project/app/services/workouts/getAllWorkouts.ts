@@ -23,10 +23,9 @@ const getAllWorkouts = (): Promise<WorkoutType[]> => {
                 throw new Constructor(message)
             }
 
-            return body as WorkoutType[]
+            return body.workouts as WorkoutType[]
         })
         .catch(error => {
-            console.error(error)
             throw new SystemError(error.message)
         })
 }

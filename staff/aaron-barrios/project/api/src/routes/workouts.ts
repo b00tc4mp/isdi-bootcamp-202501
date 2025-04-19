@@ -2,7 +2,7 @@ import { Router } from "express"
 
 import {
     createWorkoutSchema
-} from "../data/schemas/zodSchemas"
+} from "../data/zodSchemas/workoutSchemas"
 
 import {
     validationHandler,
@@ -11,56 +11,75 @@ import {
 } from "../middlewares"
 
 import {
-    getAllWorkoutsHandler
+    getAllWorkoutsHandler,
+    getWorkoutByIdHandler,
+    createWorkoutHandler,
+    deleteWorkoutHandler
 } from "../handlers/workouts"
 
 export const workoutRouter = Router()
 
 
+// ---------- GET ROUTES ----------
 // --- GET WORKOUT BY ID METHOD ---
 workoutRouter.get(
     "/:workoutId",
-    jsonBodyParser,
-    // validationHandler(createWorkoutSchema),
-    //createWorkoutHandler
+    authHandler,
+    getWorkoutByIdHandler
 )
 
 // --- GET ALL WORKOUTS METHOD ---
 workoutRouter.get(
     "/",
-    jsonBodyParser,
-    // validationHandler(createWorkoutSchema),
-    //createWorkoutHandler
+    authHandler,
+    getAllWorkoutsHandler
 )
 
+
+// ---------- POST ROUTES ----------
 // --- CREATE WORKOUT METHOD ---
 workoutRouter.post(
     "/",
     jsonBodyParser,
+    validationHandler(createWorkoutSchema),
+    createWorkoutHandler
+)
+
+//  --- FILTER WORKOUT METHOD ---
+workoutRouter.post(
+    '/:workoutId/filter',
+    jsonBodyParser,
     // validationHandler(createWorkoutSchema),
     //createWorkoutHandler
 )
 
-//  ----- TOGGLE LIKE WORKOUT METHOD-----
+// ----- DELETE ROUTES -----
+// --- DELETE WORKOUT METHOD ---
+workoutRouter.delete(
+    "/:workoutId",
+    authHandler,
+    deleteWorkoutHandler
+)
+
+
+// ---------- PATCH ROUTES ----------
+//  --- TOGGLE LIKE WORKOUT METHOD ---
 workoutRouter.patch(
-    '/:postId/likes',
-    jsonBodyParser,
-    //validationHandler(createWorkoutSchema),
+    '/:workoutId/likes',
+    authHandler,
     //createWorkoutHandler
 )
 
-//  ----- SAVE WORKOUT METHOD-----
+//  --- SAVE WORKOUT METHOD ---
 workoutRouter.patch(
-    '/:postId/saves',
-    jsonBodyParser,
-    //validationHandler(createWorkoutSchema),
+    '/:workoutId/saves',
+    authHandler,
     //createWorkoutHandler
 )
 
-//  ----- EDIT WORKOUT METHOD-----
+//  --- UPDATE/EDIT WORKOUT METHOD ---
 workoutRouter.patch(
-    '/:postId/update',
+    '/:workoutId/update',
     jsonBodyParser,
-    //validationHandler(createWorkoutSchema),
     //createWorkoutHandler
 )

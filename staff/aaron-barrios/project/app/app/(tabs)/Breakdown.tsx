@@ -1,19 +1,20 @@
-import { Button, StyleSheet } from "react-native"
-import { useRouter } from "expo-router"
-
+import { StyleSheet, Image } from "react-native"
 import { Text, View } from "@/components/Themed"
 
 export default function Breakdown() {
-    const router = useRouter()
-
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Breakdown</Text>
-            <View style={styles.container}>
-                <Text style={styles.title}>Your Progress!</Text>
-                <View style={styles.button}>
-                    {/* <Button title="Create Workout" onPress={() => router.push("/(tabs)/Home" as any)} /> */}
-                </View>
+
+            <View style={styles.content}>
+                <Image
+                    source={{ uri: "https://cdn-icons-png.flaticon.com/512/6840/6840478.png" }}
+                    style={styles.image}
+                />
+                <Text style={styles.subtitle}>Coming Soon</Text>
+                <Text style={styles.description}>
+                    We're working hard to bring you detailed progress tracking including AI-powered insights about your body composition.
+                </Text>
             </View>
         </View>
     )
@@ -22,22 +23,36 @@ export default function Breakdown() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 24,
-        justifyContent: "center",
-        backgroundColor: "#f0f0f0"
+        padding: 16,
+        backgroundColor: "#f0f0f0",
     },
     title: {
         fontSize: 32,
         fontWeight: "bold",
-        alignSelf: "flex-start",
-        marginBottom: 12
+        marginBottom: 24,
     },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: "80%",
+    content: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 20,
     },
-    button: {
-        marginBottom: 16
-    }
+    image: {
+        width: 120,
+        height: 120,
+        marginBottom: 24,
+        opacity: 0.8,
+    },
+    subtitle: {
+        fontSize: 24,
+        fontWeight: "600",
+        marginBottom: 12,
+    },
+    description: {
+        fontSize: 16,
+        textAlign: "center",
+        color: "#666",
+        maxWidth: 320,
+        lineHeight: 22,
+    },
 })

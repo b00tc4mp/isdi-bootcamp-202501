@@ -24,7 +24,7 @@ const registerUser = (
             if (response.status === 201) return // HAPPY PATH
 
             return response.json()
-                .catch(error => { debugger; throw new SystemError(error.message) })
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
                     const constructor = errors[error as keyof typeof errors] || SystemError

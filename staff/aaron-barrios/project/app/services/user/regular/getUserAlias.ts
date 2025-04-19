@@ -9,7 +9,7 @@ const getUserAlias = (): Promise<{ alias: string }> => {
         .then(token => {
             if (!token) throw new SystemError("No token found")
 
-            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/auth/self`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/self/alias`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`

@@ -3,7 +3,7 @@ import { Router } from "express"
 import {
     registerUserSchema,
     authenticateUserSchema
-} from "../data/schemas/zodSchemas"
+} from "../data/zodSchemas/userSchemas"
 
 import {
     registerUserHandler,
@@ -12,7 +12,8 @@ import {
 
 import {
     getUserAliasHandler,
-    getCurrentUserHandler
+    getCurrentUserHandler,
+    getUserWorkoutsHandler
 } from "../handlers/user/regular"
 
 import {
@@ -32,9 +33,11 @@ export const userRouter = Router()
 
 
 // -------------------- REGULAR USER ------------------
+
+// ----- GET ROUTES -----
 // --- GET USER ALIAS METHOD ---
 userRouter.get(
-    "/self/data",
+    "/self/alias",
     authHandler,
     getUserAliasHandler
 )
@@ -46,7 +49,22 @@ userRouter.get(
     getCurrentUserHandler
 )
 
+// --- GET USER WORKOUTS METHOD
+userRouter.get(
+    "/:targetUserId/workouts",
+    authHandler,
+    getUserWorkoutsHandler
+)
 
+// --- GET USER ROUTINES METHOD --- (WIP)
+userRouter.get(
+    "/:targetUserId/routines",
+    authHandler,
+    // authenticateUserHandler
+)
+
+
+// ----- POST ROUTES -----
 // --- REGISTER USER METHOD ---
 userRouter.post(
     "/",
@@ -64,25 +82,11 @@ userRouter.post(
     authenticateUserHandler
 )
 
-// --- GET USER WORKOUTS METHOD --- (WIP)
-userRouter.post(
-    "/:targetUserId/workouts",
-    jsonBodyParser,
-    // validationHandler(authenticateUserSchema),
-    // authenticateUserHandler
-)
-
-// --- GET USER WORKOUTS METHOD --- (WIP)
-userRouter.post(
-    "/:targetUserId/routines",
-    jsonBodyParser,
-    // validationHandler(authenticateUserSchema),
-    // authenticateUserHandler
-)
-
 
 
 // -------------------- ANONYM USER ------------------
+
+// ----- POST ROUTES -----
 // --- GENERATE ANONYM USER METHOD ---
 userRouter.post(
     "/auth/anon",
@@ -90,6 +94,8 @@ userRouter.post(
     generateAnonymUserHandler
 )
 
+
+// ----- DELETE ROUTES -----
 // --- DELETE ANONYM USER METHOD ---
 userRouter.delete(
     "/auth/anon",

@@ -153,13 +153,17 @@ RoutineWorkout
 - HTML/CSS/JS (...)
 - TypeScript
 - React (...)
+- React Native (...)
 - Node (...)
 - Express (...)
 - MongoDB/SH (...)
 - Mongoose
 - Mocha & Chai (...)
-- Tailwind
 - JWT 
+- Zod
+- Morgan
+- Winston
+- c8
 - [...]
 
 ### Test Coverage

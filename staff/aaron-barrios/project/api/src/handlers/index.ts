@@ -19,7 +19,10 @@ import {
 } from './user/regular'
 
 import {
-    getAllWorkoutsHandler
+    getAllWorkoutsHandler,
+    getWorkoutByIdHandler,
+    createWorkoutHandler,
+    deleteWorkoutHandler
 } from './workouts'
 
 
@@ -35,6 +38,9 @@ const services = {
     updateUserDataHandler,
 
     getAllWorkoutsHandler,
+    getWorkoutByIdHandler,
+    createWorkoutHandler,
+    deleteWorkoutHandler
 }
 
 export default services

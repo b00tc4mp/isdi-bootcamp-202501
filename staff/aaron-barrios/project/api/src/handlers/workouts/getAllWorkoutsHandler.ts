@@ -1,20 +1,16 @@
 import { Request, Response } from "express"
 
-import getAllWorkouts from "../../services/workout/getAllWorkouts"
+import { getAllWorkouts } from "../../services/workout"
 import { AuthHandlerRequest } from "../../middlewares/types"
+import { createFunctionalHandler } from "../../middlewares"
 
-export default function getAllWorkoutsHandler(
-    req: Request,
-    res: Response
-): void {
-    const userId = (req as AuthHandlerRequest).userId
+const getAllWorkoutsHandler = createFunctionalHandler(
+    (req: Request, res: Response) => {
+        const userId = (req as AuthHandlerRequest).userId
 
-    getAllWorkouts(userId)
-        .then(result => {
-            res.status(200).json(result)
-        })
-        .catch(error => {
-            console.error(error)
-            res.status(500).json({ error: "SystemError", message: "Failed to retrieve workouts" })
-        })
-}
+        return getAllWorkouts(userId)
+            .then(workouts => { res.status(200).json(workouts) })
+    }
+)
+
+export default getAllWorkoutsHandler
