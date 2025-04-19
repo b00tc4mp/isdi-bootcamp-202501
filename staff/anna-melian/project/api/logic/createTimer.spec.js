@@ -19,6 +19,7 @@ describe('createTimer', () => {
 
     it('succeeds on existing user', () => {
         let user
+        let timerId
 
         return Promise.all([User.create({
             name: 'Harry Potter',
@@ -30,17 +31,18 @@ describe('createTimer', () => {
             .then(([_user]) => {
                 user = _user
             })
-            .then(() => Promise.all([
-                Timer.create({ author: user.id, time: 50, pauseTime: 3, tag: 'Study', status: 'created', createdAt: new Date(2025, 1, 11) })
-            ]))
+            .then(() => createTimer(user.id, 50, 3, 'Study'))
+            .then(newTimerId => timerId = newTimerId)
 
-            .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
+            .then(() => Timer.findById(timerId).lean())
             .then(timer => {
+                expect(timerId).to.be.a('string')
                 expect(timer.status).to.be.a('string')
                 expect(timer.status).to.equal('created')
                 expect(timer.time).to.equal(50)
                 expect(timer.pauseTime).to.equal(3)
                 expect(timer.tag).to.equal('Study')
+                expect(timer.author.toString()).to.equal(user.id)
             })
 
     })

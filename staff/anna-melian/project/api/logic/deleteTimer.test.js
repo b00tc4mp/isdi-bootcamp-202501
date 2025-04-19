@@ -1,22 +1,23 @@
 import 'dotenv/config'
 import { data } from '../data/index.js';
-import { createTimer } from './createTimer.js'
+import { deleteTimer } from './deleteTimer.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-console.info('TEST createTimer')
+console.info('TEST deleteTimer')
 
 data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
             let result2 = null
 
-            return createTimer('67ff906120b4f615405196fa', 70, 5, 'Work')
+            return deleteTimer('67ec4499711dacde62ff0d8b', '67ec4499711dacde62ff0d8e')
                 .then(result => result2 = result)
-                .finally(() => console.assert(typeof result2 === 'string', 'result is a string (timer ID)'))
+                .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
     })
     .catch(error => console.error(error))
     .finally(() => data.disconnect())
+

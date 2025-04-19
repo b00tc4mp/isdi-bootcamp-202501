@@ -19,7 +19,7 @@ data.connect(MONGO_URL, MONGO_DB)
             })
             .then(([anna, hermione]) => {
                 return Timer.insertMany([
-                    { author: anna.id, time: 60, startDate: new Date, pauseTime: 5, pausesCount: 2, tag: 'Study', status: 'active', createdAt: new Date(2025, 1, 11) }
+                    { author: anna.id, time: 60, startDate: new Date, endDate: new Date, pauseTime: 5, pausesCount: 2, tag: 'Study', status: 'end', createdAt: new Date(2025, 1, 11) }
                 ])
             })
     })

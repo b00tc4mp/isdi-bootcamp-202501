@@ -3,11 +3,9 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError, OwnershipError, TimerError } = errors
 
-export const startTimer = (userId, timerId) => {
+export const deleteTimer = (userId, timerId) => {
     validate.id(userId, 'userId')
     validate.id(timerId, 'timerId')
-
-    let time
 
     return Promise.all([
         User.findById(userId).lean(),
@@ -20,17 +18,10 @@ export const startTimer = (userId, timerId) => {
 
             if (timer.author.toString() !== userId) throw new OwnershipError('user is not author of timer')
 
-            if (timer.startDate !== null) throw new TimerError('timer already start')
+            if (timer.status !== 'created') throw new TimerError('timer is active or finish and not able to delete')
 
-            time = timer.time
-
-            return Timer.updateOne({ _id: timerId }, {
-                $set: {
-                    startDate: new Date,
-                    status: 'active'
-                }
-            })
+            return Timer.deleteOne({ _id: timerId })
                 .catch(error => { throw new SystemError(error.message) })
         })
-        .then(() => time)
+        .then(() => { })
 }

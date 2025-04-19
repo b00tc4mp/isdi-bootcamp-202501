@@ -27,8 +27,8 @@ export const createTimer = (userId, time, pauseTime, tag) => {
 
                     return Timer.create(timer)
                         .catch(error => { throw new SystemError(error.message) })
+                        .then(newTimer => newTimer._id.toString())
 
                 })
         })
-        .then(() => { })
 }

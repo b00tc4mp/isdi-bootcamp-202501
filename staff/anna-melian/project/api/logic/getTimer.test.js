@@ -1,18 +1,19 @@
 import 'dotenv/config'
 import { data } from '../data/index.js'
-import { startTimer } from './startTimer.js'
+import { getTimer } from './getTimer.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-console.info('TEST startTimer')
+console.info('TEST getTimer')
 
 data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
-            let setTime = null
-            return startTimer('67ff906120b4f615405196fa', '67ff90b3998f40bc9b4fec28')
-                .then(time => setTime = time)
-                .finally(() => console.assert(setTime === 50, 'result is time value'))
+            let timer2
+
+            return getTimer('67e68089f5c84b6bb4b3e9d0', '67e68089f5c84b6bb4b3e9d0')
+                .then(timer => timer2 = timer)
+                .finally(() => console.assert(timer2 instanceof Object, 'timer2 is an object'))
         } catch (error) {
             console.error(error)
         }

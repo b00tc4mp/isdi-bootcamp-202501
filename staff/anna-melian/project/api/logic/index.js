@@ -8,6 +8,8 @@ import { exitTimer } from './exitTimer.js'
 import { resumeTimer } from './resumeTimer.js'
 import { setAndStartExtraTime } from './setAndStartExtraTime.js'
 import { getUserGems } from './getUserGems.js'
+import { getTimer } from './getTimer.js'
+import { deleteTimer } from './deleteTimer.js'
 
 export const logic = {
     authenticateUser,
@@ -19,5 +21,7 @@ export const logic = {
     exitTimer,
     resumeTimer,
     setAndStartExtraTime,
-    getUserGems
+    getUserGems,
+    getTimer,
+    deleteTimer
 }

@@ -43,5 +43,5 @@ export const setAndStartExtraTime = (userId, timerId, timeExtra) => {
             })
                 .catch(error => { throw new SystemError(error.message) })
         })
-        .then(() => { })
+        .then(() => timeExtra)
 }

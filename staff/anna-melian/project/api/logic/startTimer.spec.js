@@ -38,6 +38,9 @@ describe('startTimer', () => {
                 timer = _timer
             })
             .then(() => startTimer(user.id, timer.id))
+            .then(returnTime => {
+                expect(returnTime).to.equal(50)
+            })
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(timer1 => {
                 timer = timer1

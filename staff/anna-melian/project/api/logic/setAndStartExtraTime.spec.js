@@ -38,6 +38,9 @@ describe('setAndStartExtraTime', () => {
                 timer = _timer
             })
             .then(() => setAndStartExtraTime(user.id, timer.id, 15))
+            .then(returnedExtraTime => {
+                expect(returnedExtraTime).to.equal(15)
+            })
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(timer1 => {
                 timer = timer1

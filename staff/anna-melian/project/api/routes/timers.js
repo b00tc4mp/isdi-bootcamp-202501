@@ -12,7 +12,7 @@ timers.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { time, pauseTime, tag } = req.body
 
     return logic.createTimer(userId, time, pauseTime, tag)
-        .then(() => res.status(201).send())
+        .then((newTimerId) => res.status(201).json({ id: newTimerId }))
 }))
 
 timers.patch('/:timerId/start', authHandler, withErrorHandling((req, res) => {
@@ -68,5 +68,23 @@ timers.patch('/:timerId/extraTime', jsonBodyParser, authHandler, withErrorHandli
     const { timeExtra } = req.body
 
     return logic.setAndStartExtraTime(userId, timerId, timeExtra)
+        .then(() => res.status(204).send())
+}))
+
+timers.get('/:timerId', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    const { timerId } = req.params
+
+    return logic.getTimer(userId, timerId)
+        .then(timer => res.json(timer))
+}))
+
+timers.delete('/:timerId', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    const { timerId } = req.params
+
+    return logic.deleteTimer(userId, timerId)
         .then(() => res.status(204).send())
 }))
