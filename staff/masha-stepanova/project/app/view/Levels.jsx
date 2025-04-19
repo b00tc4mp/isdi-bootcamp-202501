@@ -14,7 +14,7 @@ export function Levels({ onLevelSelected }) {
       <div className='grid gap-4 max-h-[400px] overflow-y-auto py-2'>
         {levels.map((level) => (
           <div key={level.id} onClick={() => onLevelSelected(level)} className='cursor-pointer'>
-            <Level level={level} clickable />
+            <Level level={level} currentState={'closed'} />
           </div>
         ))}
       </div>

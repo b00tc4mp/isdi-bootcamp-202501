@@ -15,6 +15,7 @@ export function Home({ onNavigateToProfile, onUserLoggedOut }) {
   const navigate = useNavigate()
 
   const [activeLevel, setActiveLevel] = useState(null)
+  const [currentLevel, setCurrentLevel] = useState(null)
 
   const { pathname } = useLocation()
 
@@ -33,9 +34,10 @@ export function Home({ onNavigateToProfile, onUserLoggedOut }) {
   const handleLevelSelected = (level) => setActiveLevel(level)
   const handleBackToLevels = () => setActiveLevel(null)
   const handleLogoClick = () => navigate('/')
+
   const handlePlayClick = () => {
     try {
-      // TODO logic.getCurrentLevel()
+      logic.getCurrentLevel().then((currentLevel) => setActiveLevel(currentLevel))
     } catch (error) {
       console.error(error)
 
@@ -62,18 +64,22 @@ export function Home({ onNavigateToProfile, onUserLoggedOut }) {
               activeLevel ? (
                 <div>
                   <button onClick={handleBackToLevels} className='mb-4 text-sm text-purple-700 underline'>
-                    ← Volver a los mundos
+                    ← Return to home
                   </button>
-                  <Level level={activeLevel} />
+                  <Level level={activeLevel} currentState={'opened'} onCancelled={handleBackToLevels} />
                 </div>
               ) : (
                 <>
                   <Ranking currentState={'closed'} />
 
-                  <h2 className='text-lg font-bold mb-2'>🗺️ Mundos</h2>
+                  <h2 className='text-lg font-bold mb-2'>🗺️ Levels map</h2>
                   <Levels onLevelSelected={handleLevelSelected} />
 
-                  <button onClick={handlePlayClick} className='bg-purple-600 hover:bg-purple-400 text-white font-bold py-1 px-4 rounded-lg justify-center items-center mt-2'>
+                  <button
+                    onClick={handlePlayClick}
+                    className='w-full flex items-center justify-start gap-2 transition 
+    py-3 px-4 rounded-lg shadow  bg-purple-600 hover:bg-purple-400 text-white font-bold mt-3 mb-3'
+                  >
                     Play
                   </button>
                 </>

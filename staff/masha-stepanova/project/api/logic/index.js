@@ -6,16 +6,18 @@ import { getLevels } from './getLevels.js'
 import { isLevelPassed } from './isLevelPassed.js'
 import { getUserRanking } from './getUserRanking.js'
 import { getGlobalRanking } from './getGlobalRanking.js'
+import { getCurrentLevel } from './getCurrentLevel.js'
 
 export const logic = {
-    authenticateUser,
-    registerUser,
-    getUserUsername,
-    getUserRanking,
-    getGlobalRanking,
+  authenticateUser,
+  registerUser,
+  getUserUsername,
+  getUserRanking,
+  getGlobalRanking,
 
-    getLevel,
-    getLevels,
-    getLevel,
-    isLevelPassed
+  getLevel,
+  getLevels,
+  getLevel,
+  isLevelPassed,
+  getCurrentLevel,
 }
