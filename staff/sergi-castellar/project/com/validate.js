@@ -66,6 +66,10 @@ export const validate = {
         this.notBlankString(inviteCode, explain)
 
         if (!constant.INVITE_CODE_REGEX.test(inviteCode)) throw new ValidationError(`invalid ${explain} syntax`)
+    },
+    date(date, explain) {
+        if (!(date instanceof Date) || isNaN(date.getTime()))
+            throw new ValidationError(`invalid ${explain} format`)
     }
 }
 
