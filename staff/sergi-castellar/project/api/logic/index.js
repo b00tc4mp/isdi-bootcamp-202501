@@ -1,5 +1,4 @@
 import { authenticateUser } from "./authenticateUser.js"
-import { createCouple } from "./createCouple.js"
 import { deleteUser } from "./deleteUser.js"
 import { editUser } from "./editUser.js"
 import { getCoupleEvents } from "./getCoupleEvents.js"
@@ -10,10 +9,10 @@ import { getOwnCouple } from "./getOwnCouple.js"
 import { getSelfUser } from "./getSelfUser.js"
 import { joinWithInviteCode } from "./joinWithInviteCode.js"
 import { registerUser } from "./registerUser.js"
+import { setCoupleStartDate } from "./setCoupleStartDate.js"
 
 export const logic = {
     authenticateUser,
-    createCouple,
     deleteUser,
     editUser,
     getCoupleEvents,
@@ -23,5 +22,6 @@ export const logic = {
     getOwnCouple,
     getSelfUser,
     joinWithInviteCode,
-    registerUser
+    registerUser,
+    setCoupleStartDate
 }

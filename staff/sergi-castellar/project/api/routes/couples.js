@@ -33,15 +33,18 @@ couples.get('/invite', authHandler, withErrorHandling((req, res) => {
         .then(inviteCode => res.json({ inviteCode }))
 }))
 
-couples.post('/', withErrorHandling((req, res) => {
-    //TODO
-    return logic.createCouple
-}))
-
 couples.post('/join', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
     const { code } = req.body
 
     return logic.joinWithInviteCode(userId, code)
         .then(couple => res.json({ couple }))
+}))
+
+couples.patch('/date-start', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { dateStart } = req.body
+
+    return logic.setCoupleStartDate(userId, new Date(dateStart))
+        .then(() => res.status(204).send())
 }))
