@@ -1,9 +1,11 @@
-import registerUser from './registerUser'
-import authenticateUser from './authenticateUser'
-import getUserData from './getUserData'
+import getUserAlias from './getUserAlias'
+import getCurrentUser from "./getCurrentUser"
+import updateUserData from "./updateUserData"
+import getUserWorkouts from "./getUserWorkouts"
 
 export {
-    registerUser,
-    authenticateUser,
-    getUserData
+    getUserAlias,
+    getCurrentUser,
+    updateUserData,
+    getUserWorkouts
 }

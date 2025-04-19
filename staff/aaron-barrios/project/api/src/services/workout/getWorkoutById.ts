@@ -1,6 +1,6 @@
 import { Workout, User } from "../../data"
 import { validate, errors } from "com"
-import { WorkoutType } from "../types"
+import { WorkoutType } from "com/types"
 import { ObjectId } from "mongoose"
 
 const { SystemError, NotFoundError } = errors

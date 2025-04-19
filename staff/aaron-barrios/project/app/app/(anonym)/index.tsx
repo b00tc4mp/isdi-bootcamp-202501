@@ -4,14 +4,14 @@ import { useEffect } from "react"
 
 import { Text, View } from "@/components/Themed"
 
-import deleteAnonymUser from "@/services/deleteAnonymUser"
-import getAuthenticationData from "@/utils/getAuthenticationData"
+import { deleteAnonymUser } from "@/services/user/anonym"
+import { getUserRole } from "@/services/session/"
 
 export default function Anonym_Home() {
     const router = useRouter()
 
     useEffect(() => {
-        getAuthenticationData().then(data => {
+        getUserRole().then(data => {
             if (data?.role !== 'anonym') {
                 router.replace('/(auth)')
             }

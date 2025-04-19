@@ -3,8 +3,8 @@ import { TextInput, StyleSheet, Button, Alert, Pressable } from "react-native"
 import { Text, View } from "@/components/Themed"
 import { useRouter } from "expo-router"
 
-import loginUser from "@/services/loginUser"
-import authAnonymUser from "@/services/authAnonymUser"
+import { loginUser } from "@/services/session"
+import { authAnonymUser } from "@/services/user/anonym"
 import { errors } from "com"
 
 const { SystemError, ValidationError } = errors

@@ -60,7 +60,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             {
                 alias: 'compi',
                 email: 'mo@derator.com',
-                role: 'moderator',
+                role: 'mod',
                 password: '123123',
                 createdAt: new Date(2023, 8, 17),
             }

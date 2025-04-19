@@ -1,21 +1,59 @@
 import {
-    reviewWorkout
-} from './user/moderator'
-
+    registerUser,
+    authenticateUser
+} from './session'
 
 import {
-    registerUser,
-    authenticateUser,
-    getUserData
+    generateAnonymUser,
+    deleteAnonymUser
+} from './user/anonym'
+
+import {
+    reviewWorkout,
+    removeItem,
+    getModeratorWorkouts
+} from './user/mod'
+
+import {
+    getUserAlias,
+    getCurrentUser,
+    getUserWorkouts,
+    updateUserData
+
 } from './user/regular'
+
+import {
+    createWorkout,
+    createWorkoutProgress,
+    deleteWorkout,
+    editWorkout,
+    getAllWorkouts,
+    getWorkoutById
+} from './workout'
 
 
 const services = {
-    reviewWorkout,
-
     registerUser,
     authenticateUser,
-    getUserData
+
+    generateAnonymUser,
+    deleteAnonymUser,
+
+    getModeratorWorkouts,
+    removeItem,
+    reviewWorkout,
+
+    getCurrentUser,
+    getUserAlias,
+    getUserWorkouts,
+    updateUserData,
+
+    createWorkout,
+    createWorkoutProgress,
+    deleteWorkout,
+    editWorkout,
+    getAllWorkouts,
+    getWorkoutById
 }
 
 export default services

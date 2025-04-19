@@ -1,6 +1,6 @@
 import { errors } from 'com'
 import { data } from '@/data'
-import { WorkoutType } from '../../../api/src/services/types'
+import { WorkoutType } from 'com/types'
 
 const { SystemError, AuthorizationError } = errors
 

@@ -12,7 +12,7 @@ const user = new Schema<UserDocType>({
     },
     role: {
         type: String,
-        enum: ["moderator", "regular", "anonym"],
+        enum: ["mod", "regular", "anonym"],
         default: "regular"
     },
     lastName: {
@@ -69,7 +69,7 @@ const user = new Schema<UserDocType>({
     }]
 })
 
-// => middleware to remove default properties if user = moderator | anonym
+// => middleware to remove default properties if user = mod | anonym
 user.pre('validate', function (next) {
     if (this.role !== 'regular') {
         this.level = undefined

@@ -1,6 +1,6 @@
 import { Workout, User } from "../../data"
 import { validate, errors } from "com"
-import { EditWorkoutType } from "../types"
+import { EditWorkoutType } from "com/types"
 
 const { NotFoundError, OwnershipError, StatusError, SystemError } = errors
 

@@ -1,29 +1,42 @@
 import { Router } from "express"
-import validationHandler from "../middlewares/validationHandler"
+
 import {
     registerUserSchema,
     authenticateUserSchema
 } from "../data/schemas/zodSchemas"
-import registerUserHandler from "../handlers/registerUserHandler"
-import authenticateUserHandler from "../handlers/authenticateUserHandler"
-import getUserDataHandler from "../handlers/getUserDataHandler"
-import getCurrentUserHandler from "../handlers/getCurrentUserHandler"
-import jsonBodyParser from "../middlewares/jsonBodyParser"
-import authHandler from "../middlewares/authHandler"
-import generateAnonymUserHandler from "../handlers/generateAnonymUserHandler"
-import deleteAnonymUserHandler from "../handlers/deleteAnonymUserHandler"
-import cleanUpUserIfTokenExpired from "../middlewares/cleanUpUserIfTokenExpired"
+
+import {
+    registerUserHandler,
+    authenticateUserHandler
+} from "../handlers/session"
+
+import {
+    getUserAliasHandler,
+    getCurrentUserHandler
+} from "../handlers/user/regular"
+
+import {
+    jsonBodyParser,
+    authHandler,
+    validationHandler,
+    cleanUpUserIfTokenExpired
+} from "../middlewares"
+
+import {
+    generateAnonymUserHandler,
+    deleteAnonymUserHandler
+} from "../handlers/user/anonym"
 
 //instancia que creamos que utilizaremos para la llamada de cada petición a la API
 export const userRouter = Router()
 
 
 // -------------------- REGULAR USER ------------------
-// --- GET USER DATA METHOD ---
+// --- GET USER ALIAS METHOD ---
 userRouter.get(
     "/self/data",
     authHandler,
-    getUserDataHandler
+    getUserAliasHandler
 )
 
 // --- GET CURRENT USER METHOD ---

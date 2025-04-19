@@ -1,11 +1,10 @@
 import { errors } from "com"
-import { data } from "@/data"
-import { WorkoutType } from "../../../api/src/services/types"
+import { WorkoutType } from "com/types"
 
 const { SystemError, NotFoundError } = errors
 
-// const getWorkoutById = (): Promise<WorkoutType> => {
-//     // return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts`)
-// }
+const getWorkoutById =  () => {
 
-// export default getWorkoutById
+}
+
+export default getWorkoutById

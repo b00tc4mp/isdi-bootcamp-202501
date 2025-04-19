@@ -1,6 +1,6 @@
 import { User, Workout } from "../../data"
 import { validate, errors } from "com"
-import { WorkoutType } from "../types"
+import { WorkoutType } from "com/types"
 
 const { SystemError, NotFoundError } = errors
 

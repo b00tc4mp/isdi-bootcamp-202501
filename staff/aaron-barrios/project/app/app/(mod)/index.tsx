@@ -4,13 +4,13 @@ import { useEffect } from "react"
 
 import { Text, View } from "@/components/Themed"
 
-import getAuthenticationData from "@/utils/getAuthenticationData"
+import { getUserRole } from "@/services/session"
 
 export default function Profile() {
     const router = useRouter()
 
     useEffect(() => {
-        getAuthenticationData().then(data => {
+        getUserRole().then(data => {
             if (data?.role !== 'anonym') {
                 router.replace('/(auth)')
             }

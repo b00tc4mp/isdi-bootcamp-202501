@@ -10,3 +10,4 @@ const constant_1 = require("./constant");
 Object.defineProperty(exports, "constant", { enumerable: true, get: function () { return constant_1.constant; } });
 const validate_1 = require("./validate");
 Object.defineProperty(exports, "validate", { enumerable: true, get: function () { return validate_1.validate; } });
+//# sourceMappingURL=index.js.map

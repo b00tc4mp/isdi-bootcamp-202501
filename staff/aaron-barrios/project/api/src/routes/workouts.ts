@@ -1,11 +1,18 @@
 import { Router } from "express"
 
-import validationHandler from "../middlewares/validationHandler"
 import {
     createWorkoutSchema
 } from "../data/schemas/zodSchemas"
-import jsonBodyParser from "../middlewares/jsonBodyParser"
-// import authHandler from "../middlewares/authHandler"
+
+import {
+    validationHandler,
+    authHandler,
+    jsonBodyParser
+} from "../middlewares"
+
+import {
+    getAllWorkoutsHandler
+} from "../handlers/workouts"
 
 export const workoutRouter = Router()
 

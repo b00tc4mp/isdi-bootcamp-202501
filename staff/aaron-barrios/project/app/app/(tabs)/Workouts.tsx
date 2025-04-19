@@ -3,8 +3,9 @@ import { useRouter } from "expo-router"
 import { FlatList, Image, StyleSheet, ActivityIndicator } from "react-native"
 import { Text, View } from "@/components/Themed"
 import { Button } from "react-native"
-import getAllWorkouts from "@/services/workouts/getAllWorkouts"
-import { WorkoutType } from "../../../api/src/services/types"
+
+import { getAllWorkouts } from "@/services/workouts"
+import { WorkoutType } from "com/types"
 
 export default function Workouts() {
     const router = useRouter()

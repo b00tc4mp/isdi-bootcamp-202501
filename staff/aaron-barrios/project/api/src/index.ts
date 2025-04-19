@@ -2,7 +2,7 @@ import "dotenv/config"
 import express, { Request, Response } from "express"
 import cors from "cors"
 
-import errorHandler from "./middlewares/errorHandler"
+import {errorHandler} from "./middlewares"
 import loggers from "./logs/index"
 
 import { data } from "./data/index"

@@ -10,3 +10,4 @@ exports.constant = {
     OBJECT_ID_REGEX: /^[a-f0-9]{24}$/i,
     TOKEN_REGEX: /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
 };
+//# sourceMappingURL=constant.js.map

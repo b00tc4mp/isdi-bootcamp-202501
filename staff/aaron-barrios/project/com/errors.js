@@ -59,3 +59,4 @@ const errors = {
     StatusError
 };
 exports.default = errors;
+//# sourceMappingURL=errors.js.map

@@ -3,7 +3,7 @@ import { useRouter } from "expo-router"
 
 import { Text, View } from "@/components/Themed"
 
-import authAnonymUser from "@/services/authAnonymUser"
+import { authAnonymUser } from "@/services/user/anonym"
 import { errors } from "com"
 
 const { SystemError } = errors
