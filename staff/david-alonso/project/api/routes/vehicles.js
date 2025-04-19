@@ -21,6 +21,15 @@ vehicles.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => 
         .then(() => res.status(201).send())
 }))
 
+// EDITAR VEHICULO
+vehicles.patch('/:id', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+    const { marca, modelo, año, color, matricula, km, itv, author } = req.body
+    const { id } = req.params
+
+    return logic.updateVehicle(id, marca, modelo, parseInt(año), color, matricula, parseInt(km), new Date(itv), author)
+        .then(() => res.status(201).send())
+}))
+
 // DEVOLVER LOS VEHICULOS GUARDADOS DE UN USUARIO
 vehicles.get('/user/:userId', authHandler, withErrorHandling((req, res) => {
     const { userId } = req.params

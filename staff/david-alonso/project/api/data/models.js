@@ -86,11 +86,47 @@ const vehicle = new Schema({
 
 })
 
+const manteinance = new Schema({
+    vehicleId: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 200
+    },
+    fecha: {
+        type: Date,
+        required: true,
+    },
+    descripcion: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 30
+    },
+    texto: {
+        type: String,
+        required: false,
+        minLength: 1,
+        maxLength: 200
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
+    }
+})
+
 const User = model('User', user)
 const Vehicle = model('Vehicle', vehicle)
+const Manteinance = model('Manteinance', manteinance)
 
 
 export {
     User,
-    Vehicle
+    Vehicle,
+    Manteinance
 }

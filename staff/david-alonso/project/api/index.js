@@ -4,6 +4,7 @@ import cors from 'cors'
 
 import { users } from './routes/users.js'
 import { vehicles } from './routes/vehicles.js'
+import { manteinances } from './routes/manteinances.js'
 import { data } from './data/index.js'
 
 const { PORT, MONGO_URL, MONGO_DB } = process.env
@@ -16,7 +17,7 @@ data.connect(MONGO_URL, MONGO_DB)
         api.use(cors({
             origin: 'http://localhost:5173', // tu frontend (Vite por defecto)
             credentials: true, // si en algún momento usas cookies
-            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+            methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
             allowedHeaders: ['Content-Type', 'Authorization']
         }))
 
@@ -25,6 +26,7 @@ data.connect(MONGO_URL, MONGO_DB)
 
         api.use('/users', users)
         api.use('/vehicles', vehicles)
+        api.use('/manteinances', manteinances)
 
         // api.use(errorHandler)
 

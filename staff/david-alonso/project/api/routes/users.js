@@ -25,8 +25,6 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
         .then(id => {
             const token = jwt.sign({ sub: id }, JWT_SECRET)
 
-            console.log('🪪 Generando token con JWT_SECRET:', JWT_SECRET)
-
             res.json({ token })
         })
 }))

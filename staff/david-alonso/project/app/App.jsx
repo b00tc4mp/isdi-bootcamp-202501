@@ -9,6 +9,7 @@ import { Home } from "./view/Home/Index.jsx"
 import { Menu } from "./view/Home/Menu"
 
 import { ProfileVehicle } from "./view/Home/ProfileVehicle.jsx"
+import { Maintenance } from "./view/Home/Maintenance.jsx"
 import { Context } from './context'
 import { logic } from "./logic/index.js"
 
@@ -72,6 +73,10 @@ function App() {
         navigate('/menu')
     }
 
+    const handleMaintenanceRegistered = (id) => {
+        navigate(`/vehicle/${id}`)
+    }
+
     // Cambia hacia la pagina de Landing al cerrar sesion
     const handleUserLoggedOut = () => {
         // setShowLanding(false)
@@ -79,33 +84,8 @@ function App() {
         navigate('/login')
     }
 
-    const handleShowAlert = message => setAlertMessage(message)
-
-    const handleAlertAccepted = () => setAlertMessage('')
-
-    const handleShowConfirm = message => {
-        return new Promise((resolve, _reject) => {
-            setConfirmMessage(message)
-            setConfirmState({ resolve })
-        })
-    }
-
-    const handleConfirmAccepted = () => {
-        confirmState.resolve(true)
-        setConfirmMessage('')
-        setConfirmState(null)
-    }
-
-    const handleConfirmCancelled = () => {
-        confirmState.resolve(false)
-        setConfirmMessage('')
-        setConfirmState(null)
-    }
-    console.debug('App -> render')
-
     return <Context value={{
-        alert: handleShowAlert,
-        confirm: handleShowConfirm
+
     }}>
 
         {/* {loggedIn !== null && <Routes> */}
@@ -117,24 +97,20 @@ function App() {
             <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
             {/* /register: Muestra el registro si no está logueado. Si ya está logueado, lo manda al home / */}
 
-            <Route path="/vehicleRegister" element={<VehicleRegister onVehicleRegistered={handleVehicleRegistered} />} />
-            {/* /vehicleRegister: Muestra el registroVehiculo si no está logueado. Si ya está logueado, lo manda al home / */}
+            <Route path="/vehicleRegister/:id?" element={<VehicleRegister onVehicleRegistered={handleVehicleRegistered} />} />
 
             <Route path="/menu" element={<Menu onNavigateToMenu={handleNavigateToMenu} onUserLoggedOut={handleUserLoggedOut} />} />
-            {/* /vehicleRegister: Muestra el registroVehiculo si no está logueado. Si ya está logueado, lo manda al home / */}
+
+            <Route path='/*' element={loggedIn ? <Home handleNavigateVehicleRegister={handleNavigateVehicleRegister} /> : <Navigate to='/login' />} />
+            {/* Si ponemos una ruta que no existe y esta logeado lo mandamos a home /. Si no lo esta se le envia a /login */}
 
             <Route path="/vehicles" element={<Vehicles />} />
 
             <Route path="/vehicle/:id" element={<ProfileVehicle />} />
 
-            <Route path='/*' element={loggedIn ? <Home handleNavigateVehicleRegister={handleNavigateVehicleRegister} /> : <Navigate to='/login' />} />
-            {/* Si ponemos una ruta que no existe y esta logeado lo mandamos a home /. Si no lo esta se le envia a /login */}
-
+            <Route path="/vehicle/:id/maintenance" element={<Maintenance ononMaintenanceRegistered={handleMaintenanceRegistered} />} />
 
         </Routes>}
-
-        {/* {alertMessage && <Alert title="⚠️" message={alertMessage} onAccepted={handleAlertAccepted} />}
-        {confirmMessage && <Confirm title="❓" message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />} */}
     </Context>
 }
 

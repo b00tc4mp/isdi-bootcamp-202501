@@ -4,7 +4,7 @@ import { data } from '../data'
 const { SystemError } = errors
 
 // Funcion para Registrar al registro
-export const registerVehicle = (marca, modelo, año, color, matricula, km, itv, author) => {
+export const updateVehicle = (id, marca, modelo, año, color, matricula, km, itv, author) => {
     const { token } = data
 
     validate.text(marca, 'marca')
@@ -15,14 +15,15 @@ export const registerVehicle = (marca, modelo, año, color, matricula, km, itv, 
     validate.number(km, 'km')
     validate.date(itv, 'itv')
 
-    return fetch(`http://localhost:8080/vehicles`, {
-        method: 'POST',
+    return fetch(`http://localhost:8080/vehicles/${id}`, {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({ marca, modelo, año, color, matricula, km, itv, author })
     })
+
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
             console.log(response.status)

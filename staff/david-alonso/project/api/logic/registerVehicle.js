@@ -1,5 +1,4 @@
 import { errors, validate } from 'com'
-import bcrypt from 'bcryptjs'
 import { Vehicle } from '../data/models.js'
 
 const { SystemError, DuplicityError } = errors
@@ -14,8 +13,6 @@ export const registerVehicle = (marca, modelo, año, color, matricula, km, itv, 
     validate.number(km, 'km')
     validate.date(itv, 'itv')
 
-
-    // *****
     return Vehicle.findOne({ $or: [{ matricula }] })
         .then(vehicle => {
             if (vehicle) throw new DuplicityError('vehicle already exists')
