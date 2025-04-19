@@ -12,6 +12,240 @@ const Home = ({ navigation }) => {
   const [userId, setUserId] = useState('')
   const [loading, setLoading] = useState(true)
   const [userRole, setUserRole] = useState('')
+
+  const [modalVisible, setModalVisible] = useState(false)
+  const [selectedGame, setSelectedGame] = useState(null)
+  const [userMap, setUserMap] = useState({})
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [username, userId, role, { games }] = await Promise.all([
+          logic.getUsername(),
+          logic.getUserId(),
+          logic.getUserRole(),
+          logic.getGames()
+        ])
+  
+        setUsername(username)
+        setUserId(userId)
+        setUserRole(role)
+        setGames(games)
+  
+        const allParticipantIds = [...new Set(games.flatMap(g => g.participants))]
+        const usernamesMap = await logic.getUsernamesByIds(allParticipantIds)
+        const map = {}
+        usernamesMap.forEach(({ id, username }) => map[id] = username)
+        setUserMap(map)
+  
+        navigation.setOptions({
+          headerTitle: () => (
+            <View style={styles.usernameText}>
+              <Button title={username} onPress={handleUserClick} />
+            </View>
+          ),
+          headerTitleAlign: 'center',
+          headerBackVisible: false,
+          headerLeft: () => (
+            <Text style={styles.homeText}>HOME</Text>
+          ),
+          headerRight: () => (
+            <View style={styles.headerRightContainer}>
+              <Button title="Logout" onPress={handleLogoutClick} />
+            </View>
+          ),
+        })// como ya tenías
+      } catch (error) {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      } finally {
+        setLoading(false)
+      }
+    }
+  
+    fetchData()
+  }, [])
+  
+
+ 
+
+  const fetchGames = () => {
+    logic.getGames()
+      .then(({ games }) => setGames(games))
+      .catch(error => window.alert(`Error ❌\n${error.message}`))
+  }
+
+  const handleLogoutClick = () => {
+    try {
+      logic.logoutUser()
+      navigation.navigate('Login')
+      Alert.alert('Bye, See You soon!!')
+    } catch (error) {
+      console.error(error)
+      window.alert(`Error ❌\n${error.message}`)
+    }
+  }
+
+  const handleUserClick = () => {
+    try {
+      const userId = logic.getUserId()
+      navigation.navigate('Profile', { userId })
+    } catch (error) {
+      console.error(error)
+      window.alert(`Error ❌\n${error.message}`)
+    }
+  }
+
+  const openWinnerModal = (game) => {
+    setSelectedGame(game)
+    logic.getUsernamesByIds(game.participants)
+      .then(userArray => {
+        const map = {}
+        userArray.forEach(({ id, username }) => map[id] = username)
+        setUserMap(map)
+        setModalVisible(true)
+      })
+      .catch(error => window.alert('Error cargando participantes\n' + error.message))
+  }
+
+  const handleConfirmWinner = (winnerId) => {
+    logic.setGameWinner(selectedGame._id, winnerId)
+      .then(() => {
+        setModalVisible(false)
+        setSelectedGame(null)
+        fetchGames()
+        Alert.alert('✅ Ganador asignado correctamente')
+      })
+      .catch(error => {
+        window.alert(`Error ❌\n${error.message}`)
+        setModalVisible(false)
+      })
+  }
+
+  const handleDeleteGame = (gameId) => {
+    if (window.confirm('Delete Game?')) {
+      return logic.deleteGame(gameId)
+        .then(() => logic.getGames().then(({ games }) => setGames(games)))
+        .catch(error => Alert.alert(error.message))
+    }
+  }
+
+  const scheduledGames = games.filter(game => game.status === 'scheduled')
+  const finishedGames = games.filter(game => game.status === 'finished')
+  const combinedGames = [...scheduledGames, ...finishedGames]
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#1E90FF" />
+        <Text> ♥️ ♠️ ♣️ ♦️ Cargando Pokapp... 🂽 🂡</Text>
+      </View>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={games.sort((a, b) => (a.status === 'scheduled' ? -1 : 1))}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => {
+          const isParticipant = item.participants.includes(userId)
+
+          return (
+            <View
+              style={[
+                styles.gameCard,
+                item.status === 'scheduled' ? styles.scheduledCard : styles.finishedCard
+              ]}
+            >
+              <Text style={styles.gameTitle}>{item.title}</Text>
+              <Text style={styles.gameDate}>{new Date(item.date).toLocaleString()}</Text>
+
+              <View style={{ marginTop: 10 }}>
+              <Text style={{ fontWeight: 'bold' }}>Participants:</Text>
+              {item.participants.length === 0 ? (
+                <Text style={{ color: '#999' }}>No participants yet</Text>
+              ) : (
+                item.participants.map(partId => (
+                  <Text key={partId} style={{ marginLeft: 8 }}>
+                    • {userMap[partId] || 'Loading...'}
+                  </Text>
+                ))
+              )}
+              </View>
+              {item.status === 'finished' && item.winner && (
+              <View style={{ marginTop: 10 }}>
+                <Text style={{ fontWeight: 'bold', color: '#4CAF50' }}>
+                  🏆 Winner: {userMap[item.winner] || `ID: ${item.winner?.slice(0, 4)}`}
+                </Text>
+                <Text style={{ color: '#333', marginLeft: 4 }}>
+                  Points earned: {item.points ?? 0}
+                </Text>
+              </View>
+            )}
+            
+               <View style={{ marginTop: 12, flexDirection: 'row', justifyContent: 'space-between', gap: 8 }}>
+                {item.status === 'scheduled' && (
+                <Button
+                  title={isParticipant ? 'Cancel' : 'Participate'}
+                  onPress={() => {
+                    logic.toggleParticipation(item._id)
+                      .then(() => logic.getGames().then(({ games }) => setGames(games)))
+                      .catch(error => Alert.alert('Error ❌', error.message))
+                  }}
+                 /> 
+                )}
+                {userRole === 'admin' && item.status === 'scheduled' && (
+                  <>
+                    <Button
+                      title="Set Winner"
+                      onPress={() => openWinnerModal(item)}
+                      color="#12a14b"
+                    />
+                    <Button
+                      title="Delete Game"
+                      onPress={() => handleDeleteGame(item._id)}
+                      color="#cc0605"
+                    />
+                  </>
+                )}
+              </View>
+            </View>
+          )
+        }}
+      />
+
+      <CustomModal
+        visible={modalVisible}
+        onClose={() => {
+          setModalVisible(false)
+          setSelectedGame(null)
+        }}
+        onConfirm={handleConfirmWinner}
+        title="Selecciona al ganador"
+        cancelText="Cancelar"
+        showInput={false}
+        options={selectedGame?.participants.map(id => ({
+          label: userMap[id] || `ID: ${id.slice(0, 4)}`,
+          value: id
+        })) || []}
+      />
+      <NavBar navigation={navigation} />
+    </View>
+  )
+}
+
+export default Home
+
+
+
+
+/*
+const Home = ({ navigation }) => {
+  const [username, setUsername] = useState('')
+  const [games, setGames] = useState([])
+  const [userId, setUserId] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [userRole, setUserRole] = useState('')
   
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedGame, setSelectedGame] = useState(null)
@@ -95,15 +329,7 @@ const Home = ({ navigation }) => {
     }
   }
 
-  // Función para navegar a la pantalla de clasificación
-  const handleClassificationClick = () => {
-    navigation.navigate('Classification')  // Navegamos a la pantalla de Classification
-  }
 
-  // Función para navegar a la pantalla de crear juego
-  const handleAddGameClick = () => {
-    navigation.navigate('CreateGame') // Navegamos a la pantalla de CreateGame
-  }
 
   const openWinnerModal = (game) => {
     setSelectedGame(game)
@@ -162,12 +388,8 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.main}>
-        <Button title="Go to Profile" onPress={handleUserClick} />
-        <Button title="Go to Classification" onPress={handleClassificationClick} />
-        <Button title="Create Game" onPress={handleAddGameClick} />
-      </View>
-        {/* Lista de partidas */}
+      
+   
         <FlatList
         data={games}
         keyExtractor={(item) => item._id}
@@ -226,3 +448,4 @@ const Home = ({ navigation }) => {
 }
 
 export default Home
+*/

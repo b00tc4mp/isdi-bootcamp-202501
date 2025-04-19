@@ -1,44 +1,63 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  header: {
-    padding: 20,
-    alignItems: 'center',
-  },
-  homeClick: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
-  },
-  profileClick: {
-    fontSize: 20,
-    color: '#007bff',
-  },
-  main: {
-    marginTop: 20,
-    width: '100%',
+    padding: 16,
+    backgroundColor: '#fdfdfd'
   },
   headerRightContainer: {
-    paddingRight: 15, // Ajusta el valor según el espacio que quieras
+    paddingRight: 15
   },
   usernameText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#333'
   },
-  
   homeText: {
     fontSize: 18,
     fontWeight: 'bold',
-    paddingLeft: 15,
-    
+    paddingLeft: 15
   },
-});
 
-export default styles;
+  gameCard: {
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 2, // Borde visible completo
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3
+  },
+  scheduledCard: {
+    borderColor: '#4CAF50' // Verde para partidas programadas
+  },
+  finishedCard: {
+    borderColor: '#ccc' // Gris claro para partidas finalizadas
+  },
+
+  gameTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4
+  },
+  gameDate: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 10
+  },
+
+  buttonContainer: {
+    marginTop: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 8
+  }
+})
+
+export default styles
+

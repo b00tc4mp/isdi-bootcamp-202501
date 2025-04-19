@@ -1,0 +1,110 @@
+import React, { useState, useEffect } from 'react'
+import { View, Text, ActivityIndicator, ScrollView } from 'react-native'
+import { logic } from '../../logic/index.js'
+import styles from './Profile.styles.js'
+import { NavBar } from '../../components/index.js'
+
+export default function UserProfileScreen({ route, navigation }) {
+  const { username, userId } = route.params
+
+  const [stats, setStats] = useState(null)
+  const [historicStats, setHistoricStats] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    Promise.all([
+      logic.getUserStatsById(userId),
+      logic.getUserHistoricStatsById(userId)
+    ])
+      .then(([stats, historicStats]) => {
+        setStats(stats)
+        setHistoricStats(historicStats)
+
+        navigation.setOptions({
+          headerTitle: () => (
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{username}</Text>
+          ),
+          headerTitleAlign: 'center'
+        })
+      })
+      .catch(error => {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      })
+      .finally(() => setLoading(false))
+  }, [userId])
+
+  if (loading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size='large' />
+        <Text style={styles.loadingText}>Cargando perfil de usuario...</Text>
+      </View>
+    )
+  }
+
+  return (
+    <View style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
+          <Text style={styles.title}>User Profile</Text>
+
+          <View style={styles.statsContainer}>
+            <Text style={styles.sectionTitle}>Stats (Current Season)</Text>
+
+            {stats ? (
+              <View style={styles.statsCardsContainer}>
+                <View style={styles.statCard}>
+                  <Text style={styles.statValue}>{stats.gamesPlayed}</Text>
+                  <Text style={styles.statLabel}>Games played</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={styles.statValue}>{stats.gamesWon}</Text>
+                  <Text style={styles.statLabel}>Wins</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={styles.statValue}>{stats.winRate}%</Text>
+                  <Text style={styles.statLabel}>Win Rate</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={styles.statValue}>{stats.points}</Text>
+                  <Text style={styles.statLabel}>Points</Text>
+                </View>
+              </View>
+            ) : (
+              <Text style={styles.noStats}>No hay estadísticas disponibles.</Text>
+            )}
+          </View>
+
+          <View style={styles.statsContainer}>
+            <Text style={styles.sectionTitle}>Historic Stats</Text>
+
+            {historicStats ? (
+              <View style={styles.statsCardsContainer}>
+                <View style={styles.statCard}>
+                  <Text style={styles.statValue}>{historicStats.gamesPlayed}</Text>
+                  <Text style={styles.statLabel}>Games played</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={styles.statValue}>{historicStats.gamesWon}</Text>
+                  <Text style={styles.statLabel}>Wins</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={styles.statValue}>{historicStats.winRate}%</Text>
+                  <Text style={styles.statLabel}>Win Rate</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={styles.statValue}>{historicStats.points}</Text>
+                  <Text style={styles.statLabel}>Points</Text>
+                </View>
+              </View>
+            ) : (
+              <Text style={styles.noStats}>No hay estadísticas históricas disponibles.</Text>
+            )}
+          </View>
+        </View>
+      </ScrollView>
+      <NavBar navigation={navigation} />
+    </View>
+  )
+}

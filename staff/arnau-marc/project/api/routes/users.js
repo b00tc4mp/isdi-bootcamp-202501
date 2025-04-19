@@ -63,6 +63,15 @@ users.get('/stats', authHandler, withErrorHandling((req, res) => {
     .then(stats => res.json(stats))
     .catch(error => res.status(400).send(error.message))
 }))
+// Endpoint para generar stats de usuario que buscas
+users.get('/:id/stats', authHandler, withErrorHandling((req, res) => {
+  const { userId } = req.params
+  
+  // Llamar a la lógica para generar stats del usuario
+  return logic.getUserStats(userId)
+    .then(stats => res.json(stats))
+    .catch(error => res.status(400).send(error.message))
+}))
 
 // Endpoint para estadísticas históricas del usuario
 users.get('/stats/historic', authHandler, withErrorHandling((req, res) => {
@@ -72,16 +81,27 @@ users.get('/stats/historic', authHandler, withErrorHandling((req, res) => {
     .then(stats => res.json(stats))
 }))
 
-// Obtener info básica de un usuario por ID
-users.get('/:id', authHandler, withErrorHandling((req, res) => {
-  const { id } = req.params
-  
-  return User.findById(id).lean()
-    .then(user => {
-      if (!user) throw new NotFoundError('User not found')
-      res.json({ id: user._id.toString(), username: user.username })
-    })
+// Endpoint para estadísticas históricas de busqueda de un usuario
+users.get('/:id/stats/historic', authHandler, withErrorHandling((req, res) => {
+  const { userId } = req.params
+
+  return logic.getUserHistoricStats(userId)
+    .then(stats => res.json(stats))
 }))
+
+// Endpoint para buscar usuarios por nombre de usuario
+users.get('/search', authHandler, withErrorHandling((req, res) => {
+    const { query } = req.query; // Obtenemos el parámetro 'query' desde la query string
+
+    // Validamos que se haya recibido el 'query'
+    if (!query) {
+        return res.status(400).json({ error: 'Query string is required' });
+    }
+
+    return logic.searchUsers(query)
+        .then(users => res.json(users.map(u => ({ id: u._id.toString(), username: u.username })))) // Respondemos con la lista de usuarios que coinciden
+        .catch(error => res.status(500).json({ error: error.message }));
+}));
 
 // Obtener los usernames de participants segun sus Ids
 
@@ -99,3 +119,15 @@ users.post('/usernames', authHandler, jsonBodyParser, withErrorHandling((req, re
           res.json({ usernames })
       })
 }))
+
+// Obtener info básica de un usuario por ID
+users.get('/:id', authHandler, withErrorHandling((req, res) => {
+  const { id } = req.params
+  
+  return User.findById(id).lean()
+    .then(user => {
+      if (!user) throw new NotFoundError('User not found')
+      res.json({ id: user._id.toString(), username: user.username })
+    })
+}))
+
