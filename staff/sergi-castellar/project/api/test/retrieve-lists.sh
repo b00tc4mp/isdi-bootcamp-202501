@@ -1,2 +1,2 @@
 curl -X GET http://localhost:8080/couples/lists \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODA1MDMyNDZkMGZlN2ZkNDkwNmFiZjUiLCJpYXQiOjE3NDUxNTk4ODMsImV4cCI6MTc2MTQwMzA4M30.X3Ck8SPv_05orfu4D5Ey97W2cTphUqGYlnjPI4_DNGI' -v
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODA1MzU5ZTI4ZmViNTgzZDc4MjFlMTIiLCJpYXQiOjE3NDUxNzE4ODQsImV4cCI6MTc2MTQxNTA4NH0.IAhjdyAM-k-nq9DL4FP1ypySqAFjC2sZ3ZgqksPQofI' -v

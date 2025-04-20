@@ -60,6 +60,14 @@ couples.get('/lists', retrieveUserId, withErrorHandling((req, res) => {
         .then(lists => res.json(lists))
 }))
 
+couples.get('/lists/:listId/items', retrieveUserId, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { listId } = req.params
+
+    return logic.retrieveItems(userId, listId)
+        .then(items => res.json(items))
+}))
+
 couples.post('/lists', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
     const { title, color } = req.body

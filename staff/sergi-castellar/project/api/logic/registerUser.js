@@ -22,7 +22,7 @@ export const registerUser = (name, email, username, password) => {
 
             return User.create(user)
                 .catch(error => {
-                    if (error.code === 11000) throw new DuplicityError('user already exists')
+                    if (error.code === 11000) throw new DuplicityError('User already exists')
 
                     throw new SystemError(error.message)
                 })

@@ -10,12 +10,12 @@ export const deleteList = (userId, listId) => {
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(couple => {
-            if (!couple) throw new NotFoundError('couple not found')
+            if (!couple) throw new NotFoundError('Couple not found')
 
             return List.findById(listId)
                 .catch(error => { throw new SystemError(error.message) })
                 .then(list => {
-                    if (!list) throw new NotFoundError('list not found')
+                    if (!list) throw new NotFoundError('List not found')
                     if (!list.couple.equals(couple._id)) throw new AuthorizationError('Couple is not the owner of the list')
 
                     return ListItem.deleteMany({ list: list._id })

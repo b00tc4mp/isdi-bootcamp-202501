@@ -9,14 +9,14 @@ export const getCoupleInfo = (userId) => {
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(couple => {
-            if (!couple) throw new NotFoundError('couple not found')
+            if (!couple) throw new NotFoundError('Couple not found')
 
             const partnerId = couple.members.find(id => id.toString() !== userId.toString())
 
             return User.findById(partnerId).lean()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(partner => {
-                    if (!partner) throw new NotFoundError('partner not found')
+                    if (!partner) throw new NotFoundError('Partner not found')
 
                     const startDate = new Date(couple.dateStart)
                     const currentDate = new Date()

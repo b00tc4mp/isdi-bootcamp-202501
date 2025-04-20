@@ -60,7 +60,7 @@ describe('setCoupleStartDate', () => {
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('couple not found')
+                expect(error.message).to.equal('Couple not found')
             })
     })
 

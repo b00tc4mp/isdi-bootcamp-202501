@@ -34,7 +34,7 @@ describe('authenticateUser', () => {
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(NotFoundError)
-                expect(catchedError.message).to.equal('user not found')
+                expect(catchedError.message).to.equal('User not found')
             })
     })
 
@@ -51,7 +51,7 @@ describe('authenticateUser', () => {
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(CredentialsError)
-                expect(catchedError.message).to.equal('wrong credentials')
+                expect(catchedError.message).to.equal('Wrong credentials')
             })
 
     })

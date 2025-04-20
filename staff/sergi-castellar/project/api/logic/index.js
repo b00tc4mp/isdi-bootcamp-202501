@@ -13,6 +13,7 @@ import { getSelfUser } from "./getSelfUser.js"
 import { joinWithInviteCode } from "./joinWithInviteCode.js"
 import { registerUser } from "./registerUser.js"
 import { retrieveCoupleEvents } from "./retrieveCoupleEvents.js"
+import { retrieveItems } from "./retrieveItems.js"
 import { retrieveLists } from "./retrieveLists.js"
 import { setCoupleStartDate } from "./setCoupleStartDate.js"
 import { updateItem } from "./updateItem.js"
@@ -34,6 +35,7 @@ export const logic = {
     joinWithInviteCode,
     registerUser,
     retrieveCoupleEvents,
+    retrieveItems,
     retrieveLists,
     setCoupleStartDate,
     updateItem,

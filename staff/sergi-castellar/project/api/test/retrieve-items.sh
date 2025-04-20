@@ -1,0 +1,2 @@
+curl -X GET http://localhost:8080/couples/lists/6805359e28feb583d7821e45/items \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODA1MzU5ZTI4ZmViNTgzZDc4MjFlMTIiLCJpYXQiOjE3NDUxNzE4ODQsImV4cCI6MTc2MTQxNTA4NH0.IAhjdyAM-k-nq9DL4FP1ypySqAFjC2sZ3ZgqksPQofI'  -v

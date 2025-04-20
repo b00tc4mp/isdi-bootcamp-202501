@@ -65,7 +65,7 @@ describe('getOwnCouple', () => {
                 return getOwnCouple(userId)
                     .catch(error => {
                         expect(error).to.be.instanceOf(NotFoundError)
-                        expect(error.message).to.equal('couple not found')
+                        expect(error.message).to.equal('Couple not found')
                     })
             })
     })
@@ -76,7 +76,7 @@ describe('getOwnCouple', () => {
         return getOwnCouple(nonExistentUserId)
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('user not found')
+                expect(error.message).to.equal('User not found')
             })
     })
 

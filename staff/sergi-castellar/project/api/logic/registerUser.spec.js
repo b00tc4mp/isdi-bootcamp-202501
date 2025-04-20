@@ -37,7 +37,7 @@ describe('registerUser', () => {
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(DuplicityError)
-                expect(catchedError.message).to.equal('user already exists')
+                expect(catchedError.message).to.equal('User already exists')
             })
     })
 

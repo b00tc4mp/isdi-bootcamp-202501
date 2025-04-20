@@ -34,7 +34,7 @@ describe('deleteUser', () => {
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(NotFoundError)
-                expect(catchedError.message).to.equal('user not found')
+                expect(catchedError.message).to.equal('User not found')
             })
     })
 

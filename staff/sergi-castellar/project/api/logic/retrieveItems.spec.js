@@ -1,21 +1,21 @@
 import 'dotenv/config'
-import { data, User, Couple, List } from "../data/index.js"
-import { updateList } from "./updateList.js"
+import { data, User, Couple, List, ListItem } from "../data/index.js"
+import { retrieveItems } from "./retrieveItems.js"
 import { expect } from 'chai'
 import { NotFoundError, AuthorizationError } from 'com/errors.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-describe('updateList', () => {
-    let userId, partnerId, coupleId, listId
+describe('retrieveItems', () => {
+    let userId, partnerId, coupleId, listId, itemId1, itemId2
 
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => {
-        return Promise.all([User.deleteMany({}), Couple.deleteMany({}), List.deleteMany({})])
+        return Promise.all([User.deleteMany({}), Couple.deleteMany({}), List.deleteMany({}), ListItem.deleteMany({})])
     })
 
-    it('succeeds at updating list', () => {
+    it('succeeds at retrieving items', () => {
         return User.create({
             name: 'John Doe',
             email: 'john@doe.com',
@@ -40,20 +40,29 @@ describe('updateList', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                return List.create({ title: 'Shopping List', color: 'blue', couple: coupleId, author: userId })
+                return List.create({ title: 'Shopping List', color: 'blue', couple: coupleId, author: userId, items: [] })
             })
             .then(list => {
                 listId = list._id.toString()
-                return updateList(userId, listId, 'Updated Shopping List', 'green')
+                return ListItem.create({ text: 'Item 1', list: listId })
             })
-            .then(() => List.findById(listId).lean())
-            .then(list => {
-                expect(list.title).to.equal('Updated Shopping List')
-                expect(list.color).to.equal('green')
+            .then(item => {
+                itemId1 = item._id.toString()
+                return ListItem.create({ text: 'Item 2', list: listId })
+            })
+            .then(item => {
+                itemId2 = item._id.toString()
+                return List.updateOne({ _id: listId }, { $push: { items: { $each: [itemId1, itemId2] } } })
+            })
+            .then(() => retrieveItems(userId, listId))
+            .then(items => {
+                expect(items).to.have.lengthOf(2)
+                expect(items[0].text).to.equal('Item 1')
+                expect(items[1].text).to.equal('Item 2')
             })
     })
 
-    it('fails at non existent couple', () => {
+    it('fails at non-existent couple', () => {
         return User.create({
             name: 'John Doe',
             email: 'john@doe.com',
@@ -62,7 +71,7 @@ describe('updateList', () => {
         })
             .then(user => {
                 userId = user._id.toString()
-                return updateList(userId, '605c72ef1532073d4a8b4e1e', 'Updated Shopping List', 'green')
+                return retrieveItems(userId, '6805359e28feb583d7821e45')
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -70,7 +79,7 @@ describe('updateList', () => {
             })
     })
 
-    it('fails at non existent list', () => {
+    it('fails at non-existent list', () => {
         return User.create({
             name: 'John Doe',
             email: 'john@doe.com',
@@ -95,7 +104,7 @@ describe('updateList', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                return updateList(userId, '605c72ef1532073d4a8b4e1e', 'Updated Shopping List', 'green')
+                return retrieveItems(userId, '6805359e28feb583d7821e45')
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -132,8 +141,9 @@ describe('updateList', () => {
             })
             .then(list => {
                 listId = list._id.toString()
-                return updateList(userId, listId, 'Updated Shopping List', 'green')
+                return ListItem.create({ text: 'Item 1', list: listId })
             })
+            .then(() => retrieveItems(userId, listId))
             .catch(error => {
                 expect(error).to.be.instanceOf(AuthorizationError)
                 expect(error.message).to.equal('Couple is not the owner of the list')
@@ -141,7 +151,7 @@ describe('updateList', () => {
     })
 
     afterEach(() => {
-        return Promise.all([User.deleteMany({}), Couple.deleteMany({}), List.deleteMany({})])
+        return Promise.all([User.deleteMany({}), Couple.deleteMany({}), List.deleteMany({}), ListItem.deleteMany({})])
     })
 
     after(() => data.disconnect())

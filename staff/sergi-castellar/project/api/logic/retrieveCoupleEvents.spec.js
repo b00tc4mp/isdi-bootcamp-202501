@@ -69,7 +69,7 @@ describe('retrieveCoupleEvents', () => {
             })
     })
 
-    it('fails at couple not found', () => {
+    it('fails at Couple not found', () => {
         return retrieveCoupleEvents('605c72ef1532073d4a8b4e0e', new Date('2025-06-01'), new Date('2025-06-30'))
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)

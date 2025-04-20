@@ -35,13 +35,13 @@ describe('getSelfUser', () => {
             })
     })
 
-    it('fails at user not found', () => {
+    it('fails at User not found', () => {
         const nonExistentUserId = '605c72ef1532073d4a8b4e0e'
 
         return getSelfUser(nonExistentUserId)
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('user not found')
+                expect(error.message).to.equal('User not found')
             })
     })
 

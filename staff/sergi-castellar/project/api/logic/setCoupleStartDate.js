@@ -10,7 +10,7 @@ export const setCoupleStartDate = (userId, dateStart) => {
     return Couple.findOne({ members: userId })
         .catch(error => { throw new SystemError(error.message) })
         .then(couple => {
-            if (!couple) throw new NotFoundError('couple not found')
+            if (!couple) throw new NotFoundError('Couple not found')
 
             couple.dateStart = dateStart
             couple.modifiedAt = new Date()

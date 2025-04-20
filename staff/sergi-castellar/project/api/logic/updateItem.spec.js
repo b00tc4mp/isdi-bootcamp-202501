@@ -69,7 +69,7 @@ describe('updateItem', () => {
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('couple not found')
+                expect(error.message).to.equal('Couple not found')
             })
     })
 
@@ -102,7 +102,7 @@ describe('updateItem', () => {
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('item not found')
+                expect(error.message).to.equal('Item not found')
             })
     })
 
@@ -139,7 +139,7 @@ describe('updateItem', () => {
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('list not found')
+                expect(error.message).to.equal('List not found')
             })
     })
 

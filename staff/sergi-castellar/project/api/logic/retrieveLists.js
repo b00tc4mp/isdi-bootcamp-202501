@@ -9,9 +9,9 @@ export const retrieveLists = (userId) => {
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(couple => {
-            if (!couple) throw new NotFoundError('couple not found')
+            if (!couple) throw new NotFoundError('Couple not found')
 
-            return List.find({ couple: couple._id })/*.populate('items')//TODO*/.lean()
+            return List.find({ couple: couple._id }).lean()
                 .catch(error => { throw new SystemError(error.message) })
         })
 }

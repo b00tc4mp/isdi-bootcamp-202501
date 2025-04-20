@@ -50,7 +50,7 @@ describe('getCoupleInfo', () => {
             })
     })
 
-    it('fails at partner not found', () => {
+    it('fails at Partner not found', () => {
         return User.create({
             name: 'John Doe',
             email: 'john@doe.com',
@@ -70,15 +70,15 @@ describe('getCoupleInfo', () => {
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('partner not found')
+                expect(error.message).to.equal('Partner not found')
             })
     })
 
-    it('fails at couple not found', () => {
+    it('fails at Couple not found', () => {
         return getCoupleInfo('605c72ef1532073d4a8b4e0e')
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('couple not found')
+                expect(error.message).to.equal('Couple not found')
             })
     })
 
