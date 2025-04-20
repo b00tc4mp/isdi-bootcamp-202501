@@ -4,21 +4,21 @@ import { ValidationError } from './errors.js'
 
 export const validate = {
     string(string, explain) {
-        if (typeof string !== 'string') throw new ValidationError(`invalid ${explain} type`)
+        if (typeof string !== 'string') throw new ValidationError(`Invalid ${explain} type`)
     },
     notBlankString(text, explain) {
         this.string(text, explain)
 
-        if (!constant.NOT_EMPTY_OR_BLANK_REGEX.test(text)) throw new ValidationError(`invalid ${explain} syntax`)
+        if (!constant.NOT_EMPTY_OR_BLANK_REGEX.test(text)) throw new ValidationError(`Invalid ${explain} syntax`)
     },
     maxLength(value, maxLength, explain) {
-        if (value.length > maxLength) throw new ValidationError(`invalid ${explain} maximum length`)
+        if (value.length > maxLength) throw new ValidationError(`Invalid ${explain} maximum length`)
     },
     minLength(value, minLength, explain) {
-        if (value.length < minLength) throw new ValidationError(`invalid ${explain} minimum length`)
+        if (value.length < minLength) throw new ValidationError(`Invalid ${explain} minimum length`)
     },
     exactLength(value, exactLength, explain) {
-        if (value.length !== exactLength) throw new ValidationError(`invalid ${explain} length`)
+        if (value.length !== exactLength) throw new ValidationError(`Invalid ${explain} length`)
     },
     name(name, explain) {
         this.notBlankString(name, explain)
@@ -30,7 +30,7 @@ export const validate = {
     email(email, explain) {
         this.notBlankString(email, explain)
 
-        if (!constant.EMAIL_REGEX.test(email)) throw new ValidationError(`invalid ${explain} syntax`)
+        if (!constant.EMAIL_REGEX.test(email)) throw new ValidationError(`Invalid ${explain} syntax`)
 
         this.minLength(email, 6, explain)
 
@@ -65,11 +65,16 @@ export const validate = {
     inviteCode(inviteCode, explain) {
         this.notBlankString(inviteCode, explain)
 
-        if (!constant.INVITE_CODE_REGEX.test(inviteCode)) throw new ValidationError(`invalid ${explain} syntax`)
+        if (!constant.INVITE_CODE_REGEX.test(inviteCode)) throw new ValidationError(`Invalid ${explain} syntax`)
     },
     date(date, explain) {
         if (!(date instanceof Date) || isNaN(date.getTime()))
-            throw new ValidationError(`invalid ${explain} format`)
+            throw new ValidationError(`Invalid ${explain} format`)
+    },
+    color(color, explain) {
+        this.notBlankString(color, explain)
+
+        if (!constant.HEX_COLOR_REGEX.test(color)) throw new ValidationError(`Invalid ${explain} syntax`)
     }
 }
 
