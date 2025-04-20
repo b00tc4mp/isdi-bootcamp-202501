@@ -161,7 +161,8 @@ const listItem = new Schema({
     },
     list: {
         type: ObjectId,
-        ref: 'List'
+        ref: 'List',
+        //required: true
     },
     createdAt: {
         type: Date,

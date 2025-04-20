@@ -91,16 +91,37 @@ data.connect(MONGO_URL, MONGO_DB)
                     { text: "Open kitchen" }
                 ])
                     .then(listItems => {
-                        return Promise.all([
-                            List.insertMany([
-                                { couple: couple1._id, title: "Weekend Getaway Packing List", author: couple1.members[0]._id, items: [listItems[0]._id, listItems[1]._id], color: "blue" },
-                                { couple: couple1._id, title: "Home Renovation Ideas", author: couple1.members[1]._id, items: [listItems[2]._id, listItems[3]._id], color: "red" },
-                                { couple: couple2._id, title: "Things To Do Together", author: couple2.members[0]._id, items: [listItems[4]._id, listItems[5]._id], color: "blue" },
-                                { couple: couple2._id, title: "Vacation Wishlist", author: couple2.members[1]._id, items: [listItems[6]._id, listItems[7]._id], color: "pink" },
-                                { couple: couple3._id, title: "Anniversary Plans", author: couple3.members[0]._id, items: [listItems[8]._id, listItems[9]._id], color: "orange" },
-                                { couple: couple3._id, title: "Dream House", author: couple3.members[1]._id, items: [listItems[10]._id, listItems[11]._id], color: "red" },
-                            ])
+                        return List.insertMany([
+                            { couple: couple1._id, title: "Weekend Getaway Packing List", author: couple1.members[0]._id, items: [listItems[0]._id, listItems[1]._id], color: "#ff0a0a" },
+                            { couple: couple1._id, title: "Home Renovation Ideas", author: couple1.members[1]._id, items: [listItems[2]._id, listItems[3]._id], color: "#43d313" },
+                            { couple: couple2._id, title: "Things To Do Together", author: couple2.members[0]._id, items: [listItems[4]._id, listItems[5]._id], color: "#41dae2" },
+                            { couple: couple2._id, title: "Vacation Wishlist", author: couple2.members[1]._id, items: [listItems[6]._id, listItems[7]._id], color: "#d6cd68" },
+                            { couple: couple3._id, title: "Anniversary Plans", author: couple3.members[0]._id, items: [listItems[8]._id, listItems[9]._id], color: "#de6bff" },
+                            { couple: couple3._id, title: "Dream House", author: couple3.members[1]._id, items: [listItems[10]._id, listItems[11]._id], color: "#ff0a0a" },
                         ])
+                            .then(lists => {
+                                // Asignar el id de la lista a cada ítem
+                                const updates = [
+                                    { _id: listItems[0]._id, list: lists[0]._id },
+                                    { _id: listItems[1]._id, list: lists[0]._id },
+                                    { _id: listItems[2]._id, list: lists[1]._id },
+                                    { _id: listItems[3]._id, list: lists[1]._id },
+                                    { _id: listItems[4]._id, list: lists[2]._id },
+                                    { _id: listItems[5]._id, list: lists[2]._id },
+                                    { _id: listItems[6]._id, list: lists[3]._id },
+                                    { _id: listItems[7]._id, list: lists[3]._id },
+                                    { _id: listItems[8]._id, list: lists[4]._id },
+                                    { _id: listItems[9]._id, list: lists[4]._id },
+                                    { _id: listItems[10]._id, list: lists[5]._id },
+                                    { _id: listItems[11]._id, list: lists[5]._id }
+                                ]
+
+                                return Promise.all(
+                                    updates.map(update =>
+                                        ListItem.updateOne({ _id: update._id }, { $set: { list: update.list } })
+                                    )
+                                )
+                            })
                     })
             })
     })
