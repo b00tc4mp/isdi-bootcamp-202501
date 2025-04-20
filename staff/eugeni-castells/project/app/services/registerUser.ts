@@ -7,6 +7,7 @@ const { SystemError } = errors;
 const { EXPO_PUBLIC_API_URL } = process.env;
 
 export const registerUser = (userInfo: RegisterUserInputType) => {
+  debugger;
   const { name, email, password, address, city, country, coordinates } =
     userInfo;
 
@@ -42,6 +43,8 @@ export const registerUser = (userInfo: RegisterUserInputType) => {
 
           const constructor =
             errors[error as keyof typeof errors] || SystemError;
+
+          throw new constructor(message);
         });
     });
 };

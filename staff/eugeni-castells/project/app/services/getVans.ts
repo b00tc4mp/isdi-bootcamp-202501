@@ -1,11 +1,9 @@
 import { SystemError } from "@/com/errors";
 import { data } from "@/data";
 
-import { VanDocType } from "@/com/types";
+import { ReturnedVansType } from "@/com/types";
 
-export const getVans = async (): Promise<VanDocType[]> => {
-  debugger;
-
+export const getVans = async (): Promise<ReturnedVansType[]> => {
   const token = await data.getToken();
 
   return fetch(`${process.env.EXPO_PUBLIC_API_URL}/vans`, {
@@ -24,7 +22,7 @@ export const getVans = async (): Promise<VanDocType[]> => {
           .catch((error) => {
             throw new SystemError(error.message);
           })
-          .then((body: VanDocType[]) => {
+          .then((body: ReturnedVansType[]) => {
             const vans = body;
 
             vans.forEach((van) => {
