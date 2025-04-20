@@ -3,10 +3,10 @@ import { errors } from 'com'
 
 const { SystemError } = errors
 
-export const getLevels = () => {
+export const getUser = () => {
   const { token } = data
 
-  return fetch(`${import.meta.env.VITE_API_URL}/levels`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/users/self`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -23,9 +23,9 @@ export const getLevels = () => {
             throw new SystemError(error.message)
           })
           .then((body) => {
-            const levels = body
+            const user = body
 
-            return levels
+            return user
           })
 
       return response

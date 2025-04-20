@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Ranking } from './Ranking'
 import { useContext } from '../context'
-import { useNavigate } from 'react-router'
 
 import { logic } from '../logic'
-import { Home } from './Home'
 
-export function Profile({ onUserLoggedOut, onBackClick }) {
+export function Profile({ onUserLoggedOut, user, onNavigateToHome }) {
   const { alert, confirm } = useContext()
   const [view, setView] = useState('')
-  const navigate = useNavigate()
 
   useEffect(() => {
     try {
@@ -21,7 +18,7 @@ export function Profile({ onUserLoggedOut, onBackClick }) {
     }
   }, [])
 
-  const handleBackToHome = () => navigate('/')
+  const handleBackToHome = () => onNavigateToHome()
 
   const handleLogoutClick = () => {
     confirm('Do you really want to log out?').then((accepted) => {
@@ -43,10 +40,19 @@ export function Profile({ onUserLoggedOut, onBackClick }) {
     <>
       <section>
         <button onClick={handleBackToHome} className='mb-4 text-sm text-purple-700 underline'>
-          ← Volver a los mundos
+          ← Return to home
         </button>
+        {user && (
+          <section>
+            <img src={user.image} alt='Perfil' className='h-30 w-auto mb-2' />
+            <h1>{user.username}</h1>
+            <p>{user.name}</p>
+            <p>{user.email}</p>
+            <p>password</p>
+          </section>
+        )}
       </section>
-      {view === 'general' && <Ranking currentState={'opened'} />}
+      {view === 'general' && <Ranking currentState={'opened'} username={user ? user.username : null} />}
       <footer>
         <a onClick={handleLogoutClick}>Logout</a>
       </footer>

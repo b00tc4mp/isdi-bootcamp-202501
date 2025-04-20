@@ -7,6 +7,7 @@ import { isLevelPassed } from './isLevelPassed.js'
 import { getUserRanking } from './getUserRanking.js'
 import { getGlobalRanking } from './getGlobalRanking.js'
 import { getCurrentLevel } from './getCurrentLevel.js'
+import { getUser } from './getUser.js'
 
 export const logic = {
   authenticateUser,
@@ -14,6 +15,7 @@ export const logic = {
   getUserUsername,
   getUserRanking,
   getGlobalRanking,
+  getUser,
 
   getLevel,
   getLevels,

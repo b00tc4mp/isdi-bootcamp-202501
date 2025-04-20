@@ -23,7 +23,6 @@ export const getLevels = (userId) => {
         if (user.generalProgress.length)
           user.generalProgress.forEach((levelObjectId) => {
             if (levelObjectId.toString() === level.id || user.currentLevel.toString() === level.id) level.isBlocked = false
-            // else level.isBlocked = true
           })
       })
 
