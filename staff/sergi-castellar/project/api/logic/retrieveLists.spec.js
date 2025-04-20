@@ -40,7 +40,7 @@ describe('retrieveLists', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                List.create({ title: 'Shopping List', color: 'blue', couple: coupleId, author: userId, items: [] })
+                List.create({ title: 'Shopping List', color: '#ff0a0a', couple: coupleId, author: userId, items: [] })
             })
             .then(() => retrieveLists(userId))
             .then(lists => {

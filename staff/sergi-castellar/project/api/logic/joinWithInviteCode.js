@@ -10,6 +10,7 @@ export const joinWithInviteCode = (userId, inviteCode) => {
     return InviteCode.findOne({ code: inviteCode }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(dbInviteCode => {
+            console.log('dbInviteCode :>> ', dbInviteCode);
             if (!dbInviteCode) throw new NotFoundError('Invite code not found')
             if (dbInviteCode.createdBy.toString() === userId)
                 throw new NotAllowedError('Cannot use your own code')

@@ -40,7 +40,7 @@ describe('updateItem', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                return List.create({ title: 'Shopping List', color: 'blue', couple: coupleId, author: userId, items: [] })
+                return List.create({ title: 'Shopping List', color: '#ff0a0a', couple: coupleId, author: userId, items: [] })
             })
             .then(list => {
                 listId = list._id.toString()

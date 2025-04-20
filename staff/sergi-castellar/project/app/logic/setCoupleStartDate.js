@@ -4,7 +4,7 @@ import { errors, validate } from 'com'
 const { SystemError } = errors
 
 export const setCoupleStartDate = (dateStart) => {
-    validate.date(dateStart, 'dateStart')
+    validate.notBlankString(dateStart, 'dateStart')
 
     const { token } = data
 
