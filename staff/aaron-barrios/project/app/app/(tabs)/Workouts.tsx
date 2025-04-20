@@ -85,7 +85,7 @@ export default function Workouts() {
                         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
                     }
                     renderItem={({ item }) => (
-                        <Pressable onPress={() => item.id && router.push(`/(tabs)/Workouts/${item.id}` as any)}>
+                        <Pressable onPress={() => item.id && router.push(`/(stack)/WorkoutDetail/${item.id}` as any)}>
                             <View style={styles.card}>
                                 <Image
                                     style={styles.image}

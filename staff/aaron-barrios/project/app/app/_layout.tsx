@@ -49,7 +49,7 @@ function AppNavigator() {
         <Stack.Screen name="(auth)" />
         <Stack.Screen name="(anonym)" />
         <Stack.Screen name="(mod)" />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        <Stack.Screen name="(stack)" />
       </Stack>
     </ThemeProvider>
   )

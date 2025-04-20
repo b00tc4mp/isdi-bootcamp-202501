@@ -1,21 +1,24 @@
-import React from "react"
-import FontAwesome from "@expo/vector-icons/FontAwesome"
-import { Link, Tabs } from "expo-router"
-import { Pressable } from "react-native"
+import { Tabs } from "expo-router"
+import { Image } from "react-native"
 
-import Colors from "@/constants/Colors"
 import { useColorScheme } from "@/components/useColorScheme"
-import { useClientOnlyValue } from "@/components/useClientOnlyValue"
+import Colors from "@/constants/Colors"
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"]
-  color: string
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
+function CustomTabIcon({ icon, label, focused }: { icon: any, label: string, focused: boolean }) {
+  return (
+    <Image
+      source={icon}
+      style={{
+        width: 24,
+        height: 24,
+        tintColor: focused ? "#facc15" : "#aaa",
+      }}
+      resizeMode="contain"
+    />
+  )
 }
 
-export function ModeratorLayout() {
+export default function ModLayout() {
   const colorScheme = useColorScheme()
 
   return (
@@ -23,19 +26,30 @@ export function ModeratorLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-      }}>
+        tabBarStyle: {
+          backgroundColor: "#111",
+          borderTopWidth: 0,
+          height: 60
+        }
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <CustomTabIcon icon={require("@/assets/icons/profile.png")} label="Profile" focused={focused} />
+          ),
         }}
       />
+
       <Tabs.Screen
         name="Review"
         options={{
           title: "Review",
-          tabBarIcon: ({ color }) => <TabBarIcon name="check-circle" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <CustomTabIcon icon={require("@/assets/icons/review.png")} label="Review" focused={focused} />
+          ),
         }}
       />
     </Tabs>

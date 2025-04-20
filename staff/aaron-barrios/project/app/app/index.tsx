@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { getUserRole } from "@/services/session"
 
 export default function IndexRedirect() {
-    // ⚠️ Aquí no puedes usar useEffect porque esto es render puro
     const [screen, setScreen] = useState<"/(auth)" | "/(anonym)" | "/(mod)" | "/(tabs)" | null>(null)
 
     useEffect(() => {

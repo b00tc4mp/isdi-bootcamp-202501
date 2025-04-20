@@ -1,16 +1,29 @@
 import { Tabs } from "expo-router"
-import { FontAwesome5 } from "@expo/vector-icons"
 import { useColorScheme } from "@/components/useColorScheme"
+import { Image, Text, View } from "react-native"
+
 import Colors from "@/constants/Colors"
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome5>["name"]
-  color: string
-}) {
-  return <FontAwesome5 size={24} style={{ marginBottom: -4 }} {...props} />
+function CustomTabIcon({ icon, label, focused }: { icon: any, label: string, focused: boolean }) {
+  return (
+    <View style={{ alignItems: "center" }}>
+      <Image
+        source={icon}
+        style={{
+          width: 24,
+          height: 24,
+          tintColor: focused ? "#facc15" : "#aaa",
+          marginBottom: 2,
+        }}
+        resizeMode="contain"
+      />
+      <Text style={{
+        fontSize: 10,
+        color: focused ? "#facc15" : "#aaa",
+      }}>{label}</Text>
+    </View>
+  )
 }
-
-//mirar libreria => https://icons.expo.fyi
 
 export default function AnonLayout() {
   const colorScheme = useColorScheme()
@@ -20,26 +33,37 @@ export default function AnonLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-      }}>
+        tabBarStyle: {
+          backgroundColor: "#111",
+          borderTopWidth: 0,
+          height: 60,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Anonym_Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="anonym_home" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <CustomTabIcon icon={require("@/assets/icons/home.png")} label="Home" focused={focused} />
+          ),
         }}
       />
+
       <Tabs.Screen
         name="Workouts"
         options={{
-          title: "Workouts",
-          tabBarIcon: ({ color }) => <TabBarIcon name="dumbbell" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <CustomTabIcon icon={require("@/assets/icons/workout.png")} label="Workouts" focused={focused} />
+          ),
         }}
       />
+
       <Tabs.Screen
         name="Routines"
         options={{
-          title: "Routines",
-          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <CustomTabIcon icon={require("@/assets/icons/routine.png")} label="Routines" focused={focused} />
+          ),
         }}
       />
     </Tabs>
