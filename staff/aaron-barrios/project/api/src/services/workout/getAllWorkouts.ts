@@ -28,10 +28,11 @@ const getAllWorkouts = (
                     id: workout._id.toString(),
                     name: workout.name,
                     muscleGroup: workout.muscleGroup,
+                    feedImage: workout.feedImage,
                     type: workout.type,
                     difficulty: workout.difficulty,
                     description: workout.description,
-                    images: workout.images,
+                    executionImages: workout.executionImages,
                     status: workout.status,
                     createdAt: workout.createdAt,
                     author: {

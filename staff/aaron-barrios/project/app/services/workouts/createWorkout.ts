@@ -7,11 +7,13 @@ const createWorkout = (
     userId: string,
     name: string,
     muscleGroup: string,
+    feedImage: string,
     description: string
 ): Promise<void> => {
     validate.id(userId)
     validate.text(name)
     validate.text(muscleGroup)
+    validate.url(feedImage)
     validate.text(description)
 
     return data.getToken()

@@ -21,7 +21,10 @@ const loginUser = (alias: string, password: string): Promise<void> => {
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
                         const { token } = body
-                        return data.setToken(token).then(() => token) // => HAPPY PATH
+                        return data.setToken(token).then(() => {
+                            token
+                            console.log("🟢 Token actual, loggedUser:", token)
+                        }) // => HAPPY PATH
                             .catch(error => { throw new SystemError(error.message) })
                     })
 

@@ -56,6 +56,7 @@ describe("delete Workout", () => {
                 author: manu._id,
                 name: "press bench",
                 muscleGroup: "chest",
+                feedImage: "https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg",
                 description: "best workout to grow chest",
                 difficulty: "easy",
                 type: "strength",
@@ -64,10 +65,11 @@ describe("delete Workout", () => {
             },
             {
                 author: manu._id,
-                name: "bench press",
-                muscleGroup: "chest",
-                description: "best workout to grow chest",
-                difficulty: "easy",
+                name: "bulgarian squat",
+                muscleGroup: "buttocks",
+                feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg",
+                description: "best workout to grow buttocks",
+                difficulty: "hard",
                 type: "strength",
                 status: "accepted",
                 createdAt: new Date()

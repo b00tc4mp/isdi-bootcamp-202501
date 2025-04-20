@@ -18,17 +18,17 @@ export default function CreateWorkout() {
     const router = useRouter()
     const [name, setName] = useState("")
     const [muscleGroup, setMuscleGroup] = useState("")
-    const [image, setImage] = useState("")
+    const [feedImage, setFeedImage] = useState("")
     const [type, setType] = useState("")
     const [difficulty, setDifficulty] = useState("")
     const [description, setDescription] = useState("")
 
     const handleSubmit = () => {
-        if (!name || !muscleGroup || !type || !difficulty || !description) {
+        if (!name || !muscleGroup || !feedImage || !description) {
             return Alert.alert("Error", "All fields are required")
         }
 
-        createWorkout("userid-placeholder", name, muscleGroup, description)
+        createWorkout("userid-placeholder", name, muscleGroup, feedImage, description)
             .then(() => {
                 Alert.alert("Workout created!", "Your workout has been submitted.")
                 router.back()
@@ -53,7 +53,7 @@ export default function CreateWorkout() {
             <TextInput style={styles.input} value={muscleGroup} onChangeText={setMuscleGroup} />
 
             <Text style={styles.label}>Feed Image</Text>
-            <TextInput style={styles.input} value={image} onChangeText={setImage} />
+            <TextInput style={styles.input} value={feedImage} onChangeText={setFeedImage} />
 
             <Text style={styles.label}>Type</Text>
             <TextInput style={styles.input} value={type} onChangeText={setType} />

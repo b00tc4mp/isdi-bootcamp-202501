@@ -7,9 +7,9 @@ import { createFunctionalHandler } from "../../middlewares"
 const createWorkoutHandler = createFunctionalHandler(
     (req: Request, res: Response) => {
         const author = (req as AuthHandlerRequest).userId
-        const { name, muscleGroup, description } = req.body
+        const { name, muscleGroup, feedImage, description } = req.body
 
-        return createWorkout(author, name, muscleGroup, description)
+        return createWorkout(author, name, muscleGroup, feedImage, description)
             .then(workout => { res.status(200).json(workout) })
     }
 )

@@ -45,7 +45,7 @@ export default function Workouts() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Workouts</Text>
+            <Text style={styles.title}>Feed Screen</Text>
 
             <View style={styles.dropdownContainer}>
                 <Picker
@@ -89,7 +89,7 @@ export default function Workouts() {
                             <View style={styles.card}>
                                 <Image
                                     style={styles.image}
-                                    source={{ uri: item.images?.[0] ?? "https://via.placeholder.com/120" }}
+                                    source={{ uri: item.feedImage ?? "https://via.placeholder.com/120" }}
                                 />
                                 <View style={styles.info}>
                                     <Text style={styles.name}>{item.name}</Text>

@@ -12,11 +12,13 @@ const createWorkout = (
     author: string,
     name: string,
     muscleGroup: string,
+    feedImage: string,
     description: string,
 ): Promise<void> => {
     validate.id(author)
     validate.name(name)
     validate.text(muscleGroup)
+    validate.url(feedImage)
     validate.text(description)
 
     return User.findById(author).lean()
@@ -28,6 +30,7 @@ const createWorkout = (
                 author: new Types.ObjectId(author),
                 name,
                 muscleGroup,
+                feedImage,
                 description,
                 status: "pending"
             }

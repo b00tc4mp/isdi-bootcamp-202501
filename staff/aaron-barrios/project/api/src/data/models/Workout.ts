@@ -21,6 +21,12 @@ const workout = new Schema<WorkoutDocType>({
         minlength: 3,
         maxlength: 20
     },
+    feedImage: {
+        type: String,
+        required: true,
+        minlength: 30,
+        maxlength: 300
+    },
     type: {
         type: String,
         minlength: 3,
@@ -37,9 +43,9 @@ const workout = new Schema<WorkoutDocType>({
         minlength: 5,
         maxlength: 500
     },
-    images: [{
+    executionImages: [{
         type: String,
-        required: true
+        default: []
     }],
     likes: [{
         type: Schema.Types.ObjectId,

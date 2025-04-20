@@ -23,10 +23,11 @@ export type WorkoutDocType = {
     author: Types.ObjectId
     name: string
     muscleGroup: string
+    feedImage: string
     type?: string
     difficulty?: 'easy' | 'medium' | 'hard'
     description: string
-    images?: string[]
+    executionImages?: string[]
     likes?: Types.ObjectId[]
     saves?: Types.ObjectId[]
     status: 'pending' | 'accepted' | 'declined' //add revising => if community votes to change smthing or want to remove it
@@ -63,7 +64,7 @@ export type RoutineDocType = {
     locationType: string
     difficulty: string
     description: string
-    image: string
+    feedImage: string
     duration: number
     status: 'pending' | 'accepted' | 'declined' //add revising => if community votes to change smthing or want to remove it
     frequencySuggestion?: string

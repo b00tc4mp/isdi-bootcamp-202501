@@ -48,7 +48,7 @@ const routine = new Schema<RoutineDocType>({
         minlength: 10,
         maxlength: 500
     },
-    image: {
+    feedImage: {
         type: String,
         required: true
     },

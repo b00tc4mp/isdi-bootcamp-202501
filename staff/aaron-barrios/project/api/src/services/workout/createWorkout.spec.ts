@@ -56,12 +56,13 @@ describe('create Workout', () => {
                 ])
             })
             .then(([manu, frankie]) => {
-                return createWorkout(manu.id, 'press bench', 'chest', 'best workout to grow chest')
+                return createWorkout(manu.id, 'press bench', 'chest', 'https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg', 'best workout to grow chest')
                     .then(() => Workout.find({ author: manu.id }).lean())
                     .then(workout => {
                         expect(workout).not.to.be.undefined
                         expect(workout[0].name).to.equal('press bench')
                         expect(workout[0].muscleGroup).to.equal('chest')
+                        expect(workout[0].feedImage).to.be.a.string
                     })
             })
         // .finally(() => {
@@ -74,7 +75,7 @@ describe('create Workout', () => {
     it('fails on existingUser', () => {
         let catchedError: Error
 
-        return createWorkout(new ObjectId().toString(), 'press bench', 'chest', 'best workout to grow chest')
+        return createWorkout(new ObjectId().toString(), 'press bench', 'chest', 'https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg', 'best workout to grow chest')
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(NotFoundError)
