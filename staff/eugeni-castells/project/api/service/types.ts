@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+import { VanDocType } from "../data/types";
 import { Fuel, Shower, Toilet } from "../data/types";
 
 export type NewVanInfo = {
@@ -34,7 +36,7 @@ export type NewUserInfo = {
   address: string;
   country: string;
   city: string;
-  point: { type: "Point"; coordinates: [number, number] };
+  coordinates: [number, number];
 };
 
 export type AuthUserType = {
@@ -45,4 +47,18 @@ export type AuthUserType = {
 export type ReturnedFullName = {
   name: string;
   lastName: string;
+};
+
+export type SanitizedVanWithRating = Omit<
+  VanDocType,
+  "reviews" | "_id" | "_v"
+> & {
+  reviews: ReturnedVanReview[];
+  averageRating: number;
+};
+
+export type ReturnedVanReview = {
+  comment: string;
+  rating: number;
+  author: string;
 };

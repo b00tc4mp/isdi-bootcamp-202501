@@ -6,8 +6,17 @@ import { UserDocType, LocationDocType } from "../data/index.js";
 import { NewUserInfo } from "./types.js";
 
 export const registerUser = (newUserInfo: NewUserInfo): Promise<void> => {
-  const { lastName, name, email, password, city, country, address, point } =
-    newUserInfo;
+  debugger;
+  const {
+    lastName,
+    name,
+    email,
+    password,
+    city,
+    country,
+    address,
+    coordinates,
+  } = newUserInfo;
   validate.username(lastName, "lastName");
   validate.text(city, "city");
   validate.minLength(city, 2, "city min length");
@@ -26,7 +35,12 @@ export const registerUser = (newUserInfo: NewUserInfo): Promise<void> => {
 
   return Promise.all([
     User.findOne({ $or: [{ email }] }).lean(),
-    Location.create({ city, country, point: { coordinates: point }, address }),
+    Location.create({
+      city,
+      country,
+      point: { type: "Point", coordinates: coordinates },
+      address,
+    }),
   ])
     .catch((error) => {
       throw new SystemError(error.message);

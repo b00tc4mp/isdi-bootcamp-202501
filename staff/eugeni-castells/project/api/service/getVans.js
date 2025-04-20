@@ -8,11 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getVans = void 0;
 const com_1 = require("com");
 const data_1 = require("../data");
 const errors_1 = require("com/errors");
+const getAverageRating_1 = require("../utils/getAverageRating");
 const getVans = (userId) => {
     com_1.validate.id(userId, "user id");
     return (() => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,10 +51,40 @@ const getVans = (userId) => {
             const vans = yield data_1.Van.find({
                 location: { $in: locationIds },
             })
-                .lean()
+                .populate([
+                {
+                    path: "location",
+                    select: "address country city", //només els camps que m'interessen
+                },
+                {
+                    path: "reviews",
+                    select: "comment author rating",
+                    populate: {
+                        path: "author",
+                        select: "name",
+                    },
+                },
+            ])
                 .select("-__v")
-                .sort("-createdAt");
-            return vans;
+                .sort("-createdAt")
+                .lean();
+            const finalVans = yield Promise.all(vans.map((van) => {
+                const typedVan = van;
+                /*com que no podem fer delete perquè el delete s'ha de fer sobre variables que no tinguin el required,
+              haurem de desestructurar i deixar 'lliure' les variables que volguem eliminar*/
+                const { _id } = van, sanitizedVan = __rest(van, ["_id"]);
+                const reviews = typedVan.reviews.map((review) => {
+                    var _a;
+                    return ({
+                        comment: review.comment || "",
+                        rating: (_a = review.rating) !== null && _a !== void 0 ? _a : null,
+                        author: review.author || "Unknown",
+                    });
+                });
+                const averageRating = (0, getAverageRating_1.getAverageRating)(reviews);
+                return Object.assign(Object.assign({}, sanitizedVan), { id: _id.toString(), reviews: reviews, averageRating });
+            }));
+            return finalVans;
         }
         catch (error) {
             console.error(error);

@@ -1,11 +1,24 @@
 import { Request, Response } from "express";
 import createFunctionalHandler from "../middlewares/createHandler";
 import { registerUser } from "../service";
+import { NewUserInfo } from "../service/types";
+
+type CustomRegisterUserRequest<T> = {
+  body: T;
+};
 
 export const registerUserHandler = createFunctionalHandler(
-  (req: Request, res: Response) => {
-    const { name, lastName, email, password, city, address, country, point } =
-      req.body;
+  (req: CustomRegisterUserRequest<NewUserInfo>, res: Response) => {
+    const {
+      name,
+      lastName,
+      email,
+      password,
+      city,
+      address,
+      country,
+      coordinates,
+    } = req.body;
 
     return registerUser({
       name,
@@ -14,7 +27,7 @@ export const registerUserHandler = createFunctionalHandler(
       password,
       city,
       country,
-      point,
+      coordinates,
       address,
     }).then(() => {
       res.status(201).send();

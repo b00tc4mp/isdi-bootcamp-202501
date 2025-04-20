@@ -9,7 +9,8 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const index_js_1 = require("../data/index.js");
 const errors_1 = require("com/errors");
 const registerUser = (newUserInfo) => {
-    const { lastName, name, email, password, city, country, address, point } = newUserInfo;
+    debugger;
+    const { lastName, name, email, password, city, country, address, coordinates, } = newUserInfo;
     com_1.validate.username(lastName, "lastName");
     com_1.validate.text(city, "city");
     com_1.validate.minLength(city, 2, "city min length");
@@ -25,7 +26,12 @@ const registerUser = (newUserInfo) => {
     let locationSend;
     return Promise.all([
         index_js_1.User.findOne({ $or: [{ email }] }).lean(),
-        index_js_1.Location.create({ city, country, point: { coordinates: point }, address }),
+        index_js_1.Location.create({
+            city,
+            country,
+            point: { type: "Point", coordinates: coordinates },
+            address,
+        }),
     ])
         .catch((error) => {
         throw new errors_1.SystemError(error.message);

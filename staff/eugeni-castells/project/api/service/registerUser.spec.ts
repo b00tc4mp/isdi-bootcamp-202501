@@ -23,10 +23,7 @@ describe("registerUser", () => {
       address: "gran de sant andreu 368",
       city: "Barcelona",
       country: "Spain",
-      point: {
-        type: "Point", // <-- ara TypeScript sap que això és el literal "Point"
-        coordinates: [2.1734, 41.3851],
-      },
+      coordinates: [2.1734, 41.3851],
     };
     debugger;
     return registerUser(newUserInfo)
