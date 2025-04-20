@@ -40,7 +40,7 @@ export const validate = {
         if (!constant.URL_REGEX.test(url)) throw new ValidationError(`invalid ${explain} length`)
     },
     id(id, explain = 'id') {
-        this.string(id, explain)
+        this.text(id, explain)
         if (id.length !== 24) throw new ValidationError(`invalid ${explain} length`)
     },
 
