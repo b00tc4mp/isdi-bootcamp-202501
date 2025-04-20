@@ -5,6 +5,4 @@ export type LandingItemProps = {
   title: string;
   description: string;
   index: number;
-  onRegisterClick: () => void;
-  onLoginClick: () => void;
 };
