@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { Couple, User, DiaryEntry, CalendarEvent, List, ListItem, Feelings, data, InviteCode } from './../data/index.js'
+import { Couple, User, DiaryEntry, CalendarEvent, List, ListItem, Feelings, InviteCode, data } from './../data/index.js'
 import bcrypt from 'bcryptjs'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -73,26 +73,38 @@ data.connect(MONGO_URL, MONGO_DB)
                 { couple: couple2._id, title: "Cooking Class", description: "We will take a cooking class together to learn Italian cuisine.", author: couple2.members[1]._id, eventDate: new Date('2025-07-10T17:30:00') },
                 { couple: couple3._id, title: "Anniversary Dinner", description: "Anniversary celebration with a private dinner at home.", author: couple3.members[0]._id, eventDate: new Date('2025-05-05T20:00:00') },
                 { couple: couple3._id, title: "Weekend Getaway", description: "A weekend getaway to the beach.", author: couple3.members[1]._id, eventDate: new Date('2025-06-15T08:00:00') },
-            ]),
-            List.insertMany([
-                { couple: couple1._id, title: "Weekend Getaway Packing List", author: couple1.members[0]._id, items: [{ text: "Sunscreen" }, { text: "Camera" }], color: "blue" },
-                { couple: couple1._id, title: "Home Renovation Ideas", author: couple1.members[1]._id, items: [{ text: "New furniture" }, { text: "Paint walls" }], color: "red" },
-                { couple: couple2._id, title: "Things To Do Together", author: couple2.members[0]._id, items: [{ text: "Visit a museum" }, { text: "Have a picnic" }], color: "blue" },
-                { couple: couple2._id, title: "Vacation Wishlist", author: couple2.members[1]._id, items: [{ text: "Paris" }, { text: "Tokyo" }], color: "pink" },
-                { couple: couple3._id, title: "Anniversary Plans", author: couple3.members[0]._id, items: [{ text: "Buy a gift" }, { text: "Make a special dinner" }], color: "orange" },
-                { couple: couple3._id, title: "Dream House", author: couple3.members[1]._id, items: [{ text: "Big garden" }, { text: "Open kitchen" }], color: "red" },
-            ]),
-            Feelings.insertMany([
-                { couple: couple1._id, author: couple1.members[0]._id, emotion: "Love" },
-                { couple: couple1._id, author: couple1.members[1]._id, emotion: "Happiness" },
-                { couple: couple2._id, author: couple2.members[0]._id, emotion: "Excitement" },
-                { couple: couple2._id, author: couple2.members[1]._id, emotion: "Contentment" },
-                { couple: couple3._id, author: couple3.members[0]._id, emotion: "Gratitude" },
-                { couple: couple3._id, author: couple3.members[1]._id, emotion: "Affection" }
             ])
         ])
+            .then(() => {
+                return ListItem.insertMany([
+                    { text: "Sunscreen" },
+                    { text: "Camera" },
+                    { text: "New furniture" },
+                    { text: "Paint walls" },
+                    { text: "Visit a museum" },
+                    { text: "Have a picnic" },
+                    { text: "Paris" },
+                    { text: "Tokyo" },
+                    { text: "Buy a gift" },
+                    { text: "Make a special dinner" },
+                    { text: "Big garden" },
+                    { text: "Open kitchen" }
+                ])
+                    .then(listItems => {
+                        return Promise.all([
+                            List.insertMany([
+                                { couple: couple1._id, title: "Weekend Getaway Packing List", author: couple1.members[0]._id, items: [listItems[0]._id, listItems[1]._id], color: "blue" },
+                                { couple: couple1._id, title: "Home Renovation Ideas", author: couple1.members[1]._id, items: [listItems[2]._id, listItems[3]._id], color: "red" },
+                                { couple: couple2._id, title: "Things To Do Together", author: couple2.members[0]._id, items: [listItems[4]._id, listItems[5]._id], color: "blue" },
+                                { couple: couple2._id, title: "Vacation Wishlist", author: couple2.members[1]._id, items: [listItems[6]._id, listItems[7]._id], color: "pink" },
+                                { couple: couple3._id, title: "Anniversary Plans", author: couple3.members[0]._id, items: [listItems[8]._id, listItems[9]._id], color: "orange" },
+                                { couple: couple3._id, title: "Dream House", author: couple3.members[1]._id, items: [listItems[10]._id, listItems[11]._id], color: "red" },
+                            ])
+                        ])
+                    })
+            })
     })
     .then(() => {
-        console.log('populate.js executed')
+        console.log('populate.js ejecutado');
     })
-    .finally(() => data.disconnect())
+    .finally(() => data.disconnect());

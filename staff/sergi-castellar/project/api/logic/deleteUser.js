@@ -1,5 +1,6 @@
 import { User } from './../data/index.js'
 import { errors, validate } from 'com'
+
 const { SystemError, NotFoundError } = errors
 
 export const deleteUser = (userId) => {

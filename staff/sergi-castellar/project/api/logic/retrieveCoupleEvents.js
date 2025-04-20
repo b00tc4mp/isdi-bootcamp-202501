@@ -1,9 +1,9 @@
-import { Couple, CalendarEvent } from './../data/index.js'
+import { Couple, CalendarEvent } from '../data/index.js'
 import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const getCoupleEvents = (userId, startDate, endDate) => {
+export const retrieveCoupleEvents = (userId, startDate, endDate) => {
     validate.id(userId, 'userId')
 
     return Couple.findOne({ members: userId }).lean()

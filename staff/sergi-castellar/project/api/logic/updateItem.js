@@ -1,0 +1,35 @@
+import { Couple, List, ListItem } from '../data/index.js'
+import { validate, errors } from 'com'
+
+const { SystemError, NotFoundError, AuthorizationError } = errors
+
+export const updateItem = (userId, itemId, text) => {
+    validate.id(userId, 'userId')
+    validate.id(itemId, 'itemId')
+    validate.notBlankString(text, 'text')
+
+    return Couple.findOne({ members: userId }).lean()
+        .catch(error => { throw new SystemError(error.message) })
+        .then(couple => {
+            if (!couple) throw new NotFoundError('couple not found')
+
+            return ListItem.findById(itemId)
+                .catch(error => { throw new SystemError(error.message) })
+                .then(item => {
+                    if (!item) throw new NotFoundError('item not found')
+
+                    return List.findById(item.list).lean()
+                        .catch(error => { throw new SystemError(error.message) })
+                        .then(list => {
+                            if (!list) throw new NotFoundError('list not found')
+                            if (!list.couple.equals(couple._id)) throw new AuthorizationError('Couple is not the owner of the list')
+
+                            item.text = text.trim()
+                            item.modifiedAt = new Date()
+
+                            return item.save()
+                                .catch(error => { throw new SystemError(error.message) })
+                        })
+                })
+        })
+}

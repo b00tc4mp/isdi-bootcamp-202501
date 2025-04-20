@@ -1,20 +1,20 @@
 import jwt from 'jsonwebtoken'
 import { Router } from 'express'
-import { jsonBodyParser, withErrorHandling, authHandler } from '../handlers/index.js'
+import { jsonBodyParser, withErrorHandling, retrieveUserId } from '../middleware/index.js'
 import { logic } from '../logic/index.js'
 
 const { JWT_SECRET } = process.env
 
 export const users = Router()
 
-users.get('/', authHandler, withErrorHandling((req, res) => {
+users.get('/', retrieveUserId, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.getSelfUser(userId)
         .then(user => res.json({ user }))
 }))
 
-users.get('/couple-status', authHandler, withErrorHandling((req, res) => {
+users.get('/couple-status', retrieveUserId, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.getIfUserIsInCouple(userId)
@@ -39,16 +39,16 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
         })
 }))
 
-users.delete('/', authHandler, withErrorHandling((req, res) => {
+users.delete('/', retrieveUserId, withErrorHandling((req, res) => {
     const { userId } = req
 
     return logic.deleteUser(userId)
         .then(() => res.status(204).send())
 }))
 
-users.patch('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-    const { userId } = req
+// users.patch('/', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
+//     const { userId } = req
 
-    return logic.editUser(userId)
-        .then(() => res.status(204).send())
-}))
+//     return logic.editUser(userId)
+//         .then(() => res.status(204).send())
+// }))

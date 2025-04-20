@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 const { JWT_SECRET } = process.env
 
-export const authHandler = (req, res, next) => {
+export const retrieveUserId = (req, res, next) => {
     try {
         const { authorization } = req.headers
 

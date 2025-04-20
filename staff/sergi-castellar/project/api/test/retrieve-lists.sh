@@ -1,2 +1,2 @@
-curl -X GET http://localhost:8080/users/couple-status \
+curl -X GET http://localhost:8080/couples/lists \
     -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODA1MDMyNDZkMGZlN2ZkNDkwNmFiZjUiLCJpYXQiOjE3NDUxNTk4ODMsImV4cCI6MTc2MTQwMzA4M30.X3Ck8SPv_05orfu4D5Ey97W2cTphUqGYlnjPI4_DNGI' -v

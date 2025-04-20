@@ -71,7 +71,7 @@ const inviteCode = new Schema({
         unique: true
     },
     createdBy: {
-        type: Types.ObjectId,
+        type: ObjectId,
         ref: 'User',
         required: true
     },
@@ -159,6 +159,10 @@ const listItem = new Schema({
         minLength: 1,
         maxLength: 500,
     },
+    list: {
+        type: ObjectId,
+        ref: 'List'
+    },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -184,9 +188,13 @@ const list = new Schema({
     title: {
         type: String,
         minLength: 1,
-        maxLength: 100
+        maxLength: 100,
+        required: true
     },
-    items: [listItem],
+    items: [{
+        type: ObjectId,
+        ref: 'ListItem'
+    }],
     color: {
         type: String,
         required: true
