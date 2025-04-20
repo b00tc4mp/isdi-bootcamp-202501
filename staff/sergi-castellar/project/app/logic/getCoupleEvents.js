@@ -1,9 +1,12 @@
 import { data } from '../data'
-import { errors } from 'com'
+import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
 export const getCoupleEvents = (startDate, endDate) => {
+    validate.date(startDate, 'startDate')
+    validate.date(endDate, 'endDate')
+
     const { token } = data
 
     return fetch(`${import.meta.env.VITE_API_URL}/couples/events?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`, {

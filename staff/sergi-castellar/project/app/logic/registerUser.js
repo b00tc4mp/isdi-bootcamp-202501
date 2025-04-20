@@ -7,6 +7,7 @@ export const registerUser = (name, email, username, password, password2) => {
     validate.email(email, 'email')
     validate.username(username, 'username')
     validate.password(password, 'password')
+    validate.password(password2, 'confirm password')
 
     if (password != password2) throw new NoMatchError('Passwords do not match')
 
