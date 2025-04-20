@@ -87,7 +87,7 @@ type DocDocType = {
 
 type ReviewDocType = {
   _id: Types.ObjectId;
-  rating: number[];
+  rating: number;
   comment: string;
   author: Types.ObjectId;
   createdAt: Date;

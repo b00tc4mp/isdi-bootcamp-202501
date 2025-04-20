@@ -27,7 +27,11 @@ export const registerUserSchema = object({
     .string()
     .min(3, "region must have at least 2 characters")
     .max(20, "region cannot surpass 20 characters"),
-  point: z.number().array().length(2),
+  // point: z.object({
+  //   coordinates: z
+  //     .array(z.number())
+  //     .length(2, "coordinates must be an array of exactly two numbers"),
+  // }),
 });
 
 export const userAuthSchema = object({
@@ -50,7 +54,7 @@ export const registerVanSchema = z.object({
       message: `Year must be between 1970 and ${currentYear}`,
     }
   ),
-  images: z.array(z.string().min(10).max(100)).optional(),
+  images: z.array(z.string().min(10).max(150)).optional(),
   accessible: z.boolean().optional(),
   price: z.number().min(0).max(1000).optional(),
   reviews: z.array(z.string().regex(OBJECT_ID_REGEX)).optional(),

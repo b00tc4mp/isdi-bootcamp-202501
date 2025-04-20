@@ -4,7 +4,7 @@ exports.Review = void 0;
 const mongoose_1 = require("mongoose");
 const review = new mongoose_1.Schema({
     author: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
-    rating: { type: [Number], min: 0, max: 5 },
+    rating: { type: Number, min: 0, max: 5 },
     comment: { type: String, minlength: 3, maxLength: 500 },
     createdAt: {
         type: Date,

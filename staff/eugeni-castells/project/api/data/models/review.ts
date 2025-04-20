@@ -1,9 +1,9 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 import { ReviewDocType } from "../types.js";
 
 const review = new Schema<ReviewDocType>({
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  rating: { type: [Number], min: 0, max: 5 },
+  rating: { type: Number, min: 0, max: 5 },
   comment: { type: String, minlength: 3, maxLength: 500 },
   createdAt: {
     type: Date,

@@ -27,7 +27,11 @@ exports.registerUserSchema = (0, zod_1.object)({
         .string()
         .min(3, "region must have at least 2 characters")
         .max(20, "region cannot surpass 20 characters"),
-    point: zod_1.z.number().array().length(2),
+    // point: z.object({
+    //   coordinates: z
+    //     .array(z.number())
+    //     .length(2, "coordinates must be an array of exactly two numbers"),
+    // }),
 });
 exports.userAuthSchema = (0, zod_1.object)({
     email: zod_1.z.string().email("invalid email address"),
@@ -45,7 +49,7 @@ exports.registerVanSchema = zod_1.z.object({
     }, {
         message: `Year must be between 1970 and ${currentYear}`,
     }),
-    images: zod_1.z.array(zod_1.z.string().min(10).max(100)).optional(),
+    images: zod_1.z.array(zod_1.z.string().min(10).max(150)).optional(),
     accessible: zod_1.z.boolean().optional(),
     price: zod_1.z.number().min(0).max(1000).optional(),
     reviews: zod_1.z.array(zod_1.z.string().regex(OBJECT_ID_REGEX)).optional(),

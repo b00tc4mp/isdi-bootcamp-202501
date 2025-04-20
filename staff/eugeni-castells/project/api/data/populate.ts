@@ -1,7 +1,7 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { data } from ".";
-import { User, Van, Trip, Location } from "./models";
+import { User, Van, Trip, Location, Review } from "./models";
 import { Types } from "mongoose";
 import { UserDocType } from "./index";
 
@@ -66,7 +66,6 @@ data
       },
       {
         name: "Manu",
-
         email: "ma@nu.com",
         password: hashedPassword,
         role: "regular",
@@ -78,7 +77,6 @@ data
       },
       {
         name: "Aaron",
-
         email: "aa@ron.com",
         password: hashedPassword,
         role: "regular",
@@ -91,15 +89,59 @@ data
       },
       {
         name: "Luciano",
-
         email: "lu@cho.com",
         password: hashedPassword,
-        role: "moderator",
+        role: "admin",
         createdAt: new Date(2023, 8, 17),
         location: luchoLocation._id,
         roadPoints: 0,
         vans: [],
         trips: [],
+      },
+    ]);
+
+    const reviews = await Review.insertMany([
+      {
+        author: manu._id,
+        rating: 5,
+        comment: "An incredible experience! The camper was spotless.",
+        createdAt: new Date(),
+        modifiedAt: null,
+      },
+      {
+        author: frankie._id,
+        rating: 4,
+        comment: "Everything was great, but the bed wasn’t very comfortable.",
+        createdAt: new Date(),
+        modifiedAt: null,
+      },
+      {
+        author: aaron._id,
+        rating: 3,
+        comment: "Okay for a few days, but it was a bit noisy.",
+        createdAt: new Date(),
+        modifiedAt: null,
+      },
+      {
+        author: lucho._id,
+        rating: 5,
+        comment: "Perfect for a road trip. Would definitely do it again!",
+        createdAt: new Date(),
+        modifiedAt: null,
+      },
+      {
+        author: frankie._id,
+        rating: 2,
+        comment: "The van wasn’t clean when we arrived.",
+        createdAt: new Date(),
+        modifiedAt: null,
+      },
+      {
+        author: aaron._id,
+        rating: 4,
+        comment: "Very practical and well equipped. Ideal for short getaways.",
+        createdAt: new Date(),
+        modifiedAt: null,
       },
     ]);
 
@@ -109,10 +151,13 @@ data
         brand: "Mercedes",
         description: "Van ideal per viatges llargs amb aire acondicionat",
         year: new Date(2021, 5),
-        images: ["https://img1", "https://img2"],
+        images: [
+          "https://weinsberg.com/fileadmin/media/mj2024-2025/camper-van/global/uebersicht/kta-weinsberg-2024-2025-camper-vans-uebersicht-carabus-teaser.jpg",
+          "https://m3caravaning.com/wp-content/uploads/2024/11/furgonetas-camper-nuevas.webp",
+        ],
         accessible: true,
         price: 150,
-        reviews: [],
+        reviews: [reviews[0]._id, reviews[1]._id],
         location: manuLocation._id,
         legal: [docId],
         trips: [],
@@ -135,10 +180,13 @@ data
         brand: "Volkswagen",
         description: "Compacta i còmoda",
         year: new Date(2019, 3),
-        images: ["https://img3", "https://img4"],
+        images: [
+          "https://cdn.media.kaavan.es/blobs/vehicles/749b98ed-85b6-48f8-a275-77e879a2f857/medias/3788861.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROJ-rYbmBoFPwtTJ3vUEazTnkm9WRN9pHOrw&s",
+        ],
         accessible: false,
         price: 120,
-        reviews: [],
+        reviews: [reviews[2]._id, reviews[5]._id],
         location: frankieLocation._id,
         legal: [],
         trips: [],
@@ -161,10 +209,12 @@ data
         brand: "Renault",
         description: "Ecològica i moderna",
         year: new Date(2022, 0),
-        images: ["https://img5", "https://img6"],
+        images: [
+          "https://cdn.motor1.com/images/mgl/G3ywZV/s3/honda-n-van-compo.jpg",
+        ],
         accessible: true,
         price: 180,
-        reviews: [],
+        reviews: [reviews[3]._id, reviews[4]._id],
         location: aaronLocation._id,
         legal: [],
         trips: [],
