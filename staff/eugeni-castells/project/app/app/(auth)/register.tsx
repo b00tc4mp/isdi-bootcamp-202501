@@ -26,54 +26,60 @@ export const register = () => {
   const handleSubmit = async () => {
     let permission;
     let coordinates;
-
     try {
-      permission = await checkLocationPermit();
-    } catch (error) {
-      const err = error as Error;
-
-      Alert.alert(err.message);
-    }
-
-    if (!permission!.granted) {
       try {
-        permission = await Location.requestForegroundPermissionsAsync();
+        permission = await checkLocationPermit();
       } catch (error) {
         const err = error as Error;
 
         Alert.alert(err.message);
       }
-    }
 
-    if (permission?.status === "granted") {
+      if (!permission!.granted) {
+        try {
+          permission = await Location.requestForegroundPermissionsAsync();
+        } catch (error) {
+          const err = error as Error;
+
+          Alert.alert(err.message);
+        }
+      }
+
+      if (permission?.status === "granted") {
+        try {
+          coordinates = await getRealTimeLocation();
+        } catch (error) {
+          const err = error as Error;
+
+          Alert.alert(err.message);
+          return;
+        }
+      }
+
+      const newUserInfo = {
+        name,
+        lastName,
+        email,
+        country,
+        city,
+        address,
+        password,
+        coordinates: [coordinates!.longitude, coordinates!.latitude] as [
+          number,
+          number
+        ],
+      };
+
       try {
-        coordinates = await getRealTimeLocation();
+        await registerUser(newUserInfo);
       } catch (error) {
+        console.error(error);
         const err = error as Error;
 
         Alert.alert(err.message);
-        return;
       }
-    }
-
-    const newUserInfo = {
-      name,
-      lastName,
-      email,
-      country,
-      city,
-      address,
-      password,
-      coordinates: [coordinates!.latitude, coordinates!.longitude] as [
-        number,
-        number
-      ],
-      // coordinates,
-    };
-
-    try {
-      await registerUser(newUserInfo);
     } catch (error) {
+      console.error(error);
       const err = error as Error;
 
       Alert.alert(err.message);

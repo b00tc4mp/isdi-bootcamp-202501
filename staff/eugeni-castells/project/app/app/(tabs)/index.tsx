@@ -1,33 +1,37 @@
 import { Alert, StyleSheet } from "react-native";
-
-import { Text, View } from "@/components/Themed";
+import { View } from "@/components/Themed";
+import { SearchBar } from "@/components/Home/SearchBar";
 import { useState, useEffect } from "react";
 import { getVans } from "@/services/getVans";
-import { VanDocType } from "@/com/types";
+import { ReturnedVansType, VanDocType } from "@/com/types";
+import { VanCard } from "@/components/Home/VanCard";
 
 export default function HomeScreen() {
-  const [vans, setVans] = useState<VanDocType[]>([]);
+  const [vans, setVans] = useState<ReturnedVansType[]>([]);
 
   useEffect(() => {
-    debugger;
-    try {
-      getVans().then((vans) => {
+    const fetchVans = async () => {
+      try {
+        const vans = await getVans();
         setVans(vans);
-      });
-    } catch (error) {
-      const err = error as Error;
+      } catch (error) {
+        Alert.alert((error as Error).message);
+      }
+    };
 
-      Alert.alert(err.message);
-    }
+    fetchVans();
   }, []);
 
   return (
-    <View>
-      <Text>
-        {vans.map((van, index) => {
-          return <Text key={index}>{van.model}</Text>;
-        })}
-      </Text>
+    <View style={styles.container}>
+      <SearchBar />
+      {vans.length > 0 && (
+        <View style={styles.vansContainer}>
+          {vans.map((van, index) => {
+            return <VanCard vanInfo={van} key={index} />;
+          })}
+        </View>
+      )}
     </View>
   );
 }
@@ -46,5 +50,8 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  vansContainer: {
+    height: "80%",
   },
 });
