@@ -1,20 +1,16 @@
-import { data } from '../data'
-import { errors, validate } from 'com'
+import { data } from '../../data'
+import { errors } from 'com'
 
 const { SystemError } = errors
 
-export const joinWithInviteCode = (inviteCode) => {
-    validate.inviteCode(inviteCode, 'inviteCode')
-
+export const getCurrentUser = () => {
     const { token } = data
 
-    return fetch(`${import.meta.env.VITE_API_URL}/couples/join`, {
-        method: 'POST',
+    return fetch(`${import.meta.env.VITE_API_URL}/users/`, {
+        method: 'GET',
         headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ inviteCode })
+            Authorization: `Bearer ${token}`
+        }
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
@@ -22,10 +18,11 @@ export const joinWithInviteCode = (inviteCode) => {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { couple } = body
+                        const { user } = body
 
-                        return couple
+                        return user
                     })
+
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { logic } from '../../logic/emotions'
+import { logic } from '../../logic'
 import { EmotionsResult } from './EmotionsResult'
 
 export function Emotions() {

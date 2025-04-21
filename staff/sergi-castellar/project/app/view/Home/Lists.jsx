@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { logic } from '../../logic/lists'
+import { logic } from '../../logic'
 import { ListDetail } from './ListDetail.jsx'
 
 export function Lists() {

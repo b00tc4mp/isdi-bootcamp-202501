@@ -1,30 +1,26 @@
-import { data } from '../data/index'
-import { errors, validate } from 'com'
+import { data } from '../../data'
+import { errors } from 'com'
 
 const { SystemError } = errors
 
-export const loginUser = (username, password) => {
-    validate.username(username, 'username')
-    validate.password(password, 'password')
+export const isUserInCouple = () => {
+    const { token } = data
 
-    return fetch('http://localhost:8080/users/auth', {
-        method: 'POST',
+    return fetch(`${import.meta.env.VITE_API_URL}/users/couple-status`, {
+        method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
+            Authorization: `Bearer ${token}`
+        }
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            console.log(response.status)
-
             if (response.status === 200)
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { token } = body
+                        const { status } = body
 
-                        data.token = token
+                        return status
                     })
 
             return response.json()

@@ -1,4 +1,4 @@
-import { data } from '../data'
+import { data } from '../../data'
 import { errors } from 'com'
 
 const { SystemError } = errors

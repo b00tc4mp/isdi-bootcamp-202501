@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { logic } from '../../logic/lists'
+import { logic } from '../../logic'
 
 export function ListDetail({ list, onBack }) {
   const { _id: listId, title, color } = list

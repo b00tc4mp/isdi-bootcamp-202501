@@ -1,12 +1,12 @@
-import { data } from '../data'
+import { data } from '../../data'
 import { errors } from 'com'
 
 const { SystemError } = errors
 
-export const isUserInCouple = () => {
+export const generateInviteCode = () => {
     const { token } = data
 
-    return fetch(`${import.meta.env.VITE_API_URL}/users/couple-status`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/couples/invite`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
@@ -18,11 +18,10 @@ export const isUserInCouple = () => {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { status } = body
+                        const { inviteCode } = body
 
-                        return status
+                        return inviteCode
                     })
-
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {

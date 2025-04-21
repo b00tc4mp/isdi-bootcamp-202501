@@ -1,30 +1,32 @@
-import { data } from '../data'
+import { data } from '../../data/index'
 import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-export const getCoupleEvents = (startDate, endDate) => {
-    validate.date(startDate, 'startDate')
-    validate.date(endDate, 'endDate')
+export const loginUser = (username, password) => {
+    validate.username(username, 'username')
+    validate.password(password, 'password')
 
-    const { token } = data
-
-    return fetch(`${import.meta.env.VITE_API_URL}/couples/events?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`, {
-        method: 'GET',
+    return fetch('http://localhost:8080/users/auth', {
+        method: 'POST',
         headers: {
-            Authorization: `Bearer ${token}`
-        }
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
+            console.log(response.status)
+
             if (response.status === 200)
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { events } = body
+                        const { token } = body
 
-                        return events
+                        data.token = token
                     })
+
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
