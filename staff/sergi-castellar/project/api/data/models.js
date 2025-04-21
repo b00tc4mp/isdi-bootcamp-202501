@@ -77,8 +77,8 @@ const inviteCode = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now,
-        required: true
+        required: true,
+        default: Date.now
     }
 })
 
@@ -166,8 +166,8 @@ const listItem = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now,
-        required: true
+        required: true,
+        default: Date.now
     },
     modifiedAt: {
         type: Date,
@@ -211,7 +211,7 @@ const list = new Schema({
     }
 })
 
-const feelings = new Schema({
+const emotion = new Schema({
     couple: {
         type: ObjectId,
         ref: 'Couple',
@@ -246,7 +246,7 @@ const DiaryEntry = model('DiaryEntry', diaryEntry)
 const CalendarEvent = model('CalendarEvent', calendarEvent)
 const ListItem = model('ListItem', listItem)
 const List = model('List', list)
-const Feelings = model('Feelings', feelings)
+const Emotion = model('Emotion', emotion)
 
 export {
     User,
@@ -256,5 +256,5 @@ export {
     CalendarEvent,
     ListItem,
     List,
-    Feelings
+    Emotion
 }

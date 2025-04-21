@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { User, Couple, InviteCode, DiaryEntry, CalendarEvent, ListItem, List, Feelings } from './models.js'
+import { User, Couple, InviteCode, DiaryEntry, CalendarEvent, ListItem, List, Emotion } from './models.js'
 import { errors } from 'com'
 
 const { SystemError } = errors
@@ -24,5 +24,5 @@ export {
     CalendarEvent,
     ListItem,
     List,
-    Feelings
+    Emotion
 }

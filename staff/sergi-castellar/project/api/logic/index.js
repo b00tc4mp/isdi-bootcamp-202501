@@ -1,4 +1,5 @@
 import { authenticateUser } from "./authenticateUser.js"
+import { createEmotion } from "./createEmotion.js"
 import { createItem } from "./createItem.js"
 import { createList } from "./createList.js"
 import { deleteItem } from "./deleteItem.js"
@@ -15,12 +16,14 @@ import { registerUser } from "./registerUser.js"
 import { retrieveCoupleEvents } from "./retrieveCoupleEvents.js"
 import { retrieveItems } from "./retrieveItems.js"
 import { retrieveLists } from "./retrieveLists.js"
+import { retrieveTodayEmotions } from "./retrieveTodayEmotions.js"
 import { setCoupleStartDate } from "./setCoupleStartDate.js"
 import { updateItem } from "./updateItem.js"
 import { updateList } from "./updateList.js"
 
 export const logic = {
     authenticateUser,
+    createEmotion,
     createItem,
     createList,
     deleteItem,
@@ -37,6 +40,7 @@ export const logic = {
     retrieveCoupleEvents,
     retrieveItems,
     retrieveLists,
+    retrieveTodayEmotions,
     setCoupleStartDate,
     updateItem,
     updateList

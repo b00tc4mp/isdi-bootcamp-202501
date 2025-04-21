@@ -1,0 +1,2 @@
+curl -X GET http://localhost:8080/couples/emotions \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODA2NTA5MGIyMWVkN2Q2ODE5MDg1MDUiLCJpYXQiOjE3NDUyNDQzMTAsImV4cCI6MTc2MTQ4NzUxMH0.X6GIOdJBo2kZ2XE-dFQBS3jTMcM-DTZ3D7y_VegFUSc' -v

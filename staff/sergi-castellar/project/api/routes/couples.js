@@ -118,3 +118,20 @@ couples.delete('/items/:itemId', retrieveUserId, withErrorHandling((req, res) =>
     return logic.deleteItem(userId, itemId)
         .then(() => res.status(204).send())
 }))
+
+// EMOTIONS
+
+couples.get('/emotions', retrieveUserId, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.retrieveTodayEmotions(userId)
+        .then(emotions => res.json(emotions))
+}))
+
+couples.post('/emotions', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { emotion } = req.body
+
+    return logic.createEmotion(userId, emotion)
+        .then(() => res.status(201).send())
+}))

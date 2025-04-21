@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { Couple, User, DiaryEntry, CalendarEvent, List, ListItem, Feelings, InviteCode, data } from './../data/index.js'
+import { Couple, User, DiaryEntry, CalendarEvent, List, ListItem, Emotion, InviteCode, data } from './../data/index.js'
 import bcrypt from 'bcryptjs'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -10,7 +10,7 @@ data.connect(MONGO_URL, MONGO_DB)
             CalendarEvent.deleteMany({}),
             Couple.deleteMany({}),
             DiaryEntry.deleteMany({}),
-            Feelings.deleteMany({}),
+            Emotion.deleteMany({}),
             InviteCode.deleteMany({}),
             ListItem.deleteMany({}),
             List.deleteMany({}),
@@ -64,7 +64,7 @@ data.connect(MONGO_URL, MONGO_DB)
                 { couple: couple2._id, text: "Today we had a quiet afternoon in the park, just enjoying each other's company.", author: couple2.members[0]._id },
                 { couple: couple2._id, text: "We shared stories and plans for the future while walking hand-in-hand.", author: couple2.members[1]._id },
                 { couple: couple3._id, text: "This week we celebrated our anniversary with a surprise dinner date.", author: couple3.members[0]._id },
-                { couple: couple3._id, text: "We reminisced about the first time we met and made new memories to cherish.", author: couple3.members[1]._id },
+                { couple: couple3._id, text: "We reminisced about the first time we met and made new memories to cherish.", author: couple3.members[1]._id }
             ]),
             CalendarEvent.insertMany([
                 { couple: couple1._id, title: "Anniversary Celebration", description: "Anniversary celebration at our favorite restaurant.", author: couple1.members[0]._id, eventDate: new Date('2025-05-15T19:00:00') },
@@ -72,7 +72,15 @@ data.connect(MONGO_URL, MONGO_DB)
                 { couple: couple2._id, title: "Birthday Surprise", description: "Special birthday plan, including a spa day and a romantic dinner.", author: couple2.members[0]._id, eventDate: new Date('2025-04-20T10:00:00') },
                 { couple: couple2._id, title: "Cooking Class", description: "We will take a cooking class together to learn Italian cuisine.", author: couple2.members[1]._id, eventDate: new Date('2025-07-10T17:30:00') },
                 { couple: couple3._id, title: "Anniversary Dinner", description: "Anniversary celebration with a private dinner at home.", author: couple3.members[0]._id, eventDate: new Date('2025-05-05T20:00:00') },
-                { couple: couple3._id, title: "Weekend Getaway", description: "A weekend getaway to the beach.", author: couple3.members[1]._id, eventDate: new Date('2025-06-15T08:00:00') },
+                { couple: couple3._id, title: "Weekend Getaway", description: "A weekend getaway to the beach.", author: couple3.members[1]._id, eventDate: new Date('2025-06-15T08:00:00') }
+            ]),
+            Emotion.insertMany([
+                { couple: couple1._id, author: couple1.members[0]._id, emotion: 0 },
+                { couple: couple1._id, author: couple1.members[1]._id, emotion: 1 },
+                { couple: couple2._id, author: couple2.members[0]._id, emotion: 2 },
+                { couple: couple2._id, author: couple2.members[1]._id, emotion: 3 },
+                { couple: couple3._id, author: couple3.members[0]._id, emotion: 4 },
+                { couple: couple3._id, author: couple3.members[1]._id, emotion: 6 }
             ])
         ])
             .then(() => {
@@ -97,7 +105,7 @@ data.connect(MONGO_URL, MONGO_DB)
                             { couple: couple2._id, title: "Things To Do Together", author: couple2.members[0]._id, items: [listItems[4]._id, listItems[5]._id], color: "#41dae2" },
                             { couple: couple2._id, title: "Vacation Wishlist", author: couple2.members[1]._id, items: [listItems[6]._id, listItems[7]._id], color: "#d6cd68" },
                             { couple: couple3._id, title: "Anniversary Plans", author: couple3.members[0]._id, items: [listItems[8]._id, listItems[9]._id], color: "#de6bff" },
-                            { couple: couple3._id, title: "Dream House", author: couple3.members[1]._id, items: [listItems[10]._id, listItems[11]._id], color: "#ff0a0a" },
+                            { couple: couple3._id, title: "Dream House", author: couple3.members[1]._id, items: [listItems[10]._id, listItems[11]._id], color: "#ff0a0a" }
                         ])
                             .then(lists => {
                                 // Asignar el id de la lista a cada ítem
