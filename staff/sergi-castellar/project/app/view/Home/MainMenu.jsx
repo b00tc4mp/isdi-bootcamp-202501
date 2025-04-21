@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { logic } from '../../logic'
 
-export function MainMenu({ onCalendarClick, onListsClick, onDiaryClick, onFeelingsClick }) {
+export function MainMenu({ onCalendarClick, onListsClick, onDiaryClick, onEmotionsClick }) {
   const [user, setUser] = useState(null)
   const [daysTogether, setDaysTogether] = useState(0)
   const [partnerName, setPartnerName] = useState('')
@@ -48,7 +48,7 @@ export function MainMenu({ onCalendarClick, onListsClick, onDiaryClick, onFeelin
   const handleCalendarClick = () => onCalendarClick()
   const handleListsClick = () => onListsClick()
   const handleDiaryClick = () => onDiaryClick()
-  const handleFeelingsClick = () => onFeelingsClick()
+  const handleEmotionsClick = () => onEmotionsClick()
 
   return (
     <div className='bg-pink-100 min-h-screen flex flex-col items-center justify-start space-y-4'>
@@ -75,9 +75,9 @@ export function MainMenu({ onCalendarClick, onListsClick, onDiaryClick, onFeelin
           <img className='h-24' src='../../assets/home/asset_diary.png' alt='Diary' />
           <span className='text-lg font-medium text-gray-700 mt-2'>DIARY</span>
         </a>
-        <a onClick={handleFeelingsClick} className='flex flex-col items-center text-center bg-white p-4 rounded-2xl shadow-lg hover:bg-pink-200'>
-          <img className='h-24' src='../../assets/home/asset_feelings.png' alt='Feelings' />
-          <span className='text-lg font-medium text-gray-700 mt-2'>FEELINGS</span>
+        <a onClick={handleEmotionsClick} className='flex flex-col items-center text-center bg-white p-4 rounded-2xl shadow-lg hover:bg-pink-200'>
+          <img className='h-24' src='../../assets/home/asset_emotions.png' alt='Emotions' />
+          <span className='text-lg font-medium text-gray-700 mt-2'>EMOTIONS</span>
         </a>
       </div>
     </div>

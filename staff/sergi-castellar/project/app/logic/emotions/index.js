@@ -1,8 +1,8 @@
 import { createEmotion } from './createEmotion'
-import { retrieveTodayFeelings } from './retrieveTodayFeelings'
+import { retrieveTodayEmotions } from './retrieveTodayEmotions'
 
 
 export const logic = {
     createEmotion,
-    retrieveTodayFeelings
+    retrieveTodayEmotions
 }

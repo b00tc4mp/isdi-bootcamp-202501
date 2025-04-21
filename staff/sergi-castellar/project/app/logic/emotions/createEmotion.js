@@ -8,7 +8,7 @@ export const createEmotion = (emotion) => {
 
     const { token } = data
 
-    return fetch(`${import.meta.env.VITE_API_URL}/feelings`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/couples/emotions`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,

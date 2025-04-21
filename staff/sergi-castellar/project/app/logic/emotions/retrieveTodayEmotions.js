@@ -3,10 +3,10 @@ import { errors } from 'com'
 
 const { SystemError } = errors
 
-export const retrieveTodayFeelings = () => {
+export const retrieveTodayEmotions = () => {
     const { token } = data
 
-    return fetch(`${import.meta.env.VITE_API_URL}/feelings/today`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/couples/emotions`, {
         headers: {
             Authorization: `Bearer ${token}`
         }

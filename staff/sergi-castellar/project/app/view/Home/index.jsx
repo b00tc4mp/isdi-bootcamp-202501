@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router'
 
 import { Calendar } from './Calendar'
 import { Diary } from './Diary'
-import { Feelings } from './Feelings'
+import { Emotions } from './Emotions'
 import { MainMenu } from './MainMenu'
 import { Lists } from './Lists'
 import { InviteScreen } from './InviteScreen'
@@ -83,8 +83,8 @@ export function Home({ onUserLoggedOut }) {
     navigate('/diary')
   }
 
-  const handleFeelingsClick = () => {
-    navigate('/feelings')
+  const handleEmotionsClick = () => {
+    navigate('/emotions')
   }
 
   if (!isInCoupleLoaded) return null
@@ -113,11 +113,11 @@ export function Home({ onUserLoggedOut }) {
           </>
         ) : (
           <>
-            <Route path='/home' element={<MainMenu onCalendarClick={handleCalendarClick} onListsClick={handleListsClick} onDiaryClick={handleDiaryClick} onFeelingsClick={handleFeelingsClick} />} />
+            <Route path='/home' element={<MainMenu onCalendarClick={handleCalendarClick} onListsClick={handleListsClick} onDiaryClick={handleDiaryClick} onEmotionsClick={handleEmotionsClick} />} />
             <Route path='/calendar' element={<Calendar />} />
             <Route path='/lists' element={<Lists />} />
             <Route path='/diary' element={<Diary />} />
-            <Route path='/feelings' element={<Feelings />} />
+            <Route path='/emotions' element={<Emotions />} />
             <Route path='/invite' element={<Navigate to='/home' />} />
             <Route path='/set-date-start' element={<Navigate to='/home' />} />
           </>
