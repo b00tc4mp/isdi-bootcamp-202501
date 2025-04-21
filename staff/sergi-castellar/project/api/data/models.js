@@ -223,9 +223,9 @@ const feelings = new Schema({
         required: true
     },
     emotion: {
-        type: String,
-        minLength: 1,
-        maxLength: 50,
+        type: Number,
+        min: 0,
+        max: 8,
         required: true
     },
     createdAt: {

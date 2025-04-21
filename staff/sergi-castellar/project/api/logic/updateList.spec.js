@@ -44,12 +44,12 @@ describe('updateList', () => {
             })
             .then(list => {
                 listId = list._id.toString()
-                return updateList(userId, listId, 'Updated Shopping List', 'green')
+                return updateList(userId, listId, 'Updated Shopping List', '#ffffff')
             })
             .then(() => List.findById(listId).lean())
             .then(list => {
                 expect(list.title).to.equal('Updated Shopping List')
-                expect(list.color).to.equal('green')
+                expect(list.color).to.equal('#ffffff')
             })
     })
 
@@ -62,7 +62,7 @@ describe('updateList', () => {
         })
             .then(user => {
                 userId = user._id.toString()
-                return updateList(userId, '605c72ef1532073d4a8b4e1e', 'Updated Shopping List', 'green')
+                return updateList(userId, '605c72ef1532073d4a8b4e1e', 'Updated Shopping List', '#ffffff')
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -95,7 +95,7 @@ describe('updateList', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                return updateList(userId, '605c72ef1532073d4a8b4e1e', 'Updated Shopping List', 'green')
+                return updateList(userId, '605c72ef1532073d4a8b4e1e', 'Updated Shopping List', '#ffffff')
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -132,7 +132,7 @@ describe('updateList', () => {
             })
             .then(list => {
                 listId = list._id.toString()
-                return updateList(userId, listId, 'Updated Shopping List', 'green')
+                return updateList(userId, listId, 'Updated Shopping List', '#ffffff')
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(AuthorizationError)

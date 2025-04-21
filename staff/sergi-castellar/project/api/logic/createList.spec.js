@@ -40,7 +40,7 @@ describe('createList', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                return createList(userId, 'Shopping List', 'blue')
+                return createList(userId, 'Shopping List', '#ffffff')
             })
             .then(() => List.find({ couple: coupleId }).lean())
             .then(lists => {
@@ -58,7 +58,7 @@ describe('createList', () => {
         })
             .then(user => {
                 userId = user._id.toString()
-                return createList(userId, 'Shopping List', 'blue')
+                return createList(userId, 'Shopping List', '#ffffff')
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)

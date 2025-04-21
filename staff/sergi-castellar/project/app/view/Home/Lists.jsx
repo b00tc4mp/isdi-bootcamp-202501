@@ -92,33 +92,35 @@ export function Lists() {
       <div className='max-w-md mx-auto space-y-4'>
         <h1 className='text-2xl font-bold text-center'>Your Lists</h1>
 
-        {lists.map((list) => (
-          <div key={list._id} className='flex justify-between items-center bg-white p-4 rounded-xl shadow cursor-pointer' onClick={() => setSelectedList(list)}>
-            <div className='flex items-center space-x-3'>
-              <div className='w-3 h-12 rounded-full' style={{ backgroundColor: list.color }}></div>
-              <span className='font-semibold'>{list.title}</span>
-            </div>
+        <ul className='space-y-2'>
+          {lists.map((list) => (
+            <li key={list._id} className='flex justify-between items-center bg-white p-4 rounded-xl shadow cursor-pointer' onClick={() => setSelectedList(list)}>
+              <div className='flex items-center space-x-3'>
+                <div className='w-3 h-12 rounded-full' style={{ backgroundColor: list.color }}></div>
+                <span className='font-semibold'>{list.title}</span>
+              </div>
 
-            <div className='flex items-center space-x-2'>
-              <button
-                onClick={(event) => {
-                  event.stopPropagation()
-                  openEditModal(list)
-                }}
-                className='text-sm text-blue-500'>
-                ✏️
-              </button>
-              <button
-                onClick={(event) => {
-                  event.stopPropagation()
-                  handleDelete(list._id)
-                }}
-                className='text-sm text-red-500'>
-                🗑️
-              </button>
-            </div>
-          </div>
-        ))}
+              <div className='flex items-center space-x-2'>
+                <button
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    openEditModal(list)
+                  }}
+                  className='text-sm text-blue-500'>
+                  ✏️
+                </button>
+                <button
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    handleDelete(list._id)
+                  }}
+                  className='text-sm text-red-500'>
+                  🗑️
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
         <div className='flex justify-center'>
           <button onClick={openCreateModal} className='bg-pink-500 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
             +
@@ -127,7 +129,7 @@ export function Lists() {
       </div>
 
       {showModal && (
-        <div className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50'>
+        <div className='fixed inset-0 bg-black/70 flex items-center justify-center z-50'>
           <div className='bg-white p-6 rounded-2xl w-80 space-y-4 shadow-lg'>
             <h2 className='text-lg font-bold'>{editMode ? 'Edit List' : 'New List'}</h2>
             <input type='text' className='border w-full rounded-xl px-3 py-2' placeholder='Title' value={title} onChange={(event) => setTitle(event.target.value)} />

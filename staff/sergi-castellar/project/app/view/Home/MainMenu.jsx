@@ -55,7 +55,7 @@ export function MainMenu({ onCalendarClick, onListsClick, onDiaryClick, onFeelin
       <h2 className='text-3xl font-bold text-center text-gray-800'>Welcome again, {user ? user.username : ''}</h2>
       <div className='text-center bg-white p-4 rounded-3xl shadow-lg max-w-md mx-auto'>
         <div className='flex justify-center items-center space-x-2'>
-          <img className='h-10' src='../assets/asset_handing_hearts.png' alt='Handing hearts' />
+          <img className='h-10' src='../assets/home/asset_handing_hearts.png' alt='Handing hearts' />
           <p className='text-xl font-medium text-gray-800'>
             It’s been <span className='font-bold text-gray-900'>{daysTogether}</span> days since <span className='font-bold text-gray-900'>{partnerName}</span> and you met
           </p>
@@ -64,19 +64,19 @@ export function MainMenu({ onCalendarClick, onListsClick, onDiaryClick, onFeelin
 
       <div className='grid grid-cols-2 gap-6 px-6 py-4'>
         <a onClick={handleCalendarClick} className='flex flex-col items-center text-center bg-white p-4 rounded-2xl shadow-lg hover:bg-pink-200'>
-          <img className='h-24' src='../../assets/asset_calendar.png' alt='Calendar' />
+          <img className='h-24' src='../../assets/home/asset_calendar.png' alt='Calendar' />
           <span className='text-lg font-medium text-gray-700 mt-2'>CALENDAR</span>
         </a>
         <a onClick={handleListsClick} className='flex flex-col items-center text-center bg-white p-4 rounded-2xl shadow-lg hover:bg-pink-200'>
-          <img className='h-24' src='../../assets/asset_list.png' alt='Lists' />
+          <img className='h-24' src='../../assets/home/asset_list.png' alt='Lists' />
           <span className='text-lg font-medium text-gray-700 mt-2'>LISTS</span>
         </a>
         <a onClick={handleDiaryClick} className='flex flex-col items-center text-center bg-white p-4 rounded-2xl shadow-lg hover:bg-pink-200'>
-          <img className='h-24' src='../../assets/asset_diary.png' alt='Diary' />
+          <img className='h-24' src='../../assets/home/asset_diary.png' alt='Diary' />
           <span className='text-lg font-medium text-gray-700 mt-2'>DIARY</span>
         </a>
         <a onClick={handleFeelingsClick} className='flex flex-col items-center text-center bg-white p-4 rounded-2xl shadow-lg hover:bg-pink-200'>
-          <img className='h-24' src='../../assets/asset_feelings.png' alt='Feelings' />
+          <img className='h-24' src='../../assets/home/asset_feelings.png' alt='Feelings' />
           <span className='text-lg font-medium text-gray-700 mt-2'>FEELINGS</span>
         </a>
       </div>

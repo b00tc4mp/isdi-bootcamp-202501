@@ -27,9 +27,9 @@ couples.get('/invite', retrieveUserId, withErrorHandling((req, res) => {
 
 couples.post('/join', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
     const { userId } = req
-    const { code } = req.body
+    const { inviteCode } = req.body
 
-    return logic.joinWithInviteCode(userId, code)
+    return logic.joinWithInviteCode(userId, inviteCode)
         .then(couple => res.json({ couple }))
 }))
 

@@ -114,7 +114,7 @@ export function ListDetail({ list, onBack }) {
       </div>
 
       {showModal && (
-        <div className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50'>
+        <div className='fixed inset-0 bg-black/70 flex items-center justify-center z-50'>
           <div className='bg-white p-6 rounded-2xl w-80 space-y-4 shadow-lg'>
             <h2 className='text-lg font-bold'>{editItem ? 'Edit Item' : 'New Item'}</h2>
             <input type='text' className='border w-full rounded-xl px-3 py-2' value={text} onChange={(event) => setText(event.target.value)} placeholder='Write something...' />
