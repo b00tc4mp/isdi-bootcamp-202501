@@ -1,0 +1,33 @@
+import { data } from '../../data'
+import { errors } from 'com'
+
+const { SystemError } = errors
+
+export const retrieveCalendarEvents = (startDate, endDate) => {
+    //TODO validate
+
+    const { token } = data
+
+    const params = new URLSearchParams({
+        startDate: new Date(startDate).toISOString(),
+        endDate: new Date(endDate).toISOString()
+    })
+
+    return fetch(`${import.meta.env.VITE_API_URL}/couples/events?${params}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(res => {
+            if (res.status === 200) return res.json()
+
+            return res.json().then(body => {
+                const { error, message } = body
+
+                const constructor = errors[error]
+
+                throw new constructor(message)
+            })
+        })
+}
