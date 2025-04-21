@@ -1,12 +1,12 @@
 import 'dotenv/config'
 import { data, User, Couple, CalendarEvent } from "../../data/index.js"
-import { retrieveCoupleEvents } from "./retrieveCoupleEvents.js"
+import { retrieveCalendarEvents } from "./retrieveCalendarEvents.js"
 import { expect } from 'chai'
 import { NotFoundError } from 'com/errors.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-describe('retrieveCoupleEvents', () => {
+describe('retrieveCalendarEvents', () => {
     let userId, partnerId, coupleId
 
     before(() => data.connect(MONGO_URL, MONGO_DB))
@@ -58,7 +58,7 @@ describe('retrieveCoupleEvents', () => {
                 ])
             })
             .then(() => {
-                return retrieveCoupleEvents(userId, new Date('2025-06-01'), new Date('2025-06-30'))
+                return retrieveCalendarEvents(userId, new Date('2025-06-01'), new Date('2025-06-30'))
             })
             .then(events => {
                 expect(events).to.have.lengthOf(2)
@@ -70,7 +70,7 @@ describe('retrieveCoupleEvents', () => {
     })
 
     it('fails at Couple not found', () => {
-        return retrieveCoupleEvents('605c72ef1532073d4a8b4e0e', new Date('2025-06-01'), new Date('2025-06-30'))
+        return retrieveCalendarEvents('605c72ef1532073d4a8b4e0e', new Date('2025-06-01'), new Date('2025-06-30'))
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
                 expect(error.message).to.equal('Couple not found')

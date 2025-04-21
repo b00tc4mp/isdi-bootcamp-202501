@@ -3,8 +3,10 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const retrieveCoupleEvents = (userId, startDate, endDate) => {
+export const retrieveCalendarEvents = (userId, startDate, endDate) => {
     validate.id(userId, 'userId')
+    validate.date(startDate, 'startDate')
+    validate.date(endDate, 'endDate')
 
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })
