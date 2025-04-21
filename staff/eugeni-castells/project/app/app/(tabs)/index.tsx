@@ -1,10 +1,11 @@
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, ScrollView } from "react-native";
 import { View } from "@/components/Themed";
 import { SearchBar } from "@/components/Home/SearchBar";
 import { useState, useEffect } from "react";
 import { getVans } from "@/services/getVans";
-import { ReturnedVansType, VanDocType } from "@/com/types";
-import { VanCard } from "@/components/Home/VanCard";
+import { ReturnedVansType } from "@/com/types";
+import VanList from "@/components/Home/VanList";
+import { spacing } from "@/constants/Paddings";
 
 export default function HomeScreen() {
   const [vans, setVans] = useState<ReturnedVansType[]>([]);
@@ -25,13 +26,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <SearchBar />
-      {vans.length > 0 && (
-        <View style={styles.vansContainer}>
-          {vans.map((van, index) => {
-            return <VanCard vanInfo={van} key={index} />;
-          })}
-        </View>
-      )}
+      {vans.length > 0 && <VanList vans={vans} />}
     </View>
   );
 }
@@ -39,19 +34,14 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    padding: spacing.lg,
+    gap: spacing.rem * 2,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  vanList: {
+    flex: 1,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  vansContainer: {
-    height: "80%",
+  vanCardWrapper: {
+    // marginBottom: spacing.rem,
+    flex: 1,
   },
 });

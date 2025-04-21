@@ -47,7 +47,7 @@ export const validate = {
     if (value.length < minLength)
       throw new ValidationError("invalid " + explain + " range error");
   },
-  url(url: string, explain: string): void {
+  url(url: string): void {
     this.string(url, "url");
     if (!constant.URL_REGEX.test(url))
       throw new ValidationError(`invalid url syntax`);

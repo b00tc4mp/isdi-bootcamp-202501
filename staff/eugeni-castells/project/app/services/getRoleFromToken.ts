@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import { data } from "..";
+import { data } from "../data";
 import { SystemError } from "@/com/errors";
 
 type RoleFromToken = "regular" | "anonym" | "admin";

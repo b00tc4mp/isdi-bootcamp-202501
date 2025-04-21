@@ -13,6 +13,7 @@ export const Colors = {
     activeDot: "#FFFFFF",
     caruselItemTitle: "#FFFFFF",
     caruselItemDescription: "#FFFFFF",
+    vanCardLocation: "#94A3B8",
   },
   dark: {
     background: "#121212",
