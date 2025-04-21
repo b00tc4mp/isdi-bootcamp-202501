@@ -9,3 +9,5 @@ bottom: dotsHeight,
 };
 
 Perquè el StyleSheet.create es crea una vegada al moment de carregar el mòdul, fora del component i agnòstic als seus props.
+
+Seria útil crear una propietat a van que sigui occupiedDate? Així no hem de passar per trips=>startDate&&endDate
