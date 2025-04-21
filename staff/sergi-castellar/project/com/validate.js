@@ -75,6 +75,9 @@ export const validate = {
         this.notBlankString(color, explain)
 
         if (!constant.HEX_COLOR_REGEX.test(color)) throw new ValidationError(`Invalid ${explain} syntax`)
+    },
+    emotion(emotion, explain) {
+        if (!constant.EMOTION_NUMBER_REGEX.test(emotion)) throw new ValidationError(`Invalid ${explain} syntax`)
     }
 }
 

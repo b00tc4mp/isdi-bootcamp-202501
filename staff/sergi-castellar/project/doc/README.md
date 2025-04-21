@@ -17,7 +17,7 @@ User
 - create and view diary entries
 - add and view events in a shared calendar
 - create and view customizable lists and notes (e.g., free text and checkboxes)
-- track and share daily feelings/emotions
+- track and share daily emotions
 - track the number of days together since the relationship began
 
 ### UI/UX Design
@@ -94,7 +94,7 @@ List
 - createdAt (Date)
 - modifiedAt (Date)
 
-Feelings
+Emotions
 
 - id (string, uuid)
 - couple (Couple.id)
