@@ -5,10 +5,8 @@ import { Recipes } from './Recipes';
 import { CreateRecipe } from './CreateRecipe'
 import { Profile } from './Profile'
 
-
 import { logic } from '../../logic'
 import { useContext } from '../../context';
-
 
 export function Home({ onUserLoggedOut }) {
     const { alert, confirm } = useContext()
@@ -19,7 +17,7 @@ export function Home({ onUserLoggedOut }) {
     const { pathname } = useLocation()
 
     useEffect(() => {
-        console.debug('Home -> useEfect')
+        console.debug('Home -> useEffect')
 
         try {
             logic.getUserUsername()
@@ -35,7 +33,7 @@ export function Home({ onUserLoggedOut }) {
     }, [])
 
     const handleLogoutClick = () => {
-        confirm('Logout?')
+        confirm('¿Estás seguro de que deseas cerrar sesión?')
             .then(accepted => {
                 if (accepted)
                     try {
@@ -47,7 +45,6 @@ export function Home({ onUserLoggedOut }) {
 
                         alert(error.message)
                     }
-
             })
     }
 
@@ -65,35 +62,57 @@ export function Home({ onUserLoggedOut }) {
 
             navigate(`/${username}`, { state: { userId } })
         } catch (error) {
-
             alert(error.message)
         }
     }
 
     console.debug('Home -> render')
 
-    return <div>
+    return (
+        <div className="bg-[#f8f9fa] min-h-screen">
 
-        <header className="flex justify-between items-center fixed top-0 w-full bg-[var(--secondary-color)] py-[var(--padding-y)] px-[var(--padding-x)] box-border">
-            <h1 className="text-2xl" onClick={handleHomeClick}>Logo</h1>
+            <header className="flex justify-between items-center fixed top-0 w-full bg-[#4CAF50] py-4 px-6 shadow-lg z-50">
+                <h1
+                    className="text-3xl font-bold text-white cursor-pointer"
+                    onClick={handleHomeClick}
+                >
+                    Recetas
+                </h1>
 
-            <h2 onClick={handleUserClick}>{username}</h2>
+                <h2
+                    className="text-lg text-white cursor-pointer"
+                    onClick={handleUserClick}
+                >
+                    {username}
+                </h2>
 
-            <button type="button" onClick={handleLogoutClick}>Logout</button>
-        </header>
+                <button
+                    type="button"
+                    className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-200"
+                    onClick={handleLogoutClick}
+                >
+                    Logout
+                </button>
+            </header>
 
-        <main className="pt-[70px] pb-[60px]">
-            <Routes>
-                <Route path="/create-recipe" element={<CreateRecipe onRecipeCreated={handleRecipeCreated} onRecipeCreateCancelled={handleRecipeCreateCancelled} />} />
-                <Route path="/:username" element={<Profile />} />
-                <Route path="/" element={<Recipes />} />
-            </Routes>
-        </main>
+            <main className="pt-[80px] pb-[70px] px-4">
+                <Routes>
+                    <Route path="/create-recipe" element={<CreateRecipe onRecipeCreated={handleRecipeCreated} onRecipeCreateCancelled={handleRecipeCreateCancelled} />} />
+                    <Route path="/:username" element={<Profile />} />
+                    <Route path="/" element={<Recipes />} />
+                </Routes>
+            </main>
 
-        <footer className="flex justify-center items-center fixed bottom-0 w-full bg-[var(--secondary-color)] py-[var(--padding-y)] px-[var(--padding-x)] box-border">
-            {pathname === '/' && <button onClick={handleAddRecipeClick}>+</button>}
-        </footer>
-    </div>
+            <footer className="flex justify-center items-center fixed bottom-0 w-full bg-[#4CAF50] py-4 px-6 shadow-lg">
+                {pathname === '/' && (
+                    <button
+                        onClick={handleAddRecipeClick}
+                        className="bg-[#FFEB3B] text-[#4CAF50] w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-xl hover:bg-yellow-400 transition duration-200"
+                    >
+                        +
+                    </button>
+                )}
+            </footer>
+        </div>
+    )
 }
-
-

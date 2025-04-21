@@ -1,45 +1,70 @@
 import { useState, useEffect } from "react";
-
-import { Recipe } from './Recipe'
-
-import { logic } from '../../logic'
+import { Recipe } from './Recipe';
+import { logic } from '../../logic';
 import { useContext } from '../../context';
 
 export function Recipes({ targetUserId }) {
-    const { alert } = useContext()
-    const [recipes, setRecipes] = useState([])
+    const { alert } = useContext();
+    const [recipes, setRecipes] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        console.debug('Recipes -> useEffect')
-
-        loadRecipes()
-    }, [targetUserId])
+    // Verifica que targetUserId tenga el formato correcto
+    const validateUserId = (userId) => {
+        return typeof userId === 'string' && userId.length === 24;
+    };
 
     const loadRecipes = () => {
-        try {
-            (targetUserId ? logic.getUserRecipe(targetUserId) : logic.getRecipe())
-                .then(recipes => setRecipes(recipes))
-                .catch(error => {
-                    console.error(error)
+        if (loading) return;
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
+        setLoading(true);
 
-            alert(error.message)
+        // Asegúrate de que targetUserId sea válido antes de enviarlo al backend
+        if (targetUserId && !validateUserId(targetUserId)) {
+            alert('Invalid userId');
+            setLoading(false);
+            return;
         }
-    }
 
-    const handleRecipeLikeToggled = () => loadRecipes()
+        const fetchRecipes = targetUserId ? logic.getUserRecipe(targetUserId) : logic.getRecipe();
 
-    const handleRecipeDeleted = () => loadRecipes()
+        fetchRecipes
+            .then(recipes => {
+                setRecipes(recipes);  // Simplemente asignamos las recetas sin ningún filtro
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
-    const handleRecipesDescriptionEdited = () => loadRecipes()
+    useEffect(() => {
+        loadRecipes();
+    }, [targetUserId]);
 
-    console.debug('Recipes -> render')
+    const handleRecipeLikeToggled = () => loadRecipes();
+    const handleRecipeDeleted = () => loadRecipes();
+    const handleRecipesDescriptionEdited = () => loadRecipes();
 
-    return <section>
-        {recipes.map(recipe => <Recipe key={recipe.id} recipe={recipe} onRecipeLikeToggled={handleRecipeLikeToggled} onRecipeDeleted={handleRecipeDeleted} onRecipeDescriptionEdited={handleRecipesDescriptionEdited} />)}
-    </section>
+    return (
+        <section>
+            {/* Elimina el componente RecipeSearch */}
+
+            {recipes.length === 0 && !loading ? (
+                <p>No recipes found.</p>
+            ) : (
+                recipes.map(recipe => (
+                    <Recipe
+                        key={recipe.id}
+                        recipe={recipe}
+                        onRecipeLikeToggled={handleRecipeLikeToggled}
+                        onRecipeDeleted={handleRecipeDeleted}
+                        onRecipeDescriptionEdited={handleRecipesDescriptionEdited}
+                    />
+                ))
+            )}
+        </section>
+    );
 }

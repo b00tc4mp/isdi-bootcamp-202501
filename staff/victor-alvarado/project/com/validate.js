@@ -50,6 +50,15 @@ export const validate = {
 
     number(value, explain = 'value') {
         if (typeof value !== 'number') throw new ValidationError(`invalid ${explain} type`)
+    },
+
+    array(arr, explain = 'array') {
+        if (!Array.isArray(arr)) throw new ValidationError(`invalid ${explain} type, it should be an array`)
+        arr.forEach((item, index) => {
+            if (typeof item !== 'string') {
+                throw new ValidationError(`invalid ${explain} element at index ${index}, expected a string`)
+            }
+        })
     }
 
 }

@@ -24,7 +24,6 @@ export function Recipe({ recipe, onRecipeLikeToggled, onRecipeDeleted, onRecipeD
         }
     };
 
-
     const handleDeleteClick = () => {
         confirm('Delete recipe?')
             .then(accepted => {
@@ -74,60 +73,94 @@ export function Recipe({ recipe, onRecipeLikeToggled, onRecipeDeleted, onRecipeD
     });
 
     return (
-        <article className="Post">
-            <h3 className="px-[var(--padding-x)] cursor-pointer" onClick={handleUsernameClick}>
+        <article className="bg-white rounded-2xl shadow-xl p-6 m-4 max-w-3xl mx-auto">
+            <h3
+                className="text-lg font-semibold text-gray-800 mb-2 cursor-pointer hover:underline"
+                onClick={handleUsernameClick}
+            >
                 {recipe.author.username}
             </h3>
 
-            <div className="flex justify-center my-4">
+            <div className="flex justify-center mb-4">
                 <img
-                    className="max-w-xs w-full h-48 object-cover rounded-lg"
+                    className="w-full max-w-3xl h-72 object-cover rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105"
                     src={recipe.image}
                     alt="Recipe image"
                 />
             </div>
 
             {view === '' && (
-                <p className="px-[var(--padding-x)]">{recipe.description}</p>
+                <p className="text-gray-700 mb-4">{recipe.description}</p>
+            )}
+
+            {view === '' && recipe.ingredients && recipe.ingredients.length > 0 && (
+                <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-800 mb-1">Ingredients:</h4>
+                    <ul className="list-disc list-inside text-gray-700">
+                        {recipe.ingredients.map((ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                        ))}
+                    </ul>
+                </div>
             )}
 
             {view === 'edit-description' && (
-                <form onSubmit={handleEditDescriptionSubmit} className="px-[var(--padding-x)] space-y-2">
-                    <label htmlFor="description">Description</label>
+                <form onSubmit={handleEditDescriptionSubmit} className="space-y-2 mb-4">
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
                     <input
                         type="text"
                         id="description"
                         name="description"
                         defaultValue={recipe.description}
-                        className="w-full border p-1"
+                        className="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
                     />
 
                     <div className="flex gap-2">
-                        <button type="button" className="secondary" onClick={handleEditDescriptionCancelClick}>
+                        <button
+                            type="button"
+                            className="py-2 px-4 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                            onClick={handleEditDescriptionCancelClick}
+                        >
                             Cancel
                         </button>
-                        <button type="submit">Save</button>
+                        <button
+                            type="submit"
+                            className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                        >
+                            Save
+                        </button>
                     </div>
                 </form>
             )}
 
-            <div className="px-[var(--padding-x)] flex justify-between items-center mt-2 text-sm">
-                <time>{new Date(recipe.createdAt).toISOString()}</time>
+            <div className="flex justify-between items-center text-sm text-gray-600">
+                <time>{new Date(recipe.createdAt).toLocaleDateString()}</time>
 
-                <button onClick={handleToggleLikeClick}>
+                <button
+                    onClick={handleToggleLikeClick}
+                    className="text-lg hover:scale-110 transition-transform"
+                >
                     {`${recipe.liked ? '♥️' : '🤍'} (${recipe.likesCount})`}
                 </button>
 
                 {recipe.own && (
-                    <>
-                        <button onClick={handleEditDescriptionClick} title="Edit description">
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={handleEditDescriptionClick}
+                            title="Edit description"
+                            className="text-xl hover:text-green-600"
+                        >
                             📝
                         </button>
 
-                        <button onClick={handleDeleteClick} title="Delete recipe">
+                        <button
+                            onClick={handleDeleteClick}
+                            title="Delete recipe"
+                            className="text-xl hover:text-red-600"
+                        >
                             🗑️
                         </button>
-                    </>
+                    </div>
                 )}
             </div>
         </article>

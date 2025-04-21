@@ -1,4 +1,4 @@
-import { data } from '../data/index.js'
+import { data } from '../data/index.js';
 import { errors, validate } from 'com'
 
 const { SystemError } = errors
@@ -12,21 +12,24 @@ export const getRecipe = () => {
             Authorization: `Bearer ${token}`
         }
     })
-        .catch(error => { throw new SystemError(error.message) })
+        .catch(error => {
+            throw new SystemError(error.message)
+        })
         .then(response => {
-            if (response.status === 200)
+            if (response.status === 200) {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
                         const recipes = body
 
                         recipes.forEach(recipe => {
-                            recipe.createdAt = new Date(recipe.createdAt)
-                            if (recipe.modifiedAt) recipe.modifiedAt = new Date(recipe.modifiedAt)
-                        })
+                            recipe.createdAt = new Date(recipe.createdAt);
+                            if (recipe.modifiedAt) recipe.modifiedAt = new Date(recipe.modifiedAt);
+                        });
 
-                        return recipes
-                    })
+                        return recipes;
+                    });
+            }
 
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
@@ -36,6 +39,6 @@ export const getRecipe = () => {
                     const constructor = errors[error]
 
                     throw new constructor(message)
-                })
-        })
-}
+                });
+        });
+};

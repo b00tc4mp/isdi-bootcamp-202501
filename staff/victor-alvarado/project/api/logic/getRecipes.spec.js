@@ -46,7 +46,7 @@ describe('getRecipes', () => {
                     title: 'Tortilla',
                     description: 'Deliciosa tortilla española',
                     cookingTime: 30,
-                    image: 'https://example.com/tortilla.jpg', // Añadir campo image
+                    image: 'https://example.com/tortilla.jpg',
                     likes: [user2.id],
                     createdAt: new Date(2025, 1, 10)
                 }),
@@ -55,7 +55,7 @@ describe('getRecipes', () => {
                     title: 'Gazpacho',
                     description: 'Fresco y sano',
                     cookingTime: 10,
-                    image: 'https://example.com/gazpacho.jpg', // Añadir campo image
+                    image: 'https://example.com/gazpacho.jpg',
                     likes: [user.id, user2.id],
                     createdAt: new Date(2025, 1, 11),
                     modifiedAt: new Date(2025, 1, 12)

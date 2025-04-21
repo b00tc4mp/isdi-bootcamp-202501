@@ -3,7 +3,7 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-export const createRecipe = (image, title, description, cookingTime) => {
+export const createRecipe = (image, title, description, cookingTime, ingredients) => {
     validate.url(image, 'image')
     validate.maxLength(image, 1000, 'image')
 
@@ -14,6 +14,7 @@ export const createRecipe = (image, title, description, cookingTime) => {
     validate.maxLength(description, 2000, 'description')
 
     validate.number(cookingTime, 'cookingTime')
+    validate.array(ingredients, 'ingredients')
 
     const { token } = data
 
@@ -23,19 +24,24 @@ export const createRecipe = (image, title, description, cookingTime) => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ image, title, description, cookingTime })
+        body: JSON.stringify({ image, title, description, cookingTime, ingredients })
     })
-        .catch(error => { throw new SystemError(error.message) })
+        .catch(error => {
+            throw new SystemError(error.message)
+        })
         .then(response => {
-            if (response.status === 201) return
+            if (response.status === 201)
+                return
 
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     const { error, message } = body
+
                     const constructor = errors[error]
+
                     throw new constructor(message)
                 })
-
         })
 }
+

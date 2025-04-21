@@ -64,6 +64,13 @@ const recipe = new Schema({
         required: true,
         maxLength: 2000
     },
+
+    ingredients: {
+        type: [String],
+        required: true,
+        validate: arr => arr.length > 0
+    },
+
     likes: [{
         type: ObjectId,
         ref: 'User'

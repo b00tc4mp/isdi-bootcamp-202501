@@ -23,7 +23,6 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
             logic.registerUser(name, email, username, password)
                 .then(() => {
                     form.reset()
-
                     onUserRegistered()
                 })
                 .catch(error => {
@@ -46,35 +45,72 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     const handleLoginClick = () => onNavigateToLogin()
 
-    console.debug('Register -> render')
+    return (
+        <div className="min-h-screen bg-[#FAFAF9] flex items-center justify-center px-4">
+            <div className="bg-white rounded-3xl shadow-xl w-full max-w-md p-8">
+                <h1 className="text-4xl font-light text-center text-gray-800 mb-8 tracking-wide">
+                    Crea tu cuenta
+                </h1>
 
-    return <div>
-        <h1>Logo</h1>
+                <form onSubmit={handleRegisterSubmit} className="space-y-5">
+                    <div className="flex flex-col">
+                        <label htmlFor="name" className="text-sm font-medium text-gray-700">Nombre</label>
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Tu nombre"
+                            className="mt-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+                        />
+                    </div>
 
-        <form onSubmit={handleRegisterSubmit}>
-            <div className="field">
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" placeholder="name" />
+                    <div className="flex flex-col">
+                        <label htmlFor="email" className="text-sm font-medium text-gray-700">Correo electrónico</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="tucorreo@ejemplo.com"
+                            className="mt-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label htmlFor="username" className="text-sm font-medium text-gray-700">Nombre de usuario</label>
+                        <input
+                            type="text"
+                            id="username"
+                            placeholder="nombreDeUsuario"
+                            className="mt-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label htmlFor="password" className="text-sm font-medium text-gray-700">Contraseña</label>
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="••••••••"
+                            className="mt-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full py-3 bg-green-500 text-white rounded-full text-lg font-semibold hover:bg-green-600 transition duration-300"
+                    >
+                        Registrarse
+                    </button>
+                </form>
+
+                <p className="mt-6 text-center text-sm text-gray-600">
+                    ¿Ya tienes cuenta?{' '}
+                    <a
+                        onClick={handleLoginClick}
+                        className="text-green-600 hover:underline cursor-pointer"
+                    >
+                        Inicia sesión
+                    </a>
+                </p>
             </div>
-
-            <div className="field">
-                <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" placeholder="email" />
-            </div>
-
-            <div className="field">
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" placeholder="username" />
-            </div>
-
-            <div className="field">
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" placeholder="password" />
-            </div>
-
-            <button type="submit">Register</button>
-        </form>
-
-        <a onClick={handleLoginClick}>Login</a>
-    </div>
+        </div>
+    )
 }

@@ -25,7 +25,7 @@ data.connect(MONGO_URL, MONGO_DB)
                         title: 'Paella mixta',
                         image: 'https://www.recetasderechupete.com/wp-content/uploads/2020/04/Paella-mixta-de-marisco-y-carne.jpg',
                         description: 'Paella mixta con mariscos y carne, una receta ideal para compartir en familia.',
-                        cookingTime: 75, // minutos
+                        cookingTime: 75,
                         likes: [juan.id, lucia.id],
                         createdAt: new Date(),
                         modifiedAt: null

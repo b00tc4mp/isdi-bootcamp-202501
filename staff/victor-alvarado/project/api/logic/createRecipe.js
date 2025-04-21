@@ -3,7 +3,7 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const createRecipe = (userId, image, title, description, cookingTime) => {
+export const createRecipe = (userId, image, title, description, cookingTime, ingredients) => {
     validate.id(userId, 'userId')
     validate.url(image, 'image')
     validate.maxLength(image, 500, 'image')
@@ -13,6 +13,9 @@ export const createRecipe = (userId, image, title, description, cookingTime) => 
     validate.maxLength(description, 2000, 'description')
     validate.number(cookingTime, 'cookingTime')
     validate.minValue(cookingTime, 1, 'cookingTime')
+    validate.array(ingredients, 'ingredients')
+    validate.minLength(ingredients, 1, 'ingredients')
+    ingredients.forEach(ingredient => validate.text(ingredient, 'ingredient'))
 
     return User.findById(userId).lean()
         .catch(error => { throw new SystemError(error.message) })
@@ -24,7 +27,8 @@ export const createRecipe = (userId, image, title, description, cookingTime) => 
                 image,
                 title,
                 description,
-                cookingTime
+                cookingTime,
+                ingredients
             }
 
             return Recipe.create(recipe)
