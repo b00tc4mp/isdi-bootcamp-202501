@@ -122,7 +122,7 @@ export function Level({ level, currentState, onCancelled }) {
     py-3 px-4 rounded-lg shadow 
     ${currentLevel.isBlocked ? 'bg-gray-300 text-purple-900 border border-purple-200' : userCurrentLevel ? (userCurrentLevel.id === currentLevel.id ? 'bg-green-400 text-white hover:bg-green-500' : 'bg-green-100') : ''}`}
         >
-          <span>{currentLevel.isBlocked ? '🔒' : currentLevel.id === userCurrentLevel.id ? '' : '✔'}</span>
+          <span>{currentLevel.isBlocked ? '🔒' : userCurrentLevel ? (currentLevel.id === userCurrentLevel.id ? '' : '✔') : ''}</span>
           <span>{currentLevel.name}</span>
         </button>
       ) : view === 'opened' ? (

@@ -59,12 +59,7 @@ export function Home({ onNavigateToProfile, onUserLoggedOut }) {
     <div className='min-h-screen bg-gradient-to-b from-purple-100 to-[#c6d3ff] text-purple-800 font-sans'>
       <header className='flex justify-between items-center p-0.5 pl-4 pr-4 bg-purple-300 shadow-md'>
         <img src='../public/Logo.png' alt='Code Quest logo' className='h-17 w-auto' onClick={handleLogoClick} />
-        {/* <p onClick={handleLogoClick} className='text-xl font-bold'>
-          🧙‍♂️ Code Quest
-        </p> */}
-        {/* <p onClick={handleUsernameClick} className='text-sm hover:text-purple-700 cursor-pointer'>
-          ¡Hola, {username}!
-        </p> */}
+
         {user && <img src={user.image} alt='Perfil' className='h-16 w-auto' onClick={handleUsernameClick} />}
       </header>
 

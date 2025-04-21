@@ -51,7 +51,7 @@ export function Ranking({ currentState, username }) {
           <section onClick={handleRankingClick} className='max-h-[150px] overflow-y-auto'>
             <div>
               <h2 className={userRanking.username === username ? 'font-bold' : ''}>
-                # {userRanking.position} {userRanking.username}
+                #{userRanking.position}: {userRanking.username}, {userRanking.score} pt
               </h2>
             </div>
           </section>
@@ -62,7 +62,7 @@ export function Ranking({ currentState, username }) {
             <div>
               {globalRanking.map((user) => (
                 <p key={user.username} ref={user.username === userRanking.username ? userRef : null} className={user.username === username ? 'font-bold' : ''}>
-                  #{user.position}: {user.username}
+                  #{user.position}: {user.username}, {user.score} pt
                 </p>
               ))}
             </div>

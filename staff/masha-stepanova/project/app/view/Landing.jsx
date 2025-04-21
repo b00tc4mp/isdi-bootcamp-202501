@@ -11,10 +11,10 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
 
       <div>
         <button onClick={handleLoginClick} className='bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-full shadow-md transition w-50 mb-2'>
-          Iniciar sesión
+          Login
         </button>
         <button onClick={handleRegisterClick} className='bg-white text-purple-700 border border-purple-400 hover:bg-purple-50 font-semibold py-2 px-6 rounded-full shadow-md transition w-50'>
-          Regístrate
+          Register
         </button>
       </div>
 

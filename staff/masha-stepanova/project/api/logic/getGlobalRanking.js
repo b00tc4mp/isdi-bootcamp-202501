@@ -3,31 +3,28 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const getGlobalRanking = userId => {
-    validate.id(userId)
+export const getGlobalRanking = (userId) => {
+  validate.id(userId)
 
-    return Promise.all([
-        User.find().select('score username').lean(),
-        User.findOne({ _id: userId }).lean()
-    ])
-        .catch(error => { throw new SystemError(error.message) })
-        .then(([allUsers, currentUser]) => {
-            if (!currentUser) throw new NotFoundError('user not found')
+  return Promise.all([User.find().select('score username').lean(), User.findOne({ _id: userId }).lean()])
+    .catch((error) => {
+      throw new SystemError(error.message)
+    })
+    .then(([allUsers, currentUser]) => {
+      if (!currentUser) throw new NotFoundError('user not found')
 
-            allUsers.sort((a, b) => b.score - a.score)
+      allUsers.sort((a, b) => b.score - a.score)
 
-            allUsers.forEach((user, i) => {
-                let position
+      allUsers.forEach((user, i) => {
+        let position
 
-                if (i > -1) {
-                    position = i + 1
-                } else throw new NotFoundError('user not found in global ranking')
+        if (i > -1) {
+          position = i + 1
+        } else throw new NotFoundError('user not found in global ranking')
 
-                delete user.score
+        user.position = position
+      })
 
-                user.position = position
-            })
-
-            return allUsers
-        })
+      return allUsers
+    })
 }

@@ -48,11 +48,10 @@ export function Profile({ onUserLoggedOut, user, onNavigateToHome }) {
             <h1>{user.username}</h1>
             <p>{user.name}</p>
             <p>{user.email}</p>
-            <p>password</p>
           </section>
         )}
       </section>
-      {view === 'general' && <Ranking currentState={'opened'} username={user ? user.username : null} />}
+      {view === 'general' && <Ranking currentState={'closed'} username={user ? user.username : null} />}
       <footer>
         <a onClick={handleLogoutClick}>Logout</a>
       </footer>
