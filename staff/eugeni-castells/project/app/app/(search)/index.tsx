@@ -1,10 +1,85 @@
 import { DestinationBox } from "@/components/Search/DestinationBox";
-import { View, Text } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Feather from "@expo/vector-icons/Feather";
+import { View, Text } from "@/components/Themed";
+import { borderRadius, spacing } from "@/constants/Paddings";
+import { Colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
+import { Typography } from "@/constants/Typography";
 
 export default function SearchScreen() {
+  const router = useRouter();
+
+  const handleClose = () => {
+    router.push("/(tabs)");
+  };
   return (
-    <View>
-      <DestinationBox />
+    <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <AntDesign
+          name="close"
+          size={24}
+          color={Colors.light.searchDestinationColor}
+          style={{ marginBottom: spacing.rem }}
+          onPress={handleClose}
+        />
+        <DestinationBox />
+      </View>
+      <View style={styles.bottomContainer}>
+        <Pressable>
+          <Text style={styles.bottomText}>Clear all</Text>
+        </Pressable>
+        <Pressable style={styles.button}>
+          <Feather name="search" size={24} color={Colors.light.buttonText} />
+          <Text style={styles.buttonText}>Search</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.opaqueWhite,
+    position: "relative",
+  },
+  topContainer: {
+    padding: spacing.lg,
+    backgroundColor: Colors.light.opaqueWhite,
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: spacing.lg,
+    paddingRight: spacing.lg,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.md,
+  },
+  button: {
+    flexDirection: "row",
+    padding: spacing.xsmd,
+    paddingLeft: spacing.md,
+    paddingRight: spacing.md,
+    backgroundColor: Colors.light.button,
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: borderRadius.button,
+  },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: Typography.fontWeight.bold,
+    color: Colors.light.buttonText,
+    marginLeft: spacing.md,
+  },
+  bottomText: {
+    fontWeight: Typography.fontWeight.bold,
+    borderBottomWidth: 1,
+    borderColor: Colors.light.text,
+  },
+});

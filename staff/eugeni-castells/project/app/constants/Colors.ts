@@ -14,6 +14,8 @@ export const Colors = {
     caruselItemTitle: "#FFFFFF",
     caruselItemDescription: "#FFFFFF",
     vanCardLocation: "#94A3B8",
+    searchDestinationColor: "#CBD5E1",
+    opaqueWhite: "#F5F5F5",
   },
   dark: {
     background: "#121212",

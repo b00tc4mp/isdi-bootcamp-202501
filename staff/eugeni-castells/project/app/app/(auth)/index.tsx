@@ -14,8 +14,6 @@ import { useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { spacing } from "@/constants/Paddings";
 
-const { width } = Dimensions.get("window");
-
 export default function LandingScreen() {
   const router = useRouter();
 

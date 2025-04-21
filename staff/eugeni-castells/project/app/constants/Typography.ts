@@ -22,4 +22,7 @@ export const Typography = {
     fontSize: 24,
     fontWeight: "700" as "700",
   },
+  fontWeight: {
+    bold: 700 as 700,
+  },
 };
