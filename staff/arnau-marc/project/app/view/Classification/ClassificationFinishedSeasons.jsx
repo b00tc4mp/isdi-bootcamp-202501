@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, Button } from 'react-native'
 
 import { logic } from '../../logic/index.js'
-import { NavBar } from '../../components/index.js'
+import { PokerBackground2, NavBar, PokerHeader } from '../../components/index.js' 
 
 import  styles  from './Classification.styles.js'
 
@@ -13,12 +13,25 @@ export default function ClassificationFinishedSeasons({ navigation, route }) {
     const [season, setSeason] = useState(null)
     const [error, setError] = useState(null)
 
+    const [username, setUsername] = useState('')
+
     useEffect(() => {
+        logic.getUsername()
+          .then(setUsername)
+          .catch(console.error)
+
+
         logic.getSeasonById(seasonId)
         .then(season => {
           if (!season) throw new Error('No hemos encontrado la temporada')
           setSeason(season)
           setError(null)
+           navigation.setOptions(
+            PokerHeader({
+              onLogoutPress: handleLogoutClick,
+              leftText: 'Classification Finished Season'
+            })
+          )
           return season
         })
         .then(season => {
@@ -33,6 +46,28 @@ export default function ClassificationFinishedSeasons({ navigation, route }) {
           setError(err.message)
         })
     }, [])
+
+    const handleLogoutClick = () => {
+        try {
+          logic.logoutUser()
+          navigation.navigate('Login')
+          Alert.alert('Bye, See You soon!!')
+        } catch (error) {
+          console.error(error)
+          window.alert(`Error ❌\n${error.message}`)
+        }
+      }
+    
+      const handleUserClick = () => {
+        try {
+          const userId = logic.getUserId()
+          navigation.navigate('Profile', { userId })
+        } catch (error) {
+          console.error(error)
+          window.alert(`Error ❌\n${error.message}`)
+        }
+      }
+    
 
     const renderHeader = () => (
         <View style={styles.rowHeader}>
@@ -51,7 +86,7 @@ export default function ClassificationFinishedSeasons({ navigation, route }) {
       )
 
       return (
-        <View style={styles.container}>
+        <PokerBackground2>
             <Text style={styles.title}>Old classifications</Text>
             {season && <Text style={{ fontSize: 16, marginBottom: 10 }}>Season: {season.name}</Text>}
 
@@ -73,6 +108,6 @@ export default function ClassificationFinishedSeasons({ navigation, route }) {
                 </>
             )}
             <NavBar navigation={navigation} />
-        </View>
+        </PokerBackground2>
       )
 }

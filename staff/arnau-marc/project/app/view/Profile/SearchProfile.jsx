@@ -2,20 +2,34 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { logic } from '../../logic/index.js'
-
+import { NavBar, PokerBackground, PokerHeader } from '../../components/index.js'
 import styles from './searchProfile.styles.js'
 
 export default function SearchProfile() {
   const navigation = useNavigation()
   const [query, setQuery] = useState('')
   const [suggestions, setSuggestions] = useState([])
+  
+  useEffect(() => {
+    navigation.setOptions(
+      PokerHeader({
+        leftText: 'SEARCH USERS',
+        onLogoutPress: handleLogoutClick
+      })
+    )
+  }, [])
 
   useEffect(() => {
     if (!query.trim()) {
       setSuggestions([])
       return
     }
-
+    navigation.setOptions(
+      PokerHeader({
+        
+        leftText: 'Search Users...'
+      })
+    )
     const timeout = setTimeout(() => {
       logic.searchUsers(query)
         .then(setSuggestions)
@@ -27,20 +41,16 @@ export default function SearchProfile() {
     return () => clearTimeout(timeout)
   }, [query])
 
-  const handleSearch = () => {
-    if (!query.trim()) {
-      Alert.alert('Error', 'El campo de búsqueda no puede estar vacío')
-      return
+    const handleLogoutClick = () => {
+      try {
+        logic.logoutUser()
+        navigation.navigate('Login')
+        Alert.alert('Bye, See You soon!!')
+      } catch (error) {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      }
     }
-
-    logic.getUserId()
-      .then(userId => {
-        navigation.navigate('UserProfile', { username: query, userId })
-      })
-      .catch(error => {
-        Alert.alert('Error', error.message)
-      })
-  }
 
   const handleSelectUser = (user) => {
     setQuery('')
@@ -49,13 +59,14 @@ export default function SearchProfile() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Buscar Usuarios</Text>
+    <PokerBackground>
+      <Text style={styles.title}> 🔍</Text>
 
       <View style={styles.searchRow}>
         <TextInput
           style={styles.input}
-          placeholder='Buscar usuario'
+          placeholder='Search users... '
+          placeholderTextColor="#aaa"
           value={query}
           onChangeText={setQuery}
           autoCorrect={false}
@@ -71,6 +82,8 @@ export default function SearchProfile() {
           </TouchableOpacity>
         )}
       />
-    </View>
+
+      <NavBar navigation={navigation} />
+    </PokerBackground>
   )
 }

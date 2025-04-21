@@ -1,47 +1,49 @@
 import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff'
-  },
   title: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: 'bold',
-    marginBottom: 12,
-    textAlign: 'center'
+    color: '#fff',
+    textAlign: 'center',
+    marginVertical: 20,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    letterSpacing: 1
   },
   searchRow: {
-    flexDirection: 'row',
-    marginBottom: 16
+    marginBottom: 20,
+    paddingHorizontal: 16
   },
   input: {
-    flex: 1,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    marginRight: 8
-  },
-  button: {
-    backgroundColor: '#007bff',
-    borderRadius: 8,
+    backgroundColor: '#2b2b2b',
+    borderColor: '#d4af37',
+    borderWidth: 1.5,
+    borderRadius: 10,
     paddingHorizontal: 16,
-    justifyContent: 'center'
-  },
-  buttonText: {
+    paddingVertical: 10,
+    fontSize: 16,
     color: '#fff',
-    fontWeight: 'bold'
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 3
   },
   suggestionItem: {
-    padding: 12,
+    padding: 14,
     borderBottomWidth: 1,
-    borderColor: '#eee'
+    borderColor: '#444',
+    paddingHorizontal: 16,
+    backgroundColor: '#1e1e1e'
   },
   suggestionText: {
-    fontSize: 16
+    fontSize: 16,
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 1
   }
 })
 

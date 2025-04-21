@@ -52,11 +52,17 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    marginTop: 12,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: 8
+    gap: 8,
+    marginTop: 12
+  },
+  flexButton: {
+    flex: 1,
+    minWidth: '45%' // se adaptan como columnas incluso en pantallas pequeñas
   }
+  
 })
 
 export default styles

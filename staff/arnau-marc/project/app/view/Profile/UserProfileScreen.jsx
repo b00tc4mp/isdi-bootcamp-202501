@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, ActivityIndicator, ScrollView } from 'react-native'
 import { logic } from '../../logic/index.js'
 import styles from './Profile.styles.js'
-import { NavBar } from '../../components/index.js'
+import { NavBar, PokerBackground, PokerHeader } from '../../components/index.js' 
 
 export default function UserProfileScreen({ route, navigation }) {
   const { username, userId } = route.params
@@ -10,6 +10,18 @@ export default function UserProfileScreen({ route, navigation }) {
   const [stats, setStats] = useState(null)
   const [historicStats, setHistoricStats] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  
+  const handleLogoutClick = () => {
+    try {
+      logic.logoutUser()
+      navigation.navigate('Login')
+      Alert.alert('Bye, See You soon!!')
+    } catch (error) {
+      console.error(error)
+      window.alert(`Error ❌\n${error.message}`)
+    }
+  }
 
   useEffect(() => {
     Promise.all([
@@ -20,12 +32,14 @@ export default function UserProfileScreen({ route, navigation }) {
         setStats(stats)
         setHistoricStats(historicStats)
 
-        navigation.setOptions({
-          headerTitle: () => (
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{username}</Text>
-          ),
-          headerTitleAlign: 'center'
-        })
+          navigation.setOptions(
+            PokerHeader({
+              username,
+    
+              onLogoutPress: handleLogoutClick,
+              leftText: 'User Profile'
+            })
+          )
       })
       .catch(error => {
         console.error(error)
@@ -43,11 +57,11 @@ export default function UserProfileScreen({ route, navigation }) {
     )
   }
 
+
   return (
-    <View style={{ flex: 1 }}>
+    <PokerBackground>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.container}>
-          <Text style={styles.title}>User Profile</Text>
 
           <View style={styles.statsContainer}>
             <Text style={styles.sectionTitle}>Stats (Current Season)</Text>
@@ -105,6 +119,6 @@ export default function UserProfileScreen({ route, navigation }) {
         </View>
       </ScrollView>
       <NavBar navigation={navigation} />
-    </View>
+    </PokerBackground>
   )
 }

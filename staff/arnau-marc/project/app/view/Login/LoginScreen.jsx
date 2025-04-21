@@ -1,61 +1,61 @@
-import React, { useState } from 'react'
-import { View, Text, TextInput, Button, TouchableOpacity, Alert, StyleSheet } from 'react-native'
-import { logic } from '../../logic' // Asegúrate de que este archivo esté configurado correctamente
+import React, { useState, useEffect } from 'react'
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { logic } from '../../logic'
 import styles from './Login.styles.js'
+import { PokerBackground } from '../../components/index.js'
 
-const Login = ({ navigation }) => {  // Cambia 'route' a 'navigation'
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+const Login = ({ navigation }) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-    // Maneja el submit del login
-    const handleLoginSubmit = () => {
-        try {
-            logic.loginUser(username, password)
-                .then(() => {
-                    setUsername('')
-                    setPassword('')
-                    navigation.navigate('Home')
-                  
-                })
-                .catch(error => {
-                    console.error(error)
-                    //Alert.alert('Error ❌', `Error: ${error.message}`)
-                    window.alert(`Error ❌\n${error.message}`)
-                })
-        } catch (error) {
-            console.error(error)
-            //Alert.alert('Error ❌', `Error: ${error.message}`)
-            window.alert(`Error ❌\n${error.message}`)
-        }
-    }
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false }) // Oculta el header
+  }, [])
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Login</Text>
+  const handleLoginSubmit = () => {
+    logic.loginUser(username, password)
+      .then(() => {
+        setUsername('')
+        setPassword('')
+        navigation.navigate('Home')
+      })
+      .catch(error => {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      })
+  }
 
-            <TextInput
-                value={username}
-                onChangeText={setUsername}
-                placeholder="Your username..."
-                style={styles.input}
-            />
-            <TextInput
-                value={password}
-                onChangeText={setPassword}
-                placeholder="Your password..."
-                secureTextEntry
-                style={styles.input}
-            />
-            <Button title="Login" onPress={handleLoginSubmit} />
+  return (
+    <PokerBackground>
+      <View style={styles.container}>
+        <Text style={styles.title}>Login</Text>
 
-            {/* Navegación a Register */}
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                <Text style={styles.link}>Don't have an account? Register</Text>
-            </TouchableOpacity>
-        </View>
-    )
+        <TextInput
+          value={username}
+          onChangeText={setUsername}
+          placeholder="Your username..."
+          placeholderTextColor="#444"
+          style={styles.input}
+        />
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Your password..."
+          placeholderTextColor="#444"
+          secureTextEntry
+          style={styles.input}
+        />
+
+        <TouchableOpacity style={styles.button} onPress={handleLoginSubmit}>
+          <Text style={styles.buttonText}>LOGIN</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.link}>Don't have an account? Register</Text>
+        </TouchableOpacity>
+      </View>
+    </PokerBackground>
+  )
 }
 
 export default Login
-
-

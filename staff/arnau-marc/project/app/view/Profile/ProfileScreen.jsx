@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Button, Alert, ActivityIndicator, ScrollView } from 'react-native'
 import { logic } from '../../logic'
 import styles from './Profile.styles.js'
-import { CustomModal, NavBar } from '../../components/index.js'  
+import { CustomModal, NavBar, PokerBackground, PokerHeader, PokerButton } from '../../components/index.js' 
 
 export default function ProfileScreen({ navigation }) {
   const [username, setUsername] = useState('')
@@ -26,16 +26,40 @@ export default function ProfileScreen({ navigation }) {
         setStats(stats)
         setHistoricStats(historicStats)
 
-        navigation.setOptions({
-          headerTitle: () => (
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{username}</Text>
-          ),
-          headerTitleAlign: 'center'
-        })
+        navigation.setOptions(
+          PokerHeader({
+            username,
+            onUserPress: handleUserClick,
+            onLogoutPress: handleLogoutClick,
+            leftText: 'Profile'
+          })
+        )
       })
       .catch((error) => window.alert(`Error ❌\n${error.message}`))
       .finally(() => setLoading(false))
   }, [])
+
+    const handleLogoutClick = () => {
+      try {
+        logic.logoutUser()
+        navigation.navigate('Login')
+        Alert.alert('Bye, See You soon!!')
+      } catch (error) {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      }
+    }
+  
+    const handleUserClick = () => {
+      try {
+        const userId = logic.getUserId()
+        navigation.navigate('Profile', { userId })
+      } catch (error) {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      }
+    }
+  
 
   const handleRequestAdminRole = () => {
     setModalVisible(true)
@@ -68,13 +92,13 @@ export default function ProfileScreen({ navigation }) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <PokerBackground>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.container}>
           <Text style={styles.title}>Profile</Text>
-          <Text>Current role: {userRole}</Text>
+          <Text style={styles.roleText}>Current role: {userRole}</Text>
           {userRole !== 'admin' && (
-            <Button title='Request Admin Role' onPress={handleRequestAdminRole} />
+            <PokerButton title='Request Admin Role' onPress={handleRequestAdminRole} />
           )}
   
           <View style={styles.statsContainer}>
@@ -148,6 +172,6 @@ export default function ProfileScreen({ navigation }) {
         </View>
       </ScrollView>
       <NavBar navigation={navigation} />
-    </View>
+    </PokerBackground>
   )
 }

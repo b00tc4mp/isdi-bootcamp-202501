@@ -6,18 +6,19 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 60,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1b2d24', // Verde oscuro tipo tapete
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: '#333',
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    elevation: 8, // sombra en Android
+    elevation: 10, // sombra en Android
     shadowColor: '#000', // sombra en iOS
     shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    zIndex: 10
   },
   button: {
     alignItems: 'center',
@@ -25,6 +26,6 @@ export default StyleSheet.create({
   },
   icon: {
     fontSize: 26,
-    color: '#333'
+    color: '#f4e04d' // Dorado claro para buen contraste con fondo oscuro
   }
 })
