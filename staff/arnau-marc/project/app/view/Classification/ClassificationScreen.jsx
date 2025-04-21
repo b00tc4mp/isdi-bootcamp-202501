@@ -125,17 +125,23 @@ export default function ClassificationScreen({ navigation }) {
     <View style={styles.rowHeader}>
       <Text style={styles.cellRank}>#</Text>
       <Text style={styles.cellUsername}>Username</Text>
+      <Text style={styles.cellPlayed}>Played</Text>
+      <Text style={styles.cellWon}>Wins</Text>
+      <Text style={styles.cellWinRate}>Win%</Text>
       <Text style={styles.cellPoints}>Points</Text>
-    </View>
+    </View> 
   )
-
+  
   const renderItem = ({ item, index }) => (
     <View style={styles.row}>
       <Text style={styles.cellRank}>{index + 1}</Text>
       <Text style={styles.cellUsername}>{item.username}</Text>
+      <Text style={styles.cellPlayed}>{item.gamesPlayed}</Text>
+      <Text style={styles.cellWon}>{item.gamesWon}</Text>
+      <Text style={styles.cellWinRate}>{item.winRate}%</Text>
       <Text style={styles.cellPoints}>{item.points}</Text>
     </View>
-  )
+  )  
 
   return (
     <View style={styles.container}>

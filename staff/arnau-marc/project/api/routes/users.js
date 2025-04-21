@@ -83,9 +83,9 @@ users.get('/stats/historic', authHandler, withErrorHandling((req, res) => {
 
 // Endpoint para estadísticas históricas de busqueda de un usuario
 users.get('/:id/stats/historic', authHandler, withErrorHandling((req, res) => {
-  const { userId } = req.params
+  const { id } = req.params
 
-  return logic.getUserHistoricStats(userId)
+  return logic.getUserHistoricStats(id)
     .then(stats => res.json(stats))
 }))
 
