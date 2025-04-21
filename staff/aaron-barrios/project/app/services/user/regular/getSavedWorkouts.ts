@@ -9,7 +9,7 @@ const getSavedWorkouts = (): Promise<WorkoutType[]> => {
         .then(token => {
             if (!token) throw new AuthorizationError("No token found")
 
-            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts/self/saved`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/workouts/self/saved`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
         })

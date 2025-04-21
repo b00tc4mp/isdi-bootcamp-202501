@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { StyleSheet, TextInput, Button, Alert, Platform, ScrollView, Pressable } from "react-native"
+import { StyleSheet, TextInput, Button, Alert, Platform, ScrollView, Pressable, View as RNView } from "react-native"
 import { View, Text } from "@/components/Themed"
-import { getUserData, updateUserData } from "@/services/user/regular"
-import type { UserType } from "com/types"
+import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts } from "@/services/user/regular"
+import type { UserType, WorkoutType } from "com/types"
 
 export default function Profile() {
     const [activeTab, setActiveTab] = useState<"user" | "workouts" | "routines">("user")
@@ -14,6 +14,9 @@ export default function Profile() {
     const [currentUser, setCurrentUser] = useState<Omit<UserType, "id" | "createdAt"> | null>(null)
 
     const [loading, setLoading] = useState(true)
+
+    const [workoutType, setWorkoutType] = useState<"saved" | "mine">("saved") //state that controls the workout types to show in screen (saved or mine)
+    const [workouts, setWorkouts] = useState<WorkoutType[]>([]) //state that stores the workouts to show in screen
 
     useEffect(() => {
         if (activeTab === "user") {
@@ -41,6 +44,19 @@ export default function Profile() {
         }
     }, [activeTab])
 
+    useEffect(() => {
+        if (activeTab === "workouts") {
+            const fetch = workoutType === "saved" ? getSavedWorkouts : getMyWorkouts
+            fetch()
+                .then(setWorkouts)
+                .catch(error => {
+                    console.error("Error loading workouts:", error)
+                    showAlert("Error", error.message || "Failed to fetch workouts.")
+                })
+        }
+    }, [activeTab, workoutType])
+
+    //alert function to make it compatible in web and mobile
     const showAlert = (title: string, message: string) => {
         if (Platform.OS === "web") {
             window.alert(`${title}: ${message}`)
@@ -86,7 +102,31 @@ export default function Profile() {
         }
 
         if (activeTab === "workouts") {
-            return <Text style={{ marginTop: 20 }}>[Workouts with dropdown - coming soon]</Text>
+            return (
+                <>
+                    <View style={styles.dropdownContainer}>
+                        <Pressable
+                            style={[styles.dropdownButton, workoutType === "saved" && styles.activeDropdown]}
+                            onPress={() => setWorkoutType("saved")}
+                        >
+                            <Text>Saved</Text>
+                        </Pressable>
+                        <Pressable
+                            style={[styles.dropdownButton, workoutType === "mine" && styles.activeDropdown]}
+                            onPress={() => setWorkoutType("mine")}
+                        >
+                            <Text>Mine</Text>
+                        </Pressable>
+                    </View>
+
+                    {workouts.map((w) => (
+                        <View key={w.id} style={styles.card}>
+                            <Text style={styles.workoutName}>{w.name}</Text>
+                            <Text style={styles.meta}>{w.muscleGroup} · {w.difficulty}</Text>
+                        </View>
+                    ))}
+                </>
+            )
         }
 
         if (activeTab === "routines") {
@@ -162,5 +202,33 @@ const styles = StyleSheet.create({
     },
     tabText: {
         fontWeight: "600"
+    },
+    dropdownContainer: {
+        flexDirection: "row",
+        gap: 12,
+        marginBottom: 16
+    },
+    dropdownButton: {
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        backgroundColor: "#ddd",
+    },
+    activeDropdown: {
+        backgroundColor: "#facc15",
+    },
+    card: {
+        backgroundColor: "#fff",
+        padding: 12,
+        borderRadius: 10,
+        marginBottom: 10
+    },
+    workoutName: {
+        fontSize: 16,
+        fontWeight: "600"
+    },
+    meta: {
+        fontSize: 12,
+        color: "#666"
     }
 })

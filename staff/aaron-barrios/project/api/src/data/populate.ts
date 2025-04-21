@@ -16,10 +16,10 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
     .then(hashedPassword => {
         return User.insertMany([
             {
-                name: "Aaron",
-                lastName: "Barrios",
-                email: "aa@ron.com",
-                alias: "aaron",
+                name: "Masha",
+                lastName: "Stepanova",
+                email: "ma@sha.com",
+                alias: "ma",
                 password: hashedPassword,
                 role: "regular",
                 level: "intermediate",
@@ -66,10 +66,10 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             }
         ])
     })
-    .then(([aaron, manu, frankie, compi]) => {
+    .then(([masha, manu, frankie, compi]) => {
         return Workout.insertMany([
             {
-                author: compi.id,
+                author: masha.id,
                 name: "bench press",
                 muscleGroup: "chest",
                 feedImage: "https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg",
@@ -78,7 +78,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 description: "best chest exercise to grow the muscle!",
                 image: ["url1", "url2"],
                 likes: [compi.id],
-                saves: [],
+                saves: [masha.id],
                 status: "accepted",
                 createdAt: new Date(2023, 11, 1),
             },
@@ -92,7 +92,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 description: "best shoulder exercise!",
                 executionImages: ["url1", "url2"],
                 likes: [manu.id],
-                saves: [aaron.id],
+                saves: [masha.id],
                 status: "accepted",
                 createdAt: new Date(2024, 10, 27),
             },
@@ -105,8 +105,8 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 difficulty: "hard",
                 description: "best buttocks exercise!",
                 executionImages: ["url1", "url2"],
-                likes: [aaron.id, frankie.id, manu.id],
-                saves: [manu.id],
+                likes: [masha.id, frankie.id, manu.id],
+                saves: [manu.id, masha.id],
                 status: "accepted",
                 createdAt: new Date(2025, 1, 13),
             }

@@ -59,11 +59,11 @@ userRouter.get(
     getCurrentUserHandler
 )
 
-// --- GET USER WORKOUTS METHOD
+// --- GET YOUR WORKOUTS METHOD
 userRouter.get(
-    "/:targetUserId/workouts",
+    "/workouts/self",
     authHandler,
-    getUserWorkoutsHandler
+    getMyWorkoutsHandler
 )
 
 // --- GET SAVED WORKOUTS METHOD
@@ -73,11 +73,12 @@ userRouter.get(
     getSavedWorkoutsHandler
 )
 
-// --- GET YOUR WORKOUTS METHOD
+
+// --- GET USER WORKOUTS METHOD
 userRouter.get(
-    "/workouts/self",
+    "/:targetUserId/workouts",
     authHandler,
-    getMyWorkoutsHandler
+    getUserWorkoutsHandler
 )
 
 // --- GET USER ROUTINES METHOD --- (WIP)

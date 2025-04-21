@@ -4,12 +4,12 @@ import { WorkoutType } from "com/types"
 
 const { SystemError, AuthorizationError } = errors
 
-const getSavedWorkouts = (): Promise<WorkoutType[]> => {
+const getMyWorkouts = (): Promise<WorkoutType[]> => {
     return data.getToken()
         .then(token => {
             if (!token) throw new AuthorizationError("No token found")
 
-            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts/self`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/workouts/self`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
         })
@@ -29,4 +29,4 @@ const getSavedWorkouts = (): Promise<WorkoutType[]> => {
         })
 }
 
-export default getSavedWorkouts
+export default getMyWorkouts
