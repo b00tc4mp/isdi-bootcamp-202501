@@ -1,47 +1,69 @@
-import { authenticateUser } from "./authenticateUser.js"
-import { createEmotion } from "./createEmotion.js"
-import { createItem } from "./createItem.js"
-import { createList } from "./createList.js"
-import { deleteItem } from "./deleteItem.js"
-import { deleteList } from "./deleteList.js"
-import { deleteUser } from "./deleteUser.js"
-import { editUser } from "./editUser.js"
-import { getCoupleInfo } from "./getCoupleInfo.js"
-import { getIfUserIsInCouple } from "./getIfUserIsInCouple.js"
-import { getInviteCode } from "./getInviteCode.js"
-import { getOwnCouple } from "./getOwnCouple.js"
-import { getSelfUser } from "./getSelfUser.js"
-import { joinWithInviteCode } from "./joinWithInviteCode.js"
-import { registerUser } from "./registerUser.js"
-import { retrieveCoupleEvents } from "./retrieveCoupleEvents.js"
-import { retrieveItems } from "./retrieveItems.js"
-import { retrieveLists } from "./retrieveLists.js"
-import { retrieveTodayEmotions } from "./retrieveTodayEmotions.js"
-import { setCoupleStartDate } from "./setCoupleStartDate.js"
-import { updateItem } from "./updateItem.js"
-import { updateList } from "./updateList.js"
+// CALENDAR
+import { retrieveCoupleEvents } from "./calendar/retrieveCoupleEvents.js"
+
+// COUPLE
+import { getCoupleInfo } from "./couple/getCoupleInfo.js"
+import { getIfUserIsInCouple } from "./couple/getIfUserIsInCouple.js"
+import { getInviteCode } from "./couple/getInviteCode.js"
+import { getOwnCouple } from "./couple/getOwnCouple.js"
+import { joinWithInviteCode } from "./couple/joinWithInviteCode.js"
+import { setCoupleStartDate } from "./couple/setCoupleStartDate.js"
+
+// EMOTIONS
+import { createEmotion } from "./emotions/createEmotion.js"
+import { retrieveTodayEmotions } from "./emotions/retrieveTodayEmotions.js"
+
+// ITEMS
+import { createItem } from "./items/createItem.js"
+import { deleteItem } from "./items/deleteItem.js"
+import { retrieveItems } from "./items/retrieveItems.js"
+import { updateItem } from "./items/updateItem.js"
+
+// LISTS
+import { createList } from "./lists/createList.js"
+import { deleteList } from "./lists/deleteList.js"
+import { retrieveLists } from "./lists/retrieveLists.js"
+import { updateList } from "./lists/updateList.js"
+
+// USER
+import { authenticateUser } from "./user/authenticateUser.js"
+import { deleteUser } from "./user/deleteUser.js"
+import { editUser } from "./user/editUser.js"
+import { getSelfUser } from "./user/getSelfUser.js"
+import { registerUser } from "./user/registerUser.js"
 
 export const logic = {
-    authenticateUser,
-    createEmotion,
-    createItem,
-    createList,
-    deleteItem,
-    deleteList,
-    deleteUser,
-    editUser,
+    // CALENDAR
+    retrieveCoupleEvents,
+
+    // COUPLE
     getCoupleInfo,
     getIfUserIsInCouple,
     getInviteCode,
     getOwnCouple,
-    getSelfUser,
     joinWithInviteCode,
-    registerUser,
-    retrieveCoupleEvents,
-    retrieveItems,
-    retrieveLists,
-    retrieveTodayEmotions,
     setCoupleStartDate,
+
+    // EMOTIONS
+    createEmotion,
+    retrieveTodayEmotions,
+
+    // ITEMS
+    createItem,
+    deleteItem,
+    retrieveItems,
     updateItem,
-    updateList
+
+    // LISTS
+    createList,
+    deleteList,
+    retrieveLists,
+    updateList,
+
+    // USER
+    authenticateUser,
+    deleteUser,
+    editUser,
+    getSelfUser,
+    registerUser
 }
