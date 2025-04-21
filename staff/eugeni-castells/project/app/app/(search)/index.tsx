@@ -8,7 +8,7 @@ import { borderRadius, spacing } from "@/constants/Paddings";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { Typography } from "@/constants/Typography";
-import StartDateBox from "@/components/Search/StartDateBox";
+import StartDateBox from "@/components/Search/SearchBox";
 
 export default function SearchScreen() {
   const [location, setLocation] = useState("");
