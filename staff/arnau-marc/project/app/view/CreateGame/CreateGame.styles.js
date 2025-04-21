@@ -3,23 +3,44 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: 'white',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingHorizontal: 32
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center'
+    color: '#f4e04d',
+    textAlign: 'center',
+    marginBottom: 24,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2
   },
   input: {
-    borderColor: '#ccc',
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    marginBottom: 16,
     borderWidth: 1,
-    padding: 10,
-    marginBottom: 15,
-    borderRadius: 5
+    borderColor: '#f4e04d',
+    color: '#000'
+  },
+  dateContainer: {
+    marginBottom: 16
+  },
+  dateText: {
+    color: '#fff',
+    textAlign: 'center',
+    marginTop: 8,
+    fontSize: 16,
+    fontWeight: '500',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1
   }
+  
 })
 
 export default styles

@@ -1,34 +1,50 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
-// Estilos para la pantalla de login
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'white',
-      padding: 20,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 32
   },
   title: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: '#333',
-      marginBottom: 20,
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#f4e04d',
+    textAlign: 'center',
+    marginBottom: 24,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2
   },
   input: {
-      height: 40,
-      borderColor: '#ccc',
-      borderWidth: 1,
-      marginBottom: 15,
-      paddingLeft: 10,
-      width: '100%',
-      borderRadius: 5,
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#f4e04d',
+    color: '#000'
+  },
+  button: {
+    backgroundColor: '#2b4c3e',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#f4e04d'
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16
   },
   link: {
-      color: '#1E90FF',
-      marginTop: 20,
-  },
-});
+    color: '#f4e04d',
+    marginTop: 20,
+    textAlign: 'center'
+  }
+})
 
-  
-  export default styles;
+export default styles

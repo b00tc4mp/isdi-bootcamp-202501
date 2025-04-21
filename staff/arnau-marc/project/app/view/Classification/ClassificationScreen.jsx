@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, Button } from 'react-native'
 
 import { logic } from '../../logic/index.js'
-import { CustomModal, NavBar } from '../../components/index.js'
+import { CustomModal, NavBar, PokerBackground2, PokerHeader, PokerButton } from '../../components/index.js' 
 
 import  styles  from './Classification.styles.js'
 
@@ -11,6 +11,8 @@ export default function ClassificationScreen({ navigation }) {
   const [season, setSeason] = useState(null)
   const [userRole, setUserRole] = useState(null)
   const [error, setError] = useState(null)
+
+  const [username, setUsername] = useState('')
 
   const [seasonFinished, setSeasonFinished] = useState(null)
   const [showCreateModal, setShowCreateModal] = useState(false)
@@ -23,6 +25,10 @@ export default function ClassificationScreen({ navigation }) {
       .then(setUserRole)
       .catch(console.error)
 
+    logic.getUsername()
+      .then(setUsername)
+      .catch(console.error)
+
     logic.getFinishedSeasons()
       .then(setSeasonFinished)
       .catch(error => window.alert(error.message))
@@ -32,6 +38,12 @@ export default function ClassificationScreen({ navigation }) {
         if (!season) throw new Error('No hay ninguna temporada activa actualmente')
         setSeason(season)
         setError(null)
+        navigation.setOptions(
+          PokerHeader({
+            onLogoutPress: handleLogoutClick,
+            leftText: 'Classification Season Active'
+          })
+        )
         return season
       })
       .then(season => {
@@ -46,6 +58,28 @@ export default function ClassificationScreen({ navigation }) {
         setError(err.message)
       })
   }, [])
+
+  const handleLogoutClick = () => {
+      try {
+        logic.logoutUser()
+        navigation.navigate('Login')
+        Alert.alert('Bye, See You soon!!')
+      } catch (error) {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      }
+    }
+  
+    const handleUserClick = () => {
+      try {
+        const userId = logic.getUserId()
+        navigation.navigate('Profile', { userId })
+      } catch (error) {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      }
+    }
+  
   
   const handleFinishSeason = () => {
     logic.finishSeason(season._id)
@@ -132,26 +166,32 @@ export default function ClassificationScreen({ navigation }) {
     </View> 
   )
   
-  const renderItem = ({ item, index }) => (
-    <View style={styles.row}>
-      <Text style={styles.cellRank}>{index + 1}</Text>
-      <Text style={styles.cellUsername}>{item.username}</Text>
-      <Text style={styles.cellPlayed}>{item.gamesPlayed}</Text>
-      <Text style={styles.cellWon}>{item.gamesWon}</Text>
-      <Text style={styles.cellWinRate}>{item.winRate}%</Text>
-      <Text style={styles.cellPoints}>{item.points}</Text>
-    </View>
-  )  
+  const renderItem = ({ item, index }) => {
+    let displayRank
+  
+    if (index === 0) displayRank = '🥇'
+    else if (index === 1) displayRank = '🥈'
+    else if (index === 2) displayRank = '🥉'
+    else displayRank = (index + 1).toString()
+  
+    return (
+      <View style={styles.row}>
+        <Text style={styles.cellRank}>{displayRank}</Text>
+        <Text style={styles.cellUsername}>{item.username}</Text>
+        <Text style={styles.cellPoints}>{item.points}</Text>
+      </View>
+    )
+  }
 
   return (
-    <View style={styles.container}>
+    <PokerBackground2>
       <Text style={styles.title}>Classification</Text>
-      <Button
+      <PokerButton
         title='Ir a Clasificación Histórica'
         onPress={() => navigation.replace('ClassificationHistoric')}
       />
 
-      <Button 
+      <PokerButton 
       title='Mostrar temporadas antiguas'
       onPress={() => openSeasonModal(seasonFinished)}
       />
@@ -162,7 +202,7 @@ export default function ClassificationScreen({ navigation }) {
             {error || 'No hay temporada activa en este momento'}
           </Text>
           {userRole === 'admin' && (
-            <Button
+            <PokerButton
               title='Crear nueva temporada'
               onPress={() => setShowCreateModal(true)}
             />
@@ -171,7 +211,7 @@ export default function ClassificationScreen({ navigation }) {
       )}
 
       {userRole === 'admin' && season && (
-        <Button
+        <PokerButton
           title='Finalizar temporada'
           color='red'
           onPress={handleFinishSeason}
@@ -218,6 +258,6 @@ export default function ClassificationScreen({ navigation }) {
       } 
       />
       <NavBar navigation={navigation} />
-    </View>
+    </PokerBackground2>
   )
 }

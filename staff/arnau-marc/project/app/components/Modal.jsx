@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, View, Text, TextInput, Button } from 'react-native'
+import { Modal, View, Text, TextInput, TouchableOpacity } from 'react-native'
 import styles from './Modal.styles.js'
 
 export function CustomModal({
@@ -13,11 +13,11 @@ export function CustomModal({
   confirmText = 'Confirm',
   cancelText = 'Cancel',
   showInput = true,
-  options = [] 
+  options = []
 }) {
   return (
     <Modal
-      animationType="slide"
+      animationType='slide'
       transparent={true}
       visible={visible}
       onRequestClose={onClose}
@@ -29,6 +29,7 @@ export function CustomModal({
           {showInput && (
             <TextInput
               placeholder={placeholder}
+              placeholderTextColor='#aaa'
               value={inputValue}
               onChangeText={setInputValue}
               style={styles.modalInput}
@@ -36,55 +37,26 @@ export function CustomModal({
           )}
 
           {options.length > 0 && options.map((option, index) => (
-            <Button
+            <TouchableOpacity
               key={index}
-              title={option.label}
+              style={styles.pokerButton}
               onPress={() => onConfirm(option.value)}
-            />
+            >
+              <Text style={styles.pokerButtonText}>{option.label}</Text>
+            </TouchableOpacity>
           ))}
 
           {showInput && (
-            <Button title={confirmText} onPress={() => onConfirm(inputValue)} />
+            <TouchableOpacity style={styles.pokerButton} onPress={() => onConfirm(inputValue)}>
+              <Text style={styles.pokerButtonText}>{confirmText}</Text>
+            </TouchableOpacity>
           )}
 
-          <Button title={cancelText} color="gray" onPress={onClose} />
+          <TouchableOpacity style={[styles.pokerButton, styles.cancelButton]} onPress={onClose}>
+            <Text style={styles.pokerButtonText}>{cancelText}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
   )
 }
-
-
-
-
-
-/*
-import React from 'react'
-import { Modal, View, Text, TextInput, Button } from 'react-native'
-import styles from './Modal.styles.js'
-
-export  function CustomModal({ visible, onClose, onConfirm, inputValue,setInputValue,title = 'Enter text',placeholder = 'Type here...',confirmText = 'Confirm',cancelText = 'Cancel',  showInput = true, }) {
-  return (
-    <Modal
-    animationType="slide"
-    transparent={true}
-    visible={visible}
-    onRequestClose={onClose}
-  >
-    <View style={styles.modalContainer}>
-      <View style={styles.modalContent}>
-        <Text style={styles.modalTitle}>{title}</Text>
-        <TextInput
-          placeholder={placeholder}
-          value={inputValue}
-          onChangeText={setInputValue}
-          style={styles.modalInput}
-        />
-        <Button title={confirmText} onPress={onConfirm} />
-        <Button title={cancelText} color="gray" onPress={onClose} />
-      </View>
-    </View>
-  </Modal>
-)
-}
-*/

@@ -65,10 +65,10 @@ users.get('/stats', authHandler, withErrorHandling((req, res) => {
 }))
 // Endpoint para generar stats de usuario que buscas
 users.get('/:id/stats', authHandler, withErrorHandling((req, res) => {
-  const { userId } = req.params
+  const { id } = req.params
   
   // Llamar a la lógica para generar stats del usuario
-  return logic.getUserStats(userId)
+  return logic.getUserStats(id)
     .then(stats => res.json(stats))
     .catch(error => res.status(400).send(error.message))
 }))

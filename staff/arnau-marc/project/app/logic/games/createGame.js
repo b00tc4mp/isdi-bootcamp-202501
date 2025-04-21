@@ -11,9 +11,9 @@ export const createGame = (title, season, place, date) => {
   validate.season(season, 'season')
   validate.place(place, 'place')
  
-  const [day, month, year] = date.split('-')
-  const formattedDate = new Date(`${year} , ${month} , ${day}`) 
-
+  const isoDate = typeof date === 'string' ? new Date(date).toISOString() : date.toISOString()
+  const now = new Date()
+  if (new Date(isoDate) < now) throw new SystemError('Date cannot be in the past')
 
   return data.getToken()
     .then(token => {
@@ -25,7 +25,7 @@ export const createGame = (title, season, place, date) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ title, season, formattedDate, place}),
+        body: JSON.stringify({ title, season, date: isoDate, place}),
       })
     })
     .catch(error => {

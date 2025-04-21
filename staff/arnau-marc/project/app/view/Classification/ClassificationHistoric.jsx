@@ -2,22 +2,57 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, Button, FlatList, ActivityIndicator } from 'react-native'
 import { logic } from '../../logic/index.js'
 import styles from './Classification.styles.js'
-import { NavBar } from '../../components/index.js'
+import { CustomModal, NavBar, PokerBackground2, PokerButton, PokerHeader } from '../../components/index.js' 
 
 export default function ClassificationHistoric({ navigation }) {
   const [leaderboard, setLeaderboard] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [username, setUsername] = useState('')
 
   useEffect(() => {
+    logic.getUsername()
+      .then(setUsername)
+      .catch(console.error)
+
     logic.getSeasonHistoric()
       .then(setLeaderboard)
+      .then(() => {
+         navigation.setOptions(
+          PokerHeader({
+            onLogoutPress: handleLogoutClick,
+            leftText: 'Classification Historic'
+          })
+        )
+      })
       .catch(err => {
         setError(err.message)
         setLeaderboard([])
       })
       .finally(() => setLoading(false))
   }, [])
+
+  const handleLogoutClick = () => {
+      try {
+        logic.logoutUser()
+        navigation.navigate('Login')
+        Alert.alert('Bye, See You soon!!')
+      } catch (error) {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      }
+    }
+  
+    const handleUserClick = () => {
+      try {
+        const userId = logic.getUserId()
+        navigation.navigate('Profile', { userId })
+      } catch (error) {
+        console.error(error)
+        window.alert(`Error ❌\n${error.message}`)
+      }
+    }
+  
 
   const renderHeader = () => (
     <View style={styles.rowHeader}>
@@ -45,7 +80,7 @@ export default function ClassificationHistoric({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <PokerBackground2>
       <Text style={styles.title}>Clasificación Histórica</Text>
       {renderHeader()}
       <FlatList
@@ -56,6 +91,6 @@ export default function ClassificationHistoric({ navigation }) {
       {error && <Text style={styles.errorText}>{error}</Text>}
       <Button title='Volver a Clasificación Actual' onPress={() => navigation.navigate('ClassificationScreen')} />
       <NavBar navigation={navigation} />
-    </View>
+    </PokerBackground2>
   )
 }
