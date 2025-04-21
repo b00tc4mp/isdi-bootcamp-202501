@@ -1,5 +1,9 @@
 // CALENDAR
-import { getCoupleEvents } from "./calendar/getCoupleEvents.js"
+import { createCalendarEvent } from './calendar/createCalendarEvent'
+import { deleteCalendarEvent } from './calendar/deleteCalendarEvent'
+import { retrieveCalendarEvents } from "./calendar/retrieveCalendarEvents.js"
+import { retrieveMonthCalendarEvents } from "./calendar/retrieveMonthCalendarEvents.js"
+import { updateCalendarEvent } from './calendar/updateCalendarEvent'
 
 // COUPLE
 import { generateInviteCode } from "./couple/generateInviteCode.js"
@@ -33,7 +37,11 @@ import { registerUser } from "./user/registerUser.js"
 
 export const logic = {
     // CALENDAR
-    getCoupleEvents,
+    createCalendarEvent,
+    deleteCalendarEvent,
+    retrieveCalendarEvents,
+    retrieveMonthCalendarEvents,
+    updateCalendarEvent,
 
     // COUPLE
     generateInviteCode,

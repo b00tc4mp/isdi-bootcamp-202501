@@ -51,8 +51,7 @@ export function InviteScreen() {
                   setCopied(true)
                   setTimeout(() => setCopied(false), 2000)
                 }}
-                className='text-sm bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600'
-              >
+                className='text-sm bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600'>
                 {copied ? 'Copied!' : 'Copy'}
               </button>
             </div>
@@ -64,7 +63,7 @@ export function InviteScreen() {
         )}
 
         <div className='mt-4'>
-          <input type='text' className='border rounded-xl px-3 py-2 w-full' placeholder='Enter invite code' value={code} onChange={(e) => setCode(e.target.value)} />
+          <input type='text' className='border rounded-xl px-3 py-2 w-full' placeholder='Enter invite code' value={code} onChange={(event) => setCode(event.target.value)} />
           <button className='bg-green-500 text-white mt-2 px-4 py-2 rounded-xl w-full' onClick={handleSubmitCode}>
             Join partner
           </button>

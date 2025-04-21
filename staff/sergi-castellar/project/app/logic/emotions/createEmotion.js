@@ -22,7 +22,9 @@ export const createEmotion = (emotion) => {
 
             return response.json().then(body => {
                 const { error, message } = body
+
                 const constructor = errors[error]
+
                 throw new constructor(message)
             })
         })

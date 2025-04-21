@@ -18,7 +18,9 @@ export const retrieveTodayEmotions = () => {
 
             return response.json().then(body => {
                 const { error, message } = body
+
                 const constructor = errors[error]
+
                 throw new constructor(message)
             })
         })

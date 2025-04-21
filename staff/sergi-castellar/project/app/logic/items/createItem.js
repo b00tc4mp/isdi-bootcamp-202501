@@ -23,7 +23,10 @@ export const createItem = (listId, text) => {
 
             return response.json().then(body => {
                 const { error, message } = body
-                throw new errors[error](message)
+
+                const constructor = errors[error]
+
+                throw new constructor(message)
             })
         })
 }

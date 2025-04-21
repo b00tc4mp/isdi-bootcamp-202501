@@ -90,7 +90,12 @@ export function Lists() {
   return (
     <div className='min-h-screen bg-pink-100 p-6'>
       <div className='max-w-md mx-auto space-y-4'>
-        <h1 className='text-2xl font-bold text-center'>Your Lists</h1>
+        <div className='flex items-center space-x-4'>
+          <button onClick={() => history.back()} className='bg-white w-10 h-10 rounded-xl shadow text-xl'>
+            ←
+          </button>
+          <h1 className='text-xl font-bold'>LISTS</h1>
+        </div>
 
         <ul className='space-y-2'>
           {lists.map((list) => (

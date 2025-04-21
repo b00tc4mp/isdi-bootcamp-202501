@@ -1,7 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { logic } from '../../logic'
+
+import { CalendarDayView } from './CalendarDayView'
 
 export function Calendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date())
+  const [events, setEvents] = useState([])
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
+
+  const year = currentMonth.getFullYear()
+  const month = currentMonth.getMonth()
 
   const getFirstDayOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1)
   const getLastDayOfMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0)
@@ -10,77 +19,117 @@ export function Calendar() {
   const lastDayOfMonth = getLastDayOfMonth(currentMonth)
 
   const weekDayFirstDay = firstDayOfMonth.getDay()
-  const daysNeededBefore = weekDayFirstDay - 1
+  const daysNeededBefore = (weekDayFirstDay + 6) % 7 // Make Monday the start of the week
 
   const daysInMonth = []
-  for (let day = firstDayOfMonth; day <= lastDayOfMonth; day.setDate(day.getDate() + 1)) {
+  for (let day = new Date(firstDayOfMonth); day <= lastDayOfMonth; day.setDate(day.getDate() + 1)) {
     daysInMonth.push(new Date(day))
   }
 
-  const prevMonthDays = []
-  for (let i = 0; i < daysNeededBefore; i++) {
-    prevMonthDays.push('')
-  }
+  const prevMonthDays = Array.from({ length: daysNeededBefore }, () => '')
 
   const allDaysInGrid = [...prevMonthDays, ...daysInMonth]
 
-  const monthNameAndYear = `${currentMonth.toLocaleString('en-US', {
-    month: 'long',
-  })} ${currentMonth.getFullYear()}`
-
   const handlePrevMonth = () => {
-    setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)))
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))
   }
 
   const handleNextMonth = () => {
-    setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)))
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))
   }
 
   const handlePrevYear = () => {
-    setCurrentMonth(new Date(currentMonth.setFullYear(currentMonth.getFullYear() - 1)))
+    setCurrentMonth(new Date(currentMonth.getFullYear() - 1, currentMonth.getMonth(), 1))
   }
 
   const handleNextYear = () => {
-    setCurrentMonth(new Date(currentMonth.setFullYear(currentMonth.getFullYear() + 1)))
+    setCurrentMonth(new Date(currentMonth.getFullYear() + 1, currentMonth.getMonth(), 1))
   }
 
-  return (
-    <div className='w-full max-w-md mx-auto'>
-      <div className='flex justify-between items-center py-4'>
-        <button onClick={handlePrevYear} className='text-xl'>
-          &laquo;&laquo;
-        </button>
-        <button onClick={handlePrevMonth} className='text-xl'>
-          &lt;
-        </button>
-        <h2 className='text-lg font-bold mx-10 w-36 text-center'>{monthNameAndYear}</h2>
-        <button onClick={handleNextMonth} className='text-xl'>
-          &gt;
-        </button>
-        <button onClick={handleNextYear} className='text-xl'>
-          &raquo;&raquo;
-        </button>
-      </div>
-      <div className='grid grid-cols-7 gap-2 text-center font-semibold'>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-        <div>Sun</div>
-      </div>
-      <div className='grid grid-cols-7 gap-2 text-center'>
-        {allDaysInGrid.map((day, index) => {
-          if (!day) return <div key={index} className='p-2'></div>
+  const loadEvents = () => {
+    logic
+      .retrieveMonthCalendarEvents(year, month)
+      .then(({ events }) => setEvents(events))
+      .catch((error) => {
+        console.error(error)
 
-          const isToday = new Date().toLocaleDateString() === day.toLocaleDateString()
-          return (
-            <div key={index} className={`p-2 cursor-pointer ${isToday ? 'bg-blue-200' : 'text-gray-700'}`}>
-              <span>{day.getDate()}</span>
-            </div>
-          )
-        })}
+        alert(error.message)
+      })
+  }
+
+  useEffect(() => {
+    loadEvents()
+  }, [currentMonth, refreshTrigger])
+
+  const dateHasEvents = (date) => {
+    return events.some((event) => {
+      const eventDate = new Date(event.eventDate)
+      return eventDate.getFullYear() === date.getFullYear() && eventDate.getMonth() === date.getMonth() && eventDate.getDate() === date.getDate()
+    })
+  }
+
+  const isToday = (date) => new Date().toLocaleDateString() === date.toLocaleDateString()
+
+  const monthNameAndYear = `${currentMonth.toLocaleString('en-US', { month: 'long' })} ${currentMonth.getFullYear()}`
+
+  return (
+    <div className='min-h-screen bg-pink-100 p-6'>
+      <div className='max-w-md mx-auto space-y-6'>
+        <div className='flex items-center space-x-4'>
+          <button onClick={() => history.back()} className='bg-white w-10 h-10 rounded-xl shadow text-xl'>
+            ←
+          </button>
+          <h1 className='text-xl font-bold'>CALENDAR</h1>
+        </div>
+        <div className='max-w-md mx-auto bg-pink-200 rounded-3xl p-6 shadow space-y-4'>
+          <div className='flex justify-between items-center'>
+            <button onClick={handlePrevYear} className='text-lg'>
+              &laquo;&laquo;
+            </button>
+            <button onClick={handlePrevMonth} className='text-lg'>
+              &lt;
+            </button>
+            <h2 className='text-xl font-bold text-center'>{monthNameAndYear}</h2>
+            <button onClick={handleNextMonth} className='text-lg'>
+              &gt;
+            </button>
+            <button onClick={handleNextYear} className='text-lg'>
+              &raquo;&raquo;
+            </button>
+          </div>
+
+          <div className='grid grid-cols-7 gap-2 text-center font-semibold text-sm'>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
+          </div>
+
+          <div className='grid grid-cols-7 gap-2 text-center text-sm'>
+            {allDaysInGrid.map((day, index) => {
+              if (!day) return <div key={index} className='p-4'></div>
+
+              const hasEvents = dateHasEvents(day)
+              const today = isToday(day)
+
+              return (
+                <div
+                  key={index}
+                  className={`aspect-square flex items-center justify-center rounded-xl cursor-pointer relative transition
+                  ${today ? 'bg-pink-400 text-white' : 'bg-white hover:bg-pink-100'}`}
+                  onClick={() => setSelectedDate(new Date(day))}>
+                  <span>{day.getDate()}</span>
+                  {hasEvents && <div className='w-1.5 h-1.5 bg-pink-600 rounded-full absolute bottom-1 left-1/2 transform -translate-x-1/2'></div>}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {selectedDate && <CalendarDayView date={selectedDate} onClose={() => setSelectedDate(null)} onRefresh={() => setRefreshTrigger((prev) => prev + 1)} />}
       </div>
     </div>
   )

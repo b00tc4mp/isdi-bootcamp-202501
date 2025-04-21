@@ -32,15 +32,13 @@ export function EmotionsResult({ userEmotion, onBack }) {
           <h2 className='text-lg font-semibold'>How are you feeling today?</h2>
 
           <div className='flex justify-center gap-8'>
-            {/* Tu emoción */}
             <div className='flex flex-col items-center space-y-2'>
               <img src={`/assets/emotions/asset_emotion_${userEmotion}.png`} alt='' className='w-20 h-20 object-contain' />
               <p className='text-sm font-medium'>Your emotions</p>
             </div>
 
-            {/* Emoción de la pareja */}
             <div className='flex flex-col items-center space-y-2'>
-              {partnerEmotion !== null ? <img src={`/assets/emotions/asset_emotion_${partnerEmotion}.png`} alt='' className='w-20 h-20 object-contain' /> : <img src='/assets/emotions/asset_emotion_default.png' alt='' className='w-20 h-20 object-contain opacity-40' />}
+              {partnerEmotion !== null ? <img src={`/assets/emotions/asset_emotion_${partnerEmotion}.png`} alt='' className='w-20 h-20 object-contain' /> : <img src='/assets/emotions/asset_emotion_default.png' alt='' className='w-20 h-20 object-contain opacity-50' />}
               <p className='text-sm font-medium'>Partner’s emotions</p>
             </div>
           </div>
