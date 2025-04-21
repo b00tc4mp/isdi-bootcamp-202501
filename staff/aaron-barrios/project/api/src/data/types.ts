@@ -75,3 +75,5 @@ export type RoutineDocType = {
     workouts: RoutineWorkoutDocType[]
     __v: number
 }
+
+export type UserRole = "anonym" | "regular" | "mod" | "unknown"

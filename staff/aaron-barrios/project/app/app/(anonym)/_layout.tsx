@@ -1,8 +1,10 @@
-import { Tabs } from "expo-router"
+import { useEffect, useState } from "react"
+import { Tabs, router } from "expo-router"
 import { useColorScheme } from "@/components/useColorScheme"
 import { Image, Text, View } from "react-native"
 
 import Colors from "@/constants/Colors"
+import { getUserRole } from "@/services/session"
 
 function CustomTabIcon({ icon, label, focused }: { icon: any, label: string, focused: boolean }) {
   return (
@@ -27,6 +29,28 @@ function CustomTabIcon({ icon, label, focused }: { icon: any, label: string, foc
 
 export default function AnonLayout() {
   const colorScheme = useColorScheme()
+  const [authorized, setAuthorized] = useState(false)
+
+  useEffect(() => {
+    getUserRole().then(data => {
+      const role = data?.role
+
+      if (role === "regular") {
+        router.replace("/(tabs)")
+        return
+      }
+
+      if (role === "mod") {
+        router.replace("/(mod)")
+        return
+      }
+
+      // Si es anonym, permitimos montar el layout
+      setAuthorized(true)
+    })
+  }, [])
+
+  if (!authorized) return null
 
   return (
     <Tabs
