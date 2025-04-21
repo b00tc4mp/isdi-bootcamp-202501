@@ -8,7 +8,7 @@
     "start": "node .",
     "inspect": "node --inspect-brk .",
     "watch": "node --watch .",
-    "test": "mocha logic/*.spec.js",
+    "test": "mocha logic/*/*.spec.js",
     "test-inspect": "mocha --inspect-brk logic/*.spec.js",
     "test-coverage": "c8 --experimental-monocart --reporter=html --reporter=text mocha logic/*.spec.js --timeout 2000"
   },

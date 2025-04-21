@@ -41,15 +41,41 @@ couples.patch('/date-start', retrieveUserId, jsonBodyParser, withErrorHandling((
         .then(() => res.status(204).send())
 }))
 
-//EVENTS CALENDAR
+//CALENDAR EVENTS
 
 couples.get('/events', retrieveUserId, withErrorHandling((req, res) => {
     const { userId } = req
     const { startDate, endDate } = req.query
 
-    return logic.retrieveCoupleEvents(userId, new Date(startDate), new Date(endDate))
+    return logic.retrieveCalendarEvents(userId, new Date(startDate), new Date(endDate))
         .then(events => res.json({ events }))
 }))
+
+couples.post('/events', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { eventDate, title, description } = req.body
+
+    return logic.createCalendarEvent(userId, new Date(eventDate), title, description)
+        .then(event => res.status(201).json(event))
+}))
+
+couples.put('/events/:eventId', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { eventId } = req.params
+    const { title, description } = req.body
+
+    return logic.updateCalendarEvent(userId, eventId, title, description)
+        .then(() => res.status(204).send())
+}))
+
+couples.delete('/events/:eventId', retrieveUserId, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { eventId } = req.params
+
+    return logic.deleteCalendarEvent(userId, eventId)
+        .then(() => res.status(204).send())
+}))
+
 
 //LISTS
 

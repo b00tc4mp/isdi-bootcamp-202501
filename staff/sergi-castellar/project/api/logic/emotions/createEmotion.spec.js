@@ -44,7 +44,6 @@ describe('createEmotion', () => {
             })
             .then(() => Emotion.find({ author: userId }).lean())
             .then(emotions => {
-                console.log('emotions :>> ', emotions);
                 expect(emotions).to.have.lengthOf(1)
                 expect(emotions[0].emotion).to.equal(5)
             })

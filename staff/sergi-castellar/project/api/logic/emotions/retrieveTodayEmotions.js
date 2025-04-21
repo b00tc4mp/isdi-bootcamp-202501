@@ -18,6 +18,7 @@ export const retrieveTodayEmotions = (userId) => {
                 couple: couple._id,
                 createdAt: { $gte: startOfDay }
             }).lean()
+                .catch(error => { throw new SystemError(error.message) })
         })
         .then(emotions => {
             const userEmotion = emotions.find(emotion => emotion.author.toString() === userId)

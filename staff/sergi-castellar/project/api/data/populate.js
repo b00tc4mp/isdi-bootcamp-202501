@@ -69,7 +69,7 @@ data.connect(MONGO_URL, MONGO_DB)
             CalendarEvent.insertMany([
                 { couple: couple1._id, title: "Anniversary Celebration", description: "Anniversary celebration at our favorite restaurant.", author: couple1.members[0]._id, eventDate: new Date('2025-05-15T19:00:00') },
                 { couple: couple1._id, title: "Weekend Trip", description: "A weekend getaway to the countryside for a peaceful retreat.", author: couple1.members[1]._id, eventDate: new Date('2025-06-01T09:00:00') },
-                { couple: couple2._id, title: "Birthday Surprise", description: "Special birthday plan, including a spa day and a romantic dinner.", author: couple2.members[0]._id, eventDate: new Date('2025-04-20T10:00:00') },
+                { couple: couple2._id, title: "Birthday Surprise", description: "Special birthday plan, including a spa day and a romantic dinner.", author: couple2.members[0]._id, eventDate: new Date('2025-04-19T10:00:00') },
                 { couple: couple2._id, title: "Cooking Class", description: "We will take a cooking class together to learn Italian cuisine.", author: couple2.members[1]._id, eventDate: new Date('2025-07-10T17:30:00') },
                 { couple: couple3._id, title: "Anniversary Dinner", description: "Anniversary celebration with a private dinner at home.", author: couple3.members[0]._id, eventDate: new Date('2025-05-05T20:00:00') },
                 { couple: couple3._id, title: "Weekend Getaway", description: "A weekend getaway to the beach.", author: couple3.members[1]._id, eventDate: new Date('2025-06-15T08:00:00') }
@@ -78,7 +78,6 @@ data.connect(MONGO_URL, MONGO_DB)
                 { couple: couple1._id, author: couple1.members[0]._id, emotion: 0 },
                 { couple: couple1._id, author: couple1.members[1]._id, emotion: 1 },
                 { couple: couple2._id, author: couple2.members[0]._id, emotion: 2 },
-                { couple: couple2._id, author: couple2.members[1]._id, emotion: 3 },
                 { couple: couple3._id, author: couple3.members[0]._id, emotion: 4 },
                 { couple: couple3._id, author: couple3.members[1]._id, emotion: 6 }
             ])

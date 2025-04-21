@@ -135,8 +135,7 @@ const calendarEvent = new Schema({
     description: {
         type: String,
         minLength: 1,
-        maxLength: 1000,
-        required: true
+        maxLength: 1000
     },
     eventDate: {
         type: Date,

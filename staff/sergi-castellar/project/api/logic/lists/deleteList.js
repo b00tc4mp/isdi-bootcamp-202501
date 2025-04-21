@@ -21,6 +21,7 @@ export const deleteList = (userId, listId) => {
                     return ListItem.deleteMany({ list: list._id })
                         .catch(error => { throw new SystemError(error.message) })
                         .then(() => list.deleteOne())
+                        .catch(error => { throw new SystemError(error.message) })
                 })
         })
 }
