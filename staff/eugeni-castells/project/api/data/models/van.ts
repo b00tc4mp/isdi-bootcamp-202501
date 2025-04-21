@@ -27,10 +27,10 @@ const van = new Schema<VanDocType>({
     default: [],
   },
   location: { type: Schema.Types.ObjectId, ref: "Location" },
-  point: {
-    type: pointSchema,
-    required: false,
-  },
+  // point: {
+  //   type: pointSchema,
+  //   required: false,
+  // },
   legal: [
     {
       type: Schema.Types.ObjectId,
