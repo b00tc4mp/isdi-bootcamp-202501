@@ -43,6 +43,7 @@ const getMyWorkouts = (userId: string): Promise<WorkoutType[]> => {
                     savesCount: workout.saves?.length || 0,
                     likedByMe: workout.likes?.some((id: any) => id.toString() === userId) || false,
                     savedByMe: workout.saves?.some((id: any) => id.toString() === userId) || false,
+                    ownedByMe: true
                 }
             })
 

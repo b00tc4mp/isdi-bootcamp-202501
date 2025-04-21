@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react"
-import { StyleSheet, TextInput, Button, Alert, Platform, ScrollView, Pressable, View as RNView } from "react-native"
+import { StyleSheet, TextInput, Button, Alert, Platform, ScrollView, Pressable } from "react-native"
 import { View, Text } from "@/components/Themed"
-import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts } from "@/services/user/regular"
+import { router } from "expo-router"
+
 import type { UserType, WorkoutType } from "com/types"
+import WorkoutCard from "@/components/WorkoutCard"
+
+import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts } from "@/services/user/regular"
+import { deleteWorkout } from "@/services/workouts"
+
 
 export default function Profile() {
     const [activeTab, setActiveTab] = useState<"user" | "workouts" | "routines">("user")
-
     const [name, setName] = useState("")
     const [lastName, setLastName] = useState("")
     const [alias, setAlias] = useState("")
@@ -14,9 +19,18 @@ export default function Profile() {
     const [currentUser, setCurrentUser] = useState<Omit<UserType, "id" | "createdAt"> | null>(null)
 
     const [loading, setLoading] = useState(true)
+    const [workoutType, setWorkoutType] = useState<"saved" | "mine">("saved")
+    const [workouts, setWorkouts] = useState<WorkoutType[]>([])
 
-    const [workoutType, setWorkoutType] = useState<"saved" | "mine">("saved") //state that controls the workout types to show in screen (saved or mine)
-    const [workouts, setWorkouts] = useState<WorkoutType[]>([]) //state that stores the workouts to show in screen
+    const loadWorkouts = () => {
+        const fetch = workoutType === "saved" ? getSavedWorkouts : getMyWorkouts
+        fetch()
+            .then(setWorkouts)
+            .catch(error => {
+                console.error("Error loading workouts:", error)
+                showAlert("Error", error.message || "Failed to fetch workouts.")
+            })
+    }
 
     useEffect(() => {
         if (activeTab === "user") {
@@ -45,18 +59,9 @@ export default function Profile() {
     }, [activeTab])
 
     useEffect(() => {
-        if (activeTab === "workouts") {
-            const fetch = workoutType === "saved" ? getSavedWorkouts : getMyWorkouts
-            fetch()
-                .then(setWorkouts)
-                .catch(error => {
-                    console.error("Error loading workouts:", error)
-                    showAlert("Error", error.message || "Failed to fetch workouts.")
-                })
-        }
+        if (activeTab === "workouts") loadWorkouts()
     }, [activeTab, workoutType])
 
-    //alert function to make it compatible in web and mobile
     const showAlert = (title: string, message: string) => {
         if (Platform.OS === "web") {
             window.alert(`${title}: ${message}`)
@@ -82,18 +87,15 @@ export default function Profile() {
         if (activeTab === "user") {
             return (
                 <>
+                    {/* Campos de usuario */}
                     <Text style={styles.label}>Name</Text>
                     <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your name" />
-
                     <Text style={styles.label}>Last Name</Text>
                     <TextInput style={styles.input} value={lastName} onChangeText={setLastName} placeholder="Enter your last name" />
-
                     <Text style={styles.label}>Alias</Text>
                     <TextInput style={styles.input} value={alias} onChangeText={setAlias} placeholder="Enter your alias" />
-
                     <Text style={styles.label}>Email</Text>
                     <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Enter your email" keyboardType="email-address" />
-
                     <View style={styles.button}>
                         <Button title="Update Profile" onPress={handleUpdate} />
                     </View>
@@ -119,12 +121,26 @@ export default function Profile() {
                         </Pressable>
                     </View>
 
-                    {workouts.map((w) => (
-                        <View key={w.id} style={styles.card}>
-                            <Text style={styles.workoutName}>{w.name}</Text>
-                            <Text style={styles.meta}>{w.muscleGroup} · {w.difficulty}</Text>
-                        </View>
-                    ))}
+                    {workouts.map(workout => {
+                        const showDelete = workout.ownedByMe && workout.status === "pending"
+
+                        return (
+                            <WorkoutCard
+                                key={workout.id}
+                                workout={workout}
+                                onPress={() => router.push(`/(stack)/WorkoutDetail/${workout.id}`)}
+                                onToggleLike={() => Promise.resolve()}
+                                onToggleSave={() => Promise.resolve()}
+                                onDelete={
+                                    showDelete
+                                        ? () => deleteWorkout(workout.author.id, workout.id).then(loadWorkouts)
+                                        : undefined
+                                }
+                                showStatus={workoutType === "mine"}
+                                showAuthor={workoutType === "saved"}
+                            />
+                        )
+                    })}
                 </>
             )
         }
@@ -156,6 +172,7 @@ export default function Profile() {
         </ScrollView>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -217,18 +234,4 @@ const styles = StyleSheet.create({
     activeDropdown: {
         backgroundColor: "#facc15",
     },
-    card: {
-        backgroundColor: "#fff",
-        padding: 12,
-        borderRadius: 10,
-        marginBottom: 10
-    },
-    workoutName: {
-        fontSize: 16,
-        fontWeight: "600"
-    },
-    meta: {
-        fontSize: 12,
-        color: "#666"
-    }
 })

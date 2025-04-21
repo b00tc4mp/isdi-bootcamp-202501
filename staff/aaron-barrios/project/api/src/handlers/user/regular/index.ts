@@ -4,6 +4,8 @@ import updateUserDataHandler from "./updateUserDataHandler"
 import getUserWorkoutsHandler from "./getUserWorkoutsHandler"
 import getSavedWorkoutsHandler from "./getSavedWorkoutsHandler"
 import getMyWorkoutsHandler from "./getMyWorkoutsHandler"
+import getTargetUserDataHandler from "./getTargetUserDataHandler"
+
 
 export {
     getCurrentUserHandler,
@@ -11,5 +13,6 @@ export {
     updateUserDataHandler,
     getUserWorkoutsHandler,
     getSavedWorkoutsHandler,
-    getMyWorkoutsHandler
+    getMyWorkoutsHandler,
+    getTargetUserDataHandler
 }

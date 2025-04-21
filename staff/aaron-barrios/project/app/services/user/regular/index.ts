@@ -5,6 +5,7 @@ import getUserWorkouts from "@/services/user/regular/getUserWorkouts"
 import getSavedWorkouts from "@/services/user/regular/getSavedWorkouts"
 import getMyWorkouts from "@/services/user/regular/getMyWorkouts"
 import getUserData from "@/services/user/regular/getUserData"
+import getTargetUserData from "./getTargetUserData"
 
 export {
     getUserAlias,
@@ -13,5 +14,6 @@ export {
     getUserWorkouts,
     getSavedWorkouts,
     getMyWorkouts,
-    getUserData
+    getUserData,
+    getTargetUserData
 }

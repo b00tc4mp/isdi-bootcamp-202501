@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-import createFunctionalHandler from "../../../middlewares/createFunctionalHandler"
+import { createFunctionalHandler } from "../../../middlewares"
 import { AuthHandlerRequest } from "../../../middlewares/types"
 import { getUserAlias } from "../../../services/user/regular"
 

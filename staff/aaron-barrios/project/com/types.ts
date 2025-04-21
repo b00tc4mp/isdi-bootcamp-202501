@@ -45,6 +45,7 @@ export type WorkoutType = {
     savesCount: number
     likedByMe?: boolean   // => si el usuario actual ha dado like
     savedByMe?: boolean   // => si el usuario actual lo ha guardado
+    ownedByMe?: boolean   // => si el usuario actual lo ha creado
 }
 
 export type EditWorkoutType = { //RORO pattern (used when there are variable parameters)

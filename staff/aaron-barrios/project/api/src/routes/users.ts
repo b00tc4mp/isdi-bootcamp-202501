@@ -16,7 +16,8 @@ import {
     getUserWorkoutsHandler,
     getSavedWorkoutsHandler,
     getMyWorkoutsHandler,
-    updateUserDataHandler
+    updateUserDataHandler,
+    getTargetUserDataHandler
 } from "../handlers/user/regular"
 
 import {
@@ -71,6 +72,12 @@ userRouter.get(
     "/workouts/self/saved",
     authHandler,
     getSavedWorkoutsHandler
+)
+
+// --- GET TARGET USER DATA METHOD
+userRouter.get(
+    "/:targetUserId/data",
+    getTargetUserDataHandler
 )
 
 

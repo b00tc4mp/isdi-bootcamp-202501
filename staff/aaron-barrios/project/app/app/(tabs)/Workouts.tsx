@@ -2,31 +2,31 @@ import { useEffect, useState } from "react"
 import { useRouter } from "expo-router"
 import {
     FlatList,
-    Image,
-    StyleSheet,
     ActivityIndicator,
     RefreshControl,
-    Pressable,
     Button,
-    Platform
+    StyleSheet,
+    Platform,
 } from "react-native"
 import { Picker } from "@react-native-picker/picker"
 import { Text, View } from "@/components/Themed"
 
 import getAllWorkouts from "@/services/workouts/getAllWorkouts"
+import deleteWorkout from "@/services/workouts/deleteWorkout" // ← asegúrate de tener esta lógica
 import { WorkoutType } from "com/types"
+import WorkoutCard from "@/components/WorkoutCard"
 
 export default function Workouts() {
     const router = useRouter()
     const [workouts, setWorkouts] = useState<WorkoutType[]>([])
-    const [loading, setLoading] = useState(true) //=> state to control first entry to the screen
-    const [refreshing, setRefreshing] = useState(false) //=> state to control refreshes (pulls) to the screen
-    const [selectedGroup, setSelectedGroup] = useState<string>("") //=> state to control filters applied to the screen
+    const [loading, setLoading] = useState(true)
+    const [refreshing, setRefreshing] = useState(false)
+    const [selectedGroup, setSelectedGroup] = useState<string>("")
 
     const loadWorkouts = () => {
         setLoading(true)
         getAllWorkouts()
-            .then(data => setWorkouts(data))
+            .then(setWorkouts)
             .catch(error => console.error("Failed to fetch workouts:", error))
             .finally(() => setLoading(false))
     }
@@ -34,9 +34,23 @@ export default function Workouts() {
     const handleRefresh = () => {
         setRefreshing(true)
         getAllWorkouts()
-            .then(data => setWorkouts(data))
+            .then(setWorkouts)
             .catch(error => console.error("Failed to refresh workouts:", error))
             .finally(() => setRefreshing(false))
+    }
+
+    const handleWorkoutPress = (id: string) => {
+        router.push(`/(stack)/WorkoutDetail/${id}` as any)
+    }
+
+    const handleToggleLike = (id: string): Promise<void> => {
+        console.log("❤️ Like toggled for workout:", id)
+        return Promise.resolve() // Reemplaza con lógica real
+    }
+
+    const handleToggleSave = (id: string): Promise<void> => {
+        console.log("🔖 Save toggled for workout:", id)
+        return Promise.resolve() // Reemplaza con lógica real
     }
 
     useEffect(() => {
@@ -85,23 +99,14 @@ export default function Workouts() {
                         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
                     }
                     renderItem={({ item }) => (
-                        <Pressable onPress={() => item.id && router.push(`/(stack)/WorkoutDetail/${item.id}` as any)}>
-                            <View style={styles.card}>
-                                <Image
-                                    style={styles.image}
-                                    source={{ uri: item.feedImage ?? "https://via.placeholder.com/120" }}
-                                />
-                                <View style={styles.info}>
-                                    <Text style={styles.name}>{item.name}</Text>
-                                    <Text>{item.muscleGroup}</Text>
-                                    <Text>{item.type}</Text>
-                                    <View style={styles.stats}>
-                                        <Text>❤️ {item.likesCount}</Text>
-                                        <Text>🔖 {item.savesCount}</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </Pressable>
+                        <WorkoutCard
+                            workout={item}
+                            onPress={() => handleWorkoutPress(item.id)}
+                            onToggleLike={() => handleToggleLike(item.id)}
+                            onToggleSave={() => handleToggleSave(item.id)}
+                            showAuthor={true}
+                            showStatus={false}
+                        />
                     )}
                 />
             )}
@@ -156,37 +161,5 @@ const styles = StyleSheet.create({
     },
     list: {
         paddingBottom: 80,
-    },
-    card: {
-        flexDirection: "row",
-        marginBottom: 16,
-        backgroundColor: "#eee",
-        borderRadius: 16,
-        padding: 16,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-    },
-    image: {
-        width: 100,
-        height: 100,
-        backgroundColor: "#bbb",
-        borderRadius: 12,
-        marginRight: 16,
-    },
-    info: {
-        flex: 1,
-    },
-    name: {
-        fontWeight: "bold",
-        fontSize: 18,
-    },
-    stats: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 8,
     },
 })
