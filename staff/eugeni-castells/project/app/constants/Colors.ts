@@ -16,6 +16,7 @@ export const Colors = {
     vanCardLocation: "#94A3B8",
     searchDestinationColor: "#CBD5E1",
     opaqueWhite: "#F5F5F5",
+    secondaryText: "#CBD5E1",
   },
   dark: {
     background: "#121212",

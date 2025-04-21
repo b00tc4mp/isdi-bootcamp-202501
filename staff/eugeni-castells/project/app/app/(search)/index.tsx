@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { DestinationBox } from "@/components/Search/DestinationBox";
 import { Pressable, StyleSheet } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -7,13 +8,29 @@ import { borderRadius, spacing } from "@/constants/Paddings";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { Typography } from "@/constants/Typography";
+import StartDateBox from "@/components/Search/StartDateBox";
 
 export default function SearchScreen() {
+  const [location, setLocation] = useState("");
+  const [dateRange, setDateRange] = useState([]);
+  const [travellers, setTravellers] = useState([{}]);
+
   const router = useRouter();
+
+  const handleLocation = (location: string) => {
+    setLocation(location);
+  };
+
+  const handleClearAll = () => {
+    setLocation("");
+    setDateRange([]);
+    setTravellers([{}]);
+  };
 
   const handleClose = () => {
     router.push("/(tabs)");
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -24,10 +41,21 @@ export default function SearchScreen() {
           style={{ marginBottom: spacing.rem }}
           onPress={handleClose}
         />
-        <DestinationBox />
+        {location.length === 0 && (
+          <DestinationBox onSearchClick={handleLocation} location={location} />
+        )}
+        {location.length > 0 && (
+          <StartDateBox text="Where" displayText={location} />
+        )}
+        <StartDateBox text="When" displayText="Add dates" />
+        <StartDateBox text="Who" displayText="Add travellers" />
       </View>
       <View style={styles.bottomContainer}>
-        <Pressable>
+        <Pressable
+          onPress={() => {
+            handleClearAll();
+          }}
+        >
           <Text style={styles.bottomText}>Clear all</Text>
         </Pressable>
         <Pressable style={styles.button}>
