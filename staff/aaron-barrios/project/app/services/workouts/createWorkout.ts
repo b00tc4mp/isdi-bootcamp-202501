@@ -1,5 +1,7 @@
 import { errors, validate } from "com"
 import { data } from "@/data"
+import defaultWorkoutExecutionImages from "./defaultWorkoutExecutionImages"
+import { WorkoutType } from "com/types"
 
 const { SystemError, AuthorizationError } = errors
 
@@ -9,7 +11,7 @@ const createWorkout = (
     muscleGroup: string,
     feedImage: string,
     description: string
-): Promise<void> => {
+): Promise<WorkoutType> => {
     validate.id(userId)
     validate.text(name)
     validate.text(muscleGroup)
@@ -26,12 +28,24 @@ const createWorkout = (
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({ name, muscleGroup, description })
+                body: JSON.stringify({
+                    name,
+                    muscleGroup,
+                    description,
+                    feedImage,
+                    executionImages: defaultWorkoutExecutionImages[muscleGroup] ?? []
+                })
             })
         })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            if (response.status === 201) return // HAPPY PATH
+            if (response.status === 201) {
+                return response.json()
+                    .then(body => {
+                        if (!body) throw new SystemError('Invalid response body')
+                        return body as WorkoutType
+                    })
+            }
 
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })

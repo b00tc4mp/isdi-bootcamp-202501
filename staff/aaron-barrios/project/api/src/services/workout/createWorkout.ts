@@ -1,6 +1,3 @@
-// import { Types } from 'mongoose'
-// const { ObjectId } = Types
-
 import { User, Workout } from '../../data/models'
 import { WorkoutDocType } from '../../data/types'
 import { errors, validate } from 'com'
@@ -14,7 +11,7 @@ const createWorkout = (
     muscleGroup: string,
     feedImage: string,
     description: string,
-): Promise<void> => {
+): Promise<WorkoutDocType> => {
     validate.id(author)
     validate.name(name)
     validate.text(muscleGroup)
@@ -38,7 +35,7 @@ const createWorkout = (
             return Workout.create(newWorkout)
                 .catch(error => { throw new SystemError(error.message) })
         })
-        .then(() => { })
+        .then(workout => workout)
 }
 
 export default createWorkout

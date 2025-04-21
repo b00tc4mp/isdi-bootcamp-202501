@@ -3,7 +3,7 @@ import { useRouter } from "expo-router"
 
 import { Text, View } from "@/components/Themed"
 
-export default function Routines() {
+export default function Anon_Routines() {
     const router = useRouter()
 
     return (

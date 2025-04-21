@@ -4,7 +4,6 @@ import { Text, View } from "@/components/Themed"
 import { router } from "expo-router"
 
 import { getUserAlias } from "@/services/user/regular"
-import { logoutUser } from "@/services/session"
 import { errors } from "com"
 import { data } from "@/data"
 
@@ -26,21 +25,6 @@ export default function Home() {
             })
     }, [])
 
-
-    const handleLogout = () => {
-        Alert.alert("Logout", "Are you sure you want to logout?", [
-            { text: "Cancel", style: "cancel" },
-            {
-                text: "Logout",
-                style: "destructive",
-                onPress: async () => {
-                    console.log("🔌 Logout desde Home")
-                    await logoutUser()
-                    router.replace("/(auth)")
-                }
-            }
-        ])
-    }
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
@@ -97,7 +81,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     logo: {
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: "bold",
     },
     welcome: {

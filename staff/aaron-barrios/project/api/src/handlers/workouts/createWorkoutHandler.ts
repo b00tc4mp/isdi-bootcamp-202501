@@ -10,7 +10,7 @@ const createWorkoutHandler = createFunctionalHandler(
         const { name, muscleGroup, feedImage, description } = req.body
 
         return createWorkout(author, name, muscleGroup, feedImage, description)
-            .then(workout => { res.status(200).json(workout) })
+            .then(workout => { res.status(201).json(workout) })
     }
 )
 

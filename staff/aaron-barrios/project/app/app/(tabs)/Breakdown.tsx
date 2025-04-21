@@ -4,7 +4,7 @@ import { Text, View } from "@/components/Themed"
 export default function Breakdown() {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Breakdown</Text>
+            <Text style={styles.title}>Your progress tracker!</Text>
 
             <View style={styles.content}>
                 <Image
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f0f0f0",
     },
     title: {
-        fontSize: 32,
+        fontSize: 24,
         fontWeight: "bold",
         marginBottom: 24,
     },

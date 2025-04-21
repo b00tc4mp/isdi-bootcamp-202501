@@ -1,9 +1,28 @@
 import { Tabs } from "expo-router"
 import { useEffect, useState } from "react"
-import { Image } from "react-native"
+import { Image, Text, View, Pressable } from "react-native"
 
 import { data } from "@/data"
-import { getUserRole } from "@/services/session"
+import { getUserRole, logoutUser } from "@/services/session"
+import { router } from "expo-router"
+
+function TabIcon({ icon, label, focused }: { icon: any; label: string; focused: boolean }) {
+    return (
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Image
+                source={icon}
+                style={{
+                    width: 24,
+                    height: 24,
+                    tintColor: focused ? "#facc15" : "#aaa",
+                    marginBottom: 2,
+                }}
+                resizeMode="contain"
+            />
+            <Text style={{ fontSize: 10, color: focused ? "#facc15" : "#aaa" }}>{label}</Text>
+        </View>
+    )
+}
 
 export default function CustomTabs() {
     const [tokenExists, setTokenExists] = useState<boolean | null>(null)
@@ -12,10 +31,7 @@ export default function CustomTabs() {
     useEffect(() => {
         const checkAuth = async () => {
             const token = await data.getToken()
-            if (!token) {
-                setTokenExists(false)
-                return
-            }
+            if (!token) return setTokenExists(false)
 
             const userRole = await getUserRole()
             setTokenExists(true)
@@ -25,43 +41,87 @@ export default function CustomTabs() {
         checkAuth()
     }, [])
 
+    const handleLogout = async () => {
+        await logoutUser()
+        router.replace("/(auth)")
+    }
+
     if (tokenExists === null) return null
     if (!tokenExists) return null
 
     return (
-        <Tabs screenOptions={{ headerShown: false }}>
-            {/* Visible para todos */}
+        <Tabs
+            screenOptions={{
+                tabBarStyle: {
+                    backgroundColor: "#111",
+                    borderTopWidth: 0,
+                    height: 60,
+                },
+                headerRight: () => (
+                    <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
+                        <Image
+                            source={require("@/assets/icons/logout.png")}
+                            style={{
+                                width: 22,
+                                height: 22,
+                                tintColor: "#fff", // blanco fijo
+                            }}
+                        />
+                    </Pressable>
+                ),
+                headerTitleAlign: "left",
+                headerTitleStyle: {
+                    fontSize: 28, // ⬆️ más grande que el valor por defecto
+                    fontWeight: "bold",
+                    color: "#fff", // aseguras contraste
+                },
+                headerStyle: {
+                    backgroundColor: "#111", // mantiene coherencia con el footer
+                },
+            }}
+        >
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: "Tzend",
-                    tabBarIcon: () => <Image source={require("@/assets/icons/home.png")} style={{ width: 24, height: 24 }} />,
+                    tabBarLabel: "Tzend",
+                    headerTitle: "Tzend",
+                    tabBarIcon: ({ focused }) => (
+                        <TabIcon icon={require("@/assets/icons/home.png")} label="Tzend" focused={focused} />
+                    ),
                 }}
             />
 
             <Tabs.Screen
                 name="Workouts"
                 options={{
-                    title: "Workouts",
-                    tabBarIcon: () => <Image source={require("@/assets/icons/workout.png")} style={{ width: 24, height: 24 }} />,
+                    tabBarLabel: "Workouts",
+                    headerTitle: "Workouts",
+                    tabBarIcon: ({ focused }) => (
+                        <TabIcon icon={require("@/assets/icons/workout.png")} label="Workouts" focused={focused} />
+                    ),
                 }}
             />
 
             <Tabs.Screen
                 name="Routines"
                 options={{
-                    title: "Routines",
-                    tabBarIcon: () => <Image source={require("@/assets/icons/routine.png")} style={{ width: 24, height: 24 }} />,
+                    tabBarLabel: "Routines",
+                    headerTitle: "Routines",
+                    tabBarIcon: ({ focused }) => (
+                        <TabIcon icon={require("@/assets/icons/routine.png")} label="Routines" focused={focused} />
+                    ),
                 }}
             />
-
 
             {role === "regular" && (
                 <Tabs.Screen
                     name="Breakdown"
                     options={{
-                        title: "Breakdown",
-                        tabBarIcon: () => <Image source={require("@/assets/icons/breakdown.png")} style={{ width: 24, height: 24 }} />,
+                        tabBarLabel: "Breakdown",
+                        headerTitle: "Breakdown",
+                        tabBarIcon: ({ focused }) => (
+                            <TabIcon icon={require("@/assets/icons/breakdown.png")} label="Breakdown" focused={focused} />
+                        ),
                     }}
                 />
             )}
@@ -69,8 +129,11 @@ export default function CustomTabs() {
             <Tabs.Screen
                 name="Profile"
                 options={{
-                    title: "Profile",
-                    tabBarIcon: () => <Image source={require("@/assets/icons/profile.png")} style={{ width: 24, height: 24 }} />,
+                    tabBarLabel: "Profile",
+                    headerTitle: "Profile",
+                    tabBarIcon: ({ focused }) => (
+                        <TabIcon icon={require("@/assets/icons/profile.png")} label="Profile" focused={focused} />
+                    ),
                 }}
             />
 
@@ -78,8 +141,11 @@ export default function CustomTabs() {
                 <Tabs.Screen
                     name="ReviewPanel"
                     options={{
-                        title: "Review",
-                        tabBarIcon: () => <Image source={require("@/assets/icons/review.png")} style={{ width: 24, height: 24 }} />,
+                        tabBarLabel: "Review",
+                        headerTitle: "Review",
+                        tabBarIcon: ({ focused }) => (
+                            <TabIcon icon={require("@/assets/icons/review.png")} label="Review" focused={focused} />
+                        ),
                     }}
                 />
             )}

@@ -7,35 +7,49 @@ import {
     TouchableOpacity,
     StyleSheet,
     ScrollView,
-    Alert,
-    Pressable
+    Pressable,
+    Platform as RNPlatform,
+    Alert as RNAlert,
 } from "react-native"
-
-import createWorkout from "@/services/workouts/createWorkout"
+import { Picker } from "@react-native-picker/picker"
 import { FontAwesome5 } from "@expo/vector-icons"
+
+import { createWorkout } from "@/services/workouts"
+import { getCurrentUser } from "@/services/session"
+
+const showAlert = (title: string, message: string) => {
+    if (RNPlatform.OS === "web") {
+        window.alert(`${title}: ${message}`)
+    } else {
+        RNAlert.alert(title, message)
+    }
+}
 
 export default function CreateWorkout() {
     const router = useRouter()
     const [name, setName] = useState("")
-    const [muscleGroup, setMuscleGroup] = useState("")
+    const [muscleGroup, setMuscleGroup] = useState("chest")
     const [feedImage, setFeedImage] = useState("")
-    const [type, setType] = useState("")
+    const [type, setType] = useState("strength")
     const [difficulty, setDifficulty] = useState("")
     const [description, setDescription] = useState("")
 
     const handleSubmit = () => {
-        if (!name || !muscleGroup || !feedImage || !description) {
-            return Alert.alert("Error", "All fields are required")
+        if (!name.trim() || !description.trim() || !feedImage.trim()) {
+            return showAlert("Error", "Name, description, and image are required")
         }
 
-        createWorkout("userid-placeholder", name, muscleGroup, feedImage, description)
-            .then(() => {
-                Alert.alert("Workout created!", "Your workout has been submitted.")
-                router.back()
+        getCurrentUser()
+            .then(({ id }) => createWorkout(id, name, muscleGroup, feedImage, description))
+            .then(workout => {
+                if (!workout) throw new Error("Workout creation failed")
+
+                showAlert("Workout created!", "Your workout has been submitted.")
+                router.replace("/(tabs)/Workouts" as any)
             })
             .catch(error => {
-                console.error(error)
-                Alert.alert("Error", error.message || "Something went wrong.")
+                console.error("❌ Error en el flujo:", error)
+                showAlert("Error", error.message || "Something went wrong.")
             })
     }
 
@@ -50,16 +64,37 @@ export default function CreateWorkout() {
             <TextInput style={styles.input} value={name} onChangeText={setName} />
 
             <Text style={styles.label}>Muscle Group</Text>
-            <TextInput style={styles.input} value={muscleGroup} onChangeText={setMuscleGroup} />
+            <View style={styles.pickerContainer}>
+                <Picker selectedValue={muscleGroup} onValueChange={setMuscleGroup} style={styles.picker}>
+                    <Picker.Item label="Chest" value="chest" />
+                    <Picker.Item label="Back" value="back" />
+                    <Picker.Item label="Legs" value="legs" />
+                    <Picker.Item label="Arms" value="arms" />
+                    <Picker.Item label="Buttocks" value="buttocks" />
+                </Picker>
+            </View>
 
             <Text style={styles.label}>Feed Image</Text>
             <TextInput style={styles.input} value={feedImage} onChangeText={setFeedImage} />
 
             <Text style={styles.label}>Type</Text>
-            <TextInput style={styles.input} value={type} onChangeText={setType} />
+            <View style={styles.pickerContainer}>
+                <Picker selectedValue={type} onValueChange={setType} style={styles.picker}>
+                    <Picker.Item label="Strength" value="strength" />
+                    <Picker.Item label="Cardio" value="cardio" />
+                    <Picker.Item label="Mobility" value="mobility" />
+                    <Picker.Item label="Endurance" value="endurance" />
+                </Picker>
+            </View>
 
             <Text style={styles.label}>Difficulty</Text>
-            <TextInput style={styles.input} value={difficulty} onChangeText={setDifficulty} />
+            <View style={styles.pickerContainer}>
+                <Picker selectedValue={difficulty} onValueChange={setDifficulty} style={styles.picker}>
+                    <Picker.Item label="Easy" value="easy" />
+                    <Picker.Item label="Medium" value="medium" />
+                    <Picker.Item label="Hard" value="hard" />
+                </Picker>
+            </View>
 
             <Text style={styles.label}>Description</Text>
             <TextInput
@@ -69,15 +104,6 @@ export default function CreateWorkout() {
                 value={description}
                 onChangeText={setDescription}
             />
-
-            <View style={styles.imageRow}>
-                <TouchableOpacity style={styles.imageBox}>
-                    <Text style={styles.imageText}>+ Add Image</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.imageBox}>
-                    <Text style={styles.imageText}>+ Add Image</Text>
-                </TouchableOpacity>
-            </View>
 
             <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
                 <Text style={styles.submitText}>Send</Text>
@@ -109,26 +135,19 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginBottom: 16
     },
+    pickerContainer: {
+        backgroundColor: "#f0f0f0",
+        borderRadius: 8,
+        overflow: "hidden",
+        marginBottom: 16
+    },
+    picker: {
+        height: RNPlatform.OS === "ios" ? 200 : 40,
+        width: "100%",
+    },
     textarea: {
         height: 100,
         textAlignVertical: "top"
-    },
-    imageRow: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginBottom: 24
-    },
-    imageBox: {
-        backgroundColor: "#f2f2f2",
-        flex: 1,
-        marginHorizontal: 5,
-        paddingVertical: 32,
-        borderRadius: 10,
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    imageText: {
-        color: "#555"
     },
     submit: {
         backgroundColor: "#ccc",

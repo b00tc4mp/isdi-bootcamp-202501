@@ -41,6 +41,7 @@ workoutRouter.get(
 workoutRouter.post(
     "/",
     jsonBodyParser,
+    authHandler,
     validationHandler(createWorkoutSchema),
     createWorkoutHandler
 )

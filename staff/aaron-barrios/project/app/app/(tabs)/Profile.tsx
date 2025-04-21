@@ -8,7 +8,7 @@ export default function Profile() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Profile</Text>
+            <Text style={styles.title}>Users Profile</Text>
             <View style={styles.container}>
                 <Text style={styles.title}>Your Data!</Text>
                 <View style={styles.button}>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f0f0f0"
     },
     title: {
-        fontSize: 32,
+        fontSize: 24,
         fontWeight: "bold",
         alignSelf: "flex-start",
         marginBottom: 12
