@@ -68,6 +68,7 @@ workoutRouter.delete(
 workoutRouter.patch(
     '/:workoutId/likes',
     authHandler,
+    jsonBodyParser,
     //createWorkoutHandler
 )
 
@@ -75,12 +76,14 @@ workoutRouter.patch(
 workoutRouter.patch(
     '/:workoutId/saves',
     authHandler,
+    jsonBodyParser,
     //createWorkoutHandler
 )
 
 //  --- UPDATE/EDIT WORKOUT METHOD ---
 workoutRouter.patch(
     '/:workoutId/update',
+    authHandler,
     jsonBodyParser,
     //createWorkoutHandler
 )

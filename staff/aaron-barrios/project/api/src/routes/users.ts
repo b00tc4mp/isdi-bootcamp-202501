@@ -13,7 +13,10 @@ import {
 import {
     getUserAliasHandler,
     getCurrentUserHandler,
-    getUserWorkoutsHandler
+    getUserWorkoutsHandler,
+    getSavedWorkoutsHandler,
+    getMyWorkoutsHandler,
+    updateUserDataHandler
 } from "../handlers/user/regular"
 
 import {
@@ -49,11 +52,32 @@ userRouter.get(
     getCurrentUserHandler
 )
 
+// --- GET USER DATA METHOD ---
+userRouter.get(
+    "/data",
+    authHandler,
+    getCurrentUserHandler
+)
+
 // --- GET USER WORKOUTS METHOD
 userRouter.get(
     "/:targetUserId/workouts",
     authHandler,
     getUserWorkoutsHandler
+)
+
+// --- GET SAVED WORKOUTS METHOD
+userRouter.get(
+    "/workouts/self/saved",
+    authHandler,
+    getSavedWorkoutsHandler
+)
+
+// --- GET YOUR WORKOUTS METHOD
+userRouter.get(
+    "/workouts/self",
+    authHandler,
+    getMyWorkoutsHandler
 )
 
 // --- GET USER ROUTINES METHOD --- (WIP)
@@ -80,6 +104,15 @@ userRouter.post(
     jsonBodyParser,
     validationHandler(authenticateUserSchema),
     authenticateUserHandler
+)
+
+// ----- PATCH ROUTES -----
+// --- UPDATE USER DATA METHOD ---
+userRouter.patch(
+    "/self",
+    authHandler,
+    jsonBodyParser,
+    updateUserDataHandler
 )
 
 

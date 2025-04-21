@@ -27,32 +27,69 @@ describe("get User Workouts", () => {
     })
 
     //--- HAPPY PATH ---
-    it("succeeds on getting User Workouts", async () => {
-        const hashedPassword = await bcrypt.hash("123123", 10)
+    it("succeeds on getting User Workouts", () => {
+        return bcrypt.hash("123123", 10)
+            .then(hashedPassword => {
+                return User.insertMany([
+                    {
+                        name: "Manu",
+                        lastName: "Barzi",
+                        email: "ma@nu.com",
+                        alias: "manu",
+                        password: hashedPassword,
+                        role: "regular",
+                        level: "beginner",
+                        interests: [],
+                        createdAt: new Date(),
+                        modifiedAt: null
+                    },
+                    {
+                        name: "Frank",
+                        lastName: "Pereira",
+                        email: "fran@kie.com",
+                        alias: "frankie",
+                        password: hashedPassword,
+                        role: "regular",
+                        level: "intermediate",
+                        interests: [],
+                        createdAt: new Date(),
+                        modifiedAt: null
+                    }
+                ])
+            })
+            .then(([_user, _user2]) => {
+                const user = { id: _user._id.toString() }
+                const user2 = { id: _user2._id.toString() }
 
-        const [_user, _user2] = await User.insertMany([
-            { name: "Manu", lastName: "Barzi", email: "ma@nu.com", alias: "manu", password: hashedPassword, role: "regular", level: "beginner", interests: [], createdAt: new Date(), modifiedAt: null },
-            { name: "Frank", lastName: "Pereira", email: "fran@kie.com", alias: "frankie", password: hashedPassword, role: "regular", level: "intermediate", interests: [], createdAt: new Date(), modifiedAt: null }
-        ])
-
-        const user = { id: _user._id.toString() }
-        const user2 = { id: _user2._id.toString() }
-
-        await Workout.insertMany([
-            {
-                author: user.id, name: "bench press", muscleGroup: "chest", feedImage: "https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg", description: "workout 1", difficulty: "easy", type: "strength", status: "accepted"
-            },
-            {
-                author: user2.id, name: "bulgarian squat", muscleGroup: "buttocks", feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg", description: "workout 2", difficulty: "easy", type: "strength", status: "accepted"
-            }
-        ])
-
-        const returnedWorkouts = await getUserWorkouts(user.id, user.id)
-
-        expect(returnedWorkouts).to.be.instanceOf(Array)
-        expect(returnedWorkouts).to.have.lengthOf(1)
-        expect(returnedWorkouts[0].author.id).to.equal(user.id)
-
+                return Workout.insertMany([
+                    {
+                        author: user.id,
+                        name: "bench press",
+                        muscleGroup: "chest",
+                        feedImage: "https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg",
+                        description: "workout 1",
+                        difficulty: "easy",
+                        type: "strength",
+                        status: "accepted"
+                    },
+                    {
+                        author: user2.id,
+                        name: "bulgarian squat",
+                        muscleGroup: "buttocks",
+                        feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg",
+                        description: "workout 2",
+                        difficulty: "easy",
+                        type: "strength",
+                        status: "accepted"
+                    }
+                ])
+                    .then(() => getUserWorkouts(user.id, user.id))
+                    .then(returnedWorkouts => {
+                        expect(returnedWorkouts).to.be.instanceOf(Array)
+                        expect(returnedWorkouts).to.have.lengthOf(1)
+                        expect(returnedWorkouts[0].author.id).to.equal(user.id)
+                    })
+            })
     })
 
     //--- NOTFOUND USER ERROR PATH ---
@@ -63,8 +100,10 @@ describe("get User Workouts", () => {
     })
 
     afterEach(() => {
-        User.deleteMany({})
-        Workout.deleteMany({})
+        return Promise.all([
+            User.deleteMany({}),
+            Workout.deleteMany({})
+        ])
     })
 
     after(() => data.disconnect())

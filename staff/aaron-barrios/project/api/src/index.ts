@@ -2,7 +2,7 @@ import "dotenv/config"
 import express, { Request, Response } from "express"
 import cors from "cors"
 
-import {errorHandler} from "./middlewares"
+import { errorHandler } from "./middlewares"
 import loggers from "./logs/index"
 
 import { data } from "./data/index"
@@ -31,9 +31,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
 
         api.use(morganMiddleware)
 
-        // ✅ ACTIVA CORS (para permitir llamadas desde tu frontend Expo Web)
         api.use(cors())
-
 
         // --- ROUTES --- 
         api.use("/users", userRouter)
