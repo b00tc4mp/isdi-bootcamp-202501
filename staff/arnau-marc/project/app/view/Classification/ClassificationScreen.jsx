@@ -148,9 +148,6 @@ export default function ClassificationScreen({ navigation }) {
     <View style={styles.rowHeader}>
       <Text style={styles.cellRank}>#</Text>
       <Text style={styles.cellUsername}>Username</Text>
-      <Text style={styles.cellPlayed}>Played</Text>
-      <Text style={styles.cellWon}>Wins</Text>
-      <Text style={styles.cellWinRate}>Win%</Text>
       <Text style={styles.cellPoints}>Points</Text>
     </View> 
   )

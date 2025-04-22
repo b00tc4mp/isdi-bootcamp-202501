@@ -30,14 +30,17 @@ describe('toggleParticipation', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
         author: userId,
-        title: 'Timbita Poker',
-        season: 'season 1',
-        date: '25-04-2025',
-        place: 'bodeguita',
+        title: 'game 1',
+        _id: gameId,
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
         participants: [],
-        status: 'scheduled'
+        place: 'bodeguita',
+        winner: null,
+        points: 0
       })
     ])
       .then(() => toggleParticipation(userId.toString(), gameId.toString()))
@@ -63,14 +66,17 @@ describe('toggleParticipation', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
         author: userId,
-        title: 'Timbita Poker',
-        season: 'season 1',
-        date: '25-04-2025',
-        place: 'bodeguita',
+        title: 'game 1',
+        _id: gameId,
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
         participants: [userId],
-        status: 'scheduled'
+        place: 'bodeguita',
+        winner: null,
+        points: 0
       })
     ])
       .then(() => toggleParticipation(userId.toString(), gameId.toString()))
@@ -107,15 +113,18 @@ describe('toggleParticipation', () => {
     const userId = new ObjectId()
     const gameId = new ObjectId()
 
-    return Game.create({
-      _id: gameId,
+    return  Game.create({
       author: userId,
-      title: 'Timbita Poker',
-      season: 'season 1',
-      date: '25-04-2025',
-      place: 'bodeguita',
+      title: 'game 1',
+      _id: gameId,
+      seasonName: 'season 1',
+      seasonId: new ObjectId(),
+      status: 'scheduled',
+      date: new Date(2025, 4, 23),
       participants: [],
-      status: 'scheduled'
+      place: 'bodeguita',
+      winner: null,
+      points: 0
     })
       .then(() => toggleParticipation(userId.toString(), gameId.toString()))
       .catch(error => catchedError = error)
@@ -141,14 +150,17 @@ describe('toggleParticipation', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
         author: userId,
-        title: 'Timbita Poker',
-        season: 'season 1',
-        date: '25-04-2025',
-        place: 'bodeguita',
+        title: 'game 1',
+        _id: gameId,
+        status: 'finished',
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        date: new Date(2025, 4, 23),
         participants: [],
-        status: 'finished'
+        place: 'bodeguita',
+        winner: null,
+        points: 0
       })
     ])
       .then(() => toggleParticipation(userId.toString(), gameId.toString()))

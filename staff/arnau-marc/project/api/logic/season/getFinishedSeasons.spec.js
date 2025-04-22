@@ -35,17 +35,13 @@ describe('getFinishedSeasons', () => {
         .then(() => {
             return getFinishedSeasons()
         })
-        .finally(seasons=>{
+        .then(seasons =>{
             expect(seasons).to.exist
 
-            expect(seasons[0].status).to.equal('finished')
-            expect(seasons[1].status).to.equal('finished')
-            
-        })
-
-        
+            expect(seasons[0].name).to.equal('season 2')
+            expect(seasons[1].name).to.equal('season 1')          
+        }) 
     })
-
 
     afterEach(() => Season.deleteMany({}))
     afterEach(() => User.deleteMany({}))

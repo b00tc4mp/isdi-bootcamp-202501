@@ -17,11 +17,12 @@ describe('getUserStats', () => {
     beforeEach(() => Game.deleteMany({}))
 
     it('succeeds on get user stats', () => {
-        let arnauId
+        let arnauId  = new ObjectId()
+        const seasonId = new ObjectId()
         return Promise.all([
             User.create({
                 name: 'arnau',
-                _id: arnauId = new ObjectId(),
+                _id: arnauId,
                 surname: 'romero',
                 email: 'ar@nau.com',
                 username: 'arnau_sots',
@@ -29,17 +30,19 @@ describe('getUserStats', () => {
             }),
             Season.create({
                 name: 'season 2',
+                _id: seasonId,
                 status: 'active',
                 startDate: new Date(2025, 3, 31),
                 endDate: new Date(2025, 6, 13)
             }),
             Game.create({
                 author: arnauId,
-                season: 'season 2',
+                seasonName: 'season 2',
+                seasonId: seasonId,
                 status: 'finished',
                 title: 'timbita 4',
                 participants: [arnauId],
-                date: '25-04-2025',
+                date: new Date(2025, 3, 31),
                 place: 'bodeguita',
                 winner: arnauId,
                 points: 1,
@@ -61,12 +64,14 @@ describe('getUserStats', () => {
     })
 
     it('returns 0 if user has no participation in finished games', () => {
-        let litaId
+        let litaId = new ObjectId()
+        let arnauId  = new ObjectId()
+        const seasonId = new ObjectId()
       
         return Promise.all([
           User.create({
             name: 'Lita',
-            _id: litaId = new ObjectId(),
+            _id: litaId ,
             surname: 'Lenta',
             email: 'li@ta.com',
             username: 'lita_lenta',
@@ -74,20 +79,25 @@ describe('getUserStats', () => {
           }),
           Season.create({
             name: 'winter season',
+            _id: seasonId,
             status: 'active',
             startDate: new Date(),
             endDate: new Date()
           }),
           Game.create({
-            title: 'game sin lita',
-            author: new ObjectId(),
-            season: 'winter season',
+            author: arnauId,
+            seasonName: 'season 2',
+            seasonId: seasonId,
             status: 'finished',
-            participants: [new ObjectId()],
-            winner: new ObjectId(),
-            date: '01-01-2025',
-            place: 'bodega'
-          })
+            title: 'timbita 4',
+            participants: [arnauId],
+            date: new Date(2025, 3, 31),
+            place: 'bodeguita',
+            winner: arnauId,
+            points: 1,
+            createdAt: new Date(2025, 4, 29),
+            modifiedAt: new Date(2025, 4, 30)
+        })
         ])
           .then(() => getUserStats(litaId.toString()))
           .then(stats => {

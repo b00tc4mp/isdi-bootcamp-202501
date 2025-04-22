@@ -35,10 +35,13 @@ describe('finishSeason', () =>{
             }),
         ])
             .then(([season, user]) => {
-               return finishSeason(user.id, season.id)
+              return  finishSeason(user._id.toString(), season._id.toString())
+            })
+            .then(() => {
+                return Season.find({})
             })
             .then(seasonFinished => {
-                expect(seasonFinished.status).to.equal('finished')
+                expect(seasonFinished[0].status).to.equal('finished')
             })
     })
 

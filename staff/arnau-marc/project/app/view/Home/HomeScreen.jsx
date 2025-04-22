@@ -113,10 +113,6 @@ const Home = ({ navigation }) => {
   }
 
   const handleDeleteGame = (gameId) => {
-<<<<<<< HEAD
-
-=======
->>>>>>> 555c95caffcb2f29e6db661af5e802ca41bad872
     Alert.alert(
       '🃏 Delete Game?',
       'Are you sure you want to remove this poker game from the list? ♠️♥️',
@@ -138,10 +134,6 @@ const Home = ({ navigation }) => {
       ]
     )
   }  
-<<<<<<< HEAD
-
-=======
->>>>>>> 555c95caffcb2f29e6db661af5e802ca41bad872
 
   const scheduledGames = games.filter(game => game.status === 'scheduled')
   const finishedGames = games.filter(game => game.status === 'finished')

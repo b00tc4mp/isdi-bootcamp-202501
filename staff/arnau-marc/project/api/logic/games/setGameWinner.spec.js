@@ -131,7 +131,7 @@ describe('setGameWinner', () => {
       })
   })
 
-  it.only('fails if winner does not exist', () => {
+  it('fails if winner does not exist', () => {
     const adminId = new ObjectId()
     const gameId = new ObjectId()
     let catchedError
@@ -147,17 +147,20 @@ describe('setGameWinner', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
         author: adminId,
-        title: 'Poker Night',
-        season: 'season 1',
-        date: '25-04-2025',
-        place: 'bodeguita',
+        title: 'game 1',
+        _id: gameId,
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
         participants: [adminId],
-        status: 'scheduled'
+        place: 'bodeguita',
+        winner: null,
+        points: 0
       })
     ])
-      .then(() => setGameWinner(adminId.toString(), gameId.toString(), 'user'))
+      .then(() => setGameWinner(adminId.toString(), gameId.toString(), new ObjectId().toString()))
       .catch(error => catchedError = error)
       .finally(() => {
         expect(catchedError).to.be.instanceOf(NotFoundError)
@@ -165,7 +168,7 @@ describe('setGameWinner', () => {
       })
   })
 
-  it.only('fails if winner is not a participant', () => {
+  it('fails if winner is not a participant', () => {
     const adminId = new ObjectId()
     const notParticipantId = new ObjectId()
     const gameId = new ObjectId()
@@ -191,17 +194,20 @@ describe('setGameWinner', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
         author: adminId,
-        title: 'Poker Night',
-        season: 'season 1',
-        date: '25-04-2025',
-        place: 'bodeguita',
+        title: 'game 1',
+        _id: gameId,
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
         participants: [adminId],
-        status: 'scheduled'
+        place: 'bodeguita',
+        winner: null,
+        points: 0
       })
     ])
-      .then(() => setGameWinner(adminId.toString(), gameId.toString(), 'lita_lenta'))
+      .then(() => setGameWinner(adminId.toString(), gameId.toString(), notParticipantId.toString()))
       .catch(error => catchedError = error)
       .finally(() => {
         expect(catchedError).to.be.instanceOf(ValidationError)

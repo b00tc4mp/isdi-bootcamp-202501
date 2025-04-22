@@ -19,6 +19,7 @@ describe('getSeasonLeaderboard', () => {
 
     it('succed on get seasonLaderBoard', () => {
         let createdSeason
+        let seasonId
         let arnauId 
         let marcId
         let eylaId
@@ -27,6 +28,7 @@ describe('getSeasonLeaderboard', () => {
         return Promise.all([
             Season.create({
             name: 'season 1',
+            _id: seasonId = new ObjectId(),
             status: 'active',
             startDate: new Date(2025, 4, 23),
             endDate: new Date(2025, 5, 24)
@@ -71,11 +73,12 @@ describe('getSeasonLeaderboard', () => {
             .then(() => Promise.all([
                 Game.create({
                     author: arnauId,
-                    season: 'season 1',
+                    seasonName: 'season 1',
+                    seasonId: seasonId,
                     status: 'finished',
                     title: 'timbita 1',
                     participants: [arnauId, litaId],
-                    date: '25-04-2025',
+                    date: new Date(2025, 4, 23),
                     place: 'bodeguita',
                     winner: arnauId,
                     points: 1,
@@ -85,11 +88,12 @@ describe('getSeasonLeaderboard', () => {
                 }),
                 Game.create({
                     author: arnauId,
-                    season: 'season 1',
+                    seasonName: 'season 1',
+                    seasonId: seasonId,
                     status: 'finished',
                     title: 'timbita 2',
                     participants: [arnauId, marcId, eylaId, litaId],
-                    date: '25-04-2025',
+                    date: new Date(2025, 4, 29),
                     place: 'casita sots',
                     winner: eylaId,
                     points: 2,
@@ -98,11 +102,12 @@ describe('getSeasonLeaderboard', () => {
                 }),
                 Game.create({
                     author: arnauId,
-                    season: 'season 1',
+                    seasonName: 'season 1',
+                    seasonId: seasonId,
                     status: 'finished',
                     title: 'timbita 3',
                     participants: [arnauId, marcId,eylaId, litaId],
-                    date: '25-04-2025',
+                    date: new Date(2025, 4, 29),
                     place: 'bodeguita',
                     winner: marcId,
                     points: 4,
@@ -111,11 +116,12 @@ describe('getSeasonLeaderboard', () => {
                 }),
                 Game.create({
                     author: arnauId,
-                    season: 'season 1',
+                    seasonName: 'season 1',
+                    seasonId: seasonId,
                     status: 'finished',
                     title: 'timbita 4',
                     participants: [arnauId, marcId,eylaId, litaId],
-                    date: '25-04-2025',
+                    date: new Date(2025, 4, 29),
                     place: 'bodeguita',
                     winner: marcId,
                     points: 2,
@@ -125,7 +131,7 @@ describe('getSeasonLeaderboard', () => {
             ]))
             .then(()=> {
                 debugger
-                 return getSeasonLeaderboard('season 1')})
+                 return getSeasonLeaderboard(seasonId)})
             .then(seasonLeaderboard => {
                 expect(seasonLeaderboard).to.exist
 
@@ -159,16 +165,16 @@ describe('getSeasonLeaderboard', () => {
                 //Usuario 1
                 debugger
                 expect(seasonLeaderboard[0]['username']).to.equal('marc_ramos')
-                expect(seasonLeaderboard[0]['points']).to.equal(6)
+                expect(seasonLeaderboard[0]['points']).to.equal(5.5)
                 //Usuario 2
                 expect(seasonLeaderboard[1]['username']).to.equal('eyla_garcia')
-                expect(seasonLeaderboard[1]['points']).to.equal(2)
+                expect(seasonLeaderboard[1]['points']).to.equal(1)
                 //Usuario 3
                 expect(seasonLeaderboard[2]['username']).to.equal('arnau_sots')
-                expect(seasonLeaderboard[2]['points']).to.equal(1)
+                expect(seasonLeaderboard[2]['points']).to.equal(-0.5)
                 //Usuario 4
                 expect(seasonLeaderboard[3]['username']).to.equal('lita_lenta')
-                expect(seasonLeaderboard[3]['points']).to.equal(0)
+                expect(seasonLeaderboard[3]['points']).to.equal(-2)
             })
     })
 
