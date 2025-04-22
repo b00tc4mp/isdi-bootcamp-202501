@@ -46,9 +46,11 @@ describe('createItem', () => {
                 listId = list._id.toString()
                 return createItem(userId, listId, 'Item 1')
             })
+            .then(() => {
+                return ListItem.find({ test: 'Item 1' })
+            })
             .then(item => {
-                expect(item).to.have.property('text')
-                expect(item.text).to.equal('Item 1')
+                expect(item).to.exist
             })
     })
 

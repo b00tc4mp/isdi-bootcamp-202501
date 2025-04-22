@@ -24,8 +24,9 @@ export const createItem = (userId, listId, text) => {
                             list.items.push(item._id)
                             return list.save()
                                 .catch(error => { throw new SystemError(error.message) })
-                                .then(() => item)
+
                         })
+                        .then(() => { })
                 })
         })
 }

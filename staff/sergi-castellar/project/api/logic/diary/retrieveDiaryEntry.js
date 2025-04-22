@@ -20,7 +20,14 @@ export const retrieveDiaryEntry = (userId, entryId) => {
                     if (!entry) throw new NotFoundError('Diary entry not found')
                     if (!entry.couple.equals(couple._id)) throw new AuthorizationError('Couple is not the owner of the diary entry')
 
-                    return entry
+                    return {
+                        id: entry._id.toString(),
+                        author: {
+                            name: entry.author.name
+                        },
+                        text: entry.text,
+                        createdAt: entry.createdAt
+                    }
                 })
         })
 }

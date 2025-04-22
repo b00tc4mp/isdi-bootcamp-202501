@@ -19,4 +19,5 @@ export const createDiaryEntry = (userId, text) => {
             })
                 .catch(error => { throw new SystemError(error.message) })
         })
+        .then(() => { })
 }

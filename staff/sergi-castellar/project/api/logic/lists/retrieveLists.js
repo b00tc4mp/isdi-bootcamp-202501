@@ -14,4 +14,11 @@ export const retrieveLists = (userId) => {
             return List.find({ couple: couple._id }).lean()
                 .catch(error => { throw new SystemError(error.message) })
         })
+        .then(lists => {
+            return lists.map(list => ({
+                id: list._id.toString(),
+                title: list.title,
+                color: list.color
+            }))
+        })
 }

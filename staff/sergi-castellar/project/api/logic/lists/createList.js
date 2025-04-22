@@ -22,4 +22,5 @@ export const createList = (userId, title, color) => {
             })
                 .catch(error => { throw new SystemError(error.message) })
         })
+        .then(() => { })
 }

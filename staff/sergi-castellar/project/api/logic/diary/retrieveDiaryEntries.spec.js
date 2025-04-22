@@ -51,6 +51,7 @@ describe('retrieveDiaryEntries', () => {
             .then(entries => {
                 expect(entries).to.have.lengthOf(1)
                 expect(entries[0].text).to.equal('This is a diary entry')
+                expect(entries[0].own).to.be.true
             })
     })
 

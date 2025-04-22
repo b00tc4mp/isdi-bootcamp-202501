@@ -11,6 +11,13 @@ export const getSelfUser = userId => {
         .then(user => {
             if (!user) throw new NotFoundError('User not found')
 
-            return user
+            return {
+                id: user._id.toString(),
+                name: user.name,
+                email: user.email,
+                username: user.username,
+                createdAt: user.createdAt,
+                modifiedAt: user.modifiedAt
+            }
         })
 }

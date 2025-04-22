@@ -44,11 +44,7 @@ describe('joinWithInviteCode', () => {
                 inviteCodeId = inviteCode._id.toString()
                 return joinWithInviteCode(userId, 'COUPLE-374fd5ae4a0a83a87832')
             })
-            .then(response => {
-                expect(response).to.have.property('coupleId')
-                expect(response).to.have.property('members')
-                expect(response.members).to.include(userId)
-                expect(response.members).to.include(partnerId)
+            .then(() => {
                 return InviteCode.findOne({ code: 'COUPLE-374fd5ae4a0a83a87832' })
             })
             .then(code => {

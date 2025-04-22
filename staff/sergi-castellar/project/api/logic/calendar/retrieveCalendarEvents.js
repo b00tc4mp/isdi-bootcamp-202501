@@ -16,7 +16,16 @@ export const retrieveCalendarEvents = (userId, startDate, endDate) => {
             return CalendarEvent.find({
                 couple: couple._id,
                 eventDate: { $gte: startDate, $lte: endDate }
-            }).sort({ eventDate: 1 })
+            }).sort({ eventDate: 1 }).lean()
                 .catch(error => { throw new SystemError(error.message) })
+        })
+        .then(events => {
+            return events.map(event => ({
+                id: event._id.toString(),
+                author: event.author.toString(),
+                title: event.title,
+                description: event.description,
+                eventDate: event.eventDate
+            }))
         })
 }

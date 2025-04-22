@@ -33,13 +33,8 @@ export const joinWithInviteCode = (userId, inviteCode) => {
 
                             return InviteCode.deleteMany({ createdBy: { $in: [user1Id, user2Id] } })
                                 .catch(error => { throw new SystemError(error.message) })
-                                .then(() => {
-                                    return {
-                                        coupleId: couple._id.toString(),
-                                        members: couple.members.map(id => id.toString())
-                                    }
-                                })
                         })
                 })
+                .then(() => { })
         })
 }

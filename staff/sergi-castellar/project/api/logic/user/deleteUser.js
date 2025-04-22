@@ -14,4 +14,5 @@ export const deleteUser = (userId) => {
             return User.deleteOne({ _id: userId })
                 .catch(error => { throw new SystemError(error.message) })
         })
+        .then(() => { })
 }

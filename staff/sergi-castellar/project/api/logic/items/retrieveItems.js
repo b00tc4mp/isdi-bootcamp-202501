@@ -22,4 +22,10 @@ export const retrieveItems = (userId, listId) => {
                         .catch(error => { throw new SystemError(error.message) })
                 })
         })
+        .then(items => {
+            return items.map(item => ({
+                id: item._id.toString(),
+                text: item.text
+            }))
+        })
 }

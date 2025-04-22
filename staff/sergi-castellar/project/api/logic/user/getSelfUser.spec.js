@@ -28,7 +28,7 @@ describe('getSelfUser', () => {
             })
             .then(user => {
                 expect(user).to.exist
-                expect(user._id.toString()).to.equal(userId)
+                expect(user.id).to.equal(userId)
                 expect(user.name).to.equal('Test User')
                 expect(user.email).to.equal('test@user.com')
                 expect(user.username).to.equal('testuser')

@@ -26,4 +26,5 @@ export const createEmotion = (userId, emotion) => {
                 { upsert: true, new: true, setDefaultsOnInsert: true })
                 .catch(error => { throw new SystemError(error.message) })
         })
+        .then(() => { })
 }

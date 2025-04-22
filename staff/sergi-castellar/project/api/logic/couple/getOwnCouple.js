@@ -12,7 +12,12 @@ export const getOwnCouple = (userId) => {
                 .then(couple => {
                     if (!couple) throw new NotFoundError('Couple not found')
 
-                    return couple
+                    return {
+                        id: couple._id.toString(),
+                        dateStart: couple.dateStart,
+                        members: couple.members.map(id => id.toString()),
+                        createdAt: couple.createdAt
+                    }
                 })
         })
 }
