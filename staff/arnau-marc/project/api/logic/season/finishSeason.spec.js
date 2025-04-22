@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { data, Season, User } from '../../data/index.js'
+import { data, Season, User, Game } from '../../data/index.js'
 import { finishSeason } from './finishSeason.js'
 import { expect } from 'chai'
 import { errors } from '../../validations/index.js'
@@ -16,6 +16,7 @@ describe('finishSeason', () =>{
 
     beforeEach(() => Season.deleteMany({})) 
     beforeEach(() => User.deleteMany({})) 
+    beforeEach(() => Game.deleteMany({})) 
 
     it('succeed on finish a season', () => {
         return Promise.all([
@@ -114,8 +115,88 @@ describe('finishSeason', () =>{
             })
     })
 
+    it('Succeeds finishing a season with no games', () => {
+        let season
+        return Promise.all([
+          Season.create({
+            startDate: new Date(2025, 4, 23),
+            endDate: new Date(2025, 4, 24),
+            status: 'active',
+            name: 'season vacía'
+          }),
+          User.create({
+            name: 'Admin',
+            surname: 'User',
+            role: 'admin',
+            email: 'admin@user.com',
+            username: 'admin_user',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+          })
+        ])
+        .then(([s, user]) => {
+            season = s
+            return finishSeason(user.id, season.id)
+          })
+        .then(() => Season.findById(season._id))
+        .then(season => {
+          expect(season.status).to.equal('finished')
+          expect(season.winner).to.be.null
+        })
+      })
+
+    it('Succeeds finishing season with games without defined points', () => {
+    let seasonId
+    return Promise.all([
+        User.create({
+            name: 'Admin',
+            surname: 'Test',
+            email: 'admin@test.com',
+            username: 'admin_test',
+            role: 'admin',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        }),
+        User.create({
+            name: 'Player',
+            surname: 'One',
+            email: 'player@one.com',
+            username: 'player_one',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        })
+    ])
+
+    .then(([admin, player]) => 
+        Season.create({
+            name: 'testSeason',
+            startDate: new Date(),
+            endDate: new Date(),
+            status: 'active'
+        }).then(season => {
+        seasonId = season._id
+        return Game.create({
+            author: admin._id,
+            title: 'Game 1',
+            seasonId: season._id,
+            seasonName: 'testSeason',
+            date: new Date(),
+            place: 'Online',
+            status: 'finished',
+            participants: [player._id],
+            winner: player._id
+            // points no definido (undefined)
+        }).then(() => finishSeason(admin.id, season.id))
+            .then(() => Season.findById(season._id))
+            .then(season => {
+            expect(season.status).to.equal('finished')
+            expect(season.winner.toString()).to.equal(player._id.toString())
+            })
+        })
+    )
+    })
+
+
     afterEach(() => Season.deleteMany({}))
     afterEach(() => User.deleteMany({}))
+    afterEach(() => Game.deleteMany({}))
     
     after(() => data.disconnect()) 
 })
