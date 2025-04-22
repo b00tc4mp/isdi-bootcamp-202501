@@ -1,0 +1,36 @@
+import { data } from '../data/index.js'
+import { errors } from 'com'
+
+import { SystemError } from 'com/errors.js'
+
+export const getUserUsername = () => {
+    const { token } = data
+
+    return fetch(`${import.meta.env.VITE_API_URL}/users/self/username`, {
+        methor: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            if (response.status === 200)
+                return response.json()
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(body => {
+                        const { username } = body
+
+                        return username
+                    })
+
+            return response.json()
+                .catch(error => { throw new SystemError })
+                .then(body => {
+                    const { errorName, message } = body
+
+                    const constructor = errors[errorName]
+
+                    throw new constructor(message)
+                })
+        })
+}

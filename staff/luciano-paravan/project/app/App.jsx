@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate, Navigate} from 'react-router-dom'
 import { Landing } from './view/Landing'
 import { Register } from './view/Register'
 import { Login } from './view/Login'
+import { Home } from './view/Home'
 
 import { logic } from './logic'
 
@@ -44,6 +45,10 @@ function App () {
         setShowLanding(false)
         setLoggedIn(true)
         navigate('/')
+    }
+
+    const handleUserLoggedOut = () => {
+        navigate('/login')
     }
 
     return <>

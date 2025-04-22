@@ -26,3 +26,10 @@ users.post('/auth', jsonBodyParser, withErrorHandling((req, res) => {
             res.json({ token })
         })
 }))
+
+users.get('/self/username', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getUserUsername(userId)
+        .then(username => res.json({ username }))
+}))
