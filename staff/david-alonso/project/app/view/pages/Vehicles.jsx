@@ -29,9 +29,8 @@ export const Vehicles = () => {
                     {vehicles.map(vehicle => (
                         <Link to={`/vehicle/${vehicle.id}`} key={vehicle.id}>
                             <div
-                                className=" bg-zinc-500 rounded-2xl p-4 mb-5 flex justify-between opacity-80 "
-                                // style={{ borderColor: vehicle.color }}
-                                style={{ backgroundColor: vehicle.color }}
+                                className=" bg-zinc-500 rounded-2xl p-4 mb-5 flex justify-between "
+                                style={{ backgroundColor: `${vehicle.color}80` }}
                             >
                                 <div className="flex flex-col">
                                     <h2 className="text-lg font-bold mb-5">{vehicle.marca} - {vehicle.modelo}</h2>

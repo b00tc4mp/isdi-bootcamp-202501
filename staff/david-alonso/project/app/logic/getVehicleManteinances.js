@@ -5,13 +5,13 @@ import { logic } from './index.js'
 
 const { SystemError } = errors
 
-// Funcion para Obtener los Vehiculos
-export const getVehicles = () => {
+// Funcion para Obtener los Mantenimientos de un Vehiculo
+export const getVehicleManteinances = () => {
 
     const { token } = data
     const userId = logic.getUserId()
 
-    return fetch(`${import.meta.env.VITE_API_URL}/vehicles/user/${userId}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/manteinances/${vehicleId}`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
@@ -24,14 +24,14 @@ export const getVehicles = () => {
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const vehicles = body
+                        const manteinances = body
 
-                        vehicles.forEach(vehicle => {
-                            vehicle.createdAt = new Date(vehicle.createdAt)
-                            if (vehicle.modifiedAt) vehicle.modifiedAt = new Date(vehicle.modifiedAt)
+                        manteinances.forEach(maintenance => {
+                            maintenance.createdAt = new Date(maintenance.createdAt)
+                            if (maintenance.modifiedAt) maintenance.modifiedAt = new Date(maintenance.modifiedAt)
                         })
 
-                        return vehicles
+                        return manteinances
                     })
 
             return response.json()

@@ -44,16 +44,16 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
         <h1 className="text-2xl m-5">LOGIN</h1>
 
         <div className="">
-            <form onSubmit={handleLoginSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
+            <form onSubmit={handleLoginSubmit} >
 
-                <input type="email" id="email" placeholder="Email" className="w-full border border-gray-400 rounded-lg p-2 " />
+                <input type="email" id="email" placeholder="Email" />
 
-                <input type="password" id="password" placeholder="Password" className="w-full border border-gray-400 rounded-lg p-2" />
+                <input type="password" id="password" placeholder="Password" />
 
-                <button type="submit" className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-800 ">SIGUIENTE</button>
+                <button type="submit" >SIGUIENTE</button>
 
                 <div className="flex justify-center">
-                    <Link to="/register" className="underline text-black">REGISTRO</Link>
+                    <Link to="/register" className='underline'>REGISTRO</Link>
                 </div>
 
             </form>

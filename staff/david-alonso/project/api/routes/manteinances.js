@@ -14,3 +14,11 @@ manteinances.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res)
     return logic.registerManteinance(vehicleId, new Date(fecha), descripcion, texto)
         .then(() => res.status(201).send())
 }))
+
+// DEVOLVER LOS MANTENIMIENTOS GUARDADOS DE UN VEHICULO
+manteinances.get('/:vehicleId', authHandler, withErrorHandling((req, res) => {
+    const { vehicleId } = req.params
+
+    return logic.getVehicleManteinances(vehicleId)
+        .then(manteinances => res.json(manteinances))
+}))

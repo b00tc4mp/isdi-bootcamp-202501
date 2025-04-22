@@ -1,7 +1,10 @@
-import { logic } from '../logic/index.js'
+import { logic } from '../../logic/index.js'
 import { Link, useParams } from 'react-router'
 import { useEffect, useState } from "react"
-import { useVehicle } from '../hooks/vehicle.hooks.js'
+import { useVehicle } from '../../hooks/vehicle.hooks.js'
+
+import { ChevronLeft } from "lucide-react"
+
 
 export function VehicleRegister({ onVehicleRegistered }) {
     const { id } = useParams()
@@ -81,10 +84,10 @@ export function VehicleRegister({ onVehicleRegistered }) {
     return <div className="min-h-screen flex flex-col p-5">
 
         <div className='flex justify-start w-full'>
-            <Link to={isEditing ? `/vehicle/${id}` : "/"}>⏪</Link>
+            <Link to={isEditing ? `/vehicle/${id}` : "/"}><ChevronLeft color="white" size={24} /></Link>
         </div>
 
-        <h1 className="text-2xl m-5 mt-10">{isEditing ? 'EDITAR VEHICULO' : 'NUEVO VEHICULO'}</h1>
+        <h1 className="text-2xl m-5 mt-5">{isEditing ? 'EDITAR VEHICULO' : 'NUEVO VEHICULO'}</h1>
 
         <div className="">
             <form onSubmit={handleVehicleRegisterSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
@@ -120,7 +123,7 @@ export function VehicleRegister({ onVehicleRegistered }) {
                     <input type="date" id="itv" onInput={(e) => setItv(e.target.value)} value={itv} className="w-full border border-gray-400 rounded-lg p-2 " />
                 </div>
 
-                <button type="submit" className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-800">{isEditing ? 'GUARDAR' : 'CREAR'}</button>
+                <button type="submit" >{isEditing ? 'GUARDAR' : 'CREAR'}</button>
 
             </form>
         </div>

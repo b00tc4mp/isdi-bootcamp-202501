@@ -15,7 +15,7 @@ export const updateVehicle = (id, marca, modelo, año, color, matricula, km, itv
     validate.number(km, 'km')
     validate.date(itv, 'itv')
 
-    return fetch(`http://localhost:8080/vehicles/${id}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/vehicles/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

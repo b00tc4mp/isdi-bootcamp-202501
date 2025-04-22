@@ -7,8 +7,9 @@ const { SystemError } = errors
 export const loginUser = (email, password) => {
     validate.email(email, 'email')
     validate.password(password, 'password')
+    console.log('api url:', `${import.meta.env.VITE_API_URL}/users/auth`);
 
-    return fetch(`http://localhost:8080/users/auth`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

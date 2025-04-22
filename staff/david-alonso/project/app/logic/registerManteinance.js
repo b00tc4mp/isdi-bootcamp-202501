@@ -13,7 +13,7 @@ export const registerManteinance = (vehicleId, fecha, descripcion, texto) => {
     validate.text(texto, 'texto')
 
 
-    return fetch(`http://localhost:8080/manteinances`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/manteinances`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

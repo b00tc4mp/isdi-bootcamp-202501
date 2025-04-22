@@ -1,15 +1,10 @@
-import { Routes, Route, useLocation, useNavigate } from "react-router"
+import { Routes, Route, useLocation } from "react-router"
 
 import { Vehicles } from "./Vehicles.jsx"
 
-import { useEffect, useState } from 'react'
-import { getVehicles } from '../../logic/getVehicles.js'
-
-import { logic } from "../../logic/index.js"
 import { Link } from "react-router"
 
 export function Home({ handleNavigateVehicleRegister }) {
-    // const { alert, confirm } = useContext()
     const { pathname } = useLocation()
 
 
@@ -38,7 +33,7 @@ export function Home({ handleNavigateVehicleRegister }) {
             <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl text-white">RIDECARE</h1>
         </header>
 
-        <main className="flex-grow w-full pt-25 ">
+        <main className="flex-grow w-full pt-35 ">
 
             <Routes>
                 <Route path="/" element={<Vehicles />} />
@@ -46,8 +41,8 @@ export function Home({ handleNavigateVehicleRegister }) {
 
         </main>
 
-        <footer className="flex justify-between w-full gap-15 pb-5">
-            <button type="button" onClick={handleAddVehicle} className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-800">Añadir Vehiculo</button>
+        <footer className="flex justify-between w-full gap-15 pb-10">
+            <button type="button" onClick={handleAddVehicle} >Añadir Vehiculo</button>
         </footer>
     </div>
 

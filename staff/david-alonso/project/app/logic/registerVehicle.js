@@ -15,7 +15,7 @@ export const registerVehicle = (marca, modelo, año, color, matricula, km, itv, 
     validate.number(km, 'km')
     validate.date(itv, 'itv')
 
-    return fetch(`http://localhost:8080/vehicles`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/vehicles`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

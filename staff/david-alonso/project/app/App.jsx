@@ -3,13 +3,13 @@ import { Routes, Route, useNavigate, Navigate } from "react-router"
 
 import { Register } from './view/Register'
 import { Login } from "./view/Login"
-import { VehicleRegister } from './view/VehicleRegister'
-import { Vehicles } from "./view/Home/Vehicles.jsx"
-import { Home } from "./view/Home/Index.jsx"
-import { Menu } from "./view/Home/Menu"
+import { VehicleRegister } from './view/pages/VehicleRegister.jsx'
+import { Vehicles } from "./view/pages/Vehicles.jsx"
+import { Home } from "./view/pages/Home.jsx"
+import { Menu } from "./view/pages/Menu.jsx"
 
-import { ProfileVehicle } from "./view/Home/ProfileVehicle.jsx"
-import { Maintenance } from "./view/Home/Maintenance.jsx"
+import { ProfileVehicle } from "./view/pages/ProfileVehicle.jsx"
+import { Maintenance } from "./view/pages/Maintenance.jsx"
 import { Context } from './context'
 import { logic } from "./logic/index.js"
 
@@ -108,7 +108,7 @@ function App() {
 
             <Route path="/vehicle/:id" element={<ProfileVehicle />} />
 
-            <Route path="/vehicle/:id/maintenance" element={<Maintenance ononMaintenanceRegistered={handleMaintenanceRegistered} />} />
+            <Route path="/vehicle/:id/maintenance" element={<Maintenance />} />
 
         </Routes>}
     </Context>

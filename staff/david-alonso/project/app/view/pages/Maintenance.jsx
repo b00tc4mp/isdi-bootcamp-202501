@@ -1,8 +1,9 @@
-import { Link, useParams } from "react-router"
+import { Link, useParams, useNavigate } from "react-router"
 import { logic } from "../../logic";
 
-export function Maintenance({ onAddedMaintenance }) {
+export function Maintenance() {
     const { id } = useParams();
+    const navigate = useNavigate()
 
     const handleMaintenanceSubmit = event => {
         event.preventDefault()
@@ -15,16 +16,13 @@ export function Maintenance({ onAddedMaintenance }) {
                 texto: { value: texto },
 
             } = form
-            console.log(texto);
-
 
             // const ??? = ????
 
             logic.registerManteinance(id, new Date(fecha), descripcion, texto)
                 .then(() => {
                     form.reset()
-
-                    onAddedMaintenance()
+                    navigate(`/vehicle/${id}`)  //*******Traerlo de la APP.jsx****** */
                 })
                 .catch(error => {
                     console.error(error)
@@ -47,13 +45,13 @@ export function Maintenance({ onAddedMaintenance }) {
         <div className="">
             <form onSubmit={handleMaintenanceSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
 
-                <input type="date" id="fecha" placeholder="Fecha" className="w-full border border-gray-400 rounded-lg p-2 " />
+                <input type="date" id="fecha" placeholder="Fecha" />
 
-                <input type="text" id="descripcion" placeholder="Descripcion" className="w-full border border-gray-400 rounded-lg p-2 " />
+                <input type="text" id="descripcion" placeholder="Descripcion" />
 
                 <textarea name="texto" id="texto" placeholder="Texto" className="w-full border border-gray-400 rounded-lg p-2"></textarea>
 
-                <button type="submit" className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-800">AÑADIR</button>
+                <button type="submit" >AÑADIR</button>
 
                 <div className="flex justify-center">
                     <Link to={`/vehicle/${id}`} className='underline text-black' >CANCEL</Link>

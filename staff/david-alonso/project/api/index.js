@@ -14,12 +14,14 @@ data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         const api = express()
 
-        api.use(cors({
-            origin: 'http://localhost:5173', // tu frontend (Vite por defecto)
-            credentials: true, // si en algún momento usas cookies
-            methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
-            allowedHeaders: ['Content-Type', 'Authorization']
-        }))
+        api.use(cors(
+            {
+                origin: 'http://192.168.38.138:5173', // CAMBIAR IP BAJO NECESIDAD
+                credentials: true,
+                methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+                allowedHeaders: ['Content-Type', 'Authorization']
+            }
+        ))
 
 
         api.get('/', (req, res) => res.send('Hello, API!'))

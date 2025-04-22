@@ -1,6 +1,8 @@
 import { logic } from '../../logic'
 import { Link } from 'react-router'
 
+import { X } from 'lucide-react'
+
 export function Menu({ onUserLoggedOut }) {
 
     const handleLogoutClick = () => {
@@ -23,7 +25,7 @@ export function Menu({ onUserLoggedOut }) {
 
         <header className="fixed top-0 left-0 w-full flex items-center p-6 mt-5 z-50">
             <div>
-                <Link to="/" className="text-white">X</Link>
+                <Link to="/" ><X color="white" size={24} /></Link>
             </div>
 
             <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl text-white">RIDECARE</h1>
@@ -38,7 +40,7 @@ export function Menu({ onUserLoggedOut }) {
         </div>
 
         <footer className="flex justify-between w-full gap-15 pb-5">
-            <button type="button" onClick={handleLogoutClick} className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-800">LOGOUT</button>
+            <button type="button" onClick={handleLogoutClick} >LOGOUT</button>
         </footer>
 
     </div>

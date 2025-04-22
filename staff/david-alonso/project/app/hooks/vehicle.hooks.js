@@ -7,7 +7,7 @@ export const useVehicle = (id) => {
         if (id) {
             const token = sessionStorage.getItem('token');
 
-            fetch(`http://localhost:8080/vehicles/${id}`, {
+            fetch(`${import.meta.env.VITE_API_URL}/vehicles/${id}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -17,8 +17,28 @@ export const useVehicle = (id) => {
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     return res.json();
                 })
-                .then(data => {
-                    setVehicle(data);
+                .then(vehicle => {
+
+                    fetch(`${import.meta.env.VITE_API_URL}/manteinances/${id}`, {
+                        method: 'GET',
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+                        .then(res => {
+                            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                            return res.json();
+                        })
+                        .then(manteinances => {
+                            const vehicleWithManteinances = {
+                                ...vehicle,
+                                manteinances
+                            }
+
+                            setVehicle(vehicleWithManteinances);
+                        })
+                        .catch(error => console.error('Error en fetch:', error));
+
                 })
                 .catch(error => console.error('Error en fetch:', error));
         }
