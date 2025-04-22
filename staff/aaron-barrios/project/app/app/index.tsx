@@ -1,23 +1,18 @@
-// import { Redirect } from "expo-router"
-// import { useState, useEffect } from "react"
+// import { useEffect } from "react"
+// import { useRouter } from "expo-router"
+// import { Platform } from "react-native"
 
-// import { getUserRole } from "@/services/session"
-
-// export default function IndexRedirect() {
-//     const [screen, setScreen] = useState<"/(auth)" | "/(anonym)" | "/(mod)" | "/(tabs)" | null>(null)
+// export default function Index() {
+//     const router = useRouter()
 
 //     useEffect(() => {
-//         getUserRole().then(data => {
-//             const role = data?.role
-
-//             if (!role) return setScreen("/(auth)")
-//             if (role === "anonym") return setScreen("/(anonym)")
-//             if (role === "mod") return setScreen("/(mod)")
-//             return setScreen("/(tabs)")
-//         })
+//         // Solo realizar la navegación si el layout ya está montado
+//         setTimeout(() => {
+//             if (Platform.OS !== "web") {
+//                 router.replace("/(auth)")
+//             }
+//         }, 0)
 //     }, [])
 
-//     if (!screen) return null
-
-//     return <Redirect href={screen} />
+//     return null // No renderiza nada mientras redirige
 // }

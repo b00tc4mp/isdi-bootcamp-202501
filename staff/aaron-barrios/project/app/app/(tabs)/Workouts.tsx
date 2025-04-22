@@ -5,18 +5,16 @@ import {
     FlatList,
     ActivityIndicator,
     RefreshControl,
-    Button,
     StyleSheet,
     Platform,
+    Pressable,
 } from "react-native"
 import { Picker } from "@react-native-picker/picker"
 import { Text, View } from "@/components/Themed"
 
 import { WorkoutType } from "com/types"
 import WorkoutCard from "@/components/WorkoutCard"
-
 import { filterWorkouts } from "@/services/workouts"
-
 
 export default function Workouts() {
     const router = useRouter()
@@ -42,12 +40,10 @@ export default function Workouts() {
             .finally(() => setRefreshing(false))
     }
 
-
     const handleWorkoutPress = (id: string) => {
         router.push(`/(stack)/WorkoutDetail/${id}` as any)
     }
 
-    //=> useeffect se ejecuta post navegacion por lo que me refresca la lista filtrada 
     useFocusEffect(
         useCallback(() => {
             loadWorkouts()
@@ -56,7 +52,7 @@ export default function Workouts() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Feed Screen</Text>
+            <Text style={styles.header}>Feed Screen</Text>
 
             <View style={styles.dropdownContainer}>
                 <Picker
@@ -79,33 +75,14 @@ export default function Workouts() {
             </View>
 
             <View style={styles.filters}>
-                <FilterChip
-                    label="Popular"
-                    active={filter === "popular"}
-                    onPress={() => {
-                        setFilter("popular")
-                    }}
-                />
-                <FilterChip
-                    label="Most saved"
-                    active={filter === "saved"}
-                    onPress={() => {
-                        setFilter("saved")
-                    }}
-                />
-                <FilterChip
-                    label="Recent"
-                    active={filter === "recent"}
-                    onPress={() => {
-                        setFilter("recent")
-                    }}
-                />
+                <FilterChip label="Popular" active={filter === "popular"} onPress={() => setFilter("popular")} />
+                <FilterChip label="Most saved" active={filter === "saved"} onPress={() => setFilter("saved")} />
+                <FilterChip label="Recent" active={filter === "recent"} onPress={() => setFilter("recent")} />
             </View>
 
-            <Button
-                title="Create Workout"
-                onPress={() => router.push("/(stack)/CreateWorkout" as any)}
-            />
+            <Pressable style={styles.createButton} onPress={() => router.push("/(stack)/CreateWorkout" as any)}>
+                <Text style={styles.createButtonText}>Create Workout</Text>
+            </Pressable>
 
             {loading ? (
                 <ActivityIndicator size="large" color="#888" style={{ marginTop: 20 }} />
@@ -114,9 +91,7 @@ export default function Workouts() {
                     data={workouts}
                     keyExtractor={item => item.id}
                     contentContainerStyle={styles.list}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-                    }
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
                     renderItem={({ item }) => (
                         <WorkoutCard
                             workout={item}
@@ -125,6 +100,7 @@ export default function Workouts() {
                             showStatus={false}
                         />
                     )}
+                    showsVerticalScrollIndicator={false} // => hide scroll
                 />
             )}
         </View>
@@ -133,52 +109,67 @@ export default function Workouts() {
 
 function FilterChip({ label, onPress, active }: { label: string; onPress: () => void; active?: boolean }) {
     return (
-        <Button
-            title={label}
-            onPress={onPress}
-            color={active ? "#facc15" : "#aaa"}
-        />
+        <Pressable onPress={onPress} style={[styles.chip, active && styles.chipActive]}>
+            <Text style={styles.chipText}>{label}</Text>
+        </Pressable>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingTop: 24,
+        backgroundColor: "#fefefe",
     },
-    title: {
-        fontSize: 24,
+    header: {
+        fontSize: 22,
         fontWeight: "bold",
-        marginBottom: 16,
+        marginBottom: 12,
     },
     dropdownContainer: {
-        backgroundColor: "#ddd",
+        backgroundColor: "#eee",
         borderRadius: 8,
         marginBottom: 12,
-        alignSelf: "stretch",
-        overflow: "hidden"
+        overflow: "hidden",
     },
     picker: {
-        height: Platform.OS === "ios" ? 200 : 40,
+        height: Platform.OS === "ios" ? 180 : 40,
         width: "100%",
     },
     filters: {
         flexDirection: "row",
         gap: 8,
-        marginBottom: 16,
+        marginBottom: 12,
         flexWrap: "wrap",
     },
     chip: {
-        backgroundColor: "#ccc",
-        paddingHorizontal: 12,
+        paddingHorizontal: 14,
         paddingVertical: 6,
-        borderRadius: 16,
+        borderRadius: 20,
+        backgroundColor: "#ccc",
+    },
+    chipActive: {
+        backgroundColor: "#facc15",
     },
     chipText: {
+        fontWeight: "600",
         fontSize: 14,
-        fontWeight: "500",
     },
     list: {
-        paddingBottom: 80,
+        paddingBottom: 120,
+    },
+    createButton: {
+        width: "100%",
+        backgroundColor: "#16a34a",
+        paddingVertical: 14,
+        borderRadius: 10,
+        marginBottom: 16,
+        alignItems: "center",
+    },
+    createButtonText: {
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 16,
     },
 })
