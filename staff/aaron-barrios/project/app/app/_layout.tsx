@@ -5,13 +5,12 @@ import { useFonts } from "expo-font"
 import { Stack, useRouter, Slot } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
 import { useEffect, useState } from "react"
+import { Platform } from "react-native"
 import "react-native-reanimated"
 
 import { getUserRole } from "@/services/session"
 
-export {
-  ErrorBoundary,
-} from "expo-router"
+export { ErrorBoundary } from "expo-router"
 
 export const unstable_settings = {
   initialRouteName: "(screens)",
@@ -24,6 +23,8 @@ type Role = "anonym" | "regular" | "mod"
 const isValidRole = (value: any): value is Role =>
   value === "anonym" || value === "regular" || value === "mod"
 
+// ...imports igual que antes...
+
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
@@ -31,7 +32,9 @@ export default function RootLayout() {
   })
 
   const [appReady, setAppReady] = useState(false)
+  const [initialRoute, setInitialRoute] = useState<string | null>(null)
   const [role, setRole] = useState<Role | null>(null)
+
   const router = useRouter()
   const colorScheme = useColorScheme()
 
@@ -45,21 +48,24 @@ export default function RootLayout() {
       const userRole = isValidRole(data?.role) ? data.role : "anonym"
       setRole(userRole)
 
-      const pathname = typeof window !== "undefined" ? window.location.pathname : ""
+      if (Platform.OS !== "web") {
+        if (userRole === "regular") setInitialRoute("/(tabs)")
+        else if (userRole === "mod") setInitialRoute("/(mod)")
+        else setInitialRoute("/(anonym)")
+      } else {
+        const pathname = typeof window !== "undefined" ? window.location.pathname : ""
 
-      if (userRole === "regular" && pathname.startsWith("/(anonym)")) {
-        router.replace("/(tabs)")
-        return
-      }
-
-      if (userRole === "mod" && pathname.startsWith("/(anonym)")) {
-        router.replace("/(mod)")
-        return
-      }
-
-      if (userRole === "anonym" && !pathname.startsWith("/(anonym)")) {
-        router.replace("/(anonym)")
-        return
+        if (Platform.OS === "web") {
+          requestAnimationFrame(() => {
+            if (userRole === "regular" && pathname.startsWith("/(anonym)")) {
+              router.replace("/(tabs)")
+            } else if (userRole === "mod" && pathname.startsWith("/(anonym)")) {
+              router.replace("/(mod)")
+            } else if (userRole === "anonym" && !pathname.startsWith("/(anonym)")) {
+              router.replace("/(anonym)")
+            }
+          })
+        }
       }
 
       setAppReady(true)
@@ -69,14 +75,14 @@ export default function RootLayout() {
   }, [])
 
   useEffect(() => {
-    if (loaded && appReady) {
+    if (loaded && appReady && initialRoute) {
       SplashScreen.hideAsync()
+      router.replace(initialRoute as any)
     }
-  }, [loaded, appReady])
+  }, [loaded, appReady, initialRoute])
 
-  // Este hook NO se puede condicionar. Simplemente renderiza un Slot vacío mientras se carga. (mobile & web compatible)
   if (!loaded || !appReady) {
-    return <Slot />
+    return null
   }
 
   return (
