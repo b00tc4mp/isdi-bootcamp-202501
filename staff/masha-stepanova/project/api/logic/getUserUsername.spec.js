@@ -7,7 +7,7 @@ import { NotFoundError } from 'com/errors.js'
 const { MONGO_URL, MONGO_DB } = process.env
 
 describe('getUserUsername', () => {
-  let userId
+  let userId, username
 
   before(() => data.connect(MONGO_URL, MONGO_DB))
 
@@ -26,20 +26,27 @@ describe('getUserUsername', () => {
         userId = user._id.toString()
         return getUserUsername(userId)
       })
-      .then((user) => {
-        console.log(user)
-        expect(user).to.exist
-        expect(user).to.equal('testtest')
+      .then((userName) => {
+        username = userName
+      })
+      .finally(() => {
+        expect(username).to.exist
+        expect(username).to.equal('testtest')
       })
   })
 
   it('fails at user not found', () => {
     const nonExistentUserId = '605c72ef1532073d4a8b4e0e'
+    let catchedError
 
-    return getUserUsername(nonExistentUserId).catch((error) => {
-      expect(error).to.be.instanceOf(NotFoundError)
-      expect(error.message).to.equal('user not found')
-    })
+    return getUserUsername(nonExistentUserId)
+      .catch((error) => {
+        catchedError = error
+      })
+      .finally(() => {
+        expect(catchedError).to.be.instanceOf(NotFoundError)
+        expect(catchedError.message).to.equal('user not found')
+      })
   })
 
   afterEach(() => User.deleteMany({}))

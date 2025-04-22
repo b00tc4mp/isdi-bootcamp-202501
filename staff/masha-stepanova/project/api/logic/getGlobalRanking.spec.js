@@ -53,15 +53,15 @@ describe('getGlobalRanking', () => {
 
         expect(ranking[0].username).to.equal('usertwo')
         expect(ranking[0]).to.have.property('position', 1)
-        expect(ranking[0]).to.not.have.property('score')
+        expect(ranking[0].score).to.equal(300)
 
         expect(ranking[1].username).to.equal('userthree')
         expect(ranking[1]).to.have.property('position', 2)
-        expect(ranking[1]).to.not.have.property('score')
+        expect(ranking[1].score).to.equal(200)
 
         expect(ranking[2].username).to.equal('userone')
         expect(ranking[2]).to.have.property('position', 3)
-        expect(ranking[2]).to.not.have.property('score')
+        expect(ranking[2].score).to.equal(150)
       })
   })
 

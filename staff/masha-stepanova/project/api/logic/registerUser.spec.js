@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { data, User } from '../data/index.js'
 import { registerUser } from './registerUser.js'
 import { expect } from 'chai'
-import { DuplicityError } from 'com/errors.js'
+import { DuplicityError, PasswordValidationError } from 'com/errors.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
@@ -39,6 +39,17 @@ describe('registerUser', () => {
         expect(catchedError).to.be.instanceOf(DuplicityError)
         expect(catchedError.message).to.equal('user already exists')
       })
+  })
+
+  it('fails on password does not match the repeated password', () => {
+    let catchedError
+    try {
+      return registerUser('testing', 'testing@testing.com', 'testing', 'Patata2!', 'Patata7!')
+    } catch (error) {
+      catchedError = error
+      expect(catchedError).to.be.instanceOf(PasswordValidationError)
+      expect(catchedError.message).to.equal('Password does not match the repeated password')
+    }
   })
 
   afterEach(() => User.deleteMany({}))

@@ -63,11 +63,6 @@ const user = new Schema({
 })
 
 const level = new Schema({
-  ordinal: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   type: {
     type: String,
     required: true,

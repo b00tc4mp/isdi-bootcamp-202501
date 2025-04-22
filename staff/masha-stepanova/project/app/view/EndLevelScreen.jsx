@@ -27,7 +27,7 @@ export const EndLevelScreen = ({ level, isPassed, onReplay, onContinue, onCancel
           </button>
         </div>
 
-        <h1 className='text-3xl font-bold'>{isLevelPassed ? '¡Felicidades!' : '¡Ups, no lo lograste!'}</h1>
+        <h1 className='text-3xl font-bold'>{isLevelPassed ? 'Congratulations!' : 'Oh no, this time you lose!'}</h1>
 
         <p className='text-5xl'>{isLevelPassed ? '🥳' : '😭'}</p>
 

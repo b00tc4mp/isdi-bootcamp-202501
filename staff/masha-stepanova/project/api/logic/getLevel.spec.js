@@ -26,6 +26,7 @@ describe('getLevel', () => {
         user = _user
 
         return Level.create({
+          ordinal: 1,
           type: 'quiz',
           name: 'Intro JS',
           description: 'A level to test basic JS',
@@ -62,6 +63,7 @@ describe('getLevel', () => {
     let level
 
     return Level.create({
+      ordinal: 1,
       type: 'quiz',
       name: 'Non-user Level',
       description: 'Level for nonexistent user',

@@ -37,6 +37,7 @@ describe('getLevels', () => {
 
         return Promise.all([
           Level.create({
+            ordinal: 1,
             type: 'quiz',
             name: 'Intro Level',
             description: 'This is the first level',
@@ -45,6 +46,7 @@ describe('getLevels', () => {
             expectedResult: 'A',
           }),
           Level.create({
+            ordinal: 2,
             type: 'fillBlank',
             name: 'Basic Concepts',
             description: 'Second level description',
@@ -59,6 +61,7 @@ describe('getLevels', () => {
         level2 = _level2
 
         user.currentLevel = level1._id
+        user.generalProgress = [level1._id]
         return user.save()
       })
       .then(() => {

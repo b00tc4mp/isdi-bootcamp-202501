@@ -30,8 +30,8 @@ export function Levels({ onLevelSelected }) {
   const scrollRef = useScrollToElement(currentLevelId)
 
   return (
-    <section className='bg-white bg-opacity-80 rounded-xl p-4 shadow-md'>
-      <h2 className='text-lg font-bold mb-2'>🗺️ Levels map</h2>
+    <section className=' bg-white/75 bg-opacity-80 rounded-xl p-4 shadow-md'>
+      <h2 className='text-lg font-bold mb-4'>🗺️ Levels map</h2>
       <div className='grid gap-4 max-h-[300px] overflow-y-auto py-2'>
         {levels.map((level) => (
           <div key={level.id} ref={level.id === currentLevelId ? scrollRef : null} onClick={() => onLevelSelected(level)} className='cursor-pointer'>

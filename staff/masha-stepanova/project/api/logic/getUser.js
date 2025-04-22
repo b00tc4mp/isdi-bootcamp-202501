@@ -15,6 +15,9 @@ export const getUser = (userId) => {
     .then((user) => {
       if (!user) throw new NotFoundError('user not found')
 
+      user.id = user._id.toString()
+      delete user._id
+
       return user
     })
 }

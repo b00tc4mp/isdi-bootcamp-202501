@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useContext } from '../context'
-import { EndLevelScreen } from './EndLevelScreen'
+import { EndLevelScreen } from '../view/EndLevelScreen'
 
 import { logic } from '../logic'
 
@@ -99,7 +99,7 @@ export function Level({ level, currentState, onCancelled }) {
       logic.getCurrentLevel().then((currentLevel) => {
         setCurrentLevel(currentLevel)
         setShowEndLevel(false)
-        setView('opened')
+        setView('inGame')
         setType(currentLevel.type)
       })
     } catch (error) {
@@ -112,64 +112,54 @@ export function Level({ level, currentState, onCancelled }) {
   const handleCloseClick = () => onCancelled()
 
   return (
-    <div className='flex justify-center '>
+    <div className='bg-white bg-opacity-90  rounded-xl p-4 shadow-md transition-all'>
       {showEndLevel ? (
         <EndLevelScreen level={currentLevel} isPassed={levelIsPassed} onReplay={handleReplayLevel} onContinue={handleContinueGame} onCancelled={handleCloseClick} />
       ) : view === 'closed' ? (
         <button
           onClick={handleLevelClick}
-          className={`w-11/12 flex justify-center gap-2 font-semibold transition 
-    py-3 px-4 rounded-lg shadow-md mt
+          className={`w-full flex items-center justify-start gap-2 font-semibold transition 
+    py-3 px-4 rounded-lg shadow 
     ${currentLevel.isBlocked ? 'bg-gray-300 text-purple-900 border border-purple-200' : userCurrentLevel ? (userCurrentLevel.id === currentLevel.id ? 'bg-green-400 text-white hover:bg-green-500' : 'bg-green-100') : ''}`}
         >
           <span>{currentLevel.isBlocked ? '🔒' : userCurrentLevel ? (currentLevel.id === userCurrentLevel.id ? '' : '✔') : ''}</span>
           <span>{currentLevel.name}</span>
         </button>
       ) : view === 'opened' ? (
-        <section className='flex flex-col items-center bg-white/75 rounded-xl p-4 shadow-md transition-all'>
-          <div className='w-full  p-4 sm:p-10 min-h-[100px] text-center '>
-            <h2 className='text-2xl font-extrabold text-purple-800 mb-4 drop-shadow-sm'>{currentLevel.name}</h2>
-            <p className='text-purple-700 text-md whitespace-pre-line px-4'>{currentLevel.description}</p>
-          </div>
+        <section>
+          <h2 className='text-xl font-bold text-purple-800'>{currentLevel.name}</h2>
+          <p className='text-sm text-purple-600 mb-2'>{currentLevel.description}</p>
 
-          <div className='mt-6 flex gap-15'>
-            {currentLevel.isBlocked ? (
-              <button className='bg-gray-500 text-gray-100 font-medium py-2 px-6 rounded-lg cursor-not-allowed shadow' disabled>
-                Play 🔒
-              </button>
-            ) : (
-              <button className='bg-green-500 hover:bg-green-500 text-white font-bold py-2 px-6 rounded-full shadow transition' onClick={handlePlayClick}>
-                Play
-              </button>
-            )}
-
-            <button onClick={handleCancelClick} className='text-md text-gray-600 hover:text-purple-700 underline mt-2'>
-              Cancel
+          {currentLevel.isBlocked ? (
+            <button className='bg-gray-300 text-gray-600 font-medium py-1 px-4 rounded-lg cursor-not-allowed'>Play 🔒</button>
+          ) : (
+            <button className='bg-green-400 hover:bg-purple-400 text-white font-bold py-1 px-4 rounded-lg' onClick={handlePlayClick}>
+              Play
             </button>
-          </div>
+          )}
+
+          <button onClick={handleCancelClick} className='ml-4 text-sm text-purple-400 hover:text-purple-600 underline'>
+            Cancel
+          </button>
         </section>
       ) : view === 'inGame' ? (
-        <section className='mt-2 space-y-4  bg-white bg-opacity-90  rounded-xl p-4 shadow-md transition-all mb-2'>
-          <h3 className='text-xl font-bold text-purple-800'>{currentLevel.name}</h3>
-
-          <p className='text-purple-600 text-md'>{currentLevel.description}</p>
-
-          <div className='bg-purple-50 border border-purple-400 rounded-lg p-4 shadow-inner'>
-            <p className='text-purple-900 font-medium whitespace-pre-line'>{currentLevel.body}</p>
-          </div>
+        <section className='mt-2 space-y-2'>
+          <h3 className='text-lg font-bold text-purple-800'>{currentLevel.name}</h3>
+          <p className='text-purple-600'>{currentLevel.description}</p>
+          <p className='text-purple-700 italic whitespace-pre-line'>{currentLevel.body}</p>
 
           {type === 'quiz' && (
             <form onSubmit={handleQuizResponseClick} className='space-y-2 mt-2'>
               {currentLevel.resultOptions.map((option, i) => (
                 <div key={i} className='flex items-center gap-2'>
-                  <input type='radio' id={option} name='userAnswer' value={option} className='accent-purple-500' />
+                  <input type='radio' id={option} name='userAnswer' value={option} className='accent-mauve' />
                   <label htmlFor={option} className='text-purple-700'>
                     {option}
                   </label>
                 </div>
               ))}
 
-              <button type='submit' className='mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-full'>
+              <button type='submit' className='bg-purple-500 hover:bg-purple-600 text-white py-1 px-4 rounded-full'>
                 Submit
               </button>
             </form>
@@ -177,15 +167,15 @@ export function Level({ level, currentState, onCancelled }) {
 
           {type === 'fillInBlank' && (
             <form onSubmit={handleFillInBlankResponseClick} className='space-y-2 mt-2'>
-              <div>
-                <label htmlFor='userAnswer' className='text-purple-700 block mb-1'>
-                  Write your answer
-                </label>
-                <input type='text' id='userAnswer' className='w-full p-2 rounded-md bg-purple-50 border border-purple-400 focus:outline-none focus:ring-2 focus:ring-mauve' />
-              </div>
+              {
+                <div>
+                  <label htmlFor='userAnswer'>Write here your answer</label>
+                  <input type='text' id='userAnswer' className='w-full mt-1 p-1 rounded-md border border-purple-200 focus:outline-none focus:ring-2 focus:ring-mauve' />
+                </div>
+              }
 
-              <button type='submit' className='bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-full'>
-                Submit
+              <button type='submit' className='bg-purple-500 hover:bg-purple-600 text-white py-1 px-4 rounded-full'>
+                Sumbit
               </button>
             </form>
           )}

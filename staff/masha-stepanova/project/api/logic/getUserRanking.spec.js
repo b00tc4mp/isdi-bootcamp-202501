@@ -49,7 +49,7 @@ describe('getUserRanking', () => {
       .finally(() => {
         expect(result).to.be.an('object')
         expect(result.username).to.equal('userthree')
-        expect(result.position).to.equal(3) // porque tiene el menor score
+        expect(result.position).to.equal(3)
       })
   })
 

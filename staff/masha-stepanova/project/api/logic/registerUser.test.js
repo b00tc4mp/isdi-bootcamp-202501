@@ -6,15 +6,15 @@ const { MONGO_URL, MONGO_DB_TEST } = process.env
 
 console.info('TEST registerUser')
 
-data.connect(MONGO_URL, MONGO_DB_TEST)
-    .then(() => {
-        try {
-            return registerUser('Jasmine Princess', 'jasmine@princess.com', 'jasmine', 'Jasmine1!', 'Jasmine1!')
-                .then(result => console.assert(result === undefined, 'result is undefined'))
-        } catch (error) {
-            console.error(error)
-        }
-    })
-    .catch(error => console.error(error))
-    .finally(() => data.disconnect())
-
+data
+  .connect(MONGO_URL, MONGO_DB_TEST)
+  .then(() => {
+    try {
+      debugger
+      return registerUser('Jasmine Princess', 'jasmine@princess.com', 'jasmine', 'Jasmine1!', 'Jasmine7!').then((result) => console.assert(result === undefined, 'result is undefined'))
+    } catch (error) {
+      console.error(error)
+    }
+  })
+  .catch((error) => console.error(error))
+  .finally(() => data.disconnect())

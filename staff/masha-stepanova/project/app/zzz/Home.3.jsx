@@ -4,10 +4,10 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router'
 
 import { useContext } from '../context'
 
-import { Ranking } from './Ranking'
-import { Levels } from './Levels'
-import { Profile } from './Profile'
-import { Level } from './Level'
+import { Ranking } from '../view/Ranking'
+import { Levels } from '../view/Levels'
+import { Profile } from '../view/Profile'
+import { Level } from '../view/Level'
 
 export function Home({ onNavigateToProfile, onUserLoggedOut }) {
   const { alert } = useContext()
@@ -56,8 +56,8 @@ export function Home({ onNavigateToProfile, onUserLoggedOut }) {
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-b from-purple-100 to-[#c6d3ff] text-purple-800 font-sans pb-3'>
-      <header className='flex justify-between items-center pt-0 pb-0.5 pl-4 pr-4 bg-gradient-to-b from-[#c6d3ff] to-purple-200 shadow-lg'>
+    <div className='min-h-screen bg-gradient-to-b from-purple-100 to-[#c6d3ff] text-purple-800 font-sans'>
+      <header className='flex justify-between items-center p-0.5 pl-4 pr-4 bg-purple-300 shadow-md'>
         <img src='../public/Logo.png' alt='Code Quest logo' className='h-17 w-auto' onClick={handleLogoClick} />
 
         {user && <img src={user.image} alt='Perfil' className='h-16 w-auto' onClick={handleUsernameClick} />}
@@ -73,7 +73,7 @@ export function Home({ onNavigateToProfile, onUserLoggedOut }) {
                   <button onClick={handleBackToLevels} className='mb-4 text-sm text-purple-700 underline'>
                     ← Return to home
                   </button>
-                  <Level level={activeLevel} currentState={activeLevel.isBlocked ? 'opened' : 'opened'} onCancelled={handleBackToLevels} />
+                  <Level level={activeLevel} currentState={activeLevel.isBlocked ? 'opened' : 'inGame'} onCancelled={handleBackToLevels} />
                 </div>
               ) : (
                 <>
@@ -83,8 +83,8 @@ export function Home({ onNavigateToProfile, onUserLoggedOut }) {
 
                   <button
                     onClick={handlePlayClick}
-                    className='w-full flex items-center justify-center   
-    py-3 px-4 rounded-lg shadow-md  bg-green-400 hover:bg-purple-400 text-white font-bold mt-3 mb-3'
+                    className='w-full flex items-center justify-start gap-2 transition 
+    py-3 px-4 rounded-lg shadow  bg-green-400 hover:bg-purple-400 text-white font-bold mt-3 mb-3'
                   >
                     Play
                   </button>

@@ -4,10 +4,9 @@ import { errors, validate } from 'com'
 const { SystemError, NotFoundError } = errors
 
 export const getLevels = (userId) => {
-  debugger
   validate.id(userId, 'userId')
 
-  return Promise.all([User.findById(userId).lean(), Level.find().select('-__v').lean()])
+  return Promise.all([User.findById(userId).lean(), Level.find().select('-__v').sort('ordinal').lean()])
     .catch((error) => {
       throw new SystemError(error.message)
     })

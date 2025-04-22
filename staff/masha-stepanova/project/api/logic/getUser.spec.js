@@ -15,7 +15,7 @@ describe('getUser', () => {
   })
 
   it('succeeds at getting own user', () => {
-    let userId
+    let userId, userReturned
 
     return User.create({
       name: 'Test Testing',
@@ -27,22 +27,28 @@ describe('getUser', () => {
         userId = user._id.toString()
         return getUser(userId)
       })
-      .then((user) => {
-        expect(user).to.exist
-        expect(user._id.toString()).to.equal(userId)
-        expect(user.name).to.equal('Test Testing')
-        expect(user.email).to.equal('test@testing.com')
-        expect(user.username).to.equal('testtesting')
+      .then((user) => (userReturned = user))
+      .finally(() => {
+        expect(userReturned).to.exist
+        expect(userReturned.id).to.equal(userId)
+        expect(userReturned.name).to.equal('Test Testing')
+        expect(userReturned.email).to.equal('test@testing.com')
+        expect(userReturned.username).to.equal('testtesting')
       })
   })
 
   it('fails at user not found', () => {
     const nonExistentUserId = '605c72ef1532073d4a8b4e0e'
+    let catchedError
 
-    return getUser(nonExistentUserId).catch((error) => {
-      expect(error).to.be.instanceOf(NotFoundError)
-      expect(error.message).to.equal('user not found')
-    })
+    return getUser(nonExistentUserId)
+      .catch((error) => {
+        catchedError = error
+      })
+      .finally(() => {
+        expect(catchedError).to.be.instanceOf(NotFoundError)
+        expect(catchedError.message).to.equal('user not found')
+      })
   })
 
   afterEach(() => User.deleteMany({}))

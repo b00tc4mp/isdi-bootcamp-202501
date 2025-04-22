@@ -1,6 +1,6 @@
 export const Confirm = ({ title, message, onAccepted, onCancelled }) => {
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black'>
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/75'>
       <div className='bg-white border border-purple-300 shadow-xl rounded-xl p-6 max-w-sm w-full text-center space-y-4'>
         <h2 className='text-xl font-bold text-purple-800'>{title}</h2>
         <p className='text-purple-700'>{message}</p>

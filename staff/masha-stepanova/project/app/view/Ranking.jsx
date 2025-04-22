@@ -43,13 +43,13 @@ export function Ranking({ currentState, username }) {
 
   return (
     <>
-      <section className='bg-white bg-opacity-80 rounded-xl p-4 shadow-md mb-4 grid gap-4 '>
+      <section className='bg-white/80 rounded-xl p-4 shadow-md mb-4 grid gap-4 '>
         <h2 onClick={handleRankingClick} className='text-lg font-bold mb-2'>
           🏆 Ranking
         </h2>
         {state === 'closed' && (
           <section onClick={handleRankingClick} className='max-h-[150px] overflow-y-auto'>
-            <div>
+            <div className='bg-purple-100 p-2 rounded-lg shadow-md'>
               <h2 className={userRanking.username === username ? 'font-bold' : ''}>
                 #{userRanking.position}: {userRanking.username}, {userRanking.score} pt
               </h2>
@@ -61,7 +61,7 @@ export function Ranking({ currentState, username }) {
           <section className='max-h-[150px] overflow-y-auto'>
             <div>
               {globalRanking.map((user) => (
-                <p key={user.username} ref={user.username === userRanking.username ? userRef : null} className={user.username === username ? 'font-bold' : ''}>
+                <p key={user.username} ref={user.username === userRanking.username ? userRef : null} className={user.username === username ? 'font-bold bg-purple-100 p-2 rounded-lg mb-2 shadow-md' : 'bg-purple-100 p-2 rounded-lg mb-2 shadow-md'}>
                   #{user.position}: {user.username}, {user.score} pt
                 </p>
               ))}

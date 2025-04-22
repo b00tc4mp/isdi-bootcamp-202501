@@ -17,6 +17,7 @@ describe('getCurrentLevel', () => {
     let levelRef
 
     return Level.create({
+      ordinal: 1,
       type: 'quiz',
       name: 'JS Basics',
       description: 'This is a simple JS quiz',
@@ -63,6 +64,7 @@ describe('getCurrentLevel', () => {
     let levelReturned
 
     return Level.create({
+      ordinal: 1,
       type: 'fillBlank',
       name: 'Intro',
       description: 'Starting point',

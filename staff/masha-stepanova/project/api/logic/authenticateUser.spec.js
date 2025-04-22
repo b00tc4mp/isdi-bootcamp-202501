@@ -12,7 +12,7 @@ describe('authenticateUser', () => {
   beforeEach(() => User.deleteMany({}))
 
   it('succeeds on existing user', () => {
-    let returnedUserId
+    let returnedUserId, userInDB
 
     return User.create({
       name: 'Test User',
@@ -22,9 +22,12 @@ describe('authenticateUser', () => {
     })
       .then(() => authenticateUser('testuser', 'Patata2!'))
       .then((userId) => (returnedUserId = userId))
-      .finally(() => expect(returnedUserId).to.be.a.string)
       .then(() => User.findOne({ username: 'testuser' }).lean())
-      .then((user) => expect(user._id.toString()).to.equal(returnedUserId))
+      .then((user) => (userInDB = user))
+      .finally(() => {
+        expect(returnedUserId).to.be.a.string
+        expect(userInDB._id.toString()).to.equal(returnedUserId)
+      })
   })
 
   it('fails on non-existing user', () => {

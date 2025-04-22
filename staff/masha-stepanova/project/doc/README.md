@@ -1,4 +1,5 @@
-# **Code Quest** 🧠⚔️  
+# **Code Quest** 🧠⚔️
+
 Learn JavaScript by playing - complete levels, climb the rankings and become a coding hero!
 
 ## 🧭 Intro
@@ -14,14 +15,14 @@ Users can register, progress through interactive levels, see their progress, com
 ### Use Cases
 
 User:
+
 - view personal profile
-- view personal progress
 - play level
 - continue level
 - view global ranking
 
-
 **Additional (for future development):**
+
 - daily mission
 - weekly challenge
 
@@ -33,9 +34,9 @@ User:
 
 ### Blocks
 
-- **App** 
-- **API** 
-- **DB** 
+- **App**
+- **API**
+- **DB**
 
 ### 📦 Packages
 
@@ -47,28 +48,38 @@ User:
 ### 📊 Data Model
 
 #### `User`
+
 ```js
 {
-  id: string (string, uuid),
+  id: (string, uuid),
   name: (string, min length 3, max length 30),
   email: (string, max length 30),
   username: (string, min length 3, max length 20),
-  password: (string, min length 8, max length 30),
-  createdAt: (Date)
+  password: (string, min length 8, max length 100),
+  createdAt: (Date),
+  modifiedAt: (Date),
+  image: (string)
   generalProgress: ([Level.id]),
+  score: (number)
   currentLevel: (Level.id)
 }
 ```
 
 #### `Level`
+
 ```js
 {
   id: (string, uuid),
-  type: (string), // example: "quiz", "dragAndDrop", "fillInBlank"
-  description: (string, max length 300),
+  ordinal: (number)
+  type: (string), // example: "quiz", "fillInBlank"
+  name: (string)
+  description: (string, minLength 10, maxLength 300),
   body: (string), // content of the test or challenge
-  expectedResult: (string), // o structure for validation
-  difficulty: (number)
+  resultOptions: (array, ),
+  expectedResult: (string, minLength 3, maxLength 7), // o structure for validation
+  difficulty: (number),
+   createdAt: (Date),
+  modifiedAt: (Date)
 }
 ```
 
@@ -82,7 +93,7 @@ User:
 
 ### ✅ Code Coverage
 
-...
+[Code coverage](http://127.0.0.1:5500/staff/masha-stepanova/project/api/coverage/index.html)
 
 ## Planning
 

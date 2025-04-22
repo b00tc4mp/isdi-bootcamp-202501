@@ -12,12 +12,13 @@ describe('isLevelPassed', () => {
   beforeEach(() => Promise.all([User.deleteMany({}), Level.deleteMany({})]))
 
   it('succeeds and updates user progress if answer is correct', () => {
-    let user
+    let user, userUpdated
     let level1, level2
     let passed
 
     return Promise.all([
       Level.create({
+        ordinal: 1,
         type: 'quiz',
         name: 'Level 1',
         description: 'Level 1 description',
@@ -27,6 +28,7 @@ describe('isLevelPassed', () => {
         difficulty: 100,
       }),
       Level.create({
+        ordinal: 2,
         type: 'quiz',
         name: 'Level 2',
         description: 'Next level',
@@ -57,18 +59,22 @@ describe('isLevelPassed', () => {
       .then((_passed) => (passed = _passed))
       .then(() => User.findById(user._id).lean())
       .then((updatedUser) => {
+        userUpdated = updatedUser
+      })
+      .finally(() => {
         expect(passed).to.be.true
-        expect(updatedUser.score).to.equal(100)
-        expect(updatedUser.generalProgress.map((l) => l.toString())).to.include(level1._id.toString())
-        expect(updatedUser.currentLevel.toString()).to.equal(level2._id.toString())
+        expect(userUpdated.score).to.equal(100)
+        expect(userUpdated.generalProgress.map((l) => l.toString())).to.include(level1._id.toString())
+        expect(userUpdated.currentLevel.toString()).to.equal(level2._id.toString())
       })
   })
 
   it('returns false and does not update progress if answer is incorrect', () => {
-    let user
+    let user, userUpdated
     let level
 
     return Level.create({
+      ordinal: 1,
       type: 'quiz',
       name: 'Wrong Answer Level',
       description: 'Try to fail',
@@ -99,34 +105,38 @@ describe('isLevelPassed', () => {
         return User.findById(user._id).lean()
       })
       .then((updatedUser) => {
-        expect(updatedUser.score).to.equal(0)
-        expect(updatedUser.generalProgress).to.be.empty
-        expect(updatedUser.currentLevel.toString()).to.equal(level._id.toString())
+        userUpdated = updatedUser
+      })
+      .finally(() => {
+        expect(userUpdated.score).to.equal(0)
+        expect(userUpdated.generalProgress).to.be.empty
+        expect(userUpdated.currentLevel.toString()).to.equal(level._id.toString())
       })
   })
 
-  //   it('fails if user does not exist', () => {
-  //     let level
-  //     let errorCaught
+  it('fails if user does not exist', () => {
+    let level
+    let errorCaught
 
-  //     return Level.create({
-  //       type: 'quiz',
-  //       name: 'Ghost Level',
-  //       description: 'Haunted...',
-  //       body: 'Who?',
-  //       resultOptions: ['A', 'B', 'C'],
-  //       expectedResult: 'B',
-  //     })
-  //       .then((_level) => {
-  //         level = _level
-  //         return isLevelPassed('705c72ef1532073d4a8b4e0a', level._id.toString(), 'B')
-  //       })
-  //       .catch((error) => (errorCaught = error))
-  //       .finally(() => {
-  //         expect(errorCaught).to.be.instanceOf(NotFoundError)
-  //         expect(errorCaught.message).to.equal('user not found')
-  //       })
-  //   })
+    return Level.create({
+      ordinal: 1,
+      type: 'quiz',
+      name: 'Ghost Level',
+      description: 'Haunted...',
+      body: 'To whom?',
+      resultOptions: ['A', 'B', 'C'],
+      expectedResult: 'B',
+    })
+      .then((_level) => {
+        level = _level
+        return isLevelPassed('705c72ef1532073d4a8b4e0a', level._id.toString(), 'B')
+      })
+      .catch((error) => (errorCaught = error))
+      .finally(() => {
+        expect(errorCaught).to.be.instanceOf(NotFoundError)
+        expect(errorCaught.message).to.equal('user not found')
+      })
+  })
 
   it('fails if level does not exist', () => {
     let errorCaught
