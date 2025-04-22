@@ -20,7 +20,7 @@ export const getCurrentUserId = () => {
                     .then(body => {
                         const { user } = body
 
-                        return user._id
+                        return user.id
                     })
 
             return response.json()

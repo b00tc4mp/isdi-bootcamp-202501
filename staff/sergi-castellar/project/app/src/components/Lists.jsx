@@ -38,7 +38,7 @@ export function Lists() {
     setEditMode(true)
     setTitle(list.title)
     setColor(list.color)
-    setEditingListId(list._id)
+    setEditingListId(list.id)
     setShowModal(true)
   }
 
@@ -99,7 +99,7 @@ export function Lists() {
 
         <ul className='space-y-2'>
           {lists.map((list) => (
-            <li key={list._id} className='flex justify-between items-center bg-white p-4 rounded-xl shadow cursor-pointer' onClick={() => setSelectedList(list)}>
+            <li key={list.id} className='flex justify-between items-center bg-white p-4 rounded-xl shadow cursor-pointer' onClick={() => setSelectedList(list)}>
               <div className='flex items-center space-x-3'>
                 <div className='w-3 h-12 rounded-full' style={{ backgroundColor: list.color }}></div>
                 <span className='font-semibold'>{list.title}</span>
@@ -117,7 +117,7 @@ export function Lists() {
                 <button
                   onClick={(event) => {
                     event.stopPropagation()
-                    handleDelete(list._id)
+                    handleDelete(list.id)
                   }}
                   className='text-sm text-red-500'>
                   🗑️

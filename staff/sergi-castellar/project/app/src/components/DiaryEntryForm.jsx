@@ -9,9 +9,15 @@ export function DiaryEntryForm({ entry = null, onClose }) {
   const handleSubmit = () => {
     if (!text.trim()) return alert('Text is required.')
 
-    const action = isEditing ? logic.updateDiaryEntry(entry._id, text) : logic.createDiaryEntry(text)
+    const action = isEditing ? logic.updateDiaryEntry(entry.id, text) : logic.createDiaryEntry(text)
 
-    action.then(() => onClose()).catch((error) => alert(error.message))
+    action
+      .then(() => onClose())
+      .catch((error) => {
+        console.error(error)
+
+        alert(error.message)
+      })
   }
 
   return (

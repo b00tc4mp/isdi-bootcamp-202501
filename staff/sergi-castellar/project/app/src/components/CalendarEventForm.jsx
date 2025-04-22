@@ -13,7 +13,7 @@ export function CalendarEventForm({ event, date, onClose }) {
       return
     }
 
-    const action = isEditing ? logic.updateCalendarEvent(event._id, title, description) : logic.createCalendarEvent(date.toISOString(), title, description)
+    const action = isEditing ? logic.updateCalendarEvent(event.id, title, description) : logic.createCalendarEvent(date.toISOString(), title, description)
 
     action
       .then(() => onClose())

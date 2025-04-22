@@ -16,7 +16,8 @@ export const createDiaryEntry = (text) => {
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            if (response.status === 201) return response.json()
+            if (response.status === 201) return
+
             return response.json().then(body => {
                 const { error, message } = body
                 throw new errors[error](message)

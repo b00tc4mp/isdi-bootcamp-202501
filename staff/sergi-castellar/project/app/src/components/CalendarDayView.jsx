@@ -62,7 +62,7 @@ export function CalendarDayView({ date, onClose, onRefresh }) {
           {events.length === 0 && <p className='text-center text-sm text-gray-400'>No events for this day</p>}
 
           {events.map((event) => (
-            <div key={event._id} className='bg-pink-100 p-3 rounded-xl shadow flex justify-between items-start'>
+            <div key={event.id} className='bg-pink-100 p-3 rounded-xl shadow flex justify-between items-start'>
               <div>
                 <h3 className='font-semibold'>{event.title}</h3>
                 <p className='text-sm text-gray-700'>{event.description}</p>
@@ -76,7 +76,7 @@ export function CalendarDayView({ date, onClose, onRefresh }) {
                   className='text-blue-500'>
                   ✏️
                 </button>
-                <button onClick={() => handleDelete(event._id)} className='text-red-500'>
+                <button onClick={() => handleDelete(event.id)} className='text-red-500'>
                   🗑️
                 </button>
               </div>

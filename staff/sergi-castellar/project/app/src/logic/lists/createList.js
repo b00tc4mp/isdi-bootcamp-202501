@@ -19,8 +19,7 @@ export const createList = (title, color) => {
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            if (response.status === 201)
-                return response.json()
+            if (response.status === 201) return
 
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })

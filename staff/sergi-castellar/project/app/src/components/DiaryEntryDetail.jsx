@@ -3,14 +3,13 @@ import { DiaryEntryForm } from './DiaryEntryForm'
 import { logic } from '../logic'
 
 export function DiaryEntryDetail({ entry, onClose, onUpdated }) {
-  const isOwn = logic.getCurrentUserId() === entry.author._id
   const [editMode, setEditMode] = useState(false)
 
   const handleDelete = () => {
     if (!confirm('Delete this entry?')) return
 
-    logic
-      .deleteDiaryEntry(entry._id)
+    logic.diary
+      .deleteDiaryEntry(entry.id)
       .then(() => {
         onUpdated()
         onClose()
@@ -18,26 +17,31 @@ export function DiaryEntryDetail({ entry, onClose, onUpdated }) {
       .catch((error) => alert(error.message))
   }
 
+  const formatDate = (iso) => {
+    const date = new Date(iso)
+    return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`
+  }
+
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50'>
-      <div className={`bg-white p-6 rounded-3xl w-full max-w-md shadow-xl space-y-4 relative ${isOwn ? 'bg-pink-100' : 'bg-pink-200'}`}>
-        <button onClick={onClose} className='absolute top-2 right-4 text-gray-400 text-xl'>
-          ✕
+    <div className='min-h-screen bg-pink-100 p-6'>
+      <div className={`max-w-md mx-auto p-6 rounded-3xl shadow space-y-4 ${entry.own ? 'bg-pink-800 text-white' : 'bg-white text-pink-800'}`}>
+        <button onClick={onClose} className='text-sm text-gray-600 mb-2'>
+          ← Back
         </button>
 
         <div className='flex justify-between items-center'>
           <span className='text-sm font-semibold'>{entry.author.name}</span>
-          <span className='text-xs'>{new Date(entry.createdAt).toLocaleDateString()}</span>
+          <span className='text-xs'>{formatDate(entry.createdAt)}</span>
         </div>
 
         <p className='text-sm whitespace-pre-wrap'>{entry.text}</p>
 
-        {isOwn && (
+        {entry.own && (
           <div className='flex justify-end space-x-2 text-sm'>
-            <button onClick={() => setEditMode(true)} className='text-blue-500'>
+            <button onClick={() => setEditMode(true)} className='text-blue-200'>
               ✏️
             </button>
-            <button onClick={handleDelete} className='text-red-500'>
+            <button onClick={handleDelete} className='text-red-200'>
               🗑️
             </button>
           </div>

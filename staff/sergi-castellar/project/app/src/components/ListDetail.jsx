@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { logic } from '../logic'
 
 export function ListDetail({ list, onBack }) {
-  const { _id: listId, title, color } = list
+  const { id: listId, title, color } = list
 
   const [items, setItems] = useState([])
   const [showModal, setShowModal] = useState(false)
@@ -27,7 +27,7 @@ export function ListDetail({ list, onBack }) {
   const handleSubmit = () => {
     if (editItem) {
       logic
-        .updateItem(editItem._id, text)
+        .updateItem(editItem.id, text)
         .then(() => {
           setShowModal(false)
           setEditItem(null)
@@ -81,7 +81,7 @@ export function ListDetail({ list, onBack }) {
 
         <ul className='space-y-2'>
           {items.map((item) => (
-            <li key={item._id} className='flex justify-between items-center bg-gray-100 px-4 py-2 rounded-lg'>
+            <li key={item.id} className='flex justify-between items-center bg-gray-100 px-4 py-2 rounded-lg'>
               <span>{item.text}</span>
               <div className='space-x-2'>
                 <button
@@ -93,7 +93,7 @@ export function ListDetail({ list, onBack }) {
                   className='text-sm text-blue-500'>
                   ✏️
                 </button>
-                <button onClick={() => handleDelete(item._id)} className='text-sm text-red-500'>
+                <button onClick={() => handleDelete(item.id)} className='text-sm text-red-500'>
                   🗑️
                 </button>
               </div>

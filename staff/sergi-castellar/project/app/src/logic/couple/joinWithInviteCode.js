@@ -18,14 +18,8 @@ export const joinWithInviteCode = (inviteCode) => {
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            if (response.status === 200)
-                return response.json()
-                    .catch(error => { throw new SystemError(error.message) })
-                    .then(body => {
-                        const { couple } = body
+            if (response.status === 200) return
 
-                        return couple
-                    })
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
