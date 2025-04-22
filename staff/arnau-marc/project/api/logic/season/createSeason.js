@@ -12,7 +12,7 @@ export const createSeason = (userId, { name, startDate, endDate }) => {
     .then(user => {
       if (!user || user.role !== 'admin') throw new AuthorizationError('Only admins can create a season')
     })
-    .then(() => Season.findOne({ status: 'active' }))
+    .then(() => Season.findOne({ status: 'active', name: { $ne: 'casual' } }))
     .then(existing => {
       if (existing) throw new DuplicityError('There is already an active season')
     })

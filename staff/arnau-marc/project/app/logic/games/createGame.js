@@ -10,11 +10,13 @@ export const createGame = (title, season, place, date) => {
   validate.title(title, 'title')
   validate.season(season, 'season')
   validate.place(place, 'place')
- 
+  
   const isoDate = typeof date === 'string' ? new Date(date).toISOString() : date.toISOString()
+ /*
+  Momently we don't need to use, but we save for a future.
   const now = new Date()
   if (new Date(isoDate) < now) throw new SystemError('Date cannot be in the past')
-
+*/
   return data.getToken()
     .then(token => {
       if (!token) throw new AuthorizationError('No token found')

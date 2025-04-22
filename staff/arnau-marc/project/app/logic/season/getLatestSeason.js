@@ -1,7 +1,8 @@
 import { data } from '../../data/index.js'
-import { SystemError } from '../../validations/index.js'
+import { errors } from '../../validations/index.js'
 import  Constants  from 'expo-constants'
 
+const { SystemError } = errors
 const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 export const getLatestSeason = () => {

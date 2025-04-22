@@ -96,20 +96,34 @@ const Home = ({ navigation }) => {
   }
 
   const handleConfirmWinner = (winnerId) => {
-    if (Alert.confirm('Set Winner? This is action is irreversible')){
-    logic.setGameWinner(selectedGame._id, winnerId)
-      .then(() => {
-        setModalVisible(false)
-        setSelectedGame(null)
-        fetchGames()
-        Alert.alert('✅ Ganador asignado correctamente')
-      })
-      .catch(error => {
-        Alert.alert(`Error ❌\n${error.message}`)
-        setModalVisible(false)
-      })
-    }
-  }
+    Alert.alert(
+      'Set Winner?',
+      'This action is irreversible. Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          style: 'destructive',
+          onPress: () => {
+            logic.setGameWinner(selectedGame._id, winnerId)
+              .then(() => {
+                setModalVisible(false)
+                setSelectedGame(null)
+                fetchGames()
+                Alert.alert('✅ Ganador asignado correctamente')
+              })
+              .catch(error => {
+                Alert.alert(`Error ❌\n${error.message}`)
+                setModalVisible(false)
+              })
+          }
+        }
+      ]
+    )
+  }  
 
   const handleDeleteGame = (gameId) => {
     Alert.alert(
