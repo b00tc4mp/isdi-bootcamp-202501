@@ -17,14 +17,14 @@ describe('getFinishedSeasons', () => {
     it('Succeed on get finished Seasons', () => {
         return Promise.all([
             Season.create({
-                startDate: new Date(2025, 4, 23),
-                endDate: new Date(2025, 4, 24),
+                startDate: new Date(2025, 4, 20),
+                endDate: new Date(2025, 4, 21),
                 status:'finished',
                 name: 'season 1'
             }),
             Season.create({
-                startDate: new Date(2025, 4, 23),
-                endDate: new Date(2025, 4, 24),
+                startDate: new Date(2025, 4, 22),
+                endDate: new Date(2025, 4, 23),
                 status:'finished',
                 name: 'season 2'
             })
@@ -35,8 +35,8 @@ describe('getFinishedSeasons', () => {
         .then(seasons =>{
             expect(seasons).to.exist
 
-            expect(seasons[0].name).to.equal('season 1')
-            expect(seasons[1].name).to.equal('season 2')          
+            expect(seasons[0].name).to.equal('season 2')
+            expect(seasons[1].name).to.equal('season 1')          
         }) 
     })
 
