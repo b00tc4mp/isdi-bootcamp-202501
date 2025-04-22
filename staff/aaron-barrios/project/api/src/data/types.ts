@@ -22,7 +22,7 @@ export type WorkoutDocType = {
     _id: Types.ObjectId
     author: Types.ObjectId
     name: string
-    muscleGroup: string
+    muscleGroup: "chest" | "legs" | "biceps" | "triceps" | "back" | "shoulders" | "buttocks"
     feedImage: string
     type?: string
     difficulty?: "easy" | "medium" | "hard"

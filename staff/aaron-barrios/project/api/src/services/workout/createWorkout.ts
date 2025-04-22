@@ -14,7 +14,7 @@ const createWorkout = (
 ): Promise<WorkoutDocType> => {
     validate.id(author)
     validate.name(name)
-    validate.text(muscleGroup)
+    validate.string(muscleGroup)
     validate.url(feedImage)
     validate.text(description)
 
@@ -26,7 +26,7 @@ const createWorkout = (
             const newWorkout: Partial<WorkoutDocType> = {
                 author: new Types.ObjectId(author),
                 name,
-                muscleGroup,
+                muscleGroup: muscleGroup as WorkoutDocType["muscleGroup"],
                 feedImage,
                 description,
                 status: "pending"

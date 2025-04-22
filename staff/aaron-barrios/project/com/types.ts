@@ -25,7 +25,7 @@ export type TokenPayload = {
 export type WorkoutType = {
     id: string            // => añado los ids para interacciones clave o navegaciones
     name: string
-    muscleGroup: string
+    muscleGroup: "chest" | "legs" | "biceps" | "triceps" | "back" | "shoulders" | "buttocks"
     feedImage: string
     type?: string
     difficulty?: string

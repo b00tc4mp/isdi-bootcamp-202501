@@ -40,7 +40,7 @@ describe("filter Workouts", () => {
                     {
                         author: userId,
                         name: "Workout A",
-                        muscleGroup: "arms",
+                        muscleGroup: "biceps",
                         feedImage: "https://titanboxwear.com/wp-content/uploads/workout-ejercicios-sin-material-1.jpg",
                         description: "Desc A",
                         difficulty: "easy",
@@ -94,7 +94,7 @@ describe("filter Workouts", () => {
                     {
                         author: userId,
                         name: "Workout A",
-                        muscleGroup: "arms",
+                        muscleGroup: "biceps",
                         feedImage: "https://titanboxwear.com/wp-content/uploads/workout-ejercicios-sin-material-1.jpg",
                         description: "Desc A",
                         difficulty: "easy",
@@ -149,7 +149,7 @@ describe("filter Workouts", () => {
                     {
                         author: userId,
                         name: "Workout A",
-                        muscleGroup: "arms",
+                        muscleGroup: "biceps",
                         feedImage: "https://titanboxwear.com/wp-content/uploads/workout-ejercicios-sin-material-1.jpg",
                         description: "Desc A",
                         difficulty: "easy",

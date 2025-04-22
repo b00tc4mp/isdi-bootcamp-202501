@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react"
+import { useState, useCallback } from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { useRouter } from "expo-router"
 import {
@@ -15,7 +15,7 @@ import { Text, View } from "@/components/Themed"
 import { WorkoutType } from "com/types"
 import WorkoutCard from "@/components/WorkoutCard"
 
-import filterWorkout from "@/services/workouts/filterWorkouts"
+import { filterWorkouts } from "@/services/workouts"
 
 
 export default function Workouts() {
@@ -26,9 +26,9 @@ export default function Workouts() {
     const [selectedGroup, setSelectedGroup] = useState<string>("")
     const [filter, setFilter] = useState<"popular" | "saved" | "recent">("popular")
 
-    const loadWorkouts = (selectedFilter = filter) => {
+    const loadWorkouts = (selectedFilter = filter, muscleGroup = selectedGroup) => {
         setLoading(true)
-        filterWorkout(selectedFilter)
+        filterWorkouts(selectedFilter, muscleGroup || undefined)
             .then(setWorkouts)
             .catch(error => console.error("Failed to fetch workouts:", error))
             .finally(() => setLoading(false))
@@ -36,7 +36,7 @@ export default function Workouts() {
 
     const handleRefresh = () => {
         setRefreshing(true)
-        filterWorkout(filter)
+        filterWorkouts(filter, selectedGroup || undefined)
             .then(setWorkouts)
             .catch(error => console.error("Failed to refresh workouts:", error))
             .finally(() => setRefreshing(false))
@@ -51,7 +51,7 @@ export default function Workouts() {
     useFocusEffect(
         useCallback(() => {
             loadWorkouts()
-        }, [filter])
+        }, [filter, selectedGroup])
     )
 
     return (
@@ -61,7 +61,10 @@ export default function Workouts() {
             <View style={styles.dropdownContainer}>
                 <Picker
                     selectedValue={selectedGroup}
-                    onValueChange={(itemValue) => setSelectedGroup(itemValue)}
+                    onValueChange={(itemValue) => {
+                        setSelectedGroup(itemValue)
+                        loadWorkouts(filter, itemValue)
+                    }}
                     style={styles.picker}
                 >
                     <Picker.Item label="All Muscle Groups" value="" />
@@ -81,7 +84,6 @@ export default function Workouts() {
                     active={filter === "popular"}
                     onPress={() => {
                         setFilter("popular")
-                        loadWorkouts("popular")
                     }}
                 />
                 <FilterChip
@@ -89,7 +91,6 @@ export default function Workouts() {
                     active={filter === "saved"}
                     onPress={() => {
                         setFilter("saved")
-                        loadWorkouts("saved")
                     }}
                 />
                 <FilterChip
@@ -97,7 +98,6 @@ export default function Workouts() {
                     active={filter === "recent"}
                     onPress={() => {
                         setFilter("recent")
-                        loadWorkouts("recent")
                     }}
                 />
             </View>

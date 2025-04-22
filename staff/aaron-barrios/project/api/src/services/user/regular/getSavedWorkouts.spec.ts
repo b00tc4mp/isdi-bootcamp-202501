@@ -51,7 +51,7 @@ describe("get SavedWorkouts", () => {
                     {
                         author: user.id,
                         name: "Plank",
-                        muscleGroup: "core",
+                        muscleGroup: "biceps",
                         feedImage: "https://www.thebxngclub.com/wp-content/uploads/2023/05/3Y3A1828-960x640.jpg",
                         description: "plank desc",
                         status: "accepted"

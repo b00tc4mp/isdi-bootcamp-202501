@@ -8,10 +8,15 @@ export const createWorkoutSchema = object({
         .string()
         .min(3, 'Workout name must be at least 3 characters')
         .max(30, 'Workout name must be at last 30 characters'),
-    muscleGroup: z
-        .string()
-        .min(3, 'Workout muscle group must be at least 3 characters')
-        .max(20, 'Workout muscle group must be at last 20 characters'),
+    muscleGroup: z.enum([
+        "chest",
+        "legs",
+        "biceps",
+        "triceps",
+        "back",
+        "shoulders",
+        "buttocks"
+    ]),
     feedImage: z
         .string()
         .min(30, 'Workout feed image must be at least 3 characters')

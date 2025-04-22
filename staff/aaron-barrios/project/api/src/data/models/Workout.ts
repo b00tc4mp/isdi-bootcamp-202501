@@ -18,6 +18,7 @@ const workout = new Schema<WorkoutDocType>({
     muscleGroup: {
         type: String,
         required: true,
+        enum: ["chest", "back", "biceps", "triceps", "shoulders", "legs", "buttocks"],
         minlength: 3,
         maxlength: 20
     },

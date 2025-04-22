@@ -84,7 +84,7 @@ export default function WorkoutDetail() {
                     <Text style={styles.icon}>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
                 </Pressable>
                 <Pressable onPress={handleToggleSave} disabled={toggle}>
-                    <Text style={styles.icon}>{workout.savedByMe ? "🔖" : "📑"} {workout.savesCount}</Text>
+                    <Text style={styles.icon}>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
                 </Pressable>
             </View>
         </ScrollView>

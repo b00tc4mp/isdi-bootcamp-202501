@@ -62,7 +62,7 @@ export default function WorkoutCard({
                     <View style={styles.actions}>
                         <Text style={styles.date}>📅 {formatDate(workout.createdAt)}</Text>
                         <Text>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
-                        <Text>{workout.savedByMe ? "🔖" : "📄"} {workout.savesCount}</Text>
+                        <Text>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
                         {onDelete && (
                             <Pressable onPress={onDelete}>
                                 <Image
