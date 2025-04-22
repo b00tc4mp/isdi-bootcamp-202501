@@ -20,7 +20,6 @@ export default function ClassificationFinishedSeasons({ navigation, route }) {
           .then(setUsername)
           .catch(console.error)
 
-
         logic.getSeasonById(seasonId)
         .then(season => {
           if (!season) throw new Error('No hemos encontrado la temporada')
@@ -54,21 +53,10 @@ export default function ClassificationFinishedSeasons({ navigation, route }) {
           Alert.alert('Bye, See You soon!!')
         } catch (error) {
           console.error(error)
-          window.alert(`Error ❌\n${error.message}`)
+          Alert.alert(`Error ❌\n${error.message}`)
         }
       }
     
-      const handleUserClick = () => {
-        try {
-          const userId = logic.getUserId()
-          navigation.navigate('Profile', { userId })
-        } catch (error) {
-          console.error(error)
-          window.alert(`Error ❌\n${error.message}`)
-        }
-      }
-    
-
     const renderHeader = () => (
         <View style={styles.rowHeader}>
           <Text style={styles.cellRank}>#</Text>

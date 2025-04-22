@@ -21,7 +21,7 @@ const Login = ({ navigation }) => {
       })
       .catch(error => {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       })
   }
 

@@ -35,7 +35,7 @@ export default function ProfileScreen({ navigation }) {
           })
         )
       })
-      .catch((error) => window.alert(`Error ❌\n${error.message}`))
+      .catch((error) => Alert.alert(`Error ❌\n${error.message}`))
       .finally(() => setLoading(false))
   }, [])
 
@@ -46,7 +46,7 @@ export default function ProfileScreen({ navigation }) {
         Alert.alert('Bye, See You soon!!')
       } catch (error) {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       }
     }
   
@@ -56,11 +56,10 @@ export default function ProfileScreen({ navigation }) {
         navigation.navigate('Profile', { userId })
       } catch (error) {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       }
     }
   
-
   const handleRequestAdminRole = () => {
     setModalVisible(true)
   }
@@ -71,12 +70,12 @@ export default function ProfileScreen({ navigation }) {
         .then(() => logic.getUserRole())
         .then((role) => {
           setUserRole(role)
-          window.alert('✅ Success\nYour role has been updated to admin.')
+          Alert.alert('✅ Success\nYour role has been updated to admin.')
           setModalVisible(false)
           setSecretWord('')
         })
         .catch((error) => {
-          window.alert(`Error ❌\n${error.message || 'Something went wrong.'}`)
+          Alert.alert(`Error ❌\n${error.message || 'Something went wrong.'}`)
           setModalVisible(false)
         })
     }

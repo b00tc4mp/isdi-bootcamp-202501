@@ -47,7 +47,7 @@ const Home = ({ navigation }) => {
         )
       } catch (error) {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       } finally {
         setLoading(false)
       }
@@ -56,13 +56,10 @@ const Home = ({ navigation }) => {
     fetchData()
   }, [])
   
-
- 
-
   const fetchGames = () => {
     logic.getGames()
       .then(({ games }) => setGames(games))
-      .catch(error => window.alert(`Error ❌\n${error.message}`))
+      .catch(error => Alert.alert(`Error ❌\n${error.message}`))
   }
 
   const handleLogoutClick = () => {
@@ -72,7 +69,7 @@ const Home = ({ navigation }) => {
       Alert.alert('Bye, See You soon!!')
     } catch (error) {
       console.error(error)
-      window.alert(`Error ❌\n${error.message}`)
+      Alert.alert(`Error ❌\n${error.message}`)
     }
   }
 
@@ -82,7 +79,7 @@ const Home = ({ navigation }) => {
       navigation.navigate('Profile', { userId })
     } catch (error) {
       console.error(error)
-      window.alert(`Error ❌\n${error.message}`)
+      Alert.alert(`Error ❌\n${error.message}`)
     }
   }
 
@@ -95,7 +92,7 @@ const Home = ({ navigation }) => {
         setUserMap(map)
         setModalVisible(true)
       })
-      .catch(error => window.alert('Error cargando participantes\n' + error.message))
+      .catch(error => Alert.alert('Error cargando participantes\n' + error.message))
   }
 
   const handleConfirmWinner = (winnerId) => {
@@ -107,18 +104,33 @@ const Home = ({ navigation }) => {
         Alert.alert('✅ Ganador asignado correctamente')
       })
       .catch(error => {
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
         setModalVisible(false)
       })
   }
 
   const handleDeleteGame = (gameId) => {
-    if (window.confirm('Delete Game?')) {
-      return logic.deleteGame(gameId)
-        .then(() => logic.getGames().then(({ games }) => setGames(games)))
-        .catch(error => Alert.alert(error.message))
-    }
-  }
+    Alert.alert(
+      '🃏 Delete Game?',
+      'Are you sure you want to remove this poker game from the list? ♠️♥️',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            logic.deleteGame(gameId)
+              .then(() => logic.getGames())
+              .then(({ games }) => setGames(games))
+              .catch(error => Alert.alert('Error ❌', error.message))
+          }
+        }
+      ]
+    )
+  }  
 
   const scheduledGames = games.filter(game => game.status === 'scheduled')
   const finishedGames = games.filter(game => game.status === 'finished')

@@ -23,12 +23,12 @@ const Register = ({ navigation }) => {
         setEmail('')
         setUsername('')
         setPassword('')
-        window.alert('Registro exitoso 🎉\n¡Inicia sesión ahora!')
+        Alert.alert('Registro exitoso 🎉\n¡Inicia sesión ahora!')
         navigation.navigate('Login')
       })
       .catch((error) => {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       })
   }
 
