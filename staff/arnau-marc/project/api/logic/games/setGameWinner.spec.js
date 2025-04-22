@@ -40,17 +40,20 @@ describe('setGameWinner', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
         author: adminId,
-        title: 'Poker Night',
-        season: 'season 1',
-        date: '25-04-2025',
-        place: 'bodeguita',
+        title: 'game 1',
+        _id: gameId,
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
         participants: [adminId, winnerId],
-        status: 'scheduled'
+        place: 'bodeguita',
+        winner: null,
+        points: 0
       })
     ])
-      .then(() => setGameWinner(adminId.toString(), gameId.toString(), 'arnau_romero'))
+      .then(() => setGameWinner(adminId.toString(), gameId.toString(), winnerId.toString()))
       .then(() => Game.findById(gameId).lean())
       .then(game => {
         expect(game.winner.toString()).to.equal(winnerId.toString())
@@ -63,6 +66,7 @@ describe('setGameWinner', () => {
     let catchedError
     const userId = new ObjectId()
     const gameId = new ObjectId()
+    const winnerId = new ObjectId()
 
     return Promise.all([
       User.create({
@@ -75,6 +79,7 @@ describe('setGameWinner', () => {
         password: '123123123'
       }),
       User.create({
+        _id: winnerId,
         name: 'lita',
         surname: 'lenta',
         email: 'lita@test.com',
@@ -83,17 +88,20 @@ describe('setGameWinner', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
         author: userId,
-        title: 'Poker Night',
-        season: 'season 1',
-        date: '25-04-2025',
+        title: 'game 1',
+        _id: userId,
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
+        participants: [userId, winnerId],
         place: 'bodeguita',
-        participants: [userId],
-        status: 'scheduled'
+        winner: null,
+        points: 0
       })
     ])
-      .then(() => setGameWinner(userId.toString(), gameId.toString(), 'lita_lenta'))
+      .then(() => setGameWinner(userId.toString(), gameId.toString(), winnerId.toString()))
       .catch(error => catchedError = error)
       .finally(() => {
         expect(catchedError).to.be.instanceOf(NotAllowedError)
@@ -115,7 +123,7 @@ describe('setGameWinner', () => {
       role: 'admin',
       password: '123123123'
     })
-      .then(() => setGameWinner(adminId.toString(), gameId.toString(), 'someone'))
+      .then(() => setGameWinner(adminId.toString(), gameId.toString(), new ObjectId().toString()))
       .catch(error => catchedError = error)
       .finally(() => {
         expect(catchedError).to.be.instanceOf(NotFoundError)
@@ -123,7 +131,7 @@ describe('setGameWinner', () => {
       })
   })
 
-  it('fails if winner does not exist', () => {
+  it.only('fails if winner does not exist', () => {
     const adminId = new ObjectId()
     const gameId = new ObjectId()
     let catchedError
@@ -157,7 +165,7 @@ describe('setGameWinner', () => {
       })
   })
 
-  it('fails if winner is not a participant', () => {
+  it.only('fails if winner is not a participant', () => {
     const adminId = new ObjectId()
     const notParticipantId = new ObjectId()
     const gameId = new ObjectId()

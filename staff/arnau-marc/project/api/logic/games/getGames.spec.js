@@ -18,25 +18,29 @@ describe('getGames', () => {
     return Promise.all([
       Game.create({
         author: authorId,
-        season: 'season 1',
-        status: 'finished',
         title: 'game 1',
+        _id: new ObjectId(),
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
         participants: [],
-        date: '24-04-2025',
         place: 'bodeguita',
-        winner: authorId,
-        points: 1
+        winner: null,
+        points: 0
       }),
       Game.create({
         author: authorId,
-        season: 'season 1',
-        status: 'finished',
         title: 'game 2',
+        _id: new ObjectId(),
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 25),
         participants: [],
-        date: '23-05-2025',
         place: 'bodeguita',
-        winner: authorId,
-        points: 2
+        winner: null,
+        points: 0
       })
     ])
       .then(() => getGames())

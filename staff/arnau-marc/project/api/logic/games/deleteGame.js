@@ -4,6 +4,7 @@ import { errors, validate } from '../../validations/index.js'
 const { SystemError, NotFoundError, NotAllowedError } = errors
 
 export const deleteGame = (gameId, userId) => {
+   debugger
     validate.id(gameId, 'gameId')
     validate.id(userId, 'userId')
 

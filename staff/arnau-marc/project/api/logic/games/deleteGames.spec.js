@@ -16,12 +16,13 @@ describe('deleteGame', () => {
   beforeEach(() => Game.deleteMany({}))
 
   it('succeeds when an admin deletes an existing game', () => {
-    const marcId = new ObjectId()
+    debugger
     const gameId = new ObjectId()
+    const userId = new ObjectId()
 
     return Promise.all([
-      User.create({
-        _id: marcId,
+      User.create({  
+        _id: userId,
         name: 'marc',
         surname: 'ramos',
         email: 'marc@ramos.com',
@@ -30,19 +31,22 @@ describe('deleteGame', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
-        author: marcId,
-        season: 'season 1',
-        status: 'scheduled',
+        author: userId,
         title: 'timba',
+        _id: gameId,
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
         participants: [],
-        date: '25-04-2025',
         place: 'bodeguita',
         winner: null,
         points: 0
       })
     ])
-      .then(() => deleteGame(gameId.toString(), marcId.toString()))
+      .then(() =>{ 
+        return deleteGame(gameId.toString(), userId.toString()) 
+      })
       .then(() => Game.findById(gameId))
       .then(game => expect(game).to.be.null)
   })
@@ -63,13 +67,14 @@ describe('deleteGame', () => {
         password: '123123123'
       }),
       Game.create({
-        _id: gameId,
         author: marcId,
-        season: 'season 1',
-        status: 'scheduled',
         title: 'timba',
+        _id: gameId,
+        seasonName: 'season 1',
+        seasonId: new ObjectId(),
+        status: 'scheduled',
+        date: new Date(2025, 4, 23),
         participants: [],
-        date: '25-04-2025',
         place: 'bodeguita',
         winner: null,
         points: 0
@@ -110,14 +115,15 @@ describe('deleteGame', () => {
     const marcId = new ObjectId()
     const gameId = new ObjectId()
 
-    return Game.create({
-      _id: gameId,
+    return  Game.create({
       author: marcId,
-      season: 'season 1',
-      status: 'scheduled',
       title: 'timba',
+      _id: gameId,
+      seasonName: 'season 1',
+      seasonId: new ObjectId(),
+      status: 'scheduled',
+      date: new Date(2025, 4, 23),
       participants: [],
-      date: '25-04-2025',
       place: 'bodeguita',
       winner: null,
       points: 0

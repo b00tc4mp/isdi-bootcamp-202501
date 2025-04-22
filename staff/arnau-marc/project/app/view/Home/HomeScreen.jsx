@@ -57,8 +57,6 @@ const Home = ({ navigation }) => {
   }, [])
   
 
- 
-
   const fetchGames = () => {
     logic.getGames()
       .then(({ games }) => setGames(games))
@@ -137,7 +135,6 @@ const Home = ({ navigation }) => {
 
   return (
     <PokerBackground>
-
       <FlatList
        style={{ flex: 1 }}
        contentContainerStyle={{ padding: 16, paddingBottom: 100 }}

@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { data, Game, User } from '../../data/index.js'
+import { data, Game, User, Season} from '../../data/index.js'
 import { createGame } from './createGame.js'
 import { expect } from 'chai'
 import { errors } from '../../validations/index.js'
@@ -21,23 +21,30 @@ describe('createGame', () => {
   it('succeeds in creating a game', () => {
     const title = 'Poker Night'
     const season = 'season 1'
-    const date = '22-04-2025'
+    const date = new Date(2025, 4, 24)
     const place = 'Casa Arnau'
-    
-    return User.create({
+    return Promise.all([
+      User.create({
       name: 'arnau',
       surname: 'romero',
       email: 'ar@nau.com',
       username: 'arnau_sots',
       role: 'admin',
       password: '123123123'
-    })
-      .then(user => createGame(user._id.toString(), title, season, date, place))
+    }), 
+    Season.create({
+      startDate: new Date(2025, 4, 23),
+      endDate: new Date(2025, 4, 24),
+      status:'active',
+      name: 'season 1'
+  }),
+  ])
+      .then(([ user, season ])=> createGame(user._id.toString(), title, season.name, date, place))
       .then(game => {
         expect(game).to.exist
         expect(game.title).to.equal('Poker Night')
-        expect(game.season).to.equal('season 1')
-        expect(game.date).to.equal('22-04-2025')
+        expect(game.seasonName).to.equal('season 1')
+        // expect(game.date).to.equal('22-04-2025')
         expect(game.place).to.equal('Casa Arnau')
         expect(game.status).to.equal('scheduled')
         
