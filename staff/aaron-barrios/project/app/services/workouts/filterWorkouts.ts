@@ -1,18 +1,25 @@
-import { errors } from 'com'
-import { data } from '@/data'
-import { WorkoutType } from 'com/types'
+import { data } from "@/data"
+import { errors } from "com"
+
+import { WorkoutType } from "com/types"
 
 const { SystemError, AuthorizationError } = errors
 
-const getAllWorkouts = (): Promise<WorkoutType[]> => {
+const filterWorkouts = (
+    filter: string
+): Promise<WorkoutType[]> => {
+    //validate filter
+    if (filter !== "popular" && filter !== "saved" && filter !== "recent")
+        return Promise.reject(new SystemError("Invalid filter value"))
+
     return data.getToken()
         .then(token => {
             if (!token) throw new AuthorizationError('No token found')
 
-            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts/filter?filter=${filter}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
-                }
+                },
             })
         })
         .catch(error => { throw new SystemError(error.message) })
@@ -28,4 +35,4 @@ const getAllWorkouts = (): Promise<WorkoutType[]> => {
         })
 }
 
-export default getAllWorkouts
+export default filterWorkouts

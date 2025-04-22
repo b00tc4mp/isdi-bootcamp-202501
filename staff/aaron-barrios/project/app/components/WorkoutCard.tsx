@@ -3,12 +3,11 @@ import { View, Text } from "@/components/Themed"
 import { useRouter } from "expo-router"
 
 import type { WorkoutType } from "com/types"
+import formatDate from "@/utils/formatedDate"
 
 type WorkoutCardProps = {
     workout: WorkoutType
     onPress: () => void
-    onToggleLike: () => void
-    onToggleSave: () => void
     onDelete?: () => void
     showStatus?: boolean
     showAuthor?: boolean
@@ -17,8 +16,6 @@ type WorkoutCardProps = {
 export default function WorkoutCard({
     workout,
     onPress,
-    onToggleLike,
-    onToggleSave,
     onDelete,
     showStatus = false,
     showAuthor = false,
@@ -38,7 +35,7 @@ export default function WorkoutCard({
 
                 {showAuthor && (
                     <Pressable
-                        disabled={workout.author.alias === "default"}
+                        disabled={workout.author.role === "default"}
                         onPress={() => {
                             if (workout.author.alias !== "default") {
                                 router.push({
@@ -48,9 +45,10 @@ export default function WorkoutCard({
                             }
                         }}
                     >
-                        <Text style={workout.author.alias === "default" ? styles.defaultAuthor : styles.authorLink}>
-                            {workout.author.alias === "default" ? "Default" : `@${workout.author.alias}`}
+                        <Text style={workout.author.role === "default" ? styles.defaultAuthor : styles.authorLink}>
+                            {workout.author.role === "default" ? "Default" : `@${workout.author.alias}`}
                         </Text>
+
                     </Pressable>
                 )}
 
@@ -62,12 +60,9 @@ export default function WorkoutCard({
                     )}
 
                     <View style={styles.actions}>
-                        <Pressable onPress={onToggleLike}>
-                            <Text>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
-                        </Pressable>
-                        <Pressable onPress={onToggleSave}>
-                            <Text>{workout.savedByMe ? "🔖" : "📄"} {workout.savesCount}</Text>
-                        </Pressable>
+                        <Text style={styles.date}>📅 {formatDate(workout.createdAt)}</Text>
+                        <Text>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
+                        <Text>{workout.savedByMe ? "🔖" : "📄"} {workout.savesCount}</Text>
                         {onDelete && (
                             <Pressable onPress={onDelete}>
                                 <Image
@@ -135,8 +130,14 @@ const styles = StyleSheet.create({
     },
     defaultAuthor: {
         color: "#888",
+        opacity: 0.7,
         fontStyle: "italic",
         fontSize: 12,
         marginTop: 4,
     },
+    date: {
+        fontWeight: "600",
+        fontSize: 10,
+        marginTop: 4,
+    }
 })

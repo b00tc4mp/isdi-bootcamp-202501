@@ -22,21 +22,24 @@ export type WorkoutType = {
     id: string;
     name: string;
     muscleGroup: string;
+    feedImage: string;
     type?: string;
     difficulty?: string;
     description: string;
-    images?: string[];
+    executionImages?: string[];
     status: "pending" | "accepted" | "declined";
     createdAt: Date;
     author: {
         id: string;
         alias: string;
         level?: string;
+        role?: "anonym" | "regular" | "mod" | "default";
     };
     likesCount: number;
     savesCount: number;
     likedByMe?: boolean;
     savedByMe?: boolean;
+    ownedByMe?: boolean;
 };
 export type EditWorkoutType = {
     name?: string;

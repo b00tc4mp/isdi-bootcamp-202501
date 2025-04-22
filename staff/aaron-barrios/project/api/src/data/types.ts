@@ -3,13 +3,13 @@ import { Types } from "mongoose"
 // --- TYPES DE LOS DATOS TRANSPORTE (DTO) => BASE DE DATOS
 export type UserDocType = {
     _id: Types.ObjectId
-    role: 'mod' | 'regular' | 'anonym'
+    role: "mod" | "regular" | "anonym" | "default"
     name?: string
     lastName?: string
     email: string
     alias: string
     password: string
-    level?: 'beginner' | 'intermediate' | 'veteran'
+    level?: "beginner" | "intermediate" | "veteran"
     interests?: string[]
     createdAt: Date,
     modifiedAt?: Date | null,
@@ -25,12 +25,12 @@ export type WorkoutDocType = {
     muscleGroup: string
     feedImage: string
     type?: string
-    difficulty?: 'easy' | 'medium' | 'hard'
+    difficulty?: "easy" | "medium" | "hard"
     description: string
     executionImages?: string[]
     likes?: Types.ObjectId[]
     saves?: Types.ObjectId[]
-    status: 'pending' | 'accepted' | 'declined' //add revising => if community votes to change smthing or want to remove it
+    status: "pending" | "accepted" | "declined" //add revising => if community votes to change smthing or want to remove it
     createdAt: Date
     __v: number
 }
@@ -66,7 +66,7 @@ export type RoutineDocType = {
     description: string
     feedImage: string
     duration: number
-    status: 'pending' | 'accepted' | 'declined' //add revising => if community votes to change smthing or want to remove it
+    status: "pending" | "accepted" | "declined" //add revising => if community votes to change smthing or want to remove it
     frequencySuggestion?: string
     likes: Types.ObjectId[]
     saves: Types.ObjectId[]

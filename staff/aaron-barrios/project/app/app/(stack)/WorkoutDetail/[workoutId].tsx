@@ -4,6 +4,8 @@ import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable } from "rea
 import { Text, View } from "@/components/Themed"
 
 import getWorkoutById from "@/services/workouts/getWorkoutById"
+import toggleLikeWorkout from "@/services/workouts/toggleLikeWorkout"
+import toggleSaveWorkout from "@/services/workouts/toggleSaveWorkout"
 import { WorkoutType } from "com/types"
 
 export default function WorkoutDetail() {
@@ -12,15 +14,36 @@ export default function WorkoutDetail() {
 
     const [workout, setWorkout] = useState<WorkoutType | null>(null)
     const [loading, setLoading] = useState(true)
+    const [toggle, setTogggle] = useState(false)
+
+    const fetchWorkout = () => {
+        if (!workoutId) return
+        setLoading(true)
+        getWorkoutById(workoutId)
+            .then(setWorkout)
+            .catch(error => console.error("Error loading workout:", error))
+            .finally(() => setLoading(false))
+    }
 
     useEffect(() => {
-        if (workoutId) {
-            getWorkoutById(workoutId)
-                .then(data => setWorkout(data))
-                .catch(error => console.error("Error loading workout:", error))
-                .finally(() => setLoading(false))
-        }
+        fetchWorkout()
     }, [workoutId])
+
+    const handleToggleLike = () => {
+        if (!workoutId) return
+        setTogggle(true)
+        toggleLikeWorkout(workoutId)
+            .then(fetchWorkout)
+            .finally(() => setTogggle(false))
+    }
+
+    const handleToggleSave = () => {
+        if (!workoutId) return
+        setTogggle(true)
+        toggleSaveWorkout(workoutId)
+            .then(fetchWorkout)
+            .finally(() => setTogggle(false))
+    }
 
     if (loading) {
         return (
@@ -46,23 +69,23 @@ export default function WorkoutDetail() {
             </Pressable>
 
             {/* Feed Image */}
-            <Image
-                source={{ uri: workout.feedImage }}
-                style={styles.image}
-            />
+            <Image source={{ uri: workout.feedImage }} style={styles.image} />
 
             {/* Info */}
             <Text style={styles.title}>{workout.name}</Text>
             <Text style={styles.subtitle}>💪 {workout.muscleGroup}</Text>
             <Text style={styles.subtitle}>🏷️ Type: {workout.type}</Text>
             <Text style={styles.subtitle}>🔥 Difficulty: {workout.difficulty}</Text>
-
             <Text style={styles.description}>{workout.description}</Text>
 
-            {/* Stats */}
+            {/* Buttons */}
             <View style={styles.stats}>
-                <Text>❤️ {workout.likesCount}</Text>
-                <Text>🔖 {workout.savesCount}</Text>
+                <Pressable onPress={handleToggleLike} disabled={toggle}>
+                    <Text style={styles.icon}>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
+                </Pressable>
+                <Pressable onPress={handleToggleSave} disabled={toggle}>
+                    <Text style={styles.icon}>{workout.savedByMe ? "🔖" : "📑"} {workout.savesCount}</Text>
+                </Pressable>
             </View>
         </ScrollView>
     )
@@ -111,5 +134,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginTop: 24,
         paddingHorizontal: 4,
+    },
+    icon: {
+        fontSize: 18,
     },
 })

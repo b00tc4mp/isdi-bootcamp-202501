@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
+import { useFocusEffect } from "@react-navigation/native"
 import { useRouter } from "expo-router"
 import {
     FlatList,
@@ -11,10 +12,11 @@ import {
 import { Picker } from "@react-native-picker/picker"
 import { Text, View } from "@/components/Themed"
 
-import getAllWorkouts from "@/services/workouts/getAllWorkouts"
-import deleteWorkout from "@/services/workouts/deleteWorkout" // ← asegúrate de tener esta lógica
 import { WorkoutType } from "com/types"
 import WorkoutCard from "@/components/WorkoutCard"
+
+import filterWorkout from "@/services/workouts/filterWorkouts"
+
 
 export default function Workouts() {
     const router = useRouter()
@@ -22,10 +24,11 @@ export default function Workouts() {
     const [loading, setLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
     const [selectedGroup, setSelectedGroup] = useState<string>("")
+    const [filter, setFilter] = useState<"popular" | "saved" | "recent">("popular")
 
-    const loadWorkouts = () => {
+    const loadWorkouts = (selectedFilter = filter) => {
         setLoading(true)
-        getAllWorkouts()
+        filterWorkout(selectedFilter)
             .then(setWorkouts)
             .catch(error => console.error("Failed to fetch workouts:", error))
             .finally(() => setLoading(false))
@@ -33,29 +36,23 @@ export default function Workouts() {
 
     const handleRefresh = () => {
         setRefreshing(true)
-        getAllWorkouts()
+        filterWorkout(filter)
             .then(setWorkouts)
             .catch(error => console.error("Failed to refresh workouts:", error))
             .finally(() => setRefreshing(false))
     }
 
+
     const handleWorkoutPress = (id: string) => {
         router.push(`/(stack)/WorkoutDetail/${id}` as any)
     }
 
-    const handleToggleLike = (id: string): Promise<void> => {
-        console.log("❤️ Like toggled for workout:", id)
-        return Promise.resolve() // Reemplaza con lógica real
-    }
-
-    const handleToggleSave = (id: string): Promise<void> => {
-        console.log("🔖 Save toggled for workout:", id)
-        return Promise.resolve() // Reemplaza con lógica real
-    }
-
-    useEffect(() => {
-        loadWorkouts()
-    }, [])
+    //=> useeffect se ejecuta post navegacion por lo que me refresca la lista filtrada 
+    useFocusEffect(
+        useCallback(() => {
+            loadWorkouts()
+        }, [filter])
+    )
 
     return (
         <View style={styles.container}>
@@ -72,19 +69,41 @@ export default function Workouts() {
                     <Picker.Item label="Back" value="back" />
                     <Picker.Item label="Legs" value="legs" />
                     <Picker.Item label="Buttocks" value="buttocks" />
-                    <Picker.Item label="Arms" value="arms" />
+                    <Picker.Item label="Biceps" value="biceps" />
+                    <Picker.Item label="Triceps" value="triceps" />
+                    <Picker.Item label="Shoulders" value="shoulders" />
                 </Picker>
             </View>
 
             <View style={styles.filters}>
-                <FilterChip label="Popular" />
-                <FilterChip label="Most saved" />
-                <FilterChip label="Recent" />
-                <FilterChip label="Type" />
+                <FilterChip
+                    label="Popular"
+                    active={filter === "popular"}
+                    onPress={() => {
+                        setFilter("popular")
+                        loadWorkouts("popular")
+                    }}
+                />
+                <FilterChip
+                    label="Most saved"
+                    active={filter === "saved"}
+                    onPress={() => {
+                        setFilter("saved")
+                        loadWorkouts("saved")
+                    }}
+                />
+                <FilterChip
+                    label="Recent"
+                    active={filter === "recent"}
+                    onPress={() => {
+                        setFilter("recent")
+                        loadWorkouts("recent")
+                    }}
+                />
             </View>
 
             <Button
-                title="+ Add Workout"
+                title="Create Workout"
                 onPress={() => router.push("/(stack)/CreateWorkout" as any)}
             />
 
@@ -102,8 +121,6 @@ export default function Workouts() {
                         <WorkoutCard
                             workout={item}
                             onPress={() => handleWorkoutPress(item.id)}
-                            onToggleLike={() => handleToggleLike(item.id)}
-                            onToggleSave={() => handleToggleSave(item.id)}
                             showAuthor={true}
                             showStatus={false}
                         />
@@ -114,11 +131,13 @@ export default function Workouts() {
     )
 }
 
-function FilterChip({ label }: { label: string }) {
+function FilterChip({ label, onPress, active }: { label: string; onPress: () => void; active?: boolean }) {
     return (
-        <View style={styles.chip}>
-            <Text style={styles.chipText}>{label}</Text>
-        </View>
+        <Button
+            title={label}
+            onPress={onPress}
+            color={active ? "#facc15" : "#aaa"}
+        />
     )
 }
 

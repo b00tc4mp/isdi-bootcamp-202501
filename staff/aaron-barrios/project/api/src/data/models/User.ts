@@ -12,7 +12,7 @@ const user = new Schema<UserDocType>({
     },
     role: {
         type: String,
-        enum: ["mod", "regular", "anonym"],
+        enum: ["mod", "regular", "anonym", "default"],
         default: "regular"
     },
     lastName: {

@@ -18,8 +18,6 @@ export default function Login() {
     try {
       loginUser(alias, password)
         .then(token => {
-          // console.log("🎉 Token guardado:", token)
-
           setAlias('')
           setPassword('')
 

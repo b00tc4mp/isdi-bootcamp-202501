@@ -14,25 +14,36 @@ import {
     getAllWorkoutsHandler,
     getWorkoutByIdHandler,
     createWorkoutHandler,
-    deleteWorkoutHandler
+    deleteWorkoutHandler,
+    filterWorkoutsHandler,
+    toggleLikeWorkoutHandler,
+    toggleSaveWorkoutHandler
 } from "../handlers/workouts"
+
 
 export const workoutRouter = Router()
 
 
 // ---------- GET ROUTES ----------
-// --- GET WORKOUT BY ID METHOD ---
-workoutRouter.get(
-    "/:workoutId",
-    authHandler,
-    getWorkoutByIdHandler
-)
-
 // --- GET ALL WORKOUTS METHOD ---
 workoutRouter.get(
     "/",
     authHandler,
     getAllWorkoutsHandler
+)
+
+// --- FILTER WORKOUTS ---
+workoutRouter.get(
+    '/filter',
+    authHandler,
+    filterWorkoutsHandler
+)
+
+// --- GET WORKOUT BY ID METHOD ---
+workoutRouter.get(
+    "/:workoutId",
+    authHandler,
+    getWorkoutByIdHandler
 )
 
 
@@ -69,15 +80,15 @@ workoutRouter.patch(
     '/:workoutId/likes',
     authHandler,
     jsonBodyParser,
-    //createWorkoutHandler
+    toggleLikeWorkoutHandler
 )
 
-//  --- SAVE WORKOUT METHOD ---
+//  --- TOGGLE SAVE WORKOUT METHOD ---
 workoutRouter.patch(
     '/:workoutId/saves',
     authHandler,
     jsonBodyParser,
-    //createWorkoutHandler
+    toggleSaveWorkoutHandler
 )
 
 //  --- UPDATE/EDIT WORKOUT METHOD ---

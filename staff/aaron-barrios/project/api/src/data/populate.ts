@@ -5,7 +5,6 @@ import { User, Workout } from "./models"
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
-let compi: any // para poder usarlo en todos los then
 
 data.connect(MONGO_URI!, MONGO_DB_NAME!)
     .then(() => Promise.all([
@@ -21,7 +20,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 email: "ma@sha.com",
                 alias: "ma",
                 password: hashedPassword,
-                role: "regular",
+                role: "default",
                 level: "intermediate",
                 interests: ["strength", "resistance", "calisthenics"],
                 createdAt: new Date(),
@@ -35,7 +34,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 email: "ma@nu.com",
                 alias: "manu",
                 password: hashedPassword,
-                role: "regular",
+                role: "default",
                 level: "beginner",
                 interests: ["flexibility", "calisthenics"],
                 createdAt: new Date(),
@@ -99,16 +98,58 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             {
                 author: manu.id,
                 name: "bulgarian squat",
-                muscleGroup: "buttocks",
+                muscleGroup: "leg",
                 feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg",
                 type: "strength",
                 difficulty: "hard",
-                description: "best buttocks exercise!",
+                description: "best leg exercise!",
                 executionImages: ["url1", "url2"],
                 likes: [masha.id, frankie.id, manu.id],
                 saves: [manu.id, masha.id],
                 status: "accepted",
                 createdAt: new Date(2025, 1, 13),
+            },
+            {
+                author: frankie.id,
+                name: "hip thrust",
+                muscleGroup: "buttocks",
+                feedImage: "https://www.mgc.es/wp-content/uploads/2023/05/como-hacer-hip-thrust-para-los-gluteos-880x660.jpg",
+                type: "strength",
+                difficulty: "medium",
+                description: "best buttocks exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [manu.id],
+                saves: [masha.id],
+                status: "pending",
+                createdAt: new Date(2024, 10, 27),
+            },
+            {
+                author: frankie.id,
+                name: "hammer curl",
+                muscleGroup: "biceps",
+                feedImage: "https://www.trainheroic.com/wp-content/uploads/2023/02/AdobeStock_417412809-TH-jpg.webp",
+                type: "strength",
+                difficulty: "medium",
+                description: "best biceps exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [manu.id],
+                saves: [masha.id],
+                status: "accepted",
+                createdAt: new Date(2024, 10, 27),
+            },
+            {
+                author: frankie.id,
+                name: "rowing",
+                muscleGroup: "back",
+                feedImage: "https://static01.nyt.com/images/2022/11/08/multimedia/26WNT-ROWING-WORKOUT5-1-310a/26WNT-ROWING-WORKOUT5-1-310a-videoSixteenByNineJumbo1600.jpg",
+                type: "strength",
+                difficulty: "easy",
+                description: "best back exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [manu.id],
+                saves: [masha.id],
+                status: "accepted",
+                createdAt: new Date(2024, 10, 27),
             }
         ])
     })

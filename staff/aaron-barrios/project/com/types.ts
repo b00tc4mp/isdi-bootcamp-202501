@@ -38,6 +38,7 @@ export type WorkoutType = {
         id: string
         alias: string
         level?: string
+        role?: "anonym" | "regular" | "mod" | "default"
     }
 
     // interacciones para mostrar en frontend
