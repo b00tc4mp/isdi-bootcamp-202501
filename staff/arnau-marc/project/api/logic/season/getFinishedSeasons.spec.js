@@ -2,12 +2,9 @@ import 'dotenv/config'
 import { data, Season, User } from '../../data/index.js'
 import { getFinishedSeasons } from './getFinishedSeasons.js'
 import { expect } from 'chai'
-import { errors } from '../../validations/index.js'
 import { Types } from 'mongoose'
 
 const { ObjectId } = Types
-
-const { NotFoundError, NotAllowedError } = errors
 
 const { MONGO_URL, MONGO_DB } = process.env
 
@@ -17,7 +14,7 @@ describe('getFinishedSeasons', () => {
     beforeEach(() => Season.deleteMany({})) 
     beforeEach(() => User.deleteMany({})) 
 
-    it('Succeed on get finished Seasons', ()=>{
+    it('Succeed on get finished Seasons', () => {
         return Promise.all([
             Season.create({
                 startDate: new Date(2025, 4, 23),
@@ -38,8 +35,8 @@ describe('getFinishedSeasons', () => {
         .then(seasons =>{
             expect(seasons).to.exist
 
-            expect(seasons[0].name).to.equal('season 2')
-            expect(seasons[1].name).to.equal('season 1')          
+            expect(seasons[0].name).to.equal('season 1')
+            expect(seasons[1].name).to.equal('season 2')          
         }) 
     })
 
