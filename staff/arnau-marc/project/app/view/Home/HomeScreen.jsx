@@ -55,11 +55,7 @@ const Home = ({ navigation }) => {
   
     fetchData()
   }, [])
-  
-<<<<<<< HEAD
 
-=======
->>>>>>> 8af9266ce4948a184789d77a87dbd2844fd93417
   const fetchGames = () => {
     logic.getGames()
       .then(({ games }) => setGames(games))
