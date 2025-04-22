@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, Button, FlatList, ActivityIndicator } from 'react-native'
 import { logic } from '../../logic/index.js'
 import styles from './Classification.styles.js'
-import { CustomModal, NavBar, PokerBackground2, PokerButton, PokerHeader } from '../../components/index.js' 
+import { NavBar, PokerBackground2, PokerHeader } from '../../components/index.js' 
 
 export default function ClassificationHistoric({ navigation }) {
   const [leaderboard, setLeaderboard] = useState([])
@@ -39,20 +39,9 @@ export default function ClassificationHistoric({ navigation }) {
         Alert.alert('Bye, See You soon!!')
       } catch (error) {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       }
     }
-  
-    const handleUserClick = () => {
-      try {
-        const userId = logic.getUserId()
-        navigation.navigate('Profile', { userId })
-      } catch (error) {
-        console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
-      }
-    }
-  
 
   const renderHeader = () => (
     <View style={styles.rowHeader}>

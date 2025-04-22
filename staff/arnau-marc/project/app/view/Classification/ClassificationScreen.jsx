@@ -31,7 +31,7 @@ export default function ClassificationScreen({ navigation }) {
 
     logic.getFinishedSeasons()
       .then(setSeasonFinished)
-      .catch(error => window.alert(error.message))
+      .catch(error => Alert.alert(error.message))
 
     logic.getLatestSeason()
       .then(season => {
@@ -66,47 +66,36 @@ export default function ClassificationScreen({ navigation }) {
         Alert.alert('Bye, See You soon!!')
       } catch (error) {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       }
     }
   
-    const handleUserClick = () => {
-      try {
-        const userId = logic.getUserId()
-        navigation.navigate('Profile', { userId })
-      } catch (error) {
-        console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
-      }
-    }
-  
-  
-  const handleFinishSeason = () => {
-    logic.finishSeason(season._id)
-      .then(() => {
-        // Recargar la season finalizada para ver quién ganó
-        return logic.getSeasonById(season._id)
-      })
-      .then(seasonEnded => {
-        const winnerId = seasonEnded.winner
-  
-        if (winnerId) {
-          return logic.getUserById(winnerId)
-            .then(user => {
-              window.alert(`Temporada finalizada 🎉\nGanador: ${user.username}`)
-              setSeason(null)
-              setLeaderboard([])
-              setError('No hay ninguna temporada activa actualmente')
-            })
-        } else {
-          window.alert('Temporada finalizada. No hubo ganador.')
-          setSeason(null)
-          setLeaderboard([])
-          setError('No hay ninguna temporada activa actualmente')
-        }
-      })
-      .catch(err => window.alert(`Error al finalizar: ${err.message}`))
-  }
+    const handleFinishSeason = () => {
+      logic.finishSeason(season._id)
+        .then(() => {
+          // Recargar la season finalizada para ver quién ganó
+          return logic.getSeasonById(season._id)
+        })
+        .then(seasonEnded => {
+          const winnerId = seasonEnded.winner
+    
+          if (winnerId) {
+            return logic.getUserById(winnerId)
+              .then(user => {
+                Alert.alert(`Temporada finalizada 🎉\nGanador: ${user.username}`)
+                setSeason(null)
+                setLeaderboard([])
+                setError('No hay ninguna temporada activa actualmente')
+              })
+          } else {
+            Alert.alert('Temporada finalizada. No hubo ganador.')
+            setSeason(null)
+            setLeaderboard([])
+            setError('No hay ninguna temporada activa actualmente')
+          }
+        })
+        .catch(err => Alert.alert(`Error al finalizar: ${err.message}`))
+    }    
 
   const handleCreateSeason = () => {
     const now = new Date()
@@ -130,13 +119,13 @@ export default function ClassificationScreen({ navigation }) {
       .then(setLeaderboard)
       .catch(err => {
         setShowCreateModal(false)
-        window.alert(`Error al crear temporada: ${err.message}`)
+        Alert.alert(`Error al crear temporada: ${err.message}`)
       })
   }
 
   const openSeasonModal = (seasonArray) => {
     if (!seasonArray || seasonArray.length === 0) {
-      window.alert('No hay temporadas finalizadas disponibles')
+      Alert.alert('No hay temporadas finalizadas disponibles')
       return
     }
   
@@ -159,8 +148,11 @@ export default function ClassificationScreen({ navigation }) {
     <View style={styles.rowHeader}>
       <Text style={styles.cellRank}>#</Text>
       <Text style={styles.cellUsername}>Username</Text>
+      <Text style={styles.cellPlayed}>Played</Text>
+      <Text style={styles.cellWon}>Wins</Text>
+      <Text style={styles.cellWinRate}>Win%</Text>
       <Text style={styles.cellPoints}>Points</Text>
-    </View>
+    </View> 
   )
   
   const renderItem = ({ item, index }) => {
@@ -179,7 +171,7 @@ export default function ClassificationScreen({ navigation }) {
       </View>
     )
   }
-  
+
   return (
     <PokerBackground2>
       <Text style={styles.title}>Classification</Text>

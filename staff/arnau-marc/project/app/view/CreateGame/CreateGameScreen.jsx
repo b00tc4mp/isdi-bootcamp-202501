@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, Platform } from 'react-native'
+import { View, Text, TextInput, Platform, Alert } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import styles from './CreateGame.styles.js'
 import { logic } from '../../logic'
@@ -33,7 +33,7 @@ export default function CreateGameScreen({ navigation }) {
       })
       .catch(error => {
         console.error(error)
-        window.alert(`Error cargando season activa: ${error.message}`)
+        Alert.alert(`Error cargando season activa: ${error.message}`)
         setSeasonOptions([{ label: 'Casual', value: 'casual' }])
       })
   }, [])
@@ -42,24 +42,36 @@ export default function CreateGameScreen({ navigation }) {
     try {
       logic.logoutUser()
       navigation.navigate('Login')
-      window.alert('Bye, See You soon!!')
+      Alert.alert('Bye, See You soon!!')
     } catch (error) {
       console.error(error)
-      window.alert(`Error ❌\n${error.message}`)
+      Alert.alert(`Error ❌\n${error.message}`)
     }
   }
 
   const handleCreateGame = () => {
-    const isoDate = date.toISOString()
-    logic.createGame(title, season, place, isoDate)
-      .then(() => {
-        window.alert('Game created successfully 🎉')
-        navigation.navigate('Home')
-      })
-      .catch(error => {
-        window.alert(`Error ❌\n${error.message}`)
-      })
-  }
+    if (!title || !season || !place || !date) {
+      Alert.alert('Missing data', 'Please fill in all fields before creating a game.')
+      return
+    }
+  
+    try {
+      const isoDate = new Date(date).toISOString()
+  
+      logic.createGame(title, season, place, isoDate)
+        .then(() => {
+          Alert.alert('✅ Game created successfully 🎉')
+          navigation.navigate('Home')
+        })
+        .catch(error => {
+          console.error('❌ Create game failed:', error)
+          Alert.alert(`Error ❌`, error.message || 'Something went wrong.')
+        })
+    } catch (error) {
+      console.error('❗ Error preparing game:', error)
+      Alert.alert('Unexpected error ❌', error.message || 'Something went wrong.')
+    }
+  }  
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date

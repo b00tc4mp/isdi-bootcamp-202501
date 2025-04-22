@@ -10,7 +10,6 @@ export default function UserProfileScreen({ route, navigation }) {
   const [stats, setStats] = useState(null)
   const [historicStats, setHistoricStats] = useState(null)
   const [loading, setLoading] = useState(true)
-
   
   const handleLogoutClick = () => {
     try {
@@ -19,7 +18,7 @@ export default function UserProfileScreen({ route, navigation }) {
       Alert.alert('Bye, See You soon!!')
     } catch (error) {
       console.error(error)
-      window.alert(`Error ❌\n${error.message}`)
+      Alert.alert(`Error ❌\n${error.message}`)
     }
   }
 
@@ -43,7 +42,7 @@ export default function UserProfileScreen({ route, navigation }) {
       })
       .catch(error => {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       })
       .finally(() => setLoading(false))
   }, [userId])
@@ -56,7 +55,6 @@ export default function UserProfileScreen({ route, navigation }) {
       </View>
     )
   }
-
 
   return (
     <PokerBackground>

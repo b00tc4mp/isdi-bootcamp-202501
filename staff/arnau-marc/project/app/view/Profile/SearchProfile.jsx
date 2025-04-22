@@ -48,7 +48,7 @@ export default function SearchProfile() {
         Alert.alert('Bye, See You soon!!')
       } catch (error) {
         console.error(error)
-        window.alert(`Error ❌\n${error.message}`)
+        Alert.alert(`Error ❌\n${error.message}`)
       }
     }
 
