@@ -116,14 +116,6 @@ const Home = ({ navigation }) => {
   }
 
   const handleDeleteGame = (gameId) => {
-<<<<<<< HEAD
-    if (Alert.confirm('Delete Game? This is action is irreversible')) {
-      return logic.deleteGame(gameId)
-        .then(() => logic.getGames().then(({ games }) => setGames(games)))
-        .catch(error => Alert.alert(error.message))
-    }
-  }
-=======
     Alert.alert(
       '🃏 Delete Game?',
       'Are you sure you want to remove this poker game from the list? ♠️♥️',
@@ -145,7 +137,6 @@ const Home = ({ navigation }) => {
       ]
     )
   }  
->>>>>>> 8af9266ce4948a184789d77a87dbd2844fd93417
 
   const scheduledGames = games.filter(game => game.status === 'scheduled')
   const finishedGames = games.filter(game => game.status === 'finished')
