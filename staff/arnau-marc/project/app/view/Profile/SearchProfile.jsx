@@ -34,7 +34,7 @@ export default function SearchProfile() {
       logic.searchUsers(query)
         .then(setSuggestions)
         .catch(() => {
-          Alert.alert('Error', 'No encontramos al usuario 😔')
+          Alert.alert('Error', 'User not found 😔')
         })
     }, 300)
 

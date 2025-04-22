@@ -2,9 +2,9 @@
 
 ## Intro
 
-App to create poker matches, you can join your friends to create events and visualize a clasification and a profile for each user.WIP
+PokApp is a social application designed to help you organize and follow poker games with your friends. Users can create game events, join or leave games and compete within seasons. Each season maintains a points-based leaderboard. Users can also view their personal profile, which includes detailed statistics such as games played, games won, winning percentage and historical performance across all seasons. Administrators can manage the seasons and set the winners, keeping the competition more controlled.
 
-(photo) 
+![Logo de PokApp](.././app/assets/PokApp1.png)
 
 ## Functional
 
@@ -19,19 +19,20 @@ Admin
 - Visualize profile
 - Visualize others profiles
 - Visualize historic matches
+- Search profile
 - Create game
-- Edit game
 - Cancel game (remove)
 - Set game result
-- Change game result
 
 Player
 - Participate on a game
 - Remove participation on a game
+- Request to be an admin
 - Visualize clasification
 - Visualize profile
 - Visualize others profile
 - Visualize historic matches
+- Search others profile
 
 ### UIUX Design
 
@@ -68,7 +69,8 @@ User
 Game 
 - id (string, uuid)
 - author (User.id)
-- season (Season.id, optional)
+- seasonName (Season.name)
+- seasonId (Season.id, optional)
 - status (string, enum: scheduled | finished)
 - title (string, min length 1, max length 200)
 - participants ([User.id])
@@ -83,8 +85,10 @@ Season
 - id (string, uuid)
 - startDate (Date)
 - endDate (Date)
+- status (string, enum: active | finished)
 - name (string, min length 1, max length 20)
-- maxGames (number)
+- games ([Game.id])
+- winner (User.id)
 - participants([User.id])
 - createdAt (Date)
 - modifiedAt (Date)

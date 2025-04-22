@@ -51,7 +51,7 @@ export default function UserProfileScreen({ route, navigation }) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size='large' />
-        <Text style={styles.loadingText}>Cargando perfil de usuario...</Text>
+        <Text style={styles.loadingText}>Loading user profile...</Text>
       </View>
     )
   }
@@ -84,7 +84,7 @@ export default function UserProfileScreen({ route, navigation }) {
                 </View>
               </View>
             ) : (
-              <Text style={styles.noStats}>No hay estadísticas disponibles.</Text>
+              <Text style={styles.noStats}>Stats not available.</Text>
             )}
           </View>
 
@@ -111,7 +111,7 @@ export default function UserProfileScreen({ route, navigation }) {
                 </View>
               </View>
             ) : (
-              <Text style={styles.noStats}>No hay estadísticas históricas disponibles.</Text>
+              <Text style={styles.noStats}>Historic stats not available.</Text>
             )}
           </View>
         </View>

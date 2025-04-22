@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button, Alert, ActivityIndicator, ScrollView } from 'react-native'
+import { View, Text, Alert, ActivityIndicator, ScrollView } from 'react-native'
 import { logic } from '../../logic'
 import styles from './Profile.styles.js'
 import { CustomModal, NavBar, PokerBackground, PokerHeader, PokerButton } from '../../components/index.js' 
@@ -85,7 +85,7 @@ export default function ProfileScreen({ navigation }) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size='large' />
-        <Text style={styles.loadingText}>Cargando perfil...</Text>
+        <Text style={styles.loadingText}>Loading profile...</Text>
       </View>
     )
   }
@@ -126,7 +126,7 @@ export default function ProfileScreen({ navigation }) {
                 </View>
               </View>
             ) : (
-              <Text style={styles.noStats}>No hay estadísticas disponibles.</Text>
+              <Text style={styles.noStats}>No stats available.</Text>
             )}
           </View>
 
@@ -153,7 +153,7 @@ export default function ProfileScreen({ navigation }) {
                 </View>
               </View>
             ) : (
-              <Text style={styles.noStats}>No hay estadísticas históricas disponibles.</Text>
+              <Text style={styles.noStats}>Historic stats not available.</Text>
             )}
           </View>
 

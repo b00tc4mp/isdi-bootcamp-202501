@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button, FlatList, Alert, ActivityIndicator} from 'react-native'
+import { View, Text, FlatList, Alert, ActivityIndicator} from 'react-native'
 
 import styles from './Home.styles.js'
 import { logic } from '../../logic/index.js'
@@ -92,7 +92,7 @@ const Home = ({ navigation }) => {
         setUserMap(map)
         setModalVisible(true)
       })
-      .catch(error => Alert.alert('Error cargando participantes\n' + error.message))
+      .catch(error => Alert.alert('Error loading participants\n' + error.message))
   }
 
   const handleConfirmWinner = (winnerId) => {
@@ -106,14 +106,14 @@ const Home = ({ navigation }) => {
         },
         {
           text: 'Confirm',
-          style: 'destructive',
+          style: 'default',
           onPress: () => {
             logic.setGameWinner(selectedGame._id, winnerId)
               .then(() => {
                 setModalVisible(false)
                 setSelectedGame(null)
                 fetchGames()
-                Alert.alert('✅ Ganador asignado correctamente')
+                Alert.alert('✅ Winner correctly assigned')
               })
               .catch(error => {
                 Alert.alert(`Error ❌\n${error.message}`)
@@ -156,7 +156,7 @@ const Home = ({ navigation }) => {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#1E90FF" />
-        <Text> ♥️ ♠️ ♣️ ♦️ Cargando Pokapp... 🂽 🂡</Text>
+        <Text> ♥️ ♠️ ♣️ ♦️ Loading Pokapp... 🂽 🂡</Text>
       </View>
     )
   }
@@ -244,8 +244,8 @@ const Home = ({ navigation }) => {
           setSelectedGame(null)
         }}
         onConfirm={handleConfirmWinner}
-        title="Selecciona al ganador"
-        cancelText="Cancelar"
+        title="Select winner"
+        cancelText="Cancel"
         showInput={false}
         options={selectedGame?.participants.map(id => ({
           label: userMap[id] || `ID: ${id.slice(0, 4)}`,

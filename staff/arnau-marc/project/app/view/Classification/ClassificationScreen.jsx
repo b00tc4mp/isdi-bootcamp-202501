@@ -40,7 +40,7 @@ export default function ClassificationScreen({ navigation }) {
       .catch(error => Alert.alert(error.message))
       .then(season => {
         if (!season) {
-          throw new NotFoundError('No hay ninguna temporada activa actualmente') 
+          throw new NotFoundError('No season is currently active') 
         }
         setSeason(season)
         setError(null)
@@ -100,19 +100,19 @@ const handleFinishSeason = () => {
             if (winnerId) {
               return logic.getUserById(winnerId)
                 .then(user => {
-                  Alert.alert(`Temporada finalizada 🎉\nGanador: ${user.username}`)
+                  Alert.alert(`Season finished 🎉\nWinner: ${user.username}`)
                   setSeason(null)
                   setLeaderboard([])
-                  setError('No hay ninguna temporada activa actualmente')
+                  setError('No season is currently active')
                 })
             } else {
-              Alert.alert('Temporada finalizada. No hubo ganador.')
+              Alert.alert('Season ended. There was no winner.')
               setSeason(null)
               setLeaderboard([])
-              setError('No hay ninguna temporada activa actualmente')
+              setError('No season is currently active')
             }
             })
-            .catch(err => Alert.alert(`Error al finalizar: ${err.message}`))
+            .catch(err => Alert.alert(`Error at completion: ${err.message}`))
             logic.getFinishedSeasons()
             .then(setSeasonFinished)
             .catch(error => Alert.alert(error.message))    
@@ -142,13 +142,13 @@ const handleFinishSeason = () => {
       .then(setLeaderboard)
       .catch(err => {
         setShowCreateModal(false)
-        Alert.alert(`Error al crear temporada: ${err.message}`)
+        Alert.alert(`Error creating season: ${err.message}`)
       })
   }
 
   const openSeasonModal = (seasonArray) => {
     if (!seasonArray || seasonArray.length === 0) {
-      Alert.alert('No hay temporadas finalizadas disponibles')
+      Alert.alert('No finished seasons available')
       return
     }
   
@@ -196,23 +196,23 @@ const handleFinishSeason = () => {
     <PokerBackground2>
       <Text style={styles.title}>Classification</Text>
       <PokerButton
-        title='Ir a Clasificación Histórica'
+        title='Go to Historic Classification'
         onPress={() => navigation.replace('ClassificationHistoric')}
       />
 
       <PokerButton 
-      title='Mostrar temporadas antiguas'
+      title='Show old seasons'
       onPress={() => openSeasonModal(seasonFinished)}
       />
 
       {!season && (
         <>
           <Text style={{ marginVertical: 20, fontSize: 16, color: 'gray' }}>
-            {error || 'No hay temporada activa en este momento'}
+            {error || 'No active season at the moment'}
           </Text>
           {userRole === 'admin' && (
             <PokerButton
-              title='Crear nueva temporada'
+              title='Create new season'
               onPress={() => setShowCreateModal(true)}
             />
           )}
@@ -221,7 +221,7 @@ const handleFinishSeason = () => {
 
       {userRole === 'admin' && season && (
         <PokerButton
-          title='Finalizar temporada'
+          title='End season'
           color='red'
           onPress={handleFinishSeason}
         />
@@ -245,10 +245,10 @@ const handleFinishSeason = () => {
         onConfirm={handleCreateSeason}
         inputValue={newSeasonName}
         setInputValue={setNewSeasonName}
-        title='Crear nueva temporada'
-        placeholder='Nombre de la temporada'
-        confirmText='Crear'
-        cancelText='Cancelar'
+        title='Create new season'
+        placeholder='Name of the season'
+        confirmText='Create'
+        cancelText='Cancel'
         showInput={true}
       />
     
@@ -256,8 +256,8 @@ const handleFinishSeason = () => {
         visible={showFinishedSeasonsModal}
         onClose={() => setShowFinishedSeasonsModal(false)}
         onConfirm={handleSelectFinishedSeasons}
-        title='Selecciona temporada'
-        cancelText='Cancelar'
+        title='Select season'
+        cancelText='Cancel'
         showInput={false}
         options={
           seasonFinished?.map(season => ({

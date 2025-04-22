@@ -33,7 +33,7 @@ export default function CreateGameScreen({ navigation }) {
       })
       .catch(error => {
         console.error(error)
-        Alert.alert(`Error cargando season activa: ${error.message}`)
+        Alert.alert(`Error loading active season: ${error.message}`)
         setSeasonOptions([{ label: 'Casual', value: 'casual' }])
       })
   }, [])
