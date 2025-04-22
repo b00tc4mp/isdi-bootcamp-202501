@@ -1,7 +1,6 @@
 import { User, Workout } from '../../data/models'
 import { WorkoutDocType } from '../../data/types'
 import { errors, validate } from 'com'
-
 import { Types } from 'mongoose'
 const { SystemError, NotFoundError } = errors
 
@@ -11,12 +10,17 @@ const createWorkout = (
     muscleGroup: string,
     feedImage: string,
     description: string,
+    executionImages?: string[]
 ): Promise<WorkoutDocType> => {
     validate.id(author)
     validate.name(name)
     validate.string(muscleGroup)
     validate.url(feedImage)
     validate.text(description)
+
+    if (executionImages && !Array.isArray(executionImages)) {
+        throw new SystemError("Execution images must be an array")
+    }
 
     return User.findById(author).lean()
         .catch(error => { throw new SystemError(error.message) })
@@ -29,6 +33,7 @@ const createWorkout = (
                 muscleGroup: muscleGroup as WorkoutDocType["muscleGroup"],
                 feedImage,
                 description,
+                executionImages: executionImages?.length ? executionImages : undefined,
                 status: "pending"
             }
 

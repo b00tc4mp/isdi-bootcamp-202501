@@ -5,9 +5,11 @@ import deleteWorkoutHandler from "./deleteWorkoutHandler"
 import filterWorkoutsHandler from "./filterWorkoutsHandler"
 import toggleLikeWorkoutHandler from "./toggleLikeWorkoutHandler"
 import toggleSaveWorkoutHandler from "./toggleSaveWorkoutHandler"
+import getUserWorkoutsHandler from "./getUserWorkoutsHandler"
 
 export {
     getAllWorkoutsHandler,
+    getUserWorkoutsHandler,
     getWorkoutByIdHandler,
     createWorkoutHandler,
     deleteWorkoutHandler,

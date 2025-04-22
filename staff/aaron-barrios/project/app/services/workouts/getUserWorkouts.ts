@@ -9,7 +9,7 @@ const getUserWorkouts = (targetUserId: string): Promise<WorkoutType[]> => {
         .then(token => {
             if (!token) throw new AuthorizationError("No token found")
 
-            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/${targetUserId}/workouts`, {
+            return fetch(`${process.env.EXPO_PUBLIC_API_URL}/workouts/${targetUserId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

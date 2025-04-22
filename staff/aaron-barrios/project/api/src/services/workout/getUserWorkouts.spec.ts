@@ -5,7 +5,7 @@ import chaiAsPromised from "chai-as-promised"
 import bcrypt from "bcryptjs"
 import { Types } from "mongoose"
 
-import { data, User, Workout } from "../../../data"
+import { data, User, Workout } from "../../data"
 import getUserWorkouts from "./getUserWorkouts"
 import { errors } from "com"
 
@@ -28,6 +28,7 @@ describe("get User Workouts", () => {
 
     //--- HAPPY PATH ---
     it("succeeds on getting User Workouts", () => {
+        debugger
         return bcrypt.hash("123123", 10)
             .then(hashedPassword => {
                 return User.insertMany([
@@ -61,7 +62,7 @@ describe("get User Workouts", () => {
                 const user = { id: _user._id.toString() }
                 const user2 = { id: _user2._id.toString() }
 
-                return Workout.insertMany([
+                /*return Workout.insertMany([
                     {
                         author: user.id,
                         name: "bench press",
@@ -82,6 +83,28 @@ describe("get User Workouts", () => {
                         type: "strength",
                         status: "accepted"
                     }
+                ])*/
+                return Promise.all([
+                    Workout.create({
+                        author: user.id,
+                        name: "bench press",
+                        muscleGroup: "chest",
+                        feedImage: "https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg",
+                        description: "workout 1",
+                        difficulty: "easy",
+                        type: "strength",
+                        status: "accepted"
+                    }),
+                    Workout.create({
+                        author: user2.id,
+                        name: "bulgarian squat",
+                        muscleGroup: "buttocks",
+                        feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg",
+                        description: "workout 2",
+                        difficulty: "easy",
+                        type: "strength",
+                        status: "accepted"
+                    })
                 ])
                     .then(() => getUserWorkouts(user.id, user.id))
                     .then(returnedWorkouts => {

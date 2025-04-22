@@ -13,7 +13,6 @@ import {
 import {
     getUserAliasHandler,
     getCurrentUserHandler,
-    getUserWorkoutsHandler,
     getSavedWorkoutsHandler,
     getMyWorkoutsHandler,
     updateUserDataHandler,
@@ -80,13 +79,6 @@ userRouter.get(
     getTargetUserDataHandler
 )
 
-
-// --- GET USER WORKOUTS METHOD
-userRouter.get(
-    "/:targetUserId/workouts",
-    authHandler,
-    getUserWorkoutsHandler
-)
 
 // --- GET USER ROUTINES METHOD --- (WIP)
 userRouter.get(

@@ -5,7 +5,8 @@ import { Text, View } from "@/components/Themed"
 
 import type { WorkoutType } from "com/types"
 import WorkoutCard from "@/components/WorkoutCard"
-import { getUserWorkouts, getTargetUserData } from "@/services/user/regular"
+import { getTargetUserData } from "@/services/user/regular"
+import { getUserWorkouts } from "@/services/workouts"
 
 export default function UserProfile() {
     const router = useRouter()
@@ -86,8 +87,6 @@ export default function UserProfile() {
                                 key={workout.id}
                                 workout={workout}
                                 onPress={() => { }}
-                                onToggleLike={() => Promise.resolve()}
-                                onToggleSave={() => Promise.resolve()}
                                 showStatus={false}
                                 showAuthor={false}
                             />

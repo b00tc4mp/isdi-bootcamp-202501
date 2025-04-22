@@ -17,7 +17,6 @@ describe('registerUser', () => {
 
     //--- HAPPY PATH ---
     it('succeds on new user', () => {
-        debugger
         let result2: void
 
         return registerUser("manu", "manu@barzi.com", "mamama")

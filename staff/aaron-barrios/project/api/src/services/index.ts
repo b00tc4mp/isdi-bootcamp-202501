@@ -17,7 +17,6 @@ import {
 import {
     getUserAlias,
     getCurrentUser,
-    getUserWorkouts,
     updateUserData
 
 } from './user/regular'
@@ -28,7 +27,8 @@ import {
     deleteWorkout,
     editWorkout,
     getAllWorkouts,
-    getWorkoutById
+    getWorkoutById,
+    getUserWorkouts
 } from './workout'
 
 
@@ -45,9 +45,9 @@ const services = {
 
     getCurrentUser,
     getUserAlias,
-    getUserWorkouts,
     updateUserData,
 
+    getUserWorkouts,
     createWorkout,
     createWorkoutProgress,
     deleteWorkout,

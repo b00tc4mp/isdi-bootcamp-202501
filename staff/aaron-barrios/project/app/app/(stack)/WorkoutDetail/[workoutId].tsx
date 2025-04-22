@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useLocalSearchParams, useRouter } from "expo-router"
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable } from "react-native"
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable, FlatList, ViewToken, Dimensions } from "react-native"
 import { Text, View } from "@/components/Themed"
 
 import getWorkoutById from "@/services/workouts/getWorkoutById"
 import toggleLikeWorkout from "@/services/workouts/toggleLikeWorkout"
 import toggleSaveWorkout from "@/services/workouts/toggleSaveWorkout"
+import defaultWorkoutExecutionImages from "@/constants/defaultWorkoutExecutionImages"
 import { WorkoutType } from "com/types"
+
+const SCREEN_WIDTH = Dimensions.get("window").width
 
 export default function WorkoutDetail() {
     const { workoutId } = useLocalSearchParams<{ workoutId: string }>()
@@ -15,6 +18,14 @@ export default function WorkoutDetail() {
     const [workout, setWorkout] = useState<WorkoutType | null>(null)
     const [loading, setLoading] = useState(true)
     const [toggle, setTogggle] = useState(false)
+    //image carrussel
+    const [currentImageIndex, setCurrentImageIndex] = useState(0)
+    const viewabilityConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current
+    const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
+        if (viewableItems.length > 0) {
+            setCurrentImageIndex(viewableItems[0].index || 0)
+        }
+    }).current
 
     const fetchWorkout = () => {
         if (!workoutId) return
@@ -61,6 +72,10 @@ export default function WorkoutDetail() {
         )
     }
 
+    const finalImages = workout.executionImages?.length
+        ? workout.executionImages
+        : defaultWorkoutExecutionImages[workout.muscleGroup]
+
     return (
         <ScrollView style={styles.container}>
             {/* Back Button */}
@@ -69,17 +84,24 @@ export default function WorkoutDetail() {
             </Pressable>
 
             {/* Feed Image */}
-            <Image source={{ uri: workout.feedImage }} style={styles.image} />
-
-            {/* Info */}
             <Text style={styles.title}>{workout.name}</Text>
-            <Text style={styles.subtitle}>💪 {workout.muscleGroup}</Text>
-            <Text style={styles.subtitle}>🏷️ Type: {workout.type}</Text>
-            <Text style={styles.subtitle}>🔥 Difficulty: {workout.difficulty}</Text>
-            <Text style={styles.description}>{workout.description}</Text>
+            <Image source={{ uri: workout.feedImage }} style={styles.image} />
 
             {/* Buttons */}
             <View style={styles.stats}>
+                <View style={styles.author}>
+                    {workout.author.role === "default" ? (
+                        <Text style={styles.defaultAuthor}>Default</Text>
+                    ) : (
+                        <Pressable onPress={() => router.push({
+                            pathname: "/(stack)/UserProfile/[id]",
+                            params: { id: workout.author.id },
+                        })}>
+                            <Text style={styles.author}>@{workout.author.alias}</Text>
+                        </Pressable>
+                    )}
+                </View>
+
                 <Pressable onPress={handleToggleLike} disabled={toggle}>
                     <Text style={styles.icon}>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
                 </Pressable>
@@ -87,6 +109,48 @@ export default function WorkoutDetail() {
                     <Text style={styles.icon}>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
                 </Pressable>
             </View>
+
+            {/* Info */}
+            <Text style={styles.subtitle}>Data</Text>
+            <Text style={styles.data}>💪 Muscle Group: {workout.muscleGroup}</Text>
+            <Text style={styles.data}>🏷️ Type: {workout.type}</Text>
+            <Text style={styles.data}>🔥 Difficulty: {workout.difficulty}</Text>
+
+            <Text style={styles.subtitle}>Description</Text>
+            <Text style={styles.description}>{workout.description}</Text>
+
+            {/* Execution Images Carousel */}
+            {finalImages?.length > 0 && (
+                <View style={styles.carousel}>
+                    <FlatList
+                        data={finalImages}
+                        horizontal
+                        pagingEnabled
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(_, index) => index.toString()}
+                        onViewableItemsChanged={onViewableItemsChanged}
+                        viewabilityConfig={viewabilityConfig}
+                        renderItem={({ item }) => (
+                            <Image
+                                source={typeof item === "string" ? { uri: item } : item}
+                                style={styles.executionImage}
+                                resizeMode="cover"
+                            />
+                        )}
+                    />
+                    <View style={styles.indicatorRow}>
+                        {finalImages.map((_, index) => (
+                            <View
+                                key={index}
+                                style={[
+                                    styles.indicator,
+                                    currentImageIndex === index && styles.activeIndicator,
+                                ]}
+                            />
+                        ))}
+                    </View>
+                </View>
+            )}
         </ScrollView>
     )
 }
@@ -119,10 +183,17 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 4,
     },
-    subtitle: {
+    data: {
         fontSize: 16,
         color: "#666",
         marginBottom: 2,
+    },
+    subtitle: {
+        marginTop: 12,
+        marginBottom: 8,
+        fontSize: 22,
+        fontWeight: "bold",
+        lineHeight: 22,
     },
     description: {
         marginTop: 12,
@@ -131,11 +202,49 @@ const styles = StyleSheet.create({
     },
     stats: {
         flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 24,
+        justifyContent: "flex-end",
         paddingHorizontal: 4,
+        gap: "5px"
+    },
+    author: {
+        color: "#0ea5e9",
+        fontWeight: "600",
+        fontSize: 12,
+        marginTop: 4,
+    },
+    defaultAuthor: {
+        color: "#888",
+        opacity: 0.7,
+        fontStyle: "italic",
+        fontSize: 12,
+        marginTop: 4,
     },
     icon: {
         fontSize: 18,
+    },
+    carousel: {
+        marginTop: 20,
+    },
+    executionImage: {
+        width: SCREEN_WIDTH - 32,
+        height: 220,
+        borderRadius: 12,
+        marginRight: 8,
+        backgroundColor: "#f4f4f4",
+    },
+    indicatorRow: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 8,
+    },
+    indicator: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: "#ccc",
+        marginHorizontal: 4,
+    },
+    activeIndicator: {
+        backgroundColor: "#0ea5e9",
     },
 })

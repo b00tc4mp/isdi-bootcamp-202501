@@ -69,8 +69,10 @@ export default function CreateWorkout() {
                     <Picker.Item label="Chest" value="chest" />
                     <Picker.Item label="Back" value="back" />
                     <Picker.Item label="Legs" value="legs" />
-                    <Picker.Item label="Arms" value="arms" />
+                    <Picker.Item label="Biceps" value="biceps" />
+                    <Picker.Item label="Triceps" value="triceps" />
                     <Picker.Item label="Buttocks" value="buttocks" />
+                    <Picker.Item label="Shoulders" value="shoulders" />
                 </Picker>
             </View>
 

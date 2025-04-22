@@ -12,6 +12,7 @@ import {
 
 import {
     getAllWorkoutsHandler,
+    getUserWorkoutsHandler,
     getWorkoutByIdHandler,
     createWorkoutHandler,
     deleteWorkoutHandler,
@@ -46,6 +47,12 @@ workoutRouter.get(
     getWorkoutByIdHandler
 )
 
+// --- GET USER WORKOUTS METHOD
+workoutRouter.get(
+    "/:targetUserId",
+    authHandler,
+    getUserWorkoutsHandler
+)
 
 // ---------- POST ROUTES ----------
 // --- CREATE WORKOUT METHOD ---

@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
 
-import { createFunctionalHandler } from "../../../middlewares"
-import { AuthHandlerRequest } from "../../../middlewares/types"
-import { getUserWorkouts } from "../../../services/user/regular"
+import { createFunctionalHandler } from "../../middlewares"
+import { AuthHandlerRequest } from "../../middlewares/types"
+import { getUserWorkouts } from "../../services/workout"
 
 const getUserWorkoutsHandler = createFunctionalHandler(
     (req: Request, res: Response) => {

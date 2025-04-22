@@ -1,6 +1,6 @@
 import { errors, validate } from "com"
 import { data } from "@/data"
-import defaultWorkoutExecutionImages from "./defaultWorkoutExecutionImages"
+import defaultWorkoutExecutionImages from "../../constants/defaultWorkoutExecutionImages"
 import { WorkoutType } from "com/types"
 
 const { SystemError, AuthorizationError } = errors
@@ -12,6 +12,7 @@ const createWorkout = (
     feedImage: string,
     description: string
 ): Promise<WorkoutType> => {
+    console.log({ name, description, muscleGroup, feedImage })
     validate.id(userId)
     validate.text(name)
     validate.text(muscleGroup)
@@ -33,7 +34,7 @@ const createWorkout = (
                     muscleGroup,
                     description,
                     feedImage,
-                    executionImages: defaultWorkoutExecutionImages[muscleGroup] ?? []
+                    executionImages: (defaultWorkoutExecutionImages[muscleGroup] ?? []).map(img => img.uri)
                 })
             })
         })

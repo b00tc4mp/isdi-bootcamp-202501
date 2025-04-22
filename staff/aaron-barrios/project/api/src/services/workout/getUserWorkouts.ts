@@ -1,4 +1,4 @@
-import { User, Workout } from "../../../data"
+import { User, Workout } from "../../data"
 import { validate, errors } from "com"
 import { WorkoutType } from "com/types"
 import { ObjectId } from "mongoose"
