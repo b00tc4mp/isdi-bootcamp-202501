@@ -109,7 +109,7 @@ describe('updateCalendarEvent', () => {
             })
     })
 
-    it('fails at authorization error', () => {
+    it('fails at event is not from user\'s couple', () => {
         return User.create({
             name: 'John Doe',
             email: 'john@doe.com',

@@ -76,6 +76,65 @@ couples.delete('/events/:eventId', retrieveUserId, withErrorHandling((req, res) 
         .then(() => res.status(204).send())
 }))
 
+// DIARY
+
+couples.get('/diary', retrieveUserId, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.retrieveDiaryEntries(userId)
+        .then(entries => res.json(entries))
+}))
+
+couples.get('/diary/:entryId', retrieveUserId, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { entryId } = req.params
+
+    return logic.retrieveDiaryEntry(userId, entryId)
+        .then(entry => res.json(entry))
+}))
+
+couples.post('/diary', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { text } = req.body
+
+    return logic.createDiaryEntry(userId, text)
+        .then(entry => res.status(201).json(entry))
+}))
+
+couples.put('/diary/:entryId', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { entryId } = req.params
+    const { text } = req.body
+
+    return logic.updateDiaryEntry(userId, entryId, text)
+        .then(() => res.status(204).send())
+}))
+
+couples.delete('/diary/:entryId', retrieveUserId, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { entryId } = req.params
+
+    return logic.deleteDiaryEntry(userId, entryId)
+        .then(() => res.status(204).send())
+}))
+
+
+// EMOTIONS
+
+couples.get('/emotions', retrieveUserId, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.retrieveTodayEmotions(userId)
+        .then(emotions => res.json(emotions))
+}))
+
+couples.post('/emotions', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { emotion } = req.body
+
+    return logic.createEmotion(userId, emotion)
+        .then(() => res.status(201).send())
+}))
 
 //LISTS
 
@@ -143,21 +202,4 @@ couples.delete('/items/:itemId', retrieveUserId, withErrorHandling((req, res) =>
 
     return logic.deleteItem(userId, itemId)
         .then(() => res.status(204).send())
-}))
-
-// EMOTIONS
-
-couples.get('/emotions', retrieveUserId, withErrorHandling((req, res) => {
-    const { userId } = req
-
-    return logic.retrieveTodayEmotions(userId)
-        .then(emotions => res.json(emotions))
-}))
-
-couples.post('/emotions', retrieveUserId, jsonBodyParser, withErrorHandling((req, res) => {
-    const { userId } = req
-    const { emotion } = req.body
-
-    return logic.createEmotion(userId, emotion)
-        .then(() => res.status(201).send())
 }))

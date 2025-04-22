@@ -1,27 +1,22 @@
-import { Couple, CalendarEvent } from '../../data/index.js'
+import { Couple, DiaryEntry } from '../../data/index.js'
 import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
 
-export const createCalendarEvent = (userId, eventDate, title, description) => {
+export const createDiaryEntry = (userId, text) => {
     validate.id(userId, 'userId')
-    validate.date(eventDate, 'eventDate')
-    validate.notBlankString(title, 'title') //TODO ?text
-    validate.notBlankString(description, 'description') //TODO ?
+    validate.text(text, 1, 2000, 'text')
 
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(couple => {
             if (!couple) throw new NotFoundError('Couple not found')
 
-            return CalendarEvent.create({
+            return DiaryEntry.create({
                 couple: couple._id,
                 author: userId,
-                eventDate,
-                title: title.trim(),
-                description: description.trim()
+                text: text.trim()
             })
                 .catch(error => { throw new SystemError(error.message) })
         })
-        .then(() => { })
 }

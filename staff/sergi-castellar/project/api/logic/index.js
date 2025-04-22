@@ -6,11 +6,17 @@ import { retrieveCalendarEvents } from "./calendar/retrieveCalendarEvents.js"
 
 // COUPLE
 import { getCoupleInfo } from "./couple/getCoupleInfo.js"
-import { getIfUserIsInCouple } from "./couple/getIfUserIsInCouple.js"
 import { getInviteCode } from "./couple/getInviteCode.js"
 import { getOwnCouple } from "./couple/getOwnCouple.js"
 import { joinWithInviteCode } from "./couple/joinWithInviteCode.js"
 import { setCoupleStartDate } from "./couple/setCoupleStartDate.js"
+
+// DIARY
+import { createDiaryEntry } from "./diary/createDiaryEntry.js"
+import { deleteDiaryEntry } from "./diary/deleteDiaryEntry.js"
+import { retrieveDiaryEntries } from "./diary/retrieveDiaryEntries.js"
+import { retrieveDiaryEntry } from "./diary/retrieveDiaryEntry.js"
+import { updateDiaryEntry } from "./diary/updateDiaryEntry.js"
 
 // EMOTIONS
 import { createEmotion } from "./emotions/createEmotion.js"
@@ -32,6 +38,7 @@ import { updateList } from "./lists/updateList.js"
 import { authenticateUser } from "./user/authenticateUser.js"
 import { deleteUser } from "./user/deleteUser.js"
 import { editUser } from "./user/editUser.js"
+import { getIfUserIsInCouple } from "./user/getIfUserIsInCouple.js"
 import { getSelfUser } from "./user/getSelfUser.js"
 import { registerUser } from "./user/registerUser.js"
 
@@ -44,11 +51,17 @@ export const logic = {
 
     // COUPLE
     getCoupleInfo,
-    getIfUserIsInCouple,
     getInviteCode,
     getOwnCouple,
     joinWithInviteCode,
     setCoupleStartDate,
+
+    // DIARY
+    createDiaryEntry,
+    deleteDiaryEntry,
+    retrieveDiaryEntries,
+    retrieveDiaryEntry,
+    updateDiaryEntry,
 
     // EMOTIONS
     createEmotion,
@@ -70,6 +83,7 @@ export const logic = {
     authenticateUser,
     deleteUser,
     editUser,
+    getIfUserIsInCouple,
     getSelfUser,
     registerUser
 }

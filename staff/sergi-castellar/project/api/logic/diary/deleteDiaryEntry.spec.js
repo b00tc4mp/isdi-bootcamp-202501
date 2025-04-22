@@ -1,21 +1,21 @@
 import 'dotenv/config'
-import { data, User, Couple, CalendarEvent } from "../../data/index.js"
-import { deleteCalendarEvent } from "./deleteCalendarEvent.js"
+import { data, User, Couple, DiaryEntry } from "../../data/index.js"
+import { deleteDiaryEntry } from "./deleteDiaryEntry.js"
 import { expect } from 'chai'
 import { NotFoundError, AuthorizationError } from 'com/errors.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-describe('deleteCalendarEvent', () => {
-    let userId, partnerId, coupleId, eventId
+describe('deleteDiaryEntry', () => {
+    let userId, partnerId, coupleId, entryId
 
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => {
-        return Promise.all([User.deleteMany({}), Couple.deleteMany({}), CalendarEvent.deleteMany({})])
+        return Promise.all([User.deleteMany({}), Couple.deleteMany({}), DiaryEntry.deleteMany({})])
     })
 
-    it('succeeds at deleting calendar event', () => {
+    it('succeeds at deleting diary entry', () => {
         return User.create({
             name: 'John Doe',
             email: 'john@doe.com',
@@ -40,21 +40,20 @@ describe('deleteCalendarEvent', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                return CalendarEvent.create({
+                return DiaryEntry.create({
                     couple: coupleId,
                     author: userId,
-                    eventDate: new Date('2023-05-01'),
-                    title: 'Anniversary',
-                    description: 'Our special day'
+                    text: 'This is a diary entry',
+                    createdAt: new Date()
                 })
             })
-            .then(event => {
-                eventId = event._id.toString()
-                return deleteCalendarEvent(userId, eventId)
+            .then(entry => {
+                entryId = entry._id.toString()
+                return deleteDiaryEntry(userId, entryId)
             })
-            .then(() => CalendarEvent.findById(eventId).lean())
-            .then(event => {
-                expect(event).to.be.null
+            .then(() => DiaryEntry.findById(entryId).lean())
+            .then(entry => {
+                expect(entry).to.be.null
             })
     })
 
@@ -67,7 +66,7 @@ describe('deleteCalendarEvent', () => {
         })
             .then(user => {
                 userId = user._id.toString()
-                return deleteCalendarEvent(userId, '605c72ef1532073d4a8b4e1e')
+                return deleteDiaryEntry(userId, '68078541d746d7c09cd60288')
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -75,7 +74,7 @@ describe('deleteCalendarEvent', () => {
             })
     })
 
-    it('fails at non existent event', () => {
+    it('fails at non-existent entry', () => {
         return User.create({
             name: 'John Doe',
             email: 'john@doe.com',
@@ -100,15 +99,15 @@ describe('deleteCalendarEvent', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                return deleteCalendarEvent(userId, '605c72ef1532073d4a8b4e1e')
+                return deleteDiaryEntry(userId, '68078541d746d7c09cd60288')
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('Event not found')
+                expect(error.message).to.equal('Diary entry not found')
             })
     })
 
-    it('fails at event is not from user\'s couple', () => {
+    it('fails at entry is not from user\'s couple', () => {
         return User.create({
             name: 'John Doe',
             email: 'john@doe.com',
@@ -133,26 +132,25 @@ describe('deleteCalendarEvent', () => {
             })
             .then(couple => {
                 coupleId = couple._id.toString()
-                return CalendarEvent.create({
+                return DiaryEntry.create({
                     couple: '605c72ef1532073d4a8b4e1e',
                     author: '605c72ef1532073d4a8b8e1e',
-                    eventDate: new Date('2023-05-01'),
-                    title: 'Anniversary',
-                    description: 'Our special day'
+                    text: 'This is a diary entry',
+                    createdAt: new Date()
                 })
             })
-            .then(event => {
-                eventId = event._id.toString()
-                return deleteCalendarEvent(userId, eventId)
+            .then(entry => {
+                entryId = entry._id.toString()
+                return deleteDiaryEntry(userId, entryId)
             })
             .catch(error => {
                 expect(error).to.be.instanceOf(AuthorizationError)
-                expect(error.message).to.equal('Couple is not the owner of the event')
+                expect(error.message).to.equal('Couple is not the owner of the diary entry')
             })
     })
 
     afterEach(() => {
-        return Promise.all([User.deleteMany({}), Couple.deleteMany({}), CalendarEvent.deleteMany({})])
+        return Promise.all([User.deleteMany({}), Couple.deleteMany({}), DiaryEntry.deleteMany({})])
     })
 
     after(() => data.disconnect())

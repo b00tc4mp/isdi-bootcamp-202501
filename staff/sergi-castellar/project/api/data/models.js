@@ -102,7 +102,8 @@ const diaryEntry = new Schema({
     reaction: {
         type: String,
         minLength: 1,
-        maxLength: 10
+        maxLength: 10,
+        default: null
     },
     createdAt: {
         type: Date,
