@@ -133,6 +133,6 @@ data.connect(MONGO_URL, MONGO_DB)
             })
     })
     .then(() => {
-        console.log('populate.js ejecutado');
+        console.log('populate.js executed');
     })
     .finally(() => data.disconnect());

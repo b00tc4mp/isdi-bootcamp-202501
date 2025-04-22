@@ -28,16 +28,16 @@ export function EmotionsResult({ userEmotion, onBack }) {
           <h1 className='text-xl font-bold'>EMOTIONS</h1>
         </div>
 
-        <div className='bg-pink-200 p-4 rounded-2xl shadow text-center space-y-4'>
+        <div className='bg-white p-4 rounded-2xl shadow text-center space-y-4'>
           <h2 className='text-lg font-semibold'>How are you feeling today?</h2>
 
-          <div className='flex justify-center gap-8'>
-            <div className='flex flex-col items-center space-y-2'>
+          <div className='flex justify-center gap-8 pb-4'>
+            <div className='w-40 bg-pink-200/40 rounded-2xl shadow p-2 flex flex-col items-center space-y-2'>
               <img src={`/assets/emotions/asset_emotion_${userEmotion}.png`} alt='' className='w-20 h-20 object-contain' />
               <p className='text-sm font-medium'>Your emotions</p>
             </div>
 
-            <div className='flex flex-col items-center space-y-2'>
+            <div className='w-40 bg-pink-200/40 rounded-2xl shadow p-2 flex flex-col items-center space-y-2'>
               {partnerEmotion !== null ? <img src={`/assets/emotions/asset_emotion_${partnerEmotion}.png`} alt='' className='w-20 h-20 object-contain' /> : <img src='/assets/emotions/asset_emotion_default.png' alt='' className='w-20 h-20 object-contain opacity-50' />}
               <p className='text-sm font-medium'>Partner’s emotions</p>
             </div>

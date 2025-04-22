@@ -41,12 +41,12 @@ export function Emotions() {
           <h1 className='text-xl font-bold'>EMOTIONS</h1>
         </div>
 
-        <div className='bg-pink-200 p-4 rounded-2xl shadow'>
+        <div className='bg-white p-4 rounded-2xl shadow'>
           <h2 className='text-lg font-semibold mb-4 text-center'>How are you feeling today?</h2>
 
           <div className='grid grid-cols-3 gap-4'>
             {[...Array(9)].map((_, index) => (
-              <button key={index} onClick={() => handleSelect(index)} className='bg-white/20 rounded-2xl shadow p-2 transition hover:scale-105 flex justify-center'>
+              <button key={index} onClick={() => handleSelect(index)} className='bg-pink-200/40 rounded-2xl shadow p-2 transition hover:scale-105 flex justify-center'>
                 <img src={`/assets/emotions/asset_emotion_${index}.png`} alt='' className='w-16 h-16 object-contain' />
               </button>
             ))}

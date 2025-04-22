@@ -53,8 +53,6 @@ function App() {
     navigate('/login')
   }
 
-  console.debug('App -> render')
-
   return (
     <>
       {loggedIn !== null && (
