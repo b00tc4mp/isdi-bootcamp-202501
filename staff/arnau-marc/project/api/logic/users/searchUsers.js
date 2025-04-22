@@ -1,4 +1,7 @@
 import { User } from '../../data/index.js' // Importamos el modelo de Usuario
+import { errors } from '../../validations/index.js'
+
+const { NotFoundError } = errors
 
 export const searchUsers = (query) => {
     // Buscamos usuarios cuyo 'username' contenga el texto introducido en el query

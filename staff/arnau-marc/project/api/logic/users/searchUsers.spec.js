@@ -2,31 +2,76 @@ import 'dotenv/config'
 import { data, User } from '../../data/index.js'
 import { searchUsers } from './searchUsers.js'
 import { expect } from 'chai'
-import { Types } from 'mongoose'
+import { errors } from '../../validations/index.js'
 
-const { ObjectId } = Types
+const { NotFoundError } = errors
 
 const { MONGO_URL, MONGO_DB } = process.env
 
 describe('searchUsers', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
-
     beforeEach(() => User.deleteMany({}))
 
-    it('succed on searchUsers'), () => {
+    it('succed on searchUsers', () => {
 
-        return User.create({
+        return Promise.all([
+            User.create({
             name: 'arnau',
             surname: 'romero',
             email: 'arnau@gmail.com',
             username: 'arnau_sots',
             password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        }),
+        User.create({
+            name: 'arnau',
+            surname: 'romero',
+            email: 'marc@tonto.com',
+            username: 'arnaldo_romero',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
         })
-            .then(user => {
-                return searchUsers(query)
+    ])
+            .then(() => {
+                return searchUsers('a')
             })
             .then(user => {
-                expect(user)
+                debugger
+                expect(user).to.exist
+                expect(user).to.be.a('array')
+                expect(user[0].username).to.equal('arnaldo_romero')
+                expect(user[1].username).to.equal('arnau_sots')
             })
-    }
+    })
+
+    
+    it('fail: No users found', () => {
+        let catchedError
+
+        return Promise.all([
+            User.create({
+            name: 'arnau',
+            surname: 'romero',
+            email: 'arnau@gmail.com',
+            username: 'arnau_sots',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        }),
+        User.create({
+            name: 'arnau',
+            surname: 'romero',
+            email: 'marc@tonto.com',
+            username: 'arnaldo_romero',
+            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
+        })
+    ])
+            .then(() => {
+                return searchUsers('i')
+            })
+            .catch(error => { catchedError = error })
+            .finally(() => {
+                expect(catchedError).to.be.instanceOf(NotFoundError)
+                expect(catchedError.message).to.equal('No users found')
+            })
+    })
+
+    afterEach(() => User.deleteMany({}))                 
+    after(() => data.disconnect()) 
 })

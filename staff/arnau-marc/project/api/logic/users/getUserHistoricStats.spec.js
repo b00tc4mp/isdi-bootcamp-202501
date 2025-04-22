@@ -1,16 +1,14 @@
 import 'dotenv/config'
 import { data, Game, Season, User } from '../../data/index.js'
 import { expect } from 'chai'
-import { errors } from '../../validations/index.js'
 import { Types } from 'mongoose'
 import { getUserHistoricStats } from './getUserHistoricStats.js'
 
-const { NotFoundError, SystemError } = errors
 const { ObjectId } = Types
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-describe.only('getUserHistoricStats', () => {
+describe('getUserHistoricStats', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => Season.deleteMany({})) 
