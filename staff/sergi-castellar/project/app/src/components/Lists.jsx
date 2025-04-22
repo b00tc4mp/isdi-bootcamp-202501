@@ -127,7 +127,7 @@ export function Lists() {
           ))}
         </ul>
         <div className='flex justify-center'>
-          <button onClick={openCreateModal} className='bg-pink-500 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
+          <button onClick={openCreateModal} className='bg-pink-400 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
             +
           </button>
         </div>
@@ -143,7 +143,7 @@ export function Lists() {
               <button onClick={() => setShowModal(false)} className='text-sm text-gray-500'>
                 Cancel
               </button>
-              <button onClick={handleSave} className='bg-pink-500 text-white px-4 py-2 rounded-xl'>
+              <button onClick={handleSave} className='bg-pink-400 text-white px-4 py-2 rounded-xl'>
                 {editMode ? 'Update' : 'Create'}
               </button>
             </div>

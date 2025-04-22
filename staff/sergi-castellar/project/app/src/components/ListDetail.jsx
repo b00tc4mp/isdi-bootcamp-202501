@@ -107,7 +107,7 @@ export function ListDetail({ list, onBack }) {
               setText('')
               setShowModal(true)
             }}
-            className='bg-pink-500 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
+            className='bg-pink-400 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
             +
           </button>
         </div>
@@ -122,7 +122,7 @@ export function ListDetail({ list, onBack }) {
               <button onClick={() => setShowModal(false)} className='text-sm text-gray-500'>
                 Cancel
               </button>
-              <button onClick={handleSubmit} className='bg-pink-500 text-white px-4 py-2 rounded-xl'>
+              <button onClick={handleSubmit} className='bg-pink-400 text-white px-4 py-2 rounded-xl'>
                 {editItem ? 'Update' : 'Create'}
               </button>
             </div>

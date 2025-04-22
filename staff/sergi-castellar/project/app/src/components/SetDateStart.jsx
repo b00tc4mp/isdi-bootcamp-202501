@@ -33,7 +33,7 @@ export function SetDateStart() {
         <h2 className='text-xl font-bold'>Set the day your love story began 💖</h2>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <input type='date' className='border rounded-xl px-3 py-2 w-full' value={date} onChange={(event) => setDate(event.target.value)} required />
-          <button type='submit' className='bg-pink-500 text-white px-4 py-2 rounded-xl w-full'>
+          <button type='submit' className='bg-pink-400 text-white px-4 py-2 rounded-xl w-full'>
             Save Date
           </button>
         </form>

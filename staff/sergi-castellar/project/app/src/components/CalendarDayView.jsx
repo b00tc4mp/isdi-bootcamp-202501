@@ -88,7 +88,7 @@ export function CalendarDayView({ date, onClose, onRefresh }) {
                 setEditingEvent(null)
                 setShowForm(true)
               }}
-              className='bg-pink-500 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
+              className='bg-pink-400 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
               +
             </button>
           </div>

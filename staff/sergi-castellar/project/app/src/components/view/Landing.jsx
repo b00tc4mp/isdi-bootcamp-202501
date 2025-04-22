@@ -12,7 +12,7 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
           <p className='text-xl font-semibold text-gray-800'>Grow together every day</p>
         </div>
         <div className='space-y-4 w-full'>
-          <button onClick={handleLoginClick} className='w-full py-2 bg-pink-300 rounded-xl text-white font-bold text-xl hover:bg-pink-500'>
+          <button onClick={handleLoginClick} className='w-full py-2 bg-pink-300 rounded-xl text-white font-bold text-xl hover:bg-pink-400'>
             Login
           </button>
           <button onClick={handleRegisterClick} className='w-full py-2 bg-pink-400 rounded-xl text-white font-bold text-xl hover:bg-pink-700'>

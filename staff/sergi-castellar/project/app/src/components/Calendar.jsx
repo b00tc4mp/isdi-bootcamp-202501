@@ -89,7 +89,7 @@ export function Calendar() {
             <button onClick={handlePrevMonth} className='text-lg'>
               &lt;
             </button>
-            <h2 className='text-xl font-bold text-center'>{monthNameAndYear}</h2>
+            <h2 className='text-xl font-bold text-center min-w-40'>{monthNameAndYear}</h2>
             <button onClick={handleNextMonth} className='text-lg'>
               &gt;
             </button>
@@ -119,10 +119,10 @@ export function Calendar() {
                 <div
                   key={index}
                   className={`aspect-square flex items-center justify-center rounded-xl cursor-pointer relative transition
-                  ${today ? 'bg-pink-300 text-white font-bold' : 'bg-pink-100 hover:bg-pink-100'}`}
+                  ${today ? 'bg-pink-400 text-white font-bold' : 'bg-pink-100 hover:bg-pink-100'}`}
                   onClick={() => setSelectedDate(new Date(day))}>
                   <span>{day.getDate()}</span>
-                  {hasEvents && <div className='w-1.5 h-1.5 bg-pink-500 rounded-full absolute bottom-1 left-1/2 transform -translate-x-1/2'></div>}
+                  {hasEvents && <div className='w-1.5 h-1.5 bg-pink-400 rounded-full absolute bottom-1 left-1/2 transform -translate-x-1/2'></div>}
                 </div>
               )
             })}

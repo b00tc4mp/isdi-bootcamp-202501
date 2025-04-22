@@ -58,7 +58,7 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
               <a onClick={handleRegisterClick} className='text-pink-500 hover:underline text-sm pb-4'>
                 I need a new account
               </a>
-              <button type='submit' form='login-form' className='bg-pink-500 text-white py-2 px-6 rounded-lg hover:bg-pink-600 transition duration-200'>
+              <button type='submit' form='login-form' className='bg-pink-400 text-white py-2 px-6 rounded-lg hover:bg-pink-600 transition duration-200'>
                 Login
               </button>
             </div>

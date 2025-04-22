@@ -57,7 +57,7 @@ export function InviteScreen() {
             </div>
           </div>
         ) : (
-          <button className='bg-pink-500 text-white px-4 py-2 rounded-xl' onClick={handleGenerateInviteCode}>
+          <button className='bg-pink-400 text-white px-4 py-2 rounded-xl' onClick={handleGenerateInviteCode}>
             Generate Invite Code
           </button>
         )}

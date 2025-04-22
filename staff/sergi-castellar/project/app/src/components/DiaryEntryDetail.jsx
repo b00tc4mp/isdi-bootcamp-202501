@@ -8,7 +8,7 @@ export function DiaryEntryDetail({ entry, onClose, onUpdated }) {
   const handleDelete = () => {
     if (!confirm('Delete this entry?')) return
 
-    logic.diary
+    logic
       .deleteDiaryEntry(entry.id)
       .then(() => {
         onUpdated()
@@ -17,21 +17,16 @@ export function DiaryEntryDetail({ entry, onClose, onUpdated }) {
       .catch((error) => alert(error.message))
   }
 
-  const formatDate = (iso) => {
-    const date = new Date(iso)
-    return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`
-  }
-
   return (
     <div className='min-h-screen bg-pink-100 p-6'>
-      <div className={`max-w-md mx-auto p-6 rounded-3xl shadow space-y-4 ${entry.own ? 'bg-pink-800 text-white' : 'bg-white text-pink-800'}`}>
+      <div className={`max-w-md mx-auto p-6 rounded-3xl shadow space-y-4 bg-white text-black`}>
         <button onClick={onClose} className='text-sm text-gray-600 mb-2'>
           ← Back
         </button>
 
         <div className='flex justify-between items-center'>
           <span className='text-sm font-semibold'>{entry.author.name}</span>
-          <span className='text-xs'>{formatDate(entry.createdAt)}</span>
+          <span className='text-xs'>{new Date(entry.createdAt).toLocaleDateString()}</span>
         </div>
 
         <p className='text-sm whitespace-pre-wrap'>{entry.text}</p>
