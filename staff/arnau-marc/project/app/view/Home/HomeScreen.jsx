@@ -99,6 +99,7 @@ const Home = ({ navigation }) => {
   }
 
   const handleConfirmWinner = (winnerId) => {
+    if (Alert.confirm('Set Winner? This is action is irreversible')){
     logic.setGameWinner(selectedGame._id, winnerId)
       .then(() => {
         setModalVisible(false)
@@ -110,10 +111,11 @@ const Home = ({ navigation }) => {
         window.alert(`Error ❌\n${error.message}`)
         setModalVisible(false)
       })
+    }
   }
 
   const handleDeleteGame = (gameId) => {
-    if (window.confirm('Delete Game?')) {
+    if (Alert.confirm('Delete Game? This is action is irreversible')) {
       return logic.deleteGame(gameId)
         .then(() => logic.getGames().then(({ games }) => setGames(games)))
         .catch(error => Alert.alert(error.message))
