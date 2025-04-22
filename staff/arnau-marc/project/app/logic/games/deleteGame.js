@@ -13,7 +13,7 @@ export const deleteGame = (gameId) => {
         .then(token => {
             if (!token) throw new ValidationError(error.message)
             
-            return fetch(`http://localhost:8080/games/${gameId}`, {
+            return fetch(`${API_BASE_URL}/games/${gameId}`, {
                 method: 'DELETE',
                 headers : {
                     Authorization : `Bearer ${token}`

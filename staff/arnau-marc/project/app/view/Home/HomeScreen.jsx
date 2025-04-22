@@ -133,7 +133,7 @@ const Home = ({ navigation }) => {
       ]
     )
   }  
-
+  
   const scheduledGames = games.filter(game => game.status === 'scheduled')
   const finishedGames = games.filter(game => game.status === 'finished')
   const combinedGames = [...scheduledGames, ...finishedGames]
