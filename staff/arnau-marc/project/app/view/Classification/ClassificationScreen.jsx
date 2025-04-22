@@ -37,8 +37,11 @@ export default function ClassificationScreen({ navigation }) {
       .catch(error => Alert.alert(error.message))
 
     logic.getLatestSeason()
+      .catch(error => Alert.alert(error.message))
       .then(season => {
-        if (!season) throw new NotFoundError('No hay ninguna temporada activa actualmente')
+        if (!season) {
+          throw new NotFoundError('No hay ninguna temporada activa actualmente') 
+        }
         setSeason(season)
         setError(null)
         navigation.setOptions(
@@ -60,7 +63,7 @@ export default function ClassificationScreen({ navigation }) {
         setLeaderboard([])
         setError(err.message)
       })
-  }, [seasonFinished])
+  }, [])
 
   const handleLogoutClick = () => {
       try {
@@ -73,33 +76,49 @@ export default function ClassificationScreen({ navigation }) {
       }
     }
   
-    const handleFinishSeason = () => {
-      logic.finishSeason(season._id)
-        .then(() => {
-          // Recargar la season finalizada para ver quién ganó
-          return logic.getSeasonById(season._id)
-        })
-        .then(seasonEnded => {
-          const winnerId = seasonEnded.winner
-    
-          if (winnerId) {
-            return logic.getUserById(winnerId)
-              .then(user => {
-                Alert.alert(`Temporada finalizada 🎉\nGanador: ${user.username}`)
-                // TODO window confirm
-                setSeason(null)
-                setLeaderboard([])
-                setError('No hay ninguna temporada activa actualmente')
-              })
-          } else {
-            Alert.alert('Temporada finalizada. No hubo ganador.')
-            setSeason(null)
-            setLeaderboard([])
-            setError('No hay ninguna temporada activa actualmente')
-          }
-        })
-        .catch(err => Alert.alert(`Error al finalizar: ${err.message}`))
-    }    
+const handleFinishSeason = () => {
+  Alert.alert(
+      '🃏 Finish Season?',
+      'Are you sure you want to finish this season? ♠️♥️',
+      [
+        {
+        text: 'Cancel',
+        style: 'cancel'
+        },
+        {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: () => {
+          logic.finishSeason(season._id)
+          .then(() => {
+            // Recargar la season finalizada para ver quién ganó
+            return logic.getSeasonById(season._id)
+          })
+          .then(seasonEnded => {
+            const winnerId = seasonEnded.winner
+      
+            if (winnerId) {
+              return logic.getUserById(winnerId)
+                .then(user => {
+                  Alert.alert(`Temporada finalizada 🎉\nGanador: ${user.username}`)
+                  setSeason(null)
+                  setLeaderboard([])
+                  setError('No hay ninguna temporada activa actualmente')
+                })
+            } else {
+              Alert.alert('Temporada finalizada. No hubo ganador.')
+              setSeason(null)
+              setLeaderboard([])
+              setError('No hay ninguna temporada activa actualmente')
+            }
+            })
+            .catch(err => Alert.alert(`Error al finalizar: ${err.message}`))
+            logic.getFinishedSeasons()
+            .then(setSeasonFinished)
+            .catch(error => Alert.alert(error.message))    
+        }
+      }]
+    )}    
 
   const handleCreateSeason = () => {
     const now = new Date()

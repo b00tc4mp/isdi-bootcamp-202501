@@ -18,9 +18,10 @@ export const getLatestSeason = () => {
   }) 
     .catch(error => { throw new SystemError(error.message) })
     .then(res => {
-      if (res.status === 200)
+      if (res.status === 200){ 
         return res.json()
           .catch(error => { throw new SystemError(error.message) })
+      }
 
       return res.json()
         .catch(error => { throw new SystemError(error.message) })

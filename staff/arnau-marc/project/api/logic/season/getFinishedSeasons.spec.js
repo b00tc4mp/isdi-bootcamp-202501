@@ -38,8 +38,8 @@ describe('getFinishedSeasons', () => {
         .then(seasons =>{
             expect(seasons).to.exist
 
-            expect(seasons[0].name).to.equal('season 2')
-            expect(seasons[1].name).to.equal('season 1')          
+            expect(seasons[0].name).to.equal('season 1')
+            expect(seasons[1].name).to.equal('season 2')          
         }) 
     })
 
