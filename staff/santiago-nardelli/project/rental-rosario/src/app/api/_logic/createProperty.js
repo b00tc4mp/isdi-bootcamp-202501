@@ -31,7 +31,7 @@ export const createProperty = (propertyData) => {
       // Crear la propiedad
      
 
-      await Property.create({
+      property = await Property.create({
         title: propertyData.title,
         description: propertyData.description,
         price: propertyData.price,
@@ -41,6 +41,8 @@ export const createProperty = (propertyData) => {
         images: propertyData.images,
         airbnbUrl: propertyData.airbnbUrl
       });
+      return property; // Importante para obtener el resultado
+
     } catch (error) {
       throw new SystemError(error.message);
     }

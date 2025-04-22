@@ -1,9 +1,10 @@
-import { Property } from '../../../lib/db/models/index.js';
-import { validate, errors } from 'com';
+import { Property, User } from "../../../lib/db/models/index.js";
+import { validate, errors } from "com";
 
 const { SystemError, NotFoundError } = errors;
 
-export const updateProperty = (propertyId, updates) => {
+export const updateProperty = (userId, propertyId, updates) => {
+  validate.id(userId, "userId");
   validate.id(propertyId, "propertyId");
 
   //Validacion de update sea un objeto con al menos 1 propiedad ingresada
@@ -44,22 +45,31 @@ export const updateProperty = (propertyId, updates) => {
     validate.url(updates.airbnbUrl, { minLength: 1, maxLength: 500 });
   }
 
-    // Filtrar campos vacíos o no válidos
-    const filteredUpdates = Object.fromEntries(
-        Object.entries(updates).filter(([_, value]) => value !== undefined && value !== null && value !== "")
-      );
-    
-      if (!Object.keys(filteredUpdates).length) {
-        throw new NotFoundError("No valid fields provided for update");
-      }
-    
+  // Filtrar campos vacíos o no válidos
+  const filteredUpdates = Object.fromEntries(
+    Object.entries(updates).filter(
+      ([_, value]) => value !== undefined && value !== null && value !== ""
+    )
+  );
+
+  if (!Object.keys(filteredUpdates).length) {
+    throw new NotFoundError("No valid fields provided for update");
+  }
 
   // Lógica asincrónica envuelta en una IIFE
   return (async () => {
-    // Buscar la propiedad por ID y actualizarla
-    let updatedProperty
     try {
-       updatedProperty = await Property.findOneAndUpdate(
+      const user = await User.findById(userId).lean();
+      if (!user) {
+        throw new NotFoundError("User not found");
+      }
+    } catch (error) {
+      throw new SystemError(error.message);
+    }
+    // Buscar la propiedad por ID y actualizarla
+    let updatedProperty;
+    try {
+      updatedProperty = await Property.findOneAndUpdate(
         { _id: propertyId }, // Filtro de búsqueda
         {
           $set: {
@@ -69,7 +79,6 @@ export const updateProperty = (propertyId, updates) => {
         },
         {
           new: true, // Devuelve el documento actualizado
-          
         }
       ).lean();
 
@@ -77,7 +86,7 @@ export const updateProperty = (propertyId, updates) => {
         throw new NotFoundError("Property not found");
       }
 
-     
+      return updatedProperty;
     } catch (error) {
       throw new SystemError(error.message);
     }

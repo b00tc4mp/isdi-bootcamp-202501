@@ -11,8 +11,8 @@ if (!JWT_EXPIRES_IN) {
   console.warn('JWT_EXPIRES_IN no está definido. Usando el valor predeterminado de 1h.');
 }
 
-export const createToken = (userId, role) => {
-  const payload = { userId, role };
+export const createToken = (id, role) => {
+  const payload = { id, role };
   const options = { expiresIn: JWT_EXPIRES_IN || '1h' }; // Valor por defecto si no está definido
 
   return jwt.sign(payload, JWT_SECRET, options);

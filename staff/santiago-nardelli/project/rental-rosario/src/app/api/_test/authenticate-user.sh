@@ -1,1 +1,1 @@
-curl -X POST http://localhost:3000/api/admins/auth -H "Content-Type: application/json" -d '{"email":"diego@maradona.com","password":"123123123"}' -v
+curl -X POST http://localhost:3000/api/admins/auth -H 'Content-type: application/json' -d '{"email":"lio@messi.com", "password":"123123123"}' -v

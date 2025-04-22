@@ -1,7 +1,15 @@
-import { errors } from 'com';
-import jwt from 'jsonwebtoken';
+import { errors } from "com";
+import jwt from "jsonwebtoken";
 
-const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidateError, AuthorizationError } = errors;
+const {
+  CredentialsError,
+  DuplicityError,
+  NotFoundError,
+  OwnershipError,
+  SystemError,
+  ValidateError,
+  AuthorizationError,
+} = errors;
 const { JsonWebTokenError, TokenExpiredError } = jwt;
 
 export const errorHandler = (error, req, res) => {
@@ -30,16 +38,13 @@ export const errorHandler = (error, req, res) => {
   } else if (error instanceof TokenExpiredError) {
     status = 401;
     errorName = AuthorizationError.name;
-    message = 'expired JWT';
+    message = "expired JWT";
   } else if (error instanceof JsonWebTokenError) {
     status = 401;
     errorName = AuthorizationError.name;
-    message = 'invalid JWT';
+    message = "invalid JWT";
   }
 
- 
-    // Enviamos la respuesta con el error adecuado
-    return res.json({ error: errorName, message },
-      { status }
-    );
+  //Enviamos la respuesta con el error adecuado
+  return res.json({ error: errorName, message }, { status });
 };

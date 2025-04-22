@@ -1,12 +1,11 @@
-import { errorHandler } from './errorHandler.js';
+import { errorHandler } from "./errorHandler.js";
 
 export const withErrorHandling = (callback) => {
-  return async (req, res) => {
+  return async (req, res, params) => {
     try {
-      return await callback(req, res);
+      return await callback(req, res, params);
     } catch (error) {
-      return await errorHandler(error, req, res); 
+      return errorHandler(error, req, res);
     }
   };
 };
-

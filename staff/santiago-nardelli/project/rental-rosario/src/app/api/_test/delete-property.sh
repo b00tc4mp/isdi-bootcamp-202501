@@ -1,0 +1,1 @@
+curl -X DELETE http://localhost:3000/api/properties/6807c39eae7c098758e86e7c -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDdjMWM2YWU3YzA5ODc1OGU4NmU3MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTM0MTYxNywiZXhwIjoxNzQ1MzQ1MjE3fQ.VTV1bMAP1PxuutdQR5muGrFC8YilYydja64wEAg_HZI' -v
