@@ -39,6 +39,15 @@ data.connect(MONGO_URL, MONGO_DB)
         participants: [marc._id, arnau._id],
         createdAt: new Date(2025, 6, 1),
         modifiedAt: new Date()
+      },
+      {
+        startDate: new Date(2025, 6, 1),
+        endDate: new Date(2025, 9, 1),
+        status: 'active',
+        name: 'casual',
+        participants: [],
+        createdAt: new Date(2025, 6, 1),
+        modifiedAt: new Date()
       }
     ]).then(([season1, winter]) => {
       return Game.insertMany([

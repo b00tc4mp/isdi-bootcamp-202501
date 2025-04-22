@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, Button } from 'react-native'
+import { View, Text, FlatList, Alert} from 'react-native'
+import { errors } from '../../validations/index.js'
 
 import { logic } from '../../logic/index.js'
 import { CustomModal, NavBar, PokerBackground2, PokerHeader, PokerButton } from '../../components/index.js' 
 
 import  styles  from './Classification.styles.js'
+
+const { NotFoundError } = errors
 
 export default function ClassificationScreen({ navigation }) {
   const [leaderboard, setLeaderboard] = useState([])
@@ -35,7 +38,7 @@ export default function ClassificationScreen({ navigation }) {
 
     logic.getLatestSeason()
       .then(season => {
-        if (!season) throw new Error('No hay ninguna temporada activa actualmente')
+        if (!season) throw new NotFoundError('No hay ninguna temporada activa actualmente')
         setSeason(season)
         setError(null)
         navigation.setOptions(
@@ -57,7 +60,7 @@ export default function ClassificationScreen({ navigation }) {
         setLeaderboard([])
         setError(err.message)
       })
-  }, [])
+  }, [seasonFinished])
 
   const handleLogoutClick = () => {
       try {
@@ -83,6 +86,7 @@ export default function ClassificationScreen({ navigation }) {
             return logic.getUserById(winnerId)
               .then(user => {
                 Alert.alert(`Temporada finalizada 🎉\nGanador: ${user.username}`)
+                // TODO window confirm
                 setSeason(null)
                 setLeaderboard([])
                 setError('No hay ninguna temporada activa actualmente')
@@ -182,7 +186,7 @@ export default function ClassificationScreen({ navigation }) {
       onPress={() => openSeasonModal(seasonFinished)}
       />
 
-{!season && (
+      {!season && (
         <>
           <Text style={{ marginVertical: 20, fontSize: 16, color: 'gray' }}>
             {error || 'No hay temporada activa en este momento'}

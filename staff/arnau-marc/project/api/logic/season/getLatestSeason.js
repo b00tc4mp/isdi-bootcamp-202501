@@ -4,7 +4,7 @@ import { errors } from '../../validations/index.js'
 const { NotFoundError, SystemError } = errors
 
 export const getLatestSeason = () => {
-    return Season.findOne({ status: 'active' })
+    return Season.findOne({ status: 'active', name: { $ne: 'casual' }})
       .sort({ startDate: -1 })
       .lean()
       .catch(error => { throw new SystemError(error.message) })
