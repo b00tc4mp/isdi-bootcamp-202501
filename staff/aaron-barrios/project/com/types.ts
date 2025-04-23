@@ -1,8 +1,8 @@
 // --- TYPES DE LOS DATOS DE NEGOCIO (SERVICIO)
 export type UserType = {
     id: string
-    name: string
-    lastName: string
+    name?: string
+    lastName?: string
     email: string
     alias: string
     level?: string

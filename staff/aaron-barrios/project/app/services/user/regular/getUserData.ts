@@ -13,7 +13,7 @@ const getUserData = (): Promise<{
     level?: string
     interests?: string[]
     createdAt: string
-    modifiedAt: string | null
+    modifiedAt?: string | null
 }> => {
     return data.getToken()
         .then(token => {

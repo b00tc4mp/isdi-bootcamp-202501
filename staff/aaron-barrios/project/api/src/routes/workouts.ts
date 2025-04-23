@@ -19,11 +19,10 @@ import {
     filterWorkoutsHandler,
     toggleLikeWorkoutHandler,
     toggleSaveWorkoutHandler,
-    getModeratorWorkoutsHandler
-} from "../handlers/workouts"
-import {
+    getModeratorWorkoutsHandler,
     reviewWorkoutHandler
-} from "../handlers/user/mod"
+} from "../handlers/workouts"
+
 
 
 export const workoutRouter = Router()

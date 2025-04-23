@@ -31,6 +31,10 @@ import {
     deleteAnonymUserHandler
 } from "../handlers/user/anonym"
 
+import {
+    changePasswordHandler
+} from "../handlers/user/mod"
+
 //instancia que creamos que utilizaremos para la llamada de cada petición a la API
 export const userRouter = Router()
 
@@ -113,6 +117,14 @@ userRouter.patch(
     authHandler,
     jsonBodyParser,
     updateUserDataHandler
+)
+
+// --- CHANGE PASSWORD METHOD ---
+userRouter.patch(
+    "/password",
+    authHandler,
+    jsonBodyParser,
+    changePasswordHandler
 )
 
 

@@ -9,7 +9,7 @@ import {
 } from './user/anonym'
 
 import {
-    reviewWorkoutHandler
+    changePasswordHandler
 } from './user/mod'
 
 import {
@@ -33,6 +33,7 @@ import {
     filterWorkoutsHandler,
     toggleLikeWorkoutHandler,
     toggleSaveWorkoutHandler,
+    reviewWorkoutHandler
 } from './workouts'
 
 
@@ -42,8 +43,9 @@ const services = {
 
     generateAnonymUserHandler,
     deleteAnonymUserHandler,
-
     reviewWorkoutHandler,
+
+    changePasswordHandler,
 
     getCurrentUserHandler,
     getUserAliasHandler,

@@ -96,9 +96,14 @@ export default function Profile() {
                     <TextInput style={styles.input} value={alias} onChangeText={setAlias} placeholder="Enter your alias" />
                     <Text style={styles.label}>Email</Text>
                     <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Enter your email" keyboardType="email-address" />
+
                     <View style={styles.button}>
                         <Button title="Update Profile" onPress={handleUpdate} />
                     </View>
+
+                    <Pressable style={styles.linkButton} onPress={() => router.push("/(stack)/ChangePassword")}>
+                        <Text style={styles.linkText}>Change Password 🔐</Text>
+                    </Pressable>
                 </>
             )
         }
@@ -129,8 +134,6 @@ export default function Profile() {
                                 key={workout.id}
                                 workout={workout}
                                 onPress={() => router.push(`/(stack)/WorkoutDetail/${workout.id}`)}
-                                onToggleLike={() => Promise.resolve()}
-                                onToggleSave={() => Promise.resolve()}
                                 onDelete={
                                     showDelete
                                         ? () => deleteWorkout(workout.author.id, workout.id).then(loadWorkouts)
@@ -233,5 +236,14 @@ const styles = StyleSheet.create({
     },
     activeDropdown: {
         backgroundColor: "#facc15",
+    },
+    linkButton: {
+        marginTop: 16,
+        alignItems: "center",
+    },
+    linkText: {
+        color: "#0ea5e9",
+        fontWeight: "600",
+        fontSize: 16,
     },
 })

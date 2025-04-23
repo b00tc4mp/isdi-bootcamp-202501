@@ -1,5 +1,5 @@
-import reviewWorkoutHandler from "./reviewWorkoutHandler"
+import changePasswordHandler from "./changePasswordHandler"
 
 export {
-    reviewWorkoutHandler
+    changePasswordHandler
 }

@@ -9,7 +9,7 @@ import {
 } from './user/anonym'
 
 import {
-    removeItem,
+    changePassword
 } from './user/mod'
 
 import {
@@ -39,7 +39,7 @@ const services = {
     generateAnonymUser,
     deleteAnonymUser,
 
-    removeItem,
+    changePassword,
 
     getCurrentUser,
     getUserAlias,

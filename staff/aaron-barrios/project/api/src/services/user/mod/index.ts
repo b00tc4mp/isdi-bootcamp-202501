@@ -1,5 +1,5 @@
-import removeItem from "./removeItem"
+import changePassword from "./changePassword"
 
 export {
-    removeItem,
+    changePassword
 }
