@@ -27,10 +27,6 @@ const van = new Schema<VanDocType>({
     default: [],
   },
   location: { type: Schema.Types.ObjectId, ref: "Location" },
-  // point: {
-  //   type: pointSchema,
-  //   required: false,
-  // },
   legal: [
     {
       type: Schema.Types.ObjectId,
@@ -43,11 +39,13 @@ const van = new Schema<VanDocType>({
       ref: "Trip",
     },
   ],
+
   windows: { type: Number, min: 1, max: 10, required: true },
   doors: { type: Number, min: 1, max: 10, required: true },
   heating: { type: Boolean, default: false },
   airConditioning: { type: Boolean, default: false },
   bedCount: { type: Number, min: 1, max: 5, required: true },
+  maxTravellers: { type: Number, min: 1, max: 10 },
   insideKitchen: { type: Boolean, default: false },
   fridge: { type: Boolean, default: false },
   toilet: {

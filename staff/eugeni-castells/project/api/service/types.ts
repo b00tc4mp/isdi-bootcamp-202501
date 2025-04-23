@@ -49,16 +49,78 @@ export type ReturnedFullName = {
   lastName: string;
 };
 
+export type GetVansDateFilterPropsType = {
+  start: Date | null;
+  end: Date | null;
+};
+
+export type PopulatedTrip = {
+  _id: Types.ObjectId;
+  startDate: Date;
+  endDate: Date;
+};
+
+export type ReturnedPopulatedVan = {
+  _id: Types.ObjectId;
+  windows: number;
+  description: string;
+  doors: number;
+  heating: boolean;
+  airConditioning: boolean;
+  bedCount: number;
+  maxTravellers: number;
+  insideKitchen: boolean;
+  fridge: boolean;
+  toilet: Toilet;
+  shower: Shower;
+  fuelType: Fuel;
+  storage: number;
+  brand: string;
+  model: string;
+  year: Date;
+  accessible: boolean;
+  legal: Types.ObjectId[];
+  images: string[];
+  createdAt: Date;
+  modifiedAt: Date | null;
+  price: number;
+  reviews: PopulatedReview[];
+  location: PopulatedLocation;
+  trips: PopulatedTrip[];
+};
+
 export type SanitizedVanWithRating = Omit<
-  VanDocType,
-  "reviews" | "_id" | "_v"
+  ReturnedPopulatedVan,
+  "reviews" | "_id" | "createdAt" | "modifiedAt"
 > & {
-  reviews: ReturnedVanReview[];
+  reviews: PopulatedReview[];
   averageRating: number;
+  createdAt: Date;
+  modifiedAt: null | Date;
 };
 
 export type ReturnedVanReview = {
   comment: string;
   rating: number;
   author: string;
+};
+
+export type PopulatedLocation = {
+  id: string;
+  _id?: Types.ObjectId;
+  address: string;
+  country: string;
+  city: string;
+};
+
+export type PopulatedReview = {
+  _id?: string;
+  id: string;
+  comment: string;
+  rating: number;
+  author: PopulatedAuthor;
+};
+
+export type PopulatedAuthor = {
+  name: string;
 };

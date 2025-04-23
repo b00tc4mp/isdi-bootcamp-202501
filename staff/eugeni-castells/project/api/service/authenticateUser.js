@@ -25,16 +25,20 @@ const authenticateUser = (email, password) => {
     return (() => __awaiter(void 0, void 0, void 0, function* () {
         try {
             user = yield data_1.User.findOne({ email }).lean();
-            if (!user)
-                throw new NotFoundError("user not found");
-            isUserMatched = yield bcryptjs_1.default.compare(password, user.password);
-            if (!isUserMatched)
-                throw new CredentialsError("wrong credentials");
         }
         catch (error) {
-            console.error(error);
             throw new SystemError(error.message);
         }
+        if (!user)
+            throw new NotFoundError("user not found");
+        try {
+            isUserMatched = yield bcryptjs_1.default.compare(password, user.password);
+        }
+        catch (error) {
+            throw new SystemError(error.message);
+        }
+        if (!isUserMatched)
+            throw new CredentialsError("wrong credentials");
         return { id: user._id.toString(), role: user.role };
     }))();
 };

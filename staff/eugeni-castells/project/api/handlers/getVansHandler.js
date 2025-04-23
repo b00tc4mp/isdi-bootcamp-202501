@@ -8,7 +8,35 @@ const createHandler_1 = __importDefault(require("../middlewares/createHandler"))
 const index_1 = require("../service/index");
 exports.getVansHandler = (0, createHandler_1.default)((req, res) => {
     const { userId } = req;
-    return (0, index_1.getVans)(userId).then((vans) => {
+    const { longitude, latitude, startDate, endDate, travellers } = req.query;
+    let parsedLongitude = null;
+    if (longitude) {
+        parsedLongitude = JSON.parse(longitude);
+    }
+    let parsedLatitude = null;
+    if (latitude) {
+        parsedLatitude = JSON.parse(latitude);
+    }
+    const parsedLocation = longitude !== null && latitude !== null
+        ? [parsedLongitude, parsedLatitude]
+        : null;
+    let parsedStartDate = null;
+    if (startDate) {
+        parsedStartDate = new Date(startDate);
+    }
+    let parsedEndDate = null;
+    if (startDate) {
+        parsedEndDate = new Date(endDate);
+    }
+    const parsedDateRange = {
+        start: parsedStartDate,
+        end: parsedEndDate,
+    };
+    let parsedTravellers = null;
+    if (travellers) {
+        parsedTravellers = JSON.parse(travellers);
+    }
+    return (0, index_1.getVans)(userId, parsedLocation, parsedDateRange, parsedTravellers).then((vans) => {
         res.json(vans);
     });
 });

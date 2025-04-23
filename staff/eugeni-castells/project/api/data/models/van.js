@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Van = void 0;
 const mongoose_1 = require("mongoose");
-const point_1 = require("./point");
 const van = new mongoose_1.Schema({
     model: {
         type: String,
@@ -28,10 +27,6 @@ const van = new mongoose_1.Schema({
         default: [],
     },
     location: { type: mongoose_1.Schema.Types.ObjectId, ref: "Location" },
-    point: {
-        type: point_1.pointSchema,
-        required: false,
-    },
     legal: [
         {
             type: mongoose_1.Schema.Types.ObjectId,
@@ -49,6 +44,7 @@ const van = new mongoose_1.Schema({
     heating: { type: Boolean, default: false },
     airConditioning: { type: Boolean, default: false },
     bedCount: { type: Number, min: 1, max: 5, required: true },
+    maxTravellers: { type: Number, min: 1, max: 10 },
     insideKitchen: { type: Boolean, default: false },
     fridge: { type: Boolean, default: false },
     toilet: {

@@ -242,21 +242,24 @@ data
 
     await Promise.all([manu.save(), frankie.save(), aaron.save()]);
 
-    await Trip.create({
-      startDate: new Date(2024, 5, 1),
-      endDate: new Date(2024, 5, 15),
-      van: van3._id,
-      vanOwner: aaron._id,
+    const trip = await Trip.create({
+      startDate: new Date(2024, 6, 1),
+      endDate: new Date(2024, 6, 15),
+      van: van2._id,
+      vanOwner: frankie._id,
       renter: manu._id,
       issues: [],
       paymentStatus: "payed",
       paymentMethod: "currency",
       confirmStatus: "accepted",
+      agreements: [],
       price: 300,
       location: [locationId],
-      agreements: [docId],
       createdAt: new Date(),
     });
+
+    (van2.trips as Types.ObjectId[])[0] = trip._id;
+    await van2.save();
   })
   .finally(() => {
     console.log("✔️  Populate completed!");

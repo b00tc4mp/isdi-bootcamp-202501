@@ -24,37 +24,76 @@ exports.getVans = void 0;
 const com_1 = require("com");
 const data_1 = require("../data");
 const errors_1 = require("com/errors");
-const getAverageRating_1 = require("../utils/getAverageRating");
-const getVans = (userId) => {
+const utils_1 = require("../utils");
+const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
     com_1.validate.id(userId, "user id");
     return (() => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
+        let location;
+        let returnedUser;
+        let nearbyLocations;
+        let vans;
+        let filteredVansByDate;
         try {
-            const returnedUser = yield data_1.User.findById(userId).lean();
-            if (!returnedUser)
-                throw new errors_1.NotFoundError("user not found");
-            const location = yield data_1.Location.findById(returnedUser.location._id).lean();
-            if (!((_a = location === null || location === void 0 ? void 0 : location.point) === null || _a === void 0 ? void 0 : _a.coordinates))
-                throw new errors_1.NotFoundError("user location not found or incomplete");
-            const nearbyLocations = yield data_1.Location.find({
+            //First of all we check if the user who makes the request exists
+            returnedUser = yield data_1.User.findById(userId).lean();
+        }
+        catch (error) {
+            throw new errors_1.SystemError(error.message);
+        }
+        if (!returnedUser)
+            throw new errors_1.NotFoundError("user not found");
+        //If the location wasnt sent on the front, we will use the location of the user
+        if (!filterLocation) {
+            try {
+                location = yield data_1.Location.findById(returnedUser.location._id).lean();
+                if (!((_a = location === null || location === void 0 ? void 0 : location.point) === null || _a === void 0 ? void 0 : _a.coordinates))
+                    throw new errors_1.NotFoundError("user location not found or incomplete");
+                //we transform the location received in the same type as the paramether
+                location = [
+                    location.point.coordinates[0],
+                    location.point.coordinates[1],
+                ];
+            }
+            catch (error) {
+                throw new errors_1.SystemError(error.message);
+            }
+        }
+        else {
+            //if the location is sent we set the location to the location sent
+            location = filterLocation;
+        }
+        try {
+            nearbyLocations = yield data_1.Location.find({
                 point: {
                     $nearSphere: {
                         $geometry: {
                             type: "Point",
-                            coordinates: location.point.coordinates,
+                            coordinates: location,
                         },
                         $maxDistance: 50 * 1000,
                     },
                 },
             }).select("_id");
-            const locationIds = nearbyLocations.map((loc) => loc._id);
-            const vans = yield data_1.Van.find({
+        }
+        catch (error) {
+            throw new errors_1.SystemError(error.message);
+        }
+        //locationIds that match the condition
+        const locationIds = nearbyLocations.map((location) => location._id);
+        try {
+            //get the vans that have the id in their location array
+            vans = yield data_1.Van.find({
                 location: { $in: locationIds },
             })
                 .populate([
                 {
                     path: "location",
                     select: "address country city", //només els camps que m'interessen
+                },
+                {
+                    path: "trips",
+                    select: "startDate endDate",
                 },
                 {
                     path: "reviews",
@@ -68,28 +107,35 @@ const getVans = (userId) => {
                 .select("-__v")
                 .sort("-createdAt")
                 .lean();
-            const finalVans = yield Promise.all(vans.map((van) => {
-                const typedVan = van;
-                /*com que no podem fer delete perquè el delete s'ha de fer sobre variables que no tinguin el required,
-              haurem de desestructurar i deixar 'lliure' les variables que volguem eliminar*/
-                const { _id } = van, sanitizedVan = __rest(van, ["_id"]);
-                const reviews = typedVan.reviews.map((review) => {
-                    var _a;
-                    return ({
-                        comment: review.comment || "",
-                        rating: (_a = review.rating) !== null && _a !== void 0 ? _a : null,
-                        author: review.author || "Unknown",
-                    });
-                });
-                const averageRating = (0, getAverageRating_1.getAverageRating)(reviews);
-                return Object.assign(Object.assign({}, sanitizedVan), { id: _id.toString(), reviews: reviews, averageRating });
-            }));
-            return finalVans;
         }
         catch (error) {
-            console.error(error);
             throw new errors_1.SystemError(error.message);
         }
+        //We filter the vans that meet the date restriction
+        if (filterDates) {
+            filteredVansByDate = (0, utils_1.filterVansByDate)(vans, filterDates.start, filterDates.end);
+        }
+        //Depending on if we have filterDate or not we will sanitize one group of vans or
+        const vansToMap = filterDates ? filteredVansByDate : vans;
+        //We will use the filteredVansByDate for the final sanitation
+        const finalVans = vansToMap.map((van) => {
+            const typedVan = van;
+            /*com que no podem fer delete perquè el delete s'ha de fer sobre variables que no tinguin el required,
+              haurem de desestructurar i deixar 'lliure' les variables que volguem eliminar*/
+            const { _id, createdAt, modifiedAt } = van, sanitizedVan = __rest(van, ["_id", "createdAt", "modifiedAt"]);
+            const reviews = typedVan.reviews.map((review) => {
+                var _a;
+                return {
+                    id: review._id.toString(),
+                    comment: review.comment || "",
+                    rating: (_a = review.rating) !== null && _a !== void 0 ? _a : null,
+                    author: review.author || "Unknown",
+                };
+            });
+            const averageRating = (0, utils_1.getAverageRating)(reviews);
+            return Object.assign(Object.assign({}, sanitizedVan), { id: _id.toString(), reviews: Object.assign({}, reviews), averageRating, modifiedAt: modifiedAt !== null ? new Date(modifiedAt) : null, createdAt: new Date(createdAt) });
+        });
+        return finalVans;
     }))();
 };
 exports.getVans = getVans;

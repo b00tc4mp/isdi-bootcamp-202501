@@ -239,21 +239,23 @@ _1.data
     frankie.vans[0] = van2._id;
     aaron.vans[0] = van3._id;
     yield Promise.all([manu.save(), frankie.save(), aaron.save()]);
-    yield models_1.Trip.create({
-        startDate: new Date(2024, 5, 1),
-        endDate: new Date(2024, 5, 15),
-        van: van3._id,
-        vanOwner: aaron._id,
+    const trip = yield models_1.Trip.create({
+        startDate: new Date(2024, 6, 1),
+        endDate: new Date(2024, 6, 15),
+        van: van2._id,
+        vanOwner: frankie._id,
         renter: manu._id,
         issues: [],
         paymentStatus: "payed",
         paymentMethod: "currency",
         confirmStatus: "accepted",
+        agreements: [],
         price: 300,
         location: [locationId],
-        agreements: [docId],
         createdAt: new Date(),
     });
+    van2.trips[0] = trip._id;
+    yield van2.save();
 }))
     .finally(() => {
     console.log("✔️  Populate completed!");

@@ -1,4 +1,4 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 import { TripDocType } from "../types.js";
 
 const trip = new Schema<TripDocType>({

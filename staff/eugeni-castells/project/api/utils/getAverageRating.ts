@@ -1,6 +1,6 @@
-import { ReturnedVanReview } from "../service/types";
+import { PopulatedReview } from "../service/types";
 
-export const getAverageRating = (reviews: ReturnedVanReview[]): number => {
+export const getAverageRating = (reviews: PopulatedReview[]): number => {
   let sum = 0;
 
   reviews.forEach((review) => {

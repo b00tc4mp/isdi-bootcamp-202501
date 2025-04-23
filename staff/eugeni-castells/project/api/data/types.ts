@@ -37,6 +37,7 @@ type VanDocType = {
   heating: boolean;
   airConditioning: boolean;
   bedCount: number;
+  maxTravellers: number;
   insideKitchen: boolean;
   fridge: boolean;
   toilet: Toilet;

@@ -17,17 +17,19 @@ export const authenticateUser = (
   return (async () => {
     try {
       user = await User.findOne({ email }).lean();
-
-      if (!user) throw new NotFoundError("user not found");
-
-      isUserMatched = await bcrypt.compare(password, user.password);
-
-      if (!isUserMatched) throw new CredentialsError("wrong credentials");
     } catch (error) {
-      console.error(error);
-
       throw new SystemError((error as Error).message);
     }
+
+    if (!user) throw new NotFoundError("user not found");
+
+    try {
+      isUserMatched = await bcrypt.compare(password, user.password);
+    } catch (error) {
+      throw new SystemError((error as Error).message);
+    }
+
+    if (!isUserMatched) throw new CredentialsError("wrong credentials");
 
     return { id: user._id.toString(), role: user.role };
   })();
