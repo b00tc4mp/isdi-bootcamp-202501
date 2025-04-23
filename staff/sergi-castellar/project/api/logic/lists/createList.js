@@ -5,7 +5,7 @@ const { SystemError, NotFoundError } = errors
 
 export const createList = (userId, title, color) => {
     validate.id(userId, 'userId')
-    validate.notBlankString(title, 'title')
+    validate.titleList(title, 'title')
     validate.color(color, 'color')
 
     return Couple.findOne({ members: userId }).lean()

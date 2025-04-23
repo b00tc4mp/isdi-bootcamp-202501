@@ -162,7 +162,7 @@ const listItem = new Schema({
     list: {
         type: ObjectId,
         ref: 'List',
-        //required: true
+        //required: true //TODO ponerlo required
     },
     createdAt: {
         type: Date,

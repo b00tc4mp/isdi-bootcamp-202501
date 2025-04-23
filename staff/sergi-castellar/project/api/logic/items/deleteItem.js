@@ -25,7 +25,7 @@ export const deleteItem = (userId, itemId) => {
 
                             return Promise.all([
                                 list.save(),
-                                item.deleteOne() // ??
+                                item.deleteOne()
                             ])
                         })
                 })

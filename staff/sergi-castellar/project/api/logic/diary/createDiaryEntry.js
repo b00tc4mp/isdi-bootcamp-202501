@@ -5,7 +5,7 @@ const { SystemError, NotFoundError } = errors
 
 export const createDiaryEntry = (userId, text) => {
     validate.id(userId, 'userId')
-    validate.text(text, 1, 2000, 'text')
+    validate.textDiaryEntry(text, 'text')
 
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })

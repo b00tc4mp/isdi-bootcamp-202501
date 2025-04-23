@@ -16,5 +16,6 @@ export const setCoupleStartDate = (userId, dateStart) => {
             couple.modifiedAt = new Date()
 
             return couple.save()
+                .catch(error => { throw new SystemError(error.message) })
         })
 }

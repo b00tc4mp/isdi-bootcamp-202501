@@ -6,7 +6,7 @@ const { SystemError, NotFoundError, AuthorizationError } = errors
 export const updateList = (userId, listId, title, color) => {
     validate.id(userId, 'userId')
     validate.id(listId, 'listId')
-    if (title !== undefined) validate.notBlankString(title, 'title')
+    if (title !== undefined) validate.titleList(title, 'title')
     if (color !== undefined) validate.color(color, 'color')
 
     return Couple.findOne({ members: userId }).lean()

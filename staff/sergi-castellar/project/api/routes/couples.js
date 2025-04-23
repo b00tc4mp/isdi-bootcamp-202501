@@ -41,7 +41,7 @@ couples.patch('/date-start', retrieveUserId, jsonBodyParser, withErrorHandling((
         .then(() => res.status(204).send())
 }))
 
-//CALENDAR EVENTS
+// CALENDAR EVENTS
 
 couples.get('/events', retrieveUserId, withErrorHandling((req, res) => {
     const { userId } = req
@@ -136,7 +136,7 @@ couples.post('/emotions', retrieveUserId, jsonBodyParser, withErrorHandling((req
         .then(() => res.status(201).send())
 }))
 
-//LISTS
+// LISTS
 
 couples.get('/lists', retrieveUserId, withErrorHandling((req, res) => {
     const { userId } = req

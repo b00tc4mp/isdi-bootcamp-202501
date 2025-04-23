@@ -6,8 +6,8 @@ const { SystemError, NotFoundError } = errors
 export const createCalendarEvent = (userId, eventDate, title, description) => {
     validate.id(userId, 'userId')
     validate.date(eventDate, 'eventDate')
-    validate.notBlankString(title, 'title') //TODO ?text
-    validate.notBlankString(description, 'description') //TODO ?
+    validate.titleCalendarEvent(title, 'title')
+    validate.descriptionCalendarEvent(description, 'description')
 
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })

@@ -6,7 +6,7 @@ const { SystemError, NotFoundError, AuthorizationError } = errors
 export const updateItem = (userId, itemId, text) => {
     validate.id(userId, 'userId')
     validate.id(itemId, 'itemId')
-    validate.notBlankString(text, 'text')
+    validate.textListItem(text, 'text')
 
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })

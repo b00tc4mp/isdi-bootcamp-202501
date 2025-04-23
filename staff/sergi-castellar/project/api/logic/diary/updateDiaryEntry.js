@@ -6,7 +6,7 @@ const { SystemError, NotFoundError, AuthorizationError } = errors
 export const updateDiaryEntry = (userId, entryId, text) => {
     validate.id(userId, 'userId')
     validate.id(entryId, 'entryId')
-    validate.text(text, 1, 2000, 'text')
+    validate.textDiaryEntry(text, 'text')
 
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })
@@ -22,7 +22,8 @@ export const updateDiaryEntry = (userId, entryId, text) => {
                     entry.text = text.trim()
                     entry.modifiedAt = new Date()
 
-                    return entry.save().catch(error => { throw new SystemError(error.message) })
+                    return entry.save()
+                        .catch(error => { throw new SystemError(error.message) })
                 })
         })
 }

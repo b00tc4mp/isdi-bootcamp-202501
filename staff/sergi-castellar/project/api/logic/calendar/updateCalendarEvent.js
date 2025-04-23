@@ -6,8 +6,8 @@ const { SystemError, NotFoundError, AuthorizationError } = errors
 export const updateCalendarEvent = (userId, eventId, title, description) => {
     validate.id(userId, 'userId')
     validate.id(eventId, 'eventId')
-    if (title !== undefined) validate.notBlankString(title, 'title')
-    if (description !== undefined) validate.notBlankString(description, 'description')
+    if (title !== undefined) validate.titleCalendarEvent(title, 'title')
+    if (description !== undefined) validate.descriptionCalendarEvent(description, 'description')
 
     return Couple.findOne({ members: userId }).lean()
         .catch(error => { throw new SystemError(error.message) })
@@ -24,7 +24,8 @@ export const updateCalendarEvent = (userId, eventId, title, description) => {
                     if (description !== undefined) event.description = description.trim()
                     event.modifiedAt = new Date()
 
-                    return event.save().catch(error => { throw new SystemError(error.message) })
+                    return event.save()
+                        .catch(error => { throw new SystemError(error.message) })
                 })
         })
 }

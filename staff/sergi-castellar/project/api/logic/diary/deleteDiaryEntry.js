@@ -18,7 +18,8 @@ export const deleteDiaryEntry = (userId, entryId) => {
                     if (!entry) throw new NotFoundError('Diary entry not found')
                     if (!entry.couple.equals(couple._id)) throw new AuthorizationError('Couple is not the owner of the diary entry')
 
-                    return entry.deleteOne().catch(error => { throw new SystemError(error.message) })
+                    return entry.deleteOne()
+                        .catch(error => { throw new SystemError(error.message) })
                 })
         })
 }
