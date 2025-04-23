@@ -3,7 +3,7 @@ import { TextInput, StyleSheet, Button, Alert, Pressable } from "react-native"
 import { Text, View } from "@/components/Themed"
 import { useRouter } from "expo-router"
 
-import { loginUser, getUserRole } from "@/services/session"
+import { loginUser, getUserRole } from "@/services/user"
 import { authAnonymUser } from "@/services/user/anonym"
 import { errors } from "com"
 

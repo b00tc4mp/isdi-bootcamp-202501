@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { Text, View } from "@/components/Themed"
 
 import { deleteAnonymUser } from "@/services/user/anonym"
-import { getUserRole } from "@/services/session/"
+import { getUserRole } from "@/services/user"
 
 export default function Anonym_Home() {
     const router = useRouter()

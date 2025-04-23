@@ -1,4 +1,4 @@
-import { User } from "../../../data"
+import { User } from "../../data"
 import { errors, validate } from "com"
 
 const { NotFoundError, SystemError } = errors

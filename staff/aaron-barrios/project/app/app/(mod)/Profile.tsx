@@ -13,7 +13,7 @@ import { router } from "expo-router"
 
 import type { UserType } from "com/types"
 import { getUserData, updateUserData } from "@/services/user/regular"
-import { getUserRole } from "@/services/session"
+import { getUserRole } from "@/services/user"
 
 export default function Mod_Profile() {
     const [alias, setAlias] = useState("")

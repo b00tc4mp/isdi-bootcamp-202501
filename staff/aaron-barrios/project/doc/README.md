@@ -12,28 +12,28 @@ Tzend is a fitness app designed for both beginners and experienced users, offeri
 ### Use Cases
 
 Moderator
-- Accept/Decline workout
-- Accept/Decline routine
+- Accept/Decline workout (review page)
+- Accept/Decline routine (review page)
+- Update Data (Profile page)
 
 User (Anonym)
 - Explore public/suggested content (Home page)
-- Complete training test (Home page)
 - View recommended workouts && routines (Home page)
-- Look up and filter routines (Routines feed page)
+- Look up routines (Routines feed page)
 - View routine details (Routine detail page)
-- Look up and filter workouts (Workouts feed page)
+- Look up workouts (Workouts feed page)
 - View workout details (Workout detail page)
 - Restricted acces to Profile & Breakdown 
 
 User (Registered)
 - Register 
 - Login
+- Logout
+- Complete training test (Home page)
 - Explore public/suggested content (Home page)
 - Quick acces/navigation to key features: Current routine, last workout, smart suggestions (Home page)
 - Change/update user data (Profile page)
 - Look up workouts/routines saved in wishlist (Profile page)
-- Logout (Profile page)
-- Toggle light/dark theme (Profile page)
 - Look up and filter routines (Routines feed page)
 - View individual routine details (Routine detail page)
 - Interact with the routine: Save, like, mark as done (Routine detail page)
@@ -43,6 +43,10 @@ User (Registered)
 - View individual workout details (Workout detail page)
 - Interact with the workout: Save, like, mark as done (Workout detail page)
 - Create a custom workout (Create workout page)
+- Acess users profile 
+- Look up for workouts and routines x user has updated
+
+- Toggle light/dark theme (Profile page)
 - Visualize progress charts(Breakdown page)
 - Compare muscle group performance (Breakdown page)
 - Access future AI-based composition analysis (Breakdown page – upcoming)

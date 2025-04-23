@@ -15,7 +15,7 @@ import { Picker } from "@react-native-picker/picker"
 import { FontAwesome5 } from "@expo/vector-icons"
 
 import { createWorkout } from "@/services/workouts"
-import { getCurrentUser } from "@/services/session"
+import { getCurrentUser } from "@/services/user"
 
 const showAlert = (title: string, message: string) => {
     if (RNPlatform.OS === "web") {

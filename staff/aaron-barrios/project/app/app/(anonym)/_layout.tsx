@@ -4,7 +4,7 @@ import { useColorScheme } from "@/components/useColorScheme"
 import { Image, Text, View } from "react-native"
 
 import Colors from "@/constants/Colors"
-import { getUserRole } from "@/services/session"
+import { getUserRole } from "@/services/user"
 
 function CustomTabIcon({ icon, label, focused }: { icon: any, label: string, focused: boolean }) {
   return (

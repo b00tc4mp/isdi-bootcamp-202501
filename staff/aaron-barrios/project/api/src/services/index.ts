@@ -1,9 +1,4 @@
 import {
-    registerUser,
-    authenticateUser
-} from './session'
-
-import {
     generateAnonymUser,
     deleteAnonymUser
 } from './user/anonym'
@@ -14,10 +9,17 @@ import {
 
 import {
     getUserAlias,
-    getCurrentUser,
-    updateUserData
-
+    updateUserData,
+    getMyWorkouts,
+    getSavedWorkouts,
+    getTargetUserData,
 } from './user/regular'
+
+import {
+    getCurrentUser,
+    authenticateUser,
+    registerUser,
+} from './user/'
 
 import {
     createWorkout,
@@ -33,17 +35,20 @@ import {
 
 
 const services = {
-    registerUser,
-    authenticateUser,
-
     generateAnonymUser,
     deleteAnonymUser,
 
     changePassword,
 
-    getCurrentUser,
     getUserAlias,
     updateUserData,
+    getMyWorkouts,
+    getSavedWorkouts,
+    getTargetUserData,
+
+    getCurrentUser,
+    authenticateUser,
+    registerUser,
 
     getUserWorkouts,
     getModeratorWorkouts,

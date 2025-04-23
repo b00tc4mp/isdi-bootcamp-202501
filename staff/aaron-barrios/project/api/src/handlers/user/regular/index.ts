@@ -1,4 +1,3 @@
-import getCurrentUserHandler from "./getCurrentUserHandler"
 import getUserAliasHandler from "./getUserAliasHandler"
 import updateUserDataHandler from "./updateUserDataHandler"
 import getSavedWorkoutsHandler from "./getSavedWorkoutsHandler"
@@ -7,7 +6,6 @@ import getTargetUserDataHandler from "./getTargetUserDataHandler"
 
 
 export {
-    getCurrentUserHandler,
     getUserAliasHandler,
     updateUserDataHandler,
     getSavedWorkoutsHandler,

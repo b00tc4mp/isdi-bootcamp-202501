@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { Platform } from "react-native"
 import "react-native-reanimated"
 
-import { getUserRole } from "@/services/session"
+import { getUserRole } from "@/services/user"
 
 export { ErrorBoundary } from "expo-router"
 

@@ -1,9 +1,4 @@
 import {
-    registerUserHandler,
-    authenticateUserHandler
-} from './session'
-
-import {
     generateAnonymUserHandler,
     deleteAnonymUserHandler
 } from './user/anonym'
@@ -13,13 +8,18 @@ import {
 } from './user/mod'
 
 import {
-    getCurrentUserHandler,
     getUserAliasHandler,
     updateUserDataHandler,
     getMyWorkoutsHandler,
     getSavedWorkoutsHandler,
     getTargetUserDataHandler
 } from './user/regular'
+
+import {
+    registerUserHandler,
+    authenticateUserHandler,
+    getCurrentUserHandler,
+} from './user'
 
 import {
     getAllWorkoutsHandler,
@@ -40,6 +40,7 @@ import {
 const services = {
     registerUserHandler,
     authenticateUserHandler,
+    getCurrentUserHandler,
 
     generateAnonymUserHandler,
     deleteAnonymUserHandler,
@@ -47,7 +48,6 @@ const services = {
 
     changePasswordHandler,
 
-    getCurrentUserHandler,
     getUserAliasHandler,
     updateUserDataHandler,
     getMyWorkoutsHandler,

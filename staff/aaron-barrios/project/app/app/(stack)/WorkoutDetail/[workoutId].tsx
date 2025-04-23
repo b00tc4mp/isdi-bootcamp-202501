@@ -9,7 +9,7 @@ import toggleSaveWorkout from "@/services/workouts/toggleSaveWorkout"
 import reviewWorkout from "@/services/workouts/reviewWorkout"
 import defaultWorkoutExecutionImages from "@/constants/defaultWorkoutExecutionImages"
 import { WorkoutType } from "com/types"
-import { getUserRole } from "@/services/session"
+import { getUserRole } from "@/services/user"
 
 const SCREEN_WIDTH = Dimensions.get("window").width
 

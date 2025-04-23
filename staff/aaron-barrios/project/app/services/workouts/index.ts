@@ -7,6 +7,7 @@ import toggleLikeWorkout from "@/services/workouts/toggleLikeWorkout"
 import toggleSaveWorkout from "@/services/workouts/toggleSaveWorkout"
 import filterWorkouts from "@/services/workouts/filterWorkouts"
 import getModeratorWorkouts from "@/services/workouts/getModeratorWorkouts"
+import reviewWorkout from "@/services/workouts/reviewWorkout"
 
 import defaultWorkoutExecutionImages from "@/constants/defaultWorkoutExecutionImages"
 
@@ -20,6 +21,7 @@ export {
     toggleSaveWorkout,
     filterWorkouts,
     getModeratorWorkouts,
+    reviewWorkout,
 
     defaultWorkoutExecutionImages
 }

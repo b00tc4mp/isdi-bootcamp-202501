@@ -4,7 +4,7 @@ import {
     isUserLoggedIn,
     loginUser,
     logoutUser
-} from './session'
+} from './user'
 
 import {
     authAnonymUser,

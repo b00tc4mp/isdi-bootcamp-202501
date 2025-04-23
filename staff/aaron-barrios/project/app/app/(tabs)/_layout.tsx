@@ -3,8 +3,7 @@ import { Tabs, router } from "expo-router"
 import { Image, Text, View, Pressable } from "react-native"
 
 import { data } from "@/data"
-import { getUserRole } from "@/services/session"
-import { logoutUser } from "@/services/session"
+import { getUserRole, logoutUser } from "@/services/user"
 import type { UserRole } from "../../../api/src/data/types"
 
 function TabIcon({ icon, label, focused }: { icon: any; label: string; focused: boolean }) {

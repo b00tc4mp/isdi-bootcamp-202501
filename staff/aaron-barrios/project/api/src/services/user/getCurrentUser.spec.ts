@@ -2,7 +2,7 @@ import "dotenv/config"
 import bcrypt from "bcryptjs"
 import { expect } from "chai"
 
-import { data, User } from "../../../data"
+import { data, User } from "../../data"
 import getCurrentUser from "./getCurrentUser"
 
 import { Types } from "mongoose"

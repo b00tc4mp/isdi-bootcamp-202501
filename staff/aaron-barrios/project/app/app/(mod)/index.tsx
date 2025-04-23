@@ -9,9 +9,9 @@ import {
     RefreshControl,
 } from "react-native"
 
-import { getUserRole } from "@/services/session"
-import getModeratorWorkouts from "@/services/workouts/getModeratorWorkouts"
-import reviewWorkout from "@/services/workouts/reviewWorkout"
+import { getUserRole } from "@/services/user"
+import { getModeratorWorkouts } from "@/services/workouts"
+import { reviewWorkout } from "@/services/workouts"
 
 import WorkoutCard from "@/components/WorkoutCard"
 import { WorkoutType } from "com/types"

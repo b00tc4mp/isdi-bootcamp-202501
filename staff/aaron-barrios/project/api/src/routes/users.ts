@@ -5,19 +5,20 @@ import {
     authenticateUserSchema
 } from "../data/zodSchemas/userSchemas"
 
-import {
-    registerUserHandler,
-    authenticateUserHandler
-} from "../handlers/session"
 
 import {
     getUserAliasHandler,
-    getCurrentUserHandler,
     getSavedWorkoutsHandler,
     getMyWorkoutsHandler,
     updateUserDataHandler,
     getTargetUserDataHandler
 } from "../handlers/user/regular"
+
+import {
+    registerUserHandler,
+    authenticateUserHandler,
+    getCurrentUserHandler,
+} from "../handlers/user/"
 
 import {
     jsonBodyParser,

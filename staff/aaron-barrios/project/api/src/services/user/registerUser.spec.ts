@@ -6,7 +6,6 @@ import bcrypt from "bcryptjs"
 import { errors } from "com"
 
 const { DuplicityError } = errors
-
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
 
