@@ -9,8 +9,10 @@ type WorkoutCardProps = {
     workout: WorkoutType
     onPress: () => void
     onDelete?: () => void
+    onReview?: (workoutId: string, status: "accepted" | "declined") => void
     showStatus?: boolean
     showAuthor?: boolean
+    showReviewButtons?: boolean
 }
 
 export default function WorkoutCard({
@@ -28,6 +30,7 @@ export default function WorkoutCard({
                 style={styles.image}
                 source={{ uri: workout.feedImage || "https://via.placeholder.com/120" }}
             />
+
             <View style={styles.info}>
                 <Text style={styles.name}>{workout.name}</Text>
                 <Text>{workout.muscleGroup}</Text>
@@ -48,7 +51,6 @@ export default function WorkoutCard({
                         <Text style={workout.author.role === "default" ? styles.defaultAuthor : styles.authorLink}>
                             {workout.author.role === "default" ? "Default" : `@${workout.author.alias}`}
                         </Text>
-
                     </Pressable>
                 )}
 
@@ -61,8 +63,12 @@ export default function WorkoutCard({
 
                     <View style={styles.actions}>
                         <Text style={styles.date}>📅 {formatDate(workout.createdAt)}</Text>
-                        <Text>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
-                        <Text>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
+                        {workout.status === "accepted" && (
+                            <>
+                                <Text>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
+                                <Text>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
+                            </>
+                        )}
                         {onDelete && (
                             <Pressable onPress={onDelete}>
                                 <Image
@@ -139,5 +145,27 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         fontSize: 10,
         marginTop: 4,
-    }
+    },
+    reviewActions: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 16,
+        gap: 8,
+    },
+    reviewButton: {
+        flex: 1,
+        paddingVertical: 8,
+        borderRadius: 8,
+        alignItems: "center",
+    },
+    acceptBtn: {
+        backgroundColor: "#22c55e",
+    },
+    declineBtn: {
+        backgroundColor: "#ef4444",
+    },
+    reviewText: {
+        color: "#fff",
+        fontWeight: "bold",
+    },
 })

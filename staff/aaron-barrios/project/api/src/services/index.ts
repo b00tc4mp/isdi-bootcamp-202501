@@ -9,7 +9,6 @@ import {
 } from './user/anonym'
 
 import {
-    reviewWorkout,
     removeItem,
 } from './user/mod'
 
@@ -28,7 +27,8 @@ import {
     getAllWorkouts,
     getWorkoutById,
     getUserWorkouts,
-    getModeratorWorkouts
+    getModeratorWorkouts,
+    reviewWorkout
 } from './workout'
 
 
@@ -40,7 +40,6 @@ const services = {
     deleteAnonymUser,
 
     removeItem,
-    reviewWorkout,
 
     getCurrentUser,
     getUserAlias,
@@ -51,6 +50,7 @@ const services = {
     createWorkout,
     createWorkoutProgress,
     deleteWorkout,
+    reviewWorkout,
     editWorkout,
     getAllWorkouts,
     getWorkoutById

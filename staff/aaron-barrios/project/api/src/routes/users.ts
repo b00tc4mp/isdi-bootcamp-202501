@@ -116,7 +116,6 @@ userRouter.patch(
 )
 
 
-
 // -------------------- ANONYM USER ------------------
 
 // ----- POST ROUTES -----

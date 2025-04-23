@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
+import { useFocusEffect, useRouter } from "expo-router"
+import { Text, View } from "@/components/Themed"
 import {
     ScrollView,
     Pressable,
@@ -6,12 +8,11 @@ import {
     FlatList,
     RefreshControl,
 } from "react-native"
-import { useRouter } from "expo-router"
 
-import { Text, View } from "@/components/Themed"
 import { getUserRole } from "@/services/session"
-
 import getModeratorWorkouts from "@/services/workouts/getModeratorWorkouts"
+import reviewWorkout from "@/services/workouts/reviewWorkout"
+
 import WorkoutCard from "@/components/WorkoutCard"
 import { WorkoutType } from "com/types"
 
@@ -22,25 +23,36 @@ export default function Review() {
     const [refreshing, setRefreshing] = useState(false)
     const [activeTab, setActiveTab] = useState<"workouts" | "routines">("workouts")
 
-    const fetchWorkouts = () => {
+    // Función reutilizable para cargar workouts
+    const fetchWorkouts = useCallback(() => {
         setRefreshing(true)
         getModeratorWorkouts()
             .then(setWorkouts)
             .finally(() => setRefreshing(false))
-    }
+    }, [])
 
+    // Refresca cada vez que se accede a esta pantalla
+    useFocusEffect(fetchWorkouts)
+
+    // Comprobamos que el user sea mod
     useEffect(() => {
         getUserRole().then(data => {
             if (data?.role !== "mod") {
                 router.replace("/(auth)")
-            } else {
-                fetchWorkouts()
             }
         })
     }, [])
 
+
     const handleWorkoutPress = (id: string) => {
-        router.push(`/(stack)/WorkoutDetail/${id}` as any)
+        router.push(`/(stack)/WorkoutDetail/${id}`)
+    }
+
+
+    const handleReview = (id: string, status: "accepted" | "declined") => {
+        reviewWorkout(id, status)
+            .then(fetchWorkouts)
+            .catch(error => console.error("Review error:", error))
     }
 
     return (
@@ -63,17 +75,22 @@ export default function Review() {
                 </Pressable>
             </View>
 
+            {/* Workouts Review Feed */}
             {activeTab === "workouts" ? (
                 <FlatList
                     data={workouts}
                     keyExtractor={item => item.id}
-                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchWorkouts} />}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={fetchWorkouts} />
+                    }
                     renderItem={({ item }) => (
                         <WorkoutCard
                             workout={item}
                             onPress={() => handleWorkoutPress(item.id)}
+                            onReview={handleReview}
                             showAuthor
                             showStatus
+                            showReviewButtons
                         />
                     )}
                     contentContainerStyle={styles.list}

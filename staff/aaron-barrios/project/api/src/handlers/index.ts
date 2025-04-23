@@ -9,7 +9,7 @@ import {
 } from './user/anonym'
 
 import {
-
+    reviewWorkoutHandler
 } from './user/mod'
 
 import {
@@ -42,6 +42,8 @@ const services = {
 
     generateAnonymUserHandler,
     deleteAnonymUserHandler,
+
+    reviewWorkoutHandler,
 
     getCurrentUserHandler,
     getUserAliasHandler,

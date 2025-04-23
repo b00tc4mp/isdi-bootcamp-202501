@@ -1,5 +1,5 @@
-// import reviewWorkout from "./reviewWorkout"
+import reviewWorkoutHandler from "./reviewWorkoutHandler"
 
 export {
-    // reviewWorkout,
+    reviewWorkoutHandler
 }

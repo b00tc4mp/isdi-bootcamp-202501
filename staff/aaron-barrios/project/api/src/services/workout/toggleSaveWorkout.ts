@@ -2,7 +2,7 @@ import { User, Workout } from "../../data"
 import { errors, validate } from "com"
 import { Types } from "mongoose"
 
-const { SystemError, NotFoundError } = errors
+const { SystemError, NotFoundError, AuthorizationError } = errors
 const { ObjectId } = Types
 
 const toggleSaveWorkout = (
@@ -20,6 +20,10 @@ const toggleSaveWorkout = (
         .then(([user, workout]) => {
             if (!user) throw new NotFoundError("User not found!")
             if (!workout) throw new NotFoundError("Workout not found!")
+
+            if (workout.status !== "accepted") {
+                throw new AuthorizationError("Workout not available for interactions.")
+            }
 
             const userObjectId = new ObjectId(userId)
 

@@ -21,6 +21,9 @@ import {
     toggleSaveWorkoutHandler,
     getModeratorWorkoutsHandler
 } from "../handlers/workouts"
+import {
+    reviewWorkoutHandler
+} from "../handlers/user/mod"
 
 
 export const workoutRouter = Router()
@@ -88,8 +91,15 @@ workoutRouter.delete(
     deleteWorkoutHandler
 )
 
-
 // ---------- PATCH ROUTES ----------
+// --- REVIEW WORKOUT METHOD ---
+workoutRouter.patch(
+    "/review/:workoutId",
+    authHandler,
+    jsonBodyParser,
+    reviewWorkoutHandler
+)
+
 //  --- TOGGLE LIKE WORKOUT METHOD ---
 workoutRouter.patch(
     '/:workoutId/likes',

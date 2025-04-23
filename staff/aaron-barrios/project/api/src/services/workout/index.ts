@@ -1,6 +1,7 @@
 import createWorkout from "./createWorkout"
 import deleteWorkout from "./deleteWorkout"
 import editWorkout from "./editWorkout"
+import reviewWorkout from "./reviewWorkout"
 
 import getAllWorkouts from "./getAllWorkouts"
 import getUserWorkouts from "./getUserWorkouts"
@@ -16,6 +17,7 @@ export {
     createWorkout,
     deleteWorkout,
     editWorkout,
+    reviewWorkout,
 
     getWorkoutById,
     getAllWorkouts,

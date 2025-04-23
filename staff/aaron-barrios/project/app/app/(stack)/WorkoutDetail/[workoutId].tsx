@@ -6,8 +6,10 @@ import { Text, View } from "@/components/Themed"
 import getWorkoutById from "@/services/workouts/getWorkoutById"
 import toggleLikeWorkout from "@/services/workouts/toggleLikeWorkout"
 import toggleSaveWorkout from "@/services/workouts/toggleSaveWorkout"
+import reviewWorkout from "@/services/workouts/reviewWorkout"
 import defaultWorkoutExecutionImages from "@/constants/defaultWorkoutExecutionImages"
 import { WorkoutType } from "com/types"
+import { getUserRole } from "@/services/session"
 
 const SCREEN_WIDTH = Dimensions.get("window").width
 
@@ -18,14 +20,15 @@ export default function WorkoutDetail() {
     const [workout, setWorkout] = useState<WorkoutType | null>(null)
     const [loading, setLoading] = useState(true)
     const [toggle, setTogggle] = useState(false)
-    //image carrussel
-    const [currentImageIndex, setCurrentImageIndex] = useState(0)
-    const viewabilityConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current
-    const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
-        if (viewableItems.length > 0) {
-            setCurrentImageIndex(viewableItems[0].index || 0)
-        }
-    }).current
+    const [role, setRole] = useState<string | null>(null)
+
+    // const [currentImageIndex, setCurrentImageIndex] = useState(0)
+    // const viewabilityConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current
+    // const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
+    //     if (viewableItems.length > 0) {
+    //         setCurrentImageIndex(viewableItems[0].index || 0)
+    //     }
+    // }).current
 
     const fetchWorkout = () => {
         if (!workoutId) return
@@ -35,6 +38,10 @@ export default function WorkoutDetail() {
             .catch(error => console.error("Error loading workout:", error))
             .finally(() => setLoading(false))
     }
+
+    useEffect(() => {
+        getUserRole().then(data => setRole(data?.role || null))
+    }, [])
 
     useEffect(() => {
         fetchWorkout()
@@ -56,6 +63,13 @@ export default function WorkoutDetail() {
             .finally(() => setTogggle(false))
     }
 
+    const handleReview = (status: "accepted" | "declined") => {
+        if (!workoutId) return
+        reviewWorkout(workoutId, status)
+            .then(() => router.back())
+            .catch(error => console.error("Review error:", error))
+    }
+
     if (loading) {
         return (
             <View style={styles.centered}>
@@ -72,45 +86,42 @@ export default function WorkoutDetail() {
         )
     }
 
-    const finalImages = workout.executionImages?.length
-        ? workout.executionImages
-        : defaultWorkoutExecutionImages[workout.muscleGroup]
+    // const finalImages = workout.executionImages?.length
+    //     ? workout.executionImages
+    //     : defaultWorkoutExecutionImages[workout.muscleGroup]
 
     return (
         <ScrollView style={styles.container}>
-            {/* Back Button */}
             <Pressable onPress={() => router.back()} style={styles.backButton}>
                 <Text style={styles.backText}>← Back</Text>
             </Pressable>
 
-            {/* Feed Image */}
             <Text style={styles.title}>{workout.name}</Text>
             <Image source={{ uri: workout.feedImage }} style={styles.image} />
 
-            {/* Buttons */}
             <View style={styles.stats}>
-                <View style={styles.author}>
+                <View style={{ flex: 1 }}>
                     {workout.author.role === "default" ? (
                         <Text style={styles.defaultAuthor}>Default</Text>
                     ) : (
-                        <Pressable onPress={() => router.push({
-                            pathname: "/(stack)/UserProfile/[id]",
-                            params: { id: workout.author.id },
-                        })}>
+                        <Pressable onPress={() => router.push({ pathname: "/(stack)/UserProfile/[id]", params: { id: workout.author.id } })}>
                             <Text style={styles.author}>@{workout.author.alias}</Text>
                         </Pressable>
                     )}
                 </View>
 
-                <Pressable onPress={handleToggleLike} disabled={toggle}>
-                    <Text style={styles.icon}>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
-                </Pressable>
-                <Pressable onPress={handleToggleSave} disabled={toggle}>
-                    <Text style={styles.icon}>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
-                </Pressable>
+                <View style={styles.rightStats}>
+                    <Pressable onPress={handleToggleLike} disabled={toggle || workout.status !== "accepted"}>
+                        <Text style={styles.icon}>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
+                    </Pressable>
+                    <Pressable onPress={handleToggleSave} disabled={toggle || workout.status !== "accepted"}>
+                        <Text style={styles.icon}>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
+                    </Pressable>
+                </View>
             </View>
 
-            {/* Info */}
+
+
             <Text style={styles.subtitle}>Data</Text>
             <Text style={styles.data}>💪 Muscle Group: {workout.muscleGroup}</Text>
             <Text style={styles.data}>🏷️ Type: {workout.type}</Text>
@@ -119,8 +130,18 @@ export default function WorkoutDetail() {
             <Text style={styles.subtitle}>Description</Text>
             <Text style={styles.description}>{workout.description}</Text>
 
-            {/* Execution Images Carousel */}
-            {finalImages?.length > 0 && (
+            {role === "mod" && workout.status === "pending" && (
+                <View style={styles.reviewActions}>
+                    <Pressable style={[styles.reviewButton, styles.acceptBtn]} onPress={() => handleReview("accepted")}>
+                        <Text style={styles.reviewText}>✅ Accept</Text>
+                    </Pressable>
+                    <Pressable style={[styles.reviewButton, styles.declineBtn]} onPress={() => handleReview("declined")}>
+                        <Text style={styles.reviewText}>❌ Decline</Text>
+                    </Pressable>
+                </View>
+            )}
+
+            {/* {finalImages?.length > 0 && (
                 <View style={styles.carousel}>
                     <FlatList
                         data={finalImages}
@@ -150,7 +171,7 @@ export default function WorkoutDetail() {
                         ))}
                     </View>
                 </View>
-            )}
+            )} */}
         </ScrollView>
     )
 }
@@ -204,7 +225,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-end",
         paddingHorizontal: 4,
-        gap: "5px"
+        gap: 8,
+    },
+    rightStats: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 8,
     },
     author: {
         color: "#0ea5e9",
@@ -221,6 +247,29 @@ const styles = StyleSheet.create({
     },
     icon: {
         fontSize: 18,
+    },
+    reviewActions: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 24,
+        gap: 12,
+    },
+    reviewButton: {
+        flex: 1,
+        padding: 12,
+        borderRadius: 8,
+        alignItems: "center",
+    },
+    acceptBtn: {
+        backgroundColor: "#3b944d",
+    },
+    declineBtn: {
+        backgroundColor: "#a12828",
+    },
+    reviewText: {
+        fontWeight: "bold",
+        fontSize: 16,
+        color: "#fff",
     },
     carousel: {
         marginTop: 20,
