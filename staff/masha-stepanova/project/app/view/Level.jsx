@@ -7,19 +7,15 @@ import { logic } from '../logic'
 export function Level({ level, currentState, onCancelled }) {
   const { alert } = useContext()
 
-  const [currentLevel, setCurrentLevel] = useState(null)
+  const [currentLevel, setCurrentLevel] = useState(level)
   const [userCurrentLevel, setUserCurrentLevel] = useState(null)
-  const [view, setView] = useState('')
-  const [type, setType] = useState('')
+  const [view, setView] = useState(currentState ? currentState : 'inGame')
+  const [type, setType] = useState(level.type)
   const [showEndLevel, setShowEndLevel] = useState(false)
   const [levelIsPassed, setLevelIsPassed] = useState(false)
 
   useEffect(() => {
     try {
-      setCurrentLevel(currentLevel ? currentLevel : level)
-      setView(currentState ? currentState : 'inGame')
-      setType(level.type)
-
       logic
         .getCurrentLevel()
         .then((currentLevel) => {

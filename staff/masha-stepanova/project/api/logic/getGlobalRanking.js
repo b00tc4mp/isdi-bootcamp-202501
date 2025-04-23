@@ -15,15 +15,7 @@ export const getGlobalRanking = (userId) => {
 
       allUsers.sort((a, b) => b.score - a.score)
 
-      allUsers.forEach((user, i) => {
-        let position
-
-        if (i > -1) {
-          position = i + 1
-        } else throw new NotFoundError('user not found in global ranking')
-
-        user.position = position
-      })
+      allUsers.forEach((user, i) => (user.position = i + 1))
 
       return allUsers
     })
