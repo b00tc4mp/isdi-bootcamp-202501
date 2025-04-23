@@ -18,14 +18,14 @@ import {
 import {
     getUserAlias,
     getCurrentUser,
-    getUserWorkouts,
     updateUserData
 
 } from './user/regular'
 
 import {
     getAllWorkouts,
-    getWorkoutById
+    getWorkoutById,
+    getUserWorkouts
 } from './workouts'
 
 

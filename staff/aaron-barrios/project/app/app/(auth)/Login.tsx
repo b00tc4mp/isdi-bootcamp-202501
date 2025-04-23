@@ -3,7 +3,7 @@ import { TextInput, StyleSheet, Button, Alert, Pressable } from "react-native"
 import { Text, View } from "@/components/Themed"
 import { useRouter } from "expo-router"
 
-import { loginUser } from "@/services/session"
+import { loginUser, getUserRole } from "@/services/session"
 import { authAnonymUser } from "@/services/user/anonym"
 import { errors } from "com"
 
@@ -17,12 +17,22 @@ export default function Login() {
   const handleLogin = () => {
     try {
       loginUser(alias, password)
-        .then(token => {
+        .then(() => getUserRole())
+        .then(data => {
           setAlias('')
           setPassword('')
 
+          const role = data?.role
+
+          if (role === 'mod') {
+            router.replace('/(mod)')
+          } else if (role === 'regular') {
+            router.replace('/(tabs)')
+          } else {
+            router.replace('/(anonym)')
+          }
+
           Alert.alert('Welcome back!', `Welcome back! ${alias}`)
-          router.replace('/(tabs)' as any)
         })
         .catch(error => {
           console.error(error)

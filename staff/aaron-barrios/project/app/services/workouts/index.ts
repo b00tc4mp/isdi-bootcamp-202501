@@ -6,6 +6,7 @@ import deleteWorkout from "@/services/workouts/deleteWorkout"
 import toggleLikeWorkout from "@/services/workouts/toggleLikeWorkout"
 import toggleSaveWorkout from "@/services/workouts/toggleSaveWorkout"
 import filterWorkouts from "@/services/workouts/filterWorkouts"
+import getModeratorWorkouts from "@/services/workouts/getModeratorWorkouts"
 
 import defaultWorkoutExecutionImages from "@/constants/defaultWorkoutExecutionImages"
 
@@ -18,6 +19,7 @@ export {
     toggleLikeWorkout,
     toggleSaveWorkout,
     filterWorkouts,
+    getModeratorWorkouts,
 
     defaultWorkoutExecutionImages
 }

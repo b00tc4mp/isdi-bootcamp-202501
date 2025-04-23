@@ -15,14 +15,24 @@ import {
 import {
     getCurrentUserHandler,
     getUserAliasHandler,
-    updateUserDataHandler
+    updateUserDataHandler,
+    getMyWorkoutsHandler,
+    getSavedWorkoutsHandler,
+    getTargetUserDataHandler
 } from './user/regular'
 
 import {
     getAllWorkoutsHandler,
     getWorkoutByIdHandler,
+    getModeratorWorkoutsHandler,
+    getUserWorkoutsHandler,
+
     createWorkoutHandler,
-    deleteWorkoutHandler
+    deleteWorkoutHandler,
+
+    filterWorkoutsHandler,
+    toggleLikeWorkoutHandler,
+    toggleSaveWorkoutHandler,
 } from './workouts'
 
 
@@ -36,11 +46,19 @@ const services = {
     getCurrentUserHandler,
     getUserAliasHandler,
     updateUserDataHandler,
+    getMyWorkoutsHandler,
+    getSavedWorkoutsHandler,
+    getTargetUserDataHandler,
 
     getAllWorkoutsHandler,
     getWorkoutByIdHandler,
+    getModeratorWorkoutsHandler,
+    getUserWorkoutsHandler,
     createWorkoutHandler,
-    deleteWorkoutHandler
+    deleteWorkoutHandler,
+    filterWorkoutsHandler,
+    toggleLikeWorkoutHandler,
+    toggleSaveWorkoutHandler,
 }
 
 export default services

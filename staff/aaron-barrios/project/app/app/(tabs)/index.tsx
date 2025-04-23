@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { StyleSheet, ScrollView, Alert, Pressable } from "react-native"
+import { StyleSheet, ScrollView, Pressable } from "react-native"
 import { Text, View } from "@/components/Themed"
 import { router } from "expo-router"
 

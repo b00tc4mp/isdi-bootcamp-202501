@@ -18,13 +18,14 @@ import {
     deleteWorkoutHandler,
     filterWorkoutsHandler,
     toggleLikeWorkoutHandler,
-    toggleSaveWorkoutHandler
+    toggleSaveWorkoutHandler,
+    getModeratorWorkoutsHandler
 } from "../handlers/workouts"
 
 
 export const workoutRouter = Router()
 
-
+//------------------- REGULAR USER -------------------
 // ---------- GET ROUTES ----------
 // --- GET ALL WORKOUTS METHOD ---
 workoutRouter.get(
@@ -40,6 +41,13 @@ workoutRouter.get(
     filterWorkoutsHandler
 )
 
+// --- GET MOD WORKOUTS METHOD ---
+workoutRouter.get(
+    "/mod",
+    authHandler,
+    getModeratorWorkoutsHandler
+)
+
 // --- GET WORKOUT BY ID METHOD ---
 workoutRouter.get(
     "/:workoutId",
@@ -49,7 +57,7 @@ workoutRouter.get(
 
 // --- GET USER WORKOUTS METHOD
 workoutRouter.get(
-    "/:targetUserId",
+    "/user/:targetUserId",
     authHandler,
     getUserWorkoutsHandler
 )
