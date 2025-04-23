@@ -1,17 +1,17 @@
 import { Types } from "mongoose";
 
-export type Toilet = "portable" | "fixed" | "none";
+type Toilet = "portable" | "fixed" | "none";
 
-export type Shower = "inside" | "outside" | "none";
+type Shower = "inside" | "outside" | "none";
 
-export type Fuel = "petrol" | "diesel" | "electric" | "hybrid";
+type Fuel = "petrol" | "diesel" | "electric" | "hybrid";
 
 type PointDocType = {
   type: "Point";
   coordinates: [number, number];
 };
 
-export type VanDocType = {
+type VanDocType = {
   _id: Types.ObjectId;
   windows: number;
   description: string;
@@ -39,3 +39,34 @@ export type VanDocType = {
   reviews: Types.ObjectId[];
   location: Types.ObjectId;
 };
+
+type DestinationBoxProp = {
+  onSearchClick: (location: SelectedLocation) => void;
+};
+
+type SelectedLocation = {
+  name: string;
+  coordinates: [number, number];
+};
+
+export {
+  Types,
+  Toilet,
+  Shower,
+  Fuel,
+  PointDocType,
+  VanDocType,
+  DestinationBoxProp,
+  SelectedLocation,
+};
+
+export type SelectedDate = {
+  start: ReturnedFormattedDay | null;
+  end: ReturnedFormattedDay | null;
+};
+
+export type ReturnedFormattedDay = {
+  month: string;
+  number: string;
+  date: Date;
+} | null;
