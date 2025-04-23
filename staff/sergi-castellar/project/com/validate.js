@@ -20,6 +20,14 @@ export const validate = {
     exactLength(value, exactLength, explain) {
         if (value.length !== exactLength) throw new ValidationError(`Invalid ${explain} length`)
     },
+    text(text, minLength, maxLength, explain) {
+        this.notBlankString(text, explain)
+
+        this.minLength(text, minLength, explain)
+
+        this.maxLength(text, maxLength, explain)
+    },
+    // dedicated validations
     name(name, explain) {
         this.notBlankString(name, explain)
 
@@ -48,19 +56,12 @@ export const validate = {
 
         this.minLength(password, 8, explain)
 
-        this.maxLength(password, 25, explain)
+        this.maxLength(password, 72, explain)
     },
     id(id, explain) {
         this.notBlankString(id, explain)
 
         this.exactLength(id, 24, explain)
-    },
-    text(text, minLength, maxLength, explain) {
-        this.notBlankString(text, explain)
-
-        this.minLength(text, minLength, explain)
-
-        this.maxLength(text, maxLength, explain)
     },
     inviteCode(inviteCode, explain) {
         this.notBlankString(inviteCode, explain)
@@ -71,6 +72,41 @@ export const validate = {
         if (!(date instanceof Date) || isNaN(date.getTime()))
             throw new ValidationError(`Invalid ${explain} format`)
     },
+    textDiaryEntry(textDiaryEntry, explain) {
+        this.notBlankString(textDiaryEntry, explain)
+
+        this.minLength(textDiaryEntry, 1, explain)
+
+        this.maxLength(textDiaryEntry, 2000, explain)
+    },
+    titleCalendarEvent(titleCalendarEvent, explain) {
+        this.notBlankString(titleCalendarEvent, explain)
+
+        this.minLength(titleCalendarEvent, 1, explain)
+
+        this.maxLength(titleCalendarEvent, 100, explain)
+    },
+    descriptionCalendarEvent(descriptionCalendarEvent, explain) {
+        this.notBlankString(descriptionCalendarEvent, explain)
+
+        this.minLength(descriptionCalendarEvent, 1, explain)
+
+        this.maxLength(descriptionCalendarEvent, 1000, explain)
+    },
+    textListItem(textListItem, explain) {
+        this.notBlankString(textListItem, explain)
+
+        this.minLength(textListItem, 1, explain)
+
+        this.maxLength(textListItem, 500, explain)
+    },
+    titleList(titleList, explain) {
+        this.notBlankString(titleList, explain)
+
+        this.minLength(titleList, 1, explain)
+
+        this.maxLength(titleList, 100, explain)
+    },
     color(color, explain) {
         this.notBlankString(color, explain)
 
@@ -78,6 +114,6 @@ export const validate = {
     },
     emotion(emotion, explain) {
         if (!constant.EMOTION_NUMBER_REGEX.test(emotion)) throw new ValidationError(`Invalid ${explain} syntax`)
-    }
+    },
 }
 
