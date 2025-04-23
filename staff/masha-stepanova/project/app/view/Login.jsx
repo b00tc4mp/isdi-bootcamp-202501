@@ -17,20 +17,28 @@ export function Login({ onUserLoggedIn, onNavigateToRegister }) {
           form.reset()
           onUserLoggedIn()
         })
-        .catch((error) => alert(error.message))
+        .catch((error) => {
+          console.error(error)
+
+          alert(error.message)
+        })
     } catch (error) {
+      console.error(error)
+
       alert(error.message)
     }
   }
 
   const handleRegisterClick = () => onNavigateToRegister()
 
+  console.debug('Login -> render')
+
   return (
-    <div className='min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-periwinkle to-mauve p-6'>
+    <div className='min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-[#CCCCFF] to-[#E0B0FF] p-6'>
       <img src='../public/Logo.png' alt='Code Quest logo' className='h-20 w-auto mb-2' />
       <h1 className='text-4xl font-extrabold text-purple-900 mb-8 drop-shadow-md'>Login</h1>
 
-      <form onSubmit={handleLoginSubmit} className='bg-white bg-opacity-90 p-6 rounded-xl shadow-lg w-full max-w-sm space-y-4'>
+      <form onSubmit={handleLoginSubmit} className='bg-white/75 p-6 rounded-xl shadow-lg w-full max-w-sm space-y-4'>
         <div className='text-left'>
           <label htmlFor='username' className='block text-purple-800 font-semibold'>
             Username

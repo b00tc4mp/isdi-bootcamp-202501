@@ -6,7 +6,7 @@ Learn JavaScript by playing - complete levels, climb the rankings and become a c
 
 **Code Quest** is an educational and responsive web application created as the final project of the fullstack web development bootcamp at ISDI Coders. Its goal is to teach JavaScript through fun mechanics inspired by video games.
 
-Users can register, progress through interactive levels, see their progress, compare their performance in a global ranking and participate in special challenges.
+Users can register, progress through levels, see their progress and compare their performance in a global ranking.
 
 ![](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmtycDVvOW9iaDB3ZnR0b3dkNGl1Y2tyNXZnNjVvOTFnb2FqZzRjZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif)
 
@@ -17,6 +17,7 @@ Users can register, progress through interactive levels, see their progress, com
 User:
 
 - view personal profile
+- view own rpogress
 - play level
 - continue level
 - view global ranking
@@ -75,10 +76,10 @@ User:
   name: (string)
   description: (string, minLength 10, maxLength 300),
   body: (string), // content of the test or challenge
-  resultOptions: (array, ),
-  expectedResult: (string, minLength 3, maxLength 7), // o structure for validation
+  resultOptions: (array, minLength 3, maxLength 7),
+  expectedResult: (string),
   difficulty: (number),
-   createdAt: (Date),
+  createdAt: (Date),
   modifiedAt: (Date)
 }
 ```

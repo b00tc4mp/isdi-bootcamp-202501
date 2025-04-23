@@ -1,15 +1,6 @@
-import { useContext } from '../context'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router'
 
-import { logic } from '../logic'
-
-import { Level } from './Level'
-
-export const EndLevelScreen = ({ level, isPassed, onReplay, onContinue, onCancelled }) => {
-  const { alert } = useContext()
-  const navigate = useNavigate()
-
+export const EndLevelScreen = ({ isPassed, onReplay, onContinue, onCancelled }) => {
   const [isLevelPassed, setIsLevelPassed] = useState(null)
 
   useEffect(() => setIsLevelPassed(isPassed), [])
@@ -17,6 +8,8 @@ export const EndLevelScreen = ({ level, isPassed, onReplay, onContinue, onCancel
   const handleCloseClick = () => onCancelled()
   const handleContinueClick = () => onContinue()
   const handleReplayClick = () => onReplay()
+
+  console.debug('EndLevelScreen -> render')
 
   return (
     <div className='fixed inset-0 z-40 flex items-center justify-center bg-gradient-to-b from-periwinkle to-mauve text-purple-800 p-6'>
@@ -40,9 +33,3 @@ export const EndLevelScreen = ({ level, isPassed, onReplay, onContinue, onCancel
     </div>
   )
 }
-
-// {isLevelPassed && (
-//     <button onClick={handleReplayClick} className='bg-white border border-purple-400 text-purple-700 hover:bg-purple-50 font-semibold py-2 px-6 rounded-full'>
-//       Repetir nivel
-//     </button>
-//   )}

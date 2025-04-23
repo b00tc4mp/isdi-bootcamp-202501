@@ -23,19 +23,27 @@ export const Register = ({ onUserRegistered, onNavigateToLogin }) => {
           form.reset()
           onUserRegistered()
         })
-        .catch((error) => alert(error.message))
+        .catch((error) => {
+          console.error(error)
+
+          alert(error.message)
+        })
     } catch (error) {
+      console.error(error)
+
       alert(error.message)
     }
   }
 
+  console.debug('Register -> render')
+
   return (
-    <div className='min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-mauve to-periwinkle p-6'>
+    <div className='min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-[#CCCCFF] to-[#E0B0FF] p-6'>
       <img src='../public/Logo.png' alt='Code Quest logo' className='h-20 w-auto mb-2' />
 
       <h1 className='text-4xl font-extrabold text-purple-900 mb-8 drop-shadow-md'>Register</h1>
 
-      <form onSubmit={handleRegisterSubmit} className='bg-white bg-opacity-90 p-6 rounded-xl shadow-lg w-full max-w-sm space-y-4'>
+      <form onSubmit={handleRegisterSubmit} className='bg-white/75 p-6 rounded-xl shadow-lg w-full max-w-sm space-y-4'>
         {[
           { label: 'Name', id: 'name' },
           { label: 'Email', id: 'email' },

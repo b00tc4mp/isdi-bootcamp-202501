@@ -37,8 +37,6 @@ export function Ranking({ currentState, username }) {
   }
   const userRef = useScrollToElement(globalRanking.length > 0)
 
-  const handleCloseClick = () => setState('closed')
-
   console.debug('Ranking -> render')
 
   return (

@@ -10,24 +10,42 @@ export function Levels({ onLevelSelected }) {
   const [currentLevelId, setCurrentLevelId] = useState(null)
 
   useEffect(() => {
-    logic
-      .getCurrentLevel()
-      .then((level) => setCurrentLevelId(level.id))
-      .catch(console.error)
+    try {
+      logic
+        .getCurrentLevel()
+        .then((level) => setCurrentLevelId(level.id))
+        .catch((error) => {
+          console.error(error)
+
+          alert(error.message)
+        })
+    } catch (error) {
+      console.error(error)
+
+      alert(error.message)
+    }
   }, [])
 
   useEffect(() => {
-    logic
-      .getLevels()
-      .then(setLevels)
-      .catch((error) => {
-        console.error(error)
+    try {
+      logic
+        .getLevels()
+        .then(setLevels)
+        .catch((error) => {
+          console.error(error)
 
-        alert(error.message)
-      })
+          alert(error.message)
+        })
+    } catch (error) {
+      console.error(error)
+
+      alert(error.message)
+    }
   }, [])
 
   const scrollRef = useScrollToElement(currentLevelId)
+
+  console.debug('Levels -> render')
 
   return (
     <section className=' bg-white/75 bg-opacity-80 rounded-xl p-4 shadow-md'>

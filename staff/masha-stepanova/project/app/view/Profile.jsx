@@ -6,16 +6,21 @@ import { logic } from '../logic'
 
 export function Profile({ onUserLoggedOut, user, onNavigateToHome }) {
   const { alert, confirm } = useContext()
-  const [totalLevels, setTotalLevels] = useState(0)
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     try {
-      logic.getLevels().then((levels) => {
-        setTotalLevels(levels.length)
-        const completed = user?.generalProgress?.length || 0
-        setProgress((completed / levels.length) * 100)
-      })
+      logic
+        .getLevels()
+        .then((levels) => {
+          const completed = user?.generalProgress?.length || 0
+          setProgress((completed / levels.length) * 100)
+        })
+        .catch((error) => {
+          console.error(error)
+
+          alert(error.message)
+        })
     } catch (error) {
       console.error(error)
 
@@ -40,6 +45,8 @@ export function Profile({ onUserLoggedOut, user, onNavigateToHome }) {
       }
     })
   }
+
+  console.debug('Profile -> render')
 
   return (
     <>

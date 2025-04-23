@@ -77,11 +77,18 @@ export function Level({ level, currentState, onCancelled }) {
         userAnswer: { value: userAnswer },
       } = form
 
-      logic.isLevelPassed(currentLevel.id, userAnswer).then((isPassed) => {
-        form.reset()
-        setLevelIsPassed(isPassed)
-        setShowEndLevel(true)
-      })
+      logic
+        .isLevelPassed(currentLevel.id, userAnswer)
+        .then((isPassed) => {
+          form.reset()
+          setLevelIsPassed(isPassed)
+          setShowEndLevel(true)
+        })
+        .catch((error) => {
+          console.error(error)
+
+          alert(error.message)
+        })
     } catch (error) {
       console.error(error)
 
@@ -96,12 +103,19 @@ export function Level({ level, currentState, onCancelled }) {
 
   const handleContinueGame = () => {
     try {
-      logic.getCurrentLevel().then((currentLevel) => {
-        setCurrentLevel(currentLevel)
-        setShowEndLevel(false)
-        setView('opened')
-        setType(currentLevel.type)
-      })
+      logic
+        .getCurrentLevel()
+        .then((currentLevel) => {
+          setCurrentLevel(currentLevel)
+          setShowEndLevel(false)
+          setView('opened')
+          setType(currentLevel.type)
+        })
+        .catch((error) => {
+          console.error(error)
+
+          alert(error.message)
+        })
     } catch (error) {
       console.error(error)
 
@@ -111,10 +125,12 @@ export function Level({ level, currentState, onCancelled }) {
 
   const handleCloseClick = () => onCancelled()
 
+  console.debug('Level -> render')
+
   return (
     <div className='flex justify-center '>
       {showEndLevel ? (
-        <EndLevelScreen level={currentLevel} isPassed={levelIsPassed} onReplay={handleReplayLevel} onContinue={handleContinueGame} onCancelled={handleCloseClick} />
+        <EndLevelScreen isPassed={levelIsPassed} onReplay={handleReplayLevel} onContinue={handleContinueGame} onCancelled={handleCloseClick} />
       ) : view === 'closed' ? (
         <button
           onClick={handleLevelClick}
