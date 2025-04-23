@@ -15,13 +15,14 @@ describe('createGame', () => {
 
   beforeEach(() => Promise.all([
     User.deleteMany({}),
-    Game.deleteMany({})
+    Game.deleteMany({}),
+    Season.deleteMany({})
   ]))
 
   it('succeeds in creating a game', () => {
     const title = 'Poker Night'
     const season = 'season 1'
-    const date = new Date(2025, 4, 24)
+    const date = new Date(2025, 4, 24).toISOString()
     const place = 'Casa Arnau'
     return Promise.all([
       User.create({
@@ -33,18 +34,19 @@ describe('createGame', () => {
       password: '123123123'
     }), 
     Season.create({
-      startDate: new Date(2025, 4, 23),
-      endDate: new Date(2025, 4, 24),
+      startDate: new Date(2025, 4, 23).toISOString(),
+      endDate: new Date(2025, 4, 24).toISOString(),
       status:'active',
       name: 'season 1'
   }),
   ])
-      .then(([ user, season ])=> createGame(user._id.toString(), title, season.name, date, place))
+      .then(([ user, season ])=> { 
+         debugger
+         return createGame(user._id.toString(), title, season.name, date, place) })
       .then(game => {
         expect(game).to.exist
         expect(game.title).to.equal('Poker Night')
         expect(game.seasonName).to.equal('season 1')
-        // expect(game.date).to.equal('22-04-2025')
         expect(game.place).to.equal('Casa Arnau')
         expect(game.status).to.equal('scheduled')
         
@@ -92,7 +94,7 @@ describe('createGame', () => {
   it('Fail: User not Found', () => {
     let catchedError
 
-    return createGame(new ObjectId().toString(), 'title', 'season', '22-04-2025', 'casita')
+    return createGame(new ObjectId().toString(), 'title', 'season', new Date(2025, 5, 28).toISOString(), 'casita')
       .catch(error =>  catchedError = error)
       .finally(() => {
         expect(catchedError).to.be.instanceOf(NotFoundError)
@@ -103,7 +105,8 @@ describe('createGame', () => {
 
   afterEach(() => Promise.all([
     User.deleteMany({}),
-    Game.deleteMany({})
+    Game.deleteMany({}),
+    Season.deleteMany({})
   ]))
 
   after(() => data.disconnect())

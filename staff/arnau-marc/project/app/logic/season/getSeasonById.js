@@ -1,5 +1,5 @@
 import { data } from '../../data/index.js'
-import { errors } from '../../validations/index.js'
+import { errors, validate } from '../../validations/index.js'
 import  Constants  from 'expo-constants'
 
 const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
@@ -7,6 +7,7 @@ const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 const { SystemError } = errors
 
 export const getSeasonById = (seasonId) => {
+  validate.id(seasonId)
   return data.getToken()
   .then((token) => {
     if (!token) throw new Error('No token found')

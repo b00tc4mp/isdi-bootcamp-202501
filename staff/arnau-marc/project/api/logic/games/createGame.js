@@ -1,7 +1,7 @@
 import { User, Game, Season } from '../../data/index.js'
 import { errors, validate } from '../../validations/index.js'
 
-const { ValidationError, NotFoundError, AuthorizationError, NotAllowedError } = errors
+const { ValidationError, NotFoundError, SystemError, NotAllowedError } = errors
 
 export const createGame = (userId, title, season, date, place) => {
   if (!title || !date || !place) throw new ValidationError('Missing required fields')
@@ -9,9 +9,11 @@ export const createGame = (userId, title, season, date, place) => {
   validate.id(userId, 'userId')
   validate.title(title)
   validate.season(season)
+  validate.date(date)
   validate.place(place)
 
   return User.findById(userId)
+    .catch(error => {throw new SystemError(error.message)} )
     .then(user => {
 
       if (!user) throw new NotFoundError('User not found')
@@ -20,6 +22,8 @@ export const createGame = (userId, title, season, date, place) => {
       
       return Season.findOne({ name: season }).lean()
     })
+   
+  
     .then(season => {
       const newGame = new Game({
         author: userId,

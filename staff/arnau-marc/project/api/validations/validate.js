@@ -68,5 +68,11 @@ export const validate = {
         this.maxLength(place, 15, explain)
         if(!constant.SEASON_PLACE_REGEX) throw new ValidationError('Only letters, numbers and spaces allowed. No leading/trailing spaces or symbols.')
     },
-
+    date(date, explain = 'date') {
+        if(typeof date !== 'string') throw new ValidationError(`invalid ${explain} type`)
+    },
+    idArray(array, explain = 'ids') {
+        if (!Array.isArray(array)) throw new ValidationError(`${explain} must be an array`)
+        array.forEach((id, i) => this.id(id, `${explain}[${i}]`))
+      }
 }

@@ -5,22 +5,34 @@ const { AuthorizationError, SystemError, DuplicityError } = errors
 
 export const createSeason = (userId, { name, startDate, endDate }) => {
   validate.id(userId, 'userId')
+  validate.title(name, 'season name')
+  validate.date(startDate, 'start date')
+  validate.date(endDate, 'end date')
  
-  
-  return User.findById(userId).lean()
-    .catch(err => { throw new SystemError(err.message) })
+  debugger
+  return User.findById(userId)
+    .catch(error => { throw new SystemError(error.message) })
     .then(user => {
+    
       if (!user || user.role !== 'admin') throw new AuthorizationError('Only admins can create a season')
     })
-    .then(() => Season.findOne({ status: 'active', name: { $ne: 'casual' } }))
-    .then(existing => {
-      if (existing) throw new DuplicityError('There is already an active season')
+    .then(() => { 
+      return Season.exists({ status: 'active', name: { $ne: 'casual' } })
+        .catch(error => { throw new SystemError(error.message)})
+   })
+    
+    .then(isExist => {
+      if (isExist) throw new DuplicityError('There is already an active season')
     })
-    .then(() => Season.create({
-      name: name.toLowerCase(),
-      startDate,
-      endDate,
-      status: 'active',
-      participants: []
-    }))
+    .then(() =>{
+     return Season.create({
+            name: name.toLowerCase(),
+            startDate,
+            endDate,
+            status: 'active',
+            participants: []
+          })
+          .catch(error => { throw new SystemError(error.message)})
+    })
+    
 }

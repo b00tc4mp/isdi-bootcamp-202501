@@ -1,7 +1,8 @@
 import { data } from '../../data/index.js'
-import { SystemError } from '../../validations/index.js'
+import { errors } from '../../validations/index.js'
 import Constants from 'expo-constants'
 
+const { SystemError } = errors
 const API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 export const getFinishedSeasons = () => {
@@ -26,8 +27,11 @@ export const getFinishedSeasons = () => {
       return res.json()
         .catch(error => { throw new SystemError(error.message) })
         .then(body => {
-          const { message } = body
-          throw new SystemError(message)
+          const { error, message } = body
+
+          const constructor = errors[error]
+
+          throw new constructor(message)
         })
     })
 }

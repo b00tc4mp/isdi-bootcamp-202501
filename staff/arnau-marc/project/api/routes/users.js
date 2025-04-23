@@ -63,6 +63,7 @@ users.get('/stats', authHandler, withErrorHandling((req, res) => {
     .then(stats => res.json(stats))
     .catch(error => res.status(400).send(error.message))
 }))
+
 // Endpoint para generar stats de usuario que buscas
 users.get('/:id/stats', authHandler, withErrorHandling((req, res) => {
   const { id } = req.params
@@ -98,36 +99,24 @@ users.get('/search', authHandler, withErrorHandling((req, res) => {
         return res.status(400).json({ error: 'Query string is required' });
     }
 
-    return logic.searchUsers(query)
-        .then(users => res.json(users.map(u => ({ id: u._id.toString(), username: u.username })))) // Respondemos con la lista de usuarios que coinciden
+    return logic.searchUsers(query)               // ESTO HACERLO EN LA LOGICA
+        .then(foundUsers => res.json(foundUsers)) // Respondemos con la lista de usuarios que coinciden
         .catch(error => res.status(500).json({ error: error.message }));
 }));
 
 // Obtener los usernames de participants segun sus Ids
-
 users.post('/usernames', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
   const { ids } = req.body
 
-  if (!Array.isArray(ids)) throw new TypeError('ids must be an array')
-
-  return User.find({ _id: { $in: ids } }).lean()
-      .then(users => {
-        const usernames = users.map(user => ({
-          id: user._id.toString(),
-            username: user.username
-        }))
-          res.json({ usernames })
-      })
+  return logic.getUsernames(ids)
+         .then(usernames => res.json({ usernames })) 
 }))
 
 // Obtener info básica de un usuario por ID
 users.get('/:id', authHandler, withErrorHandling((req, res) => {
   const { id } = req.params
   
-  return User.findById(id).lean()
-    .then(user => {
-      if (!user) throw new NotFoundError('User not found')
-      res.json({ id: user._id.toString(), username: user.username })
-    })
+  return logic.getUserById(id)// SEPARAR EN LOGICA
+    .then( foundUser => res.json(foundUser) )
 }))
 

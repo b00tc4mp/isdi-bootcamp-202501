@@ -47,7 +47,7 @@ export default function ClassificationHistoric({ navigation }) {
     <View style={styles.rowHeader}>
       <Text style={styles.cellRank}>#</Text>
       <Text style={styles.cellUsername}>Username</Text>
-      <Text style={styles.cellPoints}>Points</Text>
+      <Text style={styles.cellPoints}>Wins</Text>
     </View>
   )
 

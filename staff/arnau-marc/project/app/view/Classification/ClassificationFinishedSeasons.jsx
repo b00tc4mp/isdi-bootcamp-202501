@@ -22,7 +22,7 @@ export default function ClassificationFinishedSeasons({ navigation, route }) {
 
         logic.getSeasonById(seasonId)
         .then(season => {
-          if (!season) throw new Error('No hemos encontrado la temporada')
+          if (!season) throw new Error('No season found')
           setSeason(season)
           setError(null)
            navigation.setOptions(
@@ -91,7 +91,7 @@ export default function ClassificationFinishedSeasons({ navigation, route }) {
             {!season && (
                 <>
                     <Text style={{ marginVertical: 20, fontSize: 16, color: 'gray' }}>
-                    {error || 'No hemos encontrado temporada'}
+                    {error || 'No season found'}
                     </Text>
                 </>
             )}

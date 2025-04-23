@@ -64,4 +64,11 @@ export const validate = {
         this.minLength(place, 1, explain)
         this.maxLength(place, 40, explain)
     },
+    date(date, explain = 'date') {
+        if(typeof date !== 'string') throw new ValidationError(`invalid ${explain} type`)
+    },
+    idArray(array, explain = 'ids') {
+        if (!Array.isArray(array)) throw new ValidationError(`${explain} must be an array`)
+        array.forEach((id, i) => this.id(id, `${explain}[${i}]`))
+      }
 }

@@ -33,9 +33,7 @@ export default function SearchProfile() {
     const timeout = setTimeout(() => {
       logic.searchUsers(query)
         .then(setSuggestions)
-        .catch(() => {
-          Alert.alert('Error', 'User not found 😔')
-        })
+      
     }, 300)
 
     return () => clearTimeout(timeout)

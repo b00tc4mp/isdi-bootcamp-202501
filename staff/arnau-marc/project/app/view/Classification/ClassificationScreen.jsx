@@ -125,11 +125,7 @@ const handleFinishSeason = () => {
     const end = new Date()
     end.setMonth(end.getMonth() + 1)
 
-    logic.createSeason({
-      name: newSeasonName,
-      startDate: now.toISOString(),
-      endDate: end.toISOString()
-    })
+    logic.createSeason(newSeasonName, now.toISOString(), end.toISOString())
       .then(() => {
         setShowCreateModal(false)
         setNewSeasonName('')

@@ -131,7 +131,7 @@ describe('getSeasonLeaderboard', () => {
             ]))
             .then(()=> {
                 debugger
-                 return getSeasonLeaderboard(seasonId)})
+                 return getSeasonLeaderboard(seasonId.toString())})
             .then(seasonLeaderboard => {
                 expect(seasonLeaderboard).to.exist
 

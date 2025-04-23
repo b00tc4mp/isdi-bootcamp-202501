@@ -15,6 +15,7 @@ export const finishSeason = (userId, seasonId) => {
       if (user.role !== 'admin') throw new NotAllowedError('Only admins can finish a season')
 
       return Season.findById(seasonId)
+      .catch(error => { throw new SystemError(error.message) })
     })
     .then(season => {
       if (!season) throw new NotFoundError('Season not found')

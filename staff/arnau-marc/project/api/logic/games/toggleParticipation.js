@@ -17,7 +17,7 @@ export const toggleParticipation = (userId, gameId) => {
             if (!game) throw new NotFoundError('Game not found')
             if (game.status !== 'scheduled') throw new NotAllowedError('Cannot toggle participation in a finished game')
 
-            const { participants } = game
+            const { participants } = game // const participants = game.participants
 
             const index = participants.findIndex(userObjectId => userObjectId.toString() === userId)
 

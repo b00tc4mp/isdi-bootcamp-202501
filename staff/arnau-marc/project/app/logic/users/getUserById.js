@@ -1,5 +1,5 @@
 import { data } from '../../data'
-import { errors } from '../../validations/index.js'
+import { errors,validate } from '../../validations/index.js'
 import  Constants  from 'expo-constants'
 
 const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
@@ -7,6 +7,7 @@ const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 const { SystemError } = errors
 
 export const getUserById = (userId) => {
+  validate.id(userId)
   return data.getToken()
     .then((token) => { 
         return fetch(`${API_BASE_URL}/users/${userId}`, {

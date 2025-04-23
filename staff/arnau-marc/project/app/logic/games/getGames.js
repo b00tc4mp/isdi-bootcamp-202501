@@ -31,7 +31,10 @@ export const getGames = () => {
         .catch(error => { throw new SystemError(error.message) })
         .then(body => {
           const { error, message } = body
-          throw new SystemError(message)
+
+          const constructor = errors[error]
+
+          throw new constructor(message)
         })
     })
 }

@@ -58,10 +58,17 @@ const Home = ({ navigation }) => {
 
   const fetchGames = () => {
     logic.getGames()
-      .then(({ games }) => setGames(games))
+      .then( ({ games })  => setGames(games))
       .catch(error => Alert.alert(`Error ❌\n${error.message}`))
   }
-
+  
+  const fetchParticipants = async () => {
+    const allParticipantIds = [...new Set(games.flatMap(g => g.participants))]
+    const usernamesMap = await logic.getUsernamesByIds(allParticipantIds)
+    const map = {}
+    usernamesMap.forEach(({ id, username }) => map[id] = username)
+    setUserMap(map)
+  }
   const handleLogoutClick = () => {
     try {
       logic.logoutUser()
@@ -113,6 +120,7 @@ const Home = ({ navigation }) => {
                 setModalVisible(false)
                 setSelectedGame(null)
                 fetchGames()
+                fetchParticipants()
                 Alert.alert('✅ Winner correctly assigned')
               })
               .catch(error => {
@@ -242,6 +250,7 @@ const Home = ({ navigation }) => {
         onClose={() => {
           setModalVisible(false)
           setSelectedGame(null)
+          fetchParticipants()
         }}
         onConfirm={handleConfirmWinner}
         title="Select winner"

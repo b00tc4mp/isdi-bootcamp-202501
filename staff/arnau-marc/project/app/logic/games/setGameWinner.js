@@ -27,6 +27,16 @@ export const setGameWinner = (gameId, winnerId) => {
     .catch(error => { throw new SystemError(error.message) })
     .then(response => {
       if (response.status === 204) return
-      return response.json().then(body => { throw new SystemError(body.message) })
+
+      return response.json()
+        .catch(error => { throw new SystemError(error.message)})
+        .then(body => {
+          const { error, message } = body
+
+          const constructor = errors[error]
+
+          throw new constructor(message)
+        })
+        
     })
 }

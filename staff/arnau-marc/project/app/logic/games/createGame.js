@@ -10,6 +10,7 @@ export const createGame = (title, season, place, date) => {
   validate.title(title, 'title')
   validate.season(season, 'season')
   validate.place(place, 'place')
+  validate.date(date)
   
   const isoDate = typeof date === 'string' ? new Date(date).toISOString() : date.toISOString()
  /*
@@ -39,8 +40,11 @@ export const createGame = (title, season, place, date) => {
       return response.json()
         .catch(error => { throw new SystemError(error.message) })
         .then(body => {
-          const { message } = body
-          throw new SystemError(message)
+          const { error, message } = body
+
+          const constructor = errors[error]
+
+          throw new constructor(message)
         })
     })
 }

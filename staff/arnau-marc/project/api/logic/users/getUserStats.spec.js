@@ -2,10 +2,8 @@ import 'dotenv/config'
 import { getUserStats } from './getUserStats.js'
 import { expect } from 'chai'
 import { data, User, Game, Season } from '../../data/index.js'
-import { errors } from '../../validations/index.js'
 import { Types } from 'mongoose'
 
-const { SystemError, NotFoundError } = errors
 const { ObjectId } = Types
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -107,22 +105,37 @@ describe('getUserStats', () => {
           })
     })
 
-    it('fails when there is no active season', () => {
-        let catchedError
-
-        return User.create({
-            name: 'Marc',
-            surname: 'Ramos',
-            email: 'marc@ramos.com',
-            username: 'marc_ramos',
+    it('Returns all stats 0 if there are not an active season', () => {
+        let litaId = new ObjectId()
+        const seasonId = new ObjectId()
+      
+        return Promise.all([
+          User.create({
+            name: 'Lita',
+            _id: litaId ,
+            surname: 'Lenta',
+            email: 'li@ta.com',
+            username: 'lita_lenta',
             password: '123123123'
-        })
-        .then(user => getUserStats(user._id.toString()))
-        .catch(error => catchedError = error)
-        .finally(() => {
-            expect(catchedError).to.be.instanceOf(errors.NotFoundError)
-            expect(catchedError.message).to.equal('No active season found')
-        })
+          }),
+          Season.create({
+            name: 'winter season',
+            _id: seasonId,
+            status: 'finished',
+            startDate: new Date(),
+            endDate: new Date()
+          }),
+        
+        ])
+          .then(() => getUserStats(litaId.toString()))
+          .then(stats => {
+            expect(stats.gamesPlayed).to.equal(0)
+            expect(stats.gamesWon).to.equal(0)
+            expect(stats.winRate).to.equal(0)
+            expect(stats.points).to.equal(0)
+          })
+
+
     })
 
     afterEach(() => Season.deleteMany({}))

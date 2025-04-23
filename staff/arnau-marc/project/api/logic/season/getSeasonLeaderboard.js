@@ -4,6 +4,8 @@ import { errors, validate } from '../../validations/index.js'
 const { SystemError } = errors
 
 export const getSeasonLeaderboard = (seasonId) => {
+    validate.id(seasonId, 'seasonId')
+    
     return Game.find({ seasonId: seasonId, status: 'finished'}).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(games => {

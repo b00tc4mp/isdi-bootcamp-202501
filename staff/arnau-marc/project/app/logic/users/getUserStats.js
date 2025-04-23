@@ -25,8 +25,8 @@ export const getUserStats = () => {
         .catch(error => { throw new SystemError(error.message) })
         .then(body => {
           const { error, message } = body
-          const constructor = errors[error]
-          throw new constructor(message)
+         
+          throw new SystemError(message)
         })
     })
 }

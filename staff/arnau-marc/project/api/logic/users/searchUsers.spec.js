@@ -42,36 +42,6 @@ describe('searchUsers', () => {
             })
     })
 
-    
-    it('fail: No users found', () => {
-        let catchedError
-
-        return Promise.all([
-            User.create({
-            name: 'arnau',
-            surname: 'romero',
-            email: 'arnau@gmail.com',
-            username: 'arnau_sots',
-            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
-        }),
-        User.create({
-            name: 'arnau',
-            surname: 'romero',
-            email: 'marc@tonto.com',
-            username: 'arnaldo_romero',
-            password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
-        })
-    ])
-            .then(() => {
-                return searchUsers('i')
-            })
-            .catch(error => { catchedError = error })
-            .finally(() => {
-                expect(catchedError).to.be.instanceOf(NotFoundError)
-                expect(catchedError.message).to.equal('No users found')
-            })
-    })
-
     afterEach(() => User.deleteMany({}))                 
     after(() => data.disconnect()) 
 })

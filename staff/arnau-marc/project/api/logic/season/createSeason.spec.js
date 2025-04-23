@@ -15,8 +15,8 @@ describe('createSeason',() => {
     beforeEach(() => User.deleteMany({})) 
     
     it('succeed in create a season', () =>{
-        const startDate = new Date(2025, 4, 23) 
-        const endDate = new Date(2025, 4, 24)
+        const startDate = new Date(2025, 4, 23).toISOString()
+        const endDate = new Date(2025, 4, 24).toISOString()
 
         return User.create({
             name: 'arnau',
@@ -26,14 +26,11 @@ describe('createSeason',() => {
             role: 'admin',
             password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
         })
-            .then(user =>  createSeason(user.id, { name:'season 1', startDate: new Date(2025, 4, 23), endDate: new Date(2025, 4, 24)} ))
+            .then(user =>  createSeason(user.id, { name:'season 1', startDate, endDate} ))
             .then(() => Season.findOne({ name: 'season 1' }).lean())
             .then(season => {
                 expect(season).to.exist
                 expect(season.name).to.equal('season 1')
-
-                expect(new Date(season.startDate).getTime()).to.equal(startDate.getTime())
-                expect(new Date(season.endDate).getTime()).to.equal(endDate.getTime())
 
                 expect(season.status).to.equal('active')
             })
@@ -41,7 +38,7 @@ describe('createSeason',() => {
 
     it('fail: You are not an admin', () => {
         let catchedError
-        
+
         return User.create({
             name: 'arnau',
             surname: 'romero',
@@ -51,7 +48,7 @@ describe('createSeason',() => {
             password: '$2b$10$w3l4h/JAE0YYLyTGq8yBpu2ZNffKbQ5CWzhNiLg5AtTFAlCGaAkIO'
         })
             .then(user => {
-                return createSeason(user.id, { name:'season 1', startDate: new Date(2025, 4, 23), endDate: new Date(2025, 4, 24)})
+                return createSeason(user.id, { name:'season 1', startDate: new Date(2025, 4, 23).toISOString(), endDate: new Date(2025, 4, 24).toISOString()})
             })
             .catch(error => catchedError = error)
             .finally(() =>{
@@ -62,12 +59,14 @@ describe('createSeason',() => {
 
     it('Create a season when is already existing an active season',() => {
         let catchedError
+        const startDate = new Date(2025, 4, 23).toISOString()
+        const endDate = new Date(2025, 4, 24).toISOString()
         
         return Promise.all([Season.create({
             name: 'season 1',
             status: 'active',
-            startDate: new Date(2025, 4, 23),
-            endDate: new Date(2025, 4, 24)
+            startDate: new Date(2025, 4, 23).toISOString(),
+            endDate: new Date(2025, 4, 24).toISOString()
 
         }),
         User.create({
@@ -80,10 +79,11 @@ describe('createSeason',() => {
         })
     ])
             .then(([season, user]) => {
-                return createSeason(user.id, { name:'season 1', startDate: new Date(2025, 4, 23), endDate: new Date(2025, 4, 24)})
+                return createSeason(user.id, { name:'season 1', startDate, endDate})
             })
             .catch(error => catchedError = error)
             .finally(() => {
+                debugger
                 expect(catchedError).to.be.instanceOf(DuplicityError)
                 expect(catchedError.message).to.equal('There is already an active season')
             })

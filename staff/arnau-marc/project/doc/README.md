@@ -105,6 +105,9 @@ Season
 
 - Test the code
 
+
+![code coverage](.././app/assets/coverage.jpg)
+
 ## Planning
 
 [Issue Tracking] 

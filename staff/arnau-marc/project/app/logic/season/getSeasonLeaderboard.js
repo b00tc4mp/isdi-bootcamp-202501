@@ -1,13 +1,14 @@
 import { data } from '../../data/index.js'
-import { SystemError } from '../../validations/index.js'
+import { errors, validate } from '../../validations/index.js'
 import  Constants  from 'expo-constants'
 
 const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
-
+const { SystemError } = errors
 export const getSeasonLeaderboard = (seasonId) => {
+  validate.id(seasonId)
   return data.getToken()
     .then((token) =>{
-        if (!token) throw new Error('No token found')
+        if (!token) throw new SystemError('No token found')
 
         return fetch(`${API_BASE_URL}/seasons/${seasonId}/leaderboard`, {
             headers: {

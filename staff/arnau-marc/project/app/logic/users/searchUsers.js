@@ -1,9 +1,10 @@
 import { data } from '../../data/index.js'
 import  Constants  from 'expo-constants'
-
+import { validate } from '../../validations/index.js'
 const  API_BASE_URL = Constants.expoConfig.extra.apiBaseUrl
 
 export const searchUsers = (query) => {
+   validate.text(query)
     return data.getToken()
        .catch(error => { throw new SystemError(error.message) })
        .then(token => {
