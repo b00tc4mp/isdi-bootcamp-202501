@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { logic } from '../logic'
 import { CalendarEventForm } from './CalendarEventForm'
+import { useContext } from '../context'
 
 export function CalendarDayView({ date, onClose, onRefresh }) {
+  const { alert, confirm } = useContext()
   const [events, setEvents] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [editingEvent, setEditingEvent] = useState(null)
@@ -34,25 +36,46 @@ export function CalendarDayView({ date, onClose, onRefresh }) {
   }, [date])
 
   const handleDelete = (eventId) => {
-    if (!confirm('Delete this event?')) return
+    confirm('Delete this event?').then((accepted) => {
+      if (accepted) {
+        logic
+          .deleteCalendarEvent(eventId)
+          .then(() => {
+            loadEvents()
+            onRefresh()
+          })
+          .catch((error) => {
+            console.error(error)
 
-    logic
-      .deleteCalendarEvent(eventId)
-      .then(() => {
-        loadEvents()
-        onRefresh()
-      })
-      .catch((error) => {
-        console.error(error)
-
-        alert(error.message)
-      })
+            alert(error.message)
+          })
+      }
+    })
   }
 
+  const handleCancel = () => {
+    setShowForm(false)
+    setEditingEvent(null)
+    loadEvents()
+    onRefresh()
+  }
+
+  const handleEdit = (event) => {
+    setEditingEvent(event)
+    setShowForm(true)
+  }
+
+  const handleCreate = () => {
+    setEditingEvent(null)
+    setShowForm(true)
+  }
+
+  const handleClose = () => onClose()
+
   return (
-    <div className='fixed inset-0 bg-black/70 flex items-center justify-center z-50'>
+    <div className='fixed inset-0 bg-black/70 flex items-center justify-center'>
       <div className='bg-white rounded-3xl p-6 w-full max-w-md shadow-xl space-y-4 relative'>
-        <button onClick={onClose} className='absolute top-2 right-4 text-gray-400 text-xl'>
+        <button onClick={handleClose} className='absolute top-2 right-4 text-gray-400 text-xl'>
           ✕
         </button>
 
@@ -68,12 +91,7 @@ export function CalendarDayView({ date, onClose, onRefresh }) {
                 <p className='text-sm text-gray-700'>{event.description}</p>
               </div>
               <div className='space-x-2 text-sm flex-shrink-0'>
-                <button
-                  onClick={() => {
-                    setEditingEvent(event)
-                    setShowForm(true)
-                  }}
-                  className='text-blue-500'>
+                <button onClick={() => handleEdit(event)} className='text-blue-500'>
                   ✏️
                 </button>
                 <button onClick={() => handleDelete(event.id)} className='text-red-500'>
@@ -83,29 +101,13 @@ export function CalendarDayView({ date, onClose, onRefresh }) {
             </div>
           ))}
           <div className='pt-2 flex justify-center'>
-            <button
-              onClick={() => {
-                setEditingEvent(null)
-                setShowForm(true)
-              }}
-              className='bg-pink-400 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
+            <button onClick={handleCreate} className='bg-pink-400 text-white w-12 h-12 rounded-full text-2xl shadow-lg'>
               +
             </button>
           </div>
         </div>
 
-        {showForm && (
-          <CalendarEventForm
-            event={editingEvent}
-            date={date}
-            onClose={() => {
-              setShowForm(false)
-              setEditingEvent(null)
-              loadEvents()
-              onRefresh()
-            }}
-          />
-        )}
+        {showForm && <CalendarEventForm event={editingEvent} date={date} onCancel={handleCancel} />}
       </div>
     </div>
   )

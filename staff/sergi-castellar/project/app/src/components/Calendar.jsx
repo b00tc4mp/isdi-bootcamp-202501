@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import { logic } from '../logic'
 
 import { CalendarDayView } from './CalendarDayView'
+import { useContext } from '../context'
 
 export function Calendar() {
+  const { alert } = useContext()
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [events, setEvents] = useState([])
   const [selectedDate, setSelectedDate] = useState(null)
@@ -46,6 +48,10 @@ export function Calendar() {
     setCurrentMonth(new Date(currentMonth.getFullYear() + 1, currentMonth.getMonth(), 1))
   }
 
+  const handleBack = () => history.back()
+
+  const handleSelectDay = (day) => setSelectedDate(new Date(day))
+
   const loadEvents = () => {
     logic
       .retrieveMonthCalendarEvents(year, month)
@@ -76,7 +82,7 @@ export function Calendar() {
     <div className='min-h-screen bg-pink-100 p-6'>
       <div className='max-w-md mx-auto space-y-6'>
         <div className='flex items-center space-x-4'>
-          <button onClick={() => history.back()} className='bg-white w-10 h-10 rounded-xl shadow text-xl'>
+          <button onClick={handleBack} className='bg-white w-10 h-10 rounded-xl shadow text-xl'>
             ←
           </button>
           <h1 className='text-xl font-bold'>CALENDAR</h1>
@@ -120,7 +126,7 @@ export function Calendar() {
                   key={index}
                   className={`aspect-square flex items-center justify-center rounded-xl cursor-pointer relative transition
                   ${today ? 'bg-pink-400 text-white font-bold' : 'bg-pink-100 hover:bg-pink-100'}`}
-                  onClick={() => setSelectedDate(new Date(day))}>
+                  onClick={() => handleSelectDay(day)}>
                   <span>{day.getDate()}</span>
                   {hasEvents && <div className='w-1.5 h-1.5 bg-pink-400 rounded-full absolute bottom-1 left-1/2 transform -translate-x-1/2'></div>}
                 </div>

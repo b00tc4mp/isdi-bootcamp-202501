@@ -5,7 +5,7 @@ const { SystemError } = errors
 
 export const updateList = (listId, title, color) => {
     validate.id(listId, 'listId')
-    validate.notBlankString(title, 'title')
+    validate.titleList(title, 'title')
     validate.color(color, 'color')
 
     const { token } = data

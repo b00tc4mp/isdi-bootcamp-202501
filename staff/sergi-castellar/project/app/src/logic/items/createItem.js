@@ -5,7 +5,7 @@ const { SystemError } = errors
 
 export const createItem = (listId, text) => {
     validate.id(listId, 'listId')
-    validate.notBlankString(text, 'text')
+    validate.textListItem(text, 'text')
 
     const { token } = data
 

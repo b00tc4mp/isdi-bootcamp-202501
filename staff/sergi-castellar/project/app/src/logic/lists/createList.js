@@ -4,7 +4,7 @@ import { errors, validate } from 'com'
 const { SystemError } = errors
 
 export const createList = (title, color) => {
-    validate.notBlankString(title, 'title')
+    validate.titleList(title, 'title')
     validate.color(color, 'color')
 
     const { token } = data

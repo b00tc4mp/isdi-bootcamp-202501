@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { logic } from '../logic'
 import { EmotionsResult } from './EmotionsResult'
+import { useContext } from '../context'
 
 export function Emotions() {
+  const { alert } = useContext()
   const [selectedEmotion, setSelectedEmotion] = useState(null)
 
   useEffect(() => {
@@ -29,13 +31,15 @@ export function Emotions() {
       })
   }
 
+  const handleBack = () => history.back()
+
   if (selectedEmotion !== null) return <EmotionsResult userEmotion={selectedEmotion} />
 
   return (
     <div className='min-h-screen bg-pink-100 p-6'>
       <div className='max-w-md mx-auto space-y-6'>
         <div className='flex items-center space-x-4'>
-          <button onClick={() => history.back()} className='bg-white w-10 h-10 rounded-xl shadow text-xl'>
+          <button onClick={handleBack} className='bg-white w-10 h-10 rounded-xl shadow text-xl'>
             ←
           </button>
           <h1 className='text-xl font-bold'>EMOTIONS</h1>

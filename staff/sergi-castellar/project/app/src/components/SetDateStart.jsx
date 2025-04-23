@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { logic } from '../logic'
+import { useContext } from '../context'
 
 export function SetDateStart() {
+  const { alert } = useContext()
   const [date, setDate] = useState('')
   const navigate = useNavigate()
 

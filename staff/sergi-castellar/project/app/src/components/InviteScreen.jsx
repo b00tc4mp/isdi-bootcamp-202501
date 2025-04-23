@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { logic } from '../logic'
+import { useContext } from '../context'
 
 export function InviteScreen() {
+  const { alert } = useContext()
   const [code, setCode] = useState('')
   const [generatedCode, setGeneratedCode] = useState(null)
   const [copied, setCopied] = useState(false)
@@ -35,6 +37,12 @@ export function InviteScreen() {
       })
   }
 
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(generatedCode)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
     <div className='min-h-screen bg-pink-100 flex items-start justify-center p-6'>
       <div className='bg-white rounded-3xl p-6 w-full max-w-md shadow-xl text-center space-y-4'>
@@ -45,13 +53,7 @@ export function InviteScreen() {
             <p className='text-gray-700'>Share this code:</p>
             <div className='flex justify-center items-center space-x-2'>
               <p className='text-md font-mono bg-gray-100 rounded-lg py-2 px-4'>{generatedCode}</p>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(generatedCode)
-                  setCopied(true)
-                  setTimeout(() => setCopied(false), 2000)
-                }}
-                className='text-sm bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600'>
+              <button onClick={handleCopyCode} className='text-sm bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600'>
                 {copied ? 'Copied!' : 'Copy'}
               </button>
             </div>

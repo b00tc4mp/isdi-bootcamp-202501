@@ -10,8 +10,10 @@ import { InviteScreen } from '../../InviteScreen'
 import { SetDateStart } from '../../SetDateStart'
 
 import { logic } from '../../../logic'
+import { useContext } from '../../../context'
 
 export function Home({ onUserLoggedOut }) {
+  const { alert, confirm } = useContext()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -34,7 +36,6 @@ export function Home({ onUserLoggedOut }) {
             return
           }
 
-          // Si está en pareja, comprobamos si tiene fecha
           logic.getCoupleInfo().then(({ daysInRelationship }) => {
             const hasDate = daysInRelationship > 0
             setHasDateStart(hasDate)
@@ -58,17 +59,18 @@ export function Home({ onUserLoggedOut }) {
   }, [location.pathname, navigate])
 
   const handleLogoutClick = () => {
-    const accepted = confirm('Do you want to logout?')
-    if (accepted)
-      try {
-        logic.logoutUser()
+    confirm('Do you want to logout?').then((accepted) => {
+      if (accepted)
+        try {
+          logic.logoutUser()
 
-        onUserLoggedOut()
-      } catch (error) {
-        console.error(error)
+          onUserLoggedOut()
+        } catch (error) {
+          console.error(error)
 
-        alert(error.message)
-      }
+          alert(error.message)
+        }
+    })
   }
 
   const handleCalendarClick = () => {
