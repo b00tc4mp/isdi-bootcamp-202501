@@ -47,6 +47,25 @@ export const validate = {
     id(id, explain = 'id') {
         this.text(id, explain)
         if (id.length !== 24) throw new ValidationError(`invalid ${explain} length`)
+    },
+    category(category, explain = 'category') {
+        this.string(category)
+        const allowedCategories = ['top', 'bottom', 'shoes', 'accesory']
+        if (!allowedCategories.includes(category)) throw new ValidationError(`invalid ${explain}`)
+    },
+    season(seasons, explain = 'season') {
+        if (!Array.isArray(seasons)) throw new ValidationError(`invalid ${explain} type`)
+        const allowedSeasons = ['summer', 'winter', 'spring', 'autumn']
+        seasons.forEach(season => {
+            if (!allowedSeasons.includes(season)) throw new ValidationError(`invalid season: ${season}`)
+        })
+    },
+    occasion(occasions, explain = 'occasion') {
+        if (!Array.isArray(occasions)) throw new ValidationError(`invalid ${explain} type`)
+        const allowedOccasions = ['formal', 'casual', 'sport', 'party']
+        occasions.forEach(occasion => {
+            if (!allowedOccasions.includes(occasion)) throw new ValidationError(`invalid occasion: ${occasion}`)
+        })
     }
 
 }

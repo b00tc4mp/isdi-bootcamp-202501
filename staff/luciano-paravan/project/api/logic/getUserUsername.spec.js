@@ -30,7 +30,7 @@ describe('getUserUsername', () => {
 
     it('fails on non-existing user', () => {
         let catchedError
-
+        debugger
         return getUserUsername(new ObjectId().toString())
             .catch(error => catchedError = error)
             .finally(() => {
@@ -39,7 +39,7 @@ describe('getUserUsername', () => {
             })
     })
 
-    afterEach(() => deleteMany({}))
+    afterEach(() => User.deleteMany({}))
 
     after(() => data.disconnect())
 })

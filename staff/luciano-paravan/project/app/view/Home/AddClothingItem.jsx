@@ -53,7 +53,7 @@ export function AddClothingItem({onAddedClothingItem}) {
 
             <fieldset className="flex flex-col">
                 <legend>Season</legend>
-                {['summer', 'winter', 'sping', 'autumn'].map(seasonOption => (
+                {['summer', 'winter', 'spring', 'autumn'].map(seasonOption => (
                     <label key={seasonOption}>
                         <input 
                             type="checkbox"

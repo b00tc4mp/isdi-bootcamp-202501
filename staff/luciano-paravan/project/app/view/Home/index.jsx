@@ -9,7 +9,7 @@ export function Home({onUserLoggedOut}) {
 
     const navigate = useNavigate()
 
-    const handleHomeClick = navigate('/')
+    const handleHomeClick = () => navigate('/')
     const handleLogoutClick = ()=> onUserLoggedOut()
 
     return <div>

@@ -46,7 +46,7 @@ const clothingItem = new Schema({
         ref: 'User',
         required: true
     },
-    name: {
+    itemName: {
         type: String,
         required: true
     },
