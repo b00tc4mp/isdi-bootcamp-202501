@@ -15,9 +15,13 @@ export default function LoginForm() {
 
   const handleLogIn = () => {
     try {
-      return loginUser(email, password).then(() => {
-        router.replace("/(tabs)");
-      });
+      return loginUser(email, password)
+        .then(() => {
+          router.replace("/(tabs)");
+        })
+        .catch((error) => {
+          Alert.alert(error.message);
+        });
     } catch (error) {
       console.error(error);
 

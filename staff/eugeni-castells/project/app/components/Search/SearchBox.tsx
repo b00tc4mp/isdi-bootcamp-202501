@@ -1,15 +1,26 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { View, Text } from "../Themed";
 import { spacing } from "@/constants/Paddings";
 import { Colors } from "@/constants/Colors";
 import { Typography } from "@/constants/Typography";
 import { AddBoxProps } from "./types";
 
-const StartDateBox = ({ text, displayText }: AddBoxProps) => {
+const SearchBox = ({ text, displayText, type, onPressed }: AddBoxProps) => {
+  const handlePressed = () => {
+    onPressed!();
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{text}</Text>
-      <Text style={styles.calendarDisplayText}>{displayText}</Text>
+      {type !== "location" && (
+        <Pressable onPress={handlePressed}>
+          <Text style={styles.calendarDisplayText}>{displayText}</Text>
+        </Pressable>
+      )}
+      {type === "location" && (
+        <Text style={styles.calendarDisplayText}>{displayText}</Text>
+      )}
     </View>
   );
 };
@@ -41,4 +52,4 @@ const styles = StyleSheet.create({
     fontWeight: Typography.fontWeight.bolder,
   },
 });
-export default StartDateBox;
+export default SearchBox;

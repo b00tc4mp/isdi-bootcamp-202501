@@ -8,23 +8,61 @@ import { borderRadius, spacing } from "@/constants/Paddings";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { Typography } from "@/constants/Typography";
-import StartDateBox from "@/components/Search/SearchBox";
+import SearchBox from "@/components/Search/SearchBox";
+import { SelectedDate, SelectedLocation } from "@/components/Search/types";
+import CalendarFilter from "@/components/Search/CalendarFilter";
 
 export default function SearchScreen() {
-  const [location, setLocation] = useState("");
-  const [dateRange, setDateRange] = useState([]);
+  const [displayCalendar, setDisplayCalendar] = useState(false);
+  const [displayTravellersFilter, setDisplayTravellersFilter] = useState(false);
+  const [location, setLocation] = useState<SelectedLocation>(null);
+  const [dateRange, setDateRange] = useState<SelectedDate>({
+    start: null,
+    end: null,
+  });
   const [travellers, setTravellers] = useState([{}]);
 
   const router = useRouter();
 
-  const handleLocation = (location: string) => {
+  const handleLocation = (location: SelectedLocation) => {
     setLocation(location);
   };
 
+  const handleDatesSet = (dateRange: SelectedDate) => {
+    setDateRange(dateRange);
+    setDisplayCalendar(false);
+  };
+
   const handleClearAll = () => {
-    setLocation("");
-    setDateRange([]);
+    setLocation(null);
+    setDateRange({
+      start: null,
+      end: null,
+    });
     setTravellers([{}]);
+    setDisplayCalendar(false);
+    setDisplayTravellersFilter(false);
+  };
+
+  const handleDisplayCalendar = () => {
+    setDisplayCalendar(true);
+  };
+
+  const handleDisplayTravellers = () => {
+    setDisplayTravellersFilter(true);
+  };
+
+  const handleSearchPress = () => {
+    router.push({
+      pathname: "/(tabs)", // HomeScreen
+      params: {
+        longitude: JSON.stringify(location?.coordinates[0]),
+        latitude: JSON.stringify(location?.coordinates[1]),
+        startDate: JSON.stringify(dateRange.start),
+        endOfDate: JSON.stringify(dateRange.end),
+        travellers: JSON.stringify(travellers),
+      },
+    });
   };
 
   const handleClose = () => {
@@ -41,14 +79,38 @@ export default function SearchScreen() {
           style={{ marginBottom: spacing.rem }}
           onPress={handleClose}
         />
-        {location.length === 0 && (
-          <DestinationBox onSearchClick={handleLocation} location={location} />
+        {!location && <DestinationBox onSearchClick={handleLocation} />}
+        {location && (
+          <SearchBox
+            text="Where"
+            displayText={location!.name}
+            type="location"
+          />
         )}
-        {location.length > 0 && (
-          <StartDateBox text="Where" displayText={location} />
+        {!displayCalendar ? (
+          <SearchBox
+            text="When"
+            displayText={
+              dateRange.start && dateRange.end
+                ? `${dateRange.start.month} ${dateRange.start.number} - ${dateRange.end.month} ${dateRange.end.number}`
+                : "Add dates"
+            }
+            type="calendar"
+            onPressed={handleDisplayCalendar}
+          />
+        ) : (
+          <View>
+            <CalendarFilter onAcceptDates={handleDatesSet} />
+          </View>
         )}
-        <StartDateBox text="When" displayText="Add dates" />
-        <StartDateBox text="Who" displayText="Add travellers" />
+        {!displayCalendar && (
+          <SearchBox
+            text="Who"
+            displayText="Add travellers"
+            type="travellers"
+            onPressed={handleDisplayTravellers}
+          />
+        )}
       </View>
       <View style={styles.bottomContainer}>
         <Pressable
@@ -58,8 +120,13 @@ export default function SearchScreen() {
         >
           <Text style={styles.bottomText}>Clear all</Text>
         </Pressable>
-        <Pressable style={styles.button}>
-          <Feather name="search" size={24} color={Colors.light.buttonText} />
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            handleSearchPress();
+          }}
+        >
+          {<Feather name="search" size={24} color={Colors.light.buttonText} />}
           <Text style={styles.buttonText}>Search</Text>
         </Pressable>
       </View>

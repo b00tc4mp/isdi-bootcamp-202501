@@ -2,11 +2,27 @@ import { SystemError } from "@/com/errors";
 import { data } from "@/data";
 
 import { ReturnedVansType } from "@/com/types";
+import { GetVansTravellersParam } from "./types";
+import { generateUrl } from "@/app/utils/generateUrl";
 
-export const getVans = async (): Promise<ReturnedVansType[]> => {
+export const getVans = async (
+  longitude: number | null,
+  latitude: number | null,
+  startDate: Date | null,
+  endDate: Date | null,
+  travellers: GetVansTravellersParam
+): Promise<ReturnedVansType[]> => {
   const token = await data.getToken();
 
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL}/vans`, {
+  const url = generateUrl(`/vans`, {
+    longitude,
+    latitude,
+    startDate,
+    endDate,
+    travellers,
+  });
+
+  return fetch(`${process.env.EXPO_PUBLIC_API_URL!}${url}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

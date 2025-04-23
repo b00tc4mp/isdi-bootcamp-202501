@@ -14,12 +14,9 @@ import { Typography } from "@/constants/Typography";
 import { validate } from "@/com/validate";
 import { filterLocation } from "@/services/filterLocation";
 import { GeoDBResponse } from "@/services/types";
-import { DestinationBoxProp } from "./types";
+import { DestinationBoxProp, SelectedLocation } from "./types";
 
-export const DestinationBox = ({
-  onSearchClick,
-  location,
-}: DestinationBoxProp) => {
+export const DestinationBox = ({ onSearchClick }: DestinationBoxProp) => {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [cities, setCities] = useState<GeoDBResponse>();
@@ -34,7 +31,7 @@ export const DestinationBox = ({
     };
   }, [query]);
 
-  const handleSearchClick = (city: string) => {
+  const handleSearchClick = (city: SelectedLocation) => {
     onSearchClick(city);
     setQuery("");
   };
@@ -66,25 +63,14 @@ export const DestinationBox = ({
 
   return (
     <View style={styles.container}>
-      {location.length === 0 ? (
-        <Text
-          style={{
-            paddingBottom: spacing.rem,
-            fontWeight: Typography.fontWeight.bold,
-          }}
-        >
-          Where to?
-        </Text>
-      ) : (
-        <Text
-          style={{
-            paddingBottom: spacing.rem,
-            fontWeight: Typography.fontWeight.bold,
-          }}
-        >
-          {location}
-        </Text>
-      )}
+      <Text
+        style={{
+          paddingBottom: spacing.rem,
+          fontWeight: Typography.fontWeight.bold,
+        }}
+      >
+        Where to?
+      </Text>
 
       <TextInput
         placeholder="Search destinations"
@@ -100,7 +86,10 @@ export const DestinationBox = ({
           renderItem={({ item }) => (
             <Pressable
               onPress={() => {
-                handleSearchClick(item.city);
+                handleSearchClick({
+                  name: item.city,
+                  coordinates: [item.longitude, item.latitude],
+                });
               }}
             >
               <Text style={styles.cityText}>{item.city}</Text>

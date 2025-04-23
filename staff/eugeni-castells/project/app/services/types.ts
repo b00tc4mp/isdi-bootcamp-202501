@@ -1,3 +1,5 @@
+import { SelectedDate, SelectedLocation } from "@/components/Search/types";
+
 export type RegisterUserInputType = {
   name: string;
   email: string;
@@ -21,3 +23,9 @@ export type GeoDBResponseCity = {
   longitude: number;
   region: string;
 };
+
+export type GetVansLocationParam = SelectedLocation;
+
+export type GetVansDateRangeParam = SelectedDate;
+
+export type GetVansTravellersParam = number;

@@ -7,7 +7,7 @@ export const filterLocation = (location: string): Promise<GeoDBResponse> => {
   validate.string(location, "location");
 
   return fetch(
-    `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${location}&limit=${FETCHED_CITIES_SHOWN}&sort=-population`,
+    `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${location}&limit=${FETCHED_CITIES_SHOWN}&sort=-population&types=CITY`,
     {
       method: "GET",
       headers: {
