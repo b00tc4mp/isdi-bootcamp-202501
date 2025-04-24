@@ -10,7 +10,7 @@ export const createSeason = (userId, { name, startDate, endDate }) => {
   validate.date(endDate, 'end date')
  
   debugger
-  return User.findById(userId)
+  return User.findById(userId).lean()
     .catch(error => { throw new SystemError(error.message) })
     .then(user => {
     
