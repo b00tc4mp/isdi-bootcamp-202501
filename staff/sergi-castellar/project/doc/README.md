@@ -13,12 +13,13 @@ CoupleApp is an app designed for couples, offering a platform to manage the rela
 User
 
 - link with partner (using a unique code)
-- unlink the partner and delete all your data
-- create and view diary entries
-- add and view events in a shared calendar
-- create and view customizable lists and notes (e.g., free text and checkboxes)
-- track and share daily emotions
+- set a starting relationship date
 - track the number of days together since the relationship began
+- view, add, edit and delete events in a shared calendar
+- view, add, edit and delete lists
+- view, add, edit and delete the items inside the lists
+- view, add, edit and delete diary entries
+- select daily one emotion that describe you the most and compare with your partner's emotion
 
 ### UI/UX Design
 
@@ -39,6 +40,25 @@ User
 - com (validation, errors, constants)
 - doc (documentation)
 
+### UI Component tree
+
+- Landing
+- Register
+- Login
+- InviteScreen
+- SetDateStart
+- Home
+  - MainMenu
+- Calendar
+  - CalendarDayView
+  - CalendarEventForm
+- Lists
+  - ListDetail
+- Diary
+  - DiaryEntryDetail
+- Emotions
+  - EmotionsResult
+
 ### Data Model
 
 User
@@ -58,12 +78,19 @@ Couple
 - createdAt (Date)
 - modifiedAt (Date)
 
+InviteCode
+
+- id (string, uuid)
+- code (string)
+- createdAt (Date)
+- modifiedAt (Date)
+
 DiaryEntry
 
 - id (string, uuid)
 - couple (Couple.id)
+- author (User.id)
 - text (string, min length 1, max length 2000)
-- reaction (string)
 - createdAt (Date)
 - modifiedAt (Date)
 
@@ -71,6 +98,7 @@ CalendarEvent
 
 - id (string, uuid)
 - couple (Couple.id)
+- author (User.id)
 - title (string, min length 1, max length 100)
 - description (string, min length 1, max length 1000)
 - eventDate (Date)
@@ -81,6 +109,7 @@ ListItem
 
 - id (string, uuid)
 - text (string, min length 1, max length 500)
+- list (List.id)
 - createdAt (Date)
 - modifiedAt (Date)
 
@@ -88,8 +117,9 @@ List
 
 - id (string, uuid)
 - couple (Couple.id)
+- author (User.id)
 - title (string, min length 1, max length 100)
-- items (array of strings, each item min length 1, max length 500)
+- items (array of ListItem.id)
 - color (string)
 - createdAt (Date)
 - modifiedAt (Date)
@@ -113,7 +143,7 @@ Emotions
 
 ### Code Coverage
 
-...
+![Code coverage of 96.03% at statements](code_coverage.png)
 
 ## Planning
 
