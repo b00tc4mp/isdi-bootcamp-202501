@@ -1,7 +1,7 @@
 export type UserType = {
     id: string;
-    name: string;
-    lastName: string;
+    name?: string;
+    lastName?: string;
     email: string;
     alias: string;
     level?: string;
@@ -29,6 +29,7 @@ export type WorkoutType = {
     executionImages?: string[];
     status: "pending" | "accepted" | "declined";
     createdAt: Date;
+    modifiedAt?: Date;
     author: {
         id: string;
         alias: string;
@@ -44,8 +45,9 @@ export type WorkoutType = {
 export type EditWorkoutType = {
     name?: string;
     muscleGroup?: string;
+    feedImage?: string;
     type?: string;
     difficulty?: string;
     description?: string;
-    images?: string[];
+    executionImages?: string[];
 };

@@ -44,6 +44,7 @@ const getUserWorkouts = (
                     executionImages: workout.executionImages,
                     status: workout.status,
                     createdAt: workout.createdAt,
+                    modifiedAt: workout.modifiedAt,
                     author: {
                         id: author._id.toString(),
                         alias: author.alias,

@@ -22,6 +22,7 @@ import {
     getModeratorWorkoutsHandler,
     reviewWorkoutHandler
 } from "../handlers/workouts"
+import editWorkoutHandler from "../handlers/workouts/editWorkoutHandler"
 
 
 
@@ -36,7 +37,7 @@ workoutRouter.get(
     getAllWorkoutsHandler
 )
 
-// --- FILTER WORKOUTS ---
+// --- FILTER WORKOUTS METHOD ---
 workoutRouter.get(
     '/filter',
     authHandler,
@@ -74,13 +75,6 @@ workoutRouter.post(
     createWorkoutHandler
 )
 
-//  --- FILTER WORKOUT METHOD ---
-workoutRouter.post(
-    '/:workoutId/filter',
-    jsonBodyParser,
-    // validationHandler(createWorkoutSchema),
-    //createWorkoutHandler
-)
 
 // ----- DELETE ROUTES -----
 // --- DELETE WORKOUT METHOD ---
@@ -115,10 +109,11 @@ workoutRouter.patch(
     toggleSaveWorkoutHandler
 )
 
+
 //  --- UPDATE/EDIT WORKOUT METHOD ---
 workoutRouter.patch(
-    '/:workoutId/update',
+    '/:workoutId/',
     authHandler,
     jsonBodyParser,
-    //createWorkoutHandler
-)
+    editWorkoutHandler
+)   

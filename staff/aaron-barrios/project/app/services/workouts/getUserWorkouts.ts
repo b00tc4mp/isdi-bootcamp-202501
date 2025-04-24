@@ -6,6 +6,7 @@ const { SystemError, AuthorizationError } = errors
 
 const getUserWorkouts = (targetUserId: string): Promise<WorkoutType[]> => {
     return data.getToken()
+        .catch(error => { throw new SystemError(error.message) })
         .then(token => {
             if (!token) throw new AuthorizationError("No token found")
 
@@ -15,8 +16,10 @@ const getUserWorkouts = (targetUserId: string): Promise<WorkoutType[]> => {
                 }
             })
         })
+        .catch(error => { throw new SystemError(error.message) })
         .then(response => {
             return response.json()
+                .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
                     if (!response.ok) {
                         const { error, message } = body
@@ -27,10 +30,6 @@ const getUserWorkouts = (targetUserId: string): Promise<WorkoutType[]> => {
                     if (!Array.isArray(body)) throw new SystemError("Invalid workouts response")
                     return body
                 })
-        })
-        .catch(error => {
-            console.error("❌ getUserWorkouts error:", error)
-            throw new SystemError("Invalid JSON response from server")
         })
 }
 

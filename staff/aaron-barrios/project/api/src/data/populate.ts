@@ -14,7 +14,8 @@ let compi: Partial<UserDocType>
 data.connect(MONGO_URI!, MONGO_DB_NAME!)
     .then(() => Promise.all([
         User.deleteMany({}),
-        Workout.deleteMany({})
+        Workout.deleteMany({}),
+        Routine.deleteMany({}),
     ]))
     .then(() => bcrypt.hash("mamama", 10))
     .then(hashedPassword => {
@@ -91,6 +92,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 saves: [masha._id],
                 status: "accepted",
                 createdAt: new Date(2023, 11, 1),
+                modifiedAt: new Date()
             },
             {
                 author: frankie._id,
@@ -105,6 +107,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 saves: [masha._id],
                 status: "accepted",
                 createdAt: new Date(2024, 10, 27),
+                modifiedAt: new Date()
             },
             {
                 author: manu._id,
@@ -119,20 +122,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 saves: [manu._id, masha._id],
                 status: "accepted",
                 createdAt: new Date(2025, 1, 13),
-            },
-            {
-                author: frankie._id,
-                name: "hip thrust",
-                muscleGroup: "buttocks",
-                feedImage: "https://www.mgc.es/wp-content/uploads/2023/05/como-hacer-hip-thrust-para-los-gluteos-880x660.jpg",
-                type: "strength",
-                difficulty: "medium",
-                description: "best buttocks exercise!",
-                executionImages: ["url1", "url2"],
-                likes: [],
-                saves: [],
-                status: "pending",
-                createdAt: new Date(2024, 10, 27),
+                modifiedAt: new Date()
             },
             {
                 author: frankie._id,
@@ -147,6 +137,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 saves: [masha._id],
                 status: "accepted",
                 createdAt: new Date(2024, 10, 27),
+                modifiedAt: new Date()
             },
             {
                 author: frankie._id,
@@ -160,8 +151,24 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 likes: [manu._id],
                 saves: [masha._id],
                 status: "accepted",
-                createdAt: new Date(2024, 10, 27),
-            }
+                createdAt: new Date(2024, 10, 28),
+                modifiedAt: new Date()
+            },
+            {
+                author: frankie._id,
+                name: "hip thrust",
+                muscleGroup: "buttocks",
+                feedImage: "https://www.mgc.es/wp-content/uploads/2023/05/como-hacer-hip-thrust-para-los-gluteos-880x660.jpg",
+                type: "strength",
+                difficulty: "medium",
+                description: "best buttocks exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [],
+                saves: [],
+                status: "pending",
+                createdAt: new Date(2024, 10, 29),
+                modifiedAt: new Date()
+            },
         ])
     })
     .then(([benchPress, lateralRaises, bulgarianSquat, hipThrust]) => {

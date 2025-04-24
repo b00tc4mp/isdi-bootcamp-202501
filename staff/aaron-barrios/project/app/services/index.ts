@@ -24,8 +24,17 @@ import {
 
 import {
     getAllWorkouts,
+    getUserWorkouts,
     getWorkoutById,
-    getUserWorkouts
+    createWorkout,
+    deleteWorkout,
+    toggleLikeWorkout,
+    toggleSaveWorkout,
+    filterWorkouts,
+    getModeratorWorkouts,
+    reviewWorkout,
+    editWorkout,
+    defaultWorkoutExecutionImages
 } from './workouts'
 
 
@@ -41,11 +50,21 @@ const services = {
 
     getUserAlias,
     getCurrentUser,
-    getUserWorkouts,
     updateUserData,
 
     getAllWorkouts,
-    getWorkoutById
+    getUserWorkouts,
+    getWorkoutById,
+    createWorkout,
+    deleteWorkout,
+    toggleLikeWorkout,
+    toggleSaveWorkout,
+    filterWorkouts,
+    getModeratorWorkouts,
+    reviewWorkout,
+    editWorkout,
+
+    defaultWorkoutExecutionImages
 }
 
 export default services

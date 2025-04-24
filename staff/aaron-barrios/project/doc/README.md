@@ -105,14 +105,15 @@ Workout
 - name (string)
 - muscleGroup (string)
 - feedImage (string)
-- type (number/string, enum: 1 (calysthenics) | 2: (strength) | 3: (cardio)...)
-- difficulty (number/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
+- type? (number/string, enum: 1 (calysthenics) | 2: (strength) | 3: (cardio)...)
+- difficulty? (number/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
 - description (string)
-- executionImages([string])
+- executionImages?([string])
 - status (string, enum: 1 (accepted) | 2: (pending) | 3: (declined)) -> //if state === pending, can edit workout
-- likes ([User.id])
-- saves ([User.id])
+- likes? ([User.id])
+- saves? ([User.id])
 - createdAt (date)
+- modifiedAt? (date)
 
 
 WorkoutProgress (conjunto de workoutProgress) -> poder borrar el punto

@@ -33,6 +33,7 @@ export type WorkoutType = {
     executionImages?: string[]
     status: "pending" | "accepted" | "declined"
     createdAt: Date
+    modifiedAt?: Date
 
     author: {
         id: string
@@ -52,8 +53,9 @@ export type WorkoutType = {
 export type EditWorkoutType = { //RORO pattern (used when there are variable parameters)
     name?: string
     muscleGroup?: string
+    feedImage?: string
     type?: string
     difficulty?: string
     description?: string
-    images?: string[]
+    executionImages?: string[]
 }

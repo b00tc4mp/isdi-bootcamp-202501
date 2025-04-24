@@ -9,7 +9,6 @@ import WorkoutCard from "@/components/WorkoutCard"
 import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts } from "@/services/user/regular"
 import { deleteWorkout } from "@/services/workouts"
 
-
 export default function Profile() {
     const [activeTab, setActiveTab] = useState<"user" | "workouts" | "routines">("user")
     const [name, setName] = useState("")
@@ -22,15 +21,28 @@ export default function Profile() {
     const [workoutType, setWorkoutType] = useState<"saved" | "mine">("saved")
     const [workouts, setWorkouts] = useState<WorkoutType[]>([])
 
+    function appendImageTimestamp(url: string, dateStr?: string | Date) {
+        const timestamp = new Date(dateStr ?? Date.now()).getTime()
+        return `${url}?t=${timestamp}`
+    }
+
     const loadWorkouts = () => {
         const fetch = workoutType === "saved" ? getSavedWorkouts : getMyWorkouts
+
         fetch()
-            .then(setWorkouts)
+            .then(data => {
+                const workoutsWithTimestamp = data.map(w => ({
+                    ...w,
+                    feedImage: appendImageTimestamp(w.feedImage, w.modifiedAt || w.createdAt),
+                }))
+                setWorkouts(workoutsWithTimestamp)
+            })
             .catch(error => {
                 console.error("Error loading workouts:", error)
                 showAlert("Error", error.message || "Failed to fetch workouts.")
             })
     }
+
 
     useEffect(() => {
         if (activeTab === "user") {
@@ -87,7 +99,6 @@ export default function Profile() {
         if (activeTab === "user") {
             return (
                 <>
-                    {/* Campos de usuario */}
                     <Text style={styles.label}>Name</Text>
                     <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your name" />
                     <Text style={styles.label}>Last Name</Text>
@@ -175,7 +186,6 @@ export default function Profile() {
         </ScrollView>
     )
 }
-
 
 const styles = StyleSheet.create({
     container: {

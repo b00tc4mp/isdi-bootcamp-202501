@@ -28,7 +28,12 @@ export default function WorkoutCard({
         <Pressable onPress={onPress} style={styles.card}>
             <Image
                 style={styles.image}
-                source={{ uri: workout.feedImage || "https://via.placeholder.com/120" }}
+                source={{
+                    uri: workout.feedImage
+                        ? `${workout.feedImage}?t=${(workout.modifiedAt || workout.createdAt || new Date()).toString()}`
+                        : "https://via.placeholder.com/120"
+
+                }}
             />
 
             <View style={styles.info}>
@@ -63,6 +68,19 @@ export default function WorkoutCard({
 
                     <View style={styles.actions}>
                         <Text style={styles.date}>📅 {formatDate(workout.createdAt)}</Text>
+                        {workout.status === "pending" && (
+                            <Pressable
+                                onPress={() =>
+                                    router.push({
+                                        pathname: "/(stack)/EditWorkout/[workout.Id]",
+                                        params: { workoutId: workout.id },
+                                    })
+                                }
+                            >
+                                <Text style={{ color: "#fff", fontWeight: "bold" }}>✏️</Text>
+                            </Pressable>
+                        )}
+
                         {workout.status === "accepted" && (
                             <>
                                 <Text>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
@@ -71,16 +89,17 @@ export default function WorkoutCard({
                         )}
                         {onDelete && (
                             <Pressable onPress={onDelete}>
-                                <Image
+                                {/* <Image
                                     source={require("@/assets/icons/delete.png")}
                                     style={styles.deleteIcon}
-                                />
+                                /> */}
+                                <Text style={{ color: "#fff", fontWeight: "bold" }}>🗑️</Text>
                             </Pressable>
                         )}
                     </View>
                 </View>
             </View>
-        </Pressable>
+        </Pressable >
     )
 }
 

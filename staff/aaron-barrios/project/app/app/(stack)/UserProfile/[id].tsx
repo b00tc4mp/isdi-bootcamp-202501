@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useLocalSearchParams, useRouter } from "expo-router"
+import { useLocalSearchParams } from "expo-router"
 import { ScrollView, StyleSheet, Pressable, ActivityIndicator } from "react-native"
 import { Text, View } from "@/components/Themed"
 
@@ -9,7 +9,6 @@ import { getTargetUserData } from "@/services/user/regular"
 import { getUserWorkouts } from "@/services/workouts"
 
 export default function UserProfile() {
-    const router = useRouter()
     const { id } = useLocalSearchParams()
     const targetUserId = typeof id === "string" ? id : ""
 
@@ -38,24 +37,27 @@ export default function UserProfile() {
     }, [targetUserId])
 
     useEffect(() => {
-        if (activeTab !== "workouts" || !targetUserId) return
+        if (!targetUserId || activeTab !== "workouts") return
 
         setLoading(true)
         getUserWorkouts(targetUserId)
             .then(setWorkouts)
             .catch(console.error)
             .finally(() => setLoading(false))
-    }, [activeTab, targetUserId])
+    }, [targetUserId, activeTab])
+
+    const handleTabChange = (tab: typeof activeTab) => {
+        setActiveTab(tab)
+        if (tab === "workouts") {
+            setWorkouts([])
+        }
+    }
 
     if (!targetUserId) return <Text style={styles.error}>Invalid user ID</Text>
     if (loading && activeTab !== "data") return <ActivityIndicator style={{ marginTop: 40 }} />
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Pressable onPress={() => router.back()}>
-                <Text style={styles.backButton}>← Back</Text>
-            </Pressable>
-
             <Text style={styles.title}>@{userAlias}</Text>
 
             <View style={styles.tabs}>
@@ -63,7 +65,7 @@ export default function UserProfile() {
                     <Pressable
                         key={tab}
                         style={[styles.tab, activeTab === tab && styles.activeTab]}
-                        onPress={() => setActiveTab(tab as typeof activeTab)}
+                        onPress={() => handleTabChange(tab as typeof activeTab)}
                     >
                         <Text>{tab.charAt(0).toUpperCase() + tab.slice(1)}</Text>
                     </Pressable>
@@ -139,12 +141,6 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     label: {
-        fontWeight: "bold"
-    },
-    backButton: {
-        marginBottom: 12,
-        fontSize: 16,
-        color: "#0ea5e9",
         fontWeight: "bold"
     },
     error: {

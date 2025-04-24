@@ -27,7 +27,7 @@ routineRouter.get(
     // getAllRoutinesHandler
 )
 
-// --- FILTER Routines ---
+// --- FILTER ROUTINES METHOD ---
 routineRouter.get(
     '/filter',
     authHandler,
@@ -41,7 +41,7 @@ routineRouter.get(
     // getModeratorRoutinesHandler
 )
 
-// --- GET WORKOUT BY ROUTINES METHOD ---
+// --- GET ROUTINES BY ID METHOD ---
 routineRouter.get(
     "/:workoutId",
     authHandler,
@@ -65,13 +65,6 @@ routineRouter.post(
     // createWorkoutHandler
 )
 
-//  --- FILTER ROUTINES METHOD ---
-routineRouter.post(
-    '/:workoutId/filter',
-    jsonBodyParser,
-    // validationHandler(createRoutineschema),
-    //createWorkoutHandler
-)
 
 // ----- DELETE ROUTES -----
 // --- DELETE ROUTINES METHOD ---

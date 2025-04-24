@@ -62,6 +62,10 @@ const workout = new Schema<WorkoutDocType>({
         type: Date,
         required: true,
         default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: null
     }
 })
 

@@ -32,6 +32,7 @@ export type WorkoutDocType = {
     saves?: Types.ObjectId[]
     status: "pending" | "accepted" | "declined" //add revising => if community votes to change smthing or want to remove it
     createdAt: Date
+    modifiedAt?: Date
     __v: number
 }
 
