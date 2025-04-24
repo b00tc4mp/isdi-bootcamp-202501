@@ -83,52 +83,39 @@ data.connect(MONGO_URL, MONGO_DB)
             ])
         ])
             .then(() => {
-                return ListItem.insertMany([
-                    { text: "Sunscreen" },
-                    { text: "Camera" },
-                    { text: "New furniture" },
-                    { text: "Paint walls" },
-                    { text: "Visit a museum" },
-                    { text: "Have a picnic" },
-                    { text: "Paris" },
-                    { text: "Tokyo" },
-                    { text: "Buy a gift" },
-                    { text: "Make a special dinner" },
-                    { text: "Big garden" },
-                    { text: "Open kitchen" }
+                return List.insertMany([
+                    { couple: couple1._id, title: "Weekend Getaway Packing List", author: couple1.members[0]._id, color: "#ff0a0a" },
+                    { couple: couple1._id, title: "Home Renovation Ideas", author: couple1.members[1]._id, color: "#43d313" },
+                    { couple: couple2._id, title: "Things To Do Together", author: couple2.members[0]._id, color: "#41dae2" },
+                    { couple: couple2._id, title: "Vacation Wishlist", author: couple2.members[1]._id, color: "#d6cd68" },
+                    { couple: couple3._id, title: "Anniversary Plans", author: couple3.members[0]._id, color: "#de6bff" },
+                    { couple: couple3._id, title: "Dream House", author: couple3.members[1]._id, color: "#ff0a0a" }
                 ])
-                    .then(listItems => {
-                        return List.insertMany([
-                            { couple: couple1._id, title: "Weekend Getaway Packing List", author: couple1.members[0]._id, items: [listItems[0]._id, listItems[1]._id], color: "#ff0a0a" },
-                            { couple: couple1._id, title: "Home Renovation Ideas", author: couple1.members[1]._id, items: [listItems[2]._id, listItems[3]._id], color: "#43d313" },
-                            { couple: couple2._id, title: "Things To Do Together", author: couple2.members[0]._id, items: [listItems[4]._id, listItems[5]._id], color: "#41dae2" },
-                            { couple: couple2._id, title: "Vacation Wishlist", author: couple2.members[1]._id, items: [listItems[6]._id, listItems[7]._id], color: "#d6cd68" },
-                            { couple: couple3._id, title: "Anniversary Plans", author: couple3.members[0]._id, items: [listItems[8]._id, listItems[9]._id], color: "#de6bff" },
-                            { couple: couple3._id, title: "Dream House", author: couple3.members[1]._id, items: [listItems[10]._id, listItems[11]._id], color: "#ff0a0a" }
+            })
+            .then(lists => {
+                return ListItem.insertMany([
+                    { text: "Sunscreen", list: lists[0]._id },
+                    { text: "Camera", list: lists[0]._id },
+                    { text: "New furniture", list: lists[1]._id },
+                    { text: "Paint walls", list: lists[1]._id },
+                    { text: "Visit a museum", list: lists[2]._id },
+                    { text: "Have a picnic", list: lists[2]._id },
+                    { text: "Paris", list: lists[3]._id },
+                    { text: "Tokyo", list: lists[3]._id },
+                    { text: "Buy a gift", list: lists[4]._id },
+                    { text: "Make a special dinner", list: lists[4]._id },
+                    { text: "Big garden", list: lists[5]._id },
+                    { text: "Open kitchen", list: lists[5]._id }
+                ])
+                    .then((listItems) => {
+                        return Promise.all([
+                            List.updateOne({ _id: lists[0]._id }, { $push: { items: { $each: [listItems[0]._id, [listItems[1]._id]] } } }),
+                            List.updateOne({ _id: lists[1]._id }, { $push: { items: { $each: [listItems[2]._id, [listItems[3]._id]] } } }),
+                            List.updateOne({ _id: lists[2]._id }, { $push: { items: { $each: [listItems[4]._id, [listItems[5]._id]] } } }),
+                            List.updateOne({ _id: lists[3]._id }, { $push: { items: { $each: [listItems[6]._id, [listItems[7]._id]] } } }),
+                            List.updateOne({ _id: lists[4]._id }, { $push: { items: { $each: [listItems[8]._id, [listItems[9]._id]] } } }),
+                            List.updateOne({ _id: lists[5]._id }, { $push: { items: { $each: [listItems[10]._id, [listItems[11]._id]] } } })
                         ])
-                            .then(lists => {
-                                // Asignar el id de la lista a cada ítem
-                                const updates = [
-                                    { _id: listItems[0]._id, list: lists[0]._id },
-                                    { _id: listItems[1]._id, list: lists[0]._id },
-                                    { _id: listItems[2]._id, list: lists[1]._id },
-                                    { _id: listItems[3]._id, list: lists[1]._id },
-                                    { _id: listItems[4]._id, list: lists[2]._id },
-                                    { _id: listItems[5]._id, list: lists[2]._id },
-                                    { _id: listItems[6]._id, list: lists[3]._id },
-                                    { _id: listItems[7]._id, list: lists[3]._id },
-                                    { _id: listItems[8]._id, list: lists[4]._id },
-                                    { _id: listItems[9]._id, list: lists[4]._id },
-                                    { _id: listItems[10]._id, list: lists[5]._id },
-                                    { _id: listItems[11]._id, list: lists[5]._id }
-                                ]
-
-                                return Promise.all(
-                                    updates.map(update =>
-                                        ListItem.updateOne({ _id: update._id }, { $set: { list: update.list } })
-                                    )
-                                )
-                            })
                     })
             })
     })

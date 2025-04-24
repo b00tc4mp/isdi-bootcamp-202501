@@ -99,12 +99,6 @@ const diaryEntry = new Schema({
         maxLength: 2000,
         required: true
     },
-    reaction: {
-        type: String,
-        minLength: 1,
-        maxLength: 10,
-        default: null
-    },
     createdAt: {
         type: Date,
         required: true,
@@ -162,7 +156,7 @@ const listItem = new Schema({
     list: {
         type: ObjectId,
         ref: 'List',
-        //required: true //TODO ponerlo required
+        required: true
     },
     createdAt: {
         type: Date,
