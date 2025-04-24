@@ -33,6 +33,10 @@ import {
     reviewWorkout
 } from './workout'
 
+import {
+    getAllRoutines
+} from './routines'
+
 
 const services = {
     generateAnonymUser,
@@ -58,7 +62,9 @@ const services = {
     reviewWorkout,
     editWorkout,
     getAllWorkouts,
-    getWorkoutById
+    getWorkoutById,
+
+    getAllRoutines
 }
 
 export default services

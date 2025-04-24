@@ -11,7 +11,7 @@ import {
 } from "../middlewares"
 
 import {
-
+    getAllRoutinesHandler
 } from "../handlers/routines"
 
 
@@ -24,7 +24,7 @@ export const routineRouter = Router()
 routineRouter.get(
     "/",
     authHandler,
-    // getAllRoutinesHandler
+    getAllRoutinesHandler
 )
 
 // --- FILTER ROUTINES METHOD ---

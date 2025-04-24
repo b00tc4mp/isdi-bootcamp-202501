@@ -53,6 +53,17 @@ export default function EditWorkout() {
             .then(() => router.back())
     }
 
+    //TEST IF ERROR IS THROWNED 
+    // const handleSave = async () => {
+    //     try {
+    //         await editWorkout(workoutId, form)
+    //         router.back() // ✅ Solo se ejecuta si no hay error
+    //     } catch (err: any) {
+    //         console.error("Save failed:", err)
+    //         setError(err.message || "Error when saving changes")
+    //     }
+    // }
+
     if (loading) return <Text style={styles.loading}>Loading...</Text>
     if (error) return <Text style={styles.error}>{error}</Text>
 

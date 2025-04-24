@@ -45,7 +45,7 @@ const routine = new Schema<RoutineDocType>({
     description: {
         type: String,
         required: true,
-        minlength: 10,
+        minlength: 5,
         maxlength: 500
     },
     likes: [{
@@ -93,7 +93,6 @@ const routine = new Schema<RoutineDocType>({
         restTime: Number,
         order: Number
     }]
-
 })
 
 const Routine = model<RoutineDocType>("Routine", routine)

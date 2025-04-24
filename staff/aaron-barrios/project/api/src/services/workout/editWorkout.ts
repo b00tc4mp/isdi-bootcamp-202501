@@ -38,25 +38,32 @@ const editWorkout = (
             if (workout.status !== "pending")
                 throw new StatusError("Only pending workouts can be edited.")
 
+            Object.assign(workout, updates)
 
-            const muscleGroup = ["chest", "back", "biceps", "triceps", "shoulders", "legs", "buttocks"]
+            const muscleGroups = ["chest", "back", "biceps", "triceps", "shoulders", "legs", "buttocks"]
             const types = ["strength", "cardio", "mobility", "endurance"]
 
-            if (!workout.muscleGroup || !muscleGroup.includes(workout.muscleGroup)) {
-                throw new SystemError("Invalid muscle group!")
+            if (!workout.muscleGroup || !muscleGroups.includes(workout.muscleGroup)) {
+                throw new ValidationError("Invalid muscle group!")
             }
 
             if (!workout.type || !types.includes(workout.type)) {
-                throw new SystemError("Invalid workout type!")
+                throw new ValidationError("Invalid workout type!")
             }
-
-            Object.assign(workout, updates)
 
             //asigno las propiedades correctamente al documento workout 
             //para luego al guardarlo (save) que persistan los cambios
             workout.modifiedAt = new Date()
+
             return workout.save()
-                .catch(error => { throw new SystemError(error.message) })
+                .catch(error => {
+                    // Si es error de mongoose por schema
+                    if (error.name === "ValidationError") {
+                        throw new ValidationError(error.message)
+                    }
+
+                    throw new SystemError(error.message)
+                })
         })
         .then(() => { })
 }

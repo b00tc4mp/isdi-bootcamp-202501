@@ -93,6 +93,14 @@ workoutRouter.patch(
     reviewWorkoutHandler
 )
 
+//  --- UPDATE/EDIT WORKOUT METHOD ---
+workoutRouter.patch(
+    '/:workoutId/edit',
+    authHandler,
+    jsonBodyParser,
+    editWorkoutHandler
+)
+
 //  --- TOGGLE LIKE WORKOUT METHOD ---
 workoutRouter.patch(
     '/:workoutId/likes',
@@ -109,11 +117,3 @@ workoutRouter.patch(
     toggleSaveWorkoutHandler
 )
 
-
-//  --- UPDATE/EDIT WORKOUT METHOD ---
-workoutRouter.patch(
-    '/:workoutId/',
-    authHandler,
-    jsonBodyParser,
-    editWorkoutHandler
-)   

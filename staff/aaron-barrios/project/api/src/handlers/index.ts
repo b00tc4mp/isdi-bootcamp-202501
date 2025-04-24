@@ -37,7 +37,7 @@ import {
 } from './workouts'
 
 import {
-
+    getAllRoutinesHandler
 } from './routines'
 
 
@@ -67,6 +67,8 @@ const services = {
     filterWorkoutsHandler,
     toggleLikeWorkoutHandler,
     toggleSaveWorkoutHandler,
+
+    getAllRoutinesHandler,
 }
 
 export default services

@@ -60,7 +60,7 @@ export type RoutineDocType = {
     _id: Types.ObjectId
     author: Types.ObjectId
     name: string
-    goal: string
+    goal?: string
     muscleGroup: string
     locationType?: string
     difficulty?: string
