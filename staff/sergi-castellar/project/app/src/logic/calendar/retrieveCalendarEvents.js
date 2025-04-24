@@ -20,6 +20,9 @@ export const retrieveCalendarEvents = (startDate, endDate) => {
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
             if (response.status === 200) return response.json()
+                .catch(error => {
+                    throw new SystemError(error.message)
+                })
 
             return response.json().then(body => {
                 const { error, message } = body
