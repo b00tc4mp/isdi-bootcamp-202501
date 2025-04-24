@@ -1,10 +1,11 @@
 import { data } from '../../data'
-import { errors } from 'com'
+import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
 export const retrieveMonthCalendarEvents = (year, monthIndex) => {
-    //TODO validates
+    validate.number(year, 1, 3000, 'year')
+    validate.number(monthIndex, 0, 11, 'monthIndex')
 
     const { token } = data
 

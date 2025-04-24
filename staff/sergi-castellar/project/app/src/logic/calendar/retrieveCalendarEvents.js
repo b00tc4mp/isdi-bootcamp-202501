@@ -4,7 +4,6 @@ import { errors } from 'com'
 const { SystemError } = errors
 
 export const retrieveCalendarEvents = (startDate, endDate) => {
-    //TODO validate
 
     const { token } = data
 

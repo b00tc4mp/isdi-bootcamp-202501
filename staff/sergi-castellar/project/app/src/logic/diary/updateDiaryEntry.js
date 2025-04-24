@@ -1,9 +1,12 @@
 import { data } from '../../data'
-import { errors } from 'com'
+import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
 export const updateDiaryEntry = (entryId, text) => {
+    validate.id(entryId, 'entryId')
+    validate.textDiaryEntry(text, 'text')
+
     const { token } = data
 
     return fetch(`${import.meta.env.VITE_API_URL}/couples/diary/${entryId}`, {

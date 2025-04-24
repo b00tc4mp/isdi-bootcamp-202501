@@ -4,7 +4,7 @@ import { errors, validate } from 'com'
 const { SystemError } = errors
 
 export const createEmotion = (emotion) => {
-    //TODO validate.emotion(emotion, 'emotion')
+    validate.emotion(emotion, 'emotion')
 
     const { token } = data
 

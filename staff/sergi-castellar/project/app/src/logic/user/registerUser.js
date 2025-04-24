@@ -2,7 +2,16 @@ import { errors, validate } from 'com'
 
 const { SystemError, NoMatchError } = errors
 
+const capitalizeName = (name) => {
+    return name
+        .trim()
+        .replace(/\s+/g, ' ')
+        .replace(/\b\w/g, name => name.toUpperCase())
+}
+
 export const registerUser = (name, email, username, password, password2) => {
+    name = capitalizeName(name)
+
     validate.name(name, 'name')
     validate.email(email, 'email')
     validate.username(username, 'username')
@@ -16,7 +25,7 @@ export const registerUser = (name, email, username, password, password2) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, email, username, password })
+        body: JSON.stringify({ name, email: email.trim(), username: username.trim(), password: password.trim() })
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
