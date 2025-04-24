@@ -27,6 +27,9 @@ export const validate = {
 
         this.maxLength(text, maxLength, explain)
     },
+    number(number, min, max, explain) {
+        if (typeof number !== 'number' || number < min || number > max) throw new ValidationError(`Invalid ${explain} type`)
+    },
     // dedicated validations
     name(name, explain) {
         this.notBlankString(name, explain)
