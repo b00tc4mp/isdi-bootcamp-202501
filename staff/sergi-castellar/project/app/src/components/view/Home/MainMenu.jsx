@@ -5,6 +5,7 @@ import { useContext } from '../../../context'
 
 export function MainMenu({ onCalendarClick, onListsClick, onDiaryClick, onEmotionsClick }) {
   const { alert } = useContext()
+
   const [user, setUser] = useState(null)
   const [daysTogether, setDaysTogether] = useState(0)
   const [partnerName, setPartnerName] = useState('')

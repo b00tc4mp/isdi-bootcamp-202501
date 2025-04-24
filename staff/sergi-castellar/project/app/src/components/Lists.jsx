@@ -126,12 +126,8 @@ export function Lists() {
               </div>
 
               <div className='flex items-center space-x-2'>
-                <button onClick={(event) => handleEditList(event, list)} className='text-sm text-blue-500'>
-                  ✏️
-                </button>
-                <button onClick={(event) => handleDeleteList(event, list)} className='text-sm text-red-500'>
-                  🗑️
-                </button>
+                <button onClick={(event) => handleEditList(event, list)}>✏️</button>
+                <button onClick={(event) => handleDeleteList(event, list)}>🗑️</button>
               </div>
             </li>
           ))}

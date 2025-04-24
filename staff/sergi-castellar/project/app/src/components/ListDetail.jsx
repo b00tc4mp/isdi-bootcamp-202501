@@ -104,12 +104,8 @@ export function ListDetail({ list, onBack }) {
             <li key={item.id} className='flex justify-between items-center bg-gray-100 px-4 py-2 rounded-lg'>
               <span>{item.text}</span>
               <div className='space-x-2'>
-                <button onClick={() => handleEditItem(item)} className='text-sm text-blue-500'>
-                  ✏️
-                </button>
-                <button onClick={() => handleDeleteItem(item.id)} className='text-sm text-red-500'>
-                  🗑️
-                </button>
+                <button onClick={() => handleEditItem(item)}>✏️</button>
+                <button onClick={() => handleDeleteItem(item.id)}>🗑️</button>
               </div>
             </li>
           ))}

@@ -5,6 +5,7 @@ import { useContext } from '../context'
 
 export function CalendarDayView({ date, onClose, onRefresh }) {
   const { alert, confirm } = useContext()
+
   const [events, setEvents] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [editingEvent, setEditingEvent] = useState(null)
@@ -16,39 +17,57 @@ export function CalendarDayView({ date, onClose, onRefresh }) {
   })
 
   const loadEvents = () => {
-    const start = new Date(date)
-    start.setHours(0, 0, 0, 0)
-    const end = new Date(date)
-    end.setHours(23, 59, 59, 999)
+    try {
+      const start = new Date(date)
+      start.setHours(0, 0, 0, 0)
+      const end = new Date(date)
+      end.setHours(23, 59, 59, 999)
 
-    logic
-      .retrieveCalendarEvents(start, end)
-      .then(({ events }) => setEvents(events))
-      .catch((error) => {
-        console.error(error)
+      logic
+        .retrieveCalendarEvents(start, end)
+        .then(({ events }) => setEvents(events))
+        .catch((error) => {
+          console.error(error)
 
-        alert(error.message)
-      })
+          alert(error.message)
+        })
+    } catch (error) {
+      console.error(error)
+
+      alert(error.messsage)
+    }
   }
 
   useEffect(() => {
-    loadEvents()
+    try {
+      loadEvents()
+    } catch (error) {
+      console.error(error)
+
+      alert(error.messsage)
+    }
   }, [date])
 
   const handleDelete = (eventId) => {
     confirm('Delete this event?').then((accepted) => {
       if (accepted) {
-        logic
-          .deleteCalendarEvent(eventId)
-          .then(() => {
-            loadEvents()
-            onRefresh()
-          })
-          .catch((error) => {
-            console.error(error)
+        try {
+          logic
+            .deleteCalendarEvent(eventId)
+            .then(() => {
+              loadEvents()
+              onRefresh()
+            })
+            .catch((error) => {
+              console.error(error)
 
-            alert(error.message)
-          })
+              alert(error.message)
+            })
+        } catch (error) {
+          console.error(error)
+
+          alert(error.messsage)
+        }
       }
     })
   }
@@ -91,12 +110,8 @@ export function CalendarDayView({ date, onClose, onRefresh }) {
                 <p className='text-sm text-gray-700'>{event.description}</p>
               </div>
               <div className='space-x-2 text-sm flex-shrink-0'>
-                <button onClick={() => handleEdit(event)} className='text-blue-500'>
-                  ✏️
-                </button>
-                <button onClick={() => handleDelete(event.id)} className='text-red-500'>
-                  🗑️
-                </button>
+                <button onClick={() => handleEdit(event)}>✏️</button>
+                <button onClick={() => handleDelete(event.id)}>🗑️</button>
               </div>
             </div>
           ))}

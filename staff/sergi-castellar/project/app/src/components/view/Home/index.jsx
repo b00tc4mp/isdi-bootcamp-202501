@@ -14,6 +14,7 @@ import { useContext } from '../../../context'
 
 export function Home({ onUserLoggedOut }) {
   const { alert, confirm } = useContext()
+
   const navigate = useNavigate()
   const location = useLocation()
 

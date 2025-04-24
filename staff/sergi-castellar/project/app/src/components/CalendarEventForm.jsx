@@ -4,26 +4,33 @@ import { useContext } from '../context'
 
 export function CalendarEventForm({ event, date, onCancel }) {
   const { alert } = useContext()
-  const isEditing = Boolean(event) //TODO ??
+
+  const isEditing = !!event
 
   const [title, setTitle] = useState(event?.title || '')
   const [description, setDescription] = useState(event?.description || '')
 
   const handleSubmit = () => {
-    if (!title.trim() || !description.trim()) {
-      alert('Please fill in both title and description')
-      return
+    try {
+      if (!title.trim() || !description.trim()) {
+        alert('Please fill in both title and description')
+        return
+      }
+
+      const action = isEditing ? logic.updateCalendarEvent(event.id, title, description) : logic.createCalendarEvent(date.toISOString(), title, description)
+
+      action
+        .then(() => onCancel())
+        .catch((error) => {
+          console.error(error)
+
+          alert(error.message)
+        })
+    } catch (error) {
+      console.error(error)
+
+      alert(error.messsage)
     }
-
-    const action = isEditing ? logic.updateCalendarEvent(event.id, title, description) : logic.createCalendarEvent(date.toISOString(), title, description)
-
-    action
-      .then(() => onCancel())
-      .catch((error) => {
-        console.error(error)
-
-        alert(error.message)
-      })
   }
 
   const handleCancel = () => onCancel()

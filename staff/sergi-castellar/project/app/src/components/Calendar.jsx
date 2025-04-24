@@ -6,6 +6,7 @@ import { useContext } from '../context'
 
 export function Calendar() {
   const { alert } = useContext()
+
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [events, setEvents] = useState([])
   const [selectedDate, setSelectedDate] = useState(null)
@@ -21,7 +22,7 @@ export function Calendar() {
   const lastDayOfMonth = getLastDayOfMonth(currentMonth)
 
   const weekDayFirstDay = firstDayOfMonth.getDay()
-  const daysNeededBefore = (weekDayFirstDay + 6) % 7 // Make Monday the start of the week
+  const daysNeededBefore = (weekDayFirstDay + 6) % 7
 
   const daysInMonth = []
   for (let day = new Date(firstDayOfMonth); day <= lastDayOfMonth; day.setDate(day.getDate() + 1)) {
@@ -53,18 +54,30 @@ export function Calendar() {
   const handleSelectDay = (day) => setSelectedDate(new Date(day))
 
   const loadEvents = () => {
-    logic
-      .retrieveMonthCalendarEvents(year, month)
-      .then(({ events }) => setEvents(events))
-      .catch((error) => {
-        console.error(error)
+    try {
+      logic
+        .retrieveMonthCalendarEvents(year, month)
+        .then(({ events }) => setEvents(events))
+        .catch((error) => {
+          console.error(error)
 
-        alert(error.message)
-      })
+          alert(error.message)
+        })
+    } catch (error) {
+      console.error(error)
+
+      alert(error.messsage)
+    }
   }
 
   useEffect(() => {
-    loadEvents()
+    try {
+      loadEvents()
+    } catch (error) {
+      console.error(error)
+
+      alert(error.messsage)
+    }
   }, [currentMonth, refreshTrigger])
 
   const dateHasEvents = (date) => {

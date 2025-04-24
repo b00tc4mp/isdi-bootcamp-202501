@@ -3,6 +3,7 @@ import { useContext } from '../../context'
 
 export function Register({ onNavigateToLogin, onUserRegistered }) {
   const { alert } = useContext()
+
   const handleRegisterSubmit = (event) => {
     event.preventDefault()
 
