@@ -39,9 +39,7 @@ export const getUserStats = (userId) => {
         if (participated) {
           gamesPlayed++
 
-          const won = Array.isArray(game.winner)
-            ? game.winner.some(p => p.toString() === userId)
-            : game.winner?.toString() === userId
+          const won = game.winner?.toString() === userId
 
           if (won) {
             gamesWon++
