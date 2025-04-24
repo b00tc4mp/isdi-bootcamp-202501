@@ -36,6 +36,10 @@ import {
     reviewWorkoutHandler
 } from './workouts'
 
+import {
+
+} from './routines'
+
 
 const services = {
     registerUserHandler,

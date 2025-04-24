@@ -16,25 +16,25 @@ const routine = new Schema<RoutineDocType>({
     },
     goal: {
         type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 20
+        enum: ["strength", "cardio", "mobility", "endurance"]
     },
     muscleGroup: {
         type: String,
         required: true,
-        minlength: 3,
-        maxlength: 20
+        enum: ["chest", "back", "biceps", "triceps", "shoulders", "legs", "buttocks"],
+    },
+    feedImage: {
+        type: String,
+        required: true,
+        minlength: 30,
+        maxlength: 300
     },
     locationType: {
         type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 20
+        enum: ["gym", "home", "outdoor"]
     },
     difficulty: {
         type: String,
-        required: true,
         minlength: 3,
         maxlength: 16
     },
@@ -47,10 +47,6 @@ const routine = new Schema<RoutineDocType>({
         required: true,
         minlength: 10,
         maxlength: 500
-    },
-    feedImage: {
-        type: String,
-        required: true
     },
     likes: [{
         type: Schema.Types.ObjectId,
@@ -79,11 +75,25 @@ const routine = new Schema<RoutineDocType>({
         type: Date,
         default: null
     },
+    // workouts: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: "RoutineWorkout",
+    //     required: true
+    // }]
     workouts: [{
-        type: Schema.Types.ObjectId,
-        ref: "RoutineWorkout",
-        required: true
+        workout: {
+            type: Schema.Types.ObjectId,
+            ref: "Workout",
+            required: true
+        },
+        sets: Number,
+        reps: Number,
+        weight: Number,
+        time: Number,
+        restTime: Number,
+        order: Number
     }]
+
 })
 
 const Routine = model<RoutineDocType>("Routine", routine)

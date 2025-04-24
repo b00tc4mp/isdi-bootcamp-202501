@@ -6,26 +6,26 @@ export const registerUserSchema = object({
     alias: z
         .string()
         .min(1, 'Alias must be at least 1 character')
-        .max(16, 'Alias must be at last 16 characters'),
+        .max(16, 'Alias must be at most 16 characters'),
     email: z
         .string()
         .email('Invalid email address')
-        .max(30, 'Email must be at last 30 characters'),
+        .max(30, 'Email must be at most 30 characters'),
     password: z
         .string()
         .min(3, 'Password must be at least 6 characters')
-        .max(50, 'Password must be at last 50 characters')
+        .max(50, 'Password must be at most 50 characters')
 })
 
 export const authenticateUserSchema = object({
     alias: z
         .string()
         .min(1, 'Alias must be at least 1 character')
-        .max(16, 'Alias must be at last 16 characters'),
+        .max(16, 'Alias must be at most 16 characters'),
     password: z
         .string()
         .min(3, 'Password must be at least 6 characters')
-        .max(80, 'Password must be at last 80 characters')
+        .max(80, 'Password must be at most 80 characters')
 })
 
 

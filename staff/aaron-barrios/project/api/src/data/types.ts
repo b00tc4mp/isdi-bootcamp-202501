@@ -61,17 +61,17 @@ export type RoutineDocType = {
     name: string
     goal: string
     muscleGroup: string
-    locationType: string
-    difficulty: string
+    locationType?: string
+    difficulty?: string
     description: string
     feedImage: string
     duration: number
     status: "pending" | "accepted" | "declined" //add revising => if community votes to change smthing or want to remove it
     frequencySuggestion?: string
-    likes: Types.ObjectId[]
-    saves: Types.ObjectId[]
+    likes?: Types.ObjectId[]
+    saves?: Types.ObjectId[]
     createdAt: Date
-    modifiedAt: Date | null
+    modifiedAt?: Date | null
     workouts: RoutineWorkoutDocType[]
     __v: number
 }

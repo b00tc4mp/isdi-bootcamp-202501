@@ -19,8 +19,6 @@ const workout = new Schema<WorkoutDocType>({
         type: String,
         required: true,
         enum: ["chest", "back", "biceps", "triceps", "shoulders", "legs", "buttocks"],
-        minlength: 3,
-        maxlength: 20
     },
     feedImage: {
         type: String,
@@ -30,8 +28,7 @@ const workout = new Schema<WorkoutDocType>({
     },
     type: {
         type: String,
-        minlength: 3,
-        maxlength: 20
+        enum: ["strength", "cardio", "mobility", "endurance"]
     },
     difficulty: {
         type: String,

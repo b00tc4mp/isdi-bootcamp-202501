@@ -8,6 +8,7 @@ import loggers from "./logs/index"
 import { data } from "./data/index"
 import { userRouter } from "./routes/users"
 import { workoutRouter } from "./routes/workouts"
+import { routineRouter } from "./routes/routines"
 
 const { morganMiddleware } = loggers
 
@@ -36,6 +37,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
         // --- ROUTES --- 
         api.use("/users", userRouter)
         api.use("/workouts", workoutRouter)
+        api.use("/routines", routineRouter)
 
 
         // api.get("/", (req, res) => res.send("Hello, API!"))
