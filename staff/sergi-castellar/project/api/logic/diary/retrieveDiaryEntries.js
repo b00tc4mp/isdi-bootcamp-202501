@@ -23,7 +23,6 @@ export const retrieveDiaryEntries = (userId) => {
                 },
                 text: entry.text,
                 own: entry.author._id.toString() === userId,
-                reaction: entry.reaction,
                 createdAt: entry.createdAt
             }))
         })
