@@ -37,7 +37,7 @@ export default function ClassificationScreen({ navigation }) {
       .catch(error => Alert.alert(error.message))
 
     logic.getLatestSeason()
-      .catch(error => Alert.alert(error.message))
+      .catch(error => setError(error))
       .then(season => {
         if (!season) {
           throw new NotFoundError('No season is currently active') 
@@ -113,7 +113,7 @@ const handleFinishSeason = () => {
             }
             })
             .catch(err => Alert.alert(`Error at completion: ${err.message}`))
-            logic.getFinishedSeasons()
+            .then(() => logic.getFinishedSeasons() )
             .then(setSeasonFinished)
             .catch(error => Alert.alert(error.message))    
         }
