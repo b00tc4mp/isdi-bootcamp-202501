@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, Button, FlatList, Alert, ActivityIndicator } from 'react-native'
 import { logic } from '../../logic/index.js'
 import styles from './Classification.styles.js'
 import { NavBar, PokerBackground2, PokerHeader } from '../../components/index.js' 

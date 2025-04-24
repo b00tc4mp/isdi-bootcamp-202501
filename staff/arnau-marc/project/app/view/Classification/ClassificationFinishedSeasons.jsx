@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, Button } from 'react-native'
+import { View, Text, FlatList, Alert } from 'react-native'
 
 import { logic } from '../../logic/index.js'
 import { PokerBackground2, NavBar, PokerHeader } from '../../components/index.js' 
