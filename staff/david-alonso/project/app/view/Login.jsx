@@ -40,24 +40,33 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
     console.debug('Login -> render')
 
-    return <div className="flex flex-col p-20 justify-center items-center">
-        <h1 className="text-2xl m-5">LOGIN</h1>
+    return <div className="relative min-h-screen">
 
-        <div className="">
-            <form onSubmit={handleLoginSubmit} >
+        <div className="relative z-10 flex flex-col p-5 justify-between min-h-screen">
+            <div className="flex flex-col items-center mt-30">
+                <h1 className="text-6xl tracking-widest">R I D E</h1>
+                <h1 className="text-6xl tracking-wide text-gray-400 ">C A R E</h1>
+            </div>
 
-                <input type="email" id="email" placeholder="Email" />
+            <div className="flex justify-center mt-auto">
+                <form onSubmit={handleLoginSubmit} >
 
-                <input type="password" id="password" placeholder="Password" />
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" />
 
-                <button type="submit" >SIGUIENTE</button>
+                    <label htmlFor="password">Contraseña</label>
+                    <input type="password" id="password" />
 
-                <div className="flex justify-center">
-                    <Link to="/register" className='underline'>REGISTRO</Link>
-                </div>
+                    <button type="submit" >ENTRAR</button>
 
-            </form>
+                    <div className="flex justify-center space-x-2 text-white">
+                        <span>¿Aún no tienes cuenta? </span>
+                        <Link to="/register" className='underline'>Registrate aquí</Link>
+                    </div>
+
+                </form>
+            </div>
+
         </div>
-
     </div>
 }

@@ -1,5 +1,5 @@
 import { logic } from '../../logic/index.js'
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
 import { useEffect, useState } from "react"
 import { useVehicle } from '../../hooks/vehicle.hooks.js'
 
@@ -8,6 +8,7 @@ import { ChevronLeft } from "lucide-react"
 
 export function VehicleRegister({ onVehicleRegistered }) {
     const { id } = useParams()
+    const navigate = useNavigate()
     const vehicle = useVehicle(id)
     const [marca, setMarca] = useState()
     const [modelo, setModelo] = useState()
@@ -54,7 +55,7 @@ export function VehicleRegister({ onVehicleRegistered }) {
                 logic.updateVehicle(id, marca, modelo, parseInt(año), color, matricula, parseInt(km), new Date(itv), author)
                     .then(() => {
                         form.reset()
-                        onVehicleRegistered()
+                        navigate(`/vehicle/${id}`)
                     })
                     .catch(error => {
                         console.error(error)
@@ -81,53 +82,84 @@ export function VehicleRegister({ onVehicleRegistered }) {
     }
 
 
-    return <div className="min-h-screen flex flex-col p-5">
+    return <div className="relative min-h-screen">
 
-        <div className='flex justify-start w-full'>
-            <Link to={isEditing ? `/vehicle/${id}` : "/"}><ChevronLeft color="white" size={24} /></Link>
-        </div>
+        <div className="relative z-10 flex flex-col p-5 min-h-screen">
 
-        <h1 className="text-2xl m-5 mt-5">{isEditing ? 'EDITAR VEHICULO' : 'NUEVO VEHICULO'}</h1>
+            <div className='flex justify-start w-full'>
+                <Link to={isEditing ? `/vehicle/${id}` : "/"}><ChevronLeft color="white" size={24} /></Link>
+            </div>
 
-        <div className="">
-            <form onSubmit={handleVehicleRegisterSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
+            <h1 className="text-xl mt-5 pb-5">{isEditing ? 'EDITAR VEHICULO' : 'NUEVO VEHICULO'}</h1>
 
-                <div className="flex gap-4">
-                    <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">Coche</button>
-                    <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">Moto</button>
-                    <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">Scooter</button>
-                </div>
+            <div className="flex justify-center">
+                <form onSubmit={handleVehicleRegisterSubmit} className="flex flex-col w-full max-w-md">
 
-                <input type="text" id="marca" placeholder="Marca" onInput={(e) => setMarca(e.target.value)} className="w-full border border-gray-400 rounded-lg p-2 " value={marca} />
+                    <div className="flex flex-col gap-1 ">
+                        <label htmlFor="tipo">Tipo de vehiculo</label>
+                        <div className="flex gap-4">
+                            <button type="click" >
+                                <div className='flex flex-col items-center'><img src="/images/icon-car.svg" /><span>Coche</span></div>
+                            </button>
 
-                <input type="text" id="modelo" placeholder="Modelo" onInput={(e) => setModelo(e.target.value)} className="w-full border border-gray-400 rounded-lg p-2 " value={modelo} />
+                            <button type="click" >
+                                <div className='flex flex-col items-center'><img src="/images/icon-bike.svg" /><span>Moto</span></div>
+                            </button>
 
-                <div className="flex gap-4">
-                    <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">G</button>
-                    <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">D</button>
-                    <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">E</button>
-                    <button type="click" className="flex-1 border border-gray-400 rounded-lg p-2 cursor-pointer">H</button>
-                </div>
+                            <button type="click" >
+                                <div className='flex flex-col items-center '><img src="/images/icon-scooter.svg" /><span>Scooter</span></div>
+                            </button>
+                        </div>
+                    </div>
 
-                <div className="flex gap-4">
-                    <input type="number" id="año" placeholder="Año" onInput={(e) => setAño(e.target.value)} value={año} className="w-full border border-gray-400 rounded-lg p-2 " />
+                    <div className="flex flex-col gap-1 -mt-2">
+                        <label htmlFor="marca">Marca</label>
+                        <input type="text" id="marca" value={marca} onInput={(e) => setMarca(e.target.value)} />
 
-                    <input type="color" id="color" placeholder="Color" onInput={(e) => setColor(e.target.value)} value={color} className="w-full h-11 border border-gray-400 rounded-lg p-2 " />
-                </div>
+                        <label htmlFor="modelo">Modelo</label>
+                        <input type="text" id="modelo" value={modelo} onInput={(e) => setModelo(e.target.value)} />
 
-                <input type="text" id="matricula" placeholder="Matricula" onInput={(e) => setMatricula(e.target.value)} value={matricula} className="w-full border border-gray-400 rounded-lg p-2" />
+                        <label htmlFor="matricula">Matricula</label>
+                        <input type="text" id="matricula" onInput={(e) => setMatricula(e.target.value)} value={matricula} />
 
-                <div className="flex gap-4">
-                    <input type="number" id="km" placeholder="KM" onInput={(e) => setKm(e.target.value)} value={km} className="w-full border border-gray-400 rounded-lg p-2 " />
+                        {/* <div className="flex gap-4">
+                        <button type="click" >G</button>
+                        <button type="click" >D</button>
+                        <button type="click" >E</button>
+                        <button type="click" >H</button>
+                    </div> */}
+                    </div>
 
-                    <input type="date" id="itv" onInput={(e) => setItv(e.target.value)} value={itv} className="w-full border border-gray-400 rounded-lg p-2 " />
-                </div>
+                    <div className='-mt-2'>
+                        <div className="flex gap-4">
+                            <div className="flex flex-col gap-1 w-1/2">
+                                <label htmlFor="año">Año</label>
+                                <input type="number" id="año" onInput={(e) => setAño(e.target.value)} value={año} />
+                            </div>
 
-                <button type="submit" >{isEditing ? 'GUARDAR' : 'CREAR'}</button>
+                            <div className="flex flex-col gap-1 w-1/2">
+                                <label htmlFor="itv">Última ITV</label>
+                                <input type="date" id="itv" value={itv} onInput={(e) => setItv(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <div className="flex flex-col gap-1 w-1/2">
+                                <label htmlFor="km">Km</label>
+                                <input type="number" id="km" value={km} onInput={(e) => setKm(e.target.value)} />
+                            </div>
 
-            </form>
-        </div>
+                            <div className="flex flex-col gap-1 w-1/2">
+                                <label htmlFor="color">Color</label>
+                                <input type="color" id="color" onInput={(e) => setColor(e.target.value)} value={color} className="w-full h-10 " />
+                            </div>
+                        </div>
+                    </div>
 
-    </div>
+                    <button type="submit" >{isEditing ? 'GUARDAR' : 'AÑADIR'}</button>
 
+                </form>
+            </div>
+
+        </div >
+    </div >
 }

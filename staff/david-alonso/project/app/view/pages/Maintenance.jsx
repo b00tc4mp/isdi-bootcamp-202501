@@ -2,7 +2,7 @@ import { Link, useParams, useNavigate } from "react-router"
 import { logic } from "../../logic";
 
 export function Maintenance() {
-    const { id } = useParams();
+    const { id } = useParams()
     const navigate = useNavigate()
 
     const handleMaintenanceSubmit = event => {
@@ -17,12 +17,10 @@ export function Maintenance() {
 
             } = form
 
-            // const ??? = ????
-
             logic.registerManteinance(id, new Date(fecha), descripcion, texto)
                 .then(() => {
                     form.reset()
-                    navigate(`/vehicle/${id}`)  //*******Traerlo de la APP.jsx****** */
+                    navigate(`/vehicle/${id}`)
                 })
                 .catch(error => {
                     console.error(error)
@@ -38,27 +36,35 @@ export function Maintenance() {
     }
 
 
-    return <div className="min-h-screen flex flex-col p-5">
+    return <div className="relative min-h-screen">
+        {/* Capa con desenfoque sobre el fondo */}
+        <div className="absolute inset-0 backdrop-blur-2xl z-0"></div>
 
-        <h1 className="text-2xl m-5 mt-10">AÑADIR SERVICIO</h1>
+        <div className="relative z-10 flex flex-col p-5 justify-between min-h-screen">
 
-        <div className="">
-            <form onSubmit={handleMaintenanceSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
+            <h1 className="text-2xl mt-5">AÑADIR SERVICIO</h1>
 
-                <input type="date" id="fecha" placeholder="Fecha" />
+            <div className="flex justify-center mt-auto">
+                <form onSubmit={handleMaintenanceSubmit}>
 
-                <input type="text" id="descripcion" placeholder="Descripcion" />
+                    <div className="pb-25 ">
+                        <label htmlFor="fecha">Fecha</label>
+                        <input type="date" id="fecha" />
 
-                <textarea name="texto" id="texto" placeholder="Texto" className="w-full border border-gray-400 rounded-lg p-2"></textarea>
+                        <label htmlFor="descripcion">Descripcion</label>
+                        <input type="text" id="descripcion" />
 
-                <button type="submit" >AÑADIR</button>
+                        <label htmlFor="texto">Texto</label>
+                        <textarea name="texto" id="texto" className="w-full bg-gray-300 border border-gray-400 rounded-lg p-5 pb-20"></textarea>
+                    </div>
+                    <button type="submit" >AÑADIR</button>
 
-                <div className="flex justify-center">
-                    <Link to={`/vehicle/${id}`} className='underline text-black' >CANCEL</Link>
-                </div>
-            </form>
-        </div>
+                    <div className="flex justify-center">
+                        <Link to={`/vehicle/${id}`} className='underline text-white'>CANCELAR</Link>
+                    </div>
+                </form>
+            </div>
 
-    </div>
-
+        </div >
+    </div >
 }

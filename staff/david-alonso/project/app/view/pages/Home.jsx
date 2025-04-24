@@ -23,28 +23,32 @@ export function Home({ handleNavigateVehicleRegister }) {
 
     console.debug('Home -> render')
 
-    return <div className="min-h-screen flex flex-col p-5">
+    return <div className="relative min-h-screen">
 
-        <header className="fixed top-0 left-0 w-full flex items-center p-6 mt-5 z-50">
-            <div>
-                <Link to="/menu" className="text-white">MENU</Link>
-            </div>
+        <div className="relative z-10 flex flex-col p-5 justify-between min-h-screen">
 
-            <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl text-white">RIDECARE</h1>
-        </header>
+            <header className="fixed top-0 left-0 w-full flex items-center p-6 mt-5">
+                <div>
+                    <Link to="/menu" className="text-white">MENU</Link>
+                </div>
+                <div className="flex-1 flex justify-center">
+                    <h1 className="text-2xl text-white">R I D E C A R E</h1>
+                </div>
+                <div className="w-40"></div>
+            </header>
 
-        <main className="flex-grow w-full pt-35 ">
+            <main className="flex-grow w-full pt-20 ">
 
-            <Routes>
-                <Route path="/" element={<Vehicles />} />
-            </Routes>
+                <Routes>
+                    <Route path="/" element={<Vehicles />} />
+                </Routes>
 
-        </main>
+            </main>
 
-        <footer className="flex justify-between w-full gap-15 pb-10">
-            <button type="button" onClick={handleAddVehicle} >Añadir Vehiculo</button>
-        </footer>
+            <footer className="flex justify-between w-full gap-15 pb-10">
+                <button type="button" onClick={handleAddVehicle} >Añadir Vehiculo</button>
+            </footer>
+        </div>
     </div>
-
 
 }

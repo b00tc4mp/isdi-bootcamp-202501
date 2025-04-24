@@ -39,26 +39,36 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     console.debug('Register -> render')
 
-    return <div className="flex flex-col p-20 justify-center items-center">
-        <h1 className="text-2xl m-5">REGISTRO</h1>
+    return <div className="relative min-h-screen">
 
-        <div className="">
-            <form onSubmit={handleRegisterSubmit} className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl/30 space-y-4">
+        <div className="relative z-10 flex flex-col p-5 justify-between min-h-screen">
 
-                <input type="text" id="name" placeholder="Name" />
+            <div className="flex flex-col items-center mt-30">
+                <h1 className="text-6xl tracking-widest">R I D E</h1>
+                <h1 className="text-6xl tracking-wide text-gray-400 ">C A R E</h1>
+            </div>
 
-                <input type="email" id="email" placeholder="E-mail" />
+            <div className="flex justify-center mt-auto">
+                <form onSubmit={handleRegisterSubmit}>
 
-                <input type="text" id="password" placeholder="Password" />
+                    <label htmlFor="nombre">Nombre</label>
+                    <input type="text" id="name" />
 
-                <button type="submit" >SIGUIENTE</button>
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" />
 
-                <div className="flex justify-center">
-                    <Link to="/login" className='underline' >LOGIN</Link>
-                </div>
-            </form>
+                    <label htmlFor="contraseña">Contraseña</label>
+                    <input type="text" id="password" />
+
+                    <button type="submit" >CREAR CUENTA</button>
+
+                    <div className="flex justify-center space-x-2 text-white">
+                        <span>¿Ya tienes cuenta? </span>
+                        <Link to="/login" className='underline' >Entra aquí</Link>
+                    </div>
+                </form>
+            </div>
+
         </div>
-
     </div>
-
 }

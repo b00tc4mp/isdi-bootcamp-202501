@@ -30,6 +30,15 @@ vehicles.patch('/:id', authHandler, jsonBodyParser, withErrorHandling((req, res)
         .then(() => res.status(201).send())
 }))
 
+// BORRAR UN VEHICULO
+vehicles.delete('/:id', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { id: vehicleId } = req.params
+
+    return logic.deleteVehicle(userId, vehicleId)
+        .then(() => res.status(204).send())
+}))
+
 // DEVOLVER LOS VEHICULOS GUARDADOS DE UN USUARIO
 vehicles.get('/user/:userId', authHandler, withErrorHandling((req, res) => {
     const { userId } = req.params

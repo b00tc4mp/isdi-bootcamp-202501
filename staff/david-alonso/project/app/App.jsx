@@ -8,6 +8,7 @@ import { Vehicles } from "./view/pages/Vehicles.jsx"
 import { Home } from "./view/pages/Home.jsx"
 import { Menu } from "./view/pages/Menu.jsx"
 
+import { MaintenanceDetail } from "./view/pages/MaintenanceDetail.jsx"
 import { ProfileVehicle } from "./view/pages/ProfileVehicle.jsx"
 import { Maintenance } from "./view/pages/Maintenance.jsx"
 import { Context } from './context'
@@ -77,16 +78,20 @@ function App() {
         navigate(`/vehicle/${id}`)
     }
 
-    // Cambia hacia la pagina de Landing al cerrar sesion
     const handleUserLoggedOut = () => {
-        // setShowLanding(false)
         setLoggedIn(false)
         navigate('/login')
+    }
+
+    const handleVehicleDeleted = () => {
+        navigate('/') // redirigir después de borrar
     }
 
     return <Context value={{
 
     }}>
+
+        <img src="/images/Fondo.jpg" className="fondo" />
 
         {/* {loggedIn !== null && <Routes> */}
         {<Routes>
@@ -106,9 +111,12 @@ function App() {
 
             <Route path="/vehicles" element={<Vehicles />} />
 
-            <Route path="/vehicle/:id" element={<ProfileVehicle />} />
+            <Route path="/vehicle/:id" element={<ProfileVehicle onVehicleDeleted={handleVehicleDeleted} />} />
 
             <Route path="/vehicle/:id/maintenance" element={<Maintenance />} />
+
+            <Route path="/vehicle/:vehicleId/maintenance/:manteinanceId" element={<MaintenanceDetail />} />
+
 
         </Routes>}
     </Context>

@@ -16,12 +16,18 @@ data.connect(MONGO_URL, MONGO_DB)
 
         api.use(cors(
             {
-                origin: 'http://192.168.38.138:5173', // CAMBIAR IP BAJO NECESIDAD
+                origin: 'http://192.168.1.53:5173', // CAMBIAR IP BAJO NECESIDAD
                 credentials: true,
                 methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
                 allowedHeaders: ['Content-Type', 'Authorization']
             }
         ))
+
+        api.use((req, res, next) => {
+            res.removeHeader('Permissions-Policy');
+            res.setHeader('Permissions-Policy', '');
+            next();
+        });
 
 
         api.get('/', (req, res) => res.send('Hello, API!'))
