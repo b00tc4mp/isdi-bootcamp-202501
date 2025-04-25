@@ -1,5 +1,5 @@
 import { users } from './users.js'
-import { clothingItems } from './clothingItem.js'
+import { clothingItems } from './clothingItems.js'
 
 export {
     users,

@@ -7,3 +7,11 @@ export {
     errors,
     validate
 }
+
+const com = {
+    constant,
+    errors,
+    validate
+}
+
+export default com

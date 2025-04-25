@@ -9,13 +9,18 @@
         color: var(--first-color);
         --bg-color: #1E1E1E;
         --first-color:#E0EEEC;
-        --second-color:#9600d1;
-        --third-color:#307DFB;
+        --second-color:#0261f9;
+        --third-color:#75aaff;
         --fourth-color:#FD8061;
         --padding-x: 1rem;
         --padding-y: 0.25rem;
+        box-sizing: border-box;
 
         @apply bg-[var(--bg-color)];
+    }
+
+    *, *::before, *::after {
+        box-sizing: inherit;
     }
 
     body {
@@ -28,6 +33,10 @@
 
     .btn-primary {
         @apply bg-[var(--second-color)] text-[var(--first-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+    }
+
+    .btn-secondary {
+        @apply bg-[var(--third-color)] text-[var(--first-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
     }
 
     .btn-link {

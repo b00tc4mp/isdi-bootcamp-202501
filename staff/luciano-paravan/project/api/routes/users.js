@@ -33,3 +33,10 @@ users.get('/self/username', authHandler, withErrorHandling((req, res) => {
     return logic.getUserUsername(userId)
         .then(username => res.json({ username }))
 }))
+
+users.get('/clothingItems', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getUserClothingItem({ userId })
+        .then(clothingItems => res.json({ clothingItems }))
+}))

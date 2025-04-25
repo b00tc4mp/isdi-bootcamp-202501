@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 
 import { users } from './routes/index.js'
+import { clothingItems } from './routes/index.js'
 import { errorHandler } from './handlers/errorHandler.js'
 import { data } from './data/index.js'
 

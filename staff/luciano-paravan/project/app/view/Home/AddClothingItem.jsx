@@ -1,17 +1,49 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
 
-import { logic } from '../../logic'
+import { logic } from '../../logic/index.js'
 import { useState } from 'react'
+import { SystemError, ValidationError } from 'com/errors'
 
-export function AddClothingItem({onAddedClothingItem}) {
-    const [name, setName] = useState('')
+export function AddClothingItem({ onAddedClothingItem }) {
+    const [itemName, setItemName] = useState('')
     const [category, setCategory] = useState('')
     const [type, setType] = useState('')
     const [color, setColor] = useState('')
     const [season, setSeason] = useState([])
     const [occasion, setOccasion] = useState([])
 
-    const handleSubmit = () => onAddedClothingItem()
+    const handleSubmit = event => {
+        event.preventDefault()
+
+        try {
+            logic.addClothingItem(itemName, category, type, color, season, occasion)
+            .then(() => {
+                setItemName('')
+                setCategory('')
+                setType('')
+                setColor('')
+                setSeason([])
+                setOccasion([])
+
+                onAddedClothingItem()
+            })
+            .catch(error => {
+                console.error(error)
+
+                if(error instanceof SystemError)
+                    alert('⛔️' + error.message)
+                else
+                    alert('⚠️' + error.message)
+            })
+        } catch (error) {
+            console.error(error)
+
+            if(error instanceof ValidationError)
+                alert('❗️' + error.message)
+            else
+                alert('⛔️' + error.message)
+        }
+    }
 
     const handleSeasonChange = event => {
         const value = event.target.value
@@ -26,8 +58,8 @@ export function AddClothingItem({onAddedClothingItem}) {
     return <div className="flex flex-col py-14">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4 p-4">
             <label>
-                Name:
-                <input type="text" value={name} onChange={event => setName(e.target.value)} required/>
+                Item name:
+                <input type="text" value={itemName} onChange={event => setItemName(event.target.value)} required/>
             </label>
 
             <label>

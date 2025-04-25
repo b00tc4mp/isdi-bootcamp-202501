@@ -10,7 +10,8 @@
     "inspect": "node --inspect-brk .",
     "test": "mocha logic/*.spec.js",
     "test-inspect": "mocha --inspect-brk logic/*.spec.js",
-    "test-coverage": "c8 --experimental-monocart --reporter=html --reporter=text mocha logic/*.spec.js --timeout 2000"
+    "test-coverage": "c8 --experimental-monocart --reporter=html --reporter=text mocha logic/*.spec.js --timeout 2000",
+    "populate": "node data/populate.js"
   },
   "keywords": [],
   "author": "",
