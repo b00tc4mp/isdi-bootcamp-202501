@@ -1,83 +1,46 @@
-'use client'
-import { fetchRegisterUser } from '@/app/_logic/index.js'
-import Link from 'next/link'
-import { useState } from 'react';
+"use client";
+import React from "react";
+import { useRegisterUser } from "../../hooks/useRegisterUser.js";
+import { useRouter } from "next/navigation";
 
-export default function Register() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+export default function RegisterForm() {
+  const { registerUser, error, loading, success } = useRegisterUser();
+  const router = useRouter();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    setLoading(true); // Set loading to true
-    setError(null);   // Reset any previous errors
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-    try {
-      const user = await fetchRegisterUser(formData);
-      console.debug('User registered:', user);
+    const registrationSuccessful = await registerUser(name, email, password);
 
-      // Limpiar los campos del formulario
-      event.target.reset();
-
-      alert('User registered successfully!');
-    } catch (error) {
-      console.error('Error registering user:', error);
-      setError(error.message); // Set error message
-      alert('Registration failed. Please try again.');
-    } finally {
-      setLoading(false); // Reset loading state
+    if (registrationSuccessful) {
+      router.push("/login");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-      <h1 className="text-3xl font-bold underline mb-4">Register</h1>
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
-        <input
-          type="text"
-          placeholder="Username"
-          className="border border-gray-300 rounded w-full py-2 px-3 mb-4"
-          name="username"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          className="border border-gray-300 rounded w-full py-2 px-3 mb-4"
-          name="email"
-          required
-        />
+    <div>
+      <h1>Register</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="email" name="email" placeholder="Email" required />
         <input
           type="password"
-          placeholder="Password"
-          className="border border-gray-300 rounded w-full py-2 px-3 mb-4"
           name="password"
+          placeholder="Password"
           required
         />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          className="border border-gray-300 rounded w-full py-2 px-3 mb-4"
-          name="confirmPassword"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
-          disabled={loading} // Disable the button while loading
-        >
-          {loading ? 'Registering...' : 'Register'}
+        <button type="submit" disabled={loading}>
+          {loading ? "Registering..." : "Register"}
         </button>
-        {error && <p className="text-red-500 mt-2">{error}</p>} {/* Display error */}
       </form>
-      <p className="text-center text-gray-600">
-        Already have an account?{" "}
-        <Link href="/login" className="text-blue-500 hover:text-blue-700">
-          Login
-        </Link>
-      </p>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {success && (
+        <p style={{ color: "green" }}>User registered successfully!</p>
+      )}
     </div>
   );
 }

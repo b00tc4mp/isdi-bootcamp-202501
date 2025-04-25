@@ -1,6 +1,6 @@
-import { connectToDatabase } from "@/lib/db";
+import { connectToDatabase } from "../../../../lib/db/index.js";
 import { registerUser } from "../../_logic/registerUser.js";
-import { withErrorHandling } from "@/lib/handlers";
+import { withErrorHandling } from "../../../../lib/handlers/withErrorHandling.js";
 
 export async function POST(req) {
   await connectToDatabase();

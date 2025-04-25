@@ -1,6 +1,6 @@
-import {loginUser} from './functions/loginUser.js';
-import {fetchRegisterUser} from './functions/fetchRegisterUser.js';
-import {logoutUser} from './functions/logoutUser.js';
-import {createProperty} from './functions/createProperty.js';
+import { loginUser } from "./functions/loginUserRequest.js";
+import { fetchRegisterUser } from "./functions/registerUserRequest.js";
+import { logoutUser } from "./functions/logoutUserRequest.js";
+import { createPropertyRequest } from "./functions/createPropertyRequest.js";
 
-export {loginUser, createProperty, fetchRegisterUser, logoutUser};
+export { loginUser, createPropertyRequest, fetchRegisterUser, logoutUser };

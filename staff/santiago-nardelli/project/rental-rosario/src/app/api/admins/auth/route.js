@@ -17,8 +17,6 @@ export async function POST(req) {
     const token = createToken(user.id, user.role);
 
     // Responder con éxito
-    return res.json(
-      token
-    );
+    return res.json({ token });
   })(req, res);
 }
