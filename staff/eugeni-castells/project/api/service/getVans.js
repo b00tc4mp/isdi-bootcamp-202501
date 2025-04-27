@@ -44,7 +44,7 @@ const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
         if (!returnedUser)
             throw new errors_1.NotFoundError("user not found");
         //If the location wasnt sent on the front, we will use the location of the user
-        if (!filterLocation) {
+        if (!filterLocation[0] || !filterLocation[1]) {
             try {
                 location = yield data_1.Location.findById(returnedUser.location._id).lean();
                 if (!((_a = location === null || location === void 0 ? void 0 : location.point) === null || _a === void 0 ? void 0 : _a.coordinates))
@@ -85,6 +85,7 @@ const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
             //get the vans that have the id in their location array
             vans = yield data_1.Van.find({
                 location: { $in: locationIds },
+                //TODO add new filter depending on trips
             })
                 .populate([
                 {
@@ -113,7 +114,7 @@ const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
         }
         //We filter the vans that meet the date restriction
         if (filterDates) {
-            filteredVansByDate = (0, utils_1.filterVansByDate)(vans, filterDates.start, filterDates.end);
+            filteredVansByDate = (0, utils_1.filterTripsByDate)(vans, filterDates.start, filterDates.end);
         }
         //Depending on if we have filterDate or not we will sanitize one group of vans or
         const vansToMap = filterDates ? filteredVansByDate : vans;

@@ -55,6 +55,7 @@ data
     >([
       {
         name: "Frankie",
+        lastName: "friendo",
         email: "fran@kie.com",
         password: hashedPassword,
         role: "regular",
@@ -66,6 +67,7 @@ data
       },
       {
         name: "Manu",
+        lastName: "Barzi",
         email: "ma@nu.com",
         password: hashedPassword,
         role: "regular",
@@ -77,6 +79,7 @@ data
       },
       {
         name: "Aaron",
+        lastName: "Barrios",
         email: "aa@ron.com",
         password: hashedPassword,
         role: "regular",
@@ -89,6 +92,7 @@ data
       },
       {
         name: "Luciano",
+        lastName: "Paravan",
         email: "lu@cho.com",
         password: hashedPassword,
         role: "admin",
@@ -174,6 +178,7 @@ data
         storage: 300,
         createdAt: new Date(),
         modifiedAt: null,
+        owner: manu._id,
       },
       {
         model: "California Camper",
@@ -203,6 +208,7 @@ data
         storage: 150,
         createdAt: new Date(),
         modifiedAt: null,
+        owner: frankie._id,
       },
       {
         model: "EcoVan X",
@@ -231,6 +237,7 @@ data
         storage: 400,
         createdAt: new Date(),
         modifiedAt: null,
+        owner: aaron._id,
       },
     ]);
 
@@ -243,8 +250,8 @@ data
     await Promise.all([manu.save(), frankie.save(), aaron.save()]);
 
     const trip = await Trip.create({
-      startDate: new Date(2024, 6, 1),
-      endDate: new Date(2024, 6, 15),
+      startDate: new Date(2025, 6, 1),
+      endDate: new Date(2025, 6, 15),
       van: van2._id,
       vanOwner: frankie._id,
       renter: manu._id,

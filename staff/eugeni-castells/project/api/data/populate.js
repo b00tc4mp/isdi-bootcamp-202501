@@ -59,6 +59,7 @@ _1.data
     const [frankie, manu, aaron, lucho] = yield models_1.User.insertMany([
         {
             name: "Frankie",
+            lastName: "friendo",
             email: "fran@kie.com",
             password: hashedPassword,
             role: "regular",
@@ -70,6 +71,7 @@ _1.data
         },
         {
             name: "Manu",
+            lastName: "Barzi",
             email: "ma@nu.com",
             password: hashedPassword,
             role: "regular",
@@ -81,6 +83,7 @@ _1.data
         },
         {
             name: "Aaron",
+            lastName: "Barrios",
             email: "aa@ron.com",
             password: hashedPassword,
             role: "regular",
@@ -93,6 +96,7 @@ _1.data
         },
         {
             name: "Luciano",
+            lastName: "Paravan",
             email: "lu@cho.com",
             password: hashedPassword,
             role: "admin",
@@ -176,6 +180,7 @@ _1.data
             storage: 300,
             createdAt: new Date(),
             modifiedAt: null,
+            owner: manu._id,
         },
         {
             model: "California Camper",
@@ -205,6 +210,7 @@ _1.data
             storage: 150,
             createdAt: new Date(),
             modifiedAt: null,
+            owner: frankie._id,
         },
         {
             model: "EcoVan X",
@@ -233,6 +239,7 @@ _1.data
             storage: 400,
             createdAt: new Date(),
             modifiedAt: null,
+            owner: aaron._id,
         },
     ]);
     manu.vans[0] = van1._id;
@@ -240,8 +247,8 @@ _1.data
     aaron.vans[0] = van3._id;
     yield Promise.all([manu.save(), frankie.save(), aaron.save()]);
     const trip = yield models_1.Trip.create({
-        startDate: new Date(2024, 6, 1),
-        endDate: new Date(2024, 6, 15),
+        startDate: new Date(2025, 6, 1),
+        endDate: new Date(2025, 6, 15),
         van: van2._id,
         vanOwner: frankie._id,
         renter: manu._id,

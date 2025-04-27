@@ -8,14 +8,15 @@ import {
   PopulatedReview,
   GetVansDateFilterPropsType,
 } from "./types";
-import { getAverageRating, filterVansByDate } from "../utils";
+import { getAverageRating, filterTripsByDate } from "../utils";
+type VanWithModel = { model: string };
 
 export const getVans = (
   userId: string,
-  filterLocation?: [number, number] | null,
+  filterLocation: [number, number] | [null, null],
   filterDates?: GetVansDateFilterPropsType | null,
   filterTravellers?: number | null
-): Promise<object[]> => {
+): Promise<VanWithModel[]> => {
   validate.id(userId, "user id");
 
   return (async () => {
@@ -35,7 +36,7 @@ export const getVans = (
     if (!returnedUser) throw new NotFoundError("user not found");
 
     //If the location wasnt sent on the front, we will use the location of the user
-    if (!filterLocation) {
+    if (!filterLocation[0] || !filterLocation[1]) {
       try {
         location = await Location.findById(returnedUser.location._id).lean();
         if (!location?.point?.coordinates)
@@ -76,6 +77,7 @@ export const getVans = (
       //get the vans that have the id in their location array
       vans = await Van.find({
         location: { $in: locationIds },
+        //TODO add new filter depending on trips
       })
         .populate<{
           location: PopulatedLocation;
@@ -108,7 +110,7 @@ export const getVans = (
 
     //We filter the vans that meet the date restriction
     if (filterDates) {
-      filteredVansByDate = filterVansByDate(
+      filteredVansByDate = filterTripsByDate(
         vans,
         filterDates!.start!,
         filterDates!.end!

@@ -23,6 +23,7 @@ const user = new Schema<UserDocType>({
       type: Schema.Types.ObjectId,
       required: false,
       ref: "Van",
+      default: [],
     },
   ],
   trips: [

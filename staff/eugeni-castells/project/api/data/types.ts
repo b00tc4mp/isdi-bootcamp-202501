@@ -35,6 +35,7 @@ type VanDocType = {
   description: string;
   doors: number;
   heating: boolean;
+  owner: Types.ObjectId;
   airConditioning: boolean;
   bedCount: number;
   maxTravellers: number;

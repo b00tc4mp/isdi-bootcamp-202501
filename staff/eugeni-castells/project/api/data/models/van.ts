@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import { VanDocType } from "../types";
-import { pointSchema } from "./point";
 
 const van = new Schema<VanDocType>({
   model: {
@@ -15,6 +14,7 @@ const van = new Schema<VanDocType>({
     maxLength: 15,
     required: true,
   },
+  owner: { type: Schema.Types.ObjectId, ref: "User" },
   description: {
     type: String,
   },

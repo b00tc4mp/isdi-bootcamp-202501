@@ -1,10 +1,11 @@
-import { ReturnedPopulatedVan } from "../service/types";
+import { VanWithPopulatedTrips } from "../service/types";
 
-export const filterVansByDate = (
-  vans: ReturnedPopulatedVan[],
+//We are restricting the generic to have, minimum, the property trips as an array of PopulatedTrip since its the only thing that matters when it comes to filter for trip.dates
+export const filterTripsByDate = <T extends VanWithPopulatedTrips>(
+  vans: T[],
   startDate: Date,
   endDate: Date
-): ReturnedPopulatedVan[] => {
+): T[] => {
   return vans.filter((van) => {
     //Overlap condition trip.startDate <= endDate && trip.endDate >= startDate
     const hasOverlap = van.trips.some((trip) => {

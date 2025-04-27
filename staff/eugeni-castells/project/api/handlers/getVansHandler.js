@@ -19,7 +19,7 @@ exports.getVansHandler = (0, createHandler_1.default)((req, res) => {
     }
     const parsedLocation = longitude !== null && latitude !== null
         ? [parsedLongitude, parsedLatitude]
-        : null;
+        : [null, null];
     let parsedStartDate = null;
     if (startDate) {
         parsedStartDate = new Date(startDate);

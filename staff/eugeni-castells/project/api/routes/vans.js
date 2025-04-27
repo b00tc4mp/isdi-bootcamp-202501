@@ -7,5 +7,7 @@ exports.vanRouter = void 0;
 const express_1 = require("express");
 const authHandler_1 = __importDefault(require("../middlewares/authHandler"));
 const getVansHandler_1 = require("../handlers/getVansHandler");
+const getVanByIdHandler_1 = require("../handlers/getVanByIdHandler");
 exports.vanRouter = (0, express_1.Router)();
 exports.vanRouter.get("/", authHandler_1.default, getVansHandler_1.getVansHandler);
+exports.vanRouter.get("/:id", authHandler_1.default, getVanByIdHandler_1.getVanByIdHandler);

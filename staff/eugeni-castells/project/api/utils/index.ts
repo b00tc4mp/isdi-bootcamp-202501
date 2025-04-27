@@ -1,4 +1,4 @@
 import { getAverageRating } from "./getAverageRating";
-import { filterVansByDate } from "./filterVansByDate";
+import { filterTripsByDate } from "./filterTripsByDate";
 
-export { getAverageRating, filterVansByDate };
+export { getAverageRating, filterTripsByDate };

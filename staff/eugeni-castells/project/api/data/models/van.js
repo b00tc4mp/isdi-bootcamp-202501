@@ -15,6 +15,7 @@ const van = new mongoose_1.Schema({
         maxLength: 15,
         required: true,
     },
+    owner: { type: mongoose_1.Schema.Types.ObjectId, ref: "User" },
     description: {
         type: String,
     },

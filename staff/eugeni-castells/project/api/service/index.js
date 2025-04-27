@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getVans = exports.registerVan = exports.getUserName = exports.authenticateUser = exports.registerUser = void 0;
+exports.getVanById = exports.generateTripRequest = exports.getVans = exports.registerVan = exports.getUserName = exports.authenticateUser = exports.registerUser = void 0;
 const registerUser_js_1 = require("./registerUser.js");
 Object.defineProperty(exports, "registerUser", { enumerable: true, get: function () { return registerUser_js_1.registerUser; } });
 const authenticateUser_js_1 = require("./authenticateUser.js");
@@ -11,3 +11,7 @@ const registerVan_js_1 = require("./registerVan.js");
 Object.defineProperty(exports, "registerVan", { enumerable: true, get: function () { return registerVan_js_1.registerVan; } });
 const getVans_js_1 = require("./getVans.js");
 Object.defineProperty(exports, "getVans", { enumerable: true, get: function () { return getVans_js_1.getVans; } });
+const generateTripRequest_js_1 = require("./generateTripRequest.js");
+Object.defineProperty(exports, "generateTripRequest", { enumerable: true, get: function () { return generateTripRequest_js_1.generateTripRequest; } });
+const getVanById_js_1 = require("./getVanById.js");
+Object.defineProperty(exports, "getVanById", { enumerable: true, get: function () { return getVanById_js_1.getVanById; } });

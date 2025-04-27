@@ -123,4 +123,91 @@ export type PopulatedReview = {
 
 export type PopulatedAuthor = {
   name: string;
+  lastName: string;
+};
+
+export type TripRequestLocation = {
+  coordinates: [number, number];
+  city: string;
+  country: string;
+};
+
+export type VanWithPopulatedTrips = {
+  trips: PopulatedTrip[];
+};
+
+export type TripConfirmStatus = "pending" | "accepted" | "rejected";
+export type PaymentStatus = "pending" | "payed" | "rejected";
+export type PaymentMethod = "currency" | "road points";
+
+export type RequestTripParams = {
+  startDate: Date;
+  endDate: Date;
+  paymentMethod: PaymentMethod;
+  price: number;
+  location: TripRequestLocation;
+};
+
+export type PopulatedVanReturnedById = {
+  _id: string;
+  image: string[];
+  model: string;
+  brand: string;
+  description: string;
+  owner: string;
+  accessible: boolean;
+  windows: number;
+  doors: number;
+  heating: boolean;
+  airConditioning: boolean;
+  becDount: number;
+  maxTravellers: number;
+  insideKitchen: boolean;
+  fridge: boolean;
+  toilet: Toilet;
+  shower: Shower;
+  fuelType: Fuel;
+  storage: number;
+  price: number;
+  rating: number;
+  city: string;
+  country: string;
+  reviews: PopulatedReview[];
+  createdAt: Date;
+  modifiedAt: Date;
+};
+
+export type VanDetailInfo = {
+  id: string;
+  images: string[];
+  vehicleTraits: {
+    accessible: boolean;
+    doors: number;
+    bedCount: number;
+    storage: number;
+    fuelType: Fuel;
+    windows: number;
+    maxTravellers: number;
+  };
+  features: {
+    heating: boolean;
+    shower: Shower;
+    airConditioning: boolean;
+    insideKitchen: boolean;
+  };
+  model: string;
+  brand: string;
+  description: string;
+  owner: { name: string; lastName: string };
+
+  price: number;
+  averageRating: number;
+  reviewsCount: number;
+  location: {
+    city: string;
+    country: string;
+  };
+  reviews: PopulatedReview[] | [];
+  createdAt: Date;
+  modifiedAt: Date | null;
 };

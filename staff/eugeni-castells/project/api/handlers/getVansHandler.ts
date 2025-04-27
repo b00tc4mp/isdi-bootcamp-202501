@@ -24,7 +24,7 @@ export const getVansHandler = createFunctionalHandler(
     const parsedLocation =
       longitude !== null && latitude !== null
         ? ([parsedLongitude, parsedLatitude] as [number, number])
-        : null;
+        : ([null, null] as [null, null]);
 
     let parsedStartDate: Date | null = null;
 
