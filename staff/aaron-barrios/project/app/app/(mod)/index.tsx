@@ -11,19 +11,21 @@ import {
 
 import { getUserRole } from "@/services/user"
 import { getModeratorWorkouts } from "@/services/workouts"
+import { getModeratorRoutines } from "@/services/routines"
 import { reviewWorkout } from "@/services/workouts"
 
 import WorkoutCard from "@/components/WorkoutCard"
-import { WorkoutType } from "com/types"
+import { WorkoutType, RoutineType } from "com/types"
+import RoutineCard from "@/components/RoutineCard"
 
 export default function Review() {
     const router = useRouter()
 
     const [workouts, setWorkouts] = useState<WorkoutType[]>([])
+    const [routines, setRoutines] = useState<RoutineType[]>([])
     const [refreshing, setRefreshing] = useState(false)
     const [activeTab, setActiveTab] = useState<"workouts" | "routines">("workouts")
 
-    // Función reutilizable para cargar workouts
     const fetchWorkouts = useCallback(() => {
         setRefreshing(true)
         getModeratorWorkouts()
@@ -31,10 +33,20 @@ export default function Review() {
             .finally(() => setRefreshing(false))
     }, [])
 
-    // Refresca cada vez que se accede a esta pantalla
-    useFocusEffect(fetchWorkouts)
+    const fetchRoutines = useCallback(() => {
+        setRefreshing(true)
+        getModeratorRoutines()
+            .then(setRoutines)
+            .finally(() => setRefreshing(false))
+    }, [])
 
-    // Comprobamos que el user sea mod
+    useFocusEffect(
+        useCallback(() => {
+            if (activeTab === "workouts") fetchWorkouts()
+            else fetchRoutines()
+        }, [activeTab])
+    )
+
     useEffect(() => {
         getUserRole().then(data => {
             if (data?.role !== "mod") {
@@ -43,9 +55,15 @@ export default function Review() {
         })
     }, [])
 
-
     const handleWorkoutPress = (id: string) => {
         router.push(`/(stack)/WorkoutDetail/${id}`)
+    }
+
+    const handleRoutinePress = (id: string) => {
+        router.push({
+            pathname: "/(stack)/RoutineDetail/[routineId]",
+            params: { routineId: id },
+        })
     }
 
 
@@ -75,14 +93,12 @@ export default function Review() {
                 </Pressable>
             </View>
 
-            {/* Workouts Review Feed */}
+            {/* Content */}
             {activeTab === "workouts" ? (
                 <FlatList
                     data={workouts}
                     keyExtractor={item => item.id}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={fetchWorkouts} />
-                    }
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchWorkouts} />}
                     renderItem={({ item }) => (
                         <WorkoutCard
                             workout={item}
@@ -96,7 +112,19 @@ export default function Review() {
                     contentContainerStyle={styles.list}
                 />
             ) : (
-                <Text style={styles.placeholder}>[TODO: Pending Routines Review]</Text>
+                <FlatList
+                    data={routines}
+                    keyExtractor={item => item.id}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchRoutines} />}
+                    renderItem={({ item }) => (
+                        <RoutineCard
+                            routine={item}
+                            onPress={() => handleRoutinePress(item.id)}
+                        />
+                    )}
+                    contentContainerStyle={styles.list}
+                    ListEmptyComponent={<Text style={styles.placeholder}>No pending routines found</Text>}
+                />
             )}
         </ScrollView>
     )
@@ -139,6 +167,17 @@ const styles = StyleSheet.create({
     list: {
         gap: 12,
         paddingBottom: 80,
+    },
+    card: {
+        backgroundColor: "#fff",
+        padding: 16,
+        borderRadius: 12,
+        elevation: 2,
+    },
+    cardTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 4,
     },
     placeholder: {
         marginTop: 32,

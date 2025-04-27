@@ -53,7 +53,7 @@ routineRouter.get(
 
 // --- GET ROUTINES BY ID METHOD ---
 routineRouter.get(
-    "/:ruitneId",
+    "/:routineId",
     authHandler,
     getRoutineByIdHandler
 )

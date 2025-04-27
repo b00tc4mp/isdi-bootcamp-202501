@@ -3,10 +3,13 @@ import { useLocalSearchParams, useRouter } from "expo-router"
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable, FlatList, ViewToken, Dimensions } from "react-native"
 import { Text, View } from "@/components/Themed"
 
-import getWorkoutById from "@/services/workouts/getWorkoutById"
-import toggleLikeWorkout from "@/services/workouts/toggleLikeWorkout"
-import toggleSaveWorkout from "@/services/workouts/toggleSaveWorkout"
-import reviewWorkout from "@/services/workouts/reviewWorkout"
+import {
+    getWorkoutById,
+    toggleLikeWorkout,
+    toggleSaveWorkout,
+    reviewWorkout
+} from "@/services/workouts/"
+
 import defaultWorkoutExecutionImages from "@/constants/defaultWorkoutExecutionImages"
 import { WorkoutType } from "com/types"
 import { getUserRole } from "@/services/user"

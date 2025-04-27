@@ -181,7 +181,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 locationType: "gym",
                 difficulty: "hard",
                 description: "A tough routine for your lower half.",
-                feedImage: "https://example.com/routine-lower.jpg",
+                feedImage: "https://www.barbellmedicine.com/wp-content/uploads/2024/03/Back-Squat.jpg",
                 duration: 60,
                 status: "accepted",
                 frequencySuggestion: "2x per week",
@@ -213,9 +213,41 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 locationType: "gym",
                 difficulty: "medium",
                 description: "Perfect routine to build your chest and shoulders!",
-                feedImage: "https://example.com/routine.jpg",
+                feedImage: "https://www.gymreapers.com/cdn/shop/articles/header-image-01_Cable-chest-workout---maximizing-your-muscle-growth.jpg?v=1721671171&width=1024",
                 duration: 45,
                 status: "accepted",
+                frequencySuggestion: "2-3 times per week",
+                likes: [manu._id],
+                saves: [masha._id],
+                createdAt: new Date(),
+                workouts: [
+                    {
+                        workout: benchPress._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: lateralRaises._id,
+                        sets: 3,
+                        reps: 12,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
+            {
+                author: frankie._id,
+                name: "Chest Blast",
+                goal: "strength",
+                muscleGroup: "chest",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "Perfect routine to build your chest!",
+                feedImage: "https://content.health.harvard.edu/wp-content/uploads/2024/04/351b1be8-532c-4e59-903b-c756a70ac11e.jpg",
+                duration: 45,
+                status: "pending",
                 frequencySuggestion: "2-3 times per week",
                 likes: [manu._id],
                 saves: [masha._id],
