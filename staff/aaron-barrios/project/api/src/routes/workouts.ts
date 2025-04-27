@@ -93,7 +93,7 @@ workoutRouter.patch(
     reviewWorkoutHandler
 )
 
-//  --- UPDATE/EDIT WORKOUT METHOD ---
+//  --- EDIT WORKOUT METHOD ---
 workoutRouter.patch(
     '/:workoutId/edit',
     authHandler,

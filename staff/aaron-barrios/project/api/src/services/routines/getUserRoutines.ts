@@ -1,29 +1,38 @@
 import { User, Routine } from "../../data"
-import { RoutineType } from "com/types"
 import { validate, errors } from "com"
+import { RoutineType } from "com/types"
+import { ObjectId } from "mongoose"
 
 const { SystemError, NotFoundError } = errors
 
-const getAllRoutines = (
-    userId: string
-): Promise<{ routines: RoutineType[] }> => {
+const getUserRoutines = (
+    userId: string,
+    targetUserId: string
+): Promise<RoutineType[]> => {
     validate.id(userId)
+    validate.id(targetUserId)
 
     return Promise.all([
         User.findById(userId).lean(),
-        Routine.find({ status: "accepted" })
-            .select("-__v")
-            .sort("-createdAt")
-            .populate("author", "alias level")
+        User.findById(targetUserId).lean(),
+        Routine.find({ author: targetUserId, status: 'accepted' })
+            .select('-__v')
+            .sort('-createdAt')
+            .populate('author', 'alias level')
             .populate("workouts.workout")
             .lean()
     ])
         .catch(error => { throw new SystemError(error.message) })
-        .then(([user, routines]) => {
-            if (!user) throw new NotFoundError("User not found!")
+        .then(([user, targetUser, routines]) => {
+            if (!user) throw new NotFoundError('User not found!')
+            if (!targetUser) throw new NotFoundError('Target user not found!')
 
-            const sanitizedRoutines = routines.map<RoutineType>(routine => {
-                const author = routine.author as unknown as { _id: any; alias: string }
+            //sanear con map y no forEach para no mutar
+            //tipamos el map con el type de datos de servicio (lo que mostramos en la app)
+            //utilizo la variable author para evitar tener que poner un any en cada propiedad de author y 
+            //utilizo unkwnon porque author no tiene estrictamente esas propiedades, entonces de esa forma lo "calmo"
+            const sanitizedroutines = routines.map<RoutineType>(routine => {
+                const author = routine.author as unknown as { _id: ObjectId; alias: string }
 
                 return {
                     id: routine._id.toString(),
@@ -76,8 +85,10 @@ const getAllRoutines = (
                 }
             })
 
-            return { routines: sanitizedRoutines }
+
+            return sanitizedroutines
         })
+
 }
 
-export default getAllRoutines
+export default getUserRoutines

@@ -1,26 +1,29 @@
 import { User, Routine } from "../../data"
-import { RoutineType } from "com/types"
 import { validate, errors } from "com"
+import { RoutineType } from "com/types"
 
-const { SystemError, NotFoundError } = errors
+const { NotFoundError, SystemError } = errors
 
-const getAllRoutines = (
+const getModeratorRoutines = (
     userId: string
 ): Promise<{ routines: RoutineType[] }> => {
     validate.id(userId)
 
+    //--- WARNING ---
+    //¡¡ESPECIFICAR QUE SOLO TRAIGA LOS EJERCICIOS CON STATE PENDING!!!
+
     return Promise.all([
         User.findById(userId).lean(),
-        Routine.find({ status: "accepted" })
-            .select("-__v")
-            .sort("-createdAt")
-            .populate("author", "alias level")
+        Routine.find({ status: 'pending' })
+            .select('-__v')
+            .sort('-createdAt')
+            .populate('author', 'alias level')
             .populate("workouts.workout")
             .lean()
     ])
         .catch(error => { throw new SystemError(error.message) })
         .then(([user, routines]) => {
-            if (!user) throw new NotFoundError("User not found!")
+            if (!user) throw new NotFoundError('User not found!')
 
             const sanitizedRoutines = routines.map<RoutineType>(routine => {
                 const author = routine.author as unknown as { _id: any; alias: string }
@@ -80,4 +83,4 @@ const getAllRoutines = (
         })
 }
 
-export default getAllRoutines
+export default getModeratorRoutines

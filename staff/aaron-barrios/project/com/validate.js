@@ -12,6 +12,10 @@ exports.validate = {
         if (typeof string !== 'string')
             throw new ValidationError(`invalid ${explain} type`);
     },
+    number(number, explain = 'number') {
+        if (typeof number !== 'number')
+            throw new ValidationError(`invalid ${explain} type`);
+    },
     text(text, explain = 'text') {
         this.string(text, explain);
         if (constant_1.constant.EMPTY_OR_BLANK_REGEX.test(text))
@@ -62,6 +66,10 @@ exports.validate = {
         if (!constant_1.constant.TOKEN_REGEX.test(token)) {
             throw new ValidationError(`invalid ${explain} syntax`);
         }
-    }
+    },
+    routineWorkouts(value, minLength, explain) {
+        if (value.length < minLength)
+            throw new ValidationError(`invalid ${explain} minLength`);
+    },
 };
 //# sourceMappingURL=validate.js.map

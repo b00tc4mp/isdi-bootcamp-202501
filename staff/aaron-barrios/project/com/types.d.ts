@@ -42,12 +42,62 @@ export type WorkoutType = {
     savedByMe?: boolean;
     ownedByMe?: boolean;
 };
+export type RoutineWorkoutType = {
+    workout: WorkoutType;
+    order: number;
+    sets: number;
+    reps: number;
+    time?: number;
+    weight: number;
+    restTime: number;
+};
+export type RoutineType = {
+    id: string;
+    name: string;
+    muscleGroup: "chest" | "legs" | "biceps" | "triceps" | "back" | "shoulders" | "buttocks";
+    feedImage: string;
+    type?: string;
+    difficulty?: string;
+    description: string;
+    duration: Number;
+    status: "pending" | "accepted" | "declined";
+    createdAt: Date;
+    modifiedAt?: Date;
+    author: {
+        id: string;
+        alias: string;
+        role?: "anonym" | "regular" | "mod" | "default";
+    };
+    workouts: RoutineWorkoutType[];
+    likesCount: number;
+    savesCount: number;
+    likedByMe?: boolean;
+    savedByMe?: boolean;
+    ownedByMe?: boolean;
+};
 export type EditWorkoutType = {
     name?: string;
-    muscleGroup?: string;
+    muscleGroup?: "chest" | "back" | "biceps" | "triceps" | "shoulders" | "legs" | "buttocks";
     feedImage?: string;
-    type?: string;
+    type?: "strength" | "cardio" | "mobility" | "endurance";
     difficulty?: string;
     description?: string;
     executionImages?: string[];
+};
+export type EditRoutineType = {
+    name?: string;
+    muscleGroup?: "chest" | "back" | "biceps" | "triceps" | "shoulders" | "legs" | "buttocks";
+    feedImage?: string;
+    difficulty?: string;
+    description?: string;
+    duration?: number;
+    workouts?: {
+        workoutId: string;
+        order: number;
+        sets: number;
+        reps: number;
+        weight: number;
+        restTime: number;
+        time?: number;
+    }[];
 };

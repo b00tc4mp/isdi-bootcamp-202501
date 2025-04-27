@@ -1,11 +1,15 @@
 import { constant } from "./constant"
 import errors from "./errors"
+import { RoutineWorkoutDocType } from "../api/src/data/types"
 
 const { ValidationError } = errors
 
 export const validate = {
     string(string: string, explain: string = 'string') {
         if (typeof string !== 'string') throw new ValidationError(`invalid ${explain} type`)
+    },
+    number(number: number, explain: string = 'number') {
+        if (typeof number !== 'number') throw new ValidationError(`invalid ${explain} type`)
     },
     text(text: string, explain: string = 'text') {
         this.string(text, explain)
@@ -51,5 +55,8 @@ export const validate = {
         if (!constant.TOKEN_REGEX.test(token)) {
             throw new ValidationError(`invalid ${explain} syntax`)
         }
-    }
+    },
+    routineWorkouts(value: RoutineWorkoutDocType[], minLength: number, explain: string) {
+        if (value.length < minLength) throw new ValidationError(`invalid ${explain} minLength`)
+    },
 }

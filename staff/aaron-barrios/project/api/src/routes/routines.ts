@@ -11,7 +11,17 @@ import {
 } from "../middlewares"
 
 import {
-    getAllRoutinesHandler
+    getAllRoutinesHandler,
+    createRoutineHandler,
+    filterRoutinesHandler,
+    getUserRoutinesHandler,
+    getRoutineByIdHandler,
+    getModeratorRoutinesHandler,
+    deleteRoutineHandler,
+    reviewRoutineHandler,
+    toggleLikeRoutineHandler,
+    toggleSaveRoutineHandler,
+    editRoutineHandler
 } from "../handlers/routines"
 
 
@@ -31,28 +41,28 @@ routineRouter.get(
 routineRouter.get(
     '/filter',
     authHandler,
-    // filterRoutinesHandler
+    filterRoutinesHandler
 )
 
 // --- GET MOD ROUTINES METHOD ---
 routineRouter.get(
     "/mod",
     authHandler,
-    // getModeratorRoutinesHandler
+    getModeratorRoutinesHandler
 )
 
 // --- GET ROUTINES BY ID METHOD ---
 routineRouter.get(
-    "/:workoutId",
+    "/:ruitneId",
     authHandler,
-    // getWorkoutByIdHandler
+    getRoutineByIdHandler
 )
 
 // --- GET USER ROUTINES METHOD
 routineRouter.get(
     "/user/:targetUserId",
     authHandler,
-    // getUserRoutinesHandler
+    getUserRoutinesHandler
 )
 
 // ---------- POST ROUTES ----------
@@ -62,47 +72,47 @@ routineRouter.post(
     jsonBodyParser,
     authHandler,
     validationHandler(createRoutineSchema),
-    // createWorkoutHandler
+    createRoutineHandler
 )
 
 
 // ----- DELETE ROUTES -----
 // --- DELETE ROUTINES METHOD ---
 routineRouter.delete(
-    "/:workoutId",
+    "/:routineId",
     authHandler,
-    // deleteWorkoutHandler
+    deleteRoutineHandler
 )
 
 // ---------- PATCH ROUTES ----------
 // --- REVIEW ROUTINES METHOD ---
 routineRouter.patch(
-    "/review/:workoutId",
+    "/review/:routineId",
     authHandler,
     jsonBodyParser,
-    // reviewWorkoutHandler
+    reviewRoutineHandler
 )
 
 //  --- TOGGLE LIKE ROUTINES METHOD ---
 routineRouter.patch(
-    '/:workoutId/likes',
+    '/:routineId/likes',
     authHandler,
     jsonBodyParser,
-    // toggleLikeWorkoutHandler
+    toggleLikeRoutineHandler
 )
 
 //  --- TOGGLE SAVE ROUTINES METHOD ---
 routineRouter.patch(
-    '/:workoutId/saves',
+    '/:routineId/saves',
     authHandler,
     jsonBodyParser,
-    // toggleSaveWorkoutHandler
+    toggleSaveRoutineHandler
 )
 
-//  --- UPDATE/EDIT ROUTINES METHOD ---
+//  --- EDIT ROUTINES METHOD ---
 routineRouter.patch(
-    '/:workoutId/update',
+    '/:routineId/edit',
     authHandler,
     jsonBodyParser,
-    //createWorkoutHandler
+    editRoutineHandler
 )

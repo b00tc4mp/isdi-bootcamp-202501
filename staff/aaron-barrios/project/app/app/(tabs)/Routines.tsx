@@ -5,6 +5,7 @@ import { Text, View } from "@/components/Themed"
 
 import { getAllRoutines } from "@/services/routines"
 import { RoutineType } from "com/types"
+import RoutineCard from "@/components/RoutineCard"
 
 export default function Routines() {
     const router = useRouter()
@@ -34,11 +35,12 @@ export default function Routines() {
                     data={routines}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <View style={styles.card}>
-                            <Text style={styles.cardTitle}>{item.name}</Text>
-                            <Text>{item.muscleGroup} | {item.difficulty}</Text>
-                            <Text numberOfLines={2}>{item.description}</Text>
-                        </View>
+                        <RoutineCard
+                            routine={item}
+                            isDone={false} // o lógica futura de progreso
+                            onPress={() => router.push(`/(tabs)/Routines`)}
+                        // onPress={() => router.push(`/routine/${item.id}`)}
+                        />
                     )}
                 />
             )}

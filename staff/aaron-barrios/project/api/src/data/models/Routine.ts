@@ -14,10 +14,6 @@ const routine = new Schema<RoutineDocType>({
         maxlength: 30,
         unique: true
     },
-    goal: {
-        type: String,
-        enum: ["strength", "cardio", "mobility", "endurance"]
-    },
     muscleGroup: {
         type: String,
         required: true,
@@ -29,15 +25,6 @@ const routine = new Schema<RoutineDocType>({
         minlength: 30,
         maxlength: 300
     },
-    locationType: {
-        type: String,
-        enum: ["gym", "home", "outdoor"]
-    },
-    difficulty: {
-        type: String,
-        minlength: 3,
-        maxlength: 16
-    },
     duration: {
         type: Number,
         required: true,
@@ -48,6 +35,19 @@ const routine = new Schema<RoutineDocType>({
         minlength: 5,
         maxlength: 500
     },
+    goal: {
+        type: String,
+        enum: ["strength", "cardio", "mobility", "endurance"]
+    },
+    locationType: {
+        type: String,
+        enum: ["gym", "home", "outdoor"]
+    },
+    difficulty: {
+        type: String,
+        minlength: 3,
+        maxlength: 16
+    },
     likes: [{
         type: Schema.Types.ObjectId,
         ref: "User"
@@ -56,15 +56,15 @@ const routine = new Schema<RoutineDocType>({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
-    status: {
-        type: String,
-        required: true,
-        enum: ["pending", "accepted", "declined"]
-    },
     frequencySuggestion: {
         type: String,
         minlength: 3,
         maxlength: 20
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: ["pending", "accepted", "declined"]
     },
     createdAt: {
         type: Date,
@@ -84,7 +84,8 @@ const routine = new Schema<RoutineDocType>({
         workout: {
             type: Schema.Types.ObjectId,
             ref: "Workout",
-            required: true
+            required: true,
+            // length: 3
         },
         sets: Number,
         reps: Number,

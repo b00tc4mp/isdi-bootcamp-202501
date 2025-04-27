@@ -37,7 +37,17 @@ import {
 } from './workouts'
 
 import {
-    getAllRoutinesHandler
+    getAllRoutinesHandler,
+    createRoutineHandler,
+    filterRoutinesHandler,
+    getUserRoutinesHandler,
+    getRoutineByIdHandler,
+    getModeratorRoutinesHandler,
+    deleteRoutineHandler,
+    reviewRoutineHandler,
+    toggleLikeRoutineHandler,
+    toggleSaveRoutineHandler,
+    editRoutineHandler
 } from './routines'
 
 
@@ -69,6 +79,16 @@ const services = {
     toggleSaveWorkoutHandler,
 
     getAllRoutinesHandler,
+    createRoutineHandler,
+    filterRoutinesHandler,
+    getUserRoutinesHandler,
+    getRoutineByIdHandler,
+    getModeratorRoutinesHandler,
+    deleteRoutineHandler,
+    reviewRoutineHandler,
+    toggleLikeRoutineHandler,
+    toggleSaveRoutineHandler,
+    editRoutineHandler
 }
 
 export default services

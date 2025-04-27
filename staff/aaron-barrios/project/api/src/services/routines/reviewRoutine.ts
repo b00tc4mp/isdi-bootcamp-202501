@@ -1,38 +1,38 @@
-import { User, Workout } from "../../data"
+import { User, Routine } from "../../data"
 import { errors, validate } from "com"
 
 const { NotFoundError, SystemError, AuthorizationError, ValidationError } = errors
 
-const reviewWorkout = (
+const reviewRoutine = (
     userId: string,
-    workoutId: string,
+    routineId: string,
     newStatus: "accepted" | "declined"
 ): Promise<void> => {
     validate.id(userId)
-    validate.id(workoutId)
+    validate.id(routineId)
 
     if (newStatus !== "accepted" && newStatus !== "declined")
         throw new ValidationError("Invalid status")
 
     return Promise.all([
         User.findById(userId),
-        Workout.findById(workoutId),
+        Routine.findById(routineId),
     ])
         .catch(error => { throw new SystemError(error.message) })
-        .then(([user, workout]) => {
+        .then(([user, Routine]) => {
             if (!user) throw new NotFoundError("User not found!")
-            if (!workout) throw new NotFoundError("Workout not found!")
-            if (user.role !== "mod") throw new AuthorizationError("Only moderators can review workouts")
+            if (!Routine) throw new NotFoundError("Routine not found!")
+            if (user.role !== "mod") throw new AuthorizationError("Only moderators can review Routines")
 
             if (newStatus === "declined") {
-                return Workout.deleteOne({ _id: workoutId })
+                return Routine.deleteOne({ _id: routineId })
                     .catch(error => { throw new SystemError(error.message) })
                     .then(() => { })
             }
 
             if (newStatus === "accepted") {
-                workout.status = "accepted"
-                return workout.save()
+                Routine.status = "accepted"
+                return Routine.save()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(() => { })
             }
@@ -41,4 +41,4 @@ const reviewWorkout = (
         })
 }
 
-export default reviewWorkout
+export default reviewRoutine

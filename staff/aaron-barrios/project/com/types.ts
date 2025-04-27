@@ -91,10 +91,28 @@ export type RoutineType = {
 
 export type EditWorkoutType = { //RORO pattern (used when there are variable parameters)
     name?: string
-    muscleGroup?: string
+    muscleGroup?: "chest" | "back" | "biceps" | "triceps" | "shoulders" | "legs" | "buttocks"
     feedImage?: string
-    type?: string
+    type?: "strength" | "cardio" | "mobility" | "endurance"
     difficulty?: string
     description?: string
     executionImages?: string[]
+}
+
+export type EditRoutineType = { //RORO pattern (used when there are variable parameters)
+    name?: string
+    muscleGroup?: "chest" | "back" | "biceps" | "triceps" | "shoulders" | "legs" | "buttocks"
+    feedImage?: string
+    difficulty?: string
+    description?: string
+    duration?: number
+    workouts?: {
+        workoutId: string
+        order: number
+        sets: number
+        reps: number
+        weight: number
+        restTime: number
+        time?: number
+    }[]
 }

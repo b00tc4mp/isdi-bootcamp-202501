@@ -22,9 +22,7 @@ const filterWorkouts = (
             .populate("author", "alias level role")
             .lean()
     ])
-        .catch((error) => {
-            throw new SystemError(error.message)
-        })
+        .catch((error) => { throw new SystemError(error.message) })
         .then(([user, workouts]) => {
             if (!user) throw new NotFoundError("User not found!")
 

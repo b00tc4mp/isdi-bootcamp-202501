@@ -102,8 +102,8 @@ describe("get All Routines", () => {
 
         expect(returnedRoutines.routines).to.be.instanceOf(Array)
         expect(returnedRoutines.routines).to.have.lengthOf(2)
-        expect(returnedRoutines.routines[0].author.id).to.equal(user2.id)
-        expect(returnedRoutines.routines[0].workouts).to.have.lengthOf(1)
+        expect(returnedRoutines.routines[0].author.id).to.equal(user.id)
+        expect(returnedRoutines.routines[0].workouts).to.have.lengthOf(2)
 
     })
 
