@@ -1,0 +1,1 @@
+curl -X POST -F "file=@"C:\Users\Usuario\Desktop\uwu.gif" http://192.168.1.106/files -v

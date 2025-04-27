@@ -1,0 +1,25 @@
+@keyframes loading {
+  from {
+    width: 0px;
+    background-color: gray;
+  }
+
+  to {
+    width: 100px;
+    background-color: transparent;
+  }
+}
+
+.loading-animation {
+  animation-name: loading;
+  height: 5px;
+  animation-duration: 0.5s;
+  animation-iteration-count: 3;
+  display: inline-block;
+}
+
+.playerTurn-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
