@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text } from "react-native";
+import { ImageBackground, StyleSheet, Text, Pressable } from "react-native";
 import { View } from "../Themed";
 import { CaruselDefault } from "../CaruselDefault";
 import { ReturnedVansType } from "@/com/types";
@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { capitalize } from "@/app/utils";
 import { spacing } from "@/constants/Paddings";
+import { useRouter } from "expo-router";
 
 type VanCardProps = {
   vanInfo: ReturnedVansType;
@@ -13,9 +14,23 @@ type VanCardProps = {
 
 export const VanCard = ({ vanInfo }: VanCardProps) => {
   const [caruselWidth, setCarouselWidth] = useState<number | null>(null);
-
+  const router = useRouter();
+  const handleVanClick = () => {
+    //Això no e spot fer perquè expo router valida en temps de validació i ho veu com una string qualsevol, no dinàmica.
+    //Malgrat el resultat de la ruta final si que sigui van/3543j24j34f
+    // router.push(`/(van)/${vanInfo._id}`);
+    router.push({
+      pathname: "/(van)/[id]",
+      params: { id: vanInfo.id },
+    });
+  };
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        handleVanClick();
+      }}
+    >
       <View
         style={styles.topWrapper}
         onLayout={(event) => {
@@ -60,7 +75,7 @@ export const VanCard = ({ vanInfo }: VanCardProps) => {
         </View>
         <View></View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

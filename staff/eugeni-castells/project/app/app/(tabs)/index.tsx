@@ -12,28 +12,28 @@ export default function HomeScreen() {
   const [vans, setVans] = useState<ReturnedVansType[]>([]);
   const { longitude, latitude, startDate, endDate, travellers } =
     useLocalSearchParams();
-
+  //The params we receive are strings. We want to keep it that way so it's easier to generate the queryString in the fetchVans request
   useEffect(() => {
     const fetchVans = async () => {
       try {
-        const parsedLongitude = longitude
-          ? JSON.parse(longitude as string)
-          : null;
-        const parsedLatitude = latitude ? JSON.parse(latitude as string) : null;
-        const parsedStartDate = startDate
-          ? JSON.parse(startDate as string)
-          : null;
-        const parsedEndDate = endDate ? JSON.parse(endDate as string) : null;
-        const parsedTravellers = travellers
-          ? JSON.parse(travellers as string)
-          : null;
+        //we have to do all this formatting because the localParams can return either a string or an array of strings so we have to be sura we are sending strings alone
+        let notArrayLongitude;
+        if (!Array.isArray(longitude)) notArrayLongitude = longitude;
+        let notArrayLatitude;
+        if (!Array.isArray(latitude)) notArrayLatitude = latitude;
+        let notArrayStartDate;
+        if (!Array.isArray(startDate)) notArrayStartDate = startDate;
+        let notArrayEndDate;
+        if (!Array.isArray(endDate)) notArrayEndDate = endDate;
+        let notArrayTravellers;
+        if (!Array.isArray(travellers)) notArrayTravellers = travellers;
 
         const vans = await getVans(
-          parsedLongitude,
-          parsedLatitude,
-          parsedStartDate,
-          parsedEndDate,
-          parsedTravellers
+          notArrayLongitude!,
+          notArrayLatitude!,
+          notArrayStartDate!,
+          notArrayEndDate!,
+          notArrayTravellers!
         );
         setVans(vans);
       } catch (error) {
@@ -42,7 +42,7 @@ export default function HomeScreen() {
     };
 
     fetchVans();
-  }, [location, startDate, endDate, longitude, latitude, travellers]);
+  }, []);
 
   return (
     <View style={styles.container}>

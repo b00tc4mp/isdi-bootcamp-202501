@@ -6,11 +6,11 @@ import { GetVansTravellersParam } from "./types";
 import { generateUrl } from "@/app/utils/generateUrl";
 
 export const getVans = async (
-  longitude: number | null,
-  latitude: number | null,
-  startDate: Date | null,
-  endDate: Date | null,
-  travellers: GetVansTravellersParam
+  longitude: string | null,
+  latitude: string | null,
+  startDate: string | null,
+  endDate: string | null,
+  travellers: string | null
 ): Promise<ReturnedVansType[]> => {
   const token = await data.getToken();
 
@@ -22,7 +22,7 @@ export const getVans = async (
     travellers,
   });
 
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL!}${url}`, {
+  return fetch(`${process.env.EXPO_PUBLIC_API_URL_ALXII}${url}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

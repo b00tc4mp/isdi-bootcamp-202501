@@ -34,7 +34,7 @@ export default function CalendarFilter({ onAcceptDates }: CalendarPropsType) {
 
   const formatDate = (date: Date) => {
     return {
-      date: new Date(date),
+      date: date,
       month: format(date, "MMM"),
       number: format(date, "d"),
     };
@@ -46,9 +46,9 @@ export default function CalendarFilter({ onAcceptDates }: CalendarPropsType) {
   const handleDateSelect = (date: Date) => {
     const { start, end } = selectedRange;
 
-    if (!start || (start && end)) {
+    if (!start?.date || (start?.date && end?.date)) {
       setSelectedRange({ start: formatDate(date), end: null });
-    } else if (isBefore(date, start.date)) {
+    } else if (isBefore(date, start!.date)) {
       setSelectedRange({ start: formatDate(date), end: null });
     } else {
       setSelectedRange({ start, end: formatDate(date) });

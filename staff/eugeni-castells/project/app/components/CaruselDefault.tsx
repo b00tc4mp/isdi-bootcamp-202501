@@ -8,7 +8,7 @@ import {
   Alert,
   DimensionValue,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { getNumericStylePercentage } from "@/app/utils";
 

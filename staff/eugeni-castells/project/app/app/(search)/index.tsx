@@ -20,7 +20,7 @@ export default function SearchScreen() {
     start: null,
     end: null,
   });
-  const [travellers, setTravellers] = useState([{}]);
+  const [travellers, setTravellers] = useState<number | null>(null);
 
   const router = useRouter();
 
@@ -39,7 +39,7 @@ export default function SearchScreen() {
       start: null,
       end: null,
     });
-    setTravellers([{}]);
+    setTravellers(null);
     setDisplayCalendar(false);
     setDisplayTravellersFilter(false);
   };
@@ -53,14 +53,16 @@ export default function SearchScreen() {
   };
 
   const handleSearchPress = () => {
+    const startDate = dateRange.start?.date;
+    const endDate = dateRange.end?.date;
     router.push({
       pathname: "/(tabs)", // HomeScreen
       params: {
-        longitude: JSON.stringify(location?.coordinates[0]),
-        latitude: JSON.stringify(location?.coordinates[1]),
-        startDate: JSON.stringify(dateRange.start),
-        endOfDate: JSON.stringify(dateRange.end),
-        travellers: JSON.stringify(travellers),
+        longitude: location?.coordinates[0].toString(),
+        latitude: location?.coordinates[1].toString(),
+        startDate: startDate?.toISOString(),
+        endDate: endDate?.toISOString(),
+        travellers: travellers?.toString(),
       },
     });
   };

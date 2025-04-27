@@ -14,13 +14,14 @@ export default function LoginForm() {
   };
 
   const handleLogIn = () => {
+    console.log("Button triggered");
     try {
       return loginUser(email, password)
-        .then(() => {
-          router.replace("/(tabs)");
-        })
         .catch((error) => {
           Alert.alert(error.message);
+        })
+        .then(() => {
+          router.replace("/(tabs)");
         });
     } catch (error) {
       console.error(error);
