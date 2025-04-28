@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { StyleSheet, TextInput, Button, Alert, Platform, ScrollView, Pressable } from "react-native"
 import { View, Text } from "@/components/Themed"
-import { router } from "expo-router"
+import { router, useFocusEffect } from "expo-router"
 
 import type { RoutineType, UserType, WorkoutType } from "com/types"
 import WorkoutCard from "@/components/WorkoutCard"
@@ -106,6 +106,17 @@ export default function Profile() {
     useEffect(() => {
         if (activeTab === "routines") loadRoutines()
     }, [activeTab, routineType])
+
+    useFocusEffect(
+        useCallback(() => {
+            if (activeTab === "workouts" && workoutType === "mine") {
+                loadWorkouts()
+            }
+            if (activeTab === "routines" && routineType === "mine") {
+                loadRoutines()
+            }
+        }, [activeTab, workoutType, routineType])
+    )
 
     const handleUpdate = () => {
         if (!currentUser) {
