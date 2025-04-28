@@ -113,9 +113,9 @@ function App() {
 
             <Route path="/vehicle/:id" element={<ProfileVehicle onVehicleDeleted={handleVehicleDeleted} />} />
 
-            <Route path="/vehicle/:id/maintenance" element={<Maintenance />} />
+            <Route path="/vehicle/:vehicleId/maintenance/:maintenanceId?" element={<Maintenance onMaintenanceRegistered={handleMaintenanceRegistered} />} />
 
-            <Route path="/vehicle/:vehicleId/maintenance/:manteinanceId" element={<MaintenanceDetail />} />
+            <Route path="/vehicle/:vehicleId/maintenance-detail/:maintenanceId" element={<MaintenanceDetail />} />
 
 
         </Routes>}

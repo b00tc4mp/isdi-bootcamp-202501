@@ -37,7 +37,7 @@ export function Home({ handleNavigateVehicleRegister }) {
                 <div className="w-40"></div>
             </header>
 
-            <main className="flex-grow w-full pt-20 ">
+            <main className="flex-grow w-full pt-25 ">
 
                 <Routes>
                     <Route path="/" element={<Vehicles />} />
@@ -45,7 +45,7 @@ export function Home({ handleNavigateVehicleRegister }) {
 
             </main>
 
-            <footer className="flex justify-between w-full gap-15 pb-10">
+            <footer className="flex justify-between w-full gap-15 pt-5 pb-5">
                 <button type="button" onClick={handleAddVehicle} >Añadir Vehiculo</button>
             </footer>
         </div>

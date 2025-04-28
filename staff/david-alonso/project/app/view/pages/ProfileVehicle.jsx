@@ -1,63 +1,23 @@
 import { useParams } from "react-router"
-import { DateTime } from 'luxon'
+import { useEffect, useState } from 'react'
 
 import { Link } from "react-router"
 import { useVehicle } from "../../hooks/vehicle.hooks"
 import { logic } from '../../logic'
 import { getUserId } from "../../logic/getUserId"
+import { NextITV } from "../components/NextITV"
 
-import { Printer, Trash2, PencilLine, ChevronLeft } from "lucide-react"
+import { Share2, Trash2, PencilLine, ChevronLeft, FileCheck, ChevronRight } from "lucide-react"
 
 export const ProfileVehicle = ({ onVehicleDeleted }) => {
     const { id } = useParams()
     const vehicle = useVehicle(id)
 
+    const [mantenimiento, setMantenimiento] = useState(null)
+
     if (!vehicle) return <p>Cargando...</p>
 
     const userId = getUserId()
-
-    const nextITVDate = DateTime.fromISO(vehicle?.itv).plus({ year: 1 })
-    const timeToNextITV = nextITVDate.diff(DateTime.now().startOf('day'), ['months', 'days']).toObject()
-
-    let nextITVSentence = ''
-    if (timeToNextITV.months >= 1) {
-        nextITVSentence =
-            <div className={`p-1 pl-3 mb-5 rounded-md`} >
-                <h2 className="text-gray-200 text-sm">PROXIMA ITV</h2>
-                <p>Dentro de {timeToNextITV.months} {Math.floor(timeToNextITV.months) <= 1 ? 'mes' : 'meses'}</p>
-            </div>
-    } else if (timeToNextITV.months >= 0 && timeToNextITV.months < 1) {
-        const showAlert = timeToNextITV.days < 7
-        if (timeToNextITV.days >= 1) {
-            nextITVSentence =
-                <div className={`p-1 pl-3 mb-5 rounded-md ${showAlert ? "bg-red-500 " : "bg-amber-500 "}`} >
-                    <h2 className="text-gray-200 text-sm">PROXIMA ITV</h2>
-                    <p>Dentro de {Math.floor(timeToNextITV.days)} {Math.floor(timeToNextITV.days) <= 1 ? 'día' : 'días'} {showAlert && '⚠️'}</p>
-                </div>
-
-
-        } else if (timeToNextITV.days >= 0 && timeToNextITV.days < 1) {
-            nextITVSentence =
-                <div className={`p-1 pl-3 mb-5 rounded-md bg-red-500 `} >
-                    <h2 className="text-gray-200 text-sm">PROXIMA ITV</h2>
-                    <p>Hoy {showAlert && '⚠️'}</p>
-                </div>
-
-        } else {
-            nextITVSentence =
-                <div className={`p-1 pl-3 mb-5 rounded-md bg-red-500`} >
-                    <h2 className="text-gray-200 text-sm">PROXIMA ITV</h2>
-                    <p>Hace {Math.abs(Math.floor(timeToNextITV.days))} {Math.abs(Math.floor(timeToNextITV.days)) <= 1 ? 'día' : 'días'} ⚠️</p>
-                </div>
-
-        }
-    } else {
-        nextITVSentence =
-            <div className={`p-1 pl-3 mb-5 rounded-md bg-red-500`} >
-                <h2 className="text-gray-200 text-sm">PROXIMA ITV</h2>
-                <p>Hace {Math.abs(Math.floor(timeToNextITV.months))} {Math.abs(Math.floor(timeToNextITV.months)) <= 1 ? 'mes' : 'meses'} ⚠️</p>
-            </div>
-    }
 
     const handleDeleteClick = () => {
 
@@ -77,7 +37,6 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
             }
     }
 
-
     return (
         <div className="relative min-h-screen">
 
@@ -91,9 +50,9 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                         <div className='flex justify-between items-center w-full mb-5'>
                             <Link to="/"><ChevronLeft color="white" size={24} /></Link>
 
-                            {/* IMPRIMIR */}
+                            {/* COMPARTIR */}
                             <div className='flex gap-5 '>
-                                <Link><Printer color="white" size={24} /></Link>
+                                <Link><Share2 color="white" size={24} /></Link>
 
                                 {/* EDITAR */}
                                 <Link to={`/vehicleRegister/${id}`}><PencilLine color="white" size={24} /></Link>
@@ -118,11 +77,10 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                     className=" pt-5 p-3 pb-5"
                     style={{ backgroundColor: `${vehicle.color}90` }}>
 
-                    {nextITVSentence}
-                    {/* ?????? */}
+                    <NextITV itvDate={vehicle?.itv} />
 
                     <div className=" p-1 pl-3 rounded-md">
-                        <h2 className="text-gray-200 text-sm">PRESION DE NEUMATICOS</h2>
+                        <h2 className="text-gray-100 text-sm">PRESION DE NEUMATICOS</h2>
                         <h2>2.5 - 2.9 bar delante y detras</h2>
                     </div>
                 </section>
@@ -131,25 +89,30 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
 
                     <Link to={`/vehicle/${id}/maintenance`} className="bg-white text-black p-2 rounded-md w-full text-center">+ AÑADIR SERVICIO</Link>
 
-                    <div className="mb-3 mt-3">
+                    <div className="mb-5 mt-8">
                         <h2>HISTORIAL DE SERVICIOS</h2>
                     </div>
 
-                    {vehicle.manteinances.map(manteinance => (
+                    {vehicle.manteinances.map(manteinance => {
+                        const formattedDate = new Date(manteinance.fecha).toISOString().split('T')[0]
+                        return (
+                            <Link
+                                to={`/vehicle/${vehicle._id}/maintenance-detail/${manteinance._id}`}
+                                key={manteinance._id}
+                                className=" mb-5 flex justify-between opacity-80 hover:opacity-100 transition-opacity"
+                            >
+                                <div className="flex flex-col text-white mb-4">
+                                    <h2 className="text-sm text-gray-300">{formattedDate}</h2>
+                                    <h2 className="text-xl">{manteinance.descripcion}</h2>
+                                </div>
+                                <div className="flex items-center gap-5 mr-3">
+                                    <FileCheck />
+                                    <ChevronRight />
+                                </div>
+                            </Link>
+                        )
+                    })}
 
-                        <Link
-                            to={`/vehicle/${vehicle._id}/maintenance/${manteinance._id}`}
-                            key={manteinance._id}
-                            className=" mb-5 flex justify-between opacity-80 hover:opacity-100 transition-opacity"
-                        >
-                            <div className="flex flex-col text-white">
-                                <h2 className="text-ml text-gray-300">{manteinance.fecha}</h2>
-
-                                <h2 className="text-xl">{manteinance.descripcion}</h2>
-                            </div>
-                        </Link>
-
-                    ))}
                 </section>
 
             </div >

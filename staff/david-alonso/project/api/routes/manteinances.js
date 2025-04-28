@@ -22,3 +22,12 @@ manteinances.get('/:vehicleId', authHandler, withErrorHandling((req, res) => {
     return logic.getVehicleManteinances(vehicleId)
         .then(manteinances => res.json(manteinances))
 }))
+
+// EDITAR MANTENIMIENTO
+manteinances.patch('/:maintenanceId', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
+    const { fecha, descripcion, texto } = req.body
+    const { maintenanceId } = req.params
+
+    return logic.updateVehicleManteinance(maintenanceId, new Date(fecha), descripcion, texto)
+        .then(() => res.status(201).send())
+}))

@@ -19,7 +19,6 @@ export function Menu({ onUserLoggedOut }) {
 
     }
 
-    console.debug('Menu -> render')
 
     return <div className="relative min-h-screen">
 

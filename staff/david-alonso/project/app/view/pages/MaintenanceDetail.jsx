@@ -5,22 +5,24 @@ import { Link } from 'react-router'
 import { Trash2, PencilLine, ChevronLeft } from "lucide-react"
 
 export const MaintenanceDetail = () => {
-    const { vehicleId, manteinanceId } = useParams();
-    const vehicle = useVehicle(vehicleId);
+    const { vehicleId, maintenanceId } = useParams()
+    const vehicle = useVehicle(vehicleId)
     const [mantenimiento, setMantenimiento] = useState(null)
 
     const { id } = useParams()
 
     useEffect(() => {
         if (vehicle && vehicle.manteinances) {
-            const found = vehicle.manteinances.find(m => m._id === manteinanceId)
+            const found = vehicle.manteinances.find(m => m._id === maintenanceId)
             setMantenimiento(found || null)
         }
-    }, [vehicle, manteinanceId])
+    }, [vehicle, maintenanceId])
 
     if (!vehicle) return <div>Cargando vehículo...</div>
 
     if (!mantenimiento) return <div>Mantenimiento no encontrado</div>
+
+    const formattedDate = new Date(mantenimiento.fecha).toISOString().split('T')[0]
 
     return (
         <div className="relative min-h-screen">
@@ -30,10 +32,13 @@ export const MaintenanceDetail = () => {
                 <div className='flex justify-between items-center w-full mb-5'>
                     <Link to={`/vehicle/${vehicle._id}`}><ChevronLeft color="white" size={24} /></Link>
 
-                    {/* IMPRIMIR */}
                     <div className='flex gap-5 '>
-                        <Link><PencilLine color="white" size={24} /></Link>
+                        {/* EDITAR */}
+                        <Link to={`/vehicle/${vehicle._id}/maintenance/${maintenanceId}`}>
+                            <PencilLine color="white" size={24} />
+                        </Link>
 
+                        {/* BORRAR */}
                         <Link><Trash2 color="white" size={24} /></Link>
                     </div>
                 </div>
@@ -43,7 +48,7 @@ export const MaintenanceDetail = () => {
                 <div className='mb-20'>
                     <div className='border border-black bg-white text-black p-5 rounded-t-lg'>
                         <p><strong>Fecha:</strong></p>
-                        <h2>{mantenimiento.fecha}</h2>
+                        <h2>{formattedDate}</h2>
                     </div>
 
                     <div className='border border-black bg-white text-black p-5 '>

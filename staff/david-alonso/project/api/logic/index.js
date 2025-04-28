@@ -6,7 +6,7 @@ import { updateVehicle } from './updateVehicle.js'
 import { registerManteinance } from './registerManteinance.js'
 import { getVehicleManteinances } from './getVehicleManteinance.js'
 import { deleteVehicle } from './deleteVehicle.js'
-
+import { updateVehicleManteinance } from './updateVehicleManteinance.js'
 
 export const logic = {
     registerUser,
@@ -16,5 +16,6 @@ export const logic = {
     updateVehicle,
     registerManteinance,
     getVehicleManteinances,
-    deleteVehicle
+    deleteVehicle,
+    updateVehicleManteinance
 }
