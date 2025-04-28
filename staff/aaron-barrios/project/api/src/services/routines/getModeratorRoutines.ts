@@ -17,7 +17,7 @@ const getModeratorRoutines = (
         Routine.find({ status: 'pending' })
             .select('-__v')
             .sort('-createdAt')
-            .populate('author', 'alias level')
+            .populate('author', 'alias')
             .populate("workouts.workout")
             .lean()
     ])

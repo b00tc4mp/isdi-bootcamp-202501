@@ -1,17 +1,15 @@
-import { User, Routine } from "../../data"
-import { RoutineType } from "com/types"
+import { User, Routine } from "../../../data"
 import { validate, errors } from "com"
+import { RoutineType } from "com/types"
 
 const { SystemError, NotFoundError } = errors
 
-const getAllRoutines = (
-    userId: string
-): Promise<{ routines: RoutineType[] }> => {
+const getMyRoutines = (userId: string): Promise<RoutineType[]> => {
     validate.id(userId)
 
     return Promise.all([
         User.findById(userId).lean(),
-        Routine.find({ status: "accepted" })
+        Routine.find({ author: userId })
             .select("-__v")
             .sort("-createdAt")
             .populate("author", "alias")
@@ -76,8 +74,8 @@ const getAllRoutines = (
                 }
             })
 
-            return { routines: sanitizedRoutines }
+            return sanitizedRoutines
         })
 }
 
-export default getAllRoutines
+export default getMyRoutines

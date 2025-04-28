@@ -12,7 +12,10 @@ import {
     updateUserDataHandler,
     getMyWorkoutsHandler,
     getSavedWorkoutsHandler,
-    getTargetUserDataHandler
+    getTargetUserDataHandler,
+
+    getMyRoutinesHandler,
+    getSavedRoutinesHandler
 } from './user/regular'
 
 import {
@@ -67,6 +70,8 @@ const services = {
     getMyWorkoutsHandler,
     getSavedWorkoutsHandler,
     getTargetUserDataHandler,
+    getMyRoutinesHandler,
+    getSavedRoutinesHandler,
 
     getAllWorkoutsHandler,
     getWorkoutByIdHandler,

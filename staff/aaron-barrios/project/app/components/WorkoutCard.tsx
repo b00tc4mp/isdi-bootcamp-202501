@@ -12,7 +12,6 @@ type WorkoutCardProps = {
     onReview?: (workoutId: string, status: "accepted" | "declined") => void
     showStatus?: boolean
     showAuthor?: boolean
-    showReviewButtons?: boolean
 }
 
 export default function WorkoutCard({
@@ -89,10 +88,6 @@ export default function WorkoutCard({
                         )}
                         {onDelete && (
                             <Pressable onPress={onDelete}>
-                                {/* <Image
-                                    source={require("@/assets/icons/delete.png")}
-                                    style={styles.deleteIcon}
-                                /> */}
                                 <Text style={{ color: "#fff", fontWeight: "bold" }}>🗑️</Text>
                             </Pressable>
                         )}

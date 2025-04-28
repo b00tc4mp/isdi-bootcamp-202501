@@ -18,7 +18,7 @@ export default function RoutineDetail() {
     const { routineId } = useLocalSearchParams<{ routineId: string }>()
     const router = useRouter()
 
-    console.log('Routine ID recibido:', routineId)
+
 
     const [routine, setRoutine] = useState<RoutineType | null>(null)
     const [loading, setLoading] = useState(true)
@@ -109,7 +109,7 @@ export default function RoutineDetail() {
                         <Text style={styles.icon}>{routine.likedByMe ? "❤️" : "🤍"} {routine.likesCount}</Text>
                     </Pressable>
                     <Pressable onPress={handleToggleSave} disabled={toggle || routine.status !== "accepted"}>
-                        <Text style={styles.icon}>{routine.savedByMe ? "📌" : "📃"} {routine.savesCount}</Text>
+                        <Text style={styles.icon}>{routine.savedByMe ? "📜" : "📃"} {routine.savesCount}</Text>
                     </Pressable>
                 </View>
             </View>

@@ -13,6 +13,9 @@ import {
     getMyWorkouts,
     getSavedWorkouts,
     getTargetUserData,
+
+    getMyRoutines,
+    getSavedRoutines
 } from './user/regular'
 
 import {
@@ -59,6 +62,8 @@ const services = {
     getMyWorkouts,
     getSavedWorkouts,
     getTargetUserData,
+    getMyRoutines,
+    getSavedRoutines,
 
     getCurrentUser,
     authenticateUser,

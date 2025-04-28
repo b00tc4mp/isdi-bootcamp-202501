@@ -6,6 +6,7 @@ const { SystemError, AuthorizationError } = errors
 
 const getSavedWorkouts = (): Promise<WorkoutType[]> => {
     return data.getToken()
+        .catch(error => { throw new SystemError(error.message) })
         .then(token => {
             if (!token) throw new AuthorizationError("No token found")
 
@@ -14,6 +15,7 @@ const getSavedWorkouts = (): Promise<WorkoutType[]> => {
             })
         })
         .then(res => res.json())
+        .catch(error => { throw new SystemError(error.message) })
         .then(body => {
             if ("error" in body) {
                 const { error, message } = body
@@ -22,10 +24,6 @@ const getSavedWorkouts = (): Promise<WorkoutType[]> => {
             }
 
             return body as WorkoutType[]
-        })
-        .catch(error => {
-            console.error(error)
-            throw new SystemError(error.message)
         })
 }
 

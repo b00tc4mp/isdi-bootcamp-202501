@@ -6,6 +6,7 @@ import toggleSaveRoutine from "@/services/routines/toggleSaveRoutine"
 import reviewRoutine from "@/services/routines/reviewRoutine"
 import createRoutine from "@/services/routines/createRoutine"
 import filterRoutines from "@/services/routines/filterRoutines"
+import editRoutine from "@/services/routines/editRoutine"
 
 export {
     getAllRoutines,
@@ -15,5 +16,6 @@ export {
     toggleSaveRoutine,
     reviewRoutine,
     createRoutine,
-    filterRoutines
+    filterRoutines,
+    editRoutine
 }

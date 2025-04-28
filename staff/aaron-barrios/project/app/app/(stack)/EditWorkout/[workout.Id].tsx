@@ -12,9 +12,9 @@ export default function EditWorkout() {
 
     const [form, setForm] = useState<EditWorkoutType>({
         name: "",
-        muscleGroup: "",
+        muscleGroup: undefined,
         feedImage: "",
-        type: "",
+        type: undefined,
         difficulty: "",
         description: "",
         executionImages: [],

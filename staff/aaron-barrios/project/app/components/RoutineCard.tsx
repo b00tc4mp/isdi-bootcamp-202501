@@ -2,14 +2,23 @@ import { Pressable, StyleSheet, Image } from "react-native"
 import { Text, View } from "@/components/Themed"
 import { useRouter } from "expo-router"
 import { RoutineType } from "com/types"
+import formatDate from "@/utils/formatedDate"
 
-type Props = {
+type RoutineCardProps = {
     routine: RoutineType
     onPress: () => void
-    isDone?: boolean // puedes usarlo si quieres marcar "Done"
+    onDelete?: () => void
+    showStatus?: boolean
+    showAuthor?: boolean
 }
 
-export default function RoutineCard({ routine, onPress, isDone = false }: Props) {
+export default function RoutineCard({
+    routine,
+    onPress,
+    onDelete,
+    showStatus = false,
+    showAuthor = false,
+}: RoutineCardProps) {
     const router = useRouter()
 
     return (
@@ -17,23 +26,69 @@ export default function RoutineCard({ routine, onPress, isDone = false }: Props)
             <Image
                 style={styles.image}
                 source={{
-                    uri: routine.feedImage || "https://via.placeholder.com/100"
+                    uri: routine.feedImage
+                        ? `${routine.feedImage}?t=${(routine.modifiedAt || routine.createdAt || new Date()).toString()}`
+                        : "https://via.placeholder.com/120"
                 }}
             />
 
             <View style={styles.info}>
-                <View style={styles.headerRow}>
-                    <Text style={styles.name}>{routine.name}</Text>
-                    {isDone && <Text style={styles.done}>Done</Text>}
-                </View>
+                <Text style={styles.name}>{routine.name}</Text>
+                <Text>{routine.muscleGroup}</Text>
+                <Text>{routine.workouts.length} workouts · {routine.duration.toString()} min</Text>
 
-                <Text style={styles.subtitle}>{routine.muscleGroup}</Text>
-                <Text style={styles.meta}>{routine.workouts.length} workouts</Text>
-                <Text style={styles.meta}>{`${routine.duration} min`}</Text>
+                {showAuthor && (
+                    <Pressable
+                        disabled={routine.author.alias === "default"}
+                        onPress={() => {
+                            if (routine.author.alias !== "default") {
+                                router.push({
+                                    pathname: "/(stack)/UserProfile/[id]",
+                                    params: { id: routine.author.id },
+                                })
+                            }
+                        }}
+                    >
+                        <Text style={routine.author.alias === "default" ? styles.defaultAuthor : styles.authorLink}>
+                            {routine.author.alias === "default" ? "Default" : `@${routine.author.alias}`}
+                        </Text>
+                    </Pressable>
+                )}
 
-                <View style={styles.interactions}>
-                    <Text style={styles.icon}>❤️ {routine.likesCount}</Text>
-                    <Text style={styles.icon}>📌 {routine.savesCount}</Text>
+                <View style={styles.bottomRow}>
+                    {showStatus && (
+                        <Text style={styles.status}>
+                            {routine.status.charAt(0).toUpperCase() + routine.status.slice(1)}
+                        </Text>
+                    )}
+
+                    <View style={styles.actions}>
+                        <Text style={styles.date}>📅 {formatDate(routine.createdAt)}</Text>
+                        {/* {routine.status === "pending" && (
+                            <Pressable
+                                onPress={() =>
+                                    router.push({
+                                        pathname: "/(stack)/EditRoutine/[routine.Id]",
+                                        params: { routineId: routine.id },
+                                    })
+                                }
+                            >
+                                <Text style={{ color: "#fff", fontWeight: "bold" }}>✏️</Text>
+                            </Pressable>
+                        )} */}
+
+                        {routine.status === "accepted" && (
+                            <>
+                                <Text>{routine.likedByMe ? "❤️" : "🤍"} {routine.likesCount}</Text>
+                                <Text>{routine.savedByMe ? "📜" : "📃"} {routine.savesCount}</Text>
+                            </>
+                        )}
+                        {onDelete && (
+                            <Pressable onPress={onDelete}>
+                                <Text style={{ color: "#fff", fontWeight: "bold" }}>🗑️</Text>
+                            </Pressable>
+                        )}
+                    </View>
                 </View>
             </View>
         </Pressable>
@@ -47,49 +102,58 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         padding: 12,
         marginBottom: 12,
-        elevation: 1,
     },
     image: {
-        width: 80,
-        height: 80,
-        borderRadius: 8,
+        width: 100,
+        height: 100,
+        borderRadius: 10,
         marginRight: 12,
+        backgroundColor: "#eee",
     },
     info: {
         flex: 1,
-        justifyContent: "space-between",
+        justifyContent: "center",
     },
-    headerRow: {
+    name: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 6,
+    },
+    date: {
+        fontWeight: "600",
+        fontSize: 10,
+        marginTop: 4,
+    },
+    bottomRow: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        marginTop: 12,
     },
-    name: {
-        fontSize: 16,
-        fontWeight: "bold",
-        flex: 1,
-    },
-    done: {
+    status: {
         fontSize: 12,
-        color: "#22c55e",
-        fontWeight: "bold",
+        fontStyle: "italic",
+        color: "#666",
     },
-    subtitle: {
-        fontSize: 13,
-        color: "#888",
-        marginTop: 4,
-    },
-    meta: {
-        fontSize: 13,
-        color: "#333",
-        marginTop: 2,
-    },
-    interactions: {
+    actions: {
         flexDirection: "row",
         gap: 16,
-        marginTop: 8,
+        alignItems: "center",
     },
     icon: {
         fontSize: 13,
+    },
+    authorLink: {
+        color: "#0ea5e9",
+        fontWeight: "600",
+        fontSize: 12,
+        marginTop: 4,
+    },
+    defaultAuthor: {
+        color: "#888",
+        opacity: 0.7,
+        fontStyle: "italic",
+        fontSize: 12,
+        marginTop: 4,
     },
 })

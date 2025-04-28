@@ -27,7 +27,7 @@ export type WorkoutType = {
     name: string
     muscleGroup: "chest" | "legs" | "biceps" | "triceps" | "back" | "shoulders" | "buttocks"
     feedImage: string
-    type?: string
+    type?: "cardio" | "strength" | "mobility" | "endurance"
     difficulty?: string
     description: string
     executionImages?: string[]

@@ -18,7 +18,14 @@ import {
 import {
     getUserAlias,
     getCurrentUser,
-    updateUserData
+    updateUserData,
+    getSavedWorkouts,
+    getMyWorkouts,
+    getUserData,
+    getTargetUserData,
+
+    getMyRoutines,
+    getSavedRoutines
 
 } from './user/regular'
 
@@ -38,6 +45,19 @@ import {
 } from './workouts'
 
 
+import {
+    getAllRoutines,
+    getModeratorRoutines,
+    getRoutineById,
+    toggleLikeRoutine,
+    toggleSaveRoutine,
+    reviewRoutine,
+    createRoutine,
+    filterRoutines,
+    editRoutine
+} from './routines'
+
+
 const services = {
     registerUser,
     getUserRole,
@@ -51,6 +71,12 @@ const services = {
     getUserAlias,
     getCurrentUser,
     updateUserData,
+    getSavedWorkouts,
+    getMyWorkouts,
+    getUserData,
+    getTargetUserData,
+    getMyRoutines,
+    getSavedRoutines,
 
     getAllWorkouts,
     getUserWorkouts,
@@ -64,7 +90,17 @@ const services = {
     reviewWorkout,
     editWorkout,
 
-    defaultWorkoutExecutionImages
+    defaultWorkoutExecutionImages,
+
+    getAllRoutines,
+    getModeratorRoutines,
+    getRoutineById,
+    toggleLikeRoutine,
+    toggleSaveRoutine,
+    reviewRoutine,
+    createRoutine,
+    filterRoutines,
+    editRoutine
 }
 
 export default services

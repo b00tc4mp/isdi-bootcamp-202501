@@ -3,10 +3,11 @@ import { StyleSheet, TextInput, Button, Alert, Platform, ScrollView, Pressable }
 import { View, Text } from "@/components/Themed"
 import { router } from "expo-router"
 
-import type { UserType, WorkoutType } from "com/types"
+import type { RoutineType, UserType, WorkoutType } from "com/types"
 import WorkoutCard from "@/components/WorkoutCard"
+import RoutineCard from "@/components/RoutineCard"
 
-import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts } from "@/services/user/regular"
+import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts, getSavedRoutines, getMyRoutines } from "@/services/user/regular"
 import { deleteWorkout } from "@/services/workouts"
 
 export default function Profile() {
@@ -21,9 +22,20 @@ export default function Profile() {
     const [workoutType, setWorkoutType] = useState<"saved" | "mine">("saved")
     const [workouts, setWorkouts] = useState<WorkoutType[]>([])
 
+    const [routineType, setRoutineType] = useState<"saved" | "mine">("saved")
+    const [routines, setRoutines] = useState<RoutineType[]>([])
+
     function appendImageTimestamp(url: string, dateStr?: string | Date) {
         const timestamp = new Date(dateStr ?? Date.now()).getTime()
         return `${url}?t=${timestamp}`
+    }
+
+    const showAlert = (title: string, message: string) => {
+        if (Platform.OS === "web") {
+            window.alert(`${title}: ${message}`)
+        } else {
+            Alert.alert(title, message)
+        }
     }
 
     const loadWorkouts = () => {
@@ -31,9 +43,9 @@ export default function Profile() {
 
         fetch()
             .then(data => {
-                const workoutsWithTimestamp = data.map(w => ({
-                    ...w,
-                    feedImage: appendImageTimestamp(w.feedImage, w.modifiedAt || w.createdAt),
+                const workoutsWithTimestamp = data.map(workout => ({
+                    ...workout,
+                    feedImage: appendImageTimestamp(workout.feedImage, workout.modifiedAt || workout.createdAt),
                 }))
                 setWorkouts(workoutsWithTimestamp)
             })
@@ -43,6 +55,22 @@ export default function Profile() {
             })
     }
 
+    const loadRoutines = () => {
+        const fetch = routineType === "saved" ? getSavedRoutines : getMyRoutines
+
+        fetch()
+            .then(data => {
+                const routinesWithTimestamp = data.map(routine => ({
+                    ...routine,
+                    feedImage: appendImageTimestamp(routine.feedImage, routine.modifiedAt || routine.createdAt),
+                }))
+                setRoutines(routinesWithTimestamp)
+            })
+            .catch(error => {
+                console.error("Error loading routines:", error)
+                showAlert("Error", error.message || "Failed to fetch routines.")
+            })
+    }
 
     useEffect(() => {
         if (activeTab === "user") {
@@ -74,13 +102,9 @@ export default function Profile() {
         if (activeTab === "workouts") loadWorkouts()
     }, [activeTab, workoutType])
 
-    const showAlert = (title: string, message: string) => {
-        if (Platform.OS === "web") {
-            window.alert(`${title}: ${message}`)
-        } else {
-            Alert.alert(title, message)
-        }
-    }
+    useEffect(() => {
+        if (activeTab === "routines") loadRoutines()
+    }, [activeTab, routineType])
 
     const handleUpdate = () => {
         if (!currentUser) {
@@ -160,7 +184,34 @@ export default function Profile() {
         }
 
         if (activeTab === "routines") {
-            return <Text style={{ marginTop: 20 }}>[Routines with dropdown - coming soon]</Text>
+            return (
+                <>
+                    <View style={styles.dropdownContainer}>
+                        <Pressable
+                            style={[styles.dropdownButton, routineType === "saved" && styles.activeDropdown]}
+                            onPress={() => setRoutineType("saved")}
+                        >
+                            <Text>Saved</Text>
+                        </Pressable>
+                        <Pressable
+                            style={[styles.dropdownButton, routineType === "mine" && styles.activeDropdown]}
+                            onPress={() => setRoutineType("mine")}
+                        >
+                            <Text>Mine</Text>
+                        </Pressable>
+                    </View>
+
+                    {routines.map(routine => (
+                        <RoutineCard
+                            key={routine.id}
+                            routine={routine}
+                            onPress={() => router.push(`/(stack)/RoutineDetail/${routine.id}`)}
+                            showStatus={routineType === "mine"}
+                            showAuthor={routineType === "saved"}
+                        />
+                    ))}
+                </>
+            )
         }
     }
 
@@ -188,72 +239,18 @@ export default function Profile() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 24,
-        backgroundColor: "#f0f0f0",
-        flexGrow: 1
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: "500",
-        marginBottom: 4,
-        marginTop: 12
-    },
-    input: {
-        backgroundColor: "#fff",
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        borderRadius: 8,
-        marginBottom: 8,
-    },
-    button: {
-        marginTop: 20,
-    },
-    tabs: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginBottom: 16,
-        gap: 8
-    },
-    tab: {
-        flex: 1,
-        paddingVertical: 10,
-        borderRadius: 8,
-        backgroundColor: "#ddd",
-        alignItems: "center"
-    },
-    activeTab: {
-        backgroundColor: "#facc15",
-    },
-    tabText: {
-        fontWeight: "600"
-    },
-    dropdownContainer: {
-        flexDirection: "row",
-        gap: 12,
-        marginBottom: 16
-    },
-    dropdownButton: {
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        borderRadius: 8,
-        backgroundColor: "#ddd",
-    },
-    activeDropdown: {
-        backgroundColor: "#facc15",
-    },
-    linkButton: {
-        marginTop: 16,
-        alignItems: "center",
-    },
-    linkText: {
-        color: "#0ea5e9",
-        fontWeight: "600",
-        fontSize: 16,
-    },
+    container: { padding: 24, backgroundColor: "#f0f0f0", flexGrow: 1 },
+    title: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
+    label: { fontSize: 16, fontWeight: "500", marginBottom: 4, marginTop: 12 },
+    input: { backgroundColor: "#fff", paddingHorizontal: 12, paddingVertical: 10, borderRadius: 8, marginBottom: 8 },
+    button: { marginTop: 20 },
+    tabs: { flexDirection: "row", justifyContent: "space-between", marginBottom: 16, gap: 8 },
+    tab: { flex: 1, paddingVertical: 10, borderRadius: 8, backgroundColor: "#ddd", alignItems: "center" },
+    activeTab: { backgroundColor: "#facc15" },
+    tabText: { fontWeight: "600" },
+    dropdownContainer: { flexDirection: "row", gap: 12, marginBottom: 16 },
+    dropdownButton: { paddingVertical: 8, paddingHorizontal: 16, borderRadius: 8, backgroundColor: "#ddd" },
+    activeDropdown: { backgroundColor: "#facc15" },
+    linkButton: { marginTop: 16, alignItems: "center" },
+    linkText: { color: "#0ea5e9", fontWeight: "600", fontSize: 16 },
 })

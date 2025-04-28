@@ -4,11 +4,17 @@ import getSavedWorkouts from './getSavedWorkouts'
 import getMyWorkouts from './getMyWorkouts'
 import getTargetUserData from './getTargetUserData'
 
+import getMyRoutines from './getMyRoutines'
+import getSavedRoutines from './getSavedRoutines'
+
 
 export {
     getUserAlias,
     updateUserData,
     getSavedWorkouts,
     getMyWorkouts,
-    getTargetUserData
+    getTargetUserData,
+
+    getMyRoutines,
+    getSavedRoutines
 }

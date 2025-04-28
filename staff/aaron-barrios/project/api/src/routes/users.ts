@@ -11,7 +11,9 @@ import {
     getSavedWorkoutsHandler,
     getMyWorkoutsHandler,
     updateUserDataHandler,
-    getTargetUserDataHandler
+    getTargetUserDataHandler,
+    getMyRoutinesHandler,
+    getSavedRoutinesHandler
 } from "../handlers/user/regular"
 
 import {
@@ -64,7 +66,7 @@ userRouter.get(
     getCurrentUserHandler
 )
 
-// --- GET YOUR WORKOUTS METHOD
+// --- GET MY WORKOUTS METHOD
 userRouter.get(
     "/workouts/self",
     authHandler,
@@ -76,6 +78,20 @@ userRouter.get(
     "/workouts/self/saved",
     authHandler,
     getSavedWorkoutsHandler
+)
+
+// --- GET MY ROUTINES METHOD
+userRouter.get(
+    "/routines/self",
+    authHandler,
+    getMyRoutinesHandler
+)
+
+// --- GET SAVED ROUTINES METHOD
+userRouter.get(
+    "/routines/self/saved",
+    authHandler,
+    getSavedRoutinesHandler
 )
 
 // --- GET TARGET USER DATA METHOD

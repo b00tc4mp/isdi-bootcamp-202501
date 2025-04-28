@@ -17,7 +17,7 @@ const getRoutineById = (
         userId ? User.findById(userId).lean() : Promise.resolve(null),
         Routine.findById(workoutId)
             .select("-__v")
-            .populate("author", "alias level")
+            .populate("author", "alias")
             .populate("workouts.workout")
             .lean()
     ])

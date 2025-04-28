@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { useLocalSearchParams } from "expo-router"
+import { router, useLocalSearchParams } from "expo-router"
 import { ScrollView, StyleSheet, Pressable, ActivityIndicator } from "react-native"
+import { FontAwesome5 } from "@expo/vector-icons"
 import { Text, View } from "@/components/Themed"
 
 import type { WorkoutType } from "com/types"
@@ -59,6 +60,10 @@ export default function UserProfile() {
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.title}>@{userAlias}</Text>
+
+            <Pressable onPress={() => router.back()} style={{ position: "absolute", left: 16, top: 16 }}>
+                <FontAwesome5 name="arrow-left" size={24} />
+            </Pressable>
 
             <View style={styles.tabs}>
                 {["data", "workouts", "routines"].map(tab => (

@@ -19,10 +19,9 @@ const createRoutine = (
     validate.url(feedImage)
     validate.text(description)
     validate.number(duration)
+    validate.routineWorkouts(workouts, 4)
 
     if (duration <= 0) throw new errors.ValidationError("Duration must be positive")
-    if (!Array.isArray(workouts) || workouts.length === 0)
-        throw new errors.ValidationError("Workouts must be a non-empty array")
 
     for (const workout of workouts) {
         validate.id(workout.workout.id) // o workout.workoutId según como tengas el type
@@ -36,6 +35,25 @@ const createRoutine = (
     return data.getToken()
         .then(token => {
             if (!token) throw new AuthorizationError('No token found')
+
+            const requestBody = {
+                name,
+                muscleGroup,
+                feedImage,
+                description,
+                duration,
+                workouts: workouts.map(w => ({
+                    workout: w.workout.id,
+                    sets: w.sets,
+                    reps: w.reps,
+                    restTime: w.restTime,
+                    weight: w.weight || 0,
+                    order: w.order
+                }))
+            }
+
+
+            console.log("📦 Body que estoy enviando en createRoutine:", requestBody) // 🔥 AQUÍ
 
             return fetch(`${process.env.EXPO_PUBLIC_API_URL}/routines`, {
                 method: 'POST',
