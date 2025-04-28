@@ -95,6 +95,21 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 modifiedAt: new Date()
             },
             {
+                author: masha._id,
+                name: "dips",
+                muscleGroup: "chest",
+                feedImage: "https://cdn.muscleandstrength.com/sites/default/files/chest-dip.jpg",
+                type: "strength",
+                difficulty: "difficult",
+                description: "best chest exercise to grow the muscle!",
+                executionImages: ["url1", "url2"],
+                likes: [compi._id],
+                saves: [frankie._id],
+                status: "accepted",
+                createdAt: new Date(2023, 11, 5),
+                modifiedAt: new Date()
+            },
+            {
                 author: frankie._id,
                 name: "lateral raises",
                 muscleGroup: "shoulders",
@@ -110,6 +125,21 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 modifiedAt: new Date()
             },
             {
+                author: frankie._id,
+                name: "military press",
+                muscleGroup: "shoulders",
+                feedImage: "https://rogersathletic.com/wp-content/uploads/2023/04/overhead_press_001.jpg",
+                type: "strength",
+                difficulty: "medium",
+                description: "best shoulders exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [manu._id],
+                saves: [frankie._id],
+                status: "accepted",
+                createdAt: new Date(2024, 10, 30),
+                modifiedAt: new Date()
+            },
+            {
                 author: manu._id,
                 name: "bulgarian squat",
                 muscleGroup: "legs",
@@ -120,6 +150,21 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 executionImages: ["url1", "url2"],
                 likes: [masha._id, frankie._id, manu._id],
                 saves: [manu._id, masha._id],
+                status: "accepted",
+                createdAt: new Date(2025, 1, 13),
+                modifiedAt: new Date()
+            },
+            {
+                author: manu._id,
+                name: "walking lunges",
+                muscleGroup: "legs",
+                feedImage: "https://hips.hearstapps.com/hmg-prod/images/walking-lunges-667e8add0acad.jpg?crop=0.598xw:0.895xh;0.324xw,0.0800xh&resize=640:*",
+                type: "strength",
+                difficulty: "hard",
+                description: "best legs exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [masha._id, frankie._id, manu._id],
+                saves: [manu._id, masha._id, frankie._id],
                 status: "accepted",
                 createdAt: new Date(2025, 1, 13),
                 modifiedAt: new Date()
@@ -141,6 +186,21 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             },
             {
                 author: frankie._id,
+                name: "biceps curl",
+                muscleGroup: "biceps",
+                feedImage: "https://blogscdn.thehut.net/wp-content/uploads/sites/450/2018/08/17134425/curl-de-b%C3%ADceps_1200x672_acf_cropped.jpg",
+                type: "strength",
+                difficulty: "easy",
+                description: "best biceps exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [manu._id],
+                saves: [masha._id],
+                status: "accepted",
+                createdAt: new Date(2024, 8, 17),
+                modifiedAt: new Date()
+            },
+            {
+                author: frankie._id,
                 name: "rowing",
                 muscleGroup: "back",
                 feedImage: "https://static01.nyt.com/images/2022/11/08/multimedia/26WNT-ROWING-WORKOUT5-1-310a/26WNT-ROWING-WORKOUT5-1-310a-videoSixteenByNineJumbo1600.jpg",
@@ -156,6 +216,21 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             },
             {
                 author: frankie._id,
+                name: "pull-ups",
+                muscleGroup: "back",
+                feedImage: "https://images.ctfassets.net/0k812o62ndtw/5NuCplQIQtWN7cQMgoEtXf/0ab832bf7faf755ef47fc9e413300db3/2023.11.17_SWEAT_LAURA05320-1024x683-27c3a53.jpg",
+                type: "strength",
+                difficulty: "easy",
+                description: "best back exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [manu._id],
+                saves: [masha._id, frankie._id],
+                status: "accepted",
+                createdAt: new Date(2024, 11, 3),
+                modifiedAt: new Date()
+            },
+            {
+                author: frankie._id,
                 name: "hip thrust",
                 muscleGroup: "buttocks",
                 feedImage: "https://www.mgc.es/wp-content/uploads/2023/05/como-hacer-hip-thrust-para-los-gluteos-880x660.jpg",
@@ -164,15 +239,197 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 description: "best buttocks exercise!",
                 executionImages: ["url1", "url2"],
                 likes: [],
+                saves: [frankie._id],
+                status: "accepted",
+                createdAt: new Date(2024, 10, 29),
+                modifiedAt: new Date()
+            },
+            {
+                author: frankie._id,
+                name: "glute kickbacks",
+                muscleGroup: "buttocks",
+                feedImage: "https://www.shape.com/thmb/XnPlKD-V34i5-WP1A0BWpFGcqLY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Cable-Kickback-47f64e410484455eb9edb863625da9df.jpg",
+                type: "strength",
+                difficulty: "medium",
+                description: "buttocks exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [],
                 saves: [],
                 status: "pending",
-                createdAt: new Date(2024, 10, 29),
+                createdAt: new Date(2024, 10, 30),
+                modifiedAt: new Date()
+            },
+            {
+                author: manu._id,
+                name: "triceps pushdown",
+                muscleGroup: "triceps",
+                feedImage: "https://www.puregym.com/media/0kujs5ev/tricep-pushdowns.jpg?quality=80",
+                type: "strength",
+                difficulty: "easy",
+                description: "triceps exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [],
+                saves: [frankie._id],
+                status: "accepted",
+                createdAt: new Date(2024, 9, 21),
+                modifiedAt: new Date()
+            },
+            {
+                author: frankie._id,
+                name: "triceps dips on bench",
+                muscleGroup: "triceps",
+                feedImage: "https://hips.hearstapps.com/hmg-prod/images/img-2220-jpg-1571859261.jpg",
+                type: "strength",
+                difficulty: "easy",
+                description: "triceps exercise!",
+                executionImages: ["url1", "url2"],
+                likes: [],
+                saves: [],
+                status: "pending",
+                createdAt: new Date(2024, 9, 21),
                 modifiedAt: new Date()
             },
         ])
     })
-    .then(([benchPress, lateralRaises, bulgarianSquat, hipThrust]) => {
+    .then(([benchPress, dips, militaryPress, lateralRaises, walkingLunges, bulgarianSquat, hipThrust, gluteKickacks, bicepsCurl, hammerCurl, pullUps, rowing, tricepsPushdown, tricepsDips]) => {
         return Routine.insertMany([
+            {
+                author: frankie._id,
+                name: "Chest and biceps Blast",
+                goal: "strength",
+                muscleGroup: "chest",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "Perfect routine to build your chest and shoulders!",
+                feedImage: "https://www.gymreapers.com/cdn/shop/articles/header-image-01_Cable-chest-workout---maximizing-your-muscle-growth.jpg?v=1721671171&width=1024",
+                duration: 45,
+                status: "accepted",
+                frequencySuggestion: "2-3 times per week",
+                likes: [manu._id, masha._id, frankie._id],
+                saves: [masha._id],
+                createdAt: new Date(2024, 8, 30),
+                workouts: [
+                    {
+                        workout: benchPress._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: hammerCurl._id,
+                        sets: 3,
+                        reps: 12,
+                        restTime: 60,
+                        order: 2
+                    }, {
+                        workout: dips._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: bicepsCurl._id,
+                        sets: 3,
+                        reps: 12,
+                        restTime: 60,
+                        order: 2
+                    },
+                ]
+            },
+            {
+                author: masha._id,
+                name: "shoulders and legs Blast",
+                goal: "strength",
+                muscleGroup: "shoulders",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "Perfect routine to build your shoulders!",
+                feedImage: "https://cdn.prod.website-files.com/65d1e20566ce88e043a1157d/6626917d5e3aa7dd77a929bc_6501c9c5a1cffd9eb9c42c59_imgonline-com-ua-converthdq1hpNgpS8x.webp",
+                duration: 45,
+                status: "accepted",
+                frequencySuggestion: "2-3 times per week",
+                likes: [manu._id],
+                saves: [manu._id, masha._id, frankie._id],
+                createdAt: new Date(2024, 3, 30),
+                workouts: [
+                    {
+                        workout: lateralRaises._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: militaryPress._id,
+                        sets: 3,
+                        reps: 12,
+                        restTime: 60,
+                        order: 2
+                    },
+                    {
+                        workout: bulgarianSquat._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: walkingLunges._id,
+                        sets: 3,
+                        reps: 12,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
+            {
+                author: frankie._id,
+                name: "back and triceps Blast",
+                goal: "strength",
+                muscleGroup: "back",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "Perfect routine to build your back!",
+                feedImage: "https://shop.bodybuilding.com/cdn/shop/articles/6-back-workouts-to-get-a-bigger-stronger-back-619181.jpg?v=1731882638",
+                duration: 45,
+                status: "accepted",
+                frequencySuggestion: "2-3 times per week",
+                likes: [],
+                saves: [],
+                createdAt: new Date(2024, 11, 30),
+                workouts: [
+                    {
+                        workout: dips._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: pullUps._id,
+                        sets: 3,
+                        reps: 12,
+                        restTime: 60,
+                        order: 2
+                    },
+                    {
+                        workout: tricepsDips._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: tricepsPushdown._id,
+                        sets: 3,
+                        reps: 12,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
             {
                 author: frankie._id,
                 name: "Lower Body Blast",
@@ -183,7 +440,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 description: "A tough routine for your lower half.",
                 feedImage: "https://www.barbellmedicine.com/wp-content/uploads/2024/03/Back-Squat.jpg",
                 duration: 60,
-                status: "accepted",
+                status: "pending",
                 frequencySuggestion: "2x per week",
                 likes: [masha._id],
                 saves: [manu._id],
@@ -205,70 +462,6 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                     }
                 ]
             },
-            {
-                author: frankie._id,
-                name: "Chest and Shoulders Blast",
-                goal: "strength",
-                muscleGroup: "chest",
-                locationType: "gym",
-                difficulty: "medium",
-                description: "Perfect routine to build your chest and shoulders!",
-                feedImage: "https://www.gymreapers.com/cdn/shop/articles/header-image-01_Cable-chest-workout---maximizing-your-muscle-growth.jpg?v=1721671171&width=1024",
-                duration: 45,
-                status: "accepted",
-                frequencySuggestion: "2-3 times per week",
-                likes: [manu._id],
-                saves: [masha._id],
-                createdAt: new Date(),
-                workouts: [
-                    {
-                        workout: benchPress._id,
-                        sets: 4,
-                        reps: 10,
-                        restTime: 90,
-                        order: 1
-                    },
-                    {
-                        workout: lateralRaises._id,
-                        sets: 3,
-                        reps: 12,
-                        restTime: 60,
-                        order: 2
-                    }
-                ]
-            },
-            {
-                author: frankie._id,
-                name: "Chest Blast",
-                goal: "strength",
-                muscleGroup: "chest",
-                locationType: "gym",
-                difficulty: "medium",
-                description: "Perfect routine to build your chest!",
-                feedImage: "https://content.health.harvard.edu/wp-content/uploads/2024/04/351b1be8-532c-4e59-903b-c756a70ac11e.jpg",
-                duration: 45,
-                status: "pending",
-                frequencySuggestion: "2-3 times per week",
-                likes: [manu._id],
-                saves: [masha._id],
-                createdAt: new Date(),
-                workouts: [
-                    {
-                        workout: benchPress._id,
-                        sets: 4,
-                        reps: 10,
-                        restTime: 90,
-                        order: 1
-                    },
-                    {
-                        workout: lateralRaises._id,
-                        sets: 3,
-                        reps: 12,
-                        restTime: 60,
-                        order: 2
-                    }
-                ]
-            }
         ])
     })
     .finally(() => data.disconnect());

@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react"
-import { router, useLocalSearchParams } from "expo-router"
+import { useEffect, useState, useCallback } from "react"
+import { router, useLocalSearchParams, useFocusEffect } from "expo-router"
 import { ScrollView, StyleSheet, Pressable, ActivityIndicator } from "react-native"
 import { FontAwesome5 } from "@expo/vector-icons"
 import { Text, View } from "@/components/Themed"
 
-import type { WorkoutType } from "com/types"
+import type { RoutineType, WorkoutType } from "com/types"
 import WorkoutCard from "@/components/WorkoutCard"
 import { getTargetUserData } from "@/services/user/regular"
 import { getUserWorkouts } from "@/services/workouts"
+import { getUserRoutines } from "@/services/routines"
+import RoutineCard from "@/components/RoutineCard"
 
 export default function UserProfile() {
     const { id } = useLocalSearchParams()
@@ -22,6 +24,8 @@ export default function UserProfile() {
         email?: string
     }>({ alias: "" })
     const [workouts, setWorkouts] = useState<WorkoutType[]>([])
+    const [routines, setRoutines] = useState<RoutineType[]>([])
+
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -46,6 +50,37 @@ export default function UserProfile() {
             .catch(console.error)
             .finally(() => setLoading(false))
     }, [targetUserId, activeTab])
+
+    useEffect(() => {
+        if (!targetUserId || activeTab !== "routines") return;
+
+        setLoading(true)
+        getUserRoutines(targetUserId)
+            .then(setRoutines)
+            .catch(console.error)
+            .finally(() => setLoading(false))
+    }, [targetUserId, activeTab])
+
+
+    useFocusEffect(
+        useCallback(() => {
+            if (activeTab === "workouts" && targetUserId) {
+                getUserWorkouts(targetUserId)
+                    .then(setWorkouts)
+                    .catch(console.error)
+            }
+        }, [activeTab, targetUserId])
+    )
+
+    useFocusEffect(
+        useCallback(() => {
+            if (activeTab === "routines" && targetUserId) {
+                getUserRoutines(targetUserId)
+                    .then(setRoutines)
+                    .catch(console.error)
+            }
+        }, [activeTab, targetUserId])
+    )
 
     const handleTabChange = (tab: typeof activeTab) => {
         setActiveTab(tab)
@@ -93,7 +128,7 @@ export default function UserProfile() {
                             <WorkoutCard
                                 key={workout.id}
                                 workout={workout}
-                                onPress={() => { }}
+                                onPress={() => router.push(`/(stack)/WorkoutDetail/${workout.id}`)}
                                 showStatus={false}
                                 showAuthor={false}
                             />
@@ -105,7 +140,21 @@ export default function UserProfile() {
             )}
 
             {activeTab === "routines" && (
-                <Text style={{ marginTop: 20, textAlign: "center" }}>[TODO: Fetch and show user routines]</Text>
+                <View style={{ marginTop: 12 }}>
+                    {Array.isArray(routines) && routines.length > 0 ? (
+                        routines.map(routine => (
+                            <RoutineCard
+                                key={routine.id}
+                                routine={routine}
+                                onPress={() => router.push(`/(stack)/RoutineDetail/${routine.id}`)}
+                                showStatus={false}
+                                showAuthor={false}
+                            />
+                        ))
+                    ) : (
+                        <Text style={{ textAlign: "center", marginTop: 20 }}>No routines found</Text>
+                    )}
+                </View>
             )}
         </ScrollView>
     )

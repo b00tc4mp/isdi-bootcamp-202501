@@ -42,6 +42,7 @@ const getMyRoutines = (userId: string): Promise<RoutineType[]> => {
                     savesCount: (routine.saves ?? []).length,
                     likedByMe: Array.isArray(routine.likes) && routine.likes.some(id => id.toString() === userId),
                     savedByMe: Array.isArray(routine.saves) && routine.saves.some(id => id.toString() === userId),
+                    ownedByMe: true,
                     workouts: (routine.workouts || []).map(routineWorkout => {
                         const workout = routineWorkout.workout as any
 

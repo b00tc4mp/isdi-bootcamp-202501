@@ -54,7 +54,9 @@ import {
     reviewRoutine,
     createRoutine,
     filterRoutines,
-    editRoutine
+    editRoutine,
+    deleteRoutine,
+    getUserRoutines
 } from './routines'
 
 
@@ -100,7 +102,9 @@ const services = {
     reviewRoutine,
     createRoutine,
     filterRoutines,
-    editRoutine
+    editRoutine,
+    deleteRoutine,
+    getUserRoutines
 }
 
 export default services

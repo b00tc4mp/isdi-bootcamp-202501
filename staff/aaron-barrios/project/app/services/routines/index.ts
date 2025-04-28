@@ -7,6 +7,8 @@ import reviewRoutine from "@/services/routines/reviewRoutine"
 import createRoutine from "@/services/routines/createRoutine"
 import filterRoutines from "@/services/routines/filterRoutines"
 import editRoutine from "@/services/routines/editRoutine"
+import deleteRoutine from "@/services/routines/deleteRoutine"
+import getUserRoutines from "@/services/routines/getUserRoutines"
 
 export {
     getAllRoutines,
@@ -17,5 +19,7 @@ export {
     reviewRoutine,
     createRoutine,
     filterRoutines,
-    editRoutine
+    editRoutine,
+    deleteRoutine,
+    getUserRoutines
 }

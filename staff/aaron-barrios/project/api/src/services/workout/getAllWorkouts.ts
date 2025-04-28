@@ -29,7 +29,7 @@ const getAllWorkouts = (
                     name: workout.name,
                     muscleGroup: workout.muscleGroup,
                     feedImage: workout.feedImage,
-                    type: workout.type,
+                    type: workout.type as WorkoutType["type"],
                     difficulty: workout.difficulty,
                     description: workout.description,
                     executionImages: workout.executionImages,

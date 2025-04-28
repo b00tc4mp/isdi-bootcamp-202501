@@ -96,6 +96,8 @@ export default function Routines() {
                         <RoutineCard
                             routine={item}
                             onPress={() => handleRoutinePress(item.id)}
+                            showAuthor={true}
+                            showStatus={false}
                         />
                     )}
                     showsVerticalScrollIndicator={false}

@@ -9,6 +9,7 @@ import RoutineCard from "@/components/RoutineCard"
 
 import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts, getSavedRoutines, getMyRoutines } from "@/services/user/regular"
 import { deleteWorkout } from "@/services/workouts"
+import { deleteRoutine } from "@/services/routines"
 
 export default function Profile() {
     const [activeTab, setActiveTab] = useState<"user" | "workouts" | "routines">("user")
@@ -201,15 +202,23 @@ export default function Profile() {
                         </Pressable>
                     </View>
 
-                    {routines.map(routine => (
-                        <RoutineCard
-                            key={routine.id}
-                            routine={routine}
-                            onPress={() => router.push(`/(stack)/RoutineDetail/${routine.id}`)}
-                            showStatus={routineType === "mine"}
-                            showAuthor={routineType === "saved"}
-                        />
-                    ))}
+                    {routines.map(routine => {
+                        const showDelete = routine.ownedByMe && routine.status === "pending"
+
+                        return (
+                            <RoutineCard
+                                key={routine.id}
+                                routine={routine}
+                                onPress={() => router.push(`/(stack)/RoutineDetail/${routine.id}`)}
+                                onDelete={showDelete
+                                    ? () => deleteRoutine(routine.author.id, routine.id).then(loadRoutines)
+                                    : undefined}
+                                showStatus={routineType === "mine"}
+                                showAuthor={routineType === "saved"}
+                            />
+                        )
+                    })}
+
                 </>
             )
         }

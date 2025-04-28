@@ -39,9 +39,9 @@ export default function RoutineCard({
 
                 {showAuthor && (
                     <Pressable
-                        disabled={routine.author.alias === "default"}
+                        disabled={routine.author.role === "default"}
                         onPress={() => {
-                            if (routine.author.alias !== "default") {
+                            if (routine.author.role !== "default") {
                                 router.push({
                                     pathname: "/(stack)/UserProfile/[id]",
                                     params: { id: routine.author.id },
@@ -49,11 +49,12 @@ export default function RoutineCard({
                             }
                         }}
                     >
-                        <Text style={routine.author.alias === "default" ? styles.defaultAuthor : styles.authorLink}>
-                            {routine.author.alias === "default" ? "Default" : `@${routine.author.alias}`}
+                        <Text style={routine.author.role === "default" ? styles.defaultAuthor : styles.authorLink}>
+                            {routine.author.role === "default" ? "Default" : `@${routine.author.alias}`}
                         </Text>
                     </Pressable>
                 )}
+
 
                 <View style={styles.bottomRow}>
                     {showStatus && (
@@ -64,7 +65,7 @@ export default function RoutineCard({
 
                     <View style={styles.actions}>
                         <Text style={styles.date}>📅 {formatDate(routine.createdAt)}</Text>
-                        {/* {routine.status === "pending" && (
+                        {routine.status === "pending" && (
                             <Pressable
                                 onPress={() =>
                                     router.push({
@@ -75,7 +76,7 @@ export default function RoutineCard({
                             >
                                 <Text style={{ color: "#fff", fontWeight: "bold" }}>✏️</Text>
                             </Pressable>
-                        )} */}
+                        )}
 
                         {routine.status === "accepted" && (
                             <>
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 100,
-        height: 100,
+        height: 120,
         borderRadius: 10,
         marginRight: 12,
         backgroundColor: "#eee",
