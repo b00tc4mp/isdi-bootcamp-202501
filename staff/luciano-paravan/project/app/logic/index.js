@@ -4,6 +4,8 @@ import { isUserLoggedIn } from './isUserLoggedIn.js'
 import { addClothingItem } from './addClothingItem.js'
 import { getUserUsername } from './getUserUsername.js'
 import { logoutUser } from './logoutUser.js'
+import { getUserClothingItems } from './getUserClothingItems.js'
+import { updateClothingItem } from './updateClothingItem.js'
 
 export const logic = {
     loginUser,
@@ -11,5 +13,7 @@ export const logic = {
     isUserLoggedIn,
     logoutUser,
     getUserUsername,
-    addClothingItem
+    addClothingItem,
+    getUserClothingItems,
+    updateClothingItem
 }

@@ -35,7 +35,7 @@ export function Home({ onUserLoggedOut }) {
     }
 
     return <div>
-        <header className="flex justify-between items-center fixed top-0 w-full bg-[var(--secondary-color)] py-[var(--padding-y)] px-[var(--padding-x)] box-border">
+        <header className="flex justify-between items-center fixed top-0 w-full bg-[var(--bg-color)] py-[var(--padding-y)] px-[var(--padding-x)] box-border">
             <h1 className="text-2xl" onClick={handleHomeClick}>myLook<span className={`text-[var(--fourth-color)]`}>AI</span></h1>
             <button onClick={handleLogoutClick} className="btn-primary m-4 p-4">Logout</button>
         </header>
@@ -48,7 +48,7 @@ export function Home({ onUserLoggedOut }) {
             <Route path="/profile" element={<Profile />} />
         </Routes>
 
-        <footer className="flex justify-center items-center fixed bottom-0 left-0 right-0 bg-[var(--seconday-color) py-[var(--padding-y)] px-[var(--padding-x) box-border] gap-4">
+        <footer className="flex justify-center items-center fixed bottom-0 left-0 right-0 bg-[var(--bg-color)] py-[var(--padding-y)] px-[var(--padding-x) box-border gap-4">
             <div className="flex gap-4">
                 <Link to="/my-clothing-items" className="rounded-md border border-[var(--fourth-color)] text-[var(--first-color)] py-2 px-4">My clothing Items 🧥</Link>
                 <Link to="/profile" className="rounded-md border border-[var(--fourth-color)] text-[var(--first-color)] py-2 px-4">My Profile 👤</Link>

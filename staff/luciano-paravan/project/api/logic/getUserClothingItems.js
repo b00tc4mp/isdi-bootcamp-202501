@@ -1,11 +1,11 @@
 import { SystemError } from 'com/errors.js'
 import { User, ClothingItem } from '../data/index.js'
 import { errors, validate } from 'com'
-import { clothingItems } from '../routes/clothingItems.js'
 
 const { NotFoundError } = errors
 
 export const getUserClothingItems = (userId) => {
+    debugger
     validate.id(userId)
 
     return Promise.all([

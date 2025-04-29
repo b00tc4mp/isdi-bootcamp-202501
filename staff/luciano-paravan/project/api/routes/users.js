@@ -37,6 +37,6 @@ users.get('/self/username', authHandler, withErrorHandling((req, res) => {
 users.get('/clothingItems', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
 
-    return logic.getUserClothingItem({ userId })
+    return logic.getUserClothingItems(userId)
         .then(clothingItems => res.json({ clothingItems }))
 }))

@@ -19,7 +19,7 @@ data.connect(MONGO_URL, DB_NAME)
         api.get('/', (req, res) => res.send('API is working ❤️'))
 
         api.use('/users', users)
-        api.use('/clothing-items', clothingItems)
+        api.use('/clothingItems', clothingItems)
 
         api.use(errorHandler)
 
