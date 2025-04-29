@@ -13,7 +13,7 @@ export default function AdminDashboardLayout({ children }) {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/dashboard/add-product"
+                  href="/dashboard/add-property"
                   className="block py-2 px-4 rounded-md hover:bg-gray-700 transition duration-200"
                 >
                   Agregar Propiedad

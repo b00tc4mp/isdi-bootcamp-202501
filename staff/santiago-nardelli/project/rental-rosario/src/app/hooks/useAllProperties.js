@@ -1,22 +1,20 @@
-"use client";
 import { useState, useEffect } from "react";
 import { getAllPropertiesRequest } from "../_logic/functions/getAllPropertiesRequest.js";
 
-const useAllProperties = () => {
-  const [properties, setProperties] = useState([]);
+export const useAllProperties = () => {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Inicializamos isLoading en true para mostrar un loader mientras se cargan los datos
 
   useEffect(() => {
     const fetchProperties = async () => {
       setIsLoading(true);
       setError(null);
-
       try {
-        const data = await getAllPropertiesRequest();
-        setProperties(data);
+        const responseData = await getAllPropertiesRequest();
+        setData(responseData);
       } catch (err) {
-        setError(err.message);
+        setError(err.message || "Error al cargar las propiedades.");
       } finally {
         setIsLoading(false);
       }
@@ -25,11 +23,5 @@ const useAllProperties = () => {
     fetchProperties();
   }, []);
 
-  return {
-    properties,
-    error,
-    isLoading,
-  };
+  return { data, isLoading, error };
 };
-
-export default useAllProperties;

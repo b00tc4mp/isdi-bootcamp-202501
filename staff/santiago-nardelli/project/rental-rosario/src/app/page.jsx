@@ -1,19 +1,21 @@
+"use client";
+
 import React from "react";
-import ClientSideLanding from "./_components/organisms/ClientSideLanding.jsx";
-import { getAllPropertiesRequest } from "./_logic/functions/getAllPropertiesRequest.js";
 
-async function getProperties() {
-  try {
-    const properties = await getAllPropertiesRequest();
-    return properties;
-  } catch (error) {
-    console.error("Error fetching properties:", error);
-    return [];
-  }
-}
+const ScrollToProperties = ({ children, targetRef }) => {
+  const handleClick = () => {
+    if (targetRef.current) {
+      targetRef.current.scrollIntoView({ behavior: "smooth" });
+    } else {
+      console.error("Referencia al objetivo del scroll no está disponible.");
+    }
+  };
 
-export default async function Page() {
-  const initialProperties = await getProperties();
+  return (
+    <button onClick={handleClick} className={children.props.className}>
+      {children}
+    </button>
+  );
+};
 
-  return <ClientSideLanding initialProperties={initialProperties} />;
-}
+export default ScrollToProperties;

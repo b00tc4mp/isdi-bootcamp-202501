@@ -1,13 +1,18 @@
 "use client";
 
 import { loginUserRequest } from "../_logic/functions/loginUserRequest";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { data } from "../_data/index.js";
+import { set } from "mongoose";
 
 export const useLoginUser = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(!!data.token); // Inicializa el estado de autenticación según la presencia del token
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(!!data.token); // Verifica si hay un token en el localStorage al cargar el componente
+  }, []);
   const login = async (email, password) => {
     setLoading(true);
     setError(null);

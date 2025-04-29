@@ -5,18 +5,15 @@ import Logo from "../atoms/Logo.jsx";
 import WelcomePhrase from "../molecules/WelcomePhrase.jsx";
 import FilterNavbar from "../molecules/FilterNavbar.jsx";
 import GridCards from "../atoms/GridCards.jsx";
-import Card from "../atoms/Card.jsx";
+import Card from "../molecules/PropertyCard.jsx";
 import dynamic from "next/dynamic";
 
-const ImageCarousel = dynamic(() => import("../organisms/ImageCarrusel.jsx"), {
+const ImageCarousel = dynamic(() => import("../molecules/ImageCarrusel.jsx"), {
   ssr: false,
 });
-const InteractiveMap = dynamic(
-  () => import("../organisms/InteractiveMap.jsx"),
-  {
-    ssr: false,
-  }
-);
+const InteractiveMap = dynamic(() => import("../atoms/InteractiveMap.jsx"), {
+  ssr: false,
+});
 
 const ClientSideLanding = ({ initialProperties }) => {
   const [filteredProperties, setFilteredProperties] =

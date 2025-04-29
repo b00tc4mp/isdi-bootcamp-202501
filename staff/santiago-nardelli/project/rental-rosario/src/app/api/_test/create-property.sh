@@ -1,14 +1,13 @@
 curl -X POST \
   http://localhost:3000/api/properties \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MGI2ZjBlMWY2Njc4OGNiYjAxODAxMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTU3OTc5NSwiZXhwIjoxNzQ1NTgzMzk1fQ.LxYtLrbuw5M-0BdhatXUfXbgfOsYXBcw7yUv06roKes" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MGYzMjEwNzFmNjdhMWY2MmIzNmRmNCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTkwOTM0MSwiZXhwIjoxNzQ1OTEyOTQxfQ.QbIjjh1rdkSNTsag8cgCWarNHUnyMhKwePlGLWNhExs" \
   -H "Content-Type: application/json" \
-  -d '{
-    "title": "loft",
-    "description": "loft departamento en el centro de Rosario",
-    "price": 150000,
-    "location": "loft, Argentina",
+  -d ' {
+    "title": "Casa antigua restaurada con encanto",
+    "description": "Casa antigua completamente restaurada, conservando su encanto original.",
+    "location": "Refinería, Rosario, Argentina",
     "type": "house",
-    "bedrooms": 3,
-    "images": ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
-    "airbnbUrl": "https://airbnb.com/example"
+    "bedrooms": 2,
+    "images": ["https://a0.muscache.com/im/pictures/d6ff4252-aab5-4c82-b356-d293a464cba5.jpg?im_w=720"],
+    "airbnbUrl": "https://airbnb.com/casa-antigua-refineria"
   }' -v
