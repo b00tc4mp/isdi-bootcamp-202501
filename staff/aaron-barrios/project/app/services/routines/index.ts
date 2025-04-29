@@ -11,6 +11,8 @@ import deleteRoutine from "@/services/routines/deleteRoutine"
 import getUserRoutines from "@/services/routines/getUserRoutines"
 import getMyCustomRoutines from "@/services/routines/getMyCustomRoutines"
 import saveCustomRoutine from "@/services/routines/saveCustomRoutine"
+import getCustomRoutineById from "@/services/routines/getCustomRoutineById"
+import updateCustomRoutine from "@/services/routines/updateCustomRoutine"
 
 export {
     getAllRoutines,
@@ -25,5 +27,7 @@ export {
     deleteRoutine,
     getUserRoutines,
     getMyCustomRoutines,
-    saveCustomRoutine
+    saveCustomRoutine,
+    getCustomRoutineById,
+    updateCustomRoutine
 }

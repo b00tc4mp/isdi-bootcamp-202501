@@ -50,4 +50,29 @@ export const createRoutineSchema = object({
     )
 })
 
+
+export const updateCustomRoutineSchema = object({
+    workouts: z.array(
+        z.object({
+            workoutId: z.string()
+                .min(1, 'Workout ID is required'),
+            sets: z.number()
+                .min(1)
+                .max(100),
+            reps: z.number()
+                .min(1)
+                .max(1000),
+            weight: z.number()
+                .min(0),
+            restTime: z.number()
+                .min(1)
+                .max(600),
+            order: z.number()
+                .min(1)
+                .max(100)
+        })
+    ).optional()
+})
+
 export type CreateRoutineInput = z.infer<typeof createRoutineSchema>
+export type UpdateCustomRoutineInput = z.infer<typeof updateCustomRoutineSchema>

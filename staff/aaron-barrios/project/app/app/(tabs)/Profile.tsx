@@ -261,18 +261,22 @@ export default function Profile() {
                 <>
                     {customRoutines.length === 0 ? (
                         <Text style={{ marginTop: 20, textAlign: "center" }}>
-                            No custom routines yet. Customize one to get started! ✨
+                            No custom routines yet. Customize one to get started!
                         </Text>
                     ) : (
                         customRoutines.map(customRoutine => (
                             <RoutineCard
                                 key={customRoutine.id}
                                 routine={customRoutine as any}
-                                onPress={() => router.push({
-                                    pathname: "/(stack)/customRoutine/[routineId]" as any,
-                                    params: { routineId: customRoutine.id }
-                                })
-                                }
+                                onPress={() => {
+                                    console.log("Navigating to custom routine:", customRoutine.id)
+                                    router.push({
+                                        pathname: "/(stack)/CustomRoutine/[routineId]",
+                                        params: { routineId: customRoutine.id }
+                                    })
+                                }}
+                                showStatus={false}
+                                showAuthor={false}
                             />
                         ))
                     )}

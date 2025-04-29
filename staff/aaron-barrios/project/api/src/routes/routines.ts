@@ -1,7 +1,8 @@
 import { Router } from "express"
 
 import {
-    createRoutineSchema
+    createRoutineSchema,
+    updateCustomRoutineSchema
 } from "../data/zodSchemas/routineSchemas"
 
 import {
@@ -23,7 +24,9 @@ import {
     toggleSaveRoutineHandler,
     editRoutineHandler,
     getMyCustomRoutinesHandler,
-    saveCustomRoutineHandler
+    saveCustomRoutineHandler,
+    getCustomRoutineByIdHandler,
+    updateCustomRoutineHandler
 } from "../handlers/routines"
 
 
@@ -72,6 +75,13 @@ routineRouter.get(
     "/user/:targetUserId",
     authHandler,
     getUserRoutinesHandler
+)
+
+// --- GET CUSTOM ROUTINE BY ID METHOD ---
+routineRouter.get(
+    '/custom/:routineId',
+    authHandler,
+    getCustomRoutineByIdHandler
 )
 
 // ---------- POST ROUTES ----------
@@ -132,4 +142,13 @@ routineRouter.patch(
     authHandler,
     jsonBodyParser,
     editRoutineHandler
+)
+
+//  --- UPDATE CUSTOM ROUTINE METHOD ---
+routineRouter.patch(
+    '/:routineId/custom',
+    authHandler,
+    jsonBodyParser,
+    validationHandler(updateCustomRoutineSchema),
+    updateCustomRoutineHandler
 )

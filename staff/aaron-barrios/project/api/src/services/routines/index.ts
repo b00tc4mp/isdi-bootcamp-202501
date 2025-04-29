@@ -11,6 +11,8 @@ import toggleSaveRoutine from "./toggleSaveRoutine"
 import editRoutine from "./editRoutine"
 import saveCustomRoutine from "./saveCustomRoutine"
 import getMyCustomRoutines from "./getMyCustomRoutines"
+import getCustomRoutineById from "./getCustomRoutineById"
+import updateCustomRoutine from "./updateCustomRoutine"
 
 export {
     getAllRoutines,
@@ -25,5 +27,7 @@ export {
     toggleSaveRoutine,
     editRoutine,
     saveCustomRoutine,
-    getMyCustomRoutines
+    getMyCustomRoutines,
+    getCustomRoutineById,
+    updateCustomRoutine
 }

@@ -52,7 +52,9 @@ import {
     toggleSaveRoutineHandler,
     editRoutineHandler,
     saveCustomRoutineHandler,
-    getMyCustomRoutinesHandler
+    getMyCustomRoutinesHandler,
+    getCustomRoutineByIdHandler,
+    updateCustomRoutineHandler
 } from './routines'
 
 
@@ -97,7 +99,9 @@ const services = {
     reviewRoutineHandler,
     toggleLikeRoutineHandler,
     toggleSaveRoutineHandler,
-    editRoutineHandler
+    editRoutineHandler,
+    getCustomRoutineByIdHandler,
+    updateCustomRoutineHandler
 }
 
 export default services

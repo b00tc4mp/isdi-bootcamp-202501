@@ -17,6 +17,8 @@ export default function StackLayout() {
                 <Stack.Screen name="CreateRoutine" />
                 <Stack.Screen name="EditWorkout" />
                 <Stack.Screen name="WorkoutDetail" />
+                <Stack.Screen name="RoutineDetail" />
+                <Stack.Screen name="CustomRoutine" />
             </Stack>
         </ThemeProvider>
     )

@@ -143,3 +143,15 @@ export type CustomRoutineType = {
     }
     workouts: CustomRoutineWorkoutType[]
 }
+
+export type UpdateCustomRoutineType = {
+    workouts: Array<{
+        workoutId: string
+        sets: number
+        reps: number
+        weight: number
+        restTime: number
+        order: number
+        time?: number
+    }>
+}

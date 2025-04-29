@@ -49,7 +49,9 @@ import {
     toggleSaveRoutine,
     editRoutine,
     getMyCustomRoutines,
-    saveCustomRoutine
+    saveCustomRoutine,
+    getCustomRoutineById,
+    updateCustomRoutine
 } from './routines'
 
 
@@ -93,7 +95,9 @@ const services = {
     toggleSaveRoutine,
     editRoutine,
     saveCustomRoutine,
-    getMyCustomRoutines
+    getMyCustomRoutines,
+    getCustomRoutineById,
+    updateCustomRoutine
 }
 
 export default services

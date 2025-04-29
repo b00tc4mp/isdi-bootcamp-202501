@@ -11,6 +11,8 @@ import toggleSaveRoutineHandler from "./toggleSaveRoutineHandler"
 import editRoutineHandler from "./editRoutineHandler"
 import getMyCustomRoutinesHandler from "./getMyCustomRoutinesHandler"
 import saveCustomRoutineHandler from "./saveCustomRoutineHandler"
+import getCustomRoutineByIdHandler from "./getCustomRoutineByIdHandler"
+import updateCustomRoutineHandler from "./updateCustomRoutineHandler"
 
 export {
     getAllRoutinesHandler,
@@ -25,5 +27,7 @@ export {
     toggleSaveRoutineHandler,
     editRoutineHandler,
     getMyCustomRoutinesHandler,
-    saveCustomRoutineHandler
+    saveCustomRoutineHandler,
+    getCustomRoutineByIdHandler,
+    updateCustomRoutineHandler
 }
