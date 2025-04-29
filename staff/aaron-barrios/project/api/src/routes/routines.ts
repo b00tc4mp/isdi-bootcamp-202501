@@ -26,7 +26,8 @@ import {
     getMyCustomRoutinesHandler,
     saveCustomRoutineHandler,
     getCustomRoutineByIdHandler,
-    updateCustomRoutineHandler
+    updateCustomRoutineHandler,
+    deleteCustomRoutineHandler
 } from "../handlers/routines"
 
 
@@ -109,6 +110,14 @@ routineRouter.delete(
     "/:routineId",
     authHandler,
     deleteRoutineHandler
+)
+
+
+// --- DELETE CUSTOM ROUTINE METHOD ---
+routineRouter.delete(
+    "/custom/:routineId",
+    authHandler,
+    deleteCustomRoutineHandler
 )
 
 // ---------- PATCH ROUTES ----------

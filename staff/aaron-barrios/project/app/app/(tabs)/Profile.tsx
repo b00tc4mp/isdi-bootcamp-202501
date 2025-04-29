@@ -122,23 +122,23 @@ export default function Profile() {
         if (activeTab === "routines") loadRoutines()
     }, [activeTab, routineType])
 
-    useEffect(() => {
-        if (activeTab === "customRoutines" && customRoutines.length === 0) {
-            loadCustomRoutines()
-        }
-    }, [activeTab])
-
 
     useFocusEffect(
         useCallback(() => {
             if (activeTab === "workouts" && workoutType === "mine") {
                 loadWorkouts()
             }
+
             if (activeTab === "routines" && routineType === "mine") {
                 loadRoutines()
             }
+
+            if (activeTab === "customRoutines") {
+                loadCustomRoutines()
+            }
         }, [activeTab, workoutType, routineType])
     )
+
 
     const handleUpdate = () => {
         if (!currentUser) {
@@ -269,9 +269,8 @@ export default function Profile() {
                                 key={customRoutine.id}
                                 routine={customRoutine as any}
                                 onPress={() => {
-                                    console.log("Navigating to custom routine:", customRoutine.id)
                                     router.push({
-                                        pathname: "/(stack)/CustomRoutine/[routineId]",
+                                        pathname: "/(stack)/CustomRoutineDetail/[routineId]" as any,
                                         params: { routineId: customRoutine.id }
                                     })
                                 }}
@@ -279,6 +278,7 @@ export default function Profile() {
                                 showAuthor={false}
                             />
                         ))
+
                     )}
                 </>
             )

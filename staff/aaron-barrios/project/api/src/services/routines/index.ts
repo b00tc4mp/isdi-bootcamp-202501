@@ -13,6 +13,7 @@ import saveCustomRoutine from "./saveCustomRoutine"
 import getMyCustomRoutines from "./getMyCustomRoutines"
 import getCustomRoutineById from "./getCustomRoutineById"
 import updateCustomRoutine from "./updateCustomRoutine"
+import deleteCustomRoutine from "./deleteCustomRoutine"
 
 export {
     getAllRoutines,
@@ -29,5 +30,6 @@ export {
     saveCustomRoutine,
     getMyCustomRoutines,
     getCustomRoutineById,
-    updateCustomRoutine
+    updateCustomRoutine,
+    deleteCustomRoutine
 }

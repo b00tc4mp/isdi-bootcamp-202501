@@ -13,6 +13,7 @@ import getMyCustomRoutinesHandler from "./getMyCustomRoutinesHandler"
 import saveCustomRoutineHandler from "./saveCustomRoutineHandler"
 import getCustomRoutineByIdHandler from "./getCustomRoutineByIdHandler"
 import updateCustomRoutineHandler from "./updateCustomRoutineHandler"
+import deleteCustomRoutineHandler from "./deleteCustomRoutineHandler"
 
 export {
     getAllRoutinesHandler,
@@ -29,5 +30,6 @@ export {
     getMyCustomRoutinesHandler,
     saveCustomRoutineHandler,
     getCustomRoutineByIdHandler,
-    updateCustomRoutineHandler
+    updateCustomRoutineHandler,
+    deleteCustomRoutineHandler
 }

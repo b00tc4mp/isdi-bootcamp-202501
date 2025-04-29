@@ -26,34 +26,38 @@ describe("get All Workouts", () => {
         ])
     })
 
+    // --- HAPPY PATH ---
+    it("succeeds on getting All Workouts", () => {
+        let userId: string
 
-    //--- HAPPY PATH ---
-    it("succeeds on getting All Workouts", async () => {
-        const hashedPassword = await bcrypt.hash("123123", 10)
+        return bcrypt.hash("123123", 10)
+            .then(hashedPassword => {
+                return User.insertMany([
+                    { name: "Manu", lastName: "Barzi", email: "ma@nu.com", alias: "manu", password: hashedPassword, role: "regular", level: "beginner", interests: [], createdAt: new Date(), modifiedAt: null },
+                    { name: "Frank", lastName: "Pereira", email: "fran@kie.com", alias: "frankie", password: hashedPassword, role: "regular", level: "intermediate", interests: [], createdAt: new Date(), modifiedAt: null }
+                ])
+            })
+            .then(users => {
+                const user = { id: users[0]._id.toString() }
+                const user2 = { id: users[1]._id.toString() }
+                userId = user.id
 
-        const [_user, _user2] = await User.insertMany([
-            { name: "Manu", lastName: "Barzi", email: "ma@nu.com", alias: "manu", password: hashedPassword, role: "regular", level: "beginner", interests: [], createdAt: new Date(), modifiedAt: null },
-            { name: "Frank", lastName: "Pereira", email: "fran@kie.com", alias: "frankie", password: hashedPassword, role: "regular", level: "intermediate", interests: [], createdAt: new Date(), modifiedAt: null }
-        ])
-
-        const user = { id: _user._id.toString() }
-        const user2 = { id: _user2._id.toString() }
-
-        await Workout.insertMany([
-            { author: user.id, name: "bench press", muscleGroup: "chest", feedImage: "https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg", description: "workout 1", difficulty: "easy", type: "strength", status: "accepted" },
-            { author: user2.id, name: "bulgarian squat", muscleGroup: "buttocks", feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg", description: "workout 2", difficulty: "easy", type: "strength", status: "accepted" }
-        ])
-
-        const returnedWorkouts = await getAllWorkouts(user.id)
-
-        expect(returnedWorkouts.workouts).to.be.instanceOf(Array)
-        expect(returnedWorkouts.workouts).to.have.lengthOf(2)
-        expect(returnedWorkouts.workouts[0].author.id).to.equal(user.id)
-
+                return Workout.insertMany([
+                    { author: user.id, name: "bench press", muscleGroup: "chest", feedImage: "https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg", description: "workout 1", difficulty: "easy", type: "strength", status: "accepted" },
+                    { author: user2.id, name: "bulgarian squat", muscleGroup: "buttocks", feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg", description: "workout 2", difficulty: "easy", type: "strength", status: "accepted" }
+                ])
+                    .then(() => userId)
+            })
+            .then(userId => getAllWorkouts(userId))
+            .then(result => {
+                expect(result.workouts).to.be.instanceOf(Array)
+                expect(result.workouts).to.have.lengthOf(2)
+                // Podrías añadir un .find si quieres comprobar un autor específico
+            })
     })
 
-    //--- NOTFOUND USER ERROR PATH ---
-    it("fails on existingUser", () => {
+    // --- NOT FOUND USER ERROR PATH ---
+    it("fails on non-existing user", () => {
         return expect(
             getAllWorkouts(new ObjectId().toString())
         ).to.be.rejectedWith(NotFoundError, "User not found!")

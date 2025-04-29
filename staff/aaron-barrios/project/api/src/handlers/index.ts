@@ -54,7 +54,8 @@ import {
     saveCustomRoutineHandler,
     getMyCustomRoutinesHandler,
     getCustomRoutineByIdHandler,
-    updateCustomRoutineHandler
+    updateCustomRoutineHandler,
+    deleteCustomRoutineHandler
 } from './routines'
 
 
@@ -101,7 +102,8 @@ const services = {
     toggleSaveRoutineHandler,
     editRoutineHandler,
     getCustomRoutineByIdHandler,
-    updateCustomRoutineHandler
+    updateCustomRoutineHandler,
+    deleteCustomRoutineHandler
 }
 
 export default services

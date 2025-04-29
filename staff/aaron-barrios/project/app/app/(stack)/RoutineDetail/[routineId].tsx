@@ -159,6 +159,12 @@ export default function RoutineDetail() {
             {routine.workouts.map((rw, index) => (
                 <View key={index} style={styles.workoutItem}>
                     <Text style={styles.workoutName}>{rw.workout.name}</Text>
+                    {rw.workout.feedImage && (
+                        <Image
+                            source={{ uri: rw.workout.feedImage }}
+                            style={styles.workoutImage}
+                        />
+                    )}
                     <View style={styles.workoutDataRow}>
                         <Text style={styles.workoutData}>{rw.sets} sets</Text>
                         <Text style={styles.workoutData}>{rw.reps} reps</Text>
@@ -167,6 +173,7 @@ export default function RoutineDetail() {
                     </View>
                 </View>
             ))}
+
 
             {/* Customize Button (only if accepted) */}
             {routine.status === "accepted" && userId && (
@@ -264,7 +271,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     workoutName: {
-        fontSize: 16,
+        fontSize: 22,
         fontWeight: "600",
         marginBottom: 6,
     },
@@ -273,8 +280,15 @@ const styles = StyleSheet.create({
         gap: 16,
     },
     workoutData: {
-        fontSize: 14,
+        fontSize: 18,
         color: "#666",
+    },
+    workoutImage: {
+        width: "100%",
+        height: 160,
+        borderRadius: 8,
+        marginBottom: 8,
+        backgroundColor: "#ddd",
     },
     reviewActions: {
         flexDirection: "row",
