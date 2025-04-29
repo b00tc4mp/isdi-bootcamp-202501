@@ -23,7 +23,7 @@ export type WorkoutType = {
     name: string;
     muscleGroup: "chest" | "legs" | "biceps" | "triceps" | "back" | "shoulders" | "buttocks";
     feedImage: string;
-    type?: string;
+    type?: "cardio" | "strength" | "mobility" | "endurance";
     difficulty?: string;
     description: string;
     executionImages?: string[];
@@ -100,4 +100,29 @@ export type EditRoutineType = {
         restTime: number;
         time?: number;
     }[];
+};
+export type CustomRoutineWorkoutType = {
+    workout: WorkoutType;
+    workoutId: string;
+    order: number;
+    sets: number;
+    reps: number;
+    weight: number;
+    restTime: number;
+    time?: number;
+};
+export type CustomRoutineType = {
+    id: string;
+    name: string;
+    muscleGroup: "chest" | "legs" | "biceps" | "triceps" | "back" | "shoulders" | "buttocks";
+    feedImage: string;
+    description: string;
+    duration: number;
+    createdAt: Date;
+    modifiedAt?: Date;
+    author: {
+        id: string;
+        alias: string;
+    };
+    workouts: CustomRoutineWorkoutType[];
 };

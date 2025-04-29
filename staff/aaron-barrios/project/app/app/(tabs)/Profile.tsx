@@ -4,15 +4,18 @@ import { View, Text } from "@/components/Themed"
 import { router, useFocusEffect } from "expo-router"
 
 import type { RoutineType, UserType, WorkoutType } from "com/types"
+import { CustomRoutineType } from "com/types"
+
 import WorkoutCard from "@/components/WorkoutCard"
 import RoutineCard from "@/components/RoutineCard"
 
 import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts, getSavedRoutines, getMyRoutines } from "@/services/user/regular"
 import { deleteWorkout } from "@/services/workouts"
-import { deleteRoutine } from "@/services/routines"
+import { deleteRoutine, getMyCustomRoutines } from "@/services/routines"
+
 
 export default function Profile() {
-    const [activeTab, setActiveTab] = useState<"user" | "workouts" | "routines">("user")
+    const [activeTab, setActiveTab] = useState<"user" | "workouts" | "routines" | "customRoutines">("user")
     const [name, setName] = useState("")
     const [lastName, setLastName] = useState("")
     const [alias, setAlias] = useState("")
@@ -25,6 +28,8 @@ export default function Profile() {
 
     const [routineType, setRoutineType] = useState<"saved" | "mine">("saved")
     const [routines, setRoutines] = useState<RoutineType[]>([])
+
+    const [customRoutines, setCustomRoutines] = useState<CustomRoutineType[]>([])
 
     function appendImageTimestamp(url: string, dateStr?: string | Date) {
         const timestamp = new Date(dateStr ?? Date.now()).getTime()
@@ -73,6 +78,16 @@ export default function Profile() {
             })
     }
 
+
+    const loadCustomRoutines = () => {
+        getMyCustomRoutines()
+            .then(data => setCustomRoutines(data))
+            .catch(error => {
+                console.error("Error loading custom routines:", error)
+                showAlert("Error", error.message || "Failed to fetch custom routines.")
+            })
+    }
+
     useEffect(() => {
         if (activeTab === "user") {
             setLoading(true)
@@ -106,6 +121,13 @@ export default function Profile() {
     useEffect(() => {
         if (activeTab === "routines") loadRoutines()
     }, [activeTab, routineType])
+
+    useEffect(() => {
+        if (activeTab === "customRoutines" && customRoutines.length === 0) {
+            loadCustomRoutines()
+        }
+    }, [activeTab])
+
 
     useFocusEffect(
         useCallback(() => {
@@ -233,6 +255,30 @@ export default function Profile() {
                 </>
             )
         }
+
+        if (activeTab === "customRoutines") {
+            return (
+                <>
+                    {customRoutines.length === 0 ? (
+                        <Text style={{ marginTop: 20, textAlign: "center" }}>
+                            No custom routines yet. Customize one to get started! ✨
+                        </Text>
+                    ) : (
+                        customRoutines.map(customRoutine => (
+                            <RoutineCard
+                                key={customRoutine.id}
+                                routine={customRoutine as any}
+                                onPress={() => router.push({
+                                    pathname: "/(stack)/customRoutine/[routineId]" as any,
+                                    params: { routineId: customRoutine.id }
+                                })
+                                }
+                            />
+                        ))
+                    )}
+                </>
+            )
+        }
     }
 
     if (loading && activeTab === "user") return null
@@ -250,6 +296,9 @@ export default function Profile() {
                 </Pressable>
                 <Pressable style={[styles.tab, activeTab === "routines" && styles.activeTab]} onPress={() => setActiveTab("routines")}>
                     <Text style={styles.tabText}>Routines</Text>
+                </Pressable>
+                <Pressable style={[styles.tab, activeTab === "customRoutines" && styles.activeTab]} onPress={() => setActiveTab("customRoutines")}>
+                    <Text style={styles.tabText}>Custom</Text>
                 </Pressable>
             </View>
 

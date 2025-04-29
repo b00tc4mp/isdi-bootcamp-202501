@@ -52,9 +52,6 @@ const createRoutine = (
                 }))
             }
 
-
-            console.log("📦 Body que estoy enviando en createRoutine:", requestBody) // 🔥 AQUÍ
-
             return fetch(`${process.env.EXPO_PUBLIC_API_URL}/routines`, {
                 method: 'POST',
                 headers: {

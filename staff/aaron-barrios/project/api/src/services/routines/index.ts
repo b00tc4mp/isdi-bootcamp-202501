@@ -9,6 +9,8 @@ import reviewRoutine from "./reviewRoutine"
 import toggleLikeRoutine from "./toggleLikeRoutine"
 import toggleSaveRoutine from "./toggleSaveRoutine"
 import editRoutine from "./editRoutine"
+import saveCustomRoutine from "./saveCustomRoutine"
+import getMyCustomRoutines from "./getMyCustomRoutines"
 
 export {
     getAllRoutines,
@@ -21,5 +23,7 @@ export {
     reviewRoutine,
     toggleLikeRoutine,
     toggleSaveRoutine,
-    editRoutine
+    editRoutine,
+    saveCustomRoutine,
+    getMyCustomRoutines
 }

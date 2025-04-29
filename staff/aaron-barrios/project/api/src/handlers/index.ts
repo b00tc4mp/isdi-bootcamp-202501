@@ -50,7 +50,9 @@ import {
     reviewRoutineHandler,
     toggleLikeRoutineHandler,
     toggleSaveRoutineHandler,
-    editRoutineHandler
+    editRoutineHandler,
+    saveCustomRoutineHandler,
+    getMyCustomRoutinesHandler
 } from './routines'
 
 
@@ -72,6 +74,8 @@ const services = {
     getTargetUserDataHandler,
     getMyRoutinesHandler,
     getSavedRoutinesHandler,
+    getMyCustomRoutinesHandler,
+    saveCustomRoutineHandler,
 
     getAllWorkoutsHandler,
     getWorkoutByIdHandler,

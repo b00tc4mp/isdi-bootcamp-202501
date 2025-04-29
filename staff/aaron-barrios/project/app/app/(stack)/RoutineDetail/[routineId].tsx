@@ -1,29 +1,31 @@
 import { useEffect, useState } from "react"
 import { useLocalSearchParams, useRouter } from "expo-router"
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable } from "react-native"
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable, Alert } from "react-native"
 import { Text, View } from "@/components/Themed"
 
 import {
     getRoutineById,
     toggleLikeRoutine,
     toggleSaveRoutine,
-    reviewRoutine
+    reviewRoutine,
+    saveCustomRoutine
 } from "@/services/routines"
 
 import { RoutineType } from "com/types"
-import { getUserRole } from "@/services/user"
+import { getUserRole, getCurrentUser } from "@/services/user"
 
 
 export default function RoutineDetail() {
     const { routineId } = useLocalSearchParams<{ routineId: string }>()
     const router = useRouter()
 
-
-
     const [routine, setRoutine] = useState<RoutineType | null>(null)
     const [loading, setLoading] = useState(true)
     const [toggle, setToggle] = useState(false)
     const [role, setRole] = useState<string | null>(null)
+
+    const [userId, setUserId] = useState<string | null>(null)
+
 
     const fetchRoutine = () => {
         if (!routineId) return
@@ -41,6 +43,17 @@ export default function RoutineDetail() {
     useEffect(() => {
         fetchRoutine()
     }, [routineId])
+
+
+    useEffect(() => {
+        getCurrentUser()
+            .then(user => setUserId(user.id))
+            .catch(error => {
+                console.error("Error loading userId:", error)
+                setUserId(null)
+            })
+    }, [])
+
 
     const handleToggleLike = () => {
         if (!routineId) return
@@ -64,6 +77,29 @@ export default function RoutineDetail() {
             .then(() => router.back())
             .catch(error => console.error("Review error:", error))
     }
+
+    const handleSaveCustomRoutine = () => {
+        if (!routineId || !userId) return
+
+        saveCustomRoutine(userId, routineId)
+            .then(() => {
+                router.back()
+
+                setTimeout(() => {
+                    Alert.alert(
+                        "Rutina personalizada",
+                        "Se ha guardado en tu perfil como rutina personalizada. 🎯"
+                    )
+                }, 300)
+            })
+            .catch(error => {
+                console.error("[handleSaveCustomRoutine] Error al personalizar:", error)
+                const errorMessage = error instanceof Error ? error.message : "No se pudo personalizar la rutina."
+                Alert.alert("Error", errorMessage)
+            })
+    }
+
+
 
     if (loading) {
         return (
@@ -131,6 +167,17 @@ export default function RoutineDetail() {
                     </View>
                 </View>
             ))}
+
+            {/* Customize Button (only if accepted) */}
+            {routine.status === "accepted" && userId && (
+                <Pressable
+                    style={styles.customizeButton}
+                    onPress={handleSaveCustomRoutine}
+                >
+                    <Text style={styles.customizeButtonText}>Custom Routine</Text>
+                </Pressable>
+            )}
+
 
             {/* Review Actions (Moderators Only) */}
             {role === "mod" && routine.status === "pending" && (
@@ -251,5 +298,18 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16,
         color: "#fff",
+    },
+    customizeButton: {
+        backgroundColor: "#facc15",
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 8,
+        marginTop: 20,
+        alignItems: "center",
+    },
+    customizeButtonText: {
+        fontWeight: "bold",
+        fontSize: 16,
+        color: "#333",
     },
 })

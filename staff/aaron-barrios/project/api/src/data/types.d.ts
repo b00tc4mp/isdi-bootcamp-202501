@@ -70,4 +70,18 @@ export type RoutineDocType = {
     workouts: RoutineWorkoutDocType[];
     __v: number;
 };
+export type CustomRoutineWorkoutType = {
+    workoutId: Types.ObjectId;
+    order: number;
+    sets: number;
+    reps: number;
+    weight: number;
+    restTime: number;
+    time?: number;
+};
+export type CustomRoutineType = Pick<RoutineDocType, "name" | "muscleGroup" | "feedImage" | "description" | "duration" | "createdAt" | "modifiedAt"> & {
+    userId: Types.ObjectId;
+    originalRoutineId: Types.ObjectId;
+    workouts: CustomRoutineWorkoutType[];
+};
 export type UserRole = "anonym" | "regular" | "mod" | "unknown";

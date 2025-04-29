@@ -21,7 +21,9 @@ import {
     reviewRoutineHandler,
     toggleLikeRoutineHandler,
     toggleSaveRoutineHandler,
-    editRoutineHandler
+    editRoutineHandler,
+    getMyCustomRoutinesHandler,
+    saveCustomRoutineHandler
 } from "../handlers/routines"
 
 
@@ -42,6 +44,13 @@ routineRouter.get(
     '/filter',
     authHandler,
     filterRoutinesHandler
+)
+
+// --- GET CUSTOM ROUTINES METHOD ---
+routineRouter.get(
+    '/custom',
+    authHandler,
+    getMyCustomRoutinesHandler
 )
 
 // --- GET MOD ROUTINES METHOD ---
@@ -73,6 +82,14 @@ routineRouter.post(
     authHandler,
     validationHandler(createRoutineSchema),
     createRoutineHandler
+)
+
+// --- SAVE CUSTOM ROUTINES METHOD ---
+routineRouter.post(
+    "/:routineId/custom",
+    jsonBodyParser,
+    authHandler,
+    saveCustomRoutineHandler
 )
 
 

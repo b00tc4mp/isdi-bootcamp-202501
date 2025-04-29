@@ -9,6 +9,8 @@ import reviewRoutineHandler from "./reviewRoutineHandler"
 import toggleLikeRoutineHandler from "./toggleLikeRoutineHandler"
 import toggleSaveRoutineHandler from "./toggleSaveRoutineHandler"
 import editRoutineHandler from "./editRoutineHandler"
+import getMyCustomRoutinesHandler from "./getMyCustomRoutinesHandler"
+import saveCustomRoutineHandler from "./saveCustomRoutineHandler"
 
 export {
     getAllRoutinesHandler,
@@ -21,5 +23,7 @@ export {
     reviewRoutineHandler,
     toggleLikeRoutineHandler,
     toggleSaveRoutineHandler,
-    editRoutineHandler
+    editRoutineHandler,
+    getMyCustomRoutinesHandler,
+    saveCustomRoutineHandler
 }
