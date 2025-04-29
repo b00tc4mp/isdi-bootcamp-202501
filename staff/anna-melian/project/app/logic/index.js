@@ -10,6 +10,9 @@ import { deleteTimer } from './deleteTimer.js'
 import { exitTimer } from './exitTimer.js'
 import { pauseTimer } from './pauseTimer.js'
 import { resumeTimer } from './resumeTimer.js'
+import { checkUserTimers } from './checkUserTimers.js'
+import { endTimer } from './endTimer.js'
+
 
 export const logic = {
     registerUser,
@@ -23,5 +26,7 @@ export const logic = {
     deleteTimer,
     exitTimer,
     pauseTimer,
-    resumeTimer
+    resumeTimer,
+    checkUserTimers,
+    endTimer
 }

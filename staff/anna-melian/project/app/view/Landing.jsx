@@ -4,11 +4,15 @@ export function Landing({ onNavigateToRegister, onNavigateToLogin }) {
     const handleLoginClick = () => onNavigateToLogin()
 
     console.debug('Landing -> render')
-    return <div>
-        <h1>TimeArt</h1>
-        <button onClick={handleLoginClick}>Login</button>
-        <p>or</p>
-        <button onClick={handleRegisterClick}>Register</button>
+    return (
+        <div className="flex flex-col items-center justify-center h-screen">
+            <h1 className="title mb-20">TimeArt</h1>
 
-    </div>
+            <div className="flex flex-col items-center space-y-4">
+                <button onClick={handleLoginClick}>Login</button>
+                <p>or</p>
+                <button onClick={handleRegisterClick}>Register</button>
+            </div>
+        </div>
+    )
 }

@@ -1,9 +1,13 @@
 import { logic } from "../logic/index.js"
 import { errors } from 'com'
+import { useContext } from '../context.js'
+
 
 const { SystemError, ValidationError } = errors
 
 export function Register({ onNavigateToLogin, onUserRegistered }) {
+    const { alert, confirm } = useContext()
+
 
     const handleRegisterSubmit = event => {
         event.preventDefault()
@@ -47,20 +51,28 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     console.debug('Register -> render')
 
-    return <div>
+    return <div className='flex flex-col items-center justify-center h-screen'>
         <h1>Register</h1>
         <form onSubmit={handleRegisterSubmit}>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" />
 
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" />
+            <div className="field">
+                <label htmlFor="name">Name</label>
+                <input type="text" id="name" />
+            </div>
 
-            <label htmlFor="email">E-mail</label>
-            <input type="email" id="email" />
+            <div className="field">
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" />
+            </div>
 
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" />
+            <div className="field">
+                <label htmlFor="email">E-mail</label>
+                <input type="email" id="email" />
+            </div>
+
+            <div className="field"><label htmlFor="password">Password</label>
+                <input type="password" id="password" /></div>
+
 
             <button type="submit">Register</button>
         </form>

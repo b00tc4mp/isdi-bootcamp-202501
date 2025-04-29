@@ -10,6 +10,7 @@ import { setAndStartExtraTime } from './setAndStartExtraTime.js'
 import { getUserGems } from './getUserGems.js'
 import { getTimer } from './getTimer.js'
 import { deleteTimer } from './deleteTimer.js'
+import { checkUserTimers } from './checkUserTimers.js'
 
 export const logic = {
     authenticateUser,
@@ -23,5 +24,6 @@ export const logic = {
     setAndStartExtraTime,
     getUserGems,
     getTimer,
-    deleteTimer
+    deleteTimer,
+    checkUserTimers
 }

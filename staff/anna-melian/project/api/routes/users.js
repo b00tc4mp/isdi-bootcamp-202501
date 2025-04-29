@@ -33,3 +33,15 @@ users.get('/self/gems', authHandler, withErrorHandling((req, res) => {
     return logic.getUserGems(userId)
         .then(gems => res.json({ gems }))
 }))
+
+users.get('/self/timer-check', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.checkUserTimers(userId)
+        .then((TimerOnId) => {
+            if (!TimerOnId) return res.sendStatus(204)
+
+            res.status(200).json({ id: TimerOnId })
+        }
+        )
+}))

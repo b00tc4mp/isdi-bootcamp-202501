@@ -22,6 +22,10 @@ User:
 - Add extra time allowed since the total time (initial set time + extra time) is under 240 minutes (Timer page ⏳)
 - Exit the timer (Timer page ⏳)
 - See your history, which contains information about all past timers (history page 📄)
+
+
+**In for future development:**
+
 - Modified user data (Settings page ⚙️)
 - Change the notifications and sound configuration (Settings page ⚙️)
 
@@ -87,8 +91,7 @@ User:
 
 ### Code Coverage
 
-...
-
+[Code coverage](http://127.0.0.1:5500/staff/anna-melian/project/api/coverage/index.html)
 ## Planning
 
 [Issue Tracking](https://github.com/b00tc4mp/isdi-bootcamp-202501/issues/84)

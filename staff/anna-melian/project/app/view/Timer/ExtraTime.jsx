@@ -5,12 +5,11 @@ import { useContext } from '../../context.js'
 
 
 
-export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtraTimeSetAndStarted }) {
+export function ExtraTime({ onGiveUpClick, onFinishClick }) {
     const { alert, confirm } = useContext()
 
     const navigate = useNavigate()
     const [time, setTime] = useState()
-    const [extraTime, setExtraTime] = useState()
     const [pauseTime, setPauseTime] = useState()
     const [status, setStatus] = useState('')
     const [intervalId, setIntervalId] = useState(null)
@@ -19,10 +18,10 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
     const [pauseIntervalId, setPauseIntervalId] = useState(null)
 
     const { timerId } = useParams()
-    const localTimeKey = `timer-${timerId}-time`
+    const localTimeKey = `timer-${timerId}-extraTime-on`
 
     useEffect(() => {
-        console.debug('useEffect TimerOn')
+        console.debug('useEffect ExtraTime')
         try {
             const savedTime = localStorage.getItem(localTimeKey)
             const savedStatus = localStorage.getItem(`${localTimeKey}-status`)
@@ -40,7 +39,8 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
             logic.getTimer(timerId)
                 .then(timer => {
                     if (savedTime === null) {
-                        setTime(timer.time * 60)
+                        let extraTime = timer.extraTimes[timer.extraTimes.length]
+                        setTime(extraTime * 60)
                     }
 
                     setStatus(timer.status)
@@ -49,7 +49,7 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
                         setPauseTime(timer.pauseTime)
                     }
 
-                    if (timer.status === 'active') {
+                    if (timer.status === 'extraTime') {
                         startInterval()
                     }
                 })
@@ -97,52 +97,6 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
             })
         }, 1000)
         setIntervalId(interval)
-    }
-
-    const handleReturnClick = () => {
-        confirm('Are you sure to return?')
-            .then(accepted => {
-                if (accepted) {
-                    try {
-                        logic.deleteTimer(timerId)
-                            .then(() => {
-                                localStorage.removeItem(localTimeKey)
-                                localStorage.removeItem(`${localTimeKey}-status`)
-                                onReturnAccepted()
-                            })
-                            .catch(error => {
-                                console.error(error)
-                                alert(error.message)
-                            })
-
-                    } catch (error) {
-                        console.error(error)
-                        alert(error.message)
-                    }
-                }
-            })
-    }
-
-    const handleStartClick = () => {
-        try {
-            logic.startTimer(timerId)
-                .then(() => {
-                    logic.getTimer(timerId)
-                        .then(timer => {
-                            setStatus(timer.status)
-                        })
-                })
-                .catch(error => {
-                    console.error(error)
-                    alert(error.message)
-                })
-
-            startInterval()
-
-        } catch (error) {
-            console.error(error)
-            alert(error.message)
-        }
     }
 
     const handleGiveUpClick = () => {
@@ -271,22 +225,6 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
         }
     }
 
-    const handleExtraTimeClick = () => {
-        setStatus('setExtraTime')
-    }
-
-    const handleExtraTimeStartClick = () => {
-        try {
-            logic.setAndStartExtraTime(timerId, extraTime)
-            onExtraTimeSetAndStarted(timerId)
-
-        } catch (error) {
-            console.error(error)
-            alert(error.message)
-        }
-
-    }
-
 
     const minutes = Math.floor(time / 60)
     const seconds = time % 60
@@ -294,8 +232,7 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
     console.debug('TimerOn -> render')
 
     return <div className="flex flex-col items-center  mt-20">
-        {status === 'created' && (<h3>Ready to start!</h3>)}
-        {status === 'active' && (<h3>Painting...</h3>)}
+        {status === 'extraTime' && (<h3>Painting in extra time...</h3>)}
         {status === 'pause' && (<h3>Resting</h3>)}
         {status === 'end' && <h3>Time's up! 🎉</h3>}
 
@@ -307,36 +244,13 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
             <button type="button" onClick={handleResumeClick} className="w-[150px] mt-auto mb-4">Resume</button>
         </div>)}
 
-        {status === 'active' && (<div className="sand-clock"></div>)}
-
-        {status === 'setExtraTime' && (<div className="flex flex-col space-y-4 items-center justify-center w-[250px] h-[350px] bg-amber-200 m-5 p-5" >
-
-            <input type="number" id="extraTime" value={extraTime} onChange={e => setExtraTime(Number(e.target.value))} />
-            <p>min</p>
-
-            <span>-----------------------------</span>
-            <p>Time: {time}</p>
-            <span></span>
-            <span></span>
-            <span></span>
-            <p>Total time: {time + extraTime}</p>
-
-            <p>Total time limit: 240 minutes</p>
-
-            <button type="button" onClick={handleExtraTimeStartClick}>Start</button>
+        <div className="sand-clock"></div>
 
 
-        </div>)}
-
-        {status === 'created' && (<div>
-            <button type="button" onClick={handleStartClick}>Start</button>
-            <button type="button" onClick={handleReturnClick} className="bg-red-900">Return</button>
-        </div>)}
-
-        {(status === 'active' || status === 'extraTime') && (<div>
+        <div>
             <button type="button" onClick={handlePauseClick} >Pause</button>
             <button type="button" onClick={handleGiveUpClick} className="bg-red-600">Give up</button>
-        </div>)}
+        </div>
 
         {status === 'pause' && (<div>
 
@@ -344,7 +258,7 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
         </div>)}
 
         {(status === 'end') && (<div>
-            <button type="button" onClick={handleExtraTimeClick}>Add extra time</button>
+            <button type="button" >Add extra time</button>
             <button type="button" onClick={handleEndClick} className="bg-green-700">Finish</button>
         </div>)}
 
@@ -353,3 +267,5 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
     </div>
 }
 
+//TODO logic extratime
+//TODO show time and total time, fix create extraTimer
