@@ -36,7 +36,8 @@ import {
     filterWorkoutsHandler,
     toggleLikeWorkoutHandler,
     toggleSaveWorkoutHandler,
-    reviewWorkoutHandler
+    reviewWorkoutHandler,
+    getSuggestedWorkoutsHandler
 } from './workouts'
 
 import {
@@ -56,7 +57,8 @@ import {
     getCustomRoutineByIdHandler,
     updateCustomRoutineHandler,
     deleteCustomRoutineHandler,
-    getRoutineOfTheDayHandler
+    getRoutineOfTheDayHandler,
+    getSuggestedRoutinesHandler
 } from './routines'
 
 
@@ -90,6 +92,7 @@ const services = {
     filterWorkoutsHandler,
     toggleLikeWorkoutHandler,
     toggleSaveWorkoutHandler,
+    getSuggestedWorkoutsHandler,
 
     getAllRoutinesHandler,
     createRoutineHandler,
@@ -105,7 +108,8 @@ const services = {
     getCustomRoutineByIdHandler,
     updateCustomRoutineHandler,
     deleteCustomRoutineHandler,
-    getRoutineOfTheDayHandler
+    getRoutineOfTheDayHandler,
+    getSuggestedRoutinesHandler,
 }
 
 export default services

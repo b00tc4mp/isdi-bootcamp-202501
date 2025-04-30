@@ -20,7 +20,8 @@ import {
     toggleLikeWorkoutHandler,
     toggleSaveWorkoutHandler,
     getModeratorWorkoutsHandler,
-    reviewWorkoutHandler
+    reviewWorkoutHandler,
+    getSuggestedWorkoutsHandler
 } from "../handlers/workouts"
 import editWorkoutHandler from "../handlers/workouts/editWorkoutHandler"
 
@@ -50,6 +51,14 @@ workoutRouter.get(
     authHandler,
     getModeratorWorkoutsHandler
 )
+
+// --- GET SUGGESTTED ROUTINES METHOD ---
+workoutRouter.get(
+    "/suggested",
+    authHandler,
+    getSuggestedWorkoutsHandler
+)
+
 
 // --- GET WORKOUT BY ID METHOD ---
 workoutRouter.get(

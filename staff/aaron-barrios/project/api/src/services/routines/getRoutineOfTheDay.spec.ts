@@ -16,7 +16,7 @@ const { ObjectId } = Types
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
-describe.only("get Routine Of The Day", () => {
+describe("get Routine Of The Day", () => {
     before(() => data.connect(MONGO_URI!, MONGO_DB_NAME!))
 
     beforeEach(() => Promise.all([

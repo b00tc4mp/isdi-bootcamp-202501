@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react"
-import { StyleSheet, ScrollView, Pressable } from "react-native"
+import { StyleSheet, ScrollView, Pressable, Image } from "react-native"
 import { useFocusEffect, router } from "expo-router"
 import { Text, View } from "@/components/Themed"
 
@@ -7,8 +7,10 @@ import { errors } from "com"
 import { data } from "@/data"
 
 import { getUserData } from "@/services/user/regular"
-import { getMyCustomRoutines, getRoutineOfTheDay } from "@/services/routines"
+import { getSuggestedWorkouts } from "@/services/workouts"
+import { getMyCustomRoutines, getRoutineOfTheDay, getSuggestedRoutines } from "@/services/routines"
 import { getSavedRoutines } from "@/services/user/regular"
+import { RoutineType, WorkoutType } from "com/types"
 
 
 const { NotFoundError } = errors
@@ -20,25 +22,35 @@ export default function Home() {
     const [currentRoutine, setCurrentRoutine] = useState<{ id: string; type: "custom" | "regular" } | null>(null)
     const [loadingRoutineOfDay, setLoadingRoutineOfDay] = useState(false)
 
+    const [suggestedWorkouts, setSuggestedWorkouts] = useState<WorkoutType[]>([])
+    const [suggestedRoutines, setSuggestedRoutines] = useState<RoutineType[]>([])
+
 
     useFocusEffect(
         useCallback(() => {
-            getUserData()
-                .then(user => {
+            Promise.all([
+                getUserData(),
+                getSuggestedWorkouts(),
+                getSuggestedRoutines()
+            ])
+                .then(([user, workouts, routines]) => {
                     setAlias(user.alias)
                     setInterests(user.interests ?? [])
+                    setSuggestedWorkouts(workouts)
+                    setSuggestedRoutines(routines)
                 })
                 .catch(error => {
-                    console.error("Failed to fetch user data:", error)
-
+                    console.error("Error loading home data:", error)
                     if (error instanceof NotFoundError) {
                         data.removeToken()
                         router.replace("/(auth)/Login")
                     }
                 })
+
             loadCurrentRoutine()
         }, [])
     )
+
 
     const loadCurrentRoutine = () => {
         getMyCustomRoutines()
@@ -152,19 +164,47 @@ export default function Home() {
 
             {/* Smart suggestions */}
             <Text style={styles.sectionTitle}>Smart suggestions</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.suggestions}>
-                <View style={styles.suggestionCard}><Text>Lorem Ipsum</Text></View>
-                <View style={styles.suggestionCard}><Text>Lorem Ipsum</Text></View>
-                <View style={styles.suggestionCard}><Text>Lorem Ipsum</Text></View>
+
+            <Text style={styles.sectionTitle}>Suggested Workouts</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalList}>
+                {suggestedWorkouts.map(workout => (
+                    <Pressable
+                        key={workout.id}
+                        onPress={() =>
+                            router.push({ pathname: "/(stack)/WorkoutDetail/[workoutId]", params: { workoutId: workout.id } })
+                        }
+                        style={styles.cardMini}
+                    >
+                        <Image source={{ uri: workout.feedImage }} style={styles.cardMiniImage} />
+                        <Text style={styles.cardMiniTitle}>{workout.name}</Text>
+                    </Pressable>
+                ))}
             </ScrollView>
 
+            <Text style={styles.sectionTitle}>Suggested Routines</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalList}>
+                {suggestedRoutines.map(routine => (
+                    <Pressable
+                        key={routine.id}
+                        onPress={() =>
+                            router.push({ pathname: "/(stack)/RoutineDetail/[routineId]", params: { routineId: routine.id } })
+                        }
+                        style={styles.cardMini}
+                    >
+                        <Image source={{ uri: routine.feedImage }} style={styles.cardMiniImage} />
+                        <Text style={styles.cardMiniTitle}>{routine.name}</Text>
+                    </Pressable>
+                ))}
+            </ScrollView>
+
+
             {/* Tips and reminders */}
-            <Text style={styles.sectionTitle}>Tips & Reminders</Text>
+            {/* <Text style={styles.sectionTitle}>Tips & Reminders</Text>
             <View style={styles.tips}>
                 <Text style={styles.tip}>• Lorem ipsum</Text>
                 <Text style={styles.tip}>• Lorem ipsum</Text>
                 <Text style={styles.tip}>• Lorem ipsum</Text>
-            </View>
+            </View> */}
         </ScrollView>
     )
 }
@@ -248,4 +288,24 @@ const styles = StyleSheet.create({
         backgroundColor: "#c00",
         borderRadius: 8,
     },
+    horizontalList: {
+        flexDirection: "row",
+        marginBottom: 20,
+    },
+    cardMini: {
+        width: 140,
+        marginRight: 12,
+        backgroundColor: "#eee",
+        borderRadius: 12,
+        overflow: "hidden",
+    },
+    cardMiniImage: {
+        width: "100%",
+        height: 80,
+    },
+    cardMiniTitle: {
+        fontWeight: "600",
+        fontSize: 14,
+        padding: 8,
+    }
 })

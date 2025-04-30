@@ -41,7 +41,8 @@ import {
     getModeratorWorkouts,
     reviewWorkout,
     editWorkout,
-    defaultWorkoutExecutionImages
+    defaultWorkoutExecutionImages,
+    getSuggestedWorkouts
 } from './workouts'
 
 
@@ -62,7 +63,8 @@ import {
     getCustomRoutineById,
     updateCustomRoutine,
     deleteCustomRoutine,
-    getRoutineOfTheDay
+    getRoutineOfTheDay,
+    getSuggestedRoutines
 } from './routines'
 
 
@@ -97,6 +99,7 @@ const services = {
     getModeratorWorkouts,
     reviewWorkout,
     editWorkout,
+    getSuggestedWorkouts,
 
     defaultWorkoutExecutionImages,
 
@@ -116,7 +119,8 @@ const services = {
     getCustomRoutineById,
     updateCustomRoutine,
     deleteCustomRoutine,
-    getRoutineOfTheDay
+    getRoutineOfTheDay,
+    getSuggestedRoutines,
 }
 
 export default services

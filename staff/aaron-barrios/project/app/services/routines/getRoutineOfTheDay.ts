@@ -7,21 +7,21 @@ import { data } from "@/data"
 const { SystemError, AuthorizationError } = errors
 
 const CACHE_KEY = "routineOfTheDay"
-const CACHE_EXPIRATION = 24 * 60 * 60 * 1000 // 24h en ms
+const CACHE_EXPIRATION = 24 * 60 * 60 * 1000 // 24h in seconds
 
 const getRoutineOfTheDay = async (): Promise<RoutineType> => {
-    // 1. Ver si hay una rutina cacheada válida
-    const cached = await AsyncStorage.getItem(CACHE_KEY)
+    //1st we check if we already catched a daily routine
+    const catchedRoutine = await AsyncStorage.getItem(CACHE_KEY)
 
-    if (cached) {
-        const { routine, timestamp } = JSON.parse(cached)
+    if (catchedRoutine) {
+        const { routine, timestamp } = JSON.parse(catchedRoutine)
 
         if (Date.now() - timestamp < CACHE_EXPIRATION) {
             return routine
         }
     }
 
-    // 2. Si no hay cache válida → fetch al servidor
+    //if its the 1st time you get in here or cache expired you go fetch
     const token = await data.getToken()
     if (!token) throw new AuthorizationError("No token found")
 
@@ -42,7 +42,7 @@ const getRoutineOfTheDay = async (): Promise<RoutineType> => {
 
     const routine = body as RoutineType
 
-    // 3. Guardar la rutina como "del día" con timestamp
+    //store the daily routine as the cache key in case you re enter here
     await AsyncStorage.setItem(CACHE_KEY, JSON.stringify({
         routine,
         timestamp: Date.now()

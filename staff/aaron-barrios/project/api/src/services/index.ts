@@ -33,7 +33,8 @@ import {
     getWorkoutById,
     getUserWorkouts,
     getModeratorWorkouts,
-    reviewWorkout
+    reviewWorkout,
+    getSuggestedWorkouts
 } from './workout'
 
 import {
@@ -53,7 +54,8 @@ import {
     getCustomRoutineById,
     updateCustomRoutine,
     deleteCustomRoutine,
-    getRoutineOfTheDay
+    getRoutineOfTheDay,
+    getSuggestedRoutines
 } from './routines'
 
 
@@ -68,8 +70,6 @@ const services = {
     getMyWorkouts,
     getSavedWorkouts,
     getTargetUserData,
-    getMyRoutines,
-    getSavedRoutines,
 
     getCurrentUser,
     authenticateUser,
@@ -84,8 +84,12 @@ const services = {
     editWorkout,
     getAllWorkouts,
     getWorkoutById,
+    getSuggestedWorkouts,
 
     getAllRoutines,
+    getMyRoutines,
+    getSavedRoutines,
+    getSuggestedRoutines,
     createRoutine,
     filterRoutines,
     getUserRoutines,

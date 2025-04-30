@@ -15,6 +15,7 @@ import getCustomRoutineByIdHandler from "./getCustomRoutineByIdHandler"
 import updateCustomRoutineHandler from "./updateCustomRoutineHandler"
 import deleteCustomRoutineHandler from "./deleteCustomRoutineHandler"
 import getRoutineOfTheDayHandler from "./getRoutineOfTheDayHandler"
+import getSuggestedRoutinesHandler from "./getSuggestedRoutinesHandler"
 
 export {
     getAllRoutinesHandler,
@@ -33,5 +34,6 @@ export {
     getCustomRoutineByIdHandler,
     updateCustomRoutineHandler,
     deleteCustomRoutineHandler,
-    getRoutineOfTheDayHandler
+    getRoutineOfTheDayHandler,
+    getSuggestedRoutinesHandler
 }

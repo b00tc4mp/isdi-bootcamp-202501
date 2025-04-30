@@ -6,6 +6,7 @@ import getAllWorkoutsHandler from "./getAllWorkoutsHandler"
 import getWorkoutByIdHandler from "./getWorkoutByIdHandler"
 import getUserWorkoutsHandler from "./getUserWorkoutsHandler"
 import getModeratorWorkoutsHandler from "./getModeratorWorkoutsHandler"
+import getSuggestedWorkoutsHandler from "./getSuggestedWorkoutsHandler"
 
 import filterWorkoutsHandler from "./filterWorkoutsHandler"
 import toggleLikeWorkoutHandler from "./toggleLikeWorkoutHandler"
@@ -16,6 +17,7 @@ export {
     getUserWorkoutsHandler,
     getWorkoutByIdHandler,
     getModeratorWorkoutsHandler,
+    getSuggestedWorkoutsHandler,
 
     createWorkoutHandler,
     deleteWorkoutHandler,

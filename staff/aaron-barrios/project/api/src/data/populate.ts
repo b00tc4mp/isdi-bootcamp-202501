@@ -462,6 +462,38 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                     }
                 ]
             },
+            {
+                author: manu._id,
+                name: "Legs Blast",
+                goal: "strength",
+                muscleGroup: "legs",
+                locationType: "gym",
+                difficulty: "hard",
+                description: "A tough routine for your lower half.",
+                feedImage: "https://uk.gymshark.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2F8urtyqugdt2l%2F7DjCv2aBaPIABZ9wosGvJk%2F0d693d9d04fae848feac8779289e2d3c%2Fmobile-leg-exercises.jpg&w=3840&q=85",
+                duration: 60,
+                status: "pending",
+                frequencySuggestion: "2x per week",
+                likes: [masha._id],
+                saves: [manu._id],
+                createdAt: new Date(),
+                workouts: [
+                    {
+                        workout: bulgarianSquat._id,
+                        sets: 4,
+                        reps: 8,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: hipThrust._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
         ])
     })
     .finally(() => data.disconnect());

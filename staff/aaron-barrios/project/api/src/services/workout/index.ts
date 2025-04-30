@@ -7,6 +7,7 @@ import getAllWorkouts from "./getAllWorkouts"
 import getUserWorkouts from "./getUserWorkouts"
 import getWorkoutById from "./getWorkoutById"
 import getModeratorWorkouts from "./getModeratorWorkouts"
+import getSuggestedWorkouts from "./getSuggestedWorkouts"
 
 import toggleLikeWorkout from "./toggleLikeWorkout"
 import toggleSaveWorkout from "./toggleSaveWorkout"
@@ -23,6 +24,7 @@ export {
     getAllWorkouts,
     getUserWorkouts,
     getModeratorWorkouts,
+    getSuggestedWorkouts,
 
     toggleLikeWorkout,
     toggleSaveWorkout,

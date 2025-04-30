@@ -65,7 +65,7 @@ export type RoutineType = {
     name: string
     muscleGroup: "chest" | "legs" | "biceps" | "triceps" | "back" | "shoulders" | "buttocks"
     feedImage: string
-    type?: string
+    goal?: string
     difficulty?: string
     description: string
     duration: Number
