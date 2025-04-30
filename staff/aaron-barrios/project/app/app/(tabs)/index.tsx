@@ -1,29 +1,70 @@
-import { useEffect, useState } from "react"
+import { useState, useCallback } from "react"
 import { StyleSheet, ScrollView, Pressable } from "react-native"
+import { useFocusEffect, router } from "expo-router"
 import { Text, View } from "@/components/Themed"
-import { router } from "expo-router"
 
-import { getUserAlias } from "@/services/user/regular"
 import { errors } from "com"
 import { data } from "@/data"
+
+import { getUserData } from "@/services/user/regular"
+import { getMyCustomRoutines } from "@/services/routines"
+import { getSavedRoutines } from "@/services/user/regular"
+
 
 const { NotFoundError } = errors
 
 export default function Home() {
     const [alias, setAlias] = useState("User")
+    const [interests, setInterests] = useState<string[]>([])
 
-    useEffect(() => {
-        getUserAlias()
-            .then(({ alias }) => setAlias(alias))
-            .catch(error => {
-                console.error("Failed to fetch user alias:", error)
+    const [currentRoutine, setCurrentRoutine] = useState<{ id: string; type: "custom" | "regular" } | null>(null)
 
-                if (error instanceof NotFoundError) {
-                    data.removeToken()
-                    router.replace("/(auth)/Login")
+
+    useFocusEffect(
+        useCallback(() => {
+            getUserData()
+                .then(user => {
+                    setAlias(user.alias)
+                    setInterests(user.interests ?? [])
+                })
+                .catch(error => {
+                    console.error("Failed to fetch user data:", error)
+
+                    if (error instanceof NotFoundError) {
+                        data.removeToken()
+                        router.replace("/(auth)/Login")
+                    }
+                })
+            loadCurrentRoutine()
+        }, [])
+    )
+
+    const loadCurrentRoutine = () => {
+        getMyCustomRoutines()
+            .then(customs => {
+                if (customs.length > 0) {
+                    const sorted = customs.sort((a, b) =>
+                        new Date(b.modifiedAt || b.createdAt).getTime() -
+                        new Date(a.modifiedAt || a.createdAt).getTime()
+                    )
+                    setCurrentRoutine({ id: sorted[0].id, type: "custom" })
+                } else {
+                    return getSavedRoutines().then(saved => {
+                        if (saved.length > 0) {
+                            const sorted = saved.sort((a, b) =>
+                                new Date(b.modifiedAt || b.createdAt).getTime() -
+                                new Date(a.modifiedAt || a.createdAt).getTime()
+                            )
+                            setCurrentRoutine({ id: sorted[0].id, type: "regular" })
+                        }
+                    })
                 }
             })
-    }, [])
+            .catch(error => {
+                console.error("Error loading current routine:", error)
+                setCurrentRoutine(null)
+            })
+    }
 
 
     return (
@@ -35,9 +76,13 @@ export default function Home() {
 
 
             {/* Preference test */}
-            <Pressable style={styles.buttonPrimary}>
+            {interests.length === 0 && (<Pressable
+                style={styles.buttonPrimary}
+                onPress={() => router.push("/(stack)/PreferenceTest")}
+            >
                 <Text style={styles.buttonPrimaryText}>Complete preference test</Text>
-            </Pressable>
+            </Pressable>)}
+
 
             {/* Quick access cards */}
             <Pressable
@@ -47,10 +92,32 @@ export default function Home() {
                 <Text style={styles.cardTitle}>Complete profile data</Text>
                 <Text style={styles.cardSubtext}>Preview</Text>
             </Pressable>
-            <Pressable style={styles.card}>
+
+
+            <Pressable
+                style={styles.card}
+                disabled={!currentRoutine}
+                onPress={() => {
+                    if (!currentRoutine) return
+
+                    const { id, type } = currentRoutine
+
+                    router.push({
+                        pathname:
+                            type === "custom"
+                                ? "/(stack)/CustomRoutineDetail/[routineId]"
+                                : "/(stack)/RoutineDetail/[routineId]",
+                        params: { routineId: id },
+                    })
+                }}
+            >
                 <Text style={styles.cardTitle}>Current routine</Text>
-                <Text style={styles.cardSubtext}>Preview</Text>
+                <Text style={styles.cardSubtext}>
+                    {currentRoutine ? "Tap to view your latest routine" : "No routine found"}
+                </Text>
             </Pressable>
+
+
             <Pressable style={styles.card}>
                 <Text style={styles.cardTitle}>Last workout done</Text>
                 <Text style={styles.cardSubtext}>Preview</Text>

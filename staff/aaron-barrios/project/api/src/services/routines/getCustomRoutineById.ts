@@ -24,6 +24,7 @@ const getCustomRoutineById = (
 
             const customRoutine: CustomRoutineType = {
                 id: routine._id.toString(),
+                originalRoutineId: routine.originalRoutineId.toString(),
                 name: routine.name,
                 description: routine.description,
                 muscleGroup: routine.muscleGroup as CustomRoutineType["muscleGroup"],

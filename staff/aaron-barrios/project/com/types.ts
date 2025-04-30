@@ -130,6 +130,7 @@ export type CustomRoutineWorkoutType = {
 
 export type CustomRoutineType = {
     id: string
+    originalRoutineId: string
     name: string
     muscleGroup: "chest" | "legs" | "biceps" | "triceps" | "back" | "shoulders" | "buttocks"
     feedImage: string

@@ -137,6 +137,10 @@ export default function Profile() {
                 loadRoutines()
             }
 
+            if (activeTab === "routines" && routineType === "saved") {
+                loadRoutines()
+            }
+
             if (activeTab === "customRoutines") {
                 loadCustomRoutines()
             }

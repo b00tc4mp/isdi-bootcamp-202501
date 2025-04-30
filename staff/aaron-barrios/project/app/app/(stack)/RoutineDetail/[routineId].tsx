@@ -13,6 +13,7 @@ import {
 
 import { RoutineType } from "com/types"
 import { getUserRole, getCurrentUser } from "@/services/user"
+import { getMyCustomRoutines, deleteCustomRoutine } from "@/services/routines"
 
 
 export default function RoutineDetail() {
@@ -25,6 +26,8 @@ export default function RoutineDetail() {
     const [role, setRole] = useState<string | null>(null)
 
     const [userId, setUserId] = useState<string | null>(null)
+    const [alreadyCustomized, setAlreadyCustomized] = useState(false)
+    const [customRoutineId, setCustomRoutineId] = useState<string>("")
 
 
     const fetchRoutine = () => {
@@ -53,6 +56,18 @@ export default function RoutineDetail() {
                 setUserId(null)
             })
     }, [])
+
+    useEffect(() => {
+        if (!routineId || !userId) return
+
+        getMyCustomRoutines()
+            .then(customs => {
+                const matched = customs.find(c => c.originalRoutineId === routineId)
+                setAlreadyCustomized(!!matched)
+                setCustomRoutineId(matched?.id || "")
+            })
+            .catch(err => console.error("Error checking if routine is already customized:", err))
+    }, [routineId, userId])
 
 
     const handleToggleLike = () => {
@@ -177,12 +192,32 @@ export default function RoutineDetail() {
 
             {/* Customize Button (only if accepted) */}
             {routine.status === "accepted" && userId && (
-                <Pressable
-                    style={styles.customizeButton}
-                    onPress={handleSaveCustomRoutine}
-                >
-                    <Text style={styles.customizeButtonText}>Custom Routine</Text>
-                </Pressable>
+                alreadyCustomized ? (
+                    <Pressable
+                        style={[styles.customizeButton, { backgroundColor: "#ef4444" }]}
+                        onPress={() => {
+                            deleteCustomRoutine(customRoutineId!)
+                                .then(() => {
+                                    setAlreadyCustomized(false)
+                                    router.back()
+                                    Alert.alert("Removed", "Custom routine deleted.")
+                                })
+                                .catch(error => {
+                                    console.error("Error removing custom routine:", error)
+                                    Alert.alert("Error", "Could not remove custom routine.")
+                                })
+                        }}
+                    >
+                        <Text style={styles.customizeButtonText}>Remove Custom</Text>
+                    </Pressable>
+                ) : (
+                    <Pressable
+                        style={styles.customizeButton}
+                        onPress={handleSaveCustomRoutine}
+                    >
+                        <Text style={styles.customizeButtonText}>Custom Routine</Text>
+                    </Pressable>
+                )
             )}
 
 
