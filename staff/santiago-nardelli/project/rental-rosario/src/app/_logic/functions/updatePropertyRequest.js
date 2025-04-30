@@ -2,13 +2,14 @@ import { data } from "../../_data";
 import { validate, errors } from "com";
 
 const { SystemError } = errors;
+const { NEXT_PUBLIC_API_URL } = process.env;
 
 export const updatePropertyRequest = async (propertyId, propertyData) => {
   const { token } = data;
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_API_URL}/properties/${propertyId}`,
+      `${NEXT_PUBLIC_API_URL}/properties/${propertyId}`,
       {
         method: "PATCH",
         headers: {

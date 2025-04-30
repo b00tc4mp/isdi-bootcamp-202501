@@ -2,13 +2,15 @@ import { errors } from "com";
 
 const { SystemError } = errors;
 
+const { NEXT_PUBLIC_API_URL } = process.env;
+
 export const getFilteredPropertiesRequest = async (filters) => {
   let response;
   let body;
 
   // Construir la cadena de consulta a partir del objeto de filtros
   const queryString = new URLSearchParams(filters).toString();
-  const url = `http://localhost:3000/api/properties/filtered?${queryString}`;
+  const url = `${NEXT_PUBLIC_API_URL}/properties/filtered?${queryString}`;
 
   try {
     response = await fetch(url, {

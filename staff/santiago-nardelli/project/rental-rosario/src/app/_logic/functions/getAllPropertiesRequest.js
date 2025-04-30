@@ -2,12 +2,14 @@ import { errors } from "com";
 
 const { SystemError } = errors;
 
+const { NEXT_PUBLIC_API_URL } = process.env;
+
 export const getAllPropertiesRequest = async () => {
   let response;
   let body;
 
   try {
-    response = await fetch(`http://localhost:3000/api/properties`, {
+    response = await fetch(`${NEXT_PUBLIC_API_URL}/properties`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

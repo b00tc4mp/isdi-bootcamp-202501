@@ -1,6 +1,7 @@
 import { errors, validate } from "com";
 
 const { SystemError } = errors;
+const { NEXT_PUBLIC_API_URL } = process.env;
 
 export const registerUserRequest = (name, email, password) => {
   // Validar los datos de entrada
@@ -13,7 +14,7 @@ export const registerUserRequest = (name, email, password) => {
 
   return (async () => {
     try {
-      response = await fetch(`http://localhost:3000/api/admins/register`, {
+      response = await fetch(`${NEXT_PUBLIC_API_URL}/admins/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
