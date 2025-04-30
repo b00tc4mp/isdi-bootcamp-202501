@@ -2,9 +2,12 @@ import { Link, useParams, useNavigate } from "react-router"
 import { logic } from "../../logic";
 import { useEffect, useState } from "react";
 import { useVehicle } from '../../hooks/vehicle.hooks.js'
+import { useContext } from '../../context'
 
 
 export function Maintenance({ onAddedMaintenance }) {
+    const { alert } = useContext()
+
     const { vehicleId, maintenanceId } = useParams()
     const navigate = useNavigate()
     const vehicle = useVehicle(vehicleId)

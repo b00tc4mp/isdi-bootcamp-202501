@@ -2,11 +2,14 @@ import { logic } from '../../logic/index.js'
 import { Link, useNavigate, useParams } from 'react-router'
 import { useEffect, useState } from "react"
 import { useVehicle } from '../../hooks/vehicle.hooks.js'
+import { useContext } from '../../context'
 
 import { ChevronLeft } from "lucide-react"
 
 
 export function VehicleRegister({ onVehicleRegistered }) {
+    const { alert } = useContext()
+
     const { id } = useParams()
     const navigate = useNavigate()
     const vehicle = useVehicle(id)

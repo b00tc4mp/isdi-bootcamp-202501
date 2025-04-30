@@ -4,7 +4,7 @@ import { data } from '../data'
 const { SystemError } = errors
 
 // Funcion para Registrar al registro
-export const deleteVehicle = () => {
+export const deleteVehicle = (vehicleId) => {
     const { token } = data
 
     return fetch(`${import.meta.env.VITE_API_URL}/vehicles/${vehicleId}`, {

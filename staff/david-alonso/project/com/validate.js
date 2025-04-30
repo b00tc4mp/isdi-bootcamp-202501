@@ -52,13 +52,6 @@ export const validate = {
         if (value.length < minLength) throw new ValidationError(`invalid ${explain} minLength`)
     },
 
-    // Comprueba que el parametro Usuario
-    // username(username, explain = 'username') {
-    //     this.text(username, explain)
-    //     this.minLength(username, 3, explain)
-    //     this.maxLength(username, 20, explain)
-    // },
-
     // Comprueba que el parametro Passwor
     password(password, explain = 'password') {
         this.text(password, explain)

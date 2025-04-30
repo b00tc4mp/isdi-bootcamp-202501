@@ -15,15 +15,12 @@ export function ITVAlert({ itvDate }) {
     const isCritical = timeToNextITV.days <= 7
 
     return (
-        <motion.div
-            animate={isCritical ? { scale: [1, 1.3, 1] } : {}}
-            transition={isCritical ? { duration: 1, repeat: Infinity } : {}}
-        >
-            <TriangleAlert
-                size={30}
-                color={isCritical ? "red" : "orange"}
-                className="-mt-4 mr-6"
-            />
-        </motion.div>
+
+        <TriangleAlert
+            size={30}
+            color={isCritical ? "red" : "orange"}
+            className="-mt-4 mr-6"
+        />
+
     )
 }

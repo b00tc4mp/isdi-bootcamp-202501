@@ -13,16 +13,17 @@
         font-weight: 300;
         width: 100%;
         position: relative;
+        overflow-x: hidden;
     }
 
     .fondo {
-        width: 140vw;
-        max-width: 140vw;
-        height: 140vh;
+        width: 120vw;
+        max-width: 120vw;
+        height: 120vh;
         top: -10vh;
-        left: -10vw;
+        left: -10vh;
         object-fit: cover;
-        position: absolute;
+        position: fixed;
         z-index: 0;
         filter: blur(30px);
     }

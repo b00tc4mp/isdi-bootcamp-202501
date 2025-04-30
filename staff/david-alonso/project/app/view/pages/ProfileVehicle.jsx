@@ -4,26 +4,25 @@ import { useEffect, useState } from 'react'
 import { Link } from "react-router"
 import { useVehicle } from "../../hooks/vehicle.hooks"
 import { logic } from '../../logic'
-import { getUserId } from "../../logic/getUserId"
 import { NextITV } from "../components/NextITV"
+import { useContext } from '../../context'
 
 import { Share2, Trash2, PencilLine, ChevronLeft, FileCheck, ChevronRight } from "lucide-react"
 
 export const ProfileVehicle = ({ onVehicleDeleted }) => {
+    const { alert, confirm } = useContext()
+
     const { id } = useParams()
     const vehicle = useVehicle(id)
 
-    const [mantenimiento, setMantenimiento] = useState(null)
 
     if (!vehicle) return <p>Cargando...</p>
-
-    const userId = getUserId()
 
     const handleDeleteClick = () => {
 
         if (confirm('Delete vehicle ?'))
             try {
-                logic.deleteVehicle(userId, vehicle._id)
+                logic.deleteVehicle(id)
                     .then(() => onVehicleDeleted())
                     .catch(error => {
                         console.error(error)
@@ -36,6 +35,7 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                 alert(error.message)
             }
     }
+
 
     return (
         <div className="relative min-h-screen">
@@ -58,7 +58,7 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                                 <Link to={`/vehicleRegister/${id}`}><PencilLine color="white" size={24} /></Link>
 
                                 {/* BORRAR */}
-                                <button onClick={() => handleDeleteClick(vehicle._id)} className=" bg-transparent border-none p-0 cursor-pointer">
+                                <button onClick={handleDeleteClick} className=" bg-transparent border-none p-0 cursor-pointer">
                                     <Trash2 color="white" size={24} />
                                 </button>
 

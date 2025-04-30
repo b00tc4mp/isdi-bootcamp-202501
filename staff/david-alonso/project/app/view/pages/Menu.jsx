@@ -1,9 +1,12 @@
 import { logic } from '../../logic'
 import { Link } from 'react-router'
 
+import { useContext } from '../../context'
 import { X } from 'lucide-react'
 
 export function Menu({ onUserLoggedOut }) {
+    const { alert } = useContext()
+
 
     const handleLogoutClick = () => {
 

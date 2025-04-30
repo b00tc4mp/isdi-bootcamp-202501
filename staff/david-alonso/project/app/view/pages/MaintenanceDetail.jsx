@@ -1,15 +1,21 @@
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { useVehicle } from '../../hooks/vehicle.hooks'
+import { logic } from '../../logic'
+import { getUserId } from "../../logic/getUserId"
 import { Link } from 'react-router'
+import { useContext } from '../../context'
+
 import { Trash2, PencilLine, ChevronLeft } from "lucide-react"
 
-export const MaintenanceDetail = () => {
+export const MaintenanceDetail = ({ onDeletedManteinance }) => {
+
+    const { alert, confirm } = useContext()
+
     const { vehicleId, maintenanceId } = useParams()
     const vehicle = useVehicle(vehicleId)
     const [mantenimiento, setMantenimiento] = useState(null)
 
-    const { id } = useParams()
 
     useEffect(() => {
         if (vehicle && vehicle.manteinances) {
@@ -23,6 +29,25 @@ export const MaintenanceDetail = () => {
     if (!mantenimiento) return <div>Mantenimiento no encontrado</div>
 
     const formattedDate = new Date(mantenimiento.fecha).toISOString().split('T')[0]
+
+
+    const handleDeleteManteinanceClick = () => {
+
+        if (confirm('Delete maintenance?'))
+            try {
+                logic.deleteVehicleManteinance(maintenanceId)
+                    .then(() => onDeletedManteinance(vehicleId))
+                    .catch(error => {
+                        console.error(error)
+
+                        alert(error.message)
+                    })
+            } catch (error) {
+                console.error(error)
+
+                alert(error.message)
+            }
+    }
 
     return (
         <div className="relative min-h-screen">
@@ -39,7 +64,9 @@ export const MaintenanceDetail = () => {
                         </Link>
 
                         {/* BORRAR */}
-                        <Link><Trash2 color="white" size={24} /></Link>
+                        <button onClick={() => handleDeleteManteinanceClick(maintenanceId)} className=" bg-transparent border-none p-0 cursor-pointer">
+                            <Trash2 color="white" size={24} />
+                        </button>
                     </div>
                 </div>
 

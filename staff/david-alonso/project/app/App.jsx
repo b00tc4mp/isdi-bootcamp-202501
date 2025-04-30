@@ -7,6 +7,8 @@ import { VehicleRegister } from './view/pages/VehicleRegister.jsx'
 import { Vehicles } from "./view/pages/Vehicles.jsx"
 import { Home } from "./view/pages/Home.jsx"
 import { Menu } from "./view/pages/Menu.jsx"
+import { Alert } from './view/Alert.jsx'
+import { Confirm } from './view/Confirm.jsx'
 
 import { MaintenanceDetail } from "./view/pages/MaintenanceDetail.jsx"
 import { ProfileVehicle } from "./view/pages/ProfileVehicle.jsx"
@@ -84,10 +86,41 @@ function App() {
     }
 
     const handleVehicleDeleted = () => {
-        navigate('/') // redirigir después de borrar
+        navigate('/')
     }
 
+    const handleDeleteManteinanceClick = (id) => {
+        navigate(`/vehicle/${id}`)
+    }
+
+
+    const handleShowAlert = message => setAlertMessage(message)
+
+    const handleAlertAccepted = () => setAlertMessage('')
+
+    const handleShowConfirm = message => {
+        return new Promise((resolve, _reject) => {
+            setConfirmMessage(message)
+            setConfirmState({ resolve })
+        })
+    }
+
+    const handleConfirmAccepted = () => {
+        confirmState.resolve(true)
+        setConfirmMessage('')
+        setConfirmState(null)
+    }
+
+    const handleConfirmCancelled = () => {
+        confirmState.resolve(false)
+        setConfirmMessage('')
+        setConfirmState(null)
+    }
+
+
     return <Context value={{
+        alert: handleShowAlert,
+        confirm: handleShowConfirm
 
     }}>
 
@@ -115,10 +148,13 @@ function App() {
 
             <Route path="/vehicle/:vehicleId/maintenance/:maintenanceId?" element={<Maintenance onMaintenanceRegistered={handleMaintenanceRegistered} />} />
 
-            <Route path="/vehicle/:vehicleId/maintenance-detail/:maintenanceId" element={<MaintenanceDetail />} />
-
+            <Route path="/vehicle/:vehicleId/maintenance-detail/:maintenanceId" element={<MaintenanceDetail onDeletedManteinance={handleDeleteManteinanceClick} />} />
 
         </Routes>}
+
+        {alertMessage && <Alert message={alertMessage} onAccepted={handleAlertAccepted} />}
+        {confirmMessage && <Confirm message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
+
     </Context>
 }
 
