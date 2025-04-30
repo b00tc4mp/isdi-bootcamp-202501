@@ -28,7 +28,6 @@ export const registerUser = (name, email, password) => {
                 password: hash
             }
 
-            // Inserta el objeto user en la colección data.users y devuelve el resultado
             return User.create(user)
                 .catch(error => {
                     if (error.code === 11000) throw new DuplicityError('user already exists')
@@ -37,6 +36,6 @@ export const registerUser = (name, email, password) => {
                 })
         })
 
-        .then(() => { console.log('Changes OK') })
+        .then(() => { })
 
 }

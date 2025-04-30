@@ -18,28 +18,23 @@ data.connect(MONGO_URL, MONGO_DB)
                 name: 'Dallen',
                 email: 'dallen@31.com',
                 password: hash
-            },
-            {
-                name: 'Yuki',
-                email: 'Yuki@31.com',
-                password: hash
             }
         ])
     })
-    // .then(users => {
-    //     const user = users[0] // Aquí escoges el primer usuario
-    //     const userId = user._id
+    .then(users => {
+        const user = users[0] // Aquí escoges el primer usuario
+        const userId = user._id
 
-    //     return Vehicle.insertMany([
-    //         {
-    //             marca: 'Honda',
-    //             modelo: 'CBR 600',
-    //             año: 2020,
-    //             matricula: 'cdc2525',
-    //             km: 75000,
-    //             itv: new Date(2025, 5, 20),
-    //             author: userId
-    //         }
-    //     ])
-    // })
+        return Vehicle.insertMany([
+            {
+                marca: 'Honda',
+                modelo: 'CBR 600',
+                año: 2020,
+                matricula: '2525CFR',
+                km: 75000,
+                itv: new Date(2025, 5, 20),
+                author: userId
+            }
+        ])
+    })
     .finally(() => data.disconnect())

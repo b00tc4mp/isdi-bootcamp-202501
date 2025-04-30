@@ -14,12 +14,10 @@ export const registerVehicle = (marca, modelo, año, color, matricula, km, itv, 
     validate.date(itv, 'itv')
 
     return Vehicle.findOne({ $or: [{ matricula }] })
+
         .then(vehicle => {
             if (vehicle) throw new DuplicityError('vehicle already exists')
-
-            return
         })
-        .catch(error => { throw new SystemError(error.message) })
 
         .then(() => {
             const vehicle = {
@@ -33,15 +31,14 @@ export const registerVehicle = (marca, modelo, año, color, matricula, km, itv, 
                 author
             }
 
-            // Inserta el objeto vehicle en la colección data.vehicles y devuelve el resultado
             return Vehicle.create(vehicle)
                 .catch(error => {
-                    if (error.code === 11000) throw new DuplicityError('user already exists')
+                    if (error instanceof DuplicityError) throw error
 
                     throw new SystemError(error.message)
                 })
         })
 
-        .then(() => { console.log('Changes OK') })
+        .then(() => { })
 
 }

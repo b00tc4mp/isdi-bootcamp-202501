@@ -1,5 +1,5 @@
 // OBTENER PUBLICACIONES
-import { Manteinance, User, Vehicle } from '../data/index.js'
+import { Manteinance, Vehicle } from '../data/index.js'
 import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors
@@ -16,7 +16,7 @@ export const getVehicleManteinances = vehicleId => {
         .catch(error => { throw new SystemError(error.message) })
         .then(([vehicle, manteinances]) => {
 
-            if (!manteinances) throw new NotFoundError('manteinances not found')
+            if (!vehicle) throw new NotFoundError('vehicle not found')
 
             return manteinances
         })

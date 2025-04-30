@@ -1,17 +1,17 @@
 import 'dotenv/config'
 import { data } from '../data/index.js'
-import { registerUser } from './registerUser.js'
+import { registerManteinance } from './registerManteinance.js'
 
 const { MONGO_URL, MONGO_DB_TEST } = process.env
 
-console.info('TEST registerUser')
+console.info('TEST registerManteinance')
 
 data.connect(MONGO_URL, MONGO_DB_TEST)
     .then(() => {
         try {
             let result2 = null
 
-            return registerUser('Dallen', 'dallen@31.com', '123123123')
+            return registerManteinance('20/04/2025', 'neumaticos', 'cambio de neumaticos')
                 .then(result => result2 = result)
                 .finally(() => console.assert(result2 === undefined, 'result is undefined'))
         } catch (error) {

@@ -31,3 +31,12 @@ manteinances.patch('/:maintenanceId', authHandler, jsonBodyParser, withErrorHand
     return logic.updateVehicleManteinance(maintenanceId, new Date(fecha), descripcion, texto)
         .then(() => res.status(201).send())
 }))
+
+// BORRAR UN MANTENIMIENTO
+manteinances.delete('/:maintenanceId', authHandler, withErrorHandling((req, res) => {
+
+    const { maintenanceId } = req.params
+
+    return logic.deleteVehicleManteinance(maintenanceId)
+        .then(() => res.status(204).send())
+}))

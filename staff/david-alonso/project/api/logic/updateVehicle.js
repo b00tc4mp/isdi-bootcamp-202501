@@ -3,7 +3,6 @@ import { Vehicle } from '../data/models.js'
 
 const { SystemError, DuplicityError } = errors
 
-// REGISTRO DE VEHICULO
 export const updateVehicle = (id, marca, modelo, año, color, matricula, km, itv, author) => {
     validate.text(marca, 'marca')
     validate.text(modelo, 'modelo')
@@ -29,6 +28,6 @@ export const updateVehicle = (id, marca, modelo, año, color, matricula, km, itv
 
             throw new SystemError(error.message)
         })
-        .then(() => { console.log('Changes OK') })
+        .then(() => { })
 
 }

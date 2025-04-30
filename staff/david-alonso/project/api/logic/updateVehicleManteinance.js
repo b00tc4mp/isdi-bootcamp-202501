@@ -21,6 +21,6 @@ export const updateVehicleManteinance = (maintenanceId, fecha, descripcion, text
 
             throw new SystemError(error.message)
         })
-        .then(() => { console.log('Changes OK') })
+        .then(() => { })
 
 }

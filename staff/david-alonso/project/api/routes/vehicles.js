@@ -31,11 +31,10 @@ vehicles.patch('/:id', authHandler, jsonBodyParser, withErrorHandling((req, res)
 }))
 
 // BORRAR UN VEHICULO
-vehicles.delete('/:id', authHandler, withErrorHandling((req, res) => {
-    const { userId } = req
-    const { id: vehicleId } = req.params
+vehicles.delete('/:vehicleId', authHandler, withErrorHandling((req, res) => {
+    const { vehicleId } = req.params
 
-    return logic.deleteVehicle(userId, vehicleId)
+    return logic.deleteVehicle(vehicleId)
         .then(() => res.status(204).send())
 }))
 
