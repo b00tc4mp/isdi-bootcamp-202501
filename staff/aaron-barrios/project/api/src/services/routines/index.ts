@@ -14,6 +14,7 @@ import getMyCustomRoutines from "./getMyCustomRoutines"
 import getCustomRoutineById from "./getCustomRoutineById"
 import updateCustomRoutine from "./updateCustomRoutine"
 import deleteCustomRoutine from "./deleteCustomRoutine"
+import getRoutineOfTheDay from "./getRoutineOfTheDay"
 
 export {
     getAllRoutines,
@@ -31,5 +32,6 @@ export {
     getMyCustomRoutines,
     getCustomRoutineById,
     updateCustomRoutine,
-    deleteCustomRoutine
+    deleteCustomRoutine,
+    getRoutineOfTheDay
 }

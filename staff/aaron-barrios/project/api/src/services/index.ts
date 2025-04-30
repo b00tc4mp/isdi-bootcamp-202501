@@ -52,7 +52,8 @@ import {
     saveCustomRoutine,
     getCustomRoutineById,
     updateCustomRoutine,
-    deleteCustomRoutine
+    deleteCustomRoutine,
+    getRoutineOfTheDay
 } from './routines'
 
 
@@ -99,7 +100,8 @@ const services = {
     getMyCustomRoutines,
     getCustomRoutineById,
     updateCustomRoutine,
-    deleteCustomRoutine
+    deleteCustomRoutine,
+    getRoutineOfTheDay
 }
 
 export default services

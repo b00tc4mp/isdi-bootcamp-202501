@@ -27,7 +27,8 @@ import {
     saveCustomRoutineHandler,
     getCustomRoutineByIdHandler,
     updateCustomRoutineHandler,
-    deleteCustomRoutineHandler
+    deleteCustomRoutineHandler,
+    getRoutineOfTheDayHandler
 } from "../handlers/routines"
 
 
@@ -62,6 +63,13 @@ routineRouter.get(
     "/mod",
     authHandler,
     getModeratorRoutinesHandler
+)
+
+// --- GET ROUTINE OF THE DAY METHOD ---
+routineRouter.get(
+    "/of-the-day",
+    authHandler,
+    getRoutineOfTheDayHandler
 )
 
 // --- GET ROUTINES BY ID METHOD ---

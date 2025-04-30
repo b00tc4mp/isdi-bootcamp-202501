@@ -7,7 +7,7 @@ import { errors } from "com"
 import { data } from "@/data"
 
 import { getUserData } from "@/services/user/regular"
-import { getMyCustomRoutines } from "@/services/routines"
+import { getMyCustomRoutines, getRoutineOfTheDay } from "@/services/routines"
 import { getSavedRoutines } from "@/services/user/regular"
 
 
@@ -18,6 +18,7 @@ export default function Home() {
     const [interests, setInterests] = useState<string[]>([])
 
     const [currentRoutine, setCurrentRoutine] = useState<{ id: string; type: "custom" | "regular" } | null>(null)
+    const [loadingRoutineOfDay, setLoadingRoutineOfDay] = useState(false)
 
 
     useFocusEffect(
@@ -65,6 +66,27 @@ export default function Home() {
                 setCurrentRoutine(null)
             })
     }
+
+
+    const handleRoutineOfTheDay = () => {
+        setLoadingRoutineOfDay(true)
+
+        getRoutineOfTheDay()
+            .then(routine => {
+                if (!routine?.id) return
+
+                router.push({
+                    pathname: "/(stack)/RoutineDetail/[routineId]",
+                    params: { routineId: routine.id }
+                })
+            })
+            .catch(error => {
+                console.error("Routine of the day error:", error)
+                alert("No available routine found today 😔")
+            })
+            .finally(() => setLoadingRoutineOfDay(false))
+    }
+
 
 
     return (
@@ -118,10 +140,15 @@ export default function Home() {
             </Pressable>
 
 
-            <Pressable style={styles.card}>
-                <Text style={styles.cardTitle}>Last workout done</Text>
-                <Text style={styles.cardSubtext}>Preview</Text>
+            <Pressable style={styles.card} onPress={handleRoutineOfTheDay} disabled={loadingRoutineOfDay}>
+                <Text style={styles.cardTitle}>
+                    Routine of the Day!
+                </Text>
+                <Text style={styles.cardSubtext}>
+                    {loadingRoutineOfDay ? "Loading..." : "Tap to view a fresh suggestion"}
+                </Text>
             </Pressable>
+
 
             {/* Smart suggestions */}
             <Text style={styles.sectionTitle}>Smart suggestions</Text>
