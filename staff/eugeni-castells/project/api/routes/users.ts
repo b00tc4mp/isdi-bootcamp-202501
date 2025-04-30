@@ -11,6 +11,9 @@ import authHandler from "../middlewares/authHandler";
 import { registerVanHandler } from "../handlers/registerVanHandler";
 import { getUserNameHandler } from "../handlers/getUserNameHandler";
 import { authenticateUserHandler } from "../handlers/authenticateUserHandler";
+import { generateTripRequest } from "../service";
+import { getUserExchanges } from "../service/getUserExchanges";
+import { getUserExchangesHandler } from "../handlers/getUserExchangesHandler";
 
 export const userRouter = Router();
 
@@ -36,9 +39,6 @@ userRouter.post(
   authenticateUserHandler
 );
 
-userRouter.get(
-  "/self/username",
-  jsonBodyParser,
-  authHandler,
-  getUserNameHandler
-);
+userRouter.get("/self/username", authHandler, getUserNameHandler);
+
+userRouter.get("/self/trips", authHandler, getUserExchangesHandler);

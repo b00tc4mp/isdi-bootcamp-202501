@@ -5,6 +5,11 @@ import { registerVan } from "./registerVan.js";
 import { getVans } from "./getVans.js";
 import { generateTripRequest } from "./generateTripRequest.js";
 import { getVanById } from "./getVanById.js";
+import { getUserExchanges } from "./getUserExchanges.js";
+import { getChatMessages } from "./getChatMessages.js";
+import { acceptTripRequest } from "./acceptTripRequest.js";
+import { rejectTripRequest } from "./rejectTripRequest.js";
+import { sendMessage } from "./sendMessage.js";
 
 export {
   registerUser,
@@ -14,4 +19,9 @@ export {
   getVans,
   generateTripRequest,
   getVanById,
+  getUserExchanges,
+  getChatMessages,
+  acceptTripRequest,
+  rejectTripRequest,
+  sendMessage,
 };

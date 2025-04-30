@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateTripRequest = void 0;
 const com_1 = require("com");
@@ -27,6 +38,8 @@ const generateTripRequest = (userId, vanId, tripInfo) => {
     return (() => __awaiter(void 0, void 0, void 0, function* () {
         let user;
         let van;
+        const { selectedDates, price } = tripInfo, rest = __rest(tripInfo, ["selectedDates", "price"]);
+        const { startDate, endDate } = selectedDates;
         try {
             [user, van] = yield Promise.all([
                 data_1.User.findById(userId)
@@ -53,35 +66,20 @@ const generateTripRequest = (userId, vanId, tripInfo) => {
             throw new errors_1.NotFoundError("van not found");
         //This will return true if the filter returns one user (the user) or false if it returns 0 users (the user hasnt pass the filter)
         //We put the user into an array because thats what the function expects
-        const noUserOverlap = !!(0, utils_1.filterTripsByDate)([user], tripInfo.startDate, tripInfo.endDate);
+        const noUserOverlap = !!(0, utils_1.filterTripsByDate)([user], startDate, endDate);
         if (!noUserOverlap) {
             throw new errors_1.OverlapError("you already have a trip on these dates!");
         }
-        const noVanOverlap = !!(0, utils_1.filterTripsByDate)([van], tripInfo.startDate, tripInfo.endDate);
+        const noVanOverlap = !!(0, utils_1.filterTripsByDate)([van], startDate, endDate);
         if (!noVanOverlap) {
             throw new errors_1.OverlapError("requested van is already booked");
         }
         //TODO
         //validate van travellers vs trip travellers
-        //Create location for the trip
-        let insertedLocation;
-        try {
-            insertedLocation = yield data_1.Location.create({
-                city: tripInfo.location.city,
-                country: tripInfo.location.country,
-                point: {
-                    type: "Point",
-                    coordinates: tripInfo.location.coordinates,
-                },
-            });
-        }
-        catch (error) {
-            throw new errors_1.SystemError(error.message);
-        }
         let trip;
         //Create trip with all the info
         try {
-            trip = yield data_1.Trip.create(Object.assign(Object.assign({}, tripInfo), { renter: userId, vanOwner: van.owner, location: insertedLocation._id }));
+            trip = yield data_1.Trip.create(Object.assign(Object.assign({}, rest), { price: price, renter: userId, vanOwner: van.owner, startDate: startDate, endDate: endDate, van: van._id }));
         }
         catch (error) {
             throw new errors_1.SystemError(error.message);

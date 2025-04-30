@@ -141,11 +141,9 @@ export type PaymentStatus = "pending" | "payed" | "rejected";
 export type PaymentMethod = "currency" | "road points";
 
 export type RequestTripParams = {
-  startDate: Date;
-  endDate: Date;
-  paymentMethod: PaymentMethod;
+  selectedDates: { startDate: Date; endDate: Date };
+  paymentMethod?: PaymentMethod;
   price: number;
-  location: TripRequestLocation;
 };
 
 export type PopulatedVanReturnedById = {
@@ -211,3 +209,15 @@ export type VanDetailInfo = {
   createdAt: Date;
   modifiedAt: Date | null;
 };
+
+export type ReturnedChatMessages = {
+  text: string;
+  createdAt: string;
+  author: {
+    id: string;
+    name: string;
+    lastName: string;
+  };
+  own: boolean;
+  id: string;
+}[];

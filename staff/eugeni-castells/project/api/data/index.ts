@@ -8,6 +8,7 @@ import {
   ReviewDocType,
   TripDocType,
   VanDocType,
+  ChatDocType,
 } from "./types.js";
 import { errors } from "com";
 

@@ -26,13 +26,11 @@ describe.only("generateTripRequest", () => {
 
     let newTripRequestInfo: RequestTripParams = {
       price: 317.66,
-      location: {
-        city: "London",
-        country: "UK",
-        coordinates: [-0.1276, 51.5072] as [number, number],
+
+      selectedDates: {
+        startDate: new Date(2025, 4, 1),
+        endDate: new Date(2025, 4, 7),
       },
-      startDate: new Date(2025, 4, 1),
-      endDate: new Date(2025, 4, 7),
       paymentMethod: "currency" as "currency",
     };
 

@@ -27,6 +27,7 @@ type UserDocType = {
   createdAt: Date;
   modifiedAt: Date | null;
   roadPoints: number;
+  chats: Types.ObjectId[];
 };
 
 type VanDocType = {
@@ -87,6 +88,22 @@ type DocDocType = {
   modifiedAt: Date | null;
 };
 
+type ChatDocType = {
+  _id: Types.ObjectId;
+  history: Types.ObjectId[];
+  participants: [Types.ObjectId, Types.ObjectId];
+  createdAt: Date;
+  modifiedAt: Date | null;
+};
+
+type ChatCommentDocType = {
+  _id: Types.ObjectId;
+  text: string;
+  author: Types.ObjectId;
+  createdAt: Date;
+  modifiedAt: Date | null;
+};
+
 type ReviewDocType = {
   _id: Types.ObjectId;
   rating: number;
@@ -125,4 +142,6 @@ export {
   TripDocType,
   VanDocType,
   PointDocType,
+  ChatDocType,
+  ChatCommentDocType,
 };
