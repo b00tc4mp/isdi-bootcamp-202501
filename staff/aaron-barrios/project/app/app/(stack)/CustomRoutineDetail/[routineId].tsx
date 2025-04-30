@@ -109,6 +109,12 @@ export default function CustomRoutineDetail() {
             {routine.workouts.map((rw, index) => (
                 <View key={index} style={styles.workoutItem}>
                     <Text style={styles.workoutName}>{rw.workout.name}</Text>
+                    {rw.workout.feedImage && (
+                        <Image
+                            source={{ uri: rw.workout.feedImage }}
+                            style={styles.workoutImage}
+                        />
+                    )}
                     <View style={styles.workoutDataRow}>
                         <Text style={styles.workoutData}>{rw.sets} sets</Text>
                         <Text style={styles.workoutData}>{rw.reps} reps</Text>
@@ -117,6 +123,7 @@ export default function CustomRoutineDetail() {
                     </View>
                 </View>
             ))}
+
 
             {/* Action Buttons */}
             <View style={styles.actionButtons}>
@@ -145,9 +152,16 @@ const styles = StyleSheet.create({
     subtitle: { fontSize: 22, fontWeight: "bold", marginTop: 16, marginBottom: 8 },
     description: { fontSize: 16, color: "#444", marginBottom: 16 },
     workoutItem: { backgroundColor: "#f5f5f5", borderRadius: 8, padding: 12, marginBottom: 8 },
-    workoutName: { fontSize: 16, fontWeight: "600", marginBottom: 6 },
+    workoutName: { fontSize: 22, fontWeight: "600", marginBottom: 6 },
     workoutDataRow: { flexDirection: "row", gap: 16 },
-    workoutData: { fontSize: 14, color: "#666" },
+    workoutImage: {
+        width: "100%",
+        height: 160,
+        borderRadius: 8,
+        marginBottom: 8,
+        backgroundColor: "#ddd",
+    },
+    workoutData: { fontSize: 18, color: "#666" },
     actionButtons: { flexDirection: "row", justifyContent: "space-between", marginTop: 24, gap: 12 },
     actionButton: { flex: 1, padding: 12, borderRadius: 8, alignItems: "center" },
     editButton: { backgroundColor: "#3b82f6" },

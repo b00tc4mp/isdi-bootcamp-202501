@@ -20,6 +20,8 @@ export default function Profile() {
     const [lastName, setLastName] = useState("")
     const [alias, setAlias] = useState("")
     const [email, setEmail] = useState("")
+    const [level, setLevel] = useState("")
+    const [interests, setInterests] = useState<string[]>([])
     const [currentUser, setCurrentUser] = useState<Omit<UserType, "id" | "createdAt"> | null>(null)
 
     const [loading, setLoading] = useState(true)
@@ -97,6 +99,8 @@ export default function Profile() {
                     setLastName(user.lastName || "")
                     setAlias(user.alias || "")
                     setEmail(user.email || "")
+                    setLevel(user.level || "")
+                    setInterests(user.interests || [])
                     setCurrentUser({
                         name: user.name || "",
                         lastName: user.lastName || "",
@@ -146,7 +150,7 @@ export default function Profile() {
             return
         }
 
-        const updates = { name, lastName, alias, email }
+        const updates = { name, lastName, alias, email, level, interests }
 
         updateUserData(updates, currentUser)
             .then(() => showAlert("Success", "User data updated successfully!"))
@@ -165,6 +169,41 @@ export default function Profile() {
                     <TextInput style={styles.input} value={alias} onChangeText={setAlias} placeholder="Enter your alias" />
                     <Text style={styles.label}>Email</Text>
                     <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Enter your email" keyboardType="email-address" />
+
+                    <Text style={styles.label}>Level</Text>
+                    <View style={styles.levelPicker}>
+                        {["beginner", "intermediate", "veteran"].map(option => (
+                            <Pressable
+                                key={option}
+                                onPress={() => setLevel(option)}
+                                style={[styles.levelOption, level === option && styles.activeLevel]}
+                            >
+                                <Text>{option}</Text>
+                            </Pressable>
+                        ))}
+                    </View>
+
+                    <Text style={styles.label}>Interests</Text>
+                    <View style={styles.interestsContainer}>
+                        {[
+                            "strength", "cardio", "mobility", "endurance"
+                        ].map(interest => (
+                            <Pressable
+                                key={interest}
+                                onPress={() =>
+                                    setInterests(prev =>
+                                        prev.includes(interest)
+                                            ? prev.filter((i: string) => i !== interest)
+                                            : [...prev, interest]
+                                    )
+                                }
+                                style={[styles.interestOption, interests.includes(interest) && styles.activeInterest]}
+                            >
+                                <Text>{interest}</Text>
+                            </Pressable>
+                        ))}
+                    </View>
+
 
                     <View style={styles.button}>
                         <Button title="Update Profile" onPress={handleUpdate} />
@@ -326,4 +365,35 @@ const styles = StyleSheet.create({
     activeDropdown: { backgroundColor: "#facc15" },
     linkButton: { marginTop: 16, alignItems: "center" },
     linkText: { color: "#0ea5e9", fontWeight: "600", fontSize: 16 },
+    levelPicker: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom: 12,
+        gap: 8,
+    },
+    levelOption: {
+        flex: 1,
+        paddingVertical: 10,
+        borderRadius: 8,
+        backgroundColor: "#ddd",
+        alignItems: "center",
+    },
+    activeLevel: {
+        backgroundColor: "#facc15",
+    },
+    interestsContainer: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: 8,
+        marginBottom: 12,
+    },
+    interestOption: {
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 8,
+        backgroundColor: "#ddd",
+    },
+    activeInterest: {
+        backgroundColor: "#4ade80",
+    },
 })

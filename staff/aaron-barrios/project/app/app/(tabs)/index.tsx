@@ -40,7 +40,10 @@ export default function Home() {
             </Pressable>
 
             {/* Quick access cards */}
-            <Pressable style={styles.card}>
+            <Pressable
+                style={styles.card}
+                onPress={() => router.push("/(tabs)/Profile")}
+            >
                 <Text style={styles.cardTitle}>Complete profile data</Text>
                 <Text style={styles.cardSubtext}>Preview</Text>
             </Pressable>
