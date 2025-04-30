@@ -18,7 +18,7 @@ describe('getUserClothingItems', () => {
         ])
     })
 
-    it.only('succeds on existing user', () => {
+    it('succeds on existing user', () => {
         debugger
         let returnedClothingItems
         let user, user2

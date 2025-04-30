@@ -11,3 +11,12 @@ clothingItems.post('/', jsonBodyParser, authHandler, withErrorHandling((req, res
     return logic.addClothingItem(userId, itemName, category, type, color, season, occasion)
         .then(() => res.status(201).json())
 }))
+
+clothingItems.patch('/:clothingItemId', jsonBodyParser, authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { clothingItemId } = req.params
+    const updateData = req.body
+
+    return logic.updateClothingItem(userId, clothingItemId, updateData)
+        .then(() => res.status(204).send())
+}))

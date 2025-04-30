@@ -5,7 +5,6 @@ import { errors, validate } from 'com'
 const { NotFoundError } = errors
 
 export const getUserClothingItems = (userId) => {
-    debugger
     validate.id(userId)
 
     return Promise.all([
