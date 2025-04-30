@@ -6,6 +6,7 @@ export type Shower = "inside" | "outside" | "none";
 
 export type Fuel = "petrol" | "diesel" | "electric" | "hybrid";
 
+export type TripConfirmStatus = "pending" | "rejected" | "accepted";
 type PointDocType = {
   type: "Point";
   coordinates: [number, number];
@@ -176,3 +177,23 @@ export type PopulatedReview = {
 export type PopulatedAuthor = {
   name: string;
 };
+
+export type ReturnedExchanges = {
+  id: string;
+  owner: {
+    id: Types.ObjectId;
+    name: string;
+    lastName: string;
+ 
+  };
+  confirmStatus: TripConfirmStatus;
+  startDate: Date;
+  endDate: Date;
+  price: number;
+  createdAt: Date;
+  modifiedAt: Date;
+};
+
+export type ReturnedExchangesObject={
+  pendingRequests:
+}

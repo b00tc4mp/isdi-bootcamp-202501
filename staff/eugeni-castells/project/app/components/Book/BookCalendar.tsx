@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
-import { CalendarList, DateData } from "react-native-calendars";
-import { Pressable, StyleSheet, Alert } from "react-native";
+import { Calendar, DateData } from "react-native-calendars";
+import {
+  Pressable,
+  StyleSheet,
+  Alert,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { View, Text } from "@/components/Themed";
 import { format, addDays, isSameDay, isBefore, isAfter } from "date-fns";
 import { Colors } from "@/constants/Colors";
@@ -73,18 +78,29 @@ export default function BookCalendar({
 
     return marked;
   };
+
+  const handleClearClick = () => {
+    setSelectedRange({ start: null, end: null });
+    setMarkedDates({});
+  };
   return (
-    <View style={styles.container}>
-      <CalendarList
-        pastScrollRange={0}
-        futureScrollRange={12}
-        scrollEnabled={true}
+    <View style={styles.container} id="dvd">
+      <Calendar
         showScrollIndicator={true}
         markingType="period"
         markedDates={markedDates}
         onDayPress={handleDayPress}
       />
+
       <View style={styles.footerContainer}>
+        <Pressable
+          style={styles.bookButton}
+          onPress={() => {
+            handleClearClick();
+          }}
+        >
+          <Text style={styles.buttonText}>Clear dates</Text>
+        </Pressable>
         <Pressable
           style={styles.bookButton}
           onPress={() => {
@@ -95,7 +111,6 @@ export default function BookCalendar({
               });
             } else {
               Alert.alert("Select a range of dates");
-              console.log("eureka");
             }
           }}
         >
@@ -124,8 +139,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     backgroundColor: Colors.light.background,
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    zIndex: 3,
   },
   bookButton: {
     padding: spacing.md,

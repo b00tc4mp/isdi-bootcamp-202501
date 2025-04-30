@@ -1,3 +1,4 @@
+import { errors } from "@/com";
 import { SelectedDate, SelectedLocation } from "@/components/Search/types";
 
 export type RegisterUserInputType = {
@@ -29,3 +30,10 @@ export type GetVansLocationParam = SelectedLocation;
 export type GetVansDateRangeParam = SelectedDate;
 
 export type GetVansTravellersParam = number;
+
+export type SelectedDatesInTripRequest = {
+  startDate: Date;
+  endDate: Date;
+};
+
+export type ErrorKey = keyof typeof errors;

@@ -10,16 +10,13 @@ import { useRouter } from "expo-router";
 import { spacing } from "@/constants/Paddings";
 import { Colors } from "@/constants/Colors";
 import { Typography } from "@/constants/Typography";
-import BookCalendar from "@/components/Book/BookCalendar";
+import BookIndex from "@/components/Book/BookIndex";
 
 export default function VanDetailScreen() {
-  const [displayCalendar, setDisplayCalendar] = useState<boolean>(false);
+  const [displayBookView, setDisplayBookView] = useState<boolean>(false);
   const [van, setVan] = useState<VanDetailInfo | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [selectedDates, setSelectedDates] = useState<{
-    start: Date | null;
-    end: Date | null;
-  }>({ start: null, end: null });
+
   const { id } = useLocalSearchParams();
 
   const router = useRouter();
@@ -41,29 +38,21 @@ export default function VanDetailScreen() {
     fetchVan();
   }, [id]);
 
-  const handleBookClick = () => {
-    setDisplayCalendar(true);
+  const handleSelectDatesClick = () => {
+    setDisplayBookView(true);
   };
 
   const handleReturnNavigation = () => {
-    setDisplayCalendar(false);
+    setDisplayBookView(false);
   };
 
-  const handleDateSelection = ({
-    startDate,
-    endDate,
-  }: {
-    startDate: Date;
-    endDate: Date;
-  }) => {
-    setSelectedDates({ start: startDate, end: endDate });
-  };
   return (
     <View style={styles.container}>
-      {displayCalendar && (
-        <BookCalendar
-          onReturnClick={handleReturnNavigation}
-          onAcceptButton={handleDateSelection}
+      {displayBookView && (
+        <BookIndex
+          onVanDetailScreenNavigation={handleReturnNavigation}
+          price={van!.price}
+          location={van!.location}
         />
       )}
       <View style={styles.caruselContainer}>
@@ -133,17 +122,19 @@ export default function VanDetailScreen() {
         {van?.owner?.name}
         {van?.owner.lastName}
       </Text>
+
       <View style={styles.footerContainer}>
         <Text style={styles.priceText}>€{van?.price}/night</Text>
         <Pressable
           style={styles.bookButton}
           onPress={() => {
-            handleBookClick();
+            handleSelectDatesClick();
           }}
         >
-          <Text style={styles.bookButtonText}>Book Van</Text>
+          <Text style={styles.bookButtonText}>Book</Text>
         </Pressable>
       </View>
+
       <Loading isLoading={isLoading} size="large" />
     </View>
   );

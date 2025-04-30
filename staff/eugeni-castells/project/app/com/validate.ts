@@ -1,6 +1,5 @@
 import constant from "./constants";
 import { ValidationError } from "./errors";
-
 export const validate = {
   string: function (string: string, explain: string): void {
     if (typeof string !== "string")
@@ -53,11 +52,15 @@ export const validate = {
       throw new ValidationError(`invalid url syntax`);
   },
   id(id: string, explain: string): void {
-    this.text(id, "id");
+    this.text(id, "id" + explain);
 
     if (!constant.OBJECT_ID_REGEX.test(id))
       throw new ValidationError(`invalid id as ObjectId syntax`);
 
     if (id.length !== 24) throw new ValidationError(`invalid id length`);
+  },
+  date(date: Date): void {
+    if (!(date instanceof Date))
+      throw new ValidationError("invalid date syntax");
   },
 };

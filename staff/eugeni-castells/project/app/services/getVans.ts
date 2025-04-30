@@ -1,8 +1,7 @@
-import { SystemError } from "@/com/errors";
+import errors, { SystemError } from "@/com/errors";
 import { data } from "@/data";
 
 import { ReturnedVansType } from "@/com/types";
-import { GetVansTravellersParam } from "./types";
 import { generateUrl } from "@/app/utils/generateUrl";
 
 export const getVans = async (
@@ -22,7 +21,7 @@ export const getVans = async (
     travellers,
   });
 
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL_ALXII}${url}`, {
+  return fetch(`${process.env.EXPO_PUBLIC_API_URL}${url}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -56,8 +55,7 @@ export const getVans = async (
         .then((body) => {
           const { error, message } = body;
 
-          const constructor = error.name;
-
+          const constructor = errors[error as keyof typeof errors];
           throw new constructor(message);
         });
     });

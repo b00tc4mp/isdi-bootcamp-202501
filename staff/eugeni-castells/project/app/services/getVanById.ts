@@ -1,5 +1,5 @@
 import { validate } from "@/com";
-import { SystemError } from "@/com/errors";
+import errors, { SystemError } from "@/com/errors";
 import { VanDetailInfo, ReturnedJsonVanDetailInfo } from "@/com/types";
 import { data } from "@/data";
 
@@ -9,7 +9,7 @@ export const getVanById = (id: string): Promise<VanDetailInfo> => {
   return (async () => {
     const token = await data.getToken();
 
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL_ALXII}/vans/${id}`, {
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/vans/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -44,9 +44,7 @@ export const getVanById = (id: string): Promise<VanDetailInfo> => {
           })
           .then((body) => {
             const { error, message } = body;
-
-            const constructor = error.name;
-
+            const constructor = errors[error as keyof typeof errors];
             throw new constructor(message);
           });
       });

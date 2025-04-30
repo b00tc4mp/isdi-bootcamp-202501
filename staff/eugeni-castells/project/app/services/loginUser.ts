@@ -6,7 +6,7 @@ export const loginUser = (email: string, password: string): Promise<void> => {
   validate.email(email);
   validate.password(password);
 
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL_ALXII}/users/auth`, {
+  return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/auth`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),

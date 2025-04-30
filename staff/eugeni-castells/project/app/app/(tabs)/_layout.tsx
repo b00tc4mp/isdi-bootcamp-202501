@@ -40,9 +40,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="exchange"
+        name="exchanges"
         options={{
-          title: "exchange",
+          title: "exchanges",
           tabBarIcon: ({ color }) => (
             <FontAwesome name="exchange" size={24} color={color} />
           ),

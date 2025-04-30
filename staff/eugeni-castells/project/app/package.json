@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "start-clear": "npx expo start -c",
     "android": "expo start --android",
     "android-clear": "expo start --android --clear --reset-cache",
     "ios": "expo start --ios",
