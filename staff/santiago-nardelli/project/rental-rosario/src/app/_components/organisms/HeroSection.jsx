@@ -3,7 +3,7 @@
 import React from "react";
 
 import dynamic from "next/dynamic";
-import ScrollPropertiesFind from "../atoms/ScrollToProperties";
+import ScrollToProperties from "../atoms/ScrollToProperties";
 
 // Carga dinámicamente el componente InteractiveRosarioMap solo en el cliente
 const InteractiveRosarioMap = dynamic(
@@ -28,9 +28,9 @@ const HeroSection = () => {
             de Rosario.
           </p>
           {/* Botón "Ver Propiedades" */}
-          <ScrollPropertiesFind className="mt-6 px-6 py-3 border border-white bg-transparent text-white cursor-pointer rounded-md transition-colors duration-300 hover:bg-white hover:text-black">
+          <ScrollToProperties className="mt-6 px-6 py-3 border border-white bg-transparent text-white cursor-pointer rounded-md transition-colors duration-300 hover:bg-white hover:text-black">
             Ver Propiedades
-          </ScrollPropertiesFind>
+          </ScrollToProperties>
         </div>
 
         {/* Columna para el mapa */}

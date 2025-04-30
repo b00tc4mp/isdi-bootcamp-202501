@@ -30,15 +30,10 @@ export async function connectToDatabase() {
       ? `${DATABASE_URL}/${DATABASE_NAME}`
       : DATABASE_URL;
 
-    cached.promise = mongoose
-      .connect(connectionString, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
-      .then((mongoose) => {
-        console.log("Conectado a la base de datos");
-        return mongoose;
-      });
+    cached.promise = mongoose.connect(connectionString).then((mongoose) => {
+      console.log("Conectado a la base de datos");
+      return mongoose;
+    });
   }
 
   try {

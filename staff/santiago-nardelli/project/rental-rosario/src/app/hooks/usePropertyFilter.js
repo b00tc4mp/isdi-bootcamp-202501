@@ -28,28 +28,27 @@ const usePropertyFilter = () => {
   const applyFilters = () => {
     const params = new URLSearchParams();
 
-    if (type && type !== "") {
+    if (type && type !== "all") {
       // Añadir condición para omitir si es vacío
       params.set("type", type);
     }
-    if (bedrooms && bedrooms !== "") {
+    if (bedrooms && bedrooms !== "all") {
       // Añadir condición para omitir si es vacío
       params.set("bedrooms", bedrooms);
     }
 
-    const newPathname = `/`;
     const newSearchParams = params.toString();
-    const newUrl = `${newPathname}${
+    const newUrl = `${window.location.pathname}${
       newSearchParams ? `?${newSearchParams}` : ""
     }`;
 
-    router.push(newUrl);
+    router.replace(newUrl, { scroll: false });
   };
 
   const resetFilters = () => {
     setType("");
     setBedrooms("");
-    router.push("/");
+    router.replace(window.location.pathname, { scroll: false });
   };
 
   return {
