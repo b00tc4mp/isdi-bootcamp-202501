@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs"
 import { data } from "."
 import { Routine, User, Workout } from "./models"
 import { UserDocType } from "./types"
+import { late } from "zod"
 
 const { MONGO_URI, MONGO_DB_NAME } = process.env
 
@@ -99,7 +100,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 name: "dips",
                 muscleGroup: "chest",
                 feedImage: "https://cdn.muscleandstrength.com/sites/default/files/chest-dip.jpg",
-                type: "strength",
+                type: "endurance",
                 difficulty: "difficult",
                 description: "best chest exercise to grow the muscle!",
                 executionImages: ["url1", "url2"],
@@ -114,7 +115,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 name: "lateral raises",
                 muscleGroup: "shoulders",
                 feedImage: "https://cdn.shopify.com/s/files/1/0574/1215/7598/files/Blog_Content_-_146-Edit_480x480.jpg?v=1730481657",
-                type: "strength",
+                type: "cardio",
                 difficulty: "medium",
                 description: "best shoulders exercise!",
                 executionImages: ["url1", "url2"],
@@ -144,7 +145,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 name: "bulgarian squat",
                 muscleGroup: "legs",
                 feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg",
-                type: "strength",
+                type: "endurance",
                 difficulty: "hard",
                 description: "best legs exercise!",
                 executionImages: ["url1", "url2"],
@@ -159,7 +160,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 name: "walking lunges",
                 muscleGroup: "legs",
                 feedImage: "https://hips.hearstapps.com/hmg-prod/images/walking-lunges-667e8add0acad.jpg?crop=0.598xw:0.895xh;0.324xw,0.0800xh&resize=640:*",
-                type: "strength",
+                type: "mobility",
                 difficulty: "hard",
                 description: "best legs exercise!",
                 executionImages: ["url1", "url2"],
@@ -204,7 +205,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 name: "rowing",
                 muscleGroup: "back",
                 feedImage: "https://static01.nyt.com/images/2022/11/08/multimedia/26WNT-ROWING-WORKOUT5-1-310a/26WNT-ROWING-WORKOUT5-1-310a-videoSixteenByNineJumbo1600.jpg",
-                type: "strength",
+                type: "endurance",
                 difficulty: "easy",
                 description: "best back exercise!",
                 executionImages: ["url1", "url2"],
@@ -219,7 +220,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 name: "pull-ups",
                 muscleGroup: "back",
                 feedImage: "https://images.ctfassets.net/0k812o62ndtw/5NuCplQIQtWN7cQMgoEtXf/0ab832bf7faf755ef47fc9e413300db3/2023.11.17_SWEAT_LAURA05320-1024x683-27c3a53.jpg",
-                type: "strength",
+                type: "cardio",
                 difficulty: "easy",
                 description: "best back exercise!",
                 executionImages: ["url1", "url2"],
@@ -234,7 +235,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 name: "hip thrust",
                 muscleGroup: "buttocks",
                 feedImage: "https://www.mgc.es/wp-content/uploads/2023/05/como-hacer-hip-thrust-para-los-gluteos-880x660.jpg",
-                type: "strength",
+                type: "endurance",
                 difficulty: "medium",
                 description: "best buttocks exercise!",
                 executionImages: ["url1", "url2"],
@@ -296,7 +297,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             {
                 author: frankie._id,
                 name: "Chest and biceps Blast",
-                goal: "strength",
+                goal: "endurance",
                 muscleGroup: "chest",
                 locationType: "gym",
                 difficulty: "medium",
@@ -341,7 +342,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             {
                 author: masha._id,
                 name: "shoulders and legs Blast",
-                goal: "strength",
+                goal: "endurance",
                 muscleGroup: "shoulders",
                 locationType: "gym",
                 difficulty: "medium",
@@ -387,7 +388,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             {
                 author: frankie._id,
                 name: "back and triceps Blast",
-                goal: "strength",
+                goal: "cardio",
                 muscleGroup: "back",
                 locationType: "gym",
                 difficulty: "medium",
@@ -433,7 +434,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
             {
                 author: frankie._id,
                 name: "Lower Body Blast",
-                goal: "strength",
+                goal: "mobility",
                 muscleGroup: "legs",
                 locationType: "gym",
                 difficulty: "hard",
@@ -469,10 +470,10 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 muscleGroup: "legs",
                 locationType: "gym",
                 difficulty: "hard",
-                description: "A tough routine for your lower half.",
+                description: "A tough routine for your legs.",
                 feedImage: "https://uk.gymshark.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2F8urtyqugdt2l%2F7DjCv2aBaPIABZ9wosGvJk%2F0d693d9d04fae848feac8779289e2d3c%2Fmobile-leg-exercises.jpg&w=3840&q=85",
                 duration: 60,
-                status: "pending",
+                status: "accepted",
                 frequencySuggestion: "2x per week",
                 likes: [masha._id],
                 saves: [manu._id],
@@ -486,7 +487,199 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                         order: 1
                     },
                     {
+                        workout: walkingLunges._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
+            {
+                author: masha._id,
+                name: "Buttocks Blast",
+                goal: "strength",
+                muscleGroup: "buttocks",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "A tough routine for your buttocks.",
+                feedImage: "https://workoutlabs.com/fit/wp-content/uploads/2017/03/pure-abs-attack-and-booty-blast-gym-workout.jpg",
+                duration: 60,
+                status: "accepted",
+                frequencySuggestion: "2x per week",
+                likes: [masha._id],
+                saves: [manu._id],
+                createdAt: new Date(),
+                workouts: [
+                    {
+                        workout: gluteKickacks._id,
+                        sets: 4,
+                        reps: 8,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
                         workout: hipThrust._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
+            {
+                author: frankie._id,
+                name: "Biceps Blast",
+                goal: "strength",
+                muscleGroup: "biceps",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "A tough routine for your biceps.",
+                feedImage: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b3/fb/f4/b3fbf42d-a356-f4ec-251e-f5deded3ca9d/artwork.jpg/1200x1200bb.jpg",
+                duration: 60,
+                status: "accepted",
+                frequencySuggestion: "2x per week",
+                likes: [masha._id],
+                saves: [],
+                createdAt: new Date(),
+                workouts: [
+                    {
+                        workout: bicepsCurl._id,
+                        sets: 4,
+                        reps: 8,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: hammerCurl._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
+            {
+                author: manu._id,
+                name: "Triceps Blast",
+                goal: "strength",
+                muscleGroup: "triceps",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "A tough routine for your triceps.",
+                feedImage: "https://shop.bodybuilding.com/cdn/shop/articles/the-ultimate-shoulders-and-triceps-blast-428183.jpg?v=1731882815",
+                duration: 60,
+                status: "accepted",
+                frequencySuggestion: "2x per week",
+                likes: [masha._id],
+                saves: [],
+                createdAt: new Date(),
+                workouts: [
+                    {
+                        workout: tricepsDips._id,
+                        sets: 4,
+                        reps: 8,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: tricepsPushdown._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
+            {
+                author: manu._id,
+                name: "Shoulders Blast",
+                goal: "strength",
+                muscleGroup: "shoulders",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "A tough routine for your shoulders.",
+                feedImage: "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2017/08/erik-fankhouser-shoulders-delts-front-raises.jpg?quality=86&strip=all",
+                duration: 60,
+                status: "accepted",
+                frequencySuggestion: "2x per week",
+                likes: [masha._id],
+                saves: [],
+                createdAt: new Date(),
+                workouts: [
+                    {
+                        workout: militaryPress._id,
+                        sets: 4,
+                        reps: 8,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: lateralRaises._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
+            {
+                author: manu._id,
+                name: "Back Blast",
+                goal: "strength",
+                muscleGroup: "back",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "A tough routine for your back.",
+                feedImage: "https://images-prod.healthline.com/hlcmsresource/images/topic_centers/2018-6/Back_Dumbbell_Workout_Weights-1296x728-Header.jpg",
+                duration: 60,
+                status: "accepted",
+                frequencySuggestion: "2x per week",
+                likes: [masha._id],
+                saves: [],
+                createdAt: new Date(),
+                workouts: [
+                    {
+                        workout: pullUps._id,
+                        sets: 4,
+                        reps: 8,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: rowing._id,
+                        sets: 4,
+                        reps: 10,
+                        restTime: 60,
+                        order: 2
+                    }
+                ]
+            },
+            {
+                author: frankie._id,
+                name: "Chest Blast",
+                goal: "strength",
+                muscleGroup: "chest",
+                locationType: "gym",
+                difficulty: "medium",
+                description: "A tough routine for your chest.",
+                feedImage: "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2015/01/cable-flye-chest-workout-jared-groff-promo.jpg?quality=86&strip=all",
+                duration: 60,
+                status: "accepted",
+                frequencySuggestion: "2x per week",
+                likes: [frankie._id],
+                saves: [],
+                createdAt: new Date(),
+                workouts: [
+                    {
+                        workout: benchPress._id,
+                        sets: 4,
+                        reps: 8,
+                        restTime: 90,
+                        order: 1
+                    },
+                    {
+                        workout: dips._id,
                         sets: 4,
                         reps: 10,
                         restTime: 60,

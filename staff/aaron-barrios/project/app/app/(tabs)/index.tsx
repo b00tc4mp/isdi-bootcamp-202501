@@ -10,7 +10,7 @@ import { getUserData } from "@/services/user/regular"
 import { getSuggestedWorkouts } from "@/services/workouts"
 import { getMyCustomRoutines, getRoutineOfTheDay, getSuggestedRoutines } from "@/services/routines"
 import { getSavedRoutines } from "@/services/user/regular"
-import { RoutineType, WorkoutType } from "com/types"
+import { RoutineType, UserType, WorkoutType } from "com/types"
 
 
 const { NotFoundError } = errors
@@ -25,6 +25,9 @@ export default function Home() {
     const [suggestedWorkouts, setSuggestedWorkouts] = useState<WorkoutType[]>([])
     const [suggestedRoutines, setSuggestedRoutines] = useState<RoutineType[]>([])
 
+    //check if userData completed
+    const [userData, setUserData] = useState<UserType | null>(null)
+
 
     useFocusEffect(
         useCallback(() => {
@@ -35,6 +38,10 @@ export default function Home() {
             ])
                 .then(([user, workouts, routines]) => {
                     setAlias(user.alias)
+                    setUserData({
+                        ...user,
+                        createdAt: new Date(user.createdAt),
+                    })
                     setInterests(user.interests ?? [])
                     setSuggestedWorkouts(workouts)
                     setSuggestedRoutines(routines)
@@ -84,7 +91,7 @@ export default function Home() {
         setLoadingRoutineOfDay(true)
 
         getRoutineOfTheDay()
-            .then(routine => {
+            .then((routine: RoutineType | null) => {
                 if (!routine?.id) return
 
                 router.push({
@@ -92,7 +99,7 @@ export default function Home() {
                     params: { routineId: routine.id }
                 })
             })
-            .catch(error => {
+            .catch((error: Error) => {
                 console.error("Routine of the day error:", error)
                 alert("No available routine found today 😔")
             })
@@ -119,13 +126,15 @@ export default function Home() {
 
 
             {/* Quick access cards */}
-            <Pressable
-                style={styles.card}
-                onPress={() => router.push("/(tabs)/Profile")}
-            >
-                <Text style={styles.cardTitle}>Complete profile data</Text>
-                <Text style={styles.cardSubtext}>Preview</Text>
-            </Pressable>
+            {userData && (!userData.name || !userData.lastName || !userData.level) && (
+                <Pressable
+                    style={styles.card}
+                    onPress={() => router.push("/(tabs)/Profile")}
+                >
+                    <Text style={styles.cardTitle}>Complete profile data</Text>
+                    <Text style={styles.cardSubtext}>Preview</Text>
+                </Pressable>
+            )}
 
 
             <Pressable

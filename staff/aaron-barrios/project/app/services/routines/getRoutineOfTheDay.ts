@@ -4,31 +4,37 @@ import { errors } from "com"
 import { RoutineType } from "com/types"
 import { data } from "@/data"
 
-const { SystemError, AuthorizationError } = errors
+const { SystemError, AuthorizationError, NotFoundError } = errors
 
 const CACHE_KEY = "routineOfTheDay"
-const CACHE_EXPIRATION = 24 * 60 * 60 * 1000 // 24h in seconds
+const CACHE_EXPIRATION = 24 * 60 * 60 * 1000 // 24h
 
 const getRoutineOfTheDay = async (): Promise<RoutineType> => {
-    //1st we check if we already catched a daily routine
-    const catchedRoutine = await AsyncStorage.getItem(CACHE_KEY)
-
-    if (catchedRoutine) {
-        const { routine, timestamp } = JSON.parse(catchedRoutine)
-
-        if (Date.now() - timestamp < CACHE_EXPIRATION) {
-            return routine
-        }
-    }
-
-    //if its the 1st time you get in here or cache expired you go fetch
     const token = await data.getToken()
     if (!token) throw new AuthorizationError("No token found")
 
-    const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/routines/of-the-day`, {
-        headers: {
-            Authorization: `Bearer ${token}`
+    // 1. we check if we have a cachedRoutine
+    const cachedRoutine = await AsyncStorage.getItem(CACHE_KEY)
+
+    if (cachedRoutine) {
+        const { routine, timestamp } = JSON.parse(cachedRoutine)
+
+        // 2. check if it hasnt expired 
+        if (Date.now() - timestamp < CACHE_EXPIRATION) {
+            // 3. we check if routine is still existing (I can delete it w compile-tests)
+            const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/routines/${routine.id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+
+            if (res.ok) return routine
+
+            await AsyncStorage.removeItem(CACHE_KEY)
         }
+    }
+
+    // if the routine doesnt exist we go fetch and get a new one
+    const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/routines/of-the-day`, {
+        headers: { Authorization: `Bearer ${token}` }
     })
 
     if (!res.ok) throw new SystemError(`Error ${res.status}: ${res.statusText}`)
@@ -42,7 +48,6 @@ const getRoutineOfTheDay = async (): Promise<RoutineType> => {
 
     const routine = body as RoutineType
 
-    //store the daily routine as the cache key in case you re enter here
     await AsyncStorage.setItem(CACHE_KEY, JSON.stringify({
         routine,
         timestamp: Date.now()
