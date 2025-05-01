@@ -1,0 +1,1 @@
+ curl -X POST -F "file=@package.json" http://192.168.1.59:8080/files -v
