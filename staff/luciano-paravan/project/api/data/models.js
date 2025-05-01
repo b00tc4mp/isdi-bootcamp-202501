@@ -53,6 +53,7 @@ const clothingItem = new Schema({
     category: {
         type: String,
         required: true,
+        enum: ['top', 'bottom', 'shoes', 'accesory']
     },
     type: {
         type: String,
@@ -78,7 +79,7 @@ const clothingItem = new Schema({
 })
 
 const lookRequest = new Schema({
-    //Debo ponerle un id a la request? que generará mongodb
+
     user: {
         type: ObjectId,
         ref: 'User',

@@ -9,8 +9,8 @@ import { Home } from './view/Home'
 import { Alert } from './view/Alert'
 import { Confirm } from './view/Confirm'
 
-import { Context } from './context'
 import { logic } from './logic'
+import { Context } from './context'
 
 function App () {
     const[loggedIn, setLoggedIn] = useState(null)

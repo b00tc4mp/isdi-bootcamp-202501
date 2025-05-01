@@ -20,7 +20,7 @@ export function RequestLook () {
     }
 
     return <div>
-        <form onSubmit={handleRequesLookSubmit} className="flex flex-col py-14">
+        <form onSubmit={handleRequesLookSubmit} className="flex flex-col py-22">
             
             <fieldset className="flex flex-col">
                 <legend>Context Occasion</legend>

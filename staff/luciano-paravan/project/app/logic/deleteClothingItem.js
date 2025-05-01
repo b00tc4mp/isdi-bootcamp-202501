@@ -3,22 +3,20 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-export const updateClothingItem = (clothingItemId, itemName, category, type, color, season, occasion) => {
-    validate.id(clothingItemId)
+export const deleteClothingItem = clothingItemId => {
+    validate.id(clothingItemId, 'clothing item id')
 
     const { token } = data
 
     return fetch(`${import.meta.env.VITE_API_URL}/clothingItems/${clothingItemId}`, {
-        method: 'PATCH',
+        method: 'DELETE',
         headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ itemName, category, type, color, season, occasion })
+            Authorization: `Bearer ${token}`
+        }
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
-            if (response.status == 204)
+            if (response.status === 204)
                 return
 
             return response.json()
@@ -31,4 +29,5 @@ export const updateClothingItem = (clothingItemId, itemName, category, type, col
                     throw new constructor(message)
                 })
         })
+
 }

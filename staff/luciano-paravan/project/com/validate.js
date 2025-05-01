@@ -67,5 +67,4 @@ export const validate = {
             if (!allowedOccasions.includes(occasion)) throw new ValidationError(`invalid occasion: ${occasion}`)
         })
     }
-
 }

@@ -4,6 +4,7 @@ import { getUserUsername } from './getUserUsername.js'
 import { addClothingItem } from './addClothingItem.js'
 import { getUserClothingItems } from './getUserClothingItems.js'
 import { updateClothingItem } from './updateClothingItem.js'
+import { deleteClothingItem } from './deleteClothingItem.js'
 
 export const logic = {
     registerUser,
@@ -11,5 +12,6 @@ export const logic = {
     getUserUsername,
     addClothingItem,
     getUserClothingItems,
-    updateClothingItem
+    updateClothingItem,
+    deleteClothingItem
 }

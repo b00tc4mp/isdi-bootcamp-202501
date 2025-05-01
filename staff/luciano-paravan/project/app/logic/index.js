@@ -6,6 +6,7 @@ import { getUserUsername } from './getUserUsername.js'
 import { logoutUser } from './logoutUser.js'
 import { getUserClothingItems } from './getUserClothingItems.js'
 import { updateClothingItem } from './updateClothingItem.js'
+import { deleteClothingItem } from './deleteClothingItem.js'
 
 export const logic = {
     loginUser,
@@ -15,5 +16,6 @@ export const logic = {
     getUserUsername,
     addClothingItem,
     getUserClothingItems,
-    updateClothingItem
+    updateClothingItem,
+    deleteClothingItem
 }

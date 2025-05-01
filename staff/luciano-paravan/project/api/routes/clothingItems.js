@@ -15,8 +15,17 @@ clothingItems.post('/', jsonBodyParser, authHandler, withErrorHandling((req, res
 clothingItems.patch('/:clothingItemId', jsonBodyParser, authHandler, withErrorHandling((req, res) => {
     const { userId } = req
     const { clothingItemId } = req.params
-    const updateData = req.body
+    const { itemName, category, type, color, season, occasion } = req.body
 
-    return logic.updateClothingItem(userId, clothingItemId, updateData)
+    return logic.updateClothingItem(userId, clothingItemId, itemName, category, type, color, season, occasion)
+        .then(() => res.status(204).send())
+}))
+
+clothingItems.delete('/:clothingItemId', jsonBodyParser, authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    const { clothingItemId } = req.params
+
+    return logic.deleteClothingItem(userId, clothingItemId)
         .then(() => res.status(204).send())
 }))

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { logic } from '../../logic'
+import { CircleX, PenLine } from 'lucide-react'
 
 import { useContext } from '../../context.js'
 
 export function ClothingItem ({ clothingItem, onClothingItemDeleted, onClothingItemEdited }) {
+    const { alert, confirm } = useContext()
     const [view, setView] = useState('')
     
     const [itemName, setItemName] = useState(clothingItem.itemName)
@@ -30,28 +32,43 @@ export function ClothingItem ({ clothingItem, onClothingItemDeleted, onClothingI
     const handleSubmit = event => {
         event.preventDefault()
 
-        logic.updateClothingItem(clothingItem.id, itemName, category, type, color, season, occasion)
-            .then(() => {
-                onClothingItemEdited()
-                setView('')
-            })
-            .catch(error => {
-                console.error(error)
+        try {
+            logic.updateClothingItem(clothingItem.id, itemName, category, type, color, season, occasion)
+                .then(() => {
+                    onClothingItemEdited()
+                    setView('')
+                })
+                .catch(error => {
+                    console.error(error)
+    
+                    alert('⛔️' + error.message)
+                })
+        } catch (error) {
+            console.error(error)
 
-                alert('⛔️' + error.message)
-            })
-
+            alert('⛔️' + error.message)
+        }
     }
 
     const handleEditClick = () => setView('edit-item')
 
     const handleDeleteClick = () => {
-        logic.deleteClothingItem(clothingItem.id)
-            .then(() => onClothingItemDeleted())
-            .catch(error => {
+        confirm('Delete clothing item?')
+        .then(accepted => {
+            if(accepted)
+            try {
+                logic.deleteClothingItem(clothingItem.id)
+                    .then(() => onClothingItemDeleted())
+                    .catch(error => {
+                        console.error(error)
+                        alert('⛔️' + error.message)
+                    })
+            } catch (error) {
                 console.error(error)
-                alert('⛔️' + error.message)
-            })
+
+                alert(error.message)
+            }
+        })
     }
 
     const handleSeasonChange = event => {
@@ -161,8 +178,8 @@ export function ClothingItem ({ clothingItem, onClothingItemDeleted, onClothingI
     </section>}
     
     <div className="flex justify-end space-x-2 mt-4">
-        <button onClick={handleEditClick} className="px-3 py-1 rounded-md bg-[var(--third-color)] text-[var(--bg-color)]  text-sm">Edit ✏️</button>
-        <button onClick={handleDeleteClick} className="px-3 py-1 rounded-md bg-[var(--third-color)] text-[var(--bg-color)] text-sm">Delete 🗑️</button>
+        <button onClick={handleEditClick} className="flex justify-center items-center p-2 rounded-md bg-[var(--third-color)] text-[var(--bg-color)]  text-sm gap-1">Edit<PenLine /></button>
+        <button onClick={handleDeleteClick} className="flex justify-center items-center p-2 rounded-md bg-[var(--third-color)] text-[var(--bg-color)]  text-sm gap-1">Delete<CircleX color="black"/></button>
     </div>
     </article>
 }
