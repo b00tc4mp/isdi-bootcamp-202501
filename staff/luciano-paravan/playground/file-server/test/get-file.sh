@@ -1,0 +1,1 @@
+curl -X GET http://localhost:1010/files/cfae2b88-8330-4d93-b6f6-2b35fd79b017 -v

@@ -1,0 +1,1 @@
+curl -X POST -F "file=@package.json" http://localhost:1010/files -v
