@@ -96,7 +96,9 @@ export default function Register() {
         <Button title="REGISTER" onPress={handleRegister} />
       </View>
 
-      <Button title="LOG IN" onPress={() => router.push("/(auth)/Login" as any)} />
+      <Pressable onPress={() => router.push("/(auth)/Login")}>
+        <Text style={styles.link}>Already have an account? Log In</Text>
+      </Pressable>
 
       <Pressable onPress={handleAnonymousAccess}>
         <Text style={styles.link}>Enter as a guest</Text>

@@ -57,7 +57,7 @@ export default function Login() {
     authAnonymUser()
       .then(() => {
         Alert.alert("👤 Anonym mode", "You have logged as a guest")
-        router.replace("/(anonym)" as any) // 🚀 redirige a tu layout anónimo
+        router.replace("/(anonym)" as any)
       })
       .catch(error => {
         console.error(error)
@@ -92,7 +92,9 @@ export default function Login() {
           <Button title="LOG IN" onPress={handleLogin} />
         </View>
 
-        <Button title="Register" onPress={() => router.push("/(auth)/Register" as any)} />
+        <Pressable onPress={() => router.push("/(auth)/Register")}>
+          <Text style={styles.link}>Do not have an account? Register</Text>
+        </Pressable>
 
         <Pressable onPress={handleAnonymousAccess}>
           <Text style={styles.link}>Enter as a guest</Text>

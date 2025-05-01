@@ -155,11 +155,16 @@ export default function RoutineDetail() {
                     {/* Frecuencia sugerida si la tuvieras */}
                     {/* <Text style={styles.summaryText}>📅 x3 per week</Text> */}
                 </View>
+
                 <View style={styles.summaryRight}>
-                    <Pressable onPress={handleToggleLike} disabled={toggle || routine.status !== "accepted"}>
+                    <Pressable
+                        onPress={handleToggleLike}
+                        disabled={toggle || routine.status !== "accepted" || role !== "regular"}>
                         <Text style={styles.icon}>{routine.likedByMe ? "❤️" : "🤍"} {routine.likesCount}</Text>
                     </Pressable>
-                    <Pressable onPress={handleToggleSave} disabled={toggle || routine.status !== "accepted"}>
+                    <Pressable
+                        onPress={handleToggleSave}
+                        disabled={toggle || routine.status !== "accepted" || role !== "regular"}>
                         <Text style={styles.icon}>{routine.savedByMe ? "📜" : "📃"} {routine.savesCount}</Text>
                     </Pressable>
                 </View>
@@ -172,7 +177,16 @@ export default function RoutineDetail() {
             {/* Workouts List */}
             <Text style={styles.subtitle}>Workouts</Text>
             {routine.workouts.map((rw, index) => (
-                <View key={index} style={styles.workoutItem}>
+                <Pressable
+                    key={index}
+                    onPress={() =>
+                        router.push({
+                            pathname: "/(stack)/WorkoutDetail/[workoutId]",
+                            params: { workoutId: rw.workout.id }
+                        })
+                    }
+                    style={styles.workoutItem}
+                >
                     <Text style={styles.workoutName}>{rw.workout.name}</Text>
                     {rw.workout.feedImage && (
                         <Image
@@ -186,7 +200,7 @@ export default function RoutineDetail() {
                         <Text style={styles.workoutData}>{rw.weight} kg</Text>
                         <Text style={styles.workoutData}>{rw.restTime}" rest</Text>
                     </View>
-                </View>
+                </Pressable>
             ))}
 
 

@@ -10,7 +10,6 @@ import {
     reviewWorkout
 } from "@/services/workouts/"
 
-import defaultWorkoutExecutionImages from "@/constants/defaultWorkoutExecutionImages"
 import { WorkoutType } from "com/types"
 import { getUserRole } from "@/services/user"
 
@@ -24,14 +23,6 @@ export default function WorkoutDetail() {
     const [loading, setLoading] = useState(true)
     const [toggle, setTogggle] = useState(false)
     const [role, setRole] = useState<string | null>(null)
-
-    // const [currentImageIndex, setCurrentImageIndex] = useState(0)
-    // const viewabilityConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current
-    // const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
-    //     if (viewableItems.length > 0) {
-    //         setCurrentImageIndex(viewableItems[0].index || 0)
-    //     }
-    // }).current
 
     const fetchWorkout = () => {
         if (!workoutId) return
@@ -89,9 +80,6 @@ export default function WorkoutDetail() {
         )
     }
 
-    // const finalImages = workout.executionImages?.length
-    //     ? workout.executionImages
-    //     : defaultWorkoutExecutionImages[workout.muscleGroup]
 
     return (
         <ScrollView style={styles.container}>
@@ -114,10 +102,14 @@ export default function WorkoutDetail() {
                 </View>
 
                 <View style={styles.rightStats}>
-                    <Pressable onPress={handleToggleLike} disabled={toggle || workout.status !== "accepted"}>
+                    <Pressable
+                        onPress={handleToggleLike}
+                        disabled={toggle || workout.status !== "accepted" || role !== "regular"}>
                         <Text style={styles.icon}>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
                     </Pressable>
-                    <Pressable onPress={handleToggleSave} disabled={toggle || workout.status !== "accepted"}>
+                    <Pressable
+                        onPress={handleToggleSave}
+                        disabled={toggle || workout.status !== "accepted" || role !== "regular"}>
                         <Text style={styles.icon}>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
                     </Pressable>
                 </View>
@@ -144,37 +136,6 @@ export default function WorkoutDetail() {
                 </View>
             )}
 
-            {/* {finalImages?.length > 0 && (
-                <View style={styles.carousel}>
-                    <FlatList
-                        data={finalImages}
-                        horizontal
-                        pagingEnabled
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(_, index) => index.toString()}
-                        onViewableItemsChanged={onViewableItemsChanged}
-                        viewabilityConfig={viewabilityConfig}
-                        renderItem={({ item }) => (
-                            <Image
-                                source={typeof item === "string" ? { uri: item } : item}
-                                style={styles.executionImage}
-                                resizeMode="cover"
-                            />
-                        )}
-                    />
-                    <View style={styles.indicatorRow}>
-                        {finalImages.map((_, index) => (
-                            <View
-                                key={index}
-                                style={[
-                                    styles.indicator,
-                                    currentImageIndex === index && styles.activeIndicator,
-                                ]}
-                            />
-                        ))}
-                    </View>
-                </View>
-            )} */}
         </ScrollView>
     )
 }
