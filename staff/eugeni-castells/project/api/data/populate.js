@@ -255,14 +255,17 @@ _1.data
         issues: [],
         paymentStatus: "payed",
         paymentMethod: "currency",
-        confirmStatus: "accepted",
+        confirmStatus: "pending",
         agreements: [],
         price: 300,
-        location: [locationId],
         createdAt: new Date(),
     });
     van2.trips[0] = trip._id;
+    manu.trips[0] = trip._id;
+    frankie.trips[0] = trip._id;
     yield van2.save();
+    yield manu.save();
+    yield frankie.save();
 }))
     .finally(() => {
     console.log("✔️  Populate completed!");

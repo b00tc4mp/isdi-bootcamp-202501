@@ -6,7 +6,7 @@ import { Types } from "mongoose";
 
 /*Conditions:
 - user exists
--trip exists
+- trip exists
 - user owns van with this trip
 */
 export const acceptTripRequest = (
@@ -30,9 +30,21 @@ export const acceptTripRequest = (
     }
 
     let trip;
+
     try {
       trip = await Trip.findById(tripId)
-        .populate<{ owner: string }>({ path: "van", select: "owner" })
+        .populate<{
+          van: {
+            owner: {
+              _id: Types.ObjectId;
+              name: string;
+              lastName: string;
+            };
+          };
+        }>({
+          path: "van",
+          select: "owner",
+        })
         .lean();
     } catch (error) {
       throw new SystemError((error as Error).message);
@@ -42,7 +54,7 @@ export const acceptTripRequest = (
       throw new NotFoundError("trip not found");
     }
 
-    if (trip.owner !== userId) {
+    if (trip.van.owner.toString() !== userId) {
       throw new OwnershipError(
         "user doesn't own the van associated to the trip"
       );
@@ -73,10 +85,15 @@ export const acceptTripRequest = (
 
     try {
       //We create the chat between the two participants
-      await Chat.create({
+      const chat = await Chat.create({
         participants: [user._id, new Types.ObjectId(trip.renter)],
         createdAt: new Date(),
       });
+
+      await Promise.all([
+        User.updateOne({ _id: user._id }, { $push: { chats: chat._id } }),
+        User.updateOne({ _id: trip.renter }, { $push: { chats: chat._id } }),
+      ]);
     } catch (error) {
       throw new SystemError((error as Error).message);
     }

@@ -258,15 +258,18 @@ data
       issues: [],
       paymentStatus: "payed",
       paymentMethod: "currency",
-      confirmStatus: "accepted",
+      confirmStatus: "pending",
       agreements: [],
       price: 300,
-      location: [locationId],
       createdAt: new Date(),
     });
 
     (van2.trips as Types.ObjectId[])[0] = trip._id;
+    (manu.trips as Types.ObjectId[])[0] = trip._id;
+    (frankie.trips as Types.ObjectId[])[0] = trip._id;
     await van2.save();
+    await manu.save();
+    await frankie.save();
   })
   .finally(() => {
     console.log("✔️  Populate completed!");

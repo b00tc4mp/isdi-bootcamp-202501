@@ -1,5 +1,5 @@
 import { validate } from "com";
-import { Location, Trip, User, Van } from "../data";
+import { Trip, User, Van } from "../data";
 import { NotFoundError, SystemError, OverlapError } from "com/errors";
 import { PopulatedTrip } from "./types";
 import { filterTripsByDate } from "../utils";
@@ -25,7 +25,7 @@ export const generateTripRequest = (
     let user;
     let van;
 
-    const { selectedDates, price, ...rest } = tripInfo;
+    const { selectedDates, totalPrice, ...rest } = tripInfo;
 
     const { startDate, endDate } = selectedDates;
     try {
@@ -57,13 +57,14 @@ export const generateTripRequest = (
 
     //This will return true if the filter returns one user (the user) or false if it returns 0 users (the user hasnt pass the filter)
     //We put the user into an array because thats what the function expects
-    const noUserOverlap = !!filterTripsByDate([user], startDate, endDate);
+    const noUserOverlap = !!filterTripsByDate([user], startDate, endDate)
+      .length;
 
     if (!noUserOverlap) {
       throw new OverlapError("you already have a trip on these dates!");
     }
 
-    const noVanOverlap = !!filterTripsByDate([van], startDate, endDate);
+    const noVanOverlap = !!filterTripsByDate([van], startDate, endDate).length;
 
     if (!noVanOverlap) {
       throw new OverlapError("requested van is already booked");
@@ -77,7 +78,7 @@ export const generateTripRequest = (
     try {
       trip = await Trip.create({
         ...rest,
-        price: price,
+        price: totalPrice,
         renter: userId,
         vanOwner: van.owner,
         startDate: startDate,
@@ -94,6 +95,7 @@ export const generateTripRequest = (
       await Promise.all([
         User.updateOne({ _id: userId }, { $push: { trips: trip._id } }),
         Van.updateOne({ _id: vanId }, { $push: { trips: trip._id } }),
+        User.updateOne({ _id: van.owner }, { $push: { trips: trip._id } }),
       ]);
     } catch (error) {
       throw new SystemError((error as Error).message);

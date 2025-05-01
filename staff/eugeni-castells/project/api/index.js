@@ -10,6 +10,7 @@ const data_1 = require("./data");
 const routes_1 = require("./routes");
 const errorHandler_1 = __importDefault(require("./middlewares/errorHandler"));
 const index_1 = __importDefault(require("./loggers/index"));
+const trips_1 = require("./routes/trips");
 const { MONGO_URI, MONGO_DB_APP } = process.env;
 const { morganMiddleware } = index_1.default;
 data_1.data
@@ -28,6 +29,7 @@ data_1.data
     api.use((0, cors_1.default)());
     api.use("/users", routes_1.userRouter);
     api.use("/vans", routes_1.vanRouter);
+    api.use("/trips", trips_1.tripRouter);
     api.use(errorHandler_1.default);
     api.listen(PORT, () => {
         console.log(`listening in port ${PORT}`);

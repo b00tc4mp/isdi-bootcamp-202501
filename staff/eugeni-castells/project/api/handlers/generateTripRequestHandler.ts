@@ -9,6 +9,11 @@ export const generateTripRequestHandler = createFunctionalHandler(
     const { tripInfo } = req.body;
     const { userId } = req as AuthHandlerRequest;
 
+    tripInfo.selectedDates.startDate = new Date(
+      tripInfo.selectedDates.startDate
+    );
+    tripInfo.selectedDates.endDate = new Date(tripInfo.selectedDates.endDate);
+
     return generateTripRequest(userId, id, tripInfo).then(() => {
       res.status(200).send();
     });

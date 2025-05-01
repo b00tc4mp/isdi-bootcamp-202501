@@ -1,5 +1,4 @@
 import { Types } from "mongoose";
-import { VanDocType } from "../data/types";
 import { Fuel, Shower, Toilet } from "../data/types";
 
 export type NewVanInfo = {
@@ -143,7 +142,7 @@ export type PaymentMethod = "currency" | "road points";
 export type RequestTripParams = {
   selectedDates: { startDate: Date; endDate: Date };
   paymentMethod?: PaymentMethod;
-  price: number;
+  totalPrice: number;
 };
 
 export type PopulatedVanReturnedById = {
@@ -221,3 +220,15 @@ export type ReturnedChatMessages = {
   own: boolean;
   id: string;
 }[];
+
+export type ReturnedChat = {
+  id: string;
+  createdAt: string;
+  modifiedAt: string | null;
+  participants: {
+    id: string;
+    name: string;
+    lastName: string;
+  }[];
+  history: ReturnedChatMessages;
+};

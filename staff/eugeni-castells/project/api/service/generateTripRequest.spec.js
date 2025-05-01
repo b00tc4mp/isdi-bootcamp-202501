@@ -19,7 +19,7 @@ describe.only("generateTripRequest", () => {
         let owner;
         let requestedVan;
         let newTripRequestInfo = {
-            price: 317.66,
+            totalPrice: 317.66,
             selectedDates: {
                 startDate: new Date(2025, 4, 1),
                 endDate: new Date(2025, 4, 7),

@@ -44,7 +44,7 @@ const rejectTripRequest = (userId, tripId) => {
         if (!trip) {
             throw new errors_1.NotFoundError("trip not found");
         }
-        if (trip.owner !== userId) {
+        if (trip.van.owner.toString() !== userId) {
             throw new errors_1.OwnershipError("user doesn't own the van associated to the trip");
         }
         try {

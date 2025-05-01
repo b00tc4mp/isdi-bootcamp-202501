@@ -10,6 +10,8 @@ exports.generateTripRequestHandler = (0, createHandler_1.default)((req, res) => 
     const { id } = req.params;
     const { tripInfo } = req.body;
     const { userId } = req;
+    tripInfo.selectedDates.startDate = new Date(tripInfo.selectedDates.startDate);
+    tripInfo.selectedDates.endDate = new Date(tripInfo.selectedDates.endDate);
     return (0, service_1.generateTripRequest)(userId, id, tripInfo).then(() => {
         res.status(200).send();
     });

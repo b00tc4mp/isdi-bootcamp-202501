@@ -17,6 +17,7 @@ const {
   SystemError,
   ValidationError,
   NotFoundError,
+  OverlapError,
 } = errors;
 
 const errorHandler = (
@@ -49,7 +50,7 @@ const errorHandler = (
       status = 404;
       errorName = error.constructor.name;
       break;
-    case error instanceof DuplicityError:
+    case error instanceof DuplicityError || error instanceof OverlapError:
       status = 409;
       errorName = error.constructor.name;
       break;

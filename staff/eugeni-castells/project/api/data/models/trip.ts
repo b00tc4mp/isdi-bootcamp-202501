@@ -5,7 +5,6 @@ const trip = new Schema<TripDocType>({
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
   van: { type: Schema.Types.ObjectId, ref: "Van", required: true },
-  vanOwner: { type: Schema.Types.ObjectId, ref: "User", required: true },
   renter: { type: Schema.Types.ObjectId, ref: "User", required: true },
   issues: [
     { type: Schema.Types.ObjectId, ref: "Doc", required: true, default: [] },
@@ -28,7 +27,7 @@ const trip = new Schema<TripDocType>({
     required: true,
     default: "pending",
   },
-  price: { type: Number, min: 0, max: 1000 },
+  price: { type: Number },
   agreements: [
     {
       type: Schema.Types.ObjectId,

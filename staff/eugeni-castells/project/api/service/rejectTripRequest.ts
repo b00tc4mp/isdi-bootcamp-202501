@@ -1,4 +1,4 @@
-import { validate } from "com";
+import { Types, validate } from "com";
 import { Trip, User } from "../data";
 import { NotFoundError, OwnershipError, SystemError } from "com/errors";
 
@@ -30,7 +30,11 @@ export const rejectTripRequest = (
     let trip;
     try {
       trip = await Trip.findById(tripId)
-        .populate<{ owner: string }>({ path: "van", select: "owner" })
+        .populate<{
+          van: {
+            owner: Types.ObjectId;
+          };
+        }>({ path: "van", select: "owner" })
         .lean();
     } catch (error) {
       throw new SystemError((error as Error).message);
@@ -40,7 +44,7 @@ export const rejectTripRequest = (
       throw new NotFoundError("trip not found");
     }
 
-    if (trip.owner !== userId) {
+    if (trip.van.owner.toString() !== userId) {
       throw new OwnershipError(
         "user doesn't own the van associated to the trip"
       );

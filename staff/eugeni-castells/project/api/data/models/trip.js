@@ -6,7 +6,6 @@ const trip = new mongoose_1.Schema({
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     van: { type: mongoose_1.Schema.Types.ObjectId, ref: "Van", required: true },
-    vanOwner: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
     renter: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
     issues: [
         { type: mongoose_1.Schema.Types.ObjectId, ref: "Doc", required: true, default: [] },
@@ -29,7 +28,7 @@ const trip = new mongoose_1.Schema({
         required: true,
         default: "pending",
     },
-    price: { type: Number, min: 0, max: 1000 },
+    price: { type: Number },
     agreements: [
         {
             type: mongoose_1.Schema.Types.ObjectId,

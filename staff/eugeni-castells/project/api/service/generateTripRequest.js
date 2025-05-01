@@ -38,7 +38,7 @@ const generateTripRequest = (userId, vanId, tripInfo) => {
     return (() => __awaiter(void 0, void 0, void 0, function* () {
         let user;
         let van;
-        const { selectedDates, price } = tripInfo, rest = __rest(tripInfo, ["selectedDates", "price"]);
+        const { selectedDates, totalPrice } = tripInfo, rest = __rest(tripInfo, ["selectedDates", "totalPrice"]);
         const { startDate, endDate } = selectedDates;
         try {
             [user, van] = yield Promise.all([
@@ -66,11 +66,12 @@ const generateTripRequest = (userId, vanId, tripInfo) => {
             throw new errors_1.NotFoundError("van not found");
         //This will return true if the filter returns one user (the user) or false if it returns 0 users (the user hasnt pass the filter)
         //We put the user into an array because thats what the function expects
-        const noUserOverlap = !!(0, utils_1.filterTripsByDate)([user], startDate, endDate);
+        const noUserOverlap = !!(0, utils_1.filterTripsByDate)([user], startDate, endDate)
+            .length;
         if (!noUserOverlap) {
             throw new errors_1.OverlapError("you already have a trip on these dates!");
         }
-        const noVanOverlap = !!(0, utils_1.filterTripsByDate)([van], startDate, endDate);
+        const noVanOverlap = !!(0, utils_1.filterTripsByDate)([van], startDate, endDate).length;
         if (!noVanOverlap) {
             throw new errors_1.OverlapError("requested van is already booked");
         }
@@ -79,7 +80,7 @@ const generateTripRequest = (userId, vanId, tripInfo) => {
         let trip;
         //Create trip with all the info
         try {
-            trip = yield data_1.Trip.create(Object.assign(Object.assign({}, rest), { price: price, renter: userId, vanOwner: van.owner, startDate: startDate, endDate: endDate, van: van._id }));
+            trip = yield data_1.Trip.create(Object.assign(Object.assign({}, rest), { price: totalPrice, renter: userId, vanOwner: van.owner, startDate: startDate, endDate: endDate, van: van._id }));
         }
         catch (error) {
             throw new errors_1.SystemError(error.message);
@@ -90,6 +91,7 @@ const generateTripRequest = (userId, vanId, tripInfo) => {
             yield Promise.all([
                 data_1.User.updateOne({ _id: userId }, { $push: { trips: trip._id } }),
                 data_1.Van.updateOne({ _id: vanId }, { $push: { trips: trip._id } }),
+                data_1.User.updateOne({ _id: van.owner }, { $push: { trips: trip._id } }),
             ]);
         }
         catch (error) {
