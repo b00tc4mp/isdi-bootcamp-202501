@@ -53,6 +53,8 @@ export default function SearchScreen() {
   };
 
   const handleSearchPress = () => {
+    debugger;
+    console.log(dateRange.start?.number);
     const startDate = dateRange.start?.date;
     const endDate = dateRange.end?.date;
     router.push({

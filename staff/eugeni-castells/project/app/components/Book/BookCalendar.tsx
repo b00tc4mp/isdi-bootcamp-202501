@@ -1,11 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Calendar, DateData } from "react-native-calendars";
-import {
-  Pressable,
-  StyleSheet,
-  Alert,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { Pressable, StyleSheet, Alert } from "react-native";
 import { View, Text } from "@/components/Themed";
 import { format, addDays, isSameDay, isBefore, isAfter } from "date-fns";
 import { Colors } from "@/constants/Colors";

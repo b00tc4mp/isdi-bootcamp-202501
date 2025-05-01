@@ -1,171 +1,147 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import {
-  format,
-  startOfMonth,
-  endOfMonth,
-  addMonths,
-  subMonths,
-  eachDayOfInterval,
-  isSameDay,
-  isBefore,
-  isAfter,
-} from "date-fns";
-import {
-  CalendarPropsType,
-  ReturnedFormattedDay,
-  GeneratedDayByCalendar,
-} from "./types";
+import { View, Text, Pressable, StyleSheet, Alert } from "react-native";
+import { Calendar, DateData } from "react-native-calendars";
+import { format, isSameDay, isBefore, isAfter, addDays } from "date-fns";
+import { CalendarPropsType, ReturnedFormattedDay } from "./types";
 import { spacing } from "@/constants/Paddings";
 import { Colors } from "@/constants/Colors";
 import { Typography } from "@/constants/Typography";
+import { getFormattedDate } from "@/app/utils";
 
 export default function CalendarFilter({ onAcceptDates }: CalendarPropsType) {
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
-  const [days, setDays] = useState<GeneratedDayByCalendar[]>();
-
   const [selectedRange, setSelectedRange] = useState<{
-    start: ReturnedFormattedDay | null;
-    end: ReturnedFormattedDay | null;
+    start: ReturnedFormattedDay;
+    end: ReturnedFormattedDay;
   }>({
-    start: null,
+    start: {
+      date: null,
+      number: null,
+      month: null,
+    },
     end: null,
   });
 
-  const formatDate = (date: Date) => {
-    return {
-      date: date,
-      month: format(date, "MMM"),
-      number: format(date, "d"),
-    };
-  };
+  const [markedDates, setMarkedDates] = useState({});
 
-  const handleAcceptDates = () => {
-    onAcceptDates(selectedRange);
-  };
-  const handleDateSelect = (date: Date) => {
-    const { start, end } = selectedRange;
+  const handleDayPress = (day: DateData) => {
+    const selectedDate = new Date(day.dateString);
+    const formatted = getFormattedDate(selectedDate);
 
-    if (!start?.date || (start?.date && end?.date)) {
-      setSelectedRange({ start: formatDate(date), end: null });
-    } else if (isBefore(date, start!.date)) {
-      setSelectedRange({ start: formatDate(date), end: null });
-    } else {
-      setSelectedRange({ start, end: formatDate(date) });
+    // Si no hi ha cap data o ja s’ha seleccionat un rang complet
+    if (
+      !selectedRange?.start?.date ||
+      (selectedRange.start.date && selectedRange.end?.date)
+    ) {
+      setSelectedRange({
+        start: formatted,
+        end: null,
+      });
+
+      const dateStr = format(selectedDate, "yyyy-MM-dd");
+      setMarkedDates({
+        [dateStr]: {
+          startingDay: true,
+          color: Colors.light.button,
+          textColor: "white",
+        },
+      });
+
+      return;
     }
-  };
 
-  useEffect(() => {
-    const generatedDays = generateCalendar();
-    setDays(generatedDays);
-  }, [currentMonth]);
+    // Si seleccionem una data abans de la data d'inici
+    if (isBefore(selectedDate, selectedRange.start.date)) {
+      setSelectedRange({
+        start: formatted,
+        end: null,
+      });
 
-  const generateCalendar = (): GeneratedDayByCalendar[] => {
-    //Obtenim quin dia comença el mes actual
-    const start = startOfMonth(currentMonth);
+      const dateStr = format(selectedDate, "yyyy-MM-dd");
+      setMarkedDates({
+        [dateStr]: {
+          startingDay: true,
+          color: Colors.light.button,
+          textColor: "white",
+        },
+      });
 
-    //Obtenim quin dia acaba el mes actual
-    const end = endOfMonth(currentMonth);
+      return;
+    }
 
-    //Trobem quins dies hi ha entre l'interval del primer dia del mes i l'últim
-    const days = eachDayOfInterval({ start, end });
-
-    let formattedDays: ReturnedFormattedDay[];
-
-    formattedDays = days.map((day) => {
-      return {
-        date: day,
-        month: format(day, "MMM"),
-        number: format(day, "d"),
-      };
+    // Si seleccionem una data posterior i volem completar el rang
+    const range = generateRangeWithFns(selectedRange.start.date!, selectedDate);
+    setSelectedRange({
+      start: selectedRange.start,
+      end: getFormattedDate(selectedDate),
     });
+    setMarkedDates(range);
+  };
 
-    //Calculem quants espais ha de deixar en blanc al principi del mes
-    const nullDays = start.getDay(); // 0 (Sunday) - 6 (Saturday)
+  const generateRangeWithFns = (start: Date, end: Date) => {
+    const marked: any = {};
+    let current = start;
 
-    //Creem un nou array amb  length igual al nombre de dies null
-    const nullArray = new Array(nullDays);
+    while (!isAfter(current, end)) {
+      const dateStr = format(current, "yyyy-MM-dd");
 
-    //Fem que a cada item de l'array li assignem null com a valor
-    for (let i = 0; i < nullArray.length; i++) {
-      nullArray[i] = null;
+      marked[dateStr] = {
+        color: Colors.light.button,
+        textColor: "white",
+        startingDay: isSameDay(current, start),
+        endingDay: isSameDay(current, end),
+      };
+
+      current = addDays(current, 1);
     }
 
-    //Concatenem aquest array amb el dels dies. Així, al principi tindrem els null i després seguiran els altres.
-    const aggregatedDays = nullArray.concat(days);
-
-    return aggregatedDays;
+    return marked;
   };
 
-  const isInRange = (date: Date) => {
-    const { start, end } = selectedRange;
-    if (!start || !end) return false;
-    return isAfter(date, start.date) && isBefore(date, end.date);
+  const handleClearClick = () => {
+    setSelectedRange({ start: null, end: null });
+    setMarkedDates({});
   };
-
-  const isStart = (date: Date) =>
-    selectedRange.start && isSameDay(date, selectedRange.start.date);
-  const isEnd = (date: Date) =>
-    selectedRange.end && isSameDay(date, selectedRange.end.date);
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Pressable onPress={() => setCurrentMonth(subMonths(currentMonth, 1))}>
-          <Text style={styles.arrow}>{"<"}</Text>
-        </Pressable>
-        <Text style={styles.month}>{format(currentMonth, "MMMM yyyy")}</Text>
-        <Pressable onPress={() => setCurrentMonth(addMonths(currentMonth, 1))}>
-          <Text style={styles.arrow}>{">"}</Text>
-        </Pressable>
-      </View>
-      <View style={styles.dayWrapper}>
-        <View style={styles.weekdays}>
-          {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day, index) => (
-            <Text key={index} style={styles.weekday}>
-              {day}
-            </Text>
-          ))}
-        </View>
-        <View style={styles.daysContainer}>
-          {days?.map((date, index) => {
-            const isSelectedStart = date && isStart(date);
-            const isSelectedEnd = date && isEnd(date);
-            const isBetween = date && isInRange(date);
+      <Calendar
+        showScrollIndicator={true}
+        markingType="period"
+        markedDates={markedDates}
+        onDayPress={handleDayPress}
+      />
 
-            return (
-              <Pressable
-                key={index}
-                style={[
-                  styles.day,
-                  isBetween && styles.betweenDay,
-                  isSelectedStart && styles.startDay,
-                  isSelectedEnd && styles.endDay,
-                ]}
-                onPress={() => date && handleDateSelect(date)}
-              >
-                <Text
-                  style={[
-                    styles.dayText,
-                    (isSelectedStart || isSelectedEnd) &&
-                      styles.selectedDayText,
-                  ]}
-                >
-                  {date ? format(date, "d") : ""}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-      </View>
-      <View style={styles.bottomContainer}>
+      <View style={styles.footerContainer}>
         <Pressable
-          style={styles.buttonContainer}
+          style={styles.bookButton}
           onPress={() => {
-            handleAcceptDates();
+            handleClearClick();
           }}
         >
-          <Text style={styles.buttonText}>Accept</Text>
+          <Text style={styles.buttonText}>Clear dates</Text>
+        </Pressable>
+        <Pressable
+          style={styles.bookButton}
+          onPress={() => {
+            if (selectedRange.start?.date && selectedRange.end?.date) {
+              onAcceptDates({
+                start: {
+                  date: selectedRange.start.date,
+                  month: selectedRange.start.month,
+                  number: selectedRange.start.number,
+                },
+                end: {
+                  date: selectedRange.end.date,
+                  month: selectedRange.end.month,
+                  number: selectedRange.end.number,
+                },
+              });
+            } else {
+              Alert.alert("Select a range of dates");
+            }
+          }}
+        >
+          <Text style={styles.buttonText}>Select Dates</Text>
         </Pressable>
       </View>
     </View>
@@ -178,72 +154,26 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 12,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: spacing.xsmd,
-  },
-  month: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  arrow: {
-    fontSize: 18,
-    color: "#64748B",
-  },
-  weekdays: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: spacing.sm,
-  },
-  weekday: {
-    textAlign: "center",
-    color: "#94A3B8",
-  },
-  daysContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-  },
-  day: {
-    width: "14.28%",
-    aspectRatio: 1,
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
     alignItems: "center",
-    margin: 2,
-    borderRadius: 16,
+    backgroundColor: "rgba(255,255,255,0.7)",
+    zIndex: 1,
   },
-  dayText: {
-    color: "#0F172A",
-  },
-  selectedDayText: {
-    color: "white",
-  },
-  startDay: {
-    backgroundColor: "#3B82F6",
-  },
-  endDay: {
-    backgroundColor: "#3B82F6",
-  },
-  betweenDay: {
-    backgroundColor: "#DBEAFE",
-    borderRadius: 0,
-  },
-  dayWrapper: {
-    padding: spacing.md,
-  },
-  bottomContainer: {
-    padding: spacing.md,
+  footerContainer: {
+    width: "100%",
+    padding: spacing.lg,
+    position: "absolute",
+    bottom: 0,
     backgroundColor: Colors.light.background,
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
+    alignItems: "center",
+    zIndex: 3,
   },
-  buttonContainer: {
-    paddingLeft: spacing.md,
-    paddingRight: spacing.md,
-    paddingTop: spacing.xsmd,
-    paddingBottom: spacing.xsmd,
+  bookButton: {
+    padding: spacing.md,
     backgroundColor: Colors.light.button,
     borderRadius: 10,
   },

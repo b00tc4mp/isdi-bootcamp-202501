@@ -1,4 +1,4 @@
-export const generateUrl = (baseUrl: string, params: object) => {
+export const generateQuery = (baseUrl: string, params: object) => {
   let querySign = "?";
 
   //Object.entries() transforma en un array anidat d'arrays on cada item és un array amb el primer valor igual al nom de la propietat i el segon el valor de la propietat

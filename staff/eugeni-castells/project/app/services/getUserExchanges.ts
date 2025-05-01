@@ -5,7 +5,7 @@ import { ReturnedExchanges, ReturnedExchangesObject } from "@/com/types";
 export const getUserExchanges = async (): Promise<ReturnedExchangesObject> => {
   const token = await data.getToken();
 
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL}/self/trips`, {
+  return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/self/trips`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -24,19 +24,33 @@ export const getUserExchanges = async (): Promise<ReturnedExchangesObject> => {
           .then((body: ReturnedExchangesObject) => {
             const exchanges = body;
 
-            exchanges.pendingRequests.forEach((exchange) => {
+            exchanges.pendingRequests?.all?.forEach((exchange) => {
+              exchange.createdAt = new Date(exchange.createdAt);
+              if (exchange.modifiedAt)
+                exchange.modifiedAt = new Date(exchange.modifiedAt);
+            });
+            exchanges.pendingRequests?.toUser?.forEach((exchange) => {
+              exchange.createdAt = new Date(exchange.createdAt);
+              if (exchange.modifiedAt)
+                exchange.modifiedAt = new Date(exchange.modifiedAt);
+            });
+            exchanges.pendingRequests?.user?.forEach((exchange) => {
               exchange.createdAt = new Date(exchange.createdAt);
               if (exchange.modifiedAt)
                 exchange.modifiedAt = new Date(exchange.modifiedAt);
             });
 
-            exchanges.trips.forEach((exchange) => {
+            exchanges.trips?.all?.forEach((exchange) => {
               exchange.createdAt = new Date(exchange.createdAt);
               if (exchange.modifiedAt)
                 exchange.modifiedAt = new Date(exchange.modifiedAt);
             });
-
-            exchanges.userRequests.forEach((exchange) => {
+            exchanges.trips?.user?.forEach((exchange) => {
+              exchange.createdAt = new Date(exchange.createdAt);
+              if (exchange.modifiedAt)
+                exchange.modifiedAt = new Date(exchange.modifiedAt);
+            });
+            exchanges.trips?.vans?.forEach((exchange) => {
               exchange.createdAt = new Date(exchange.createdAt);
               if (exchange.modifiedAt)
                 exchange.modifiedAt = new Date(exchange.modifiedAt);

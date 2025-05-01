@@ -23,6 +23,9 @@ export const filterLocation = (location: string): Promise<GeoDBResponse> => {
     })
     .then((response) => {
       return response.json();
+
+      //TODO
+      //Add response error logic
     })
     .catch((error) => {
       throw new SystemError(error.message);

@@ -16,20 +16,20 @@ exports.validate = {
         if (constants_1.default.EMPTY_OR_BLANK_REGEX.test(text))
             throw new errors_1.ValidationError("invalid " + explain + " syntax");
     },
-    email: function (email, explain) {
-        this.string(email, explain);
+    email: function (email) {
+        this.string(email, "email");
         if (!constants_1.default.EMAIL_REGEX.test(email))
-            throw new errors_1.ValidationError("invalid " + explain + " syntax");
+            throw new errors_1.ValidationError("invalid " + "email" + " syntax");
     },
-    username: function (username, explain) {
-        this.text(username, explain);
-        this.minLength(username, 3, explain);
-        this.maxLength(username, 20, explain);
+    username: function (username) {
+        this.text(username, "username");
+        this.minLength(username, 3, "username");
+        this.maxLength(username, 20, "username");
     },
-    password: function (password, explain) {
-        this.text(password, explain);
-        this.minLength(password, 8, explain);
-        this.maxLength(password, 50, explain);
+    password: function (password) {
+        this.text(password, "password");
+        this.minLength(password, 8, "password");
+        this.maxLength(password, 50, "password");
     },
     hashedPassword: function (password, explain) {
         this.text(password, explain);
@@ -44,16 +44,20 @@ exports.validate = {
         if (value.length < minLength)
             throw new errors_1.ValidationError("invalid " + explain + " range error");
     },
-    url(url, explain) {
-        this.string(url, explain);
+    url(url) {
+        this.string(url, "url");
         if (!constants_1.default.URL_REGEX.test(url))
-            throw new errors_1.ValidationError(`invalid ${explain} syntax`);
+            throw new errors_1.ValidationError(`invalid url syntax`);
     },
     id(id, explain) {
-        this.text(id, explain);
+        this.text(id, "id" + explain);
         if (!constants_1.default.OBJECT_ID_REGEX.test(id))
-            throw new errors_1.ValidationError(`invalid ${explain} as ObjectId syntax`);
+            throw new errors_1.ValidationError(`invalid id as ObjectId syntax`);
         if (id.length !== 24)
-            throw new errors_1.ValidationError(`invalid ${explain} length`);
+            throw new errors_1.ValidationError(`invalid id length`);
+    },
+    date(date) {
+        if (!(date instanceof Date))
+            throw new errors_1.ValidationError("invalid date syntax");
     },
 };

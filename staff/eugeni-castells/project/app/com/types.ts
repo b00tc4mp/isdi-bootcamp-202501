@@ -181,19 +181,83 @@ export type PopulatedAuthor = {
 export type ReturnedExchanges = {
   id: string;
   owner: {
-    id: Types.ObjectId;
+    id: string;
     name: string;
     lastName: string;
- 
+    isUser: boolean;
   };
   confirmStatus: TripConfirmStatus;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   price: number;
   createdAt: Date;
   modifiedAt: Date;
+  renter: {
+    id: string;
+    name: string;
+    lastName: string;
+  };
 };
 
-export type ReturnedExchangesObject={
-  pendingRequests:
-}
+export type ReturnedExchangesObject = {
+  trips: {
+    all: ReturnedExchanges[] | [];
+    user: ReturnedExchanges[] | [];
+    vans: ReturnedExchanges[] | [];
+  };
+  pendingRequests: {
+    all: ReturnedExchanges[] | [];
+    user: ReturnedExchanges[] | [];
+    toUser: ReturnedExchanges[] | [];
+  };
+};
+
+export type ReturnedChatMessages = {
+  text: string;
+  createdAt: string;
+  author: {
+    id: string;
+    name: string;
+    lastName: string;
+  };
+  own: boolean;
+  id: string;
+  modifiedAt: string | null;
+}[];
+
+export type ReturnedChat = {
+  id: string;
+  createdAt: string;
+  modifiedAt: null | string;
+  participants: {
+    id: string;
+    name: string;
+    lastName: string;
+  }[];
+  history: ReturnedChatMessages;
+};
+
+export type ReturnedSanitizedChat = {
+  id: string;
+  createdAt: Date;
+  modifiedAt: null | Date;
+  participants: {
+    id: string;
+    name: string;
+    lastName: string;
+  }[];
+  history: ReturnedSanitizedChatMessages;
+};
+
+export type ReturnedSanitizedChatMessages = {
+  text: string;
+  createdAt: Date;
+  author: {
+    id: string;
+    name: string;
+    lastName: string;
+  };
+  own: boolean;
+  id: string;
+  modifiedAt: Date | null;
+}[];

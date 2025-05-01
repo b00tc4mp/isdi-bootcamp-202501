@@ -28,7 +28,7 @@ const SearchBox = ({ text, displayText, type, onPressed }: AddBoxProps) => {
 const styles = StyleSheet.create({
   container: {
     padding: spacing.lg,
-    backgroundColor: "white", // necessari perquè l'ombra es vegi
+    backgroundColor: "white",
     borderRadius: 16,
     // iOS
     shadowColor: "#000",

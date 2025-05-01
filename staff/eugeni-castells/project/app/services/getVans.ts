@@ -2,7 +2,7 @@ import errors, { SystemError } from "@/com/errors";
 import { data } from "@/data";
 
 import { ReturnedVansType } from "@/com/types";
-import { generateUrl } from "@/app/utils/generateUrl";
+import { generateQuery } from "@/app/utils/generateQuery";
 
 export const getVans = async (
   longitude: string | null,
@@ -13,7 +13,7 @@ export const getVans = async (
 ): Promise<ReturnedVansType[]> => {
   const token = await data.getToken();
 
-  const url = generateUrl(`/vans`, {
+  const url = generateQuery(`/vans`, {
     longitude,
     latitude,
     startDate,

@@ -41,25 +41,26 @@ export const BookIndex = ({
   }, [selectedDates]);
 
   const handleAcceptTripRequest = () => {
-    Alert.alert(
-      "Confirm trip request",
-      "Are you sure you want to request this trip?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-          onPress: () => {},
-        },
-        {
-          text: "Confirm",
-          style: "default",
-          onPress: () => {
-            handleTripConfirmed();
-          },
-        },
-      ],
-      { cancelable: true }
-    );
+    // Alert.alert(
+    //   "Confirm trip request",
+    //   "Are you sure you want to request this trip?",
+    //   [
+    //     {
+    //       text: "Cancel",
+    //       style: "cancel",
+    //       onPress: () => {},
+    //     },
+    //     {
+    //       text: "Confirm",
+    //       style: "default",
+    //       onPress: () => {
+    //         handleTripConfirmed();
+    //       },
+    //     },
+    //   ],
+    //   { cancelable: true }
+    // );
+    handleTripConfirmed();
   };
 
   const handleTripConfirmed = async () => {
@@ -72,7 +73,7 @@ export const BookIndex = ({
           },
           totalPrice: totalPrice!,
         };
-
+        debugger;
         return generateTripRequest(tripInfo, id)
           .then(() => {
             router.push("/(tabs)/exchanges");

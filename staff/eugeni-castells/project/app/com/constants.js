@@ -8,5 +8,8 @@ const constant = {
     PASSWORD_REGEX: /^(?=.*[A-Z])(?=.*[^a-zA-Z\s])\S{8,20}$/,
     NAME_REGEX: /^(?!.* {2,})[A-Za-zÀ-ÿ ]{2,20}$/,
     USERNAME_REGEX: /^(?!.* {2,})[A-Za-zÀ-ÿ0-9 ]{2,20}$/,
+    PERCENTAGE_STRING_REGEX: /^100%$|^\d{1,2}%$/,
+    FETCHED_CITIES_SHOWN: 5,
+    MAX_DISTANCE: 50,
 };
 exports.default = constant;

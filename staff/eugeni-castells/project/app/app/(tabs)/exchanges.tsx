@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
 
-import { Alert, Pressable, StyleSheet } from "react-native";
+import { Alert, Pressable, StyleSheet, ScrollView } from "react-native";
 
 import { Text, View } from "@/components/Themed";
 
-import { ReturnedExchanges, ReturnedExchangesObject } from "@/com/types";
+import { ReturnedExchangesObject } from "@/com/types";
 import { getUserExchanges } from "@/services/getUserExchanges";
+import { spacing } from "@/constants/Paddings";
+import ExchangesFoldedItem from "@/components/Exchanges/ExchangesFoldedItem";
 
 export default function ExchangeScreen() {
   const [exchanges, setExchanges] = useState<ReturnedExchangesObject | null>(
     null
   );
+
   const [view, setView] = useState<
-    "trips" | "user requests" | "requests received"
+    | "trips"
+    | "user trips"
+    | "vans trips"
+    | "requests"
+    | "user requests"
+    | "pending requests"
   >("trips");
 
   useEffect(() => {
+    fetchUserExchanges();
+  }, []);
+
+  const fetchUserExchanges = () => {
     try {
       getUserExchanges()
         .then((exchanges) => {
@@ -27,7 +39,7 @@ export default function ExchangeScreen() {
     } catch (error) {
       Alert.alert((error as Error).message);
     }
-  }, []);
+  };
 
   return (
     <View style={styles.container}>
@@ -36,73 +48,243 @@ export default function ExchangeScreen() {
           onPress={() => {
             setView("trips");
           }}
-          style={[styles.button, view === "trips" && styles.selectedButton]}
+          style={[
+            styles.button,
+            (view === "trips" ||
+              view === "user trips" ||
+              view === "vans trips") &&
+              styles.selectedButton,
+          ]}
         >
-          <Text>Your Trips</Text>
-          {exchanges?.trips.map((trip) => {
-            return <Text>{trip.owner.name}</Text>;
-          })}
+          <Text>Trips</Text>
         </Pressable>
         <Pressable
           onPress={() => {
-            setView("requests received");
+            setView("requests");
           }}
           style={[
             styles.button,
-            view === "requests received" && styles.selectedButton,
+            (view === "requests" ||
+              view === "pending requests" ||
+              view === "user requests") &&
+              styles.selectedButton,
           ]}
         >
-          <Text>Requests Received</Text>
-          <Text>Your Trips</Text>
-          {exchanges?.userRequests.map((trip) => {
-            return <Text>{trip.owner.name}</Text>;
-          })}
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            setView("user requests");
-          }}
-          style={[
-            styles.button,
-            view === "user requests" && styles.selectedButton,
-          ]}
-        >
-          <Text>Your Requests</Text>
-          {exchanges?.pendingRequests.map((trip) => {
-            return <Text>{trip.owner.name}</Text>;
-          })}
+          <Text>Requests</Text>
         </Pressable>
       </View>
-      {view === "trips" && (
-        <>
-          <Text style={styles.title}>Your trips</Text>
-          <View
-            style={styles.separator}
-            lightColor="#eee"
-            darkColor="rgba(255,255,255,0.1)"
-          ></View>
-        </>
-      )}
-      {view === "user requests" && (
-        <>
-          <Text style={styles.title}>Trip requests</Text>
-          <View
-            style={styles.separator}
-            lightColor="#eee"
-            darkColor="rgba(255,255,255,0.1)"
-          ></View>
-        </>
-      )}
-      {view === "requests received" && (
-        <>
-          <Text style={styles.title}>Requests received</Text>
-          <View
-            style={styles.separator}
-            lightColor="#eee"
-            darkColor="rgba(255,255,255,0.1)"
-          ></View>
-        </>
-      )}
+      <View style={styles.headerContainer}>
+        {(view === "trips" ||
+          view === "user trips" ||
+          view === "vans trips") && (
+          <>
+            <Pressable
+              onPress={() => {
+                setView("trips");
+              }}
+            >
+              <Text>All</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                setView("user trips");
+              }}
+            >
+              <Text> User Trips</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                setView("vans trips");
+              }}
+            >
+              <Text>Vans' Trips</Text>
+            </Pressable>
+          </>
+        )}
+        {(view === "requests" ||
+          view === "pending requests" ||
+          view === "user requests") && (
+          <>
+            <Pressable
+              onPress={() => {
+                setView("requests");
+              }}
+            >
+              <Text>All</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                setView("user requests");
+              }}
+            >
+              <Text> User Requests</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                setView("pending requests");
+              }}
+            >
+              <Text>Requests To Confirm</Text>
+            </Pressable>
+          </>
+        )}
+      </View>
+      <ScrollView style={{ width: "100%" }}>
+        {view === "trips" && (
+          <>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            ></View>
+            {exchanges?.trips.all.map((trip, index) => {
+              return (
+                <ExchangesFoldedItem
+                  key={index}
+                  startDate={trip.startDate}
+                  endDate={trip.endDate}
+                  status={trip.confirmStatus}
+                  owner={trip.owner}
+                  renter={trip.renter}
+                  createdAt={trip.createdAt}
+                  price={trip.price}
+                  id={trip.id}
+                />
+              );
+            })}
+          </>
+        )}
+        {view === "user trips" && (
+          <>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            ></View>
+            {exchanges?.trips.user.map((trip, index) => {
+              return (
+                <ExchangesFoldedItem
+                  key={index}
+                  startDate={trip.startDate}
+                  endDate={trip.endDate}
+                  status={trip.confirmStatus}
+                  owner={trip.owner}
+                  renter={trip.renter}
+                  createdAt={trip.createdAt}
+                  price={trip.price}
+                  id={trip.id}
+                />
+              );
+            })}
+          </>
+        )}
+        {view === "vans trips" && (
+          <>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            ></View>
+            {exchanges?.trips.vans.map((trip, index) => {
+              return (
+                <ExchangesFoldedItem
+                  key={index}
+                  startDate={trip.startDate}
+                  endDate={trip.endDate}
+                  status={trip.confirmStatus}
+                  owner={trip.owner}
+                  renter={trip.renter}
+                  createdAt={trip.createdAt}
+                  price={trip.price}
+                  id={trip.id}
+                />
+              );
+            })}
+          </>
+        )}
+        {view === "requests" && (
+          <>
+            <Text style={styles.title}>All Your requests</Text>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            ></View>
+
+            {exchanges?.pendingRequests.all.map((trip, index) => {
+              return (
+                <ExchangesFoldedItem
+                  key={index}
+                  startDate={trip.startDate}
+                  endDate={trip.endDate}
+                  status={trip.confirmStatus}
+                  owner={trip.owner}
+                  renter={trip.renter}
+                  createdAt={trip.createdAt}
+                  price={trip.price}
+                  id={trip.id}
+                  handleRequestButtons={trip.owner.isUser}
+                  onConfirm={fetchUserExchanges}
+                />
+              );
+            })}
+          </>
+        )}
+        {view === "user requests" && (
+          <>
+            <Text style={styles.title}>Your requests</Text>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            ></View>
+
+            {exchanges?.pendingRequests.user.map((trip, index) => {
+              return (
+                <ExchangesFoldedItem
+                  key={index}
+                  startDate={trip.startDate}
+                  endDate={trip.endDate}
+                  status={trip.confirmStatus}
+                  owner={trip.owner}
+                  renter={trip.renter}
+                  createdAt={trip.createdAt}
+                  price={trip.price}
+                  id={trip.id}
+                />
+              );
+            })}
+          </>
+        )}
+        {view === "pending requests" && (
+          <>
+            <Text style={styles.title}>Your requests</Text>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            ></View>
+
+            {exchanges?.pendingRequests.toUser.map((trip, index) => {
+              return (
+                <ExchangesFoldedItem
+                  key={index}
+                  startDate={trip.startDate}
+                  endDate={trip.endDate}
+                  status={trip.confirmStatus}
+                  owner={trip.owner}
+                  renter={trip.renter}
+                  createdAt={trip.createdAt}
+                  price={trip.price}
+                  onConfirm={fetchUserExchanges}
+                  handleRequestButtons={trip.owner.isUser}
+                  id={trip.id}
+                />
+              );
+            })}
+          </>
+        )}
+      </ScrollView>
     </View>
   );
 }
@@ -110,6 +292,14 @@ export default function ExchangeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
+    padding: spacing.lg,
+  },
+  headerContainer: {
+    width: "100%",
+    flexDirection: "row",
+    gap: spacing.md,
+    justifyContent: "space-between",
     alignItems: "center",
   },
   buttonContainer: {
@@ -119,7 +309,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     paddingVertical: 12,
-    marginHorizontal: 5,
+    // marginHorizontal: 5,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 8,

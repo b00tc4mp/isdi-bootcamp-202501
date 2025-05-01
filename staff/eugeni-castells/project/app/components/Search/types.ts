@@ -16,12 +16,10 @@ export type CalendarPropsType = {
   onAcceptDates: (dateRange: SelectedDate) => void;
 };
 
-export type GeneratedDayByCalendar = Date | null;
-
 export type ReturnedFormattedDay = {
-  month: string;
-  number: string;
-  date: Date;
+  month: string | null;
+  number: string | null;
+  date: Date | null;
 } | null;
 
 export type SelectedLocation = {

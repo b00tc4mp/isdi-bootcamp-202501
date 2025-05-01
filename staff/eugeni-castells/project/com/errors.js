@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LocationError = exports.AuthorizationError = exports.ValidationError = exports.DuplicityError = exports.SystemError = exports.CredentialsError = exports.NotFoundError = exports.OwnershipError = void 0;
+exports.OverlapError = exports.LocationError = exports.AuthorizationError = exports.ValidationError = exports.DuplicityError = exports.SystemError = exports.CredentialsError = exports.NotFoundError = exports.OwnershipError = void 0;
 class OwnershipError extends Error {
     constructor(message) {
         super(message);
@@ -57,6 +57,13 @@ class AuthorizationError extends Error {
     }
 }
 exports.AuthorizationError = AuthorizationError;
+class OverlapError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "OverlapError";
+    }
+}
+exports.OverlapError = OverlapError;
 const errors = {
     OwnershipError,
     NotFoundError,
@@ -66,5 +73,6 @@ const errors = {
     ValidationError,
     AuthorizationError,
     LocationError,
+    OverlapError,
 };
 exports.default = errors;

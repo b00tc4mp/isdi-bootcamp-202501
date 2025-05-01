@@ -50,6 +50,13 @@ class AuthorizationError extends Error {
   }
 }
 
+class OverlapError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "OverlapError";
+  }
+}
+
 export {
   OwnershipError,
   NotFoundError,
@@ -59,6 +66,7 @@ export {
   ValidationError,
   AuthorizationError,
   LocationError,
+  OverlapError,
 };
 
 const errors = {
@@ -70,6 +78,7 @@ const errors = {
   ValidationError,
   AuthorizationError,
   LocationError,
+  OverlapError,
 };
 
 export default errors;
