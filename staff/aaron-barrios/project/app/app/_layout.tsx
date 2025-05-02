@@ -1,8 +1,12 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { useColorScheme } from "@/components/useColorScheme"
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native"
-import { useFonts } from "expo-font"
-import { Stack, useRouter, Slot } from "expo-router"
+import {
+  useFonts,
+  Montserrat_900Black,
+} from "@expo-google-fonts/montserrat"
+import { Lato_300Light } from "@expo-google-fonts/lato"
+import { Stack, useRouter } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
 import { useEffect, useState } from "react"
 import { Platform } from "react-native"
@@ -23,10 +27,10 @@ type Role = "anonym" | "regular" | "mod"
 const isValidRole = (value: any): value is Role =>
   value === "anonym" || value === "regular" || value === "mod"
 
-// ...imports igual que antes...
-
 export default function RootLayout() {
   const [loaded, error] = useFonts({
+    Montserrat_900Black,
+    Lato_300Light,
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   })

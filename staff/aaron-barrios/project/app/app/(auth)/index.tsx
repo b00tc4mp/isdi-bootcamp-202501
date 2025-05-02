@@ -1,12 +1,17 @@
-import { Alert, Button, StyleSheet, Pressable } from "react-native"
+import {
+  Alert,
+  Pressable,
+  ImageBackground,
+  View,
+} from "react-native"
 import { useRouter } from "expo-router"
-
-import { Text, View } from "@/components/Themed"
-
+import { Text } from "react-native"
 import { authAnonymUser } from "@/services/user/anonym"
 import { errors } from "com"
 
 const { SystemError } = errors
+
+import { styles } from "./Landing.styles"
 
 export default function LandingScreen() {
   const router = useRouter()
@@ -15,7 +20,7 @@ export default function LandingScreen() {
     authAnonymUser()
       .then(() => {
         Alert.alert("👤 Anonym mode", "You have logged as a guest")
-        router.replace("/(anonym)" as any) // 🚀 redirige a tu layout anónimo
+        router.replace("/(anonym)" as any)
       })
       .catch(error => {
         console.error(error)
@@ -28,50 +33,34 @@ export default function LandingScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Landing</Text>
+    <ImageBackground
+      source={require("@/assets/images/landing_bg.jpg")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      {/* Capa oscura encima del fondo */}
+      <View style={styles.overlay} />
+
       <View style={styles.container}>
-
-        <View style={styles.button}>
-          <Button title="LOG IN" onPress={() => router.push("/(auth)/Login" as any)} />
+        <View style={styles.header}>
+          <Text style={styles.logo}>TZEND</Text>
+          <Text style={styles.subtitle}>Your only limit is you</Text>
         </View>
-        <Button title="REGISTER" onPress={() => router.push("/(auth)/Register" as any)} />
 
-        {/* Anchor a modo Anónimo */}
-        <Pressable onPress={handleAnonymousAccess}>
-          <Text style={styles.link}>Enter as a guest</Text>
-        </Pressable>
+        <View style={styles.footer}>
+          <Pressable style={styles.button} onPress={() => router.push("/(auth)/Login" as any)}>
+            <Text style={styles.buttonText}>SIGN IN</Text>
+          </Pressable>
 
+          <Pressable style={styles.button} onPress={() => router.push("/(auth)/Register" as any)}>
+            <Text style={styles.buttonText}>SIGN UP</Text>
+          </Pressable>
+
+          <Pressable onPress={handleAnonymousAccess}>
+            <Text style={styles.guestText}>Enter as a guest</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    justifyContent: "center",
-    backgroundColor: "#f0f0f0"
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    alignSelf: "flex-start",
-    marginBottom: 12
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  button: {
-    marginBottom: 16
-  },
-  link: {
-    fontSize: 16,
-    color: "#007aff",
-    textDecorationLine: "underline",
-    marginTop: 12
-  }
-})
