@@ -1,0 +1,84 @@
+body {
+    display: flex;
+    justify-content: center;
+    background-color: azure;
+}
+
+.landing-section {
+    display: flex;
+    flex-direction: column;
+
+    p {
+        text-align: center;
+        font-size: 3cap;
+    }
+
+    button {
+        padding: 50px 40px;
+        border-radius: 50%;
+        background: #19361e;
+        color: #4bd763;
+        font-size: 1.5em;
+        margin: 30px auto;
+        cursor: pointer;
+    }
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.marker {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+}
+
+.game-content {
+    flex: 2;
+    text-align: center;
+}
+
+.game-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+
+    button {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        outline: none;
+    }
+
+}
+
+.logs-section {
+    width: 100%;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .game-header {
+        flex-direction: column;
+    }
+
+    .marker,
+    .game-content {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

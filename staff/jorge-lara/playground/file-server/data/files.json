@@ -1,0 +1,22 @@
+[
+    {
+        "uuid": "7ff9e96c-1689-40a8-93ed-c7f9d7094cea",
+        "filename": "package.json",
+        "path": "files\\7ff9e96c-1689-40a8-93ed-c7f9d7094cea\\8c7dd922ad47494fc02c388e12c00eac\\b9cfc7f2cdf78a7f4b91a753d10865a2"
+    },
+    {
+        "uuid": "ff5ab533-b054-400b-b64b-1ce0ded34d8d",
+        "filename": "hello-world.txt",
+        "path": "files\\ff5ab533-b054-400b-b64b-1ce0ded34d8d\\8c7dd922ad47494fc02c388e12c00eac\\98f22c2dca8bf5ef2fe42552a9f95ec7"
+    },
+    {
+        "uuid": "55b621d8-b72b-4c0d-b76b-3c0bb6df7801",
+        "filename": "uwu.gif",
+        "path": "files\\55b621d8-b72b-4c0d-b76b-3c0bb6df7801\\8c7dd922ad47494fc02c388e12c00eac\\79d0e38f4dcccf49411c5d7ac2029db0"
+    },
+    {
+        "uuid": "9d827731-dd6f-43eb-972a-93b51ec19e11",
+        "filename": "pica.png",
+        "path": "files\\9d827731-dd6f-43eb-972a-93b51ec19e11\\8c7dd922ad47494fc02c388e12c00eac\\d323f099c8d518c475482978192ba884"
+    }
+]
