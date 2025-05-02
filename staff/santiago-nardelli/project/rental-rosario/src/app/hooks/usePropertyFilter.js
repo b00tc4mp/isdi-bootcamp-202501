@@ -2,10 +2,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 const usePropertyFilter = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [type, setType] = useState(searchParams.get("type") || "");
@@ -38,17 +39,17 @@ const usePropertyFilter = () => {
     }
 
     const newSearchParams = params.toString();
-    const newUrl = `${window.location.pathname}${
-      newSearchParams ? `?${newSearchParams}` : ""
-    }`;
+    // const newUrl = `${window.location.pathname}${
+    //   newSearchParams ? `?${newSearchParams}` : ""
+    // }`;
 
-    router.replace(newUrl, { scroll: false });
+    router.replace(`${pathname}?${newSearchParams}`, { scroll: false });
   };
 
   const resetFilters = () => {
     setType("");
     setBedrooms("");
-    router.replace(window.location.pathname, { scroll: false });
+    router.replace(pathname, { scroll: false });
   };
 
   return {

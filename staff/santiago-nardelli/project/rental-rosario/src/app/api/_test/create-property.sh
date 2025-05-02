@@ -1,6 +1,6 @@
 curl -X POST \
   http://localhost:3000/api/properties \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MGYzMjEwNzFmNjdhMWY2MmIzNmRmNCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTkwOTM0MSwiZXhwIjoxNzQ1OTEyOTQxfQ.QbIjjh1rdkSNTsag8cgCWarNHUnyMhKwePlGLWNhExs" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU2NmFjMDMzNjU1ODUyNTM0MDBmYyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjA5MTE3MiwiZXhwIjoxNzQ2MDk0NzcyfQ.k8IzO-EcUoBj3wVrcMu8uO5tnDToazff2V244dKUwRk" \
   -H "Content-Type: application/json" \
   -d ' {
     "title": "Casa antigua restaurada con encanto",

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import useCreateProperty from "../../../hooks/useCreateProperty.js";
+import { useCreateProperty } from "../../../hooks/useCreateProperty.js";
 import formCreateProperty from "../../../_components/organisms/FormCreateProperty.jsx";
 const PropertyForm = () => {
   const [formData, setFormData] = useState({
