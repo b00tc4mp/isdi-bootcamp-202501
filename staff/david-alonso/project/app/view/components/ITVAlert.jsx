@@ -17,9 +17,9 @@ export function ITVAlert({ itvDate }) {
     return (
 
         <TriangleAlert
-            size={30}
+            size={35}
             color={isCritical ? "red" : "orange"}
-            className="-mt-4 mr-6"
+            className="-mt-6 mr-6"
         />
 
     )

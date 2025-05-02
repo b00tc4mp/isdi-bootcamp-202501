@@ -17,15 +17,15 @@
     }
 
     .fondo {
-        width: 120vw;
-        max-width: 120vw;
-        height: 120vh;
+        width: 130vw;
+        max-width: 130vw;
+        height: 130vh;
         top: -10vh;
         left: -10vh;
         object-fit: cover;
         position: fixed;
         z-index: 0;
-        filter: blur(30px);
+        filter: blur(15px);
     }
 
     form {

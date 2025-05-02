@@ -15,25 +15,28 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
     const { id } = useParams()
     const vehicle = useVehicle(id)
 
+    const [mantenimiento, setMantenimiento] = useState(null)
+
 
     if (!vehicle) return <p>Cargando...</p>
 
     const handleDeleteClick = () => {
+        confirm('Delete vehicle ?').then((result) => {
 
-        if (confirm('Delete vehicle ?'))
-            try {
-                logic.deleteVehicle(id)
-                    .then(() => onVehicleDeleted())
-                    .catch(error => {
-                        console.error(error)
-
-                        alert(error.message)
-                    })
-            } catch (error) {
-                console.error(error)
-
-                alert(error.message)
+            if (result) {
+                try {
+                    logic.deleteVehicle(id)
+                        .then(() => onVehicleDeleted())
+                        .catch(error => {
+                            console.error(error)
+                            alert(error.message)
+                        });
+                } catch (error) {
+                    console.error(error)
+                    alert(error.message)
+                }
             }
+        })
     }
 
 
@@ -45,7 +48,7 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                 <header>
                     <div key={vehicle.id}
                         className=" pt-5 p-5"
-                        style={{ backgroundColor: `${vehicle.color}cc` }}>
+                        style={{ backgroundColor: `${vehicle.color}dd` }}>
 
                         <div className='flex justify-between items-center w-full mb-5'>
                             <Link to="/"><ChevronLeft color="white" size={24} /></Link>
@@ -75,7 +78,7 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
 
                 <section key={`${vehicle.id}-section`}
                     className=" pt-5 p-3 pb-5"
-                    style={{ backgroundColor: `${vehicle.color}90` }}>
+                    style={{ backgroundColor: `${vehicle.color}bb` }}>
 
                     <NextITV itvDate={vehicle?.itv} />
 
@@ -94,12 +97,17 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                     </div>
 
                     {vehicle.manteinances.map(manteinance => {
-                        const formattedDate = new Date(manteinance.fecha).toISOString().split('T')[0]
+                        const fechaObj = new Date(manteinance.fecha);
+                        const dia = String(fechaObj.getDate()).padStart(2, '0');
+                        const mes = String(fechaObj.getMonth() + 1).padStart(2, '0');
+                        const año = fechaObj.getFullYear();
+                        const formattedDate = `${dia}-${mes}-${año}`;
+
                         return (
                             <Link
                                 to={`/vehicle/${vehicle._id}/maintenance-detail/${manteinance._id}`}
                                 key={manteinance._id}
-                                className=" mb-5 flex justify-between opacity-80 hover:opacity-100 transition-opacity"
+                                className=" mb-5 flex justify-between"
                             >
                                 <div className="flex flex-col text-white mb-4">
                                     <h2 className="text-sm text-gray-300">{formattedDate}</h2>

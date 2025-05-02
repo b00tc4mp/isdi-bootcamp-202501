@@ -36,7 +36,7 @@ export const Vehicles = () => {
                         <Link to={`/vehicle/${vehicle.id}`} key={vehicle.id}>
                             <div
                                 className="  rounded-md p-4 mb-3 "
-                                style={{ backgroundColor: `${vehicle.color}aa` }}
+                                style={{ backgroundColor: `${vehicle.color}cc` }}
                             >
                                 <div className="flex flex-col">
                                     <h2 className="text-xl  mb-3">{vehicle.marca} - {vehicle.modelo}</h2>

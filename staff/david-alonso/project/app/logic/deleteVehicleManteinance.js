@@ -6,8 +6,6 @@ const { SystemError } = errors
 export const deleteVehicleManteinance = (id) => {
     const { token } = data
 
-    console.log(id)
-
     return fetch(`${import.meta.env.VITE_API_URL}/manteinances/${id}`, {
         method: 'DELETE',
         headers: {

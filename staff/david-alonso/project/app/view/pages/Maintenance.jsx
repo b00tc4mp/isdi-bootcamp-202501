@@ -55,7 +55,7 @@ export function Maintenance({ onAddedMaintenance }) {
                 logic.registerManteinance(vehicleId, new Date(fecha), descripcion, texto)
                     .then(() => {
                         form.reset()
-                        onAddedMaintenance()
+                        navigate(`/vehicle/${vehicleId}`)
                     })
                     .catch(error => {
                         console.error(error)
@@ -85,12 +85,12 @@ export function Maintenance({ onAddedMaintenance }) {
                         <input type="date" id="fecha" value={fecha} onInput={(e) => setFecha(e.target.value)} />
 
                         <label htmlFor="descripcion">Descripcion</label>
-                        <input type="text" id="descripcion" value={descripcion} onInput={(e) => setDescripcion(e.target.value)} />
+                        <input type="text" id="descripcion" className="capitalize" value={descripcion} onInput={(e) => setDescripcion(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))} />
 
                         <label htmlFor="texto">Texto</label>
-                        <textarea name="texto" id="texto" value={texto} onInput={(e) => setTexto(e.target.value)} className="w-full bg-gray-300 border border-gray-400 rounded-lg p-5 pb-20"></textarea>
+                        <textarea name="texto" id="texto" value={texto} onInput={(e) => setTexto(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))} className="capitalize w-full bg-gray-300 border border-gray-400 rounded-lg p-5 pb-20"></textarea>
                     </div>
-                    <button type="submit" >{isEditing ? 'GUARDAR' : 'AÑADIR'}</button>
+                    <button type="submit" className='cursor-pointer'>{isEditing ? 'GUARDAR' : 'AÑADIR'}</button>
 
                     <div className="flex justify-center">
                         <Link to={`/vehicle/${vehicleId}`} className='underline text-white'>CANCELAR</Link>

@@ -43,7 +43,7 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
         <div className="relative z-10 flex flex-col p-5 justify-between min-h-screen">
 
-            <div className="flex flex-col items-center mt-30">
+            <div className="flex flex-col items-center mt-20">
                 <h1 className="text-6xl tracking-widest">R I D E</h1>
                 <h1 className="text-6xl tracking-wide text-gray-400 ">C A R E</h1>
             </div>
@@ -62,7 +62,7 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
                     <button type="submit" >CREAR CUENTA</button>
 
-                    <div className="flex justify-center space-x-2 text-white">
+                    <div className="flex justify-center space-x-2 text-white pb-5">
                         <span>¿Ya tienes cuenta? </span>
                         <Link to="/login" className='underline' >Entra aquí</Link>
                     </div>

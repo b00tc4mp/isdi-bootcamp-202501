@@ -21,6 +21,8 @@ export function VehicleRegister({ onVehicleRegistered }) {
     const [km, setKm] = useState()
     const [itv, setItv] = useState()
 
+    const [tipoVehiculo, setTipoVehiculo] = useState(null)
+
     useEffect(() => {
         if (vehicle) {
             setMarca(vehicle.marca)
@@ -53,6 +55,12 @@ export function VehicleRegister({ onVehicleRegistered }) {
             } = form
 
             const author = logic.getUserId()
+
+            if (!tipoVehiculo) {
+                alert('Por favor selecciona un tipo de vehículo')
+                return
+            }
+
 
             if (isEditing) {
                 logic.updateVehicle(id, marca, modelo, parseInt(año), color, matricula, parseInt(km), new Date(itv), author)
@@ -98,40 +106,75 @@ export function VehicleRegister({ onVehicleRegistered }) {
             <div className="flex justify-center">
                 <form onSubmit={handleVehicleRegisterSubmit} className="flex flex-col w-full max-w-md">
 
-                    <div className="flex flex-col gap-1 ">
-                        <label htmlFor="tipo">Tipo de vehiculo</label>
+                    {/* **** */}
+                    <div className="flex flex-col gap-1">
+                        <label htmlFor="tipo">Tipo de vehículo</label>
                         <div className="flex gap-4">
-                            <button type="click" >
-                                <div className='flex flex-col items-center'><img src="/images/icon-car.svg" /><span>Coche</span></div>
+                            <button
+                                type="button"
+                                onClick={() => setTipoVehiculo('coche')}
+                                className={`p-2 rounded ${tipoVehiculo === 'coche' ? 'bg-gray-400' : ''}`}
+                            >
+                                <div className='flex flex-col items-center'>
+                                    <img src="/images/icon-car.svg" />
+                                    <span>Coche</span>
+                                </div>
                             </button>
 
-                            <button type="click" >
-                                <div className='flex flex-col items-center'><img src="/images/icon-bike.svg" /><span>Moto</span></div>
+                            <button
+                                type="button"
+                                onClick={() => setTipoVehiculo('moto')}
+                                className={`p-2 rounded ${tipoVehiculo === 'moto' ? 'bg-gray-400' : ''}`}
+                            >
+                                <div className='flex flex-col items-center'>
+                                    <img src="/images/icon-bike.svg" />
+                                    <span>Moto</span>
+                                </div>
                             </button>
 
-                            <button type="click" >
-                                <div className='flex flex-col items-center '><img src="/images/icon-scooter.svg" /><span>Scooter</span></div>
+                            <button
+                                type="button"
+                                onClick={() => setTipoVehiculo('scooter')}
+                                className={`p-2 rounded ${tipoVehiculo === 'scooter' ? 'bg-gray-400' : ''}`}
+                            >
+                                <div className='flex flex-col items-center'>
+                                    <img src="/images/icon-scooter.svg" />
+                                    <span>Scooter</span>
+                                </div>
                             </button>
                         </div>
-                    </div>
 
-                    <div className="flex flex-col gap-1 -mt-2">
+                        {tipoVehiculo && (
+                            <div className='flex justify-center'>
+                                <p className="text-lg text-white mt-1">
+                                    Seleccionado: <span className="font-semibold">{tipoVehiculo}</span>
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                    {/* **** */}
+
+                    <div className="flex flex-col gap-1 -mt-4">
                         <label htmlFor="marca">Marca</label>
-                        <input type="text" id="marca" value={marca} onInput={(e) => setMarca(e.target.value)} />
+                        <input type="text" id="marca" className="capitalize"
+                            value={marca} onInput={(e) =>
+                                setMarca(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
+                            }
+                        />
 
                         <label htmlFor="modelo">Modelo</label>
-                        <input type="text" id="modelo" value={modelo} onInput={(e) => setModelo(e.target.value)} />
+                        <input type="text" id="modelo" className="capitalize"
+                            value={modelo} onInput={(e) =>
+                                setModelo(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
+                            }
+                        />
 
                         <label htmlFor="matricula">Matricula</label>
-                        <input type="text" id="matricula" onInput={(e) => setMatricula(e.target.value)} value={matricula} />
-
-                        {/* <div className="flex gap-4">
-                        <button type="click" >G</button>
-                        <button type="click" >D</button>
-                        <button type="click" >E</button>
-                        <button type="click" >H</button>
-                    </div> */}
+                        <input type="text" id="matricula" className="uppercase"
+                            value={matricula} onInput={(e) => setMatricula(e.target.value.toUpperCase())}
+                        />
                     </div>
+
 
                     <div className='-mt-2'>
                         <div className="flex gap-4">
@@ -158,7 +201,7 @@ export function VehicleRegister({ onVehicleRegistered }) {
                         </div>
                     </div>
 
-                    <button type="submit" >{isEditing ? 'GUARDAR' : 'AÑADIR'}</button>
+                    <button type="submit" className='cursor-pointer'>{isEditing ? 'GUARDAR' : 'AÑADIR'}</button>
 
                 </form>
             </div>
