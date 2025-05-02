@@ -11,7 +11,8 @@ export const getAllProperties = async () => {
       .sort("title") // Ordena alfabéticamente por título
       .lean();
 
-    console.log("Propiedades encontradas:", properties);
+    console.log("Propiedades encontradas:", properties.length); // Útil para ver cuántas se devuelven
+
     // Procesa las propiedades para formatear los datos
     properties.forEach((property) => {
       property.id = property._id.toString();

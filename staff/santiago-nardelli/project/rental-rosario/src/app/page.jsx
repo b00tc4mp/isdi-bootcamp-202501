@@ -10,6 +10,8 @@ import { errors } from "com";
 const { SystemError } = errors;
 
 async function getProperties(searchParamsPromise) {
+  const startTime = Date.now();
+  console.log("getProperties: Inicio");
   try {
     const searchParams = await searchParamsPromise;
     const hasFilters = Object.keys(searchParams).length > 0;
@@ -23,9 +25,16 @@ async function getProperties(searchParamsPromise) {
         )
       : {};
 
+    const propertiesStartTime = Date.now();
     const properties = hasFilters
       ? await getFilteredPropertiesRequest(filtersObject)
       : await getAllPropertiesRequest();
+    const propertiesEndTime = Date.now();
+    console.log(
+      `getProperties: Obtención de propiedades completada en ${
+        propertiesEndTime - propertiesStartTime
+      }ms`
+    );
 
     return properties;
   } catch (error) {
@@ -34,17 +43,31 @@ async function getProperties(searchParamsPromise) {
     } else {
       console.error("Error inesperado:", error);
     }
-
     return [];
+  } finally {
+    const endTime = Date.now();
+    console.log(`getProperties: Finalizado en ${endTime - startTime}ms`);
   }
 }
 
 export default async function Home({ searchParams }) {
+  const homeStartTime = Date.now();
+  console.log("Home: Inicio");
+
+  const propertiesStartTime = Date.now();
   const initialProperties = await getProperties(searchParams);
-  console.log("initialProperties ==>", initialProperties);
+  const propertiesEndTime = Date.now();
+  console.log(
+    `Home: getProperties completado en ${
+      propertiesEndTime - propertiesStartTime
+    }ms`
+  );
+
+  console.log("Home: initialProperties ==>", initialProperties);
   const hasError = initialProperties.length === 0;
 
-  return (
+  const renderStartTime = Date.now();
+  const jsx = (
     <div className="relative">
       <Header className="absolute top-0 left-0 right-0 z-30" />
       <HeroSection />
@@ -59,4 +82,13 @@ export default async function Home({ searchParams }) {
       )}
     </div>
   );
+  const renderEndTime = Date.now();
+  console.log(
+    `Home: Render JSX completado en ${renderEndTime - renderStartTime}ms`
+  );
+
+  const homeEndTime = Date.now();
+  console.log(`Home: Finalizado en ${homeEndTime - homeStartTime}ms`);
+
+  return jsx;
 }
