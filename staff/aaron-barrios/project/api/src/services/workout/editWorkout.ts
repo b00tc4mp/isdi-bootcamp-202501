@@ -18,10 +18,6 @@ const editWorkout = (
     if (updates.type) validate.text(updates.type)
     if (updates.difficulty) validate.text(updates.difficulty)
     if (updates.description) validate.text(updates.description)
-    // if (updates.executionImages) {
-    //     if (!Array.isArray(updates.executionImages)) throw new TypeError("executionImages must be an array of strings")
-    //     updates.executionImages.forEach(img => validate.url(img))
-    // }
 
     return Promise.all([
         User.findById(userId),

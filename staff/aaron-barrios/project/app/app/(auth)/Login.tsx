@@ -1,6 +1,11 @@
 import { useState } from "react"
-import { TextInput, StyleSheet, Button, Alert, Pressable } from "react-native"
-import { Text, View } from "@/components/Themed"
+import {
+  TextInput,
+  Alert,
+  Pressable,
+  View,
+  Text,
+} from "react-native"
 import { useRouter } from "expo-router"
 
 import { loginUser, getUserRole } from "@/services/user"
@@ -9,47 +14,41 @@ import { errors } from "com"
 
 const { SystemError, ValidationError } = errors
 
+import { styles } from "./Login.styles"
+
 export default function Login() {
-  const [alias, setAlias] = useState('')
-  const [password, setPassword] = useState('')
+  const [alias, setAlias] = useState("")
+  const [password, setPassword] = useState("")
   const router = useRouter()
 
   const handleLogin = () => {
     try {
       loginUser(alias, password)
         .then(() => getUserRole())
-        .then(data => {
-          setAlias('')
-          setPassword('')
+        .then((data) => {
+          setAlias("")
+          setPassword("")
 
           const role = data?.role
+          if (role === "mod") router.replace("/(mod)")
+          else if (role === "regular") router.replace("/(tabs)")
+          else router.replace("/(anonym)")
 
-          if (role === 'mod') {
-            router.replace('/(mod)')
-          } else if (role === 'regular') {
-            router.replace('/(tabs)')
-          } else {
-            router.replace('/(anonym)')
-          }
-
-          Alert.alert('Welcome back!', `Welcome back! ${alias}`)
+          Alert.alert("Welcome back!", `Welcome back! ${alias}`)
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error)
-
           if (error instanceof SystemError)
-            Alert.alert('⛔', error.message)
+            Alert.alert("⛔", error.message)
           else
-            Alert.alert('⚠️ Error inesperado', error.message || 'Ups...')
+            Alert.alert("⚠️ Error inesperado", error.message || "Ups...")
         })
-
     } catch (error) {
       console.error(error)
-
       if (error instanceof ValidationError)
-        Alert.alert('❌ Validación', error.message)
+        Alert.alert("❌ Validación", error.message)
       else
-        Alert.alert('⛔ Error fatal', error instanceof Error ? error.message : 'Algo salió mal')
+        Alert.alert("⛔ Error fatal", error instanceof Error ? error.message : "Algo salió mal")
     }
   }
 
@@ -59,7 +58,7 @@ export default function Login() {
         Alert.alert("👤 Anonym mode", "You have logged as a guest")
         router.replace("/(anonym)" as any)
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error)
         if (error instanceof SystemError) {
           Alert.alert("⛔ Error", error.message)
@@ -70,75 +69,45 @@ export default function Login() {
   }
 
   return (
-    <View style={styles.container2}>
-      <Text style={styles.title}>LOGIN</Text>
-      <View style={styles.container}>
+    <View style={styles.screen}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Tzend</Text>
+        <Text style={styles.title}>Login</Text>
+      </View>
+
+      <View style={styles.form}>
+        <Text style={styles.label}>Username</Text>
         <TextInput
-          placeholder="ALIAS"
+          placeholder="Enter your alias"
           onChangeText={setAlias}
           value={alias}
           style={styles.input}
           autoCapitalize="none"
         />
+
+        <Text style={styles.label}>Password</Text>
         <TextInput
-          placeholder="PASSWORD"
+          placeholder="Enter your password"
           onChangeText={setPassword}
           value={password}
           secureTextEntry
           style={styles.input}
         />
 
-        <View style={styles.button}>
-          <Button title="LOG IN" onPress={handleLogin} />
-        </View>
-
-        <Pressable onPress={() => router.push("/(auth)/Register")}>
-          <Text style={styles.link}>Do not have an account? Register</Text>
+        <Pressable style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Iniciar Sesión</Text>
         </Pressable>
 
         <Pressable onPress={handleAnonymousAccess}>
           <Text style={styles.link}>Enter as a guest</Text>
         </Pressable>
+
+        <Pressable onPress={() => router.push("/(auth)/Register")}>
+          <Text style={styles.secondaryText}>
+            ¿Do not have an account? <Text style={styles.bold}>Register here</Text>
+          </Text>
+        </Pressable>
       </View>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    justifyContent: "center",
-    backgroundColor: "#f0f0f0"
-  },
-  container2: {
-    flex: 1,
-    padding: 24,
-    justifyContent: "flex-start",
-    backgroundColor: "#f0f0f0"
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    alignSelf: "flex-start",
-    marginBottom: 12
-  },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
-    paddingHorizontal: 10,
-    marginBottom: 16,
-    backgroundColor: "#fff"
-  },
-  link: {
-    fontSize: 16,
-    color: "#007aff",
-    textDecorationLine: "underline",
-    marginTop: 12
-  },
-  button: {
-    marginBottom: 16
-  },
-})

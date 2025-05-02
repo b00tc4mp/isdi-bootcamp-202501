@@ -45,7 +45,7 @@ export default function Anonym_Home() {
         deleteAnonymUser()
             .then(() => {
                 Alert.alert("Bye!", "Your anonymous session has ended.")
-                router.replace("/(auth)")
+                router.replace("/(auth)/Login")
             })
             .catch(error => {
                 console.error(error)

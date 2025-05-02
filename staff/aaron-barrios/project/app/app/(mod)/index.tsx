@@ -50,7 +50,7 @@ export default function Review() {
     useEffect(() => {
         getUserRole().then(data => {
             if (data?.role !== "mod") {
-                router.replace("/(auth)")
+                router.replace("/(auth)/Login")
             }
         })
     }, [])

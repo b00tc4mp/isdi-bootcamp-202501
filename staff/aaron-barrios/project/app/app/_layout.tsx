@@ -9,12 +9,14 @@ import { Lato_300Light } from "@expo-google-fonts/lato"
 import { Stack, useRouter } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
 import { useEffect, useState } from "react"
-import { Platform } from "react-native"
+import { ActivityIndicator, Platform, Text, View } from "react-native"
 import "react-native-reanimated"
 
 import { getUserRole } from "@/services/user"
 
 export { ErrorBoundary } from "expo-router"
+
+const SESSION_LANDING_SEEN = "sessionLandingSeen"
 
 export const unstable_settings = {
   initialRouteName: "(screens)",
@@ -37,8 +39,6 @@ export default function RootLayout() {
 
   const [appReady, setAppReady] = useState(false)
   const [initialRoute, setInitialRoute] = useState<string | null>(null)
-  const [role, setRole] = useState<Role | null>(null)
-
   const router = useRouter()
   const colorScheme = useColorScheme()
 
@@ -49,27 +49,54 @@ export default function RootLayout() {
   useEffect(() => {
     const prepareApp = async () => {
       const data = await getUserRole()
-      const userRole = isValidRole(data?.role) ? data.role : "anonym"
-      setRole(userRole)
+      const userRole = isValidRole(data?.role) ? data.role : null
 
+      const pathname = typeof window !== "undefined" ? window.location.pathname : ""
+      const hasSeenLanding = typeof window !== "undefined" && sessionStorage.getItem(SESSION_LANDING_SEEN) === "true"
+
+      console.log("📍 PATH:", pathname)
+      console.log("👀 HAS SEEN LANDING:", hasSeenLanding)
+      console.log("🧑 ROLE:", userRole)
+
+      // 🌟 Solo mostramos landing si está en raíz y no ha visto landing aún
+      if (pathname === "/" && !hasSeenLanding) {
+        sessionStorage.setItem(SESSION_LANDING_SEEN, "true")
+        setInitialRoute("/(auth)")
+        setAppReady(true)
+        return
+      }
+
+      // ✅ Mobile → redirige directo según rol
       if (Platform.OS !== "web") {
         if (userRole === "regular") setInitialRoute("/(tabs)")
         else if (userRole === "mod") setInitialRoute("/(mod)")
         else setInitialRoute("/(anonym)")
-      } else {
-        const pathname = typeof window !== "undefined" ? window.location.pathname : ""
+        setAppReady(true)
+        return
+      }
 
-        if (Platform.OS === "web") {
-          requestAnimationFrame(() => {
-            if (userRole === "regular" && pathname.startsWith("/(anonym)")) {
-              router.replace("/(tabs)")
-            } else if (userRole === "mod" && pathname.startsWith("/(anonym)")) {
-              router.replace("/(mod)")
-            } else if (userRole === "anonym" && !pathname.startsWith("/(anonym)")) {
-              router.replace("/(anonym)")
-            }
-          })
+      // ✅ En web → corregimos incoherencias entre rol y ruta
+      requestAnimationFrame(() => {
+        if (userRole === "regular" && pathname.startsWith("/(anonym)")) {
+          router.replace("/(tabs)")
+        } else if (userRole === "mod" && pathname.startsWith("/(anonym)")) {
+          router.replace("/(mod)")
+        } else if (userRole === "anonym" && !pathname.startsWith("/(anonym)")) {
+          router.replace("/(anonym)")
         }
+      })
+
+      // ✅ Si estás en Login/Register → mantenemos ruta tras F5
+      if (pathname.startsWith("/(auth)")) {
+        setInitialRoute(pathname)
+      } else if (userRole === "regular") {
+        setInitialRoute("/(tabs)")
+      } else if (userRole === "mod") {
+        setInitialRoute("/(mod)")
+      } else if (userRole === "anonym") {
+        setInitialRoute("/(anonym)")
+      } else {
+        setInitialRoute("/(auth)/Login")
       }
 
       setAppReady(true)
@@ -86,7 +113,12 @@ export default function RootLayout() {
   }, [loaded, appReady, initialRoute])
 
   if (!loaded || !appReady) {
-    return null
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#111" }}>
+        <ActivityIndicator size="large" color="#facc15" />
+        <Text style={{ color: "#aaa", marginTop: 10 }}>Loading...</Text>
+      </View>
+    )
   }
 
   return (

@@ -64,7 +64,9 @@ describe("edit Routine", () => {
                 return editRoutine(manu._id.toString(), routine._id.toString(), {
                     name: "New Routine Name",
                     description: "Updated description",
-                    duration: 45
+                    duration: 45,
+                    muscleGroup: "back" as const,
+                    feedImage: "https://exampleeeeeeeeeeeeee.com/image.jpg",
                 })
             })
             .then(() => Routine.findById(routine._id).lean())

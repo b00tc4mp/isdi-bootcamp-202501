@@ -5,6 +5,7 @@ import { Image, Text, View, Pressable } from "react-native"
 import { data } from "@/data"
 import { getUserRole, logoutUser } from "@/services/user"
 import type { UserRole } from "../../../api/src/data/types"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 function TabIcon({ icon, label, focused }: { icon: any; label: string; focused: boolean }) {
   return (
@@ -50,7 +51,7 @@ export default function TabsLayout() {
 
   const handleLogout = async () => {
     await logoutUser()
-    router.replace("/(auth)")
+    router.replace("/(auth)/Login")
   }
 
   if (!ready) return null

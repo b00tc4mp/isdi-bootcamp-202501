@@ -9,6 +9,7 @@
     "build": "tsc",
     "build:dev": "tsc -w",
     "test": "mocha services/*.spec.ts",
+    "test-coverage": "c8 --experimental-monocart --reporter=html --reporter=text mocha --require ts-node/register \"src/services/**/*.spec.ts\" --timeout 2000",
     "populate": "node dist/data/populate.js",
     "inspect": "node --inspect-brk .",
     "test-inspect": "mocha --inspect-brk dist/services/**/*.spec.js",
