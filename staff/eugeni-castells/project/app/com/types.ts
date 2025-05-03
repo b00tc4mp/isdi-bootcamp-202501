@@ -234,6 +234,11 @@ export type ReturnedChat = {
     name: string;
     lastName: string;
   }[];
+  interlocutor: {
+    id: string;
+    name: string;
+    lastName: string;
+  };
   history: ReturnedChatMessages;
 };
 
@@ -246,6 +251,11 @@ export type ReturnedSanitizedChat = {
     name: string;
     lastName: string;
   }[];
+  interlocutor: {
+    id: string;
+    name: string;
+    lastName: string;
+  };
   history: ReturnedSanitizedChatMessages;
 };
 
@@ -261,3 +271,42 @@ export type ReturnedSanitizedChatMessages = {
   id: string;
   modifiedAt: Date | null;
 }[];
+
+export type ReturnedSanitizedChatMessage = {
+  text: string;
+  createdAt: Date;
+  author: {
+    id: string;
+    name: string;
+    lastName: string;
+  };
+  own: boolean;
+  id: string;
+  modifiedAt: Date | null;
+};
+
+export type ReturnedAllUserInfo = {
+  id: string;
+  location: {
+    id: string;
+    city: string;
+    country: string;
+  };
+  name: string;
+  lastName: string;
+  email: string;
+  vans: {
+    id: string;
+    model: string;
+    brand: string;
+    location: {
+      id: string;
+      city: string;
+      country: string;
+    };
+    price: number;
+  }[];
+  createdAt: Date;
+  modifiedAt: Date | null;
+  roadPoints: number;
+};

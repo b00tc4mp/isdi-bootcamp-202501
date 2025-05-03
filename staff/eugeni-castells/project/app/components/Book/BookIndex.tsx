@@ -73,7 +73,6 @@ export const BookIndex = ({
           },
           totalPrice: totalPrice!,
         };
-        debugger;
         return generateTripRequest(tripInfo, id)
           .then(() => {
             router.push("/(tabs)/exchanges");

@@ -4,11 +4,10 @@ import { ReturnedChat, ReturnedSanitizedChat } from "@/com/types";
 import { data } from "@/data";
 
 export const getChats = (): Promise<ReturnedSanitizedChat[]> => {
-  debugger;
   return (async () => {
     const token = await data.getToken();
 
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/chats`, {
+    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/chats`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
