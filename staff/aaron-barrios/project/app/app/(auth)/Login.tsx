@@ -76,7 +76,7 @@ export default function Login() {
       </View>
 
       <View style={styles.form}>
-        <Text style={styles.label}>Username</Text>
+        <Text style={styles.label}>Alias</Text>
         <TextInput
           placeholder="Enter your alias"
           onChangeText={setAlias}
@@ -95,7 +95,7 @@ export default function Login() {
         />
 
         <Pressable style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Iniciar Sesión</Text>
+          <Text style={styles.buttonText}>Log In</Text>
         </Pressable>
 
         <Pressable onPress={() => router.push("/(auth)/Register")}>

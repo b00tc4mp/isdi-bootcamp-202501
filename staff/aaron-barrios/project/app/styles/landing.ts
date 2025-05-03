@@ -6,7 +6,7 @@ const { width, height } = Dimensions.get("window")
 export const styles = StyleSheet.create({
     background: {
         width: width,
-        height: height,
+        height: height
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         paddingVertical: 60,
         paddingHorizontal: 24,
-        zIndex: 2
+        zIndex: 2,
     },
     header: {
         alignItems: "center",

@@ -51,15 +51,17 @@ export default function RootLayout() {
       const data = await getUserRole()
       const userRole = isValidRole(data?.role) ? data.role : null
 
-      const pathname = typeof window !== "undefined" ? window.location.pathname : ""
-      const hasSeenLanding = typeof window !== "undefined" && sessionStorage.getItem(SESSION_LANDING_SEEN) === "true"
+      const isWeb = Platform.OS === "web"
+
+      const pathname = isWeb ? window?.location?.pathname ?? "" : ""
+      const hasSeenLanding = isWeb ? sessionStorage.getItem(SESSION_LANDING_SEEN) === "true" : false
 
       console.log("📍 PATH:", pathname)
       console.log("👀 HAS SEEN LANDING:", hasSeenLanding)
       console.log("🧑 ROLE:", userRole)
 
       // 🌟 Solo mostramos landing si está en raíz y no ha visto landing aún
-      if (pathname === "/" && !hasSeenLanding) {
+      if (isWeb && pathname === "/" && !hasSeenLanding) {
         sessionStorage.setItem(SESSION_LANDING_SEEN, "true")
         setInitialRoute("/(auth)")
         setAppReady(true)
