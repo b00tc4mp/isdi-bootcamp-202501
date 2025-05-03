@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react"
 import { useLocalSearchParams, useRouter } from "expo-router"
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable, Alert } from "react-native"
-import { Text, View } from "@/components/Themed"
+import {
+    ActivityIndicator,
+    Image,
+    ScrollView,
+    Pressable,
+    Alert,
+    Text,
+    View
+} from "react-native"
 
 import {
     getRoutineById,
@@ -15,6 +22,7 @@ import { RoutineType } from "com/types"
 import { getUserRole, getCurrentUser } from "@/services/user"
 import { getMyCustomRoutines, deleteCustomRoutine } from "@/services/routines"
 
+import { styles } from "@/styles/routineDetail"
 
 export default function RoutineDetail() {
     const { routineId } = useLocalSearchParams<{ routineId: string }>()
@@ -134,24 +142,28 @@ export default function RoutineDetail() {
 
     return (
         <ScrollView style={styles.container}>
-            {/* Back Button */}
-            <Pressable onPress={() => router.back()} style={styles.backButton}>
-                <Text style={styles.backIcon}>←</Text>
-            </Pressable>
-
-            {/* Title */}
-            <Text style={styles.title}>{routine.name}</Text>
+            {/* Header */}
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}>{routine.name}</Text>
+                <Pressable onPress={() => router.back()}>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
+                </Pressable>
+            </View>
 
             {/* Feed Image */}
             <Image source={{ uri: routine.feedImage }} style={styles.image} />
+
 
             {/* Summary Card */}
             <View style={styles.summaryCard}>
                 <View style={styles.summaryLeft}>
                     {/* <Text style={styles.summaryText}>📍 {routine.locationType || "Gym"}</Text> */}
-                    <Text style={styles.summaryText}>💪 {routine.muscleGroup}</Text>
-                    <Text style={styles.summaryText}>🔥 {routine.difficulty || "Intermediate"}</Text>
-                    <Text style={styles.summaryText}>🕒 {routine.duration.toString()} min</Text>
+                    <Text style={styles.summaryText}>💪 Muscle Group: {routine.muscleGroup}</Text>
+                    <Text style={styles.summaryText}>🔥 Difficulty: {routine.difficulty || "Intermediate"}</Text>
+                    <Text style={styles.summaryText}>🕒 Duration: {routine.duration.toString()} min</Text>
                     {/* Frecuencia sugerida si la tuvieras */}
                     {/* <Text style={styles.summaryText}>📅 x3 per week</Text> */}
                 </View>
@@ -249,130 +261,3 @@ export default function RoutineDetail() {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-    },
-    centered: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    backButton: {
-        marginBottom: 12,
-    },
-    backIcon: {
-        fontSize: 26,
-        color: "#555",
-    },
-    image: {
-        width: "100%",
-        height: 200,
-        borderRadius: 12,
-        marginBottom: 16,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginBottom: 8,
-    },
-    summaryCard: {
-        flexDirection: "row",
-        backgroundColor: "#fff",
-        padding: 12,
-        borderRadius: 12,
-        marginBottom: 16,
-        elevation: 2,
-    },
-    summaryLeft: {
-        flex: 1,
-        gap: 4,
-    },
-    summaryRight: {
-        justifyContent: "center",
-        alignItems: "flex-end",
-        gap: 8,
-    },
-    summaryText: {
-        fontSize: 14,
-        color: "#333",
-    },
-    icon: {
-        fontSize: 18,
-    },
-    subtitle: {
-        fontSize: 22,
-        fontWeight: "bold",
-        marginTop: 16,
-        marginBottom: 8,
-    },
-    description: {
-        fontSize: 16,
-        color: "#444",
-        marginBottom: 16,
-    },
-    workoutItem: {
-        backgroundColor: "#f5f5f5",
-        borderRadius: 8,
-        padding: 12,
-        marginBottom: 8,
-    },
-    workoutName: {
-        fontSize: 22,
-        fontWeight: "600",
-        marginBottom: 6,
-    },
-    workoutDataRow: {
-        flexDirection: "row",
-        gap: 16,
-    },
-    workoutData: {
-        fontSize: 18,
-        color: "#666",
-    },
-    workoutImage: {
-        width: "100%",
-        height: 160,
-        borderRadius: 8,
-        marginBottom: 8,
-        backgroundColor: "#ddd",
-    },
-    reviewActions: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 24,
-        gap: 12,
-    },
-    reviewButton: {
-        flex: 1,
-        padding: 12,
-        borderRadius: 8,
-        alignItems: "center",
-    },
-    acceptBtn: {
-        backgroundColor: "#3b944d",
-    },
-    declineBtn: {
-        backgroundColor: "#a12828",
-    },
-    reviewText: {
-        fontWeight: "bold",
-        fontSize: 16,
-        color: "#fff",
-    },
-    customizeButton: {
-        backgroundColor: "#facc15",
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 8,
-        marginTop: 20,
-        alignItems: "center",
-    },
-    customizeButtonText: {
-        fontWeight: "bold",
-        fontSize: 16,
-        color: "#333",
-    },
-})

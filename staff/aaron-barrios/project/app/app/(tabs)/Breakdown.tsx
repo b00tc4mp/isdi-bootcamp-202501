@@ -23,35 +23,41 @@ export default function Breakdown() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#fefefe",           // 🧼 Fondo blanco-grisáceo
+        paddingHorizontal: 24,
+        paddingTop: 32,
+        paddingBottom: 80,
     },
     title: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: "bold",
         marginBottom: 24,
+        color: "#000",                        // 🖤 Texto oscuro
     },
     content: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
         paddingHorizontal: 20,
+        borderRadius: 10,
+        backgroundColor: "#e5e5e5"
     },
     image: {
-        width: 120,
-        height: 120,
+        width: 140,
+        height: 140,
         marginBottom: 24,
-        opacity: 0.8,
+        opacity: 0.9,
     },
     subtitle: {
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: "600",
+        color: "#000",                        // 🖤 Texto oscuro
         marginBottom: 12,
     },
     description: {
         fontSize: 16,
         textAlign: "center",
-        color: "#666",
+        color: "#444",
         maxWidth: 320,
         lineHeight: 22,
     },

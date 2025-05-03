@@ -5,16 +5,17 @@ import {
     FlatList,
     ActivityIndicator,
     RefreshControl,
-    StyleSheet,
-    Platform,
     Pressable,
+    Text,
+    View
 } from "react-native"
 import { Picker } from "@react-native-picker/picker"
-import { Text, View } from "@/components/Themed"
 
 import { WorkoutType } from "com/types"
 import WorkoutCard from "@/components/WorkoutCard"
 import { filterWorkouts } from "@/services/workouts"
+
+import { styles } from "@/styles/workoutsFeed"
 
 export default function Workouts() {
     const router = useRouter()
@@ -114,62 +115,3 @@ function FilterChip({ label, onPress, active }: { label: string; onPress: () => 
         </Pressable>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 16,
-        paddingTop: 24,
-        backgroundColor: "#fefefe",
-    },
-    header: {
-        fontSize: 22,
-        fontWeight: "bold",
-        marginBottom: 12,
-    },
-    dropdownContainer: {
-        backgroundColor: "#eee",
-        borderRadius: 8,
-        marginBottom: 12,
-        overflow: "hidden",
-    },
-    picker: {
-        height: Platform.OS === "ios" ? 180 : 40,
-        width: "100%",
-    },
-    filters: {
-        flexDirection: "row",
-        gap: 8,
-        marginBottom: 12,
-        flexWrap: "wrap",
-    },
-    chip: {
-        paddingHorizontal: 14,
-        paddingVertical: 6,
-        borderRadius: 20,
-        backgroundColor: "#ccc",
-    },
-    chipActive: {
-        backgroundColor: "#facc15",
-    },
-    chipText: {
-        fontWeight: "600",
-        fontSize: 14,
-    },
-    list: {
-        paddingBottom: 120,
-    },
-    createButton: {
-        width: "100%",
-        backgroundColor: "#16a34a",
-        paddingVertical: 14,
-        borderRadius: 10,
-        marginBottom: 16,
-        alignItems: "center",
-    },
-    createButtonText: {
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 16,
-    },
-})

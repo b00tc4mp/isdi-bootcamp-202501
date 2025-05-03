@@ -46,7 +46,8 @@ export default function RoutineCard({
             <View style={styles.info}>
                 <Text style={styles.name}>{routine.name}</Text>
                 <Text style={styles.d_info}>{routine.muscleGroup}</Text>
-                <Text style={styles.d_info}>{routine.workouts.length} workouts · {routine.duration.toString()} min</Text>
+                <Text style={styles.d_info}>{routine.workouts.length} workouts </Text>
+                <Text style={styles.d_info}>{routine.duration.toString()} min</Text>
 
                 {showAuthor && (
                     <Pressable

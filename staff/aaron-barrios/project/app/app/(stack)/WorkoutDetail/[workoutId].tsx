@@ -1,17 +1,26 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { useLocalSearchParams, useRouter } from "expo-router"
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable, FlatList, ViewToken, Dimensions } from "react-native"
-import { Text, View } from "@/components/Themed"
+import {
+    ActivityIndicator,
+    Image,
+    ScrollView,
+    Pressable,
+    Dimensions,
+    Text,
+    View
+} from "react-native"
 
 import {
     getWorkoutById,
     toggleLikeWorkout,
     toggleSaveWorkout,
-    reviewWorkout
+    reviewWorkout,
 } from "@/services/workouts/"
 
 import { WorkoutType } from "com/types"
 import { getUserRole } from "@/services/user"
+
+import { styles } from "@/styles/workoutDetail"
 
 const SCREEN_WIDTH = Dimensions.get("window").width
 
@@ -21,7 +30,7 @@ export default function WorkoutDetail() {
 
     const [workout, setWorkout] = useState<WorkoutType | null>(null)
     const [loading, setLoading] = useState(true)
-    const [toggle, setTogggle] = useState(false)
+    const [toggle, setToggle] = useState(false)
     const [role, setRole] = useState<string | null>(null)
 
     const fetchWorkout = () => {
@@ -43,25 +52,19 @@ export default function WorkoutDetail() {
 
     const handleToggleLike = () => {
         if (!workoutId) return
-        setTogggle(true)
-        toggleLikeWorkout(workoutId)
-            .then(fetchWorkout)
-            .finally(() => setTogggle(false))
+        setToggle(true)
+        toggleLikeWorkout(workoutId).then(fetchWorkout).finally(() => setToggle(false))
     }
 
     const handleToggleSave = () => {
         if (!workoutId) return
-        setTogggle(true)
-        toggleSaveWorkout(workoutId)
-            .then(fetchWorkout)
-            .finally(() => setTogggle(false))
+        setToggle(true)
+        toggleSaveWorkout(workoutId).then(fetchWorkout).finally(() => setToggle(false))
     }
 
     const handleReview = (status: "accepted" | "declined") => {
         if (!workoutId) return
-        reviewWorkout(workoutId, status)
-            .then(() => router.back())
-            .catch(error => console.error("Review error:", error))
+        reviewWorkout(workoutId, status).then(() => router.back()).catch(console.error)
     }
 
     if (loading) {
@@ -80,12 +83,17 @@ export default function WorkoutDetail() {
         )
     }
 
-
     return (
-        <ScrollView style={styles.container}>
-            <Pressable onPress={() => router.back()} style={styles.backButton}>
-                <Text style={styles.backText}>← Back</Text>
-            </Pressable>
+        <ScrollView contentContainerStyle={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}>Workout Detail</Text>
+                <Pressable onPress={() => router.back()}>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
+                </Pressable>
+            </View>
 
             <Text style={styles.title}>{workout.name}</Text>
             <Image source={{ uri: workout.feedImage }} style={styles.image} />
@@ -95,7 +103,14 @@ export default function WorkoutDetail() {
                     {workout.author.role === "default" ? (
                         <Text style={styles.defaultAuthor}>Default</Text>
                     ) : (
-                        <Pressable onPress={() => router.push({ pathname: "/(stack)/UserProfile/[id]", params: { id: workout.author.id } })}>
+                        <Pressable
+                            onPress={() =>
+                                router.push({
+                                    pathname: "/(stack)/UserProfile/[id]",
+                                    params: { id: workout.author.id },
+                                })
+                            }
+                        >
                             <Text style={styles.author}>@{workout.author.alias}</Text>
                         </Pressable>
                     )}
@@ -104,18 +119,22 @@ export default function WorkoutDetail() {
                 <View style={styles.rightStats}>
                     <Pressable
                         onPress={handleToggleLike}
-                        disabled={toggle || workout.status !== "accepted" || role !== "regular"}>
-                        <Text style={styles.icon}>{workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}</Text>
+                        disabled={toggle || workout.status !== "accepted" || role !== "regular"}
+                    >
+                        <Text style={styles.icon}>
+                            {workout.likedByMe ? "❤️" : "🤍"} {workout.likesCount}
+                        </Text>
                     </Pressable>
                     <Pressable
                         onPress={handleToggleSave}
-                        disabled={toggle || workout.status !== "accepted" || role !== "regular"}>
-                        <Text style={styles.icon}>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
+                        disabled={toggle || workout.status !== "accepted" || role !== "regular"}
+                    >
+                        <Text style={styles.icon}>
+                            {workout.savedByMe ? "📜" : "📃"} {workout.savesCount}
+                        </Text>
                     </Pressable>
                 </View>
             </View>
-
-
 
             <Text style={styles.subtitle}>Data</Text>
             <Text style={styles.data}>💪 Muscle Group: {workout.muscleGroup}</Text>
@@ -135,129 +154,6 @@ export default function WorkoutDetail() {
                     </Pressable>
                 </View>
             )}
-
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-    },
-    centered: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    backButton: {
-        marginBottom: 12,
-    },
-    backText: {
-        fontSize: 16,
-        color: "#555",
-    },
-    image: {
-        width: "100%",
-        height: 200,
-        borderRadius: 12,
-        marginBottom: 16,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginBottom: 4,
-    },
-    data: {
-        fontSize: 16,
-        color: "#666",
-        marginBottom: 2,
-    },
-    subtitle: {
-        marginTop: 12,
-        marginBottom: 8,
-        fontSize: 22,
-        fontWeight: "bold",
-        lineHeight: 22,
-    },
-    description: {
-        marginTop: 12,
-        fontSize: 16,
-        lineHeight: 22,
-    },
-    stats: {
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        paddingHorizontal: 4,
-        gap: 8,
-    },
-    rightStats: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 8,
-    },
-    author: {
-        color: "#0ea5e9",
-        fontWeight: "600",
-        fontSize: 12,
-        marginTop: 4,
-    },
-    defaultAuthor: {
-        color: "#888",
-        opacity: 0.7,
-        fontStyle: "italic",
-        fontSize: 12,
-        marginTop: 4,
-    },
-    icon: {
-        fontSize: 18,
-    },
-    reviewActions: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 24,
-        gap: 12,
-    },
-    reviewButton: {
-        flex: 1,
-        padding: 12,
-        borderRadius: 8,
-        alignItems: "center",
-    },
-    acceptBtn: {
-        backgroundColor: "#3b944d",
-    },
-    declineBtn: {
-        backgroundColor: "#a12828",
-    },
-    reviewText: {
-        fontWeight: "bold",
-        fontSize: 16,
-        color: "#fff",
-    },
-    carousel: {
-        marginTop: 20,
-    },
-    executionImage: {
-        width: SCREEN_WIDTH - 32,
-        height: 220,
-        borderRadius: 12,
-        marginRight: 8,
-        backgroundColor: "#f4f4f4",
-    },
-    indicatorRow: {
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 8,
-    },
-    indicator: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: "#ccc",
-        marginHorizontal: 4,
-    },
-    activeIndicator: {
-        backgroundColor: "#0ea5e9",
-    },
-})

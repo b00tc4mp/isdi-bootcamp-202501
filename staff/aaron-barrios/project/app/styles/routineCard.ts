@@ -23,10 +23,6 @@ export const styles = StyleSheet.create({
     info: {
         flex: 1,
         justifyContent: "center",
-        paddingVertical: 4,
-        backgroundColor: "rgba(184, 184, 184, 0.55)", // gris neutro más oscuro
-        borderRadius: 10,
-        padding: 10,
     },
     name: {
         fontSize: 18,
@@ -50,7 +46,7 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginTop: 12,
-        backgroundColor: "rgba(204, 203, 203, 0.55)",
+        color: "#666",
     },
     status: {
         fontSize: 12,
@@ -61,7 +57,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         gap: 14,
-        backgroundColor: "rgba(204, 203, 203, 0.55)",
+        color: "#666",
     },
     authorLink: {
         color: "#0ea5e9",
