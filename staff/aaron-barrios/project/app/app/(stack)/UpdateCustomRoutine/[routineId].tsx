@@ -3,9 +3,7 @@ import {
     Text,
     TextInput,
     ScrollView,
-    StyleSheet,
     Alert,
-    Button,
     View,
     Pressable,
     Image
@@ -15,6 +13,8 @@ import { useLocalSearchParams, useRouter } from "expo-router"
 import { getCustomRoutineById, updateCustomRoutine } from "@/services/routines"
 import { getCurrentUser } from "@/services/user"
 import { RoutineType } from "com/types"
+
+import { styles } from "@/styles/updateCustomRoutine"
 
 export default function CustomRoutineEditor() {
     const { routineId } = useLocalSearchParams<{ routineId: string }>()
@@ -101,27 +101,32 @@ export default function CustomRoutineEditor() {
             })
     }
 
-    if (loading) return <Text style={styles.loading}>Loading...</Text>
-    if (error) return <Text style={styles.error}>{error}</Text>
+    if (loading) return <Text >Loading...</Text>
+    if (error) return <Text>{error}</Text>
     if (!routine) return null
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            {/* Back Button */}
-            <Pressable onPress={() => router.back()} style={styles.backButton}>
-                <Text style={styles.backIcon}>←</Text>
-            </Pressable>
+            {/* Header */}
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}>Update Custom Routine</Text>
+                <Pressable onPress={() => router.back()}>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
+                </Pressable>
+            </View>
 
-            <Text style={styles.title}>✏️ Edit Custom Routine: {routine.name}</Text>
+            {/* Title */}
+            <Text style={styles.title}>{routine.name}</Text>
 
+            {/* Workouts Editable */}
             {routine.workouts.map((rw, index) => (
                 <View key={index} style={styles.workoutCard}>
                     <Text style={styles.workoutTitle}>{rw.workout.name}</Text>
 
-                    <Image
-                        source={{ uri: rw.workout.feedImage }}
-                        style={styles.workoutImage}
-                    />
+                    <Image source={{ uri: rw.workout.feedImage }} style={styles.workoutImage} />
 
                     <View style={styles.inputGroup}>
                         <Text style={styles.label}>Sets</Text>
@@ -165,39 +170,11 @@ export default function CustomRoutineEditor() {
                 </View>
             ))}
 
-            <Button title="💾 Save Changes" onPress={handleSave} color="#22c55e" />
+            {/* Save Button */}
+            <Pressable style={styles.saveButton} onPress={handleSave}>
+                <Text style={styles.saveButtonText}>Save Changes</Text>
+            </Pressable>
         </ScrollView>
     )
-}
 
-const styles = StyleSheet.create({
-    container: { padding: 16 },
-    title: { fontSize: 20, fontWeight: "bold", marginBottom: 16 },
-    loading: { padding: 20, fontSize: 16, textAlign: "center" },
-    error: { padding: 20, fontSize: 16, color: "red", textAlign: "center" },
-    workoutCard: { backgroundColor: "#fff", padding: 12, marginBottom: 16, borderRadius: 8 },
-    backButton: {
-        marginBottom: 12,
-    },
-    backIcon: {
-        fontSize: 26,
-        color: "#555",
-    },
-    workoutTitle: { fontSize: 16, fontWeight: "bold", marginBottom: 8 },
-    inputGroup: { marginBottom: 8 },
-    label: { fontWeight: "600", marginBottom: 4 },
-    input: {
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 6,
-        padding: 8,
-        fontSize: 14,
-    },
-    workoutImage: {
-        width: "100%",
-        height: 160,
-        borderRadius: 8,
-        marginBottom: 8,
-        backgroundColor: "#ccc"
-    }
-})
+}

@@ -44,7 +44,17 @@ export default function RoutineCard({
             />
 
             <View style={styles.info}>
-                <Text style={styles.name}>{routine.name}</Text>
+                <View style={styles.nameRow}>
+                    <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+                        {routine.name}
+                    </Text>
+                    {showStatus && (
+                        <Text style={styles.status}>
+                            {routine.status.charAt(0).toUpperCase() + routine.status.slice(1)}
+                        </Text>
+                    )}
+                </View>
+
                 <Text style={styles.d_info}>{routine.muscleGroup}</Text>
                 <Text style={styles.d_info}>{routine.workouts.length} workouts </Text>
                 <Text style={styles.d_info}>{routine.duration.toString()} min</Text>
@@ -69,14 +79,11 @@ export default function RoutineCard({
 
 
                 <View style={styles.bottomRow}>
-                    {showStatus && (
-                        <Text style={styles.status}>
-                            {routine.status.charAt(0).toUpperCase() + routine.status.slice(1)}
-                        </Text>
-                    )}
+                    <View style={styles.leftColumn}>
+                        <Text style={styles.date}>📅 {formatDate(routine.createdAt)}</Text>
+                    </View>
 
                     <View style={styles.actions}>
-                        <Text style={styles.date}>📅 {formatDate(routine.createdAt)}</Text>
                         {routine.status === "pending" && role !== "mod" && (
                             <Pressable
                                 onPress={() =>
@@ -103,6 +110,7 @@ export default function RoutineCard({
                         )}
                     </View>
                 </View>
+
             </View>
         </Pressable>
     )

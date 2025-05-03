@@ -27,8 +27,16 @@ export const styles = StyleSheet.create({
     name: {
         fontSize: 18,
         fontWeight: "bold",
-        marginBottom: 4,
         color: "#111",
+        marginBottom: 4,
+        flexShrink: 1,
+        maxWidth: "75%",
+    },
+    nameRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 8,
     },
     d_info: {
         fontSize: 12,
@@ -41,35 +49,38 @@ export const styles = StyleSheet.create({
         color: "#111",
         fontWeight: "600",
     },
+    leftColumn: {
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        gap: 4,
+    },
     bottomRow: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center",
-        marginTop: 12,
-        color: "#666",
+        alignItems: "flex-end",
+        marginTop: 4,
+    },
+    actions: {
+        flexDirection: "row",
+        alignItems: "flex-end",
+        gap: 14,
     },
     status: {
         fontSize: 12,
         fontStyle: "italic",
         color: "#111",
     },
-    actions: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 14,
-        color: "#666",
-    },
     authorLink: {
         color: "#0ea5e9",
         fontWeight: "600",
         fontSize: 12,
-        marginTop: 4,
+        marginTop: 2,
     },
     defaultAuthor: {
         color: "#888",
         opacity: 0.7,
         fontStyle: "italic",
         fontSize: 12,
-        marginTop: 4,
+        marginTop: 2,
     },
 })

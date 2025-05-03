@@ -45,9 +45,21 @@ export default function WorkoutCard({
             />
 
             <View style={styles.info}>
-                <Text style={styles.name}>{workout.name}</Text>
+                <View style={styles.nameRow}>
+                    <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+                        {workout.name}
+                    </Text>
+                    {showStatus && role !== "mod" && (
+                        <Text style={styles.status}>
+                            {workout.status.charAt(0).toUpperCase() + workout.status.slice(1)}
+                        </Text>
+                    )}
+                </View>
+
+
                 <Text>{workout.muscleGroup}</Text>
                 <Text>{workout.type}</Text>
+
 
                 {showAuthor && (
                     <Pressable
@@ -68,14 +80,8 @@ export default function WorkoutCard({
                 )}
 
                 <View style={styles.bottomRow}>
-                    {showStatus && role !== "mod" && (
-                        <Text style={styles.status}>
-                            {workout.status.charAt(0).toUpperCase() + workout.status.slice(1)}
-                        </Text>
-                    )}
-
+                    <Text style={styles.date}>📅 {formatDate(workout.createdAt)}</Text>
                     <View style={styles.actions}>
-                        <Text style={styles.date}>📅 {formatDate(workout.createdAt)}</Text>
                         {workout.status === "pending" && role !== "mod" && (
                             <Pressable
                                 onPress={() =>
@@ -95,6 +101,7 @@ export default function WorkoutCard({
                                 <Text>{workout.savedByMe ? "📜" : "📃"} {workout.savesCount}</Text>
                             </>
                         )}
+
                         {onDelete && (
                             <Pressable onPress={onDelete}>
                                 <Text style={{ color: "#fff", fontWeight: "bold" }}>🗑️</Text>
@@ -102,6 +109,7 @@ export default function WorkoutCard({
                         )}
                     </View>
                 </View>
+
             </View>
         </Pressable >
     )

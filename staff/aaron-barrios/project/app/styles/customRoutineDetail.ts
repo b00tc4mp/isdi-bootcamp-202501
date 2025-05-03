@@ -20,57 +20,48 @@ export const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 24,
-        fontWeight: "600",
+        fontWeight: "bold",
         color: "#fff",
     },
     centered: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
     },
     backButton: {
-        marginBottom: 16,
-        paddingTop: 32,
+        marginBottom: 12,
     },
     backIcon: {
         fontSize: 26,
-        color: "#000",
+        color: "#555"
     },
     image: {
         width: "100%",
         height: 200,
         borderRadius: 12,
-        marginBottom: 16,
+        marginBottom: 16
     },
     title: {
         fontSize: 28,
         fontWeight: "bold",
         color: "#000",
-        marginBottom: 8,
+        marginBottom: 8
     },
     summaryCard: {
         flexDirection: "row",
-        backgroundColor: "#e5e5e5",
+        backgroundColor: "#fff",
         padding: 12,
         borderRadius: 12,
         marginBottom: 16,
-        gap: 8,
+        elevation: 2,
+        gap: 8
     },
     summaryLeft: {
         flex: 1,
-        gap: 4,
-    },
-    summaryRight: {
-        justifyContent: "center",
-        alignItems: "flex-end",
-        gap: 8,
+        gap: 4
     },
     summaryText: {
         fontSize: 14,
-        color: "#000",
-    },
-    icon: {
-        fontSize: 18,
         color: "#000",
     },
     subtitle: {
@@ -96,7 +87,7 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "600",
         color: "#000",
-        marginBottom: 6,
+        marginBottom: 6
     },
     workoutDataRow: {
         flexDirection: "row",
@@ -114,43 +105,28 @@ export const styles = StyleSheet.create({
         marginBottom: 8,
         backgroundColor: "#ddd",
     },
-    reviewActions: {
+    actionButtons: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginTop: 32,
-        gap: 12,
-    },
-    reviewButton: {
-        flex: 1,
-        padding: 14,
-        borderRadius: 8,
-        alignItems: "center",
-    },
-    acceptBtn: {
-        backgroundColor: "#3b944d",
-        marginBottom: 10
-    },
-    declineBtn: {
-        backgroundColor: "#a12828",
-        marginBottom: 10
-    },
-    reviewText: {
-        fontWeight: "bold",
-        fontSize: 16,
-        color: "#fff",
-    },
-    customizeButton: {
-        backgroundColor: "#facc15",
-        paddingVertical: 14,
-        paddingHorizontal: 24,
-        borderRadius: 8,
         marginTop: 24,
-        alignItems: "center",
-        marginBottom: 100
+        marginBottom: 12,
+        gap: 12
     },
-    customizeButtonText: {
+    actionButton: {
+        flex: 1,
+        padding: 12,
+        borderRadius: 8,
+        alignItems: "center"
+    },
+    editButton: {
+        backgroundColor: "#3b82f6"
+    },
+    deleteButton: {
+        backgroundColor: "#ef4444"
+    },
+    actionText: {
         fontWeight: "bold",
         fontSize: 16,
-        color: "#000",
-    },
+        color: "#fff"
+    }
 })

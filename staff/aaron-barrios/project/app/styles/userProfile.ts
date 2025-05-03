@@ -90,7 +90,7 @@ export const styles = StyleSheet.create({
     },
     dropdownButton: {
         paddingVertical: 10,
-        paddingHorizontal: 16,
+        paddingHorizontal: 58,
         borderRadius: 8,
         backgroundColor: "#ddd",
     },

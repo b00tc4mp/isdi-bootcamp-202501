@@ -24,21 +24,40 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
     },
-    name: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 6,
-    },
-    bottomRow: {
+    nameRow: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 12,
+        gap: 8,
     },
+
+    name: {
+        fontSize: 18,
+        marginBottom: 20,
+        fontWeight: "bold",
+        flexShrink: 1,
+        maxWidth: "75%",
+        color: "#000",
+    },
+
     status: {
-        fontSize: 12,
+        fontSize: 13,
         fontStyle: "italic",
         color: "#666",
+        flexShrink: 0,
+        marginBottom: 20,
+    },
+
+    bottomRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-end",
+        marginTop: 12,
+    },
+    date: {
+        fontWeight: "600",
+        fontSize: 11,
+        color: "#555",
     },
     actions: {
         flexDirection: "row",
@@ -61,11 +80,6 @@ export const styles = StyleSheet.create({
         opacity: 0.7,
         fontStyle: "italic",
         fontSize: 12,
-        marginTop: 4,
-    },
-    date: {
-        fontWeight: "600",
-        fontSize: 10,
         marginTop: 4,
     },
     reviewActions: {

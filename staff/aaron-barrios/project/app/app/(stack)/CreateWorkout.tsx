@@ -5,23 +5,24 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet,
     ScrollView,
     Pressable,
-    Platform as RNPlatform,
-    Alert as RNAlert,
+    Platform,
+    Alert,
+    Image,
 } from "react-native"
 import { Picker } from "@react-native-picker/picker"
-import { FontAwesome5 } from "@expo/vector-icons"
 
 import { createWorkout } from "@/services/workouts"
 import { getCurrentUser } from "@/services/user"
 
+import { styles } from "@/styles/createWorkout"
+
 const showAlert = (title: string, message: string) => {
-    if (RNPlatform.OS === "web") {
+    if (Platform.OS === "web") {
         window.alert(`${title}: ${message}`)
     } else {
-        RNAlert.alert(title, message)
+        Alert.alert(title, message)
     }
 }
 
@@ -55,10 +56,15 @@ export default function CreateWorkout() {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Create Workout</Text>
-            <Pressable onPress={() => router.back()} style={{ position: "absolute", left: 16, top: 16 }}>
-                <FontAwesome5 name="arrow-left" size={24} />
-            </Pressable>
+            <View style={styles.header}>
+                <Text style={styles.title}>Create Workout</Text>
+                <Pressable onPress={() => router.back()}>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
+                </Pressable>
+            </View>
 
             <Text style={styles.label}>Name</Text>
             <TextInput style={styles.input} value={name} onChangeText={setName} />
@@ -113,52 +119,3 @@ export default function CreateWorkout() {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-        backgroundColor: "#fff",
-        flexGrow: 1
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginBottom: 24
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: "600",
-        marginBottom: 4
-    },
-    input: {
-        backgroundColor: "#f0f0f0",
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        marginBottom: 16
-    },
-    pickerContainer: {
-        backgroundColor: "#f0f0f0",
-        borderRadius: 8,
-        overflow: "hidden",
-        marginBottom: 16
-    },
-    picker: {
-        height: RNPlatform.OS === "ios" ? 200 : 40,
-        width: "100%",
-    },
-    textarea: {
-        height: 100,
-        textAlignVertical: "top"
-    },
-    submit: {
-        backgroundColor: "#ccc",
-        paddingVertical: 14,
-        borderRadius: 8,
-        alignItems: "center"
-    },
-    submitText: {
-        fontSize: 16,
-        fontWeight: "600"
-    }
-})

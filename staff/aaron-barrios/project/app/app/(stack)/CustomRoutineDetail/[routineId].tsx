@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { useLocalSearchParams, useRouter } from "expo-router"
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Pressable, Alert } from "react-native"
-import { Text, View } from "@/components/Themed"
+import { ActivityIndicator, Image, ScrollView, Pressable, Alert, View, Text } from "react-native"
 
 import { getCustomRoutineById, deleteCustomRoutine } from "@/services/routines"
 import { getCurrentUser } from "@/services/user"
 import { CustomRoutineType } from "com/types"
+
+import { styles } from "@/styles/customRoutineDetail"
 
 export default function CustomRoutineDetail() {
     const { routineId } = useLocalSearchParams<{ routineId: string }>()
@@ -81,23 +82,26 @@ export default function CustomRoutineDetail() {
 
     return (
         <ScrollView style={styles.container}>
-            {/* Back Button */}
-            <Pressable onPress={() => router.back()} style={styles.backButton}>
-                <Text style={styles.backIcon}>←</Text>
-            </Pressable>
+            {/* Header */}
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}>{routine.name}</Text>
+                <Pressable onPress={() => router.back()}>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
+                </Pressable>
+            </View>
 
-            {/* Title */}
-            <Text style={styles.title}>{routine.name}</Text>
 
             {/* Feed Image */}
             <Image source={{ uri: routine.feedImage }} style={styles.image} />
 
             {/* Summary Card */}
-            <View style={styles.summaryCard}>
-                <View style={styles.summaryLeft}>
-                    <Text style={styles.summaryText}>💪 {routine.muscleGroup}</Text>
-                    <Text style={styles.summaryText}>🕒 {routine.duration} min</Text>
-                </View>
+            <View style={styles.summaryLeft}>
+                <Text style={styles.summaryText}>💪 Muscle Group: {routine.muscleGroup}</Text>
+                <Text style={styles.summaryText}>🔥 Difficulty: Intermediate</Text>
+                <Text style={styles.summaryText}>🕒 Duration: {routine.duration.toString()} min</Text>
             </View>
 
             {/* Description */}
@@ -128,43 +132,13 @@ export default function CustomRoutineDetail() {
             {/* Action Buttons */}
             <View style={styles.actionButtons}>
                 <Pressable style={[styles.actionButton, styles.editButton]} onPress={handleEdit}>
-                    <Text style={styles.actionText}>✏️ Edit Routine</Text>
+                    <Text style={styles.actionText}>Edit Routine</Text>
                 </Pressable>
 
                 <Pressable style={[styles.actionButton, styles.deleteButton]} onPress={handleDelete}>
-                    <Text style={styles.actionText}>🗑️ Remove Custom</Text>
+                    <Text style={styles.actionText}>Remove Custom</Text>
                 </Pressable>
             </View>
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16 },
-    centered: { flex: 1, justifyContent: "center", alignItems: "center" },
-    backButton: { marginBottom: 12 },
-    backIcon: { fontSize: 26, color: "#555" },
-    image: { width: "100%", height: 200, borderRadius: 12, marginBottom: 16 },
-    title: { fontSize: 28, fontWeight: "bold", marginBottom: 8 },
-    summaryCard: { flexDirection: "row", backgroundColor: "#fff", padding: 12, borderRadius: 12, marginBottom: 16, elevation: 2 },
-    summaryLeft: { flex: 1, gap: 4 },
-    summaryText: { fontSize: 14, color: "#333" },
-    subtitle: { fontSize: 22, fontWeight: "bold", marginTop: 16, marginBottom: 8 },
-    description: { fontSize: 16, color: "#444", marginBottom: 16 },
-    workoutItem: { backgroundColor: "#f5f5f5", borderRadius: 8, padding: 12, marginBottom: 8 },
-    workoutName: { fontSize: 22, fontWeight: "600", marginBottom: 6 },
-    workoutDataRow: { flexDirection: "row", gap: 16 },
-    workoutImage: {
-        width: "100%",
-        height: 160,
-        borderRadius: 8,
-        marginBottom: 8,
-        backgroundColor: "#ddd",
-    },
-    workoutData: { fontSize: 18, color: "#666" },
-    actionButtons: { flexDirection: "row", justifyContent: "space-between", marginTop: 24, gap: 12 },
-    actionButton: { flex: 1, padding: 12, borderRadius: 8, alignItems: "center" },
-    editButton: { backgroundColor: "#3b82f6" },
-    deleteButton: { backgroundColor: "#ef4444" },
-    actionText: { fontWeight: "bold", fontSize: 16, color: "#fff" }
-})
