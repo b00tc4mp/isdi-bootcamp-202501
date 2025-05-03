@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { StyleSheet, TextInput, Button, Alert, Platform, ScrollView, Pressable } from "react-native"
-import { View, Text } from "@/components/Themed"
+import { TextInput, Alert, Platform, ScrollView, Pressable, View, Text } from "react-native"
 import { router, useFocusEffect } from "expo-router"
 
 import type { RoutineType, UserType, WorkoutType } from "com/types"
@@ -12,6 +11,8 @@ import RoutineCard from "@/components/RoutineCard"
 import { getUserData, updateUserData, getMyWorkouts, getSavedWorkouts, getSavedRoutines, getMyRoutines } from "@/services/user/regular"
 import { deleteWorkout } from "@/services/workouts"
 import { deleteRoutine, getMyCustomRoutines } from "@/services/routines"
+
+import { styles } from "@/styles/userProfile"
 
 
 export default function Profile() {
@@ -209,12 +210,13 @@ export default function Profile() {
                     </View>
 
 
-                    <View style={styles.button}>
-                        <Button title="Update Profile" onPress={handleUpdate} />
-                    </View>
+                    <Pressable style={styles.button} onPress={handleUpdate}>
+                        <Text style={styles.buttonText}>Update Profile</Text>
+                    </Pressable>
+
 
                     <Pressable style={styles.linkButton} onPress={() => router.push("/(stack)/ChangePassword")}>
-                        <Text style={styles.linkText}>Change Password 🔐</Text>
+                        <Text style={styles.linkText}>Change Password </Text>
                     </Pressable>
                 </>
             )
@@ -332,7 +334,7 @@ export default function Profile() {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Your Profile</Text>
+            <Text style={styles.title}>{alias}'s data</Text>
 
             <View style={styles.tabs}>
                 <Pressable style={[styles.tab, activeTab === "user" && styles.activeTab]} onPress={() => setActiveTab("user")}>
@@ -353,51 +355,3 @@ export default function Profile() {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: { padding: 24, backgroundColor: "#f0f0f0", flexGrow: 1 },
-    title: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
-    label: { fontSize: 16, fontWeight: "500", marginBottom: 4, marginTop: 12 },
-    input: { backgroundColor: "#fff", paddingHorizontal: 12, paddingVertical: 10, borderRadius: 8, marginBottom: 8 },
-    button: { marginTop: 20 },
-    tabs: { flexDirection: "row", justifyContent: "space-between", marginBottom: 16, gap: 8 },
-    tab: { flex: 1, paddingVertical: 10, borderRadius: 8, backgroundColor: "#ddd", alignItems: "center" },
-    activeTab: { backgroundColor: "#facc15" },
-    tabText: { fontWeight: "600" },
-    dropdownContainer: { flexDirection: "row", gap: 12, marginBottom: 16 },
-    dropdownButton: { paddingVertical: 8, paddingHorizontal: 16, borderRadius: 8, backgroundColor: "#ddd" },
-    activeDropdown: { backgroundColor: "#facc15" },
-    linkButton: { marginTop: 16, alignItems: "center" },
-    linkText: { color: "#0ea5e9", fontWeight: "600", fontSize: 16 },
-    levelPicker: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginBottom: 12,
-        gap: 8,
-    },
-    levelOption: {
-        flex: 1,
-        paddingVertical: 10,
-        borderRadius: 8,
-        backgroundColor: "#ddd",
-        alignItems: "center",
-    },
-    activeLevel: {
-        backgroundColor: "#facc15",
-    },
-    interestsContainer: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: 8,
-        marginBottom: 12,
-    },
-    interestOption: {
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        borderRadius: 8,
-        backgroundColor: "#ddd",
-    },
-    activeInterest: {
-        backgroundColor: "#4ade80",
-    },
-})

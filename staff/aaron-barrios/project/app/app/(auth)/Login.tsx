@@ -71,7 +71,7 @@ export default function Login() {
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Tzend</Text>
+        {/* <Text style={styles.headerText}>Tzend</Text> */}
         <Text style={styles.title}>Login</Text>
       </View>
 

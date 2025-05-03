@@ -52,7 +52,7 @@ export default function ModLayout() {
 
   const handleLogout = async () => {
     await logoutUser()
-    router.replace("/(auth)")
+    router.replace("/(auth)/Login")
   }
 
   if (!authorized) return null

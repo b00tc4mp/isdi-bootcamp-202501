@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import {
-    StyleSheet,
     TextInput,
     Button,
     Alert,
@@ -14,6 +13,8 @@ import { router } from "expo-router"
 import type { UserType } from "com/types"
 import { getUserData, updateUserData } from "@/services/user/regular"
 import { getUserRole } from "@/services/user"
+
+import { styles } from "@/styles/modProfile"
 
 export default function Mod_Profile() {
     const [alias, setAlias] = useState("")
@@ -75,7 +76,7 @@ export default function Mod_Profile() {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Moderator Profile</Text>
+            <Text style={styles.title}>{alias}'s  data</Text>
 
             <Text style={styles.label}>Alias</Text>
             <TextInput
@@ -96,51 +97,14 @@ export default function Mod_Profile() {
                 autoCapitalize="none"
             />
 
-            <View style={styles.button}>
-                <Button title="Update Profile" onPress={handleUpdate} />
-            </View>
+            <Pressable style={styles.button} onPress={handleUpdate}>
+                <Text style={styles.buttonText}>Update Profile</Text>
+            </Pressable>
+
 
             <Pressable style={styles.linkButton} onPress={() => router.push("/(stack)/ChangePassword")}>
-                <Text style={styles.linkText}>Change Password 🔐</Text>
+                <Text style={styles.linkText}>Change Password</Text>
             </Pressable>
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 24,
-        backgroundColor: "#f0f0f0",
-        flexGrow: 1,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: "500",
-        marginBottom: 4,
-        marginTop: 12,
-    },
-    input: {
-        backgroundColor: "#fff",
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        borderRadius: 8,
-        marginBottom: 8,
-    },
-    button: {
-        marginTop: 20,
-    },
-    linkButton: {
-        marginTop: 16,
-        alignItems: "center",
-    },
-    linkText: {
-        color: "#0ea5e9",
-        fontWeight: "600",
-        fontSize: 16,
-    },
-})

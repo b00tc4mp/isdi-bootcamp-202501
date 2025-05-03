@@ -62,7 +62,7 @@ export default function Register() {
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Tzend</Text>
+        {/* <Text style={styles.headerText}>Tzend</Text> */}
         <Text style={styles.title}>Register</Text>
       </View>
 
