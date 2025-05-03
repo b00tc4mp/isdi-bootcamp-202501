@@ -1,17 +1,17 @@
 import { useEffect, useState, useCallback } from "react"
 import { useFocusEffect, useRouter } from "expo-router"
-import { Text, View } from "@/components/Themed"
 import {
     FlatList,
     Pressable,
-    StyleSheet,
     RefreshControl,
+    StyleSheet,
+    View,
+    Text,
 } from "react-native"
 
 import { getUserRole } from "@/services/user"
 import { getModeratorWorkouts, reviewWorkout } from "@/services/workouts"
 import { getModeratorRoutines } from "@/services/routines"
-
 import WorkoutCard from "@/components/WorkoutCard"
 import RoutineCard from "@/components/RoutineCard"
 import type { WorkoutType, RoutineType } from "com/types"
@@ -26,16 +26,12 @@ export default function Review() {
 
     const fetchWorkouts = useCallback(() => {
         setRefreshing(true)
-        getModeratorWorkouts()
-            .then(setWorkouts)
-            .finally(() => setRefreshing(false))
+        getModeratorWorkouts().then(setWorkouts).finally(() => setRefreshing(false))
     }, [])
 
     const fetchRoutines = useCallback(() => {
         setRefreshing(true)
-        getModeratorRoutines()
-            .then(setRoutines)
-            .finally(() => setRefreshing(false))
+        getModeratorRoutines().then(setRoutines).finally(() => setRefreshing(false))
     }, [])
 
     useFocusEffect(
@@ -74,6 +70,7 @@ export default function Review() {
 
     return (
         <FlatList
+            style={styles.container}
             data={data}
             keyExtractor={item => item.id}
             refreshControl={
@@ -83,28 +80,37 @@ export default function Review() {
                 />
             }
             ListHeaderComponent={
-                <View>
-                    <Text style={styles.title}>Review</Text>
-
+                <>
                     <View style={styles.tabs}>
                         <Pressable
-                            style={[styles.tab, activeTab === "routines" && styles.tabInactive]}
-                            onPress={() => setActiveTab("routines")}
-                        >
-                            <Text style={activeTab === "routines" ? styles.tabTextActive : styles.tabText}>
-                                Routines
-                            </Text>
-                        </Pressable>
-                        <Pressable
-                            style={[styles.tab, activeTab === "workouts" && styles.tabInactive]}
+                            style={[styles.tab, activeTab === "workouts" && styles.tabActive]}
                             onPress={() => setActiveTab("workouts")}
                         >
-                            <Text style={activeTab === "workouts" ? styles.tabTextActive : styles.tabText}>
+                            <Text
+                                style={[
+                                    styles.tabText,
+                                    activeTab === "workouts" && styles.tabTextActive,
+                                ]}
+                            >
                                 Workouts
                             </Text>
                         </Pressable>
+
+                        <Pressable
+                            style={[styles.tab, activeTab === "routines" && styles.tabActive]}
+                            onPress={() => setActiveTab("routines")}
+                        >
+                            <Text
+                                style={[
+                                    styles.tabText,
+                                    activeTab === "routines" && styles.tabTextActive,
+                                ]}
+                            >
+                                Routines
+                            </Text>
+                        </Pressable>
                     </View>
-                </View>
+                </>
             }
             renderItem={({ item }) =>
                 activeTab === "workouts" ? (
@@ -125,7 +131,9 @@ export default function Review() {
             contentContainerStyle={styles.list}
             ListEmptyComponent={
                 <Text style={styles.placeholder}>
-                    {activeTab === "routines" ? "No pending routines found" : "No pending workouts found"}
+                    {activeTab === "routines"
+                        ? "No pending routines found"
+                        : "No pending workouts found"}
                 </Text>
             }
         />
@@ -133,37 +141,40 @@ export default function Review() {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#f5f5f5",
+    },
     title: {
-        fontSize: 26,
+        fontSize: 32,
         fontWeight: "bold",
-        marginBottom: 16,
-        paddingHorizontal: 16,
-        paddingTop: 24,
+        color: "#000",
     },
     tabs: {
+        paddingTop: 28,
         flexDirection: "row",
-        justifyContent: "space-around",
-        marginBottom: 16,
-        paddingHorizontal: 16,
+        justifyContent: "space-between",
+        gap: 12,
+        marginBottom: 24,
     },
     tab: {
         flex: 1,
-        paddingVertical: 10,
-        backgroundColor: "#e5e5e5",
-        marginHorizontal: 4,
+        paddingVertical: 12,
+        backgroundColor: "rgba(179, 179, 179, 0.74)",
         borderRadius: 10,
         alignItems: "center",
     },
-    tabInactive: {
-        backgroundColor: "#aaa",
+
+    tabActive: {
+        backgroundColor: "#facc15",
     },
     tabText: {
         fontWeight: "600",
         color: "#333",
+        fontSize: 14,
     },
     tabTextActive: {
-        fontWeight: "700",
         color: "#000",
+        fontWeight: "700",
     },
     list: {
         gap: 12,

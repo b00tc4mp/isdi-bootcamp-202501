@@ -1,8 +1,13 @@
-import { Pressable, StyleSheet, Image } from "react-native"
-import { Text, View } from "@/components/Themed"
+import { Pressable, Image, Text, View } from "react-native"
 import { useRouter } from "expo-router"
+import { useEffect, useState } from "react"
+
 import { RoutineType } from "com/types"
+
 import formatDate from "@/utils/formatedDate"
+import { getUserRole } from "@/services/user"
+
+import { styles } from "@/styles/routineCard"
 
 type RoutineCardProps = {
     routine: RoutineType
@@ -21,6 +26,12 @@ export default function RoutineCard({
 }: RoutineCardProps) {
     const router = useRouter()
 
+    const [role, setRole] = useState<string | null>(null)
+
+    useEffect(() => {
+        getUserRole().then(data => setRole(data?.role || null))
+    }, [])
+
     return (
         <Pressable style={styles.card} onPress={onPress}>
             <Image
@@ -34,8 +45,8 @@ export default function RoutineCard({
 
             <View style={styles.info}>
                 <Text style={styles.name}>{routine.name}</Text>
-                <Text>{routine.muscleGroup}</Text>
-                <Text>{routine.workouts.length} workouts · {routine.duration.toString()} min</Text>
+                <Text style={styles.d_info}>{routine.muscleGroup}</Text>
+                <Text style={styles.d_info}>{routine.workouts.length} workouts · {routine.duration.toString()} min</Text>
 
                 {showAuthor && (
                     <Pressable
@@ -65,7 +76,7 @@ export default function RoutineCard({
 
                     <View style={styles.actions}>
                         <Text style={styles.date}>📅 {formatDate(routine.createdAt)}</Text>
-                        {routine.status === "pending" && (
+                        {routine.status === "pending" && role !== "mod" && (
                             <Pressable
                                 onPress={() =>
                                     router.push({
@@ -95,66 +106,3 @@ export default function RoutineCard({
         </Pressable>
     )
 }
-
-const styles = StyleSheet.create({
-    card: {
-        flexDirection: "row",
-        backgroundColor: "#fff",
-        borderRadius: 12,
-        padding: 12,
-        marginBottom: 12,
-    },
-    image: {
-        width: 100,
-        height: 120,
-        borderRadius: 10,
-        marginRight: 12,
-        backgroundColor: "#eee",
-    },
-    info: {
-        flex: 1,
-        justifyContent: "center",
-    },
-    name: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 6,
-    },
-    date: {
-        fontWeight: "600",
-        fontSize: 10,
-        marginTop: 4,
-    },
-    bottomRow: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginTop: 12,
-    },
-    status: {
-        fontSize: 12,
-        fontStyle: "italic",
-        color: "#666",
-    },
-    actions: {
-        flexDirection: "row",
-        gap: 16,
-        alignItems: "center",
-    },
-    icon: {
-        fontSize: 13,
-    },
-    authorLink: {
-        color: "#0ea5e9",
-        fontWeight: "600",
-        fontSize: 12,
-        marginTop: 4,
-    },
-    defaultAuthor: {
-        color: "#888",
-        opacity: 0.7,
-        fontStyle: "italic",
-        fontSize: 12,
-        marginTop: 4,
-    },
-})

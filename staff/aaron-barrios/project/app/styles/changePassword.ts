@@ -2,15 +2,24 @@ import { StyleSheet } from "react-native"
 
 export const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        flex: 1,
         backgroundColor: "#f5f5f5",
-        padding: 24,
+        paddingHorizontal: 24,
+    },
+    header: {
+        backgroundColor: "#222",
+        paddingVertical: 32,
+        paddingHorizontal: 24,
+        marginBottom: 24,
+        marginHorizontal: -24,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     title: {
         fontSize: 28,
         fontWeight: "bold",
-        marginBottom: 24,
-        color: "#000",
+        color: "#fff",
     },
     label: {
         fontSize: 14,
@@ -38,15 +47,5 @@ export const styles = StyleSheet.create({
         color: "#fff",
         fontWeight: "bold",
         fontSize: 16,
-    },
-    linkButton: {
-        marginTop: 24,
-        alignItems: "center",
-    },
-    linkText: {
-        color: "#0ea5e9",
-        fontWeight: "600",
-        fontSize: 16,
-        textDecorationLine: "underline",
     },
 })

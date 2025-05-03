@@ -1,17 +1,18 @@
 import { useState } from "react"
 import {
-    StyleSheet,
     TextInput,
-    Button,
     Alert,
     Platform,
     ScrollView,
     Pressable,
+    Image,
 } from "react-native"
 import { View, Text } from "@/components/Themed"
 import { router } from "expo-router"
 
 import changePassword from "@/services/user/mod/changePassword"
+
+import { styles } from "@/styles/changePassword"
 
 export default function ChangePasswordScreen() {
     const [currentPassword, setCurrentPassword] = useState("")
@@ -47,15 +48,18 @@ export default function ChangePasswordScreen() {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView contentContainerStyle={styles.container} >
 
-            <View style={styles.subheader}>
+            <View style={styles.header}>
                 <Text style={styles.title}>Change Password</Text>
-
                 <Pressable onPress={() => router.back()}>
-                    <Text style={styles.backButton}>← Back</Text>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
                 </Pressable>
             </View>
+
 
             <Text style={styles.label}>Current Password</Text>
             <TextInput
@@ -84,49 +88,9 @@ export default function ChangePasswordScreen() {
                 secureTextEntry
             />
 
-            <View style={styles.button}>
-                <Button title="Update Password" onPress={handleChangePassword} disabled={loading} />
-            </View>
+            <Pressable style={styles.button} onPress={handleChangePassword} disabled={loading}>
+                <Text style={styles.buttonText}>Update Password</Text>
+            </Pressable>
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 24,
-        backgroundColor: "#f0f0f0",
-        flexGrow: 1,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: "500",
-        marginBottom: 4,
-        marginTop: 12,
-    },
-    subheader: {
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-    input: {
-        backgroundColor: "#fff",
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        borderRadius: 8,
-        marginBottom: 8,
-    },
-    button: {
-        marginTop: 20,
-    },
-    backButton: {
-        marginBottom: 12,
-        fontSize: 16,
-        color: "#0ea5e9",
-        fontWeight: "bold"
-    },
-})

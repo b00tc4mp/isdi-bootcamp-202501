@@ -1,9 +1,12 @@
-import { Image, Pressable, StyleSheet } from "react-native"
-import { View, Text } from "@/components/Themed"
+import { Image, Pressable, View, Text } from "react-native"
 import { useRouter } from "expo-router"
+import { useEffect, useState } from "react"
 
 import type { WorkoutType } from "com/types"
 import formatDate from "@/utils/formatedDate"
+import { getUserRole } from "@/services/user"
+
+import { styles } from "@/styles/workoutCard"
 
 type WorkoutCardProps = {
     workout: WorkoutType
@@ -22,6 +25,12 @@ export default function WorkoutCard({
     showAuthor = false,
 }: WorkoutCardProps) {
     const router = useRouter()
+
+    const [role, setRole] = useState<string | null>(null)
+
+    useEffect(() => {
+        getUserRole().then(data => setRole(data?.role || null))
+    }, [])
 
     return (
         <Pressable onPress={onPress} style={styles.card}>
@@ -59,7 +68,7 @@ export default function WorkoutCard({
                 )}
 
                 <View style={styles.bottomRow}>
-                    {showStatus && (
+                    {showStatus && role !== "mod" && (
                         <Text style={styles.status}>
                             {workout.status.charAt(0).toUpperCase() + workout.status.slice(1)}
                         </Text>
@@ -67,7 +76,7 @@ export default function WorkoutCard({
 
                     <View style={styles.actions}>
                         <Text style={styles.date}>📅 {formatDate(workout.createdAt)}</Text>
-                        {workout.status === "pending" && (
+                        {workout.status === "pending" && role !== "mod" && (
                             <Pressable
                                 onPress={() =>
                                     router.push({
@@ -97,89 +106,3 @@ export default function WorkoutCard({
         </Pressable >
     )
 }
-
-const styles = StyleSheet.create({
-    card: {
-        flexDirection: "row",
-        backgroundColor: "#fff",
-        borderRadius: 12,
-        padding: 12,
-        marginBottom: 12,
-    },
-    image: {
-        width: 100,
-        height: 100,
-        borderRadius: 10,
-        marginRight: 12,
-    },
-    info: {
-        flex: 1,
-        justifyContent: "center",
-    },
-    name: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 6,
-    },
-    bottomRow: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginTop: 12,
-    },
-    status: {
-        fontSize: 12,
-        fontStyle: "italic",
-        color: "#666",
-    },
-    actions: {
-        flexDirection: "row",
-        gap: 16,
-        alignItems: "center",
-    },
-    deleteIcon: {
-        width: 20,
-        height: 20,
-        tintColor: "red",
-    },
-    authorLink: {
-        color: "#0ea5e9",
-        fontWeight: "600",
-        fontSize: 12,
-        marginTop: 4,
-    },
-    defaultAuthor: {
-        color: "#888",
-        opacity: 0.7,
-        fontStyle: "italic",
-        fontSize: 12,
-        marginTop: 4,
-    },
-    date: {
-        fontWeight: "600",
-        fontSize: 10,
-        marginTop: 4,
-    },
-    reviewActions: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 16,
-        gap: 8,
-    },
-    reviewButton: {
-        flex: 1,
-        paddingVertical: 8,
-        borderRadius: 8,
-        alignItems: "center",
-    },
-    acceptBtn: {
-        backgroundColor: "#22c55e",
-    },
-    declineBtn: {
-        backgroundColor: "#ef4444",
-    },
-    reviewText: {
-        color: "#fff",
-        fontWeight: "bold",
-    },
-})
