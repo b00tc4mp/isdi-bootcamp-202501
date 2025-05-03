@@ -4,18 +4,17 @@ import { StyleSheet } from "react-native"
 export const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: "white", // fondo blanco general
+        backgroundColor: "white",
         paddingHorizontal: 24,
-        paddingTop: 60,
     },
     header: {
-        backgroundColor: "#111", // header seminegro
-        paddingVertical: 24,
-        paddingHorizontal: 16,
+        backgroundColor: "#111",
+        paddingVertical: 32,
+        paddingHorizontal: 24, // ← igualamos al padding del resto
         marginBottom: 24,
-        borderRadius: 12,
-        width: "100%",
+        marginHorizontal: -24, // ← esto se mantiene para ocupar ancho completo
     },
+
     headerText: {
         fontSize: 20,
         fontWeight: "600",
@@ -61,7 +60,7 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: "#000",
         textDecorationLine: "underline",
-        marginBottom: 16,
+        marginTop: 16,
         textAlign: "center",
     },
     secondaryText: {

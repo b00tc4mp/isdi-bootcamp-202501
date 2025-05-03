@@ -66,14 +66,25 @@ export default function RootLayout() {
         return
       }
 
+      // // ✅ Mobile → redirige directo según rol
+      // if (Platform.OS !== "web") {
+      //   if (userRole === "regular") setInitialRoute("/(tabs)")
+      //   else if (userRole === "mod") setInitialRoute("/(mod)")
+      // else setInitialRoute("/(anonym)")
+      //   setAppReady(true)
+      //   return
+      // }
+
       // ✅ Mobile → redirige directo según rol
       if (Platform.OS !== "web") {
         if (userRole === "regular") setInitialRoute("/(tabs)")
         else if (userRole === "mod") setInitialRoute("/(mod)")
-        else setInitialRoute("/(anonym)")
+        else if (userRole === "anonym") setInitialRoute("/(anonym)")
+        else setInitialRoute("/(auth)") // ← aquí está la clave
         setAppReady(true)
         return
       }
+
 
       // ✅ En web → corregimos incoherencias entre rol y ruta
       requestAnimationFrame(() => {

@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     overlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: "rgba(0,0,0,0.4)",
+        zIndex: 1
     },
     container: {
         flex: 1,
@@ -18,10 +19,12 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         paddingVertical: 60,
         paddingHorizontal: 24,
+        zIndex: 2
     },
     header: {
         alignItems: "center",
         marginTop: 40,
+        zIndex: 3
     },
     logo: {
         fontSize: 90,
@@ -46,6 +49,7 @@ export const styles = StyleSheet.create({
     footer: {
         alignItems: "center",
         width: "100%",
+        zIndex: 3
     },
     button: {
         width: "100%",

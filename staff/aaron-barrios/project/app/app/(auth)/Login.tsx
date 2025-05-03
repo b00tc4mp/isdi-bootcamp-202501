@@ -4,7 +4,7 @@ import {
   Alert,
   Pressable,
   View,
-  Text,
+  Text
 } from "react-native"
 import { useRouter } from "expo-router"
 
@@ -14,7 +14,7 @@ import { errors } from "com"
 
 const { SystemError, ValidationError } = errors
 
-import { styles } from "./Login.styles"
+import { styles } from "../../styles/login"
 
 export default function Login() {
   const [alias, setAlias] = useState("")
@@ -98,14 +98,15 @@ export default function Login() {
           <Text style={styles.buttonText}>Iniciar Sesión</Text>
         </Pressable>
 
-        <Pressable onPress={handleAnonymousAccess}>
-          <Text style={styles.link}>Enter as a guest</Text>
-        </Pressable>
-
         <Pressable onPress={() => router.push("/(auth)/Register")}>
           <Text style={styles.secondaryText}>
             ¿Do not have an account? <Text style={styles.bold}>Register here</Text>
           </Text>
+        </Pressable>
+
+
+        <Pressable onPress={handleAnonymousAccess}>
+          <Text style={styles.link}>Enter as a guest</Text>
         </Pressable>
       </View>
     </View>

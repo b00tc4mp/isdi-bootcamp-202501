@@ -11,7 +11,7 @@ import { errors } from "com"
 
 const { SystemError } = errors
 
-import { styles } from "./Landing.styles"
+import { styles } from "../../styles/landing"
 
 export default function LandingScreen() {
   const router = useRouter()
