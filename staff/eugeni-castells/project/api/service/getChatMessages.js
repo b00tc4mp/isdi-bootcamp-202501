@@ -62,7 +62,7 @@ const getChatMessages = (userId, chatId) => {
                 const { _id: authorId } = author, sanitizedAuthor = __rest(author, ["_id"]);
                 //We use the sanitized author to set the returnedAuthor
                 const sanitizedComment = Object.assign(Object.assign({}, rest), { author: sanitizedAuthor });
-                return Object.assign(Object.assign({}, sanitizedComment), { own: userId === comment.author._id, createdAt: comment.createdAt.toISOString() });
+                return Object.assign(Object.assign({}, sanitizedComment), { own: userId === comment.author._id.toString(), createdAt: comment.createdAt.toISOString() });
             })) !== null && _a !== void 0 ? _a : [];
             return populatedChatHistoryWithOwn;
         }

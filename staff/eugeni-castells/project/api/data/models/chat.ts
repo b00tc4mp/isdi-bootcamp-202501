@@ -5,7 +5,7 @@ const chat = new Schema<ChatDocType>({
   history: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Comment",
+      ref: "ChatComment",
       required: true,
       default: [],
     },

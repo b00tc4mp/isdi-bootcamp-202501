@@ -12,7 +12,7 @@ import { registerVanHandler } from "../handlers/registerVanHandler";
 import { getUserNameHandler } from "../handlers/getUserNameHandler";
 import { authenticateUserHandler } from "../handlers/authenticateUserHandler";
 import { getUserExchangesHandler } from "../handlers/getUserExchangesHandler";
-import { getChatsHandler } from "../handlers/getChatsHandler";
+import { getAllUserInfoHandler } from "../handlers/getAllUserInfoHandler";
 
 export const userRouter = Router();
 
@@ -40,6 +40,6 @@ userRouter.post(
 
 userRouter.get("/self/username", authHandler, getUserNameHandler);
 
-userRouter.get("/self/trips", authHandler, getUserExchangesHandler);
+userRouter.get("/self", authHandler, getAllUserInfoHandler);
 
-userRouter.get("/chats", authHandler, getChatsHandler);
+userRouter.get("/self/trips", authHandler, getUserExchangesHandler);

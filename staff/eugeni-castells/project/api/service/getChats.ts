@@ -20,6 +20,7 @@ export const getChats = (userId: string): Promise<ReturnedChat[]> => {
               _id: Types.ObjectId;
               name: string;
               lastName: string;
+              isUser: boolean;
             }[];
             history: {
               _id: Types.ObjectId;
@@ -65,28 +66,39 @@ export const getChats = (userId: string): Promise<ReturnedChat[]> => {
       });
     });
 
-    const returnedChats: ReturnedChat[] = user.chats.map((chat) => ({
-      id: chat._id.toString(),
-      participants: chat.participants.map((p) => ({
-        id: p._id.toString(),
-        name: p.name,
-        lastName: p.lastName,
-      })),
-      createdAt: chat.createdAt.toISOString(),
-      modifiedAt:
-        chat.modifiedAt === null ? null : chat.modifiedAt.toISOString(),
-      history: chat.history.map((comment) => ({
-        id: comment._id.toString(),
-        text: comment.text,
-        createdAt: comment.createdAt.toISOString(),
-        author: {
-          id: comment.author._id.toString(),
-          name: comment.author.name,
-          lastName: comment.author.lastName,
+    const returnedChats: ReturnedChat[] = user.chats.map((chat) => {
+      const interlocutor = chat.participants.find(
+        (p) => p._id.toString() !== userId
+      );
+
+      return {
+        id: chat._id.toString(),
+        participants: chat.participants.map((p) => ({
+          id: p._id.toString(),
+          name: p.name,
+          lastName: p.lastName,
+        })),
+        interlocutor: {
+          id: interlocutor!._id.toString(),
+          name: interlocutor!.name,
+          lastName: interlocutor!.lastName,
         },
-        own: comment.author._id.toString() === userId,
-      })),
-    }));
+        createdAt: chat.createdAt.toISOString(),
+        modifiedAt:
+          chat.modifiedAt === null ? null : chat.modifiedAt.toISOString(),
+        history: chat.history.map((comment) => ({
+          id: comment._id.toString(),
+          text: comment.text,
+          createdAt: comment.createdAt.toISOString(),
+          author: {
+            id: comment.author._id.toString(),
+            name: comment.author.name,
+            lastName: comment.author.lastName,
+          },
+          own: comment.author._id.toString() === userId,
+        })),
+      };
+    });
 
     return returnedChats;
   })();

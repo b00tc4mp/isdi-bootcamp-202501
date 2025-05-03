@@ -65,7 +65,7 @@ export const getChatMessages = (
           const sanitizedComment = { ...rest, author: sanitizedAuthor };
           return {
             ...sanitizedComment,
-            own: userId === comment.author._id,
+            own: userId === comment.author._id.toString(),
             createdAt: comment.createdAt.toISOString(),
           };
         }) ?? [];

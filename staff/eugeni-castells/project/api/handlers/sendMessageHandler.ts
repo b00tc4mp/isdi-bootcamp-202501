@@ -10,7 +10,7 @@ export const sendMessageHandler = createFunctionalHandler(
     const { message } = req.body;
 
     return sendMessage(userId, chatId, message).then(() => {
-      res.status(200).send();
+      res.status(201).send();
     });
   }
 );

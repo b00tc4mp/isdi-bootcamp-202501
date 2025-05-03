@@ -6,6 +6,7 @@ import { userRouter, vanRouter } from "./routes";
 import errorHandler from "./middlewares/errorHandler";
 import loggers from "./loggers/index";
 import { tripRouter } from "./routes/trips";
+import { chatRouter } from "./routes/chats";
 
 const { MONGO_URI, MONGO_DB_APP } = process.env;
 
@@ -36,6 +37,8 @@ data
     api.use("/vans", vanRouter);
 
     api.use("/trips", tripRouter);
+
+    api.use("/chats", chatRouter);
 
     api.use(errorHandler);
 

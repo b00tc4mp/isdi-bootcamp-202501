@@ -6,7 +6,7 @@ const chat = new mongoose_1.Schema({
     history: [
         {
             type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Comment",
+            ref: "ChatComment",
             required: true,
             default: [],
         },

@@ -230,5 +230,63 @@ export type ReturnedChat = {
     name: string;
     lastName: string;
   }[];
+  interlocutor: {
+    id: string;
+    name: string;
+    lastName: string;
+  };
   history: ReturnedChatMessages;
+};
+
+export type PopulatedAllUserInfo = {
+  _id: Types.ObjectId;
+  location: {
+    _id: Types.ObjectId;
+    city: string;
+    country: string;
+  };
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  vans: {
+    _id: Types.ObjectId;
+    model: string;
+    brand: string;
+    location: {
+      _id: Types.ObjectId;
+      city: string;
+      country: string;
+    };
+    price: number;
+  }[];
+  createdAt: Date;
+  modifiedAt: Date | null;
+  roadPoints: number;
+};
+
+export type ReturnedAllUserInfo = {
+  id: string;
+  location: {
+    id: string;
+    city: string;
+    country: string;
+  };
+  name: string;
+  lastName: string;
+  email: string;
+  vans: {
+    id: string;
+    model: string;
+    brand: string;
+    location: {
+      id: string;
+      city: string;
+      country: string;
+    };
+    price: number;
+  }[];
+  createdAt: Date;
+  modifiedAt: Date | null;
+  roadPoints: number;
 };

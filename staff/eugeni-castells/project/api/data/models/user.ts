@@ -53,7 +53,9 @@ const user = new Schema<UserDocType>({
     required: true,
     default: 0,
   },
-  chats: [{ type: Schema.Types.ObjectId, required: true, default: [] }],
+  chats: [
+    { type: Schema.Types.ObjectId, required: true, default: [], ref: "Chat" },
+  ],
 });
 
 export const User = model<UserDocType>("User", user);

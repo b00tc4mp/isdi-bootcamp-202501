@@ -54,6 +54,8 @@ const user = new mongoose_1.Schema({
         required: true,
         default: 0,
     },
-    chats: [{ type: mongoose_1.Schema.Types.ObjectId, required: true, default: [] }],
+    chats: [
+        { type: mongoose_1.Schema.Types.ObjectId, required: true, default: [], ref: "Chat" },
+    ],
 });
 exports.User = (0, mongoose_1.model)("User", user);
