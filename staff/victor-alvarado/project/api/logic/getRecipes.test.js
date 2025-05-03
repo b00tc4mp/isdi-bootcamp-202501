@@ -11,9 +11,13 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let recipes2
 
-            return getRecipes('67fab79679f66ace0e2c29cc')
+            return getRecipes('6809f14c9c18bc69531ee9df')
                 .then(recipes => recipes2 = recipes)
-                .finally(() => console.assert(recipes2 instanceof Array, 'recipes2 is an array'))
+                .finally(() => {
+                    console.assert(recipes2 instanceof Array, 'recipes2 is an array')
+                    console.assert(recipes2.length === 2, "recipies have two elements")
+                    console.log(recipes2)
+                })
         } catch (error) {
             console.error(error)
         }

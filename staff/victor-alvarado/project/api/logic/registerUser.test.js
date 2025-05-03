@@ -21,5 +21,5 @@ data.connect(MONGO_URL, MONGO_DB)
             console.error(error)
         }
     })
-    .catch(error => console.error(error)) // 
-    .finally(() => data.disconnect()) // 
+    .catch(error => console.error(error))
+    .finally(() => data.disconnect()) 

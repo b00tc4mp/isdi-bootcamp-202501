@@ -94,7 +94,9 @@ const recipe = new Schema({
 const User = model('User', user)
 const Recipe = model('Recipe', recipe)
 
+
 export {
     User,
     Recipe
+
 }

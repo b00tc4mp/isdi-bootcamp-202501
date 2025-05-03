@@ -54,6 +54,7 @@ Recipe
 - modifiedAt (Date)
 - likes ([User.id])
 - cookingTime(number)
+- ingredients([string])
 
 
 

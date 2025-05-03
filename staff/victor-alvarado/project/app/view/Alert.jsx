@@ -5,10 +5,8 @@ export const Alert = ({ title, message, onAccepted }) => {
 
     return (
         <>
-            {/* Fondo oscuro con opacidad */}
             <div className="w-screen h-screen fixed top-0 left-0 bg-black bg-opacity-50 z-40"></div>
 
-            {/* Contenedor del alert centrado */}
             <div className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center z-50">
                 <div className="bg-white text-black rounded-2xl shadow-2xl px-8 py-6 max-w-sm w-full text-center space-y-4">
                     <h2 className="text-2xl font-semibold">{title}</h2>

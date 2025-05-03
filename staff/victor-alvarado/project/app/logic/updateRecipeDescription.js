@@ -5,6 +5,7 @@ const { SystemError } = errors
 
 export const updateRecipeDescription = (recipeId, description) => {
     validate.id(recipeId, 'recipeId')
+    validate.text(description, 'description')
 
     const { token } = data
 

@@ -3,7 +3,7 @@ import { constant } from './constant.js'
 import { ValidationError } from './errors.js'
 
 export const validate = {
-    string(string, explain = 'text') {
+    string(string, explain = 'string') {
         if (typeof string !== 'string') throw new ValidationError(`invalid ${explain} type`)
     },
     text(text, explain = 'text') {
@@ -41,7 +41,7 @@ export const validate = {
     },
     id(id, explain = 'id') {
         this.text(id, explain)
-        if (id.length !== 24) throw new ValidationError(`invalid ${explain} length`)
+        if (id.length !== 24) throw new ValidationError(`invalid ${explain} syntax`)
     },
 
     minValue(value, minValue, explain = 'value') {

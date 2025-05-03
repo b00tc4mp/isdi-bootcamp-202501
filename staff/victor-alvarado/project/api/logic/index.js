@@ -11,6 +11,7 @@ import { getUserRecipes } from './getUserRecipes.js'
 
 
 
+
 export const logic = {
     registerUser,
     authenticateUser,
@@ -22,4 +23,5 @@ export const logic = {
     updateRecipeDescription,
     toggleLikeRecipe,
     getUserRecipes
+
 }
