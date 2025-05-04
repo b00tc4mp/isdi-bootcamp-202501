@@ -118,6 +118,7 @@ export type VanDetailInfo = {
   reviews: PopulatedReview[] | [];
   createdAt: Date;
   modifiedAt: Date | null;
+  occupiedDates: string[] | [];
 };
 
 export type ReturnedJsonVanDetailInfo = {
@@ -309,4 +310,9 @@ export type ReturnedAllUserInfo = {
   createdAt: Date;
   modifiedAt: Date | null;
   roadPoints: number;
+};
+
+export type VanImageType = {
+  id: string;
+  uri: string;
 };

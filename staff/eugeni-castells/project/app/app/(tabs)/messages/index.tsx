@@ -5,8 +5,11 @@ import { getChats } from "@/services";
 import { ReturnedSanitizedChat } from "@/com/types";
 import ChatBox from "@/components/Chats/ChatBox";
 import { useRouter } from "expo-router";
+import { useAuthRedirect } from "@/custom-hooks/useAuthRedirect";
 
 export default function MessagesScreen() {
+  useAuthRedirect();
+
   const [chats, setChats] = useState<ReturnedSanitizedChat[] | null>(null);
   const [fetchController, setFetchController] = useState<boolean | null>(null);
 

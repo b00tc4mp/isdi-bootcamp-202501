@@ -70,3 +70,31 @@ export type ReturnedFormattedDay = {
   number: string;
   date: Date;
 } | null;
+
+export type RegisterVanParam = {
+  features: VehicleFeatures;
+  traits: VehicleTraitsWithNumbers;
+  model: string;
+  brand: string;
+  price: number;
+  description: string;
+};
+
+export type VehicleTraitsWithNumbers = {
+  doors: number;
+  bedCount: number;
+  windows: number;
+  maxTravellers: number;
+  storage: number;
+  fuelType: string;
+  accessible: boolean;
+};
+
+export type VehicleFeatures = {
+  heating: boolean;
+  airConditioning: boolean;
+  insideKitchen: boolean;
+  fridge: boolean;
+  toilet: "fixed" | "portable" | "none";
+  shower: "inside" | "outside" | "none";
+};

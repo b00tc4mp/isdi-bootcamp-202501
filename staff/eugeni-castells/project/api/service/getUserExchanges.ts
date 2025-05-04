@@ -102,7 +102,7 @@ export const getUserExchanges = (userId: string) => {
     });
 
     const pendingAllUserRequests = sanitizedTrips.filter((trip) => {
-      if (trip.confirmStatus !== "accepted") return trip;
+      if (trip.confirmStatus === "pending") return trip;
     });
 
     const pendingUserRequests = pendingAllUserRequests.filter((trip) => {

@@ -6,6 +6,7 @@ import { ExchangesFoldedItemProps } from "./types";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import { acceptTripRequest } from "@/services";
+import { rejectTripRequest } from "@/services/rejectTripRequest";
 
 const ExchangesFoldedItem = ({
   status,
@@ -24,6 +25,20 @@ const ExchangesFoldedItem = ({
   const handleAcceptTripClick = () => {
     try {
       acceptTripRequest(id)
+        .then(() => {
+          handleonConfirmNavigation();
+        })
+        .catch((error) => {
+          Alert.alert((error as Error).message);
+        });
+    } catch (error) {
+      Alert.alert((error as Error).message);
+    }
+  };
+
+  const handleRejectTripClick = () => {
+    try {
+      rejectTripRequest(id)
         .then(() => {
           handleonConfirmNavigation();
         })
@@ -57,7 +72,14 @@ const ExchangesFoldedItem = ({
               handleAcceptTripClick();
             }}
           />
-          <Entypo name="circle-with-cross" size={24} color="black" />
+          <Entypo
+            name="circle-with-cross"
+            size={28}
+            color="black"
+            onPress={() => {
+              handleRejectTripClick();
+            }}
+          />
         </View>
       )}
     </View>

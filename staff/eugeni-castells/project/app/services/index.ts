@@ -6,6 +6,7 @@ import { getRealTimeLocation } from "./getRealTimeLocation";
 import { generateTripRequest } from "./generateTripRequest";
 import { acceptTripRequest } from "./acceptTripRequest";
 import { getChats } from "./getChats";
+import { registerVan } from "./registerVan";
 export {
   registerUser,
   isUserLoggedIn,
@@ -15,4 +16,5 @@ export {
   generateTripRequest,
   acceptTripRequest,
   getChats,
+  registerVan,
 };

@@ -15,8 +15,8 @@ export const registerUser = (userInfo: RegisterUserInputType) => {
   validate.password(password);
   validate.text(name, "name");
   validate.text(address, "address");
-  validate.text(city, "city");
-  validate.text(country, "country");
+  validate.text(city.name, "city");
+  validate.text(country.name, "country");
 
   return fetch(`${EXPO_PUBLIC_API_URL}/users`, {
     method: "POST",

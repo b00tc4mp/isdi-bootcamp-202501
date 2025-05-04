@@ -53,6 +53,7 @@ export default function VanDetailScreen() {
           onVanDetailScreenNavigation={handleReturnNavigation}
           price={van!.price}
           location={van!.location}
+          occupiedDates={van!.occupiedDates}
         />
       )}
       <View style={styles.caruselContainer}>

@@ -1,13 +1,13 @@
 import { validate, constant } from "@/com";
 import { SystemError } from "@/com/errors";
 import { GeoDBResponse } from "./types";
-const { FETCHED_CITIES_SHOWN } = constant;
+const { FETCHED_ITEMS_SHOWN } = constant;
 
 export const filterLocation = (location: string): Promise<GeoDBResponse> => {
   validate.string(location, "location");
 
   return fetch(
-    `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${location}&limit=${FETCHED_CITIES_SHOWN}&sort=-population&types=CITY`,
+    `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${location}&limit=${FETCHED_ITEMS_SHOWN}&sort=-population&types=CITY`,
     {
       method: "GET",
       headers: {

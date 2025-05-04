@@ -11,8 +11,11 @@ import { Typography } from "@/constants/Typography";
 import SearchBox from "@/components/Search/SearchBox";
 import { SelectedDate, SelectedLocation } from "@/components/Search/types";
 import CalendarFilter from "@/components/Search/CalendarFilter";
+import { useAuthRedirect } from "@/custom-hooks/useAuthRedirect";
 
 export default function SearchScreen() {
+  useAuthRedirect();
+
   const [displayCalendar, setDisplayCalendar] = useState(false);
   const [displayTravellersFilter, setDisplayTravellersFilter] = useState(false);
   const [location, setLocation] = useState<SelectedLocation>(null);

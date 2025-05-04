@@ -83,22 +83,27 @@ export const acceptTripRequest = (
       throw new SystemError((error as Error).message);
     }
 
-    try {
-      //We check that no chat is opened if the user has booked his own van
-      if (user._id !== trip.renter) {
-        //We create the chat between the two participants
-        const chat = await Chat.create({
+    //We check that no chat is opened if the user has booked his own van
+    if (userId !== trip.renter.toString()) {
+      //We create the chat between the two participants
+      let chat;
+      try {
+        chat = await Chat.create({
           participants: [user._id, new Types.ObjectId(trip.renter)],
           createdAt: new Date(),
         });
+      } catch (error) {
+        throw new SystemError((error as Error).message);
+      }
 
+      try {
         await Promise.all([
           User.updateOne({ _id: user._id }, { $push: { chats: chat._id } }),
           User.updateOne({ _id: trip.renter }, { $push: { chats: chat._id } }),
         ]);
+      } catch (error) {
+        throw new SystemError((error as Error).message);
       }
-    } catch (error) {
-      throw new SystemError((error as Error).message);
     }
   })();
 };

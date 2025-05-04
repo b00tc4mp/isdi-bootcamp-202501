@@ -11,13 +11,33 @@ import { BookCalendarProps } from "./types";
 export default function BookCalendar({
   onReturnClick,
   onAcceptButton,
+  occupiedDates,
 }: BookCalendarProps) {
   const [selectedRange, setSelectedRange] = useState<{
     start: Date | null;
     end: Date | null;
   }>({ start: null, end: null });
+  const formatOccupiedDates = (dateStrings: string[]) => {
+    return dateStrings.map((dateStr) =>
+      format(new Date(dateStr), "yyyy-MM-dd")
+    );
+  };
 
-  const [markedDates, setMarkedDates] = useState({});
+  const getDisabledDateMarks = (disabledDates: string[]) => {
+    const result: Record<string, any> = {};
+    disabledDates.forEach((date) => {
+      result[date] = {
+        disabled: true,
+        disableTouchEvent: true,
+      };
+    });
+    return result;
+  };
+
+  const disabledDateKeys = formatOccupiedDates(occupiedDates ?? []);
+  const disabledMarks = getDisabledDateMarks(disabledDateKeys);
+
+  const [markedDates, setMarkedDates] = useState(disabledMarks);
 
   const handleDayPress = (day: DateData) => {
     const selectedDate = new Date(day.dateString);
@@ -27,6 +47,7 @@ export default function BookCalendar({
 
       const dateStr = format(selectedDate, "yyyy-MM-dd");
       setMarkedDates({
+        ...disabledMarks,
         [dateStr]: {
           startingDay: true,
           color: Colors.light.button,
@@ -38,6 +59,7 @@ export default function BookCalendar({
 
       const dateStr = format(selectedDate, "yyyy-MM-dd");
       setMarkedDates({
+        ...disabledMarks,
         [dateStr]: {
           startingDay: true,
           color: Colors.light.button,
@@ -50,7 +72,10 @@ export default function BookCalendar({
 
       const range = generateRangeWithFns(start, end);
       setSelectedRange({ start, end });
-      setMarkedDates(range);
+      setMarkedDates({
+        ...range,
+        ...disabledMarks,
+      });
     }
   };
 

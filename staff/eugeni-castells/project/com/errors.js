@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OverlapError = exports.LocationError = exports.AuthorizationError = exports.ValidationError = exports.DuplicityError = exports.SystemError = exports.CredentialsError = exports.NotFoundError = exports.OwnershipError = void 0;
+exports.UploadFirebaseError = exports.OverlapError = exports.LocationError = exports.AuthorizationError = exports.ValidationError = exports.DuplicityError = exports.SystemError = exports.CredentialsError = exports.NotFoundError = exports.OwnershipError = void 0;
 class OwnershipError extends Error {
     constructor(message) {
         super(message);
@@ -64,6 +64,13 @@ class OverlapError extends Error {
     }
 }
 exports.OverlapError = OverlapError;
+class UploadFirebaseError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "UploadFirebaseError";
+    }
+}
+exports.UploadFirebaseError = UploadFirebaseError;
 const errors = {
     OwnershipError,
     NotFoundError,
@@ -74,5 +81,6 @@ const errors = {
     AuthorizationError,
     LocationError,
     OverlapError,
+    UploadFirebaseError,
 };
 exports.default = errors;

@@ -18,6 +18,7 @@ export const BookIndex = ({
   onVanDetailScreenNavigation,
   price,
   location,
+  occupiedDates,
 }: BookIndexProps) => {
   const [displayCalendar, setDisplayCalendar] = useState<boolean>(true);
 
@@ -117,6 +118,7 @@ export const BookIndex = ({
             <BookCalendar
               onReturnClick={handleBackClick}
               onAcceptButton={handleDateSelection}
+              occupiedDates={occupiedDates}
             />
           ) : (
             <TripSummary

@@ -5,12 +5,12 @@ const van = new Schema<VanDocType>({
   model: {
     type: String,
     required: true,
-    minLength: 3,
+    minLength: 2,
     maxLength: 30,
   },
   brand: {
     type: String,
-    minlength: 3,
+    minlength: 2,
     maxLength: 15,
     required: true,
   },
@@ -18,8 +18,8 @@ const van = new Schema<VanDocType>({
   description: {
     type: String,
   },
-  year: { type: Date, required: true },
-  images: [{ type: String, minLength: 10, maxLength: 150 }],
+  year: { type: Date },
+  images: [{ type: String, required: true }],
   accessible: { type: Boolean },
   price: { type: Number, min: 0, max: 1000 },
   reviews: {

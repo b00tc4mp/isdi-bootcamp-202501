@@ -79,8 +79,20 @@ export const getVanById = (id: string): Promise<VanDetailInfo> => {
 
       const averageRating = getAverageRating(reviews);
 
-      //Hem d'utilitzar un predicat per dir-li a typescript que després del filtrat
-      //el tipus retornat de l'element de l'array serà un tipus en concret i no undefined (ja que és el que haurem filtrat)
+      const occupiedDates: Date[] = [];
+
+      //We add to occupiedDates array every date that has
+      van!.trips.forEach((trip) => {
+        //we make sure is a date by creating a new date object and we make a copy of the original
+        const start = new Date(trip.startDate);
+        const end = new Date(trip.endDate);
+        let current = new Date(start);
+
+        while (current <= end) {
+          occupiedDates.push(new Date(current));
+          current.setDate(current.getDate() + 1);
+        }
+      });
 
       const finalVan: VanDetailInfo = {
         ...sanitizedVan,
@@ -100,8 +112,8 @@ export const getVanById = (id: string): Promise<VanDetailInfo> => {
           airConditioning: airConditioning,
           insideKitchen: insideKitchen,
         },
-
         averageRating,
+        occupiedDates,
       };
 
       return finalVan;

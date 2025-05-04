@@ -82,7 +82,7 @@ const getUserExchanges = (userId) => {
             }
         });
         const pendingAllUserRequests = sanitizedTrips.filter((trip) => {
-            if (trip.confirmStatus !== "accepted")
+            if (trip.confirmStatus === "pending")
                 return trip;
         });
         const pendingUserRequests = pendingAllUserRequests.filter((trip) => {

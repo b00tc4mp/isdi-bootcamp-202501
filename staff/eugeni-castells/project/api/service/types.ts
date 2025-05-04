@@ -1,28 +1,28 @@
 import { Types } from "mongoose";
-import { Fuel, Shower, Toilet } from "../data/types";
+import { Fuel, Shower, Toilet, VanImageType } from "../data/types";
 
 export type NewVanInfo = {
   model: string;
   brand: string;
-  year: Date;
-  images?: string[];
-  accessible?: boolean;
+  year?: Date;
+  images: string[] | [];
+  accessible: boolean;
   price?: number;
-  reviews?: string[];
-  location: string;
+  reviews?: string[] | [];
+  location?: string;
   legal?: string[];
   trips?: string[];
   windows: number;
   doors: number;
-  heating?: boolean;
-  airConditioning?: boolean;
+  heating: boolean;
+  airConditioning: boolean;
   bedCount: number;
-  insideKitchen?: boolean;
-  fridge?: boolean;
-  toilet?: Toilet;
+  insideKitchen: boolean;
+  fridge: boolean;
+  toilet: Toilet;
   shower: Shower;
   fuelType: Fuel;
-  storage?: number;
+  storage: number;
   createdAt?: Date;
   modifiedAt?: Date | null;
 };
@@ -79,7 +79,6 @@ export type ReturnedPopulatedVan = {
   year: Date;
   accessible: boolean;
   legal: Types.ObjectId[];
-  images: string[];
   createdAt: Date;
   modifiedAt: Date | null;
   price: number;
@@ -176,7 +175,6 @@ export type PopulatedVanReturnedById = {
 
 export type VanDetailInfo = {
   id: string;
-  images: string[];
   vehicleTraits: {
     accessible: boolean;
     doors: number;
@@ -207,6 +205,7 @@ export type VanDetailInfo = {
   reviews: PopulatedReview[] | [];
   createdAt: Date;
   modifiedAt: Date | null;
+  occupiedDates: Date[] | [];
 };
 
 export type ReturnedChatMessages = {

@@ -60,4 +60,14 @@ exports.validate = {
         if (!(date instanceof Date))
             throw new errors_1.ValidationError("invalid date syntax");
     },
+    boolean(value, explain) {
+        if (typeof value !== "boolean") {
+            throw new errors_1.ValidationError(`${explain} is not a boolean`);
+        }
+    },
+    number(value, explain) {
+        if (typeof value !== "number") {
+            throw new errors_1.ValidationError(`${explain} is not a number`);
+        }
+    },
 };

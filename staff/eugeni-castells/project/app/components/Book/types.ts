@@ -7,6 +7,7 @@ export type BookCalendarProps = {
     startDate: Date;
     endDate: Date;
   }) => void;
+  occupiedDates: string[] | [];
 };
 
 export type BookIndexProps = {
@@ -16,6 +17,7 @@ export type BookIndexProps = {
     city: string;
     country: string;
   };
+  occupiedDates: string[] | [];
 };
 
 export type TripSummaryProps = {

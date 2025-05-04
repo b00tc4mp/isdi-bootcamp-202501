@@ -51,23 +51,10 @@ export const rejectTripRequest = (
     }
 
     try {
-      const result = await Trip.updateOne(
-        { _id: tripId },
-        {
-          $set: {
-            confirmStatus: "rejected",
-            modifiedAt: new Date(),
-          },
-        },
-        { runValidators: true }
-      );
+      const result = await Trip.deleteOne({ _id: tripId });
 
-      if (result.matchedCount === 0) {
-        throw new NotFoundError("Trip not found during update");
-      }
-
-      if (result.modifiedCount === 0) {
-        throw new SystemError("Trip update failed");
+      if (result.deletedCount === 0) {
+        throw new NotFoundError("trip not found during deletion");
       }
     } catch (error) {
       throw new SystemError((error as Error).message);

@@ -48,17 +48,9 @@ const rejectTripRequest = (userId, tripId) => {
             throw new errors_1.OwnershipError("user doesn't own the van associated to the trip");
         }
         try {
-            const result = yield data_1.Trip.updateOne({ _id: tripId }, {
-                $set: {
-                    confirmStatus: "rejected",
-                    modifiedAt: new Date(),
-                },
-            }, { runValidators: true });
-            if (result.matchedCount === 0) {
-                throw new errors_1.NotFoundError("Trip not found during update");
-            }
-            if (result.modifiedCount === 0) {
-                throw new errors_1.SystemError("Trip update failed");
+            const result = yield data_1.Trip.deleteOne({ _id: tripId });
+            if (result.deletedCount === 0) {
+                throw new errors_1.NotFoundError("trip not found during deletion");
             }
         }
         catch (error) {

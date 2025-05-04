@@ -13,6 +13,7 @@ import { getUserNameHandler } from "../handlers/getUserNameHandler";
 import { authenticateUserHandler } from "../handlers/authenticateUserHandler";
 import { getUserExchangesHandler } from "../handlers/getUserExchangesHandler";
 import { getAllUserInfoHandler } from "../handlers/getAllUserInfoHandler";
+import { multerHandler } from "../middlewares/multerHandler";
 
 export const userRouter = Router();
 
@@ -26,8 +27,10 @@ userRouter.post(
 userRouter.post(
   "/van",
   authHandler,
-  jsonBodyParser,
-  validationHandler(registerVanSchema),
+  //Multer handler is incompatible with jsonBodyParser handle
+  // jsonBodyParser,
+  // validationHandler(registerVanSchema),
+  multerHandler,
   registerVanHandler
 );
 

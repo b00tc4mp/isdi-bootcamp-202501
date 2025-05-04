@@ -57,6 +57,13 @@ class OverlapError extends Error {
   }
 }
 
+class UploadFirebaseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UploadFirebaseError";
+  }
+}
+
 export {
   OwnershipError,
   NotFoundError,
@@ -67,6 +74,7 @@ export {
   AuthorizationError,
   LocationError,
   OverlapError,
+  UploadFirebaseError,
 };
 
 const errors = {
@@ -79,6 +87,7 @@ const errors = {
   AuthorizationError,
   LocationError,
   OverlapError,
+  UploadFirebaseError,
 };
 
 export default errors;

@@ -69,22 +69,28 @@ const acceptTripRequest = (userId, tripId) => {
         catch (error) {
             throw new errors_1.SystemError(error.message);
         }
-        try {
-            //We check that no chat is opened if the user has booked his own van
-            if (user._id !== trip.renter) {
-                //We create the chat between the two participants
-                const chat = yield chat_1.Chat.create({
+        //We check that no chat is opened if the user has booked his own van
+        if (userId !== trip.renter.toString()) {
+            //We create the chat between the two participants
+            let chat;
+            try {
+                chat = yield chat_1.Chat.create({
                     participants: [user._id, new mongoose_1.Types.ObjectId(trip.renter)],
                     createdAt: new Date(),
                 });
+            }
+            catch (error) {
+                throw new errors_1.SystemError(error.message);
+            }
+            try {
                 yield Promise.all([
                     data_1.User.updateOne({ _id: user._id }, { $push: { chats: chat._id } }),
                     data_1.User.updateOne({ _id: trip.renter }, { $push: { chats: chat._id } }),
                 ]);
             }
-        }
-        catch (error) {
-            throw new errors_1.SystemError(error.message);
+            catch (error) {
+                throw new errors_1.SystemError(error.message);
+            }
         }
     }))();
 };

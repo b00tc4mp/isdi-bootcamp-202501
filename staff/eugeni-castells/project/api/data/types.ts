@@ -127,6 +127,11 @@ type PointDocType = {
   coordinates: [number, number];
 };
 
+type VanImageType = {
+  id: string;
+  uri: string;
+};
+
 export {
   Roles,
   Toilet,
@@ -144,4 +149,5 @@ export {
   PointDocType,
   ChatDocType,
   ChatCommentDocType,
+  VanImageType,
 };

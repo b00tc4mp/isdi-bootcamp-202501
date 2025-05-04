@@ -14,14 +14,31 @@ describe("registerVan", () => {
     });
     it("succeeds on registering van", () => {
         const newVanInfoObject = {
+            description: "great van!",
+            traits: {
+                accessible: true,
+                windows: 9,
+                doors: 10,
+                fuelType: "petrol",
+                storage: 78,
+                bedCount: 3,
+                maxTravellers: 3,
+            },
+            features: {
+                heating: false,
+                airConditioning: false,
+                insideKitchen: false,
+                fridge: true,
+                toilet: "fixed",
+                shower: "outside",
+            },
             model: "wrong",
             brand: "Jackson-Warren",
             year: new Date(new Date().getFullYear(), 0, 1),
-            images: [
-                "https://www.lorempixel.com/132/843",
-                "https://placekitten.com/27/965",
-            ],
-            accessible: true,
+            // images: [
+            //   { id: "2223223", uri: "https://www.lorempixel.com/132/843" },
+            //   { id: "efgwrg", uri: "https://placekitten.com/27/965" },
+            // ],
             price: 317.66,
             reviews: [],
             location: "5f52c9f00f5f4640b1b4dcef",
@@ -31,19 +48,7 @@ describe("registerVan", () => {
                 "5f52c9f00f5f4640b1b4dcec",
             ],
             trips: [],
-            windows: 9,
-            doors: 10,
-            heating: false,
-            airConditioning: false,
-            bedCount: 3,
-            insideKitchen: false,
-            fridge: true,
-            toilet: "fixed",
-            shower: "outside",
-            fuelType: "petrol",
-            storage: 78,
         };
-        debugger;
         return data_1.User.create({
             name: "Eugeni",
             username: "euge",
@@ -54,7 +59,9 @@ describe("registerVan", () => {
             .then(() => data_1.User.findOne({ name: "Eugeni" }).lean())
             .then((user) => {
             if (user) {
-                return (0, registerVan_1.registerVan)(user._id.toString(), newVanInfoObject);
+                //we need to convert this to unknown and then to the multer type
+                const file = 2;
+                return (0, registerVan_1.registerVan)(user._id.toString(), newVanInfoObject, file);
             }
         })
             .then(() => {

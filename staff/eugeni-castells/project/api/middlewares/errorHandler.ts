@@ -5,6 +5,8 @@ import { errors } from "com";
 import { ZodError } from "zod";
 import jwt from "jsonwebtoken";
 import loggers from "../loggers/index.js";
+import { UploadFirebaseError } from "com/errors.js";
+import { FirebaseAppError } from "firebase-admin/app";
 
 const { logger } = loggers;
 const { JsonWebTokenError, TokenExpiredError } = jwt;
@@ -50,7 +52,9 @@ const errorHandler = (
       status = 404;
       errorName = error.constructor.name;
       break;
-    case error instanceof DuplicityError || error instanceof OverlapError:
+    case error instanceof DuplicityError ||
+      error instanceof OverlapError ||
+      error instanceof UploadFirebaseError:
       status = 409;
       errorName = error.constructor.name;
       break;

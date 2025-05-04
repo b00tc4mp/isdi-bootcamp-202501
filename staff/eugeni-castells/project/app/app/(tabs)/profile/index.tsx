@@ -6,7 +6,10 @@ import { ReturnedAllUserInfo } from "@/com/types";
 import { getAllUserInfo } from "@/services/getAllUserInfo";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import { useAuthRedirect } from "@/custom-hooks/useAuthRedirect";
 export default function ProfileScreen() {
+  useAuthRedirect();
+
   const [user, setUser] = useState<ReturnedAllUserInfo | null>(null);
 
   const router = useRouter();
@@ -48,16 +51,16 @@ export default function ProfileScreen() {
         <Text>{user?.email}</Text>
         <Text>{user?.location.city}</Text>
         <Text>{user?.location.country}</Text>
-        {user?.vans.map((van) => {
+        {user?.vans.map((van, index) => {
           return (
-            <>
+            <View key={index}>
               <Text>
                 {van.model} {van.brand}
               </Text>
               <Text>{van.location.city}</Text>
               <Text>{van.location.country}</Text>
               <Text>{van.price} </Text>
-            </>
+            </View>
           );
         })}
         <Ionicons

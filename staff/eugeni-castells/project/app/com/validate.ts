@@ -63,4 +63,14 @@ export const validate = {
     if (!(date instanceof Date))
       throw new ValidationError("invalid date syntax");
   },
+  boolean(value: boolean, explain: string): void {
+    if (typeof value !== "boolean") {
+      throw new ValidationError(`${explain} is not a boolean`);
+    }
+  },
+  number(value: number, explain: string): void {
+    if (typeof value !== "number") {
+      throw new ValidationError(`${explain} is not a number`);
+    }
+  },
 };

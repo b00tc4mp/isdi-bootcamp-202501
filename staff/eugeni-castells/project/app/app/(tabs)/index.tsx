@@ -7,12 +7,16 @@ import { getVans } from "@/services/getVans";
 import { ReturnedVansType } from "@/com/types";
 import VanList from "@/components/Home/VanList";
 import { spacing } from "@/constants/Paddings";
+import { useAuthRedirect } from "@/custom-hooks/useAuthRedirect";
 
 export default function HomeScreen() {
+  useAuthRedirect();
+
   const [vans, setVans] = useState<ReturnedVansType[]>([]);
   const { longitude, latitude, startDate, endDate, travellers } =
     useLocalSearchParams();
   //The params we receive are strings. We want to keep it that way so it's easier to generate the queryString in the fetchVans request
+
   useEffect(() => {
     const fetchVans = async () => {
       try {

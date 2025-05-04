@@ -7,9 +7,12 @@ exports.registerVanHandler = void 0;
 const createHandler_1 = __importDefault(require("../middlewares/createHandler"));
 const index_1 = require("../service/index");
 exports.registerVanHandler = (0, createHandler_1.default)((req, res) => {
-    var _a;
-    const { userId, vanInfo } = req.body;
-    return (_a = (0, index_1.registerVan)(userId, vanInfo)) === null || _a === void 0 ? void 0 : _a.then(() => {
-        res.status(200).send();
+    const { userId } = req;
+    const { vanInfo } = req.body;
+    //the multerHandler will have added the multer files to the request
+    const files = req.files;
+    const parsedVanInfo = JSON.parse(vanInfo);
+    return (0, index_1.registerVan)(userId, parsedVanInfo, files).then(() => {
+        res.status(201).send();
     });
 });
