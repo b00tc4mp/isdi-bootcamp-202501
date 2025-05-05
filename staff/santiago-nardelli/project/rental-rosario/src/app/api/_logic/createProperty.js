@@ -5,14 +5,13 @@ const { SystemError, DuplicityError } = errors;
 
 export const createProperty = (propertyData) => {
   // Validaciones de entrada
+  console.log("propertyData recibido en createProperty:", propertyData);
 
   validate.text(propertyData.title, { minLength: 3, maxLength: 50 });
-  validate.url(propertyData.images, { minLength: 1 });
+  validate.url(propertyData.image, { minLength: 1 });
   validate.text(propertyData.description, { minLength: 3, maxLength: 500 });
   validate.text(propertyData.location, { minLength: 3, maxLength: 50 });
-  validate.text(propertyData.type, {
-    allowedValues: ["casa", "departamento", "studio"],
-  });
+  validate.text(propertyData.type);
 
   return (async () => {
     let property;

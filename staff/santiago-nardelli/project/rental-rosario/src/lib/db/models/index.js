@@ -36,7 +36,6 @@ const propertySchema = new Schema({
   },
   type: {
     type: String,
-    enum: ["house", "apartment", "studio"],
     required: true,
   },
   bedrooms: { type: Number, required: true },

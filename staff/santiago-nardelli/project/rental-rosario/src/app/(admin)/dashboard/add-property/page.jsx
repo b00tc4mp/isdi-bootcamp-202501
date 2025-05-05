@@ -1,50 +1,125 @@
+// src/app/_components/pages/PropertyForm.jsx
 "use client";
 import React, { useState } from "react";
 import { useCreateProperty } from "../../../hooks/useCreateProperty.js";
-import formCreateProperty from "../../../_components/organisms/FormCreateProperty.jsx";
+//import GenericForm from "../../../_components/molecules/GenericForm.jsx";
+
 const PropertyForm = () => {
+  const { createProperty, propertyCreated, error, loading } =
+    useCreateProperty();
   const [formData, setFormData] = useState({
     title: "",
     image: "",
     description: "",
-    price: "",
     location: "",
     type: "",
-    rooms: "",
-    bathrooms: "",
-    garage: "",
-    pool: "",
-    pets: "",
+    bedrooms: "",
+    airbnbUrl: "",
   });
 
-  const { createProperty, propertyCreated, error, loading } =
-    useCreateProperty();
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: name === "bedrooms" ? Number(value) : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formDataToSend = {
-      ...formData,
-      price: Number(formData.price),
-      rooms: Number(formData.rooms),
-      bathrooms: Number(formData.bathrooms),
-      garage: Number(formData.garage),
-    };
-    await createProperty(formDataToSend);
+    await createProperty(formData);
   };
 
   return (
-    <formCreateProperty
-      formData={formData}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-      loading={loading}
-      error={error}
-      propertyCreated={propertyCreated}
-    />
+    <div>
+      <h1>Create New Property</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+      {propertyCreated && (
+        <p style={{ color: "green" }}>Property created successfully!</p>
+      )}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="image">Image URL:</label>
+          <input
+            type="url"
+            id="image"
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="location">Location:</label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="type">Type:</label>
+          <input
+            type="text"
+            id="type"
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="bedrooms">Rooms:</label>
+          <input
+            type="number"
+            id="bedrooms"
+            name="bedrooms"
+            value={formData.rooms}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="airbnbUrl">Airbnb URL:</label>
+          <input
+            type="url"
+            id="airbnbUrl"
+            name="airbnbUrl"
+            value={formData.airbnbUrl}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button type="submit" disabled={loading}>
+          Create Property
+        </button>
+      </form>
+    </div>
   );
 };
 

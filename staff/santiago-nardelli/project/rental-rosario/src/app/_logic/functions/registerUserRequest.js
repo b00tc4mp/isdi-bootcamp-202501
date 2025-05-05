@@ -1,8 +1,6 @@
 import { errors, validate } from "com";
 
 const { SystemError } = errors;
-const { NEXT_PUBLIC_API_URL } = process.env;
-
 export const registerUserRequest = (name, email, password) => {
   // Validar los datos de entrada
   validate.name(name);
@@ -14,13 +12,16 @@ export const registerUserRequest = (name, email, password) => {
 
   return (async () => {
     try {
-      response = await fetch(`${NEXT_PUBLIC_API_URL}/admins/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
-      });
+      response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/admins/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        }
+      );
     } catch (error) {
       throw new SystemError("Error al registrar usuario", error.message);
     }

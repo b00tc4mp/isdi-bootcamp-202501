@@ -2,16 +2,15 @@ import { data } from "../../_data/index.js";
 import { validate, errors } from "com";
 
 const { SystemError } = errors;
-const { NEXT_PUBLIC_API_URL } = process.env;
 export const createPropertyRequest = (propertyData) => {
   const {
     title: propertyName,
-    urlImage: propertyImage,
+    image: propertyImage,
     description: propertyDescription,
     location: propertyLocation,
     type: propertyType,
-    rooms: propertyRooms,
-    urlArbnb: propertyUrlArbnb,
+    bedrooms: propertyRooms,
+    airbnbUrl: propertyUrlArbnb,
   } = propertyData;
 
   // Validate Name
@@ -19,7 +18,7 @@ export const createPropertyRequest = (propertyData) => {
   validate.minLength(propertyName, 3, "property name");
   validate.maxLength(propertyName, 20, "property name");
   // Validate Image
-  validate.url(propertyImage);
+  validate.url(propertyImage, "property image");
   // Validate Description
   validate.text(propertyDescription);
   validate.minLength(propertyDescription, 10, "property description");
@@ -31,7 +30,7 @@ export const createPropertyRequest = (propertyData) => {
   // Validate Rooms
   validate.number(propertyRooms);
   // Validate UrlArbnb
-  validate.url(propertyUrlArbnb);
+  validate.url(propertyUrlArbnb, "property urlArbnb");
 
   const { token } = data;
 
@@ -39,7 +38,7 @@ export const createPropertyRequest = (propertyData) => {
   let response;
   return (async () => {
     try {
-      response = await fetch(`${NEXT_PUBLIC_API_URL}/properties`, {
+      response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,10 +48,10 @@ export const createPropertyRequest = (propertyData) => {
           title: propertyName,
           image: propertyImage,
           description: propertyDescription,
-          urlArbnb: propertyUrlArbnb,
+          airbnbUrl: propertyUrlArbnb,
           location: propertyLocation,
           type: propertyType,
-          rooms: propertyRooms,
+          bedrooms: propertyRooms,
         }),
       });
     } catch (error) {

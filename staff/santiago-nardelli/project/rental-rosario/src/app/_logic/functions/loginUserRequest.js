@@ -3,8 +3,6 @@ import { errors, validate } from "com";
 
 const { SystemError } = errors;
 
-const { NEXT_PUBLIC_API_URL } = process.env;
-
 export const loginUserRequest = (email, password) => {
   validate.email(email);
   validate.password(password);
@@ -14,7 +12,7 @@ export const loginUserRequest = (email, password) => {
 
   return (async () => {
     try {
-      response = await fetch(`${NEXT_PUBLIC_API_URL}/admins/auth`, {
+      response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admins/auth`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
