@@ -105,8 +105,10 @@ export const register = () => {
   };
 
   useEffect(() => {
-    if (debouncedQuery) {
+    if (debouncedQuery && selectedCountry) {
       fetchCities();
+    } else if (!selectedCountry) {
+      Alert.alert("You have to select a country first!");
     }
   }, [debouncedQuery]);
 

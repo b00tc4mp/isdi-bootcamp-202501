@@ -84,12 +84,14 @@ export type VanDetailInfo = {
     storage: number;
     fuelType: Fuel;
     windows: number;
+    maxTravellers: number;
   };
   features: {
     heating: boolean;
-    shower: Shower;
+    shower: boolean;
     airConditioning: boolean;
     insideKitchen: boolean;
+    toilet: Toilet;
   };
   model: string;
   brand: string;
@@ -101,10 +103,8 @@ export type VanDetailInfo = {
   heating: boolean;
   airConditioning: boolean;
   bedCount: number;
-  maxTravellers: number;
   insideKitchen: boolean;
   fridge: boolean;
-  toilet: Toilet;
   shower: Shower;
   fuelType: Fuel;
   storage: number;
@@ -131,12 +131,14 @@ export type ReturnedJsonVanDetailInfo = {
     storage: number;
     fuelType: Fuel;
     windows: number;
+    maxTravellers: number;
   };
   features: {
     heating: boolean;
-    shower: Shower;
+    shower: boolean;
     airConditioning: boolean;
     insideKitchen: boolean;
+    toilet: Toilet;
   };
   model: string;
   brand: string;
@@ -148,7 +150,6 @@ export type ReturnedJsonVanDetailInfo = {
   heating: boolean;
   airConditioning: boolean;
   bedCount: number;
-  maxTravellers: number;
   insideKitchen: boolean;
   fridge: boolean;
   toilet: Toilet;
@@ -165,6 +166,7 @@ export type ReturnedJsonVanDetailInfo = {
   reviews: PopulatedReview[] | [];
   createdAt: string;
   modifiedAt: string | null;
+  occupiedDates: string[] | [];
 };
 
 export type PopulatedReview = {
@@ -175,8 +177,14 @@ export type PopulatedReview = {
   author: PopulatedAuthor;
 };
 
+export type ReturnedSanitizedReviews = {
+  reviews: PopulatedReview[];
+  averageRating: number;
+};
+
 export type PopulatedAuthor = {
   name: string;
+  lastName: string;
 };
 
 export type ReturnedExchanges = {

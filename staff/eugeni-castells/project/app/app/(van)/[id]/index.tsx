@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Alert, ImageBackground, Pressable, StyleSheet } from "react-native";
+import {
+  Alert,
+  ImageBackground,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { View, Text } from "@/components/Themed";
 import { useLocalSearchParams } from "expo-router";
 import { CaruselDefault } from "@/components/CaruselDefault";
@@ -11,6 +17,14 @@ import { spacing } from "@/constants/Paddings";
 import { Colors } from "@/constants/Colors";
 import { Typography } from "@/constants/Typography";
 import BookIndex from "@/components/Book/BookIndex";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+
+import Entypo from "@expo/vector-icons/Entypo";
+
+import { capitalize } from "@/app/utils";
+import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 
 export default function VanDetailScreen() {
   const [displayBookView, setDisplayBookView] = useState<boolean>(false);
@@ -38,6 +52,15 @@ export default function VanDetailScreen() {
     fetchVan();
   }, [id]);
 
+  const handleReviewsClick = () => {
+    try {
+      console.log(id);
+      router.push(`/(van)/${id}/reviews`);
+    } catch (error) {
+      Alert.alert((error as Error).message);
+    }
+  };
+
   const handleSelectDatesClick = () => {
     setDisplayBookView(true);
   };
@@ -46,8 +69,20 @@ export default function VanDetailScreen() {
     setDisplayBookView(false);
   };
 
+  const handleBackClick = () => {
+    router.back();
+  };
   return (
     <View style={styles.container}>
+      <AntDesign
+        name="arrowleft"
+        size={24}
+        color="black"
+        style={styles.backContainer}
+        onPress={() => {
+          handleBackClick();
+        }}
+      />
       {displayBookView && (
         <BookIndex
           onVanDetailScreenNavigation={handleReturnNavigation}
@@ -78,52 +113,105 @@ export default function VanDetailScreen() {
           />
         )}
       </View>
-      <View>
-        <Text>
-          {van?.model}, {van?.brand}
-        </Text>
-        <Text>
-          {van?.location.city}, {van?.location.country}
-        </Text>
-      </View>
-      <Text>{van?.description}</Text>
-      <View>
-        {van
-          ? Object.entries(van?.vehicleTraits!).map((trait, index) => {
-              return (
-                <Text key={index}>
-                  {trait[0]}:
-                  {typeof trait[1] === "boolean"
-                    ? trait[1]
-                      ? "Yes"
-                      : "No"
-                    : trait[1]}
+      <View style={styles.contentContainer}>
+        <View style={styles.firstContentBlockContainer}>
+          <View>
+            <Pressable
+              onPress={() => {
+                handleReviewsClick();
+              }}
+              style={styles.reviewsBlock}
+            >
+              <AntDesign name="star" size={20} color="black" />
+              <Text>{van?.averageRating}</Text>
+              <Text>({van?.reviews.length})</Text>
+            </Pressable>
+          </View>
+          <View>
+            <View style={{ width: "85%" }}>
+              <Text style={styles.titleText}>
+                {van?.model}, {van?.brand}
+              </Text>
+              {van?.location && (
+                <Text style={styles.locationText}>
+                  {capitalize(van!.location.city)},{" "}
+                  {capitalize(van!.location.country)}
                 </Text>
-              );
-            })
-          : null}
+              )}
+              {van && (
+                <View style={styles.traitsContainer}>
+                  <Text style={styles.traitsText}>
+                    passangers {van.vehicleTraits.maxTravellers} ·{" "}
+                  </Text>
+                  <Text style={styles.traitsText}>
+                    beds {van.vehicleTraits.bedCount} ·{" "}
+                  </Text>
+                  <Text style={styles.traitsText}>
+                    storage {van.vehicleTraits.storage} ·{" "}
+                  </Text>
+                  <Text style={styles.traitsText}>
+                    fuel {van.vehicleTraits.fuelType} ·{" "}
+                  </Text>
+                  <Text style={styles.traitsText}>
+                    toilet {van.features.toilet}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </View>
+        </View>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.descriptionTitle}>Description</Text>
+          <Text style={styles.descriptionText}>{van?.description}</Text>
+        </View>
+        <View>
+          {van ? (
+            <View style={styles.featuresBox}>
+              <Text style={styles.featuresTitle}>Features</Text>
+              <ScrollView
+                contentContainerStyle={styles.featuresContainer}
+                horizontal={true}
+              >
+                <View style={styles.iconSquare}>
+                  <FontAwesome5 name="shower" size={24} color="black" />
+                </View>
+                {van.features.heating && (
+                  <View>
+                    <View style={styles.iconSquare}>
+                      <MaterialCommunityIcons
+                        name="radiator"
+                        size={24}
+                        color="black"
+                      />
+                    </View>
+                  </View>
+                )}
+                {van.features.insideKitchen && (
+                  <View style={styles.iconSquare}>
+                    <FontAwesome6 name="kitchen-set" size={24} color="black" />
+                  </View>
+                )}
+                {van.features.airConditioning && (
+                  <View style={styles.iconSquare}>
+                    <Entypo name="air" size={24} color="black" />
+                  </View>
+                )}
+                {van.accessible && (
+                  <View style={styles.iconSquare}>
+                    <MaterialIcons name="accessible" size={24} color="black" />
+                  </View>
+                )}
+              </ScrollView>
+            </View>
+          ) : null}
+        </View>
+        <View style={styles.ownerContainer}>
+          <Text style={styles.ownerTitle}>Owner</Text>
+          <Text>
+            {van?.owner?.name} {van?.owner.lastName}
+          </Text>
+        </View>
       </View>
-      <View>
-        {van
-          ? Object.entries(van?.features!).map((trait, index) => {
-              return (
-                <Text key={index}>
-                  {trait[0]}:
-                  {typeof trait[1] === "boolean"
-                    ? trait[1]
-                      ? "Yes"
-                      : "No"
-                    : trait[1]}
-                </Text>
-              );
-            })
-          : null}
-      </View>
-      <Text>
-        {van?.owner?.name}
-        {van?.owner.lastName}
-      </Text>
-
       <View style={styles.footerContainer}>
         <Text style={styles.priceText}>€{van?.price}/night</Text>
         <Pressable
@@ -146,8 +234,75 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "relative",
   },
+  backContainer: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    zIndex: 3,
+  },
   caruselContainer: {
-    height: "35%",
+    height: "30%",
+  },
+  firstContentBlockContainer: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+  },
+  contentContainer: {
+    padding: spacing.md,
+    gap: spacing.lg * 2,
+  },
+  reviewsBlock: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+  },
+  titleText: {
+    fontSize: spacing.lg,
+  },
+  locationText: {
+    fontSize: spacing.md,
+    color: "#2C2C2C",
+  },
+  traitsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  traitsText: {
+    fontWeight: Typography.fontWeight.bolder,
+  },
+  descriptionContainer: {
+    gap: spacing.xs,
+  },
+  descriptionTitle: {
+    fontSize: 20,
+  },
+  descriptionText: {
+    fontSize: spacing.md,
+  },
+  featuresBox: {
+    gap: spacing.xsmd,
+  },
+  featuresTitle: {
+    fontSize: 20,
+  },
+  featuresContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    gap: spacing.md,
+  },
+  iconSquare: {
+    borderWidth: 1,
+    borderColor: "black",
+    padding: spacing.md,
+    width: 60,
+    height: 60,
+    borderRadius: 10,
+  },
+  ownerContainer: {
+    gap: spacing.xs,
+  },
+  ownerTitle: {
+    fontSize: 20,
   },
   footerContainer: {
     width: "100%",
@@ -157,6 +312,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    borderTopWidth: 1,
+    borderTopColor: Colors.light.secondaryText,
   },
   bookButton: {
     paddingLeft: spacing.md,

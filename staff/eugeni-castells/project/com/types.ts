@@ -96,5 +96,23 @@ export type VehicleFeatures = {
   insideKitchen: boolean;
   fridge: boolean;
   toilet: "fixed" | "portable" | "none";
-  shower: "inside" | "outside" | "none";
+  shower: boolean;
+};
+
+export type PopulatedReview = {
+  _id?: string;
+  id: string;
+  comment: string;
+  rating: number;
+  author: PopulatedAuthor;
+};
+
+export type ReturnedSanitizedReviews = {
+  reviews: PopulatedReview[];
+  averageRating: number;
+};
+
+export type PopulatedAuthor = {
+  name: string;
+  lastName: string;
 };
