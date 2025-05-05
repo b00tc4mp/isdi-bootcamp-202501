@@ -3,7 +3,7 @@ import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError, OwnershipError, TimerError } = errors
 
-export const setAndStartExtraTime = (userId, timerId, timeExtra) => {
+export const addExtraTime = (userId, timerId, timeExtra) => {
     validate.id(userId, 'userId')
     validate.id(timerId, 'timerId')
     validate.time(timeExtra, 'timeExtra')
@@ -43,5 +43,5 @@ export const setAndStartExtraTime = (userId, timerId, timeExtra) => {
             })
                 .catch(error => { throw new SystemError(error.message) })
         })
-        .then(() => timeExtra)
+        .then(() => { })
 }

@@ -4,7 +4,6 @@ import { logic } from '../../logic/index.js'
 import { useContext } from '../../context.js'
 
 
-
 export function ExtraTime({ onGiveUpClick, onFinishClick }) {
     const { alert, confirm } = useContext()
 
@@ -39,7 +38,8 @@ export function ExtraTime({ onGiveUpClick, onFinishClick }) {
             logic.getTimer(timerId)
                 .then(timer => {
                     if (savedTime === null) {
-                        let extraTime = timer.extraTimes[timer.extraTimes.length]
+                        let extraTimes = timer.extraTimes
+                        let extraTime = extraTimes.pop()
                         setTime(extraTime * 60)
                     }
 
@@ -267,5 +267,4 @@ export function ExtraTime({ onGiveUpClick, onFinishClick }) {
     </div>
 }
 
-//TODO logic extratime
 //TODO show time and total time, fix create extraTimer

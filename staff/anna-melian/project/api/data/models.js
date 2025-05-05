@@ -50,7 +50,7 @@ const timer = new Schema({
     author: {
         type: ObjectId,
         ref: 'User',
-        require: true
+        required: true
     },
     time: {
         type: Number,

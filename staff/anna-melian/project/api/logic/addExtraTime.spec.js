@@ -1,5 +1,5 @@
 import { data, User, Timer } from '../data/index.js'
-import { setAndStartExtraTime } from './setAndStartExtraTime.js'
+import { addExtraTime } from './addExtraTime.js'
 import { ValidationError, NotFoundError, DuplicityError, TimerError, OwnershipError } from 'com/errors.js'
 import { expect } from 'chai'
 import * as chai from 'chai'
@@ -12,7 +12,7 @@ chai.use(chaiAsPromised)
 const { MONGO_URL, MONGO_DB } = process.env
 const { ObjectId } = Types
 
-describe('setAndStartExtraTime', () => {
+describe('addExtraTime', () => {
     before(() => data.connect(MONGO_URL, MONGO_DB))
 
     beforeEach(() => Promise.all([User.deleteMany({}), Timer.deleteMany({})]))
@@ -37,10 +37,7 @@ describe('setAndStartExtraTime', () => {
             .then(([_timer]) => {
                 timer = _timer
             })
-            .then(() => setAndStartExtraTime(user.id, timer.id, 15))
-            .then(returnedExtraTime => {
-                expect(returnedExtraTime).to.equal(15)
-            })
+            .then(() => addExtraTime(user.id, timer.id, 15))
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(timer1 => {
                 timer = timer1
@@ -71,7 +68,7 @@ describe('setAndStartExtraTime', () => {
             .then(([_timer]) => {
                 timer = _timer
             })
-            .then(() => setAndStartExtraTime(user.id, timer.id, 15))
+            .then(() => addExtraTime(user.id, timer.id, 15))
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(timer1 => {
                 timer = timer1
@@ -106,7 +103,7 @@ describe('setAndStartExtraTime', () => {
             })
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(_timer => timer = _timer)
-            .then(() => setAndStartExtraTime(new ObjectId().toString(), timer._id.toString(), 20))
+            .then(() => addExtraTime(new ObjectId().toString(), timer._id.toString(), 20))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(NotFoundError)
@@ -138,9 +135,9 @@ describe('setAndStartExtraTime', () => {
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(_timer => timer = _timer)
             .then(() => {
-                expect(() => setAndStartExtraTime(123, timer._id.toString(), 30)).to.throw(ValidationError, 'invalid userId type')
-                expect(() => setAndStartExtraTime('123', timer._id.toString(), 30)).to.throw(ValidationError, 'invalid userId length')
-                expect(() => setAndStartExtraTime(' '.repeat(24), timer._id.toString(), 30)).to.throw(ValidationError, 'invalid userId syntax')
+                expect(() => addExtraTime(123, timer._id.toString(), 30)).to.throw(ValidationError, 'invalid userId type')
+                expect(() => addExtraTime('123', timer._id.toString(), 30)).to.throw(ValidationError, 'invalid userId length')
+                expect(() => addExtraTime(' '.repeat(24), timer._id.toString(), 30)).to.throw(ValidationError, 'invalid userId syntax')
             })
 
 
@@ -170,9 +167,9 @@ describe('setAndStartExtraTime', () => {
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(_timer => timer = _timer)
             .then(() => {
-                expect(() => setAndStartExtraTime(user._id.toString(), 123, 30)).to.throw(ValidationError, 'invalid timerId type')
-                expect(() => setAndStartExtraTime(user._id.toString(), '123', 30)).to.throw(ValidationError, 'invalid timerId length')
-                expect(() => setAndStartExtraTime(user._id.toString(), ' '.repeat(24), 30)).to.throw(ValidationError, 'invalid timerId syntax')
+                expect(() => addExtraTime(user._id.toString(), 123, 30)).to.throw(ValidationError, 'invalid timerId type')
+                expect(() => addExtraTime(user._id.toString(), '123', 30)).to.throw(ValidationError, 'invalid timerId length')
+                expect(() => addExtraTime(user._id.toString(), ' '.repeat(24), 30)).to.throw(ValidationError, 'invalid timerId syntax')
             })
 
 
@@ -213,7 +210,7 @@ describe('setAndStartExtraTime', () => {
             })
             .then(() => Timer.findOne({ createdAt: new Date(2025, 1, 11) }).lean())
             .then(_timer => timer = _timer)
-            .then(() => setAndStartExtraTime(user._id.toString(), timer._id.toString(), 30))
+            .then(() => addExtraTime(user._id.toString(), timer._id.toString(), 30))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(OwnershipError)
@@ -247,7 +244,7 @@ describe('setAndStartExtraTime', () => {
             })
             .then(() => Timer.findOne({ author: user._id.toString() }).lean())
             .then(_timer => timer = _timer)
-            .then(() => setAndStartExtraTime(user._id.toString(), timer._id.toString(), 30))
+            .then(() => addExtraTime(user._id.toString(), timer._id.toString(), 30))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(TimerError)
@@ -282,7 +279,7 @@ describe('setAndStartExtraTime', () => {
             })
             .then(() => Timer.findOne({ author: user._id.toString() }).lean())
             .then(_timer => timer = _timer)
-            .then(() => setAndStartExtraTime(user._id.toString(), timer._id.toString(), 30))
+            .then(() => addExtraTime(user._id.toString(), timer._id.toString(), 30))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(TimerError)
@@ -316,7 +313,7 @@ describe('setAndStartExtraTime', () => {
             })
             .then(() => Timer.findOne({ author: user._id.toString() }).lean())
             .then(_timer => timer = _timer)
-            .then(() => setAndStartExtraTime(user._id.toString(), timer._id.toString(), 20))
+            .then(() => addExtraTime(user._id.toString(), timer._id.toString(), 20))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(TimerError)
@@ -351,7 +348,7 @@ describe('setAndStartExtraTime', () => {
             })
             .then(() => Timer.findOne({ author: user._id.toString() }).lean())
             .then(_timer => timer = _timer)
-            .then(() => setAndStartExtraTime(user._id.toString(), timer._id.toString(), 50))
+            .then(() => addExtraTime(user._id.toString(), timer._id.toString(), 50))
             .catch(error => catchedError = error)
             .finally(() => {
                 expect(catchedError).to.be.instanceOf(TimerError)

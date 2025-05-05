@@ -5,6 +5,7 @@ import { CreateTimer } from './CreateTimer.jsx'
 import { ExtraTime } from './ExtraTime.jsx'
 import { TimerOn } from './TimerOn.jsx'
 import { useContext } from '../../context.js'
+import { SessionHistory } from './SessionHistory.jsx'
 
 
 export function Timer({ onUserLoggedOut }) {
@@ -35,7 +36,9 @@ export function Timer({ onUserLoggedOut }) {
     const handleUserLoggedOut = () => {
         onUserLoggedOut()
     }
-
+    const handleSessionHistoryClick = () => {
+        navigate('/session-history')
+    }
     const handleTimerCreated = timerId => {
         navigate(`/${timerId}`)
     }
@@ -52,20 +55,28 @@ export function Timer({ onUserLoggedOut }) {
         navigate('/')
     }
 
-    const handleExtraTimeSetAndStart = timerId => {
+    const handleAddExtraTime = timerId => {
         navigate(`/${timerId}/extraTime-on`)
 
+    }
+
+    const handleTimerClick = () => {
+        navigate('/')
     }
 
     console.debug('Timer -> render')
 
     return <div>
         <Routes>
-            <Route path="/" element={<CreateTimer onUserLoggedOut={handleUserLoggedOut} onCreateTimer={handleTimerCreated} />} />
+            <Route path="/" element={<CreateTimer onUserLoggedOut={handleUserLoggedOut} onCreateTimer={handleTimerCreated} onSessionHistoryClick={handleSessionHistoryClick} />} />
 
-            <Route path="/:timerId" element={<TimerOn onReturnAccepted={handleReturnClicked} onGiveUpClick={handleGiveUpClicked} onFinishClick={handleFinishClicked} onExtraTimeSetAndStarted={handleExtraTimeSetAndStart} />} />
+            <Route path="/session-history" element={<SessionHistory onMenuTimerClick={handleTimerClick} />} />
+
+            <Route path="/:timerId" element={<TimerOn onReturnAccepted={handleReturnClicked} onGiveUpClick={handleGiveUpClicked} onFinishClick={handleFinishClicked} onAddExtraTime={handleAddExtraTime} />} />
 
             <Route path="/:timerId/extraTime-on" element={<ExtraTime onFinishClick={handleFinishClicked} onGiveUpClick={handleGiveUpClicked} />} />
+
+
         </Routes>
     </div>
 

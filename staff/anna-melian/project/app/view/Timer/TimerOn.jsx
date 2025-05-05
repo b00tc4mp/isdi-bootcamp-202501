@@ -5,12 +5,13 @@ import { useContext } from '../../context.js'
 
 
 
-export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtraTimeSetAndStarted }) {
+export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddExtraTime }) {
     const { alert, confirm } = useContext()
 
     const navigate = useNavigate()
     const [time, setTime] = useState()
-    const [extraTime, setExtraTime] = useState()
+    const [extraTime, setExtraTime] = useState(5)
+    const [initialTime, setInitialTime] = useState()
     const [pauseTime, setPauseTime] = useState()
     const [status, setStatus] = useState('')
     const [intervalId, setIntervalId] = useState(null)
@@ -41,6 +42,7 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
                 .then(timer => {
                     if (savedTime === null) {
                         setTime(timer.time * 60)
+                        setInitialTime(timer.time)
                     }
 
                     setStatus(timer.status)
@@ -277,9 +279,14 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
 
     const handleExtraTimeStartClick = () => {
         try {
-            logic.setAndStartExtraTime(timerId, extraTime)
-            onExtraTimeSetAndStarted(timerId)
-
+            logic.addExtraTime(timerId, extraTime)
+                .then(() => {
+                    onAddExtraTime(timerId)
+                })
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -299,7 +306,7 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
         {status === 'pause' && (<h3>Resting</h3>)}
         {status === 'end' && <h3>Time's up! 🎉</h3>}
 
-        <h1>{minutes}:{seconds < 10 ? `0${seconds}` : seconds} min</h1>
+        {status !== 'setExtraTime' && <h1>{minutes}:{seconds < 10 ? `0${seconds}` : seconds} min</h1>}
 
         {status === 'pause' && (<div className="flex flex-col space-y-4 items-center justify-center w-[250px] h-[350px] bg-amber-200 m-5 p-5">
             <h1>{formatTime(pauseCountdown)}</h1>
@@ -309,24 +316,42 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onExtr
 
         {status === 'active' && (<div className="sand-clock"></div>)}
 
-        {status === 'setExtraTime' && (<div className="flex flex-col space-y-4 items-center justify-center w-[250px] h-[350px] bg-amber-200 m-5 p-5" >
+        {status === 'setExtraTime' && (
+            <div className="flex flex-col items-center justify-center w-[400px] h-[550px] bg-yellow-50 rounded-2xl shadow-xl p-6 space-y-8 text-center border-4 border-fuchsia-900">
 
-            <input type="number" id="extraTime" value={extraTime} onChange={e => setExtraTime(Number(e.target.value))} />
-            <p>min</p>
+                <h2 className="text-3xl font-bold text-fuchsia-900">➕ Add Extra Time</h2>
 
-            <span>-----------------------------</span>
-            <p>Time: {time}</p>
-            <span></span>
-            <span></span>
-            <span></span>
-            <p>Total time: {time + extraTime}</p>
+                <label htmlFor="timeExtra" className="text-xl font-semibold text-yellow-600">
+                    Select extra minutes:
+                </label>
 
-            <p>Total time limit: 240 minutes</p>
+                <input
+                    type="number"
+                    id="timeExtra"
+                    min={5}
+                    max={240 - initialTime}
+                    step={5}
+                    value={extraTime}
+                    onChange={e => setExtraTime(Number(e.target.value))}
+                    className="w-[180px] text-2xl px-4 py-2 border-2 border-red-900 rounded-lg text-center text-fuchsia-900 font-bold"
+                />
 
-            <button type="button" onClick={handleExtraTimeStartClick}>Start</button>
+                <div className="text-xl text-gray-800 space-y-2">
+                    <p><strong className="text-fuchsia-900">Initial Time:</strong> {initialTime} min</p>
+                    <p><strong className="text-red-900">Total Time:</strong> {initialTime + extraTime} min</p>
+                    <p className="text-base text-red-600 italic">(Limit: 240 min)</p>
+                </div>
 
+                <button
+                    type="button"
+                    onClick={handleExtraTimeStartClick}
+                    className="w-full h-[48px] bg-green-600 text-white text-lg font-semibold rounded-xl shadow hover:bg-green-700 transition-all flex items-center justify-center"
+                >
+                    Start Extra Time
+                </button>
 
-        </div>)}
+            </div>
+        )}
 
         {status === 'created' && (<div>
             <button type="button" onClick={handleStartClick}>Start</button>
