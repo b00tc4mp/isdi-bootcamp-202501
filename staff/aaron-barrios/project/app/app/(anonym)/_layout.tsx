@@ -8,13 +8,14 @@ import { getUserRole } from "@/services/user"
 
 function CustomTabIcon({ icon, label, focused }: { icon: any, label: string, focused: boolean }) {
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={{ alignItems: "center", justifyContent: "center", width: 80 }}>
       <Image
         source={icon}
         style={{
-          width: 24,
-          height: 24,
+          width: 32,
+          height: 32,
           tintColor: focused ? "#facc15" : "#aaa",
+          marginTop: 20,
           marginBottom: 2,
         }}
         resizeMode="contain"
@@ -22,7 +23,13 @@ function CustomTabIcon({ icon, label, focused }: { icon: any, label: string, foc
       <Text style={{
         fontSize: 10,
         color: focused ? "#facc15" : "#aaa",
-      }}>{label}</Text>
+        maxWidth: 80,
+        textAlign: "center",
+      }}
+        numberOfLines={1}
+      >
+        {label}
+      </Text>
     </View>
   )
 }
@@ -57,6 +64,7 @@ export default function AnonLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#111",
           borderTopWidth: 0,
