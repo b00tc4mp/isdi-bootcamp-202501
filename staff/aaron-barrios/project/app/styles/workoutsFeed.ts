@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
         overflow: "hidden",
     },
     picker: {
-        height: Platform.OS === "ios" ? 180 : 50, // ⬅️ Más alto en Android también
+        height: Platform.OS === "ios" ? 180 : 50,
         width: "100%",
         paddingVertical: 28,
     },

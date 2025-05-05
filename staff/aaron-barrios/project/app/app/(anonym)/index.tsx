@@ -1,8 +1,6 @@
-import { Button, StyleSheet, Alert, ScrollView, Pressable, Image } from "react-native"
+import { Alert, ScrollView, Pressable, Image, Text, View } from "react-native"
 import { useFocusEffect, useRouter } from "expo-router"
 import { useCallback, useEffect, useState } from "react"
-
-import { Text, View } from "@/components/Themed"
 
 import { RoutineType, WorkoutType } from "com/types"
 
@@ -10,6 +8,8 @@ import { deleteAnonymUser } from "@/services/user/anonym"
 import { getAllRoutines } from "@/services/routines"
 import { getUserRole } from "@/services/user"
 import { getAllWorkouts } from "@/services/workouts"
+
+import { styles } from "@/styles/anonymHome"
 
 export default function Anonym_Home() {
     const router = useRouter()
@@ -57,14 +57,20 @@ export default function Anonym_Home() {
         <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
             <View style={styles.header}>
                 <Text style={styles.title}>Home</Text>
-                <Button title="Exit" onPress={handleExit} />
+                <Pressable onPress={handleExit}>
+                    <Image
+                        source={require("@/assets/icons/logout.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
+                </Pressable>
+
             </View>
 
             <View style={styles.subheader}>
-                <Pressable onPress={() => router.replace("/(auth)/Login")}>
+                <Pressable onPress={handleExit}>
                     <Text style={styles.link}>Already have an account? Log In</Text>
                 </Pressable>
-                <Text style={styles.guestTitle}>You are a guest!</Text>
+                <Text style={styles.guestTitle}>You logged as a guest!</Text>
             </View>
 
 
@@ -81,7 +87,8 @@ export default function Anonym_Home() {
                         style={styles.cardMini}
                     >
                         <Image source={{ uri: workout.feedImage }} style={styles.cardMiniImage} />
-                        <Text style={styles.cardMiniTitle}>{workout.name}</Text>
+                        <Text style={styles.cardMiniTitle} numberOfLines={1} ellipsizeMode="tail">
+                            {workout.name}</Text>
                     </Pressable>
                 ))}
             </ScrollView>
@@ -97,7 +104,9 @@ export default function Anonym_Home() {
                         style={styles.cardMini}
                     >
                         <Image source={{ uri: routine.feedImage }} style={styles.cardMiniImage} />
-                        <Text style={styles.cardMiniTitle}>{routine.name}</Text>
+                        <Text style={styles.cardMiniTitle} numberOfLines={1} ellipsizeMode="tail">
+                            {routine.name}
+                        </Text>
                     </Pressable>
                 ))}
             </ScrollView>
@@ -105,78 +114,3 @@ export default function Anonym_Home() {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-    },
-    title: {
-        fontSize: 32,
-        fontWeight: "bold",
-        alignSelf: "flex-start",
-        marginBottom: 12
-    },
-    subheader: {
-        marginTop: 8,
-        marginBottom: 16,
-        alignItems: "center",
-    },
-    link: {
-        color: "#1e90ff",
-        textDecorationLine: "underline",
-        fontWeight: "600",
-        fontSize: 20,
-        marginBottom: 6,
-    },
-    guestTitle: {
-        fontSize: 24,
-        fontWeight: "bold",
-        color: "#222",
-    },
-    header: {
-        marginBottom: 12,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    subtitle: {
-        fontSize: 16,
-        color: "#444",
-        marginBottom: 12
-    },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: "80%",
-    },
-    button: {
-        marginBottom: 16
-    },
-    horizontalList: {
-        flexDirection: "row",
-        marginBottom: 20,
-    },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12,
-    },
-    cardMini: {
-        width: 140,
-        marginRight: 12,
-        backgroundColor: "#eee",
-        borderRadius: 12,
-        overflow: "hidden",
-    },
-    cardMiniImage: {
-        width: "100%",
-        height: 80,
-    },
-    cardMiniTitle: {
-        fontWeight: "600",
-        fontSize: 14,
-        padding: 8,
-    }
-})

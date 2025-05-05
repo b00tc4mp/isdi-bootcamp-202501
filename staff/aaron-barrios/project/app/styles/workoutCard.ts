@@ -30,16 +30,14 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         gap: 8,
     },
-
     name: {
         fontSize: 18,
-        marginBottom: 20,
+        marginBottom: 5,
         fontWeight: "bold",
         flexShrink: 1,
         maxWidth: "75%",
         color: "#000",
     },
-
     status: {
         fontSize: 13,
         fontStyle: "italic",
@@ -47,7 +45,6 @@ export const styles = StyleSheet.create({
         flexShrink: 0,
         marginBottom: 20,
     },
-
     bottomRow: {
         flexDirection: "row",
         justifyContent: "space-between",

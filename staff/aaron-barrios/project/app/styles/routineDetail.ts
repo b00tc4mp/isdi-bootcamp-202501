@@ -146,7 +146,7 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         marginTop: 24,
         alignItems: "center",
-        marginBottom: 100
+        marginBottom: 20
     },
     customizeButtonText: {
         fontWeight: "bold",

@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
-import { StyleSheet, ScrollView, Pressable, Image } from "react-native"
+import { StyleSheet, ScrollView, Pressable, Image, Text, View } from "react-native"
 import { useFocusEffect, router } from "expo-router"
-import { Text, View } from "@/components/Themed"
 
 import { errors } from "com"
 import { data } from "@/data"
@@ -12,6 +11,7 @@ import { getMyCustomRoutines, getRoutineOfTheDay, getSuggestedRoutines } from "@
 import { getSavedRoutines } from "@/services/user/regular"
 import { RoutineType, UserType, WorkoutType } from "com/types"
 
+import { styles } from "@/styles/userHome"
 
 const { NotFoundError } = errors
 
@@ -115,65 +115,66 @@ export default function Home() {
                 <Text style={styles.logo}>Welcome back, {alias}</Text>
             </View>
 
-
             {/* Preference test */}
-            {interests.length === 0 && (<Pressable
-                style={styles.buttonPrimary}
-                onPress={() => router.push("/(stack)/PreferenceTest")}
-            >
-                <Text style={styles.buttonPrimaryText}>Complete preference test</Text>
-            </Pressable>)}
+            {interests.length === 0 && (
+                <Pressable
+                    style={styles.buttonPrimary}
+                    onPress={() => router.push("/(stack)/PreferenceTest")}
+                >
+                    <Text style={styles.buttonPrimaryText}>Complete preference test</Text>
+                </Pressable>
+            )}
 
-
-            {/* Quick access cards */}
+            {/* Complete profile card */}
             {userData && (!userData.name || !userData.lastName || !userData.level) && (
                 <Pressable
                     style={styles.card}
                     onPress={() => router.push("/(tabs)/Profile")}
                 >
-                    <Text style={styles.cardTitle}>Complete profile data</Text>
-                    <Text style={styles.cardSubtext}>Preview</Text>
+                    <View style={styles.cardTextWrapper}>
+                        <Text style={styles.cardTitle}>Complete profile data</Text>
+                        <Text style={styles.cardSubtext}>Preview</Text>
+                    </View>
+                    <Image source={require("@/assets/icons/go.png")} style={styles.cardArrow} />
                 </Pressable>
             )}
 
-
+            {/* Current routine */}
             <Pressable
                 style={styles.card}
                 disabled={!currentRoutine}
                 onPress={() => {
                     if (!currentRoutine) return
-
                     const { id, type } = currentRoutine
-
                     router.push({
-                        pathname:
-                            type === "custom"
-                                ? "/(stack)/CustomRoutineDetail/[routineId]"
-                                : "/(stack)/RoutineDetail/[routineId]",
+                        pathname: type === "custom"
+                            ? "/(stack)/CustomRoutineDetail/[routineId]"
+                            : "/(stack)/RoutineDetail/[routineId]",
                         params: { routineId: id },
                     })
                 }}
             >
-                <Text style={styles.cardTitle}>Current routine</Text>
-                <Text style={styles.cardSubtext}>
-                    {currentRoutine ? "Tap to view your latest routine" : "No routine found"}
-                </Text>
+                <View style={styles.cardTextWrapper}>
+                    <Text style={styles.cardTitle}>My current routine</Text>
+                    <Text style={styles.cardSubtext}>
+                        {currentRoutine ? "Previous view of routine" : "No routine found"}
+                    </Text>
+                </View>
+                <Image source={require("@/assets/icons/go.png")} style={styles.cardArrow} />
             </Pressable>
 
-
+            {/* Routine of the Day */}
             <Pressable style={styles.card} onPress={handleRoutineOfTheDay} disabled={loadingRoutineOfDay}>
-                <Text style={styles.cardTitle}>
-                    Routine of the Day!
-                </Text>
-                <Text style={styles.cardSubtext}>
-                    {loadingRoutineOfDay ? "Loading..." : "Tap to view a fresh suggestion"}
-                </Text>
+                <View style={styles.cardTextWrapper}>
+                    <Text style={styles.cardTitle}>Routine of the day</Text>
+                    <Text style={styles.cardSubtext}>
+                        {loadingRoutineOfDay ? "Cargando..." : "Daily routine"}
+                    </Text>
+                </View>
+                <Image source={require("@/assets/icons/go.png")} style={styles.cardArrow} />
             </Pressable>
 
-
-            {/* Smart suggestions */}
-            <Text style={styles.sectionTitle}>Smart suggestions</Text>
-
+            {/* Smart Suggestions */}
             <Text style={styles.sectionTitle}>Suggested Workouts</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalList}>
                 {suggestedWorkouts.map(workout => (
@@ -185,7 +186,8 @@ export default function Home() {
                         style={styles.cardMini}
                     >
                         <Image source={{ uri: workout.feedImage }} style={styles.cardMiniImage} />
-                        <Text style={styles.cardMiniTitle}>{workout.name}</Text>
+                        <Text style={styles.cardMiniTitle} numberOfLines={1} ellipsizeMode="tail">
+                            {workout.name}</Text>
                     </Pressable>
                 ))}
             </ScrollView>
@@ -201,120 +203,11 @@ export default function Home() {
                         style={styles.cardMini}
                     >
                         <Image source={{ uri: routine.feedImage }} style={styles.cardMiniImage} />
-                        <Text style={styles.cardMiniTitle}>{routine.name}</Text>
+                        <Text style={styles.cardMiniTitle} numberOfLines={1} ellipsizeMode="tail">
+                            {routine.name}</Text>
                     </Pressable>
                 ))}
             </ScrollView>
-
-
-            {/* Tips and reminders */}
-            {/* <Text style={styles.sectionTitle}>Tips & Reminders</Text>
-            <View style={styles.tips}>
-                <Text style={styles.tip}>• Lorem ipsum</Text>
-                <Text style={styles.tip}>• Lorem ipsum</Text>
-                <Text style={styles.tip}>• Lorem ipsum</Text>
-            </View> */}
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-    },
-    header: {
-        marginBottom: 20,
-    },
-    logo: {
-        fontSize: 24,
-        fontWeight: "bold",
-    },
-    welcome: {
-        fontSize: 22,
-        fontWeight: "600",
-        marginTop: 8,
-    },
-    buttonPrimary: {
-        backgroundColor: "#555",
-        paddingVertical: 12,
-        borderRadius: 8,
-        alignItems: "center",
-        marginBottom: 20,
-    },
-    buttonPrimaryText: {
-        color: "#fff",
-        fontWeight: "600",
-        fontSize: 16,
-    },
-    card: {
-        backgroundColor: "#ddd",
-        borderRadius: 12,
-        padding: 16,
-        marginBottom: 12,
-    },
-    cardTitle: {
-        fontWeight: "bold",
-        fontSize: 16,
-        marginBottom: 4,
-    },
-    cardSubtext: {
-        color: "#666",
-        fontSize: 14,
-    },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12,
-    },
-    suggestions: {
-        flexDirection: "row",
-        gap: 12,
-    },
-    suggestionCard: {
-        width: 100,
-        height: 100,
-        backgroundColor: "#ccc",
-        borderRadius: 8,
-        alignItems: "center",
-        justifyContent: "center",
-        marginRight: 12,
-    },
-    tips: {
-        marginTop: 8,
-    },
-    tip: {
-        fontSize: 14,
-        marginBottom: 6,
-    },
-    logout: {
-        color: "#fff",
-        fontWeight: "600",
-        fontSize: 16,
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        backgroundColor: "#c00",
-        borderRadius: 8,
-    },
-    horizontalList: {
-        flexDirection: "row",
-        marginBottom: 20,
-    },
-    cardMini: {
-        width: 140,
-        marginRight: 12,
-        backgroundColor: "#eee",
-        borderRadius: 12,
-        overflow: "hidden",
-    },
-    cardMiniImage: {
-        width: "100%",
-        height: 80,
-    },
-    cardMiniTitle: {
-        fontWeight: "600",
-        fontSize: 14,
-        padding: 8,
-    }
-})

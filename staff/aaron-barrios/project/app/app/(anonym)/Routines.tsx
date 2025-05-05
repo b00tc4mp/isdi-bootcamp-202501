@@ -50,7 +50,7 @@ export default function Anon_Routines() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Explore Routines</Text>
+            <Text style={styles.header}>Routines Feed</Text>
 
             <View style={styles.dropdownContainer}>
                 <Picker
@@ -97,26 +97,32 @@ export default function Anon_Routines() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 16,
-        paddingTop: 24,
-        backgroundColor: "#fefefe",
+        paddingHorizontal: 24,
+        backgroundColor: "#fdfdfd",
     },
     header: {
-        fontSize: 22,
-        fontWeight: "bold",
-        marginBottom: 12,
+        backgroundColor: "#222",
+        paddingVertical: 32,
+        paddingHorizontal: 24,
+        marginBottom: 24,
+        marginHorizontal: -24,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        fontSize: 26,
     },
     dropdownContainer: {
         backgroundColor: "#eee",
         borderRadius: 8,
-        marginBottom: 12,
+        marginBottom: 16,
         overflow: "hidden",
     },
     picker: {
-        height: Platform.OS === "ios" ? 180 : 40,
+        height: Platform.OS === "ios" ? 180 : 50,
         width: "100%",
+        paddingVertical: 28,
     },
     list: {
-        paddingBottom: 120,
+        paddingBottom: 20,
     },
 })
