@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
-import { Text, TextInput, ScrollView, Button, StyleSheet, Pressable, Image, Alert } from "react-native"
+import { Text, TextInput, ScrollView, Pressable, Image, Alert, View } from "react-native"
 import { useLocalSearchParams, useRouter } from "expo-router"
 
 import { getRoutineById, editRoutine } from "@/services/routines"
 import { RoutineType, EditRoutineType } from "com/types"
-import { View } from "@/components/Themed"
+
+import { styles } from "@/styles/editRoutine"
 
 export default function EditRoutine() {
     const { routineId } = useLocalSearchParams<{ routineId: string }>()
@@ -68,10 +69,13 @@ export default function EditRoutine() {
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>✏️ Editing: {form.name}</Text>
+                <Text style={styles.title}>Editing: {form.name}</Text>
 
                 <Pressable onPress={() => router.back()}>
-                    <Text style={styles.backButton}>← Back</Text>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
                 </Pressable>
             </View>
 
@@ -106,27 +110,13 @@ export default function EditRoutine() {
             />
 
             <View style={styles.saveButtonContainer}>
-                <Button
-                    title={saving ? "Saving..." : "✅ Save Changes"}
-                    onPress={handleSave}
-                    color="#22c55e"
-                    disabled={saving}
-                />
+                <Pressable onPress={handleSave} disabled={saving}>
+                    <Text style={styles.saveButtonText}>
+                        {saving ? "Saving..." : "Save Changes"}
+                    </Text>
+                </Pressable>
             </View>
+
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: { padding: 16 },
-    header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 },
-    backButton: { fontSize: 16, color: "#0ea5e9", fontWeight: "bold" },
-    title: { fontSize: 18, fontWeight: "bold", flexShrink: 1, textAlign: "right", marginLeft: 8 },
-    previewImage: { width: "100%", height: 180, borderRadius: 10, marginBottom: 16 },
-    label: { fontWeight: "bold", marginBottom: 4, marginTop: 12 },
-    input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 8 },
-    textarea: { minHeight: 80, textAlignVertical: "top" },
-    saveButtonContainer: { marginTop: 24, marginBottom: 40 },
-    loading: { padding: 20, fontSize: 16, textAlign: "center" },
-    error: { padding: 20, fontSize: 16, color: "red", textAlign: "center" },
-})

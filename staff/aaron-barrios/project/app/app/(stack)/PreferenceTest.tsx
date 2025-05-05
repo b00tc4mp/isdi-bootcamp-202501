@@ -1,14 +1,16 @@
 import { useState } from "react"
-import { View, Text, Pressable, ScrollView, StyleSheet, Alert } from "react-native"
+import { View, Text, Pressable, ScrollView, Alert, Image } from "react-native"
 import { router } from "expo-router"
 
 import { getUserData, updateUserData } from "@/services/user/regular"
+
+import { styles } from "@/styles/preferenceTest"
 
 const GOALS = [
     { key: "endurance", label: "🔥 Increase endurance" },
     { key: "strength", label: "🏋️ Gain strength" },
     { key: "mobility", label: "🤸 Improve mobility" },
-    { key: "cardio", label: "❤️ Improve cardio" },
+    { key: "cardio", label: "❤️ Enhance cardio" },
 ]
 
 export default function PreferenceTest() {
@@ -40,7 +42,17 @@ export default function PreferenceTest() {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>¿Which is your main training goal or interest?</Text>
+
+            <View style={styles.header}>
+                <Text style={styles.title}>Preference test</Text>
+                <Pressable onPress={() => router.back()}>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
+                </Pressable>
+            </View>
+            <Text style={styles.subtitle}>¿Which is your main training goal or interest?</Text>
 
             <View style={styles.optionsContainer}>
                 {GOALS.map(goal => (
@@ -58,51 +70,8 @@ export default function PreferenceTest() {
             </View>
 
             <Pressable style={styles.saveButton} onPress={handleSave} disabled={saving}>
-                <Text style={styles.saveText}>{saving ? "Guardando..." : "Guardar objetivo"}</Text>
+                <Text style={styles.saveText}>{saving ? "Saving..." : "Save preference"}</Text>
             </Pressable>
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 24,
-        backgroundColor: "#f0f0f0",
-        flexGrow: 1,
-        justifyContent: "center",
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: "bold",
-        textAlign: "center",
-        marginBottom: 24,
-    },
-    optionsContainer: {
-        gap: 12,
-        marginBottom: 24,
-    },
-    option: {
-        paddingVertical: 14,
-        paddingHorizontal: 16,
-        backgroundColor: "#ddd",
-        borderRadius: 10,
-    },
-    selectedOption: {
-        backgroundColor: "#facc15",
-    },
-    optionText: {
-        fontSize: 16,
-        fontWeight: "600",
-    },
-    saveButton: {
-        backgroundColor: "#10b981",
-        paddingVertical: 14,
-        borderRadius: 10,
-        alignItems: "center",
-    },
-    saveText: {
-        color: "#fff",
-        fontWeight: "bold",
-        fontSize: 16,
-    },
-})

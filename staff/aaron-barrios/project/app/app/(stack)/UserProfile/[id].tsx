@@ -1,15 +1,16 @@
 import { useEffect, useState, useCallback } from "react"
 import { router, useLocalSearchParams, useFocusEffect } from "expo-router"
-import { ScrollView, StyleSheet, Pressable, ActivityIndicator } from "react-native"
-import { FontAwesome5 } from "@expo/vector-icons"
-import { Text, View } from "@/components/Themed"
+import { ScrollView, Pressable, ActivityIndicator, Text, View, Image } from "react-native"
 
 import type { RoutineType, WorkoutType } from "com/types"
-import WorkoutCard from "@/components/WorkoutCard"
 import { getTargetUserData } from "@/services/user/regular"
 import { getUserWorkouts } from "@/services/workouts"
 import { getUserRoutines } from "@/services/routines"
+
+import WorkoutCard from "@/components/WorkoutCard"
 import RoutineCard from "@/components/RoutineCard"
+
+import { styles } from "@/styles/otheUserProfile"
 
 export default function UserProfile() {
     const { id } = useLocalSearchParams()
@@ -94,11 +95,15 @@ export default function UserProfile() {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>@{userAlias}</Text>
-
-            <Pressable onPress={() => router.back()} style={{ position: "absolute", left: 16, top: 16 }}>
-                <FontAwesome5 name="arrow-left" size={24} />
-            </Pressable>
+            <View style={styles.header}>
+                <Text style={styles.title}>@{userAlias}'s profile</Text>
+                <Pressable onPress={() => router.back()}>
+                    <Image
+                        source={require("@/assets/icons/back.png")}
+                        style={{ width: 22, height: 22, tintColor: "#fff" }}
+                    />
+                </Pressable>
+            </View>
 
             <View style={styles.tabs}>
                 {["data", "workouts", "routines"].map(tab => (
@@ -113,7 +118,7 @@ export default function UserProfile() {
             </View>
 
             {activeTab === "data" && (
-                <View style={styles.dataContainer}>
+                <View style={[styles.dataContainer, styles.alignedContainer]}>
                     <Text style={styles.field}><Text style={styles.label}>Name:</Text> {userData.name || "-"}</Text>
                     <Text style={styles.field}><Text style={styles.label}>Last Name:</Text> {userData.lastName || "-"}</Text>
                     <Text style={styles.field}><Text style={styles.label}>Alias:</Text> {userData.alias}</Text>
@@ -159,48 +164,3 @@ export default function UserProfile() {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 24,
-        backgroundColor: "#f0f0f0",
-        flexGrow: 1,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
-        textAlign: "center"
-    },
-    tabs: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginBottom: 16,
-        gap: 8
-    },
-    tab: {
-        flex: 1,
-        paddingVertical: 10,
-        borderRadius: 8,
-        backgroundColor: "#ddd",
-        alignItems: "center"
-    },
-    activeTab: {
-        backgroundColor: "#facc15",
-    },
-    dataContainer: {
-        gap: 10
-    },
-    field: {
-        fontSize: 14
-    },
-    label: {
-        fontWeight: "bold"
-    },
-    error: {
-        marginTop: 40,
-        textAlign: "center",
-        fontSize: 16,
-        color: "red"
-    }
-})
