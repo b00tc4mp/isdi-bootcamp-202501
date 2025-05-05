@@ -5,7 +5,6 @@ import { Image, Text, View, Pressable } from "react-native"
 import { data } from "@/data"
 import { getUserRole, logoutUser } from "@/services/user"
 import type { UserRole } from "../../../api/src/data/types"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 
 function TabIcon({ icon, label, focused }: { icon: any; label: string; focused: boolean }) {
   return (
@@ -59,6 +58,7 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
+        tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#111",
           borderTopWidth: 0,
@@ -80,6 +80,7 @@ export default function TabsLayout() {
         },
         headerStyle: {
           backgroundColor: "#111",
+          height: 80
         },
       }}
     >
