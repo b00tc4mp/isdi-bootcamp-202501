@@ -122,8 +122,8 @@ export default function VanDetailScreen() {
               }}
               style={styles.reviewsBlock}
             >
-              <AntDesign name="star" size={20} color="black" />
               <Text>{van?.averageRating}</Text>
+              <AntDesign name="star" size={18} color="black" />
               <Text>({van?.reviews.length})</Text>
             </Pressable>
           </View>

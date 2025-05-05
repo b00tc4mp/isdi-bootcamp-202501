@@ -67,6 +67,7 @@ export type ReturnedVansType = {
   modifiedAt: Date | null;
   price: number;
   reviews: Types.ObjectId[];
+  maxTravellers: number;
   location: {
     id: Types.ObjectId;
     address: string;
