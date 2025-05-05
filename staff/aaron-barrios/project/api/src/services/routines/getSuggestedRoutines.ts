@@ -41,10 +41,15 @@ const getSuggestedRoutines = (
 
 
             return filteredRoutines.map<RoutineType>((routine) => {
-                const author = routine.author as unknown as {
-                    _id: any
-                    alias: string
+                let authorId = ""
+                let authorAlias = "default"
+
+                if (routine.author && typeof routine.author === "object" && "_id" in routine.author && "alias" in routine.author) {
+                    const author = routine.author as { _id: any; alias: string }
+                    authorId = author._id.toString()
+                    authorAlias = author.alias
                 }
+
 
                 return {
                     id: routine._id.toString(),
@@ -58,8 +63,8 @@ const getSuggestedRoutines = (
                     createdAt: routine.createdAt,
                     modifiedAt: routine.modifiedAt || undefined,
                     author: {
-                        id: author._id.toString(),
-                        alias: author.alias,
+                        id: authorId,
+                        alias: authorAlias,
                     },
                     likesCount: routine.likes?.length || 0,
                     savesCount: routine.saves?.length || 0,

@@ -101,9 +101,11 @@ export const styles = StyleSheet.create({
     },
     acceptBtn: {
         backgroundColor: "#3b944d",
+        marginBottom: 10
     },
     declineBtn: {
         backgroundColor: "#a12828",
+        marginBottom: 10
     },
     reviewText: {
         fontWeight: "bold",
