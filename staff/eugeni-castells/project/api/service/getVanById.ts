@@ -111,6 +111,7 @@ export const getVanById = (id: string): Promise<VanDetailInfo> => {
           shower: shower,
           airConditioning: airConditioning,
           insideKitchen: insideKitchen,
+          toilet: toilet,
         },
         averageRating,
         occupiedDates,

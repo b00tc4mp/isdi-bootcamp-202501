@@ -30,7 +30,7 @@ describe("registerVan", () => {
                 insideKitchen: false,
                 fridge: true,
                 toilet: "fixed",
-                shower: "outside",
+                shower: true,
             },
             model: "wrong",
             brand: "Jackson-Warren",

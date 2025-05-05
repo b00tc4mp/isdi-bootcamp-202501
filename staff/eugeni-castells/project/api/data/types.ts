@@ -43,7 +43,7 @@ type VanDocType = {
   insideKitchen: boolean;
   fridge: boolean;
   toilet: Toilet;
-  shower: Shower;
+  shower: boolean;
   fuelType: Fuel;
   storage: number;
   brand: string;

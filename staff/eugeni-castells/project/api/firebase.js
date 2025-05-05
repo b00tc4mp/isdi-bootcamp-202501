@@ -10,7 +10,7 @@ const firebase_service_account_json_1 = __importDefault(require("./firebase-serv
 const serviceAccount = firebase_service_account_json_1.default;
 firebase_admin_1.default.initializeApp({
     credential: firebase_admin_1.default.credential.cert(serviceAccount),
-    storageBucket: "camperboat-45a0a.firebasestorage.app",
+    storageBucket: process.env.FIREBASE_BUCKET,
 });
 console.log("Using bucket:", (0, storage_1.getStorage)().bucket().name);
 exports.bucket = (0, storage_1.getStorage)().bucket();

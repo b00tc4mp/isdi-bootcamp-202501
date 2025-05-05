@@ -87,6 +87,7 @@ const getVanById = (id) => {
                 shower: shower,
                 airConditioning: airConditioning,
                 insideKitchen: insideKitchen,
+                toilet: toilet,
             }, averageRating,
             occupiedDates });
         return finalVan;

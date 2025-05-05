@@ -71,7 +71,7 @@ export type ReturnedPopulatedVan = {
   insideKitchen: boolean;
   fridge: boolean;
   toilet: Toilet;
-  shower: Shower;
+  shower: boolean;
   fuelType: Fuel;
   storage: number;
   brand: string;
@@ -117,6 +117,11 @@ export type PopulatedReview = {
   comment: string;
   rating: number;
   author: PopulatedAuthor;
+};
+
+export type ReturnedSanitizedReviews = {
+  reviews: PopulatedReview[];
+  averageRating: number;
 };
 
 export type PopulatedAuthor = {
@@ -186,9 +191,10 @@ export type VanDetailInfo = {
   };
   features: {
     heating: boolean;
-    shower: Shower;
+    shower: boolean;
     airConditioning: boolean;
     insideKitchen: boolean;
+    toilet: Toilet;
   };
   model: string;
   brand: string;

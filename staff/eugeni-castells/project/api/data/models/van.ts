@@ -20,7 +20,7 @@ const van = new Schema<VanDocType>({
   },
   year: { type: Date },
   images: [{ type: String, required: true }],
-  accessible: { type: Boolean },
+  accessible: { type: Boolean, default: false },
   price: { type: Number, min: 0, max: 1000 },
   reviews: {
     type: [{ type: Schema.Types.ObjectId, ref: "Review" }],
@@ -45,7 +45,7 @@ const van = new Schema<VanDocType>({
   heating: { type: Boolean, default: false },
   airConditioning: { type: Boolean, default: false },
   bedCount: { type: Number, min: 1, max: 5, required: true },
-  maxTravellers: { type: Number, min: 1, max: 10 },
+  maxTravellers: { type: Number, min: 1, max: 10, default: 2 },
   insideKitchen: { type: Boolean, default: false },
   fridge: { type: Boolean, default: false },
   toilet: {
@@ -53,7 +53,7 @@ const van = new Schema<VanDocType>({
     enum: ["fixed", "portable", "none"],
     default: "none",
   },
-  shower: { type: String, enum: ["inside", "outside", "none"], required: true },
+  shower: { type: Boolean, default: false },
   fuelType: {
     type: String,
     enum: ["petrol", "diesel", "electric", "hybrid"],
