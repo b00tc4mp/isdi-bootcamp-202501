@@ -1,0 +1,9 @@
+.fallingObject {
+    position: absolute;
+    width: 100px;
+}
+
+.player {
+    position: absolute;
+    width: 200px;
+}
