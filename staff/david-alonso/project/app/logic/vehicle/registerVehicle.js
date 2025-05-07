@@ -1,5 +1,5 @@
-import { errors, validate } from '../../com'
-import { data } from '../data'
+import { errors, validate } from '../../../com'
+import { data } from '../../data'
 
 const { SystemError } = errors
 

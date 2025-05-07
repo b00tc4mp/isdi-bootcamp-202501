@@ -9,9 +9,9 @@ export const manteinances = Router()
 
 // REGISTRAR MANTENIMIENTO
 manteinances.post('/', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-    const { vehicleId, fecha, descripcion, texto } = req.body
+    const { vehicleId, fecha, km, descripcion, texto, image } = req.body
 
-    return logic.registerManteinance(vehicleId, new Date(fecha), descripcion, texto)
+    return logic.registerManteinance(vehicleId, new Date(fecha), km, descripcion, texto, image)
         .then(() => res.status(201).send())
 }))
 
@@ -25,10 +25,10 @@ manteinances.get('/:vehicleId', authHandler, withErrorHandling((req, res) => {
 
 // EDITAR MANTENIMIENTO
 manteinances.patch('/:maintenanceId', authHandler, jsonBodyParser, withErrorHandling((req, res) => {
-    const { fecha, descripcion, texto } = req.body
+    const { fecha, km, descripcion, texto, image } = req.body
     const { maintenanceId } = req.params
 
-    return logic.updateVehicleManteinance(maintenanceId, new Date(fecha), descripcion, texto)
+    return logic.updateVehicleManteinance(maintenanceId, new Date(fecha), km, descripcion, texto, image)
         .then(() => res.status(201).send())
 }))
 

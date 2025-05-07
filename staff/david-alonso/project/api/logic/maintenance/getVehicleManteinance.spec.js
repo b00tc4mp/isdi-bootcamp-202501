@@ -32,14 +32,17 @@ describe('getVehicleManteinances', () => {
 
                 return Manteinance.create({
                     vehicleId,
-                    fecha: new Date('2024-04-01T00:00:00.000Z'),
-                    descripcion: 'aceite',
-                    texto: 'cambio de aceite'
+                    fecha: new Date('2024-05-02T00:00:00.000Z'),
+                    km: 25000,
+                    descripcion: 'neumaticos',
+                    texto: 'cambio de neumaticos',
+                    image: 'https://rmsgestion.es/wp-content/uploads/2023/11/Factura-Rectificativa-de-Taller-724x1024.jpg'
                 })
             })
     })
 
     it('succeeds retrieving manteinances for existing vehicle', () => {
+
         return getVehicleManteinances(vehicleId)
             .then(manteinances => {
                 expect(manteinances).to.be.an('array')
@@ -47,11 +50,14 @@ describe('getVehicleManteinances', () => {
 
                 const m = manteinances[0]
 
-                expect(m.descripcion).to.equal('aceite')
-                expect(m.texto).to.equal('cambio de aceite')
-                expect(new Date(m.fecha).toISOString()).to.equal('2024-04-01T00:00:00.000Z')
                 expect(m.vehicleId.toString()).to.equal(vehicleId)
+                expect(new Date(m.fecha).toISOString()).to.equal('2024-05-02T00:00:00.000Z')
+                expect(m.km).to.equal(25000)
+                expect(m.descripcion).to.equal('neumaticos')
+                expect(m.texto).to.equal('cambio de neumaticos')
+                expect(m.image).to.equal('https://rmsgestion.es/wp-content/uploads/2023/11/Factura-Rectificativa-de-Taller-724x1024.jpg')
             })
+
     })
 
     it('fails if vehicle does not exist', () => {

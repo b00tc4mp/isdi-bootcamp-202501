@@ -1,14 +1,16 @@
-import { errors, validate } from '../../com'
-import { data } from '../data'
+import { errors, validate } from '../../../com'
+import { data } from '../../data'
 
 const { SystemError } = errors
 
-export const updateVehicleManteinance = (id, fecha, descripcion, texto) => {
+export const updateVehicleManteinance = (id, fecha, km, descripcion, texto, image) => {
     const { token } = data
 
     validate.date(fecha, 'fecha')
     validate.text(descripcion, 'descripcion')
     validate.text(texto, 'texto')
+    validate.url(image)
+    validate.maxLength(image, 1000, 'image')
 
     return fetch(`${import.meta.env.VITE_API_URL}/manteinances/${id}`, {
         method: 'PATCH',
@@ -16,7 +18,7 @@ export const updateVehicleManteinance = (id, fecha, descripcion, texto) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ fecha, descripcion, texto })
+        body: JSON.stringify({ fecha, km, descripcion, texto, image })
     })
 
         .catch(error => { throw new SystemError(error.message) })

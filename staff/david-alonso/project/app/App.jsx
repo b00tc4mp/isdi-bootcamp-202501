@@ -9,6 +9,7 @@ import { Home } from "./view/pages/Home.jsx"
 import { Menu } from "./view/pages/Menu.jsx"
 import { Alert } from './view/Alert.jsx'
 import { Confirm } from './view/Confirm.jsx'
+import { PdfMaintenances } from "./view/components/PdfMaintenances.jsx"
 
 import { MaintenanceDetail } from "./view/pages/MaintenanceDetail.jsx"
 import { ProfileVehicle } from "./view/pages/ProfileVehicle.jsx"

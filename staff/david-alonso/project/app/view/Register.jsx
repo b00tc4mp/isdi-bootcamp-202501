@@ -44,8 +44,7 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
         <div className="relative z-10 flex flex-col p-5 justify-between min-h-screen">
 
             <div className="flex flex-col items-center mt-20">
-                <h1 className="text-6xl tracking-widest">R I D E</h1>
-                <h1 className="text-6xl tracking-wide text-gray-400 ">C A R E</h1>
+                <img src="/images/logo.svg" />
             </div>
 
             <div className="flex justify-center mt-auto">

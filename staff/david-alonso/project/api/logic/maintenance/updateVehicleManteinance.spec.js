@@ -14,10 +14,12 @@ describe('updateVehicleManteinance', () => {
     beforeEach(() => {
         return Manteinance.deleteMany({})
             .then(() => Manteinance.create({
-                fecha: new Date('2024-01-01T00:00:00.000Z'),
-                descripcion: 'Cambio de aceite',
-                texto: 'Aceite 10W40, revisión general',
-                vehicleId: '123456789012345678901234'
+                vehicleId: '6809f7edb2addc30bc503f84',
+                fecha: new Date('2024-05-02T00:00:00.000Z'),
+                km: 25000,
+                descripcion: 'neumaticos',
+                texto: 'cambio de neumaticos',
+                image: 'https://rmsgestion.es/wp-content/uploads/2023/11/Factura-Rectificativa-de-Taller-724x1024.jpg'
             }))
             .then(m => {
                 maintenanceId = m._id.toString()
@@ -26,22 +28,28 @@ describe('updateVehicleManteinance', () => {
 
     it('succeeds updating maintenance record', () => {
         const updatedData = {
-            fecha: new Date('2024-06-15T00:00:00.000Z'),
-            descripcion: 'Cambio de neumáticos',
-            texto: 'Neumáticos Michelin nuevos'
+            fecha: new Date('2024-05-02T00:00:00.000Z'),
+            km: 25000,
+            descripcion: 'neumaticos',
+            texto: 'cambio de neumaticos',
+            image: 'https://rmsgestion.es/wp-content/uploads/2023/11/Factura-Rectificativa-de-Taller-724x1024.jpg'
         }
 
         return updateVehicleManteinance(
             maintenanceId,
             updatedData.fecha,
+            updatedData.km,
             updatedData.descripcion,
-            updatedData.texto
+            updatedData.texto,
+            updatedData.image
         )
             .then(() => Manteinance.findById(maintenanceId).lean())
             .then(m => {
+                expect(m.fecha.toISOString()).to.equal(updatedData.fecha.toISOString())
+                expect(m.km).to.equal(updatedData.km)
                 expect(m.descripcion).to.equal(updatedData.descripcion)
                 expect(m.texto).to.equal(updatedData.texto)
-                expect(m.fecha.toISOString()).to.equal(updatedData.fecha.toISOString())
+                expect(m.image).to.equal(updatedData.image)
             })
     })
 
@@ -51,8 +59,11 @@ describe('updateVehicleManteinance', () => {
         return updateVehicleManteinance(
             '5f50c31f1c9d440000a6f1',
             new Date(),
-            'Revisión',
-            'Cambio de filtro'
+            25000,
+            'neumaticos',
+            'cambio de neumaticos',
+            'https://rmsgestion.es/wp-content/uploads/2023/11/Factura-Rectificativa-de-Taller-724x1024.jpg'
+
         )
             .catch(err => error = err)
             .finally(() => {

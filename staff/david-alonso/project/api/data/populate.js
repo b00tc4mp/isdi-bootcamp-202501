@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { data, User, Vehicle } from './index.js'
+import { data, Manteinance, User, Vehicle } from './index.js'
 import bcrypt from 'bcryptjs'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -8,7 +8,8 @@ data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         return Promise.all([
             User.deleteMany({}),
-            Vehicle.deleteMany({})
+            Vehicle.deleteMany({}),
+            Manteinance.deleteMany({})
         ])
     })
     .then(() => bcrypt.hash('123123123', 10))

@@ -15,9 +15,11 @@ describe('deleteVehicleManteinance', () => {
         return Manteinance.deleteMany()
             .then(() => Manteinance.create({
                 vehicleId: '6809f7edb2addc30bc503f84',
-                fecha: new Date('2024-05-01'),
-                descripcion: 'Cambio de aceite',
-                texto: 'Se cambió el aceite del motor'
+                fecha: new Date('2024-05-02T00:00:00.000Z'),
+                km: 25000,
+                descripcion: 'neumaticos',
+                texto: 'cambio de neumaticos',
+                image: 'https://rmsgestion.es/wp-content/uploads/2023/11/Factura-Rectificativa-de-Taller-724x1024.jpg'
             }))
             .then(maintenance => {
                 maintenanceId = maintenance._id.toString()

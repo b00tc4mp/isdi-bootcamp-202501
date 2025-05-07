@@ -1,4 +1,4 @@
-import { extractPayloadFromJWT } from '../util'
+import { extractPayloadFromJWT } from '../../util'
 
 export const getUserId = () => {
     if (!sessionStorage.token) return null

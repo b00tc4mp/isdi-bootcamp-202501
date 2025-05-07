@@ -4,6 +4,9 @@
 
 With this app, you can easily manage the maintenance of your vehicles: cars, motorcycles, scooters... Record all your check-ups, part replacements, invoices, comments, and services performed. Always have all the important information about each vehicle at hand, receive notifications, alerts, and control customized timers to never miss any detail. Keep your vehicle maintenance history with you at all times!
 
+## Intro Español
+Con esta app, puedes gestionar fácilmente el mantenimiento de tus vehículos: coches, motos, scooters... Registra todas tus revisiones, sustituciones de piezas, facturas, comentarios y servicios realizados. Ten siempre a mano toda la información importante de cada vehículo, recibe notificaciones, alertas y controla temporizadores personalizados para no perderte ningún detalle. ¡Lleva siempre contigo el historial de mantenimiento de tu vehículo!
+
 
 ![](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDQ4YjFnZ2gyYjA3bngzZ2JoZnMyYm03M2R0OWtpcHpueHA0MzBobiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/E0LBbfFyZvtvUcVFIp/giphy.gif)
 
@@ -19,14 +22,16 @@ User
     - Create
     - Edit
     - Delete
+    - Schedule alerts
+    - ...
 
 - Maintenances
     - Add
     - Edit
     - Delete
     - Upload invoices
-    - Export to PDF
-- ...
+    - Download in PDF
+    - ...
 
 ### UIUX Desing
 
@@ -61,7 +66,6 @@ User
 Vehicle
 
 - id (string, uuid)
-- name (string) ??
 - type (string, enum: coche, moto, scooter)
 - brand (string)
 - model (string)
@@ -75,9 +79,10 @@ Maintenace
 
 - vehicle (Vehicle.id)
 - date (date)
+- km (number)
+- service (string)
 - description (string)
-- text (string)
-- documentPhotos ([string])
+- image ([string])
 
 ### Technologies
 
@@ -91,7 +96,7 @@ Maintenace
 
 ### Code Coverage
 
-...
+[code coverage] (http://127.0.0.1:5500/staff/david-alonso/project/api/coverage/index.html)
 
 ## Planning
 

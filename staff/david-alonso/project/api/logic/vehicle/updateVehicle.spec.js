@@ -18,7 +18,7 @@ describe('updateVehicle', () => {
                 modelo: 'MT-07',
                 año: 2021,
                 color: 'negro',
-                matricula: '1234ABC',
+                matricula: '1234FBC',
                 km: 10000,
                 itv: new Date('2025-01-01T00:00:00.000Z'),
                 author: '123456789012345678901234'

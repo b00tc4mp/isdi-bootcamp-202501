@@ -1,7 +1,7 @@
-import { data } from '../data/index.js'
+import { data } from '../../data/index.js'
 
-import errors from '../../com/errors.js'
-import { logic } from './index.js'
+import errors from '../../../com/errors.js'
+import { logic } from '../index.js'
 
 const { SystemError } = errors
 

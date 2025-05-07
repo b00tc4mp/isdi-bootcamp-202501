@@ -56,10 +56,10 @@ export function VehicleRegister({ onVehicleRegistered }) {
 
             const author = logic.getUserId()
 
-            if (!tipoVehiculo) {
-                alert('Por favor selecciona un tipo de vehículo')
-                return
-            }
+            // if (!tipoVehiculo) {
+            //     alert('Por favor selecciona un tipo de vehículo')
+            //     return
+            // }
 
 
             if (isEditing) {
@@ -106,71 +106,64 @@ export function VehicleRegister({ onVehicleRegistered }) {
             <div className="flex justify-center">
                 <form onSubmit={handleVehicleRegisterSubmit} className="flex flex-col w-full max-w-md">
 
-                    {/* **** */}
-                    <div className="flex flex-col gap-1">
-                        <label htmlFor="tipo">Tipo de vehículo</label>
-                        <div className="flex gap-4">
-                            <button
-                                type="button"
-                                onClick={() => setTipoVehiculo('coche')}
-                                className={`p-2 rounded ${tipoVehiculo === 'coche' ? 'bg-gray-400' : ''}`}
-                            >
-                                <div className='flex flex-col items-center'>
-                                    <img src="/images/icon-car.svg" />
-                                    <span>Coche</span>
-                                </div>
-                            </button>
+                    {/* Mostrar solo si NO estás editando */}
+                    {!isEditing && (
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="tipo">Tipo de vehículo</label>
+                            <div className="flex gap-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setTipoVehiculo('coche')}
+                                    className={`p-2 rounded ${tipoVehiculo === 'coche' ? 'bg-gray-400' : ''}`}
+                                >
+                                    <div className='flex flex-col items-center'>
+                                        <img src="/images/icon-car.svg" />
+                                        <span>Coche</span>
+                                    </div>
+                                </button>
 
-                            <button
-                                type="button"
-                                onClick={() => setTipoVehiculo('moto')}
-                                className={`p-2 rounded ${tipoVehiculo === 'moto' ? 'bg-gray-400' : ''}`}
-                            >
-                                <div className='flex flex-col items-center'>
-                                    <img src="/images/icon-bike.svg" />
-                                    <span>Moto</span>
-                                </div>
-                            </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setTipoVehiculo('moto')}
+                                    className={`p-2 rounded ${tipoVehiculo === 'moto' ? 'bg-gray-400' : ''}`}
+                                >
+                                    <div className='flex flex-col items-center'>
+                                        <img src="/images/icon-bike.svg" />
+                                        <span>Moto</span>
+                                    </div>
+                                </button>
 
-                            <button
-                                type="button"
-                                onClick={() => setTipoVehiculo('scooter')}
-                                className={`p-2 rounded ${tipoVehiculo === 'scooter' ? 'bg-gray-400' : ''}`}
-                            >
-                                <div className='flex flex-col items-center'>
-                                    <img src="/images/icon-scooter.svg" />
-                                    <span>Scooter</span>
-                                </div>
-                            </button>
-                        </div>
-
-                        {tipoVehiculo && (
-                            <div className='flex justify-center'>
-                                <p className="text-lg text-white mt-1">
-                                    Seleccionado: <span className="font-semibold">{tipoVehiculo}</span>
-                                </p>
+                                <button
+                                    type="button"
+                                    onClick={() => setTipoVehiculo('scooter')}
+                                    className={`p-2 rounded ${tipoVehiculo === 'scooter' ? 'bg-gray-400' : ''}`}
+                                >
+                                    <div className='flex flex-col items-center'>
+                                        <img src="/images/icon-scooter.svg" />
+                                        <span>Scooter</span>
+                                    </div>
+                                </button>
                             </div>
-                        )}
-                    </div>
-                    {/* **** */}
+                        </div>
+                    )}
 
                     <div className="flex flex-col gap-1 -mt-4">
                         <label htmlFor="marca">Marca</label>
-                        <input type="text" id="marca" className="capitalize"
+                        <input type="text" id="marca" placeholder=" Marca" className="capitalize"
                             value={marca} onInput={(e) =>
                                 setMarca(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
                             }
                         />
 
                         <label htmlFor="modelo">Modelo</label>
-                        <input type="text" id="modelo" className="capitalize"
+                        <input type="text" id="modelo" placeholder=" Modelo" className="capitalize"
                             value={modelo} onInput={(e) =>
                                 setModelo(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
                             }
                         />
 
                         <label htmlFor="matricula">Matricula</label>
-                        <input type="text" id="matricula" className="uppercase"
+                        <input type="text" id="matricula" placeholder=" Matricula" className="uppercase placeholder:capitalize"
                             value={matricula} onInput={(e) => setMatricula(e.target.value.toUpperCase())}
                         />
                     </div>
@@ -180,7 +173,7 @@ export function VehicleRegister({ onVehicleRegistered }) {
                         <div className="flex gap-4">
                             <div className="flex flex-col gap-1 w-1/2">
                                 <label htmlFor="año">Año</label>
-                                <input type="number" id="año" onInput={(e) => setAño(e.target.value)} value={año} />
+                                <input type="number" id="año" placeholder=" Año" onInput={(e) => setAño(e.target.value)} value={año} />
                             </div>
 
                             <div className="flex flex-col gap-1 w-1/2">
@@ -191,7 +184,7 @@ export function VehicleRegister({ onVehicleRegistered }) {
                         <div className="flex gap-4">
                             <div className="flex flex-col gap-1 w-1/2">
                                 <label htmlFor="km">Km</label>
-                                <input type="number" id="km" value={km} onInput={(e) => setKm(e.target.value)} />
+                                <input type="number" id="km" placeholder=" Km" value={km} onInput={(e) => setKm(e.target.value)} />
                             </div>
 
                             <div className="flex flex-col gap-1 w-1/2">

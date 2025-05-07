@@ -2,11 +2,10 @@ import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { useVehicle } from '../../hooks/vehicle.hooks'
 import { logic } from '../../logic'
-import { getUserId } from "../../logic/getUserId"
 import { Link } from 'react-router'
 import { useContext } from '../../context'
 
-import { Trash2, PencilLine, ChevronLeft, CalendarCheck, Wrench, FileText } from "lucide-react"
+import { Trash2, PencilLine, ChevronLeft, CalendarCheck, Wrench, FileText, Gauge, FileImage } from "lucide-react"
 
 export const MaintenanceDetail = ({ onDeletedManteinance }) => {
 
@@ -81,7 +80,7 @@ export const MaintenanceDetail = ({ onDeletedManteinance }) => {
 
                 <div className='mb-20'>
                     <div className='flex items-center gap-6 border border-black bg-white text-black pt-0 p-5 rounded-t-lg'>
-                        <CalendarCheck size={30} />
+                        <CalendarCheck size={30} className="flex-shrink-0" />
                         <div className='mt-3'>
                             <p><strong>Fecha:</strong></p>
                             <h2>{formattedDate}</h2>
@@ -89,21 +88,39 @@ export const MaintenanceDetail = ({ onDeletedManteinance }) => {
                     </div>
 
                     <div className="flex items-center gap-6 border border-black bg-white text-black pt-0 p-5">
-                        <Wrench size={30} />
+                        <Gauge size={30} className="flex-shrink-0" />
                         <div className='mt-3'>
-                            <p><strong>Descripción:</strong></p>
+                            <p><strong>Km:</strong></p>
+                            <h2>{mantenimiento.km}</h2>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-6 border border-black bg-white text-black pt-0 p-5">
+                        <Wrench size={30} className="flex-shrink-0" />
+                        <div className='mt-3'>
+                            <p><strong>Título</strong></p>
                             <h2>{mantenimiento.descripcion}</h2>
                         </div>
                     </div>
 
-
-                    <div className='flex items-center gap-6 border border-black bg-white text-black pt-0 p-5 pb-30 rounded-b-lg'>
-                        <FileText size={30} />
-                        <div className='mt-3'>
-                            <p><strong>Texto:</strong></p>
+                    <div className='flex items-center gap-6 border border-black bg-white text-black pt-0 p-5 pb-15'>
+                        <FileText size={30} className="flex-shrink-0" />
+                        <div className='mt-3 break-words max-w-xs'>
+                            <p><strong>Descripción</strong></p>
                             <h2>{mantenimiento.texto}</h2>
                         </div>
                     </div>
+
+                    <div className='flex items-center gap-6 border border-black bg-white text-black pt-5 p-5 rounded-b-lg'>
+                        <FileImage size={30} className="flex-shrink-0" />
+                        <div className='mt-3 break-words max-w-xs'>
+                            {mantenimiento.image ? (
+                                <img src={mantenimiento.image} className="image" />
+                            ) : null}
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>)

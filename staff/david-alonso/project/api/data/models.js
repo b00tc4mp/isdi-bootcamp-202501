@@ -58,6 +58,7 @@ const vehicle = new Schema({
     },
     matricula: {
         type: String,
+        match: constant.MATRICULA_REGEX,
         required: true,
     },
     km: {
@@ -97,17 +98,26 @@ const manteinance = new Schema({
         type: Date,
         required: true,
     },
+    km: {
+        type: Number,
+        required: true,
+    },
     descripcion: {
         type: String,
         required: true,
         minLength: 1,
-        maxLength: 30
+        maxLength: 50
     },
     texto: {
         type: String,
         required: false,
         minLength: 1,
         maxLength: 200
+    },
+    image: {
+        type: String,
+        match: constant.URL_REGEX,
+        maxLength: 500,
     },
     createdAt: {
         type: Date,

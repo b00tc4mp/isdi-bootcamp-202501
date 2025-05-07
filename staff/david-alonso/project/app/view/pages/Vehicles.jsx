@@ -1,6 +1,6 @@
 import { useParams } from "react-router"
 import { useEffect, useState } from 'react'
-import { getVehicles } from '../../logic/getVehicles'
+import { getVehicles } from '../../logic/vehicle/getVehicles'
 import { Link } from 'react-router'
 import { useVehicle } from "../../hooks/vehicle.hooks"
 import { ITVAlert } from "../components/ITVAlert"

@@ -7,16 +7,15 @@ import { logic } from '../../logic'
 import { NextITV } from "../components/NextITV"
 import { useContext } from '../../context'
 
-import { Share2, Trash2, PencilLine, ChevronLeft, FileCheck, ChevronRight } from "lucide-react"
+import { PdfMaintenances } from '../components/PdfMaintenances'
+
+import { Download, Trash2, PencilLine, ChevronLeft, FileCheck, ChevronRight } from "lucide-react"
 
 export const ProfileVehicle = ({ onVehicleDeleted }) => {
     const { alert, confirm } = useContext()
 
     const { id } = useParams()
     const vehicle = useVehicle(id)
-
-    const [mantenimiento, setMantenimiento] = useState(null)
-
 
     if (!vehicle) return <p>Cargando...</p>
 
@@ -55,7 +54,11 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
 
                             {/* COMPARTIR */}
                             <div className='flex gap-5 '>
-                                <Link><Share2 color="white" size={24} /></Link>
+
+                                <button onClick={() => PdfMaintenances(vehicle)} className=" bg-transparent border-none p-0 cursor-pointer">
+                                    <Download color="white" size={24} />
+                                </button>
+
 
                                 {/* EDITAR */}
                                 <Link to={`/vehicleRegister/${id}`}><PencilLine color="white" size={24} /></Link>
@@ -76,6 +79,7 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                     </div>
                 </header >
 
+                {/* ALERTS */}
                 <section key={`${vehicle.id}-section`}
                     className=" pt-5 p-3 pb-5"
                     style={{ backgroundColor: `${vehicle.color}bb` }}>
@@ -88,6 +92,7 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                     </div>
                 </section>
 
+                {/* MAINTENANCES */}
                 <section className=" flex flex-col pt-10 p-5 ">
 
                     <Link to={`/vehicle/${id}/maintenance`} className="bg-white text-black p-2 rounded-md w-full text-center">+ AÑADIR SERVICIO</Link>
@@ -96,30 +101,33 @@ export const ProfileVehicle = ({ onVehicleDeleted }) => {
                         <h2>HISTORIAL DE SERVICIOS</h2>
                     </div>
 
-                    {vehicle.manteinances.map(manteinance => {
-                        const fechaObj = new Date(manteinance.fecha);
-                        const dia = String(fechaObj.getDate()).padStart(2, '0');
-                        const mes = String(fechaObj.getMonth() + 1).padStart(2, '0');
-                        const año = fechaObj.getFullYear();
-                        const formattedDate = `${dia}-${mes}-${año}`;
+                    {[...vehicle.manteinances]
+                        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+                        .map(manteinance => {
+                            const fechaObj = new Date(manteinance.fecha)
+                            const dia = String(fechaObj.getDate()).padStart(2, '0')
+                            const mes = String(fechaObj.getMonth() + 1).padStart(2, '0')
+                            const año = fechaObj.getFullYear()
+                            const formattedDate = `${dia}-${mes}-${año}`
 
-                        return (
-                            <Link
-                                to={`/vehicle/${vehicle._id}/maintenance-detail/${manteinance._id}`}
-                                key={manteinance._id}
-                                className=" mb-5 flex justify-between"
-                            >
-                                <div className="flex flex-col text-white mb-4">
-                                    <h2 className="text-sm text-gray-300">{formattedDate}</h2>
-                                    <h2 className="text-xl">{manteinance.descripcion}</h2>
-                                </div>
-                                <div className="flex items-center gap-5 mr-3">
-                                    <FileCheck />
-                                    <ChevronRight />
-                                </div>
-                            </Link>
-                        )
-                    })}
+                            return (
+                                <Link
+                                    to={`/vehicle/${vehicle._id}/maintenance-detail/${manteinance._id}`}
+                                    key={manteinance._id}
+                                    className="mb-5 flex justify-between"
+                                >
+                                    <div className="flex flex-col text-white mb-4">
+                                        <h2 className="text-sm text-gray-300">{formattedDate}</h2>
+                                        <h2 className="text-xl">{manteinance.descripcion}</h2>
+                                    </div>
+                                    <div className="flex items-center gap-5 mr-3">
+                                        {manteinance.image && <FileCheck />}
+                                        <ChevronRight />
+                                    </div>
+                                </Link>
+                            )
+                        })}
+
 
                 </section>
 
