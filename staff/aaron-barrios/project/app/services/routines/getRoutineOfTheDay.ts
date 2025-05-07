@@ -8,6 +8,7 @@ const { SystemError, AuthorizationError, NotFoundError } = errors
 
 const CACHE_KEY = "routineOfTheDay"
 const CACHE_EXPIRATION = 24 * 60 * 60 * 1000 // 24h
+// const CACHE_EXPIRATION = 2 * 60 * 1000 // 2 min
 
 const getRoutineOfTheDay = async (): Promise<RoutineType> => {
     const token = await data.getToken()

@@ -144,7 +144,7 @@ data.connect(MONGO_URI!, MONGO_DB_NAME!)
                 author: manu._id,
                 name: "bulgarian squat",
                 muscleGroup: "legs",
-                feedImage: "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg",
+                feedImage: "https://bellabeat.com/wp-content/uploads/elementor/thumbs/bulgarian-split-squat-bellabeat-coach-q5xmx1loh30gv5dp8kkoyj77qhh3yon2hol1wfpt4w.jpg",
                 type: "endurance",
                 difficulty: "hard",
                 description: "best legs exercise!",

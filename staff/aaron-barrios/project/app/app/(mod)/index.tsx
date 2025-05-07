@@ -36,10 +36,15 @@ export default function Review() {
 
     useFocusEffect(
         useCallback(() => {
-            if (activeTab === "workouts") fetchWorkouts()
-            else fetchRoutines()
+            const fetch = activeTab === "workouts" ? fetchWorkouts : fetchRoutines
+            fetch()
+
+            const interval = setInterval(fetch, 3000)
+
+            return () => clearInterval(interval)
         }, [activeTab])
     )
+
 
     useEffect(() => {
         getUserRole().then(data => {
