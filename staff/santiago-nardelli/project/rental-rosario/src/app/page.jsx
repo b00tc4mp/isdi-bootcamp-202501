@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { getAllPropertiesRequest } from "./_logic/functions/getAllPropertiesRequest.js";
 import { getFilteredPropertiesRequest } from "./_logic/functions/getFilteredPropertiesRequest.js";
 import PropertyList from "./_components/organisms/PropertyList.jsx";
@@ -71,7 +71,9 @@ export default async function Home({ searchParams }) {
     <div className="relative">
       <Header className="absolute top-0 left-0 right-0 z-30" />
       <HeroSection />
-      <PropertyFilterNavbar />
+      <Suspense fallback={<p>Cargando filtros...</p>}>
+        <PropertyFilterNavbar />
+      </Suspense>
       {hasError ? (
         <p className="text-red-500">
           Hubo un error al cargar las propiedades. Por favor, intenta nuevamente
