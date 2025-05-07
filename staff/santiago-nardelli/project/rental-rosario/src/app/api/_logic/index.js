@@ -6,6 +6,7 @@ import { deleteProperty } from "./deleteProperty.js";
 import { getAllProperties } from "./getAllProperties.js";
 import { updateProperty } from "./updateProperties.js";
 import { getFilteredProperties } from "./getFilteredProperties.js";
+import { getOneProperty } from "./getOneProperty.js";
 
 export {
   authenticateUser,
@@ -15,4 +16,5 @@ export {
   getAllProperties,
   updateProperty,
   getFilteredProperties,
+  getOneProperty,
 };

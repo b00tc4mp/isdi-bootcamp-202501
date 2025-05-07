@@ -1,22 +1,26 @@
-import { errors } from "com";
+import { errors, validate } from "com";
 
 const { SystemError } = errors;
 
 //const { NEXT_PUBLIC_API_URL } = process.env;
 
-export const getAllPropertiesRequest = async () => {
+export const getOnePropertieRequest = async (propertyId) => {
+  validate.id(propertyId, "property id");
   let response;
   let body;
 
   try {
-    response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error) {
-    throw new SystemError("Error al obtener las propiedades", error.message);
+    throw new SystemError("Error al obtener la propiedad", error.message);
   }
 
   if (response.status === 200) {

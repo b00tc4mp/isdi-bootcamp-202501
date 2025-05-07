@@ -5,6 +5,13 @@ import React from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "../ui/select";
 
 const GenericForm = ({
   title,
@@ -25,15 +32,46 @@ const GenericForm = ({
           fields.map((field) => (
             <div key={field.name} className="grid gap-2">
               {field.label && <Label htmlFor={field.name}>{field.label}</Label>}
-              <Input
-                type={field.type || "text"}
-                id={field.name}
-                name={field.name}
-                placeholder={field.placeholder || ""}
-                required={field.required || false}
-                defaultValue={field.defaultValue || ""}
-                {...field.rest} // Permite pasar otras props específicas al Input
-              />
+              {field.type === "select" ? (
+                <Select
+                  name={field.name} // Importante para la sumisión del formulario
+                  onValueChange={(value) => {
+                    console.log(
+                      `Valor seleccionado para ${field.name}: ${value}`
+                    );
+                  }}
+                  defaultValue={field.defaultValue}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder={`Selecciona un ${field.label}`} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {field.options.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : field.type === "textarea" ? (
+                <textarea
+                  id={field.name}
+                  name={field.name}
+                  placeholder={field.placeholder || ""}
+                  required={field.required || false}
+                  defaultValue={field.defaultValue || ""}
+                ></textarea>
+              ) : (
+                <Input
+                  type={field.type || "text"}
+                  id={field.name}
+                  name={field.name}
+                  placeholder={field.placeholder || ""}
+                  required={field.required || false}
+                  defaultValue={field.defaultValue || ""}
+                  {...field.rest}
+                />
+              )}
             </div>
           ))}
         {children}{" "}

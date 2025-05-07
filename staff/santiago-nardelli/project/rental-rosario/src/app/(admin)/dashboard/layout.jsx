@@ -1,7 +1,10 @@
-// src/app/(admin)/layout.jsx
+"use client";
 import Link from "next/link";
+import { useLogout } from "../../hooks/useLogout";
+import { Button } from "../../_components/ui/button";
 
 export default function AdminDashboardLayout({ children }) {
+  const logout = useLogout();
   return (
     <div className="min-h-screen bg-gray-900 text-white flex">
       <aside className="w-1/5 bg-gray-800 p-4 sm:w-64">
@@ -43,12 +46,12 @@ export default function AdminDashboardLayout({ children }) {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link
-                  href="/"
-                  className="block py-2 px-4 rounded-md hover:bg-gray-700 transition duration-200"
+                <Button
+                  onClick={logout}
+                  className="block w-full text-left py-2 px-4 rounded-md hover:bg-gray-700 transition duration-200"
                 >
                   Volver a la Página Principal
-                </Link>
+                </Button>
               </li>
             </ul>
           </div>

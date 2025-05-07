@@ -1,126 +1,88 @@
-// src/app/_components/pages/PropertyForm.jsx
+// src/app/_components/pages/AddPage.jsx
 "use client";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useCreateProperty } from "../../../hooks/useCreateProperty.js";
-//import GenericForm from "../../../_components/molecules/GenericForm.jsx";
+import GenericForm from "../../../_components/molecules/GenericForm.jsx";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
-const PropertyForm = () => {
+const AddPage = () => {
   const { createProperty, propertyCreated, error, loading } =
     useCreateProperty();
-  const [formData, setFormData] = useState({
-    title: "",
-    image: "",
-    description: "",
-    location: "",
-    type: "",
-    bedrooms: "",
-    airbnbUrl: "",
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: name === "bedrooms" ? Number(value) : value,
-    }));
-  };
+  useEffect(() => {
+    if (propertyCreated) {
+      Swal.fire({
+        icon: "success",
+        title: "¡Éxito!",
+        text: "Propiedad creada correctamente.",
+        confirmButtonText: "OK",
+      });
+    }
+
+    if (error) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Error!",
+        text: error,
+        confirmButtonText: "OK",
+      });
+    }
+  }, [propertyCreated, error]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = {
+      title: e.target.elements.title.value,
+      image: e.target.elements.image.value,
+      description: e.target.elements.description.value,
+      location: e.target.elements.location.value,
+      type: e.target.elements.type.value,
+      bedrooms: Number(e.target.elements.bedrooms.value),
+      airbnbUrl: e.target.elements.airbnbUrl.value,
+    };
     await createProperty(formData);
   };
 
+  const formFields = [
+    { label: "Title", name: "title", type: "text", required: true },
+    { label: "Image URL", name: "image", type: "url", required: true },
+    {
+      label: "Description",
+      name: "description",
+      type: "textarea",
+      required: true,
+    },
+    { label: "Location", name: "location", type: "text", required: true },
+    {
+      label: "Type",
+      name: "type",
+      type: "select",
+      required: true,
+      options: [
+        { value: "apartment", label: "Apartamento" },
+        { value: "house", label: "Casa" },
+        { value: "studio", label: "Estudio" },
+      ],
+    },
+    { label: "Rooms", name: "bedrooms", type: "number", required: true },
+    { label: "Airbnb URL", name: "airbnbUrl", type: "url", required: true },
+  ];
   return (
-    <div>
-      <h1>Create New Property</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      {propertyCreated && (
-        <p style={{ color: "green" }}>Property created successfully!</p>
-      )}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="image">Image URL:</label>
-          <input
-            type="url"
-            id="image"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="location">Location:</label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="type">Type:</label>
-          <input
-            type="text"
-            id="type"
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="bedrooms">Rooms:</label>
-          <input
-            type="number"
-            id="bedrooms"
-            name="bedrooms"
-            value={formData.rooms}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="airbnbUrl">Airbnb URL:</label>
-          <input
-            type="url"
-            id="airbnbUrl"
-            name="airbnbUrl"
-            value={formData.airbnbUrl}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          Create Property
-        </button>
-      </form>
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-6">Create New Property</h1>
+      <GenericForm
+        title="Property Details"
+        fields={formFields}
+        onSubmit={handleSubmit}
+        submitButtonText="Create Property"
+        className="max-w-md mx-auto"
+        buttonClassName="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        error={null} // El manejo de errores se hace con SweetAlert
+        loading={loading}
+      />
     </div>
   );
 };
 
-export default PropertyForm;
+export default AddPage;

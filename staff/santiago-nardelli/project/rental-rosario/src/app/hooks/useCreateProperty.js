@@ -10,6 +10,7 @@ export const useCreateProperty = () => {
   const createProperty = async (propertyData) => {
     setLoading(true);
     setError(null);
+    setPropertyCreated(false); // Reinicia el estado de creación de propiedad
 
     try {
       // Llama a la función que realiza la solicitud de creación de propiedad
@@ -18,12 +19,12 @@ export const useCreateProperty = () => {
         setPropertyCreated(true); // Actualiza el estado de creación de propiedad
         return true; // Indica que la creación fue exitosa
       } else {
-        setError("Failed to create property"); // Establece un mensaje de error si la creación falla
-        return false; // Indica que la creación falló
+        setError("Error al crear la propiedad"); // Maneja el error de creación
+        return false; // Indica que hubo un error
       }
-    } catch (err) {
-      setError(err.message); // Captura el mensaje de error
-      return false; // Indica que hubo un error en la creación de la propiedad
+    } catch (error) {
+      setError(error.message); // Maneja el error de la solicitud
+      return false; // Indica que hubo un error
     } finally {
       setLoading(false); // Finaliza el estado de carga
     }

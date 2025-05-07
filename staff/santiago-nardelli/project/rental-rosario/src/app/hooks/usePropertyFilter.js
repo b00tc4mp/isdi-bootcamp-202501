@@ -39,9 +39,6 @@ const usePropertyFilter = () => {
     }
 
     const newSearchParams = params.toString();
-    // const newUrl = `${window.location.pathname}${
-    //   newSearchParams ? `?${newSearchParams}` : ""
-    // }`;
 
     router.replace(`${pathname}?${newSearchParams}`, { scroll: false });
   };

@@ -5,13 +5,12 @@ import Link from "next/link";
 import { useLoginUser } from "../../hooks/useLoginUser.js";
 import { useRouter } from "next/navigation";
 import { isUserLoggedIn } from "../../_logic/functions/isUserLoggedIn.js";
+import GenericForm from "../../_components/molecules/GenericForm.jsx";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const { login, error, loading } = useLoginUser();
-
+  const { login, error, loading, success } = useLoginUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -20,52 +19,61 @@ const LoginPage = () => {
     }
   }, [router]);
 
+  useEffect(() => {
+    if (success) {
+      Swal.fire({
+        icon: "success",
+        title: "¡Éxito!",
+        text: "Inicio de sesión exitoso.",
+        confirmButtonText: "OK",
+      }).then(() => {
+        router.push("/dashboard");
+      });
+    }
+
+    if (error) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Error!",
+        text: error,
+        confirmButtonText: "OK",
+      });
+    }
+  }, [success, error, router]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const loginSuccessful = await login(email, password);
-    if (loginSuccessful) {
-      router.push("/dashboard");
-    }
+    const email = e.target.elements.email.value;
+    const password = e.target.elements.password.value;
+
+    await login(email, password);
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      >
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border border-gray-300 rounded p-2 mb-4 w-full"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border border-gray-300 rounded p-2 mb-4 w-full"
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full"
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+  const formFields = [
+    { label: "Email", name: "email", type: "email", required: true },
+    { label: "Password", name: "password", type: "password", required: true },
+  ];
 
-      <Link href="/register" className="text-blue-500 mt-4">
-        Don't have an account? Register here.
-      </Link>
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-300">
+      <div className="w-full max-w-sm bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+        <GenericForm
+          fields={formFields}
+          onSubmit={handleSubmit}
+          loading={loading}
+          submitButtonText={loading ? "Logging in..." : "Login"}
+          buttonClassName="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          className="space-y-4"
+          error={null}
+        />
+        <p className="text-center text-gray-500 text-xs mt-4">
+          Don't have an account?{" "}
+          <Link href="/register" className="text-blue-500 hover:text-blue-800">
+            Register here.
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

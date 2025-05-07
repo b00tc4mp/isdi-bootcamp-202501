@@ -1,13 +1,14 @@
 import { Property, User } from "../../../lib/db/models/index.js";
 import { validate, errors } from "com";
 
-const { SystemError, NotFoundError } = errors;
+const { SystemError, NotFoundError, ValidateError } = errors;
 
 export const updateProperty = (userId, propertyId, updates) => {
+  // 1. Validación de IDs: Asegura que userId y propertyId sean IDs válidos.
   validate.id(userId, "userId");
   validate.id(propertyId, "propertyId");
 
-  //Validacion de update sea un objeto con al menos 1 propiedad ingresada
+  // 2. Validación de 'updates': Verifica que 'updates' sea un objeto no vacío.
   if (
     !updates ||
     typeof updates !== "object" ||
@@ -17,7 +18,9 @@ export const updateProperty = (userId, propertyId, updates) => {
     throw new NotFoundError("Updates must be a non-empty object");
   }
 
-  // Validaciones de entrada
+  // 3. Validaciones de Campos Individuales en 'updates':
+  //    Se valida cada campo que podría venir en el objeto 'updates'.
+  //    Solo se valida si el campo está presente en 'updates'.
   if (updates.title) {
     validate.text(updates.title, { minLength: 3, maxLength: 50 });
   }
@@ -39,25 +42,34 @@ export const updateProperty = (userId, propertyId, updates) => {
     validate.number(updates.bedrooms, { minLength: 1, maxLength: 50 });
   }
   if (updates.images) {
-    validate.url(updates.images, { minLength: 1, maxLength: 500 });
+    if (!Array.isArray(updates.images)) {
+      throw new ValidateError("Images must be an array");
+    }
+    updates.images.forEach((image) => {
+      validate.url(image, "image URL");
+    });
   }
   if (updates.airbnbUrl) {
     validate.url(updates.airbnbUrl, { minLength: 1, maxLength: 500 });
   }
 
-  // Filtrar campos vacíos o no válidos
+  // 4. Filtrado de 'updates': Elimina campos con valores vacíos, nulos o indefinidos.
   const filteredUpdates = Object.fromEntries(
     Object.entries(updates).filter(
       ([_, value]) => value !== undefined && value !== null && value !== ""
     )
   );
 
+  // 5. Verificación de 'filteredUpdates': Asegura que queden campos válidos después del filtrado.
   if (!Object.keys(filteredUpdates).length) {
     throw new NotFoundError("No valid fields provided for update");
   }
 
-  // Lógica asincrónica envuelta en una IIFE
+  // 6. Lógica Asincrónica Principal (IIFE - Immediately Invoked Function Expression):
+  //    La lógica de la base de datos se envuelve en una función asincrónica que se ejecuta inmediatamente.
   return (async () => {
+    // 6.1. Verificación del Usuario (Autorización):
+    //    Busca al usuario por userId para asegurar que existe.
     try {
       const user = await User.findById(userId).lean();
       if (!user) {
@@ -66,27 +78,29 @@ export const updateProperty = (userId, propertyId, updates) => {
     } catch (error) {
       throw new SystemError(error.message);
     }
-    // Buscar la propiedad por ID y actualizarla
+    // 6.2. Búsqueda y Actualización de la Propiedad:
+    //    Utiliza findOneAndUpdate de Mongoose para buscar la propiedad por _id y actualizarla.
     let updatedProperty;
     try {
       updatedProperty = await Property.findOneAndUpdate(
-        { _id: propertyId }, // Filtro de búsqueda
+        { _id: propertyId }, // Filtro de búsqueda: encuentra la propiedad por su _id.
         {
           $set: {
-            ...filteredUpdates, // Actualiza solo los campos proporcionados
-            modifiedAt: new Date(),
+            ...filteredUpdates, // Los datos a actualizar se aplican usando $set.
+            modifiedAt: new Date(), // Se actualiza la fecha de modificación.
           },
         },
         {
-          new: true, // Devuelve el documento actualizado
+          new: true, // Importante: Devuelve el documento *después* de la actualización.
         }
       ).lean();
 
+      // 6.3. Verificación de si la Propiedad Fue Encontrada y Actualizada:
       if (!updatedProperty) {
         throw new NotFoundError("Property not found");
       }
 
-      return updatedProperty;
+      return updatedProperty; // Retorna la propiedad actualizada.
     } catch (error) {
       throw new SystemError(error.message);
     }

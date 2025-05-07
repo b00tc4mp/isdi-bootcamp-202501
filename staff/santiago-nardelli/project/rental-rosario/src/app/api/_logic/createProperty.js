@@ -35,7 +35,7 @@ export const createProperty = (propertyData) => {
         location: propertyData.location,
         type: propertyData.type,
         bedrooms: propertyData.bedrooms,
-        images: propertyData.images,
+        images: [propertyData.image],
         airbnbUrl: propertyData.airbnbUrl,
       });
       return property; // Importante para obtener el resultado

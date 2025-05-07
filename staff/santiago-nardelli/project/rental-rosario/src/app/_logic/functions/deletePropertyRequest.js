@@ -1,47 +1,44 @@
 import { data } from "../../_data/index.js";
-import { errors } from "com";
+import { errors, validate } from "com";
 
 const { SystemError } = errors;
 
-const { NEXT_PUBLIC_API_URL } = process.env;
-
 export const deletePropertyRequest = async (propertyId) => {
+  validate.id(propertyId, "property id");
   const { token } = data;
 
-  try {
-    const response = await fetch(
-      `${NEXT_PUBLIC_API_URL}/properties/${propertyId}`,
-      {
+  let response;
+  return (async () => {
+    try {
+      const requestUrl = `${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}`;
+      response = await fetch(requestUrl, {
         method: "DELETE",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
+      });
+    } catch (error) {
+      throw new SystemError("Error al eliminar propiedad", error.message);
+    }
+
+    if (response.status === 204) {
+      return { success: true, message: "Property delete successfully!" };
+    }
 
     if (!response.ok) {
-      const body = await response.json();
+      try {
+        body = await response.json();
+      } catch (error) {
+        throw new SystemError(
+          `Error al eliminar propiedad (status ${response.status})`,
+          error.message
+        );
+      }
+
       const { error, message } = body;
-      const ErrorConstructor = errors[error] || SystemError;
-      throw new ErrorConstructor(
-        message ||
-          `Error al eliminar la propiedad con ID ${propertyId}: ${response.status}`
-      );
+      const ErrorConstructor = errors[error];
+      throw new ErrorConstructor(message);
     }
-
-    // La API podría devolver un 204 No Content en caso de éxito sin cuerpo
-    if (response.status === 204) {
-      return; // Indica éxito sin datos de respuesta
-    }
-
-    return await response.json(); // Si la API devuelve algún dato tras la eliminación (ej., la propiedad eliminada)
-  } catch (error) {
-    if (error instanceof SystemError) {
-      throw error;
-    }
-    throw new SystemError(
-      `Error al eliminar la propiedad con ID ${propertyId}`,
-      error.message
-    );
-  }
+  })();
 };

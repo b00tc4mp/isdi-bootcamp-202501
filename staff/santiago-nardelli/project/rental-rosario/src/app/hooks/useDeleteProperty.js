@@ -1,12 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { deletePropertyRequest } from "../_logic/functions/deletePropertyRequest.js";
 
-const useDeleteProperty = () => {
+export const useDeleteProperty = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
 
-  const deleteProperty = useCallback(async (propertyId) => {
+  const deleteProperty = async (propertyId) => {
     setIsDeleting(true);
     setDeleteError(null);
     setDeleteSuccess(false);
@@ -19,7 +19,7 @@ const useDeleteProperty = () => {
     } finally {
       setIsDeleting(false);
     }
-  }, []);
+  };
 
   return {
     isDeleting,
@@ -28,5 +28,3 @@ const useDeleteProperty = () => {
     deleteProperty,
   };
 };
-
-export default useDeleteProperty;

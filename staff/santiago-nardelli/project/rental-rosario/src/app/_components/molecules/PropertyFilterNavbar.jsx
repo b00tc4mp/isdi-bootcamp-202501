@@ -38,6 +38,7 @@ const PropertyFilterNavbar = () => {
               <SelectItem value="all">Todos</SelectItem>
               <SelectItem value="apartment">Apartamento</SelectItem>
               <SelectItem value="house">Casa</SelectItem>
+              <SelectItem value="studio">Estudio</SelectItem>
               {/* Agrega más opciones de tipo según tus datos */}
             </SelectContent>
           </Select>

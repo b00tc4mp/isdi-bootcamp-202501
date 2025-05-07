@@ -16,13 +16,13 @@ export const createPropertyRequest = (propertyData) => {
   // Validate Name
   validate.text(propertyName);
   validate.minLength(propertyName, 3, "property name");
-  validate.maxLength(propertyName, 20, "property name");
+  validate.maxLength(propertyName, 100, "property name");
   // Validate Image
   validate.url(propertyImage, "property image");
   // Validate Description
   validate.text(propertyDescription);
   validate.minLength(propertyDescription, 10, "property description");
-  validate.maxLength(propertyDescription, 200, "property description");
+  validate.maxLength(propertyDescription, 1000, "property description");
   // Validate Location
   validate.text(propertyLocation);
   // Validate Type
@@ -59,7 +59,7 @@ export const createPropertyRequest = (propertyData) => {
     }
 
     if (response.status === 201) {
-      return true;
+      return { success: true, message: "Property created successfully!" };
     }
 
     if (!response.ok) {

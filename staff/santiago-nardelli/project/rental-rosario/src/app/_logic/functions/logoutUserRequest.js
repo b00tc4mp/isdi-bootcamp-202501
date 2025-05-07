@@ -1,5 +1,5 @@
 import { data } from "../../_data/index.js";
 
-export const logoutUser = () => {
+export const logoutUserRequest = () => {
   data.token = null;
 };
