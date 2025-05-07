@@ -1,4 +1,4 @@
-# [App Name]
+# [Tzend]
 
 ## Intro
 
@@ -29,22 +29,23 @@ User (Registered)
 - Register 
 - Login
 - Logout
-- Complete training test (Home page)
+- Complete preference test (Home page)
 - Explore public/suggested content (Home page)
-- Quick acces/navigation to key features: Current routine, last workout, smart suggestions (Home page)
+- Quick acces/navigation to key features: Current routine, profile data && daily routine(Home page)
 - Change/update user data (Profile page)
 - Look up workouts/routines saved in wishlist (Profile page)
+- Custom routines edit (Profile page)
 - Look up and filter routines (Routines feed page)
 - View individual routine details (Routine detail page)
-- Interact with the routine: Save, like, mark as done (Routine detail page)
+- Interact with the routine: Save, like && save custom routine (Routine detail page)
 - Edit reps/sets/weight/rest per workout inside routine (Routine detail page)
 - Create a custom routine (Create routine page)
 - Look up and filter workouts (Workouts feed page)
 - View individual workout details (Workout detail page)
-- Interact with the workout: Save, like, mark as done (Workout detail page)
+- Interact with the workout: Save & like (Workout detail page)
 - Create a custom workout (Create workout page)
 - Acess users profile 
-- Look up for workouts and routines x user has updated
+- Look up for user data, as workouts and routines x user has updated
 
 - Toggle light/dark theme (Profile page)
 - Visualize progress charts(Breakdown page)
@@ -80,6 +81,7 @@ User
   - role (string, enum: ('anonymous', 'regular', 'moderator', 'default'))
   - name? (string)
   - lastName? (string)
+  - email (string)
   - alias (string)
   - password  (string) (hashed)
   - level? (string, enum: ('beginner', 'intermediate', 'advanced'))
@@ -101,7 +103,7 @@ User
 
 Workout
 - id (UUID)
-- createdBy? (User.id)
+- author (User.id)
 - name (string)
 - muscleGroup (string)
 - feedImage (string)
@@ -116,32 +118,31 @@ Workout
 - modifiedAt? (date)
 
 
-WorkoutProgress (conjunto de workoutProgress) -> poder borrar el punto
+<!-- WorkoutProgress (conjunto de workoutProgress) -> poder borrar el punto
   - user (User.id)
   - workout (Workout.id) 
   - weightUsed (number)
   - createdAt (date)
-  - notes? (string) (???)
+  - notes? (string) (???) -->
 
 
 Routine
 - id (UUID)
-- createdBy? (User.id)
+- author (User.id)
 - name (string)
-- goal (string) //gain strength, resistance, etc
-- muscle group (string)
+- goal? (string) //gain strength, resistance, etc
+- muscleGroup (string)
 - feedImage (string)
-- locationType (number/string, enum: 1 (home) | 2: (gym) | 3: (outside))
-- difficulty (number/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
+- locationType? (number/string, enum: 1 (home) | 2: (gym) | 3: (outside))
+- difficulty? (number/string, enum: 1 (begginer) | 2: (intermediate) | 3: (advanced))
 - status (number/string, enum: 1 (accepted) | 2: (pending) | 3: (declined))
-- description? (string)
-- executionImages? (string)
+- description (string)
 - duration (string)
 - frequencySuggestion? (string)
-- likes ([User.id])
-- saves ([User.id])
+- likes? ([User.id])
+- saves? ([User.id])
 - createdAt (date)
-- modifiedAt (date)
+- modifiedAt? (date)
 - workouts ([RutineWorkout])
 
 RoutineWorkout 
@@ -153,6 +154,30 @@ RoutineWorkout
 - time? number,
 - weight? number,
 - restTime? number
+
+CustomRoutineWorkout 
+- workoutId (Workout.id),
+- order number,
+- sets number,
+- reps number,
+- time? number,
+- weight number,
+- restTime number
+
+
+CustomRoutine
+- id (UUID)
+- name (string)
+- muscleGroup (string)
+- feedImage (string)
+- description (string)
+- duration (string)
+- createdAt (date)
+- modifiedAt (date)
+- userId (User.id)
+- originalRoutineId (Routine.id)
+- workouts ([CustomRutineWorkout])
+
 
 
 ### Technologies
@@ -175,7 +200,7 @@ RoutineWorkout
 
 ### Test Coverage
 
-[...]
+(http://127.0.0.1:5500/staff/aaron-barrios/project/api/coverage/index.html)
 
 ## Planning
 

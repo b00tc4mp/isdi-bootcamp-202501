@@ -56,7 +56,7 @@ export default function Anonym_Home() {
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
             <View style={styles.header}>
-                <Text style={styles.title}>Home</Text>
+                <Text style={styles.title}>Tzend</Text>
                 <Pressable onPress={handleExit}>
                     <Image
                         source={require("@/assets/icons/logout.png")}
