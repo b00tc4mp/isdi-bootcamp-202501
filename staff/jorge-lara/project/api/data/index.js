@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { errors} from 'com';
-import { User } from "./models.js";
+import { errors } from 'com';
+import { User, Exercise, Routine, BodyTracker } from "./models.js";
 
-const {SystemError} = errors;
+const { SystemError } = errors;
 
 const data = {
     connect(url, dbName) {
@@ -10,12 +10,15 @@ const data = {
             .catch(error => new SystemError(error.message))
     },
 
-    disconnect(){
+    disconnect() {
         return mongoose.disconnect();
     }
 }
 
 export {
     data,
-    User
+    User,
+    Exercise,
+    Routine,
+    BodyTracker
 }
