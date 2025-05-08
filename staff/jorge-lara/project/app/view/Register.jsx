@@ -1,6 +1,6 @@
 import { logic } from "../logic/index";
 
-export function Register({ onUserRegistered }) {
+export function Register({ onUserRegistered, onNavigateToLogin }) {
 
     const handleRegisterSubmit = event => {
         event.preventDefault();
@@ -33,24 +33,36 @@ export function Register({ onUserRegistered }) {
     }
 
 
-    return <div>
-        <h1>Register</h1>
-        <form className='flex flex-col' onSubmit={handleRegisterSubmit}>
-            <div>
-                <input type="email" id="email" placeholder="email" />
-            </div>
+    return <div className="flex flex-col items-center justify-center text-center min-h-screen w-full px-4 space-y-8">
+        <h1 className="text-white text-3xl">Fitrack</h1>
+        <img src="assets/logo.svg" className="w-32 h-32 md:w-40 md:h-40"></img>
 
-            <div>
-                <input type="text" id="username" placeholder="Username" />
-            </div>
+        <div className="w-full max-w-xs bg-white rounded-2xl shadow-lg p-6 flex flex-col space-y-4">
+            <h1 className="text-2xl font-bold">Register</h1>
 
-            <div>
-                <input type="password" id="password" placeholder="Password" />
-            </div>
+            <form className='flex flex-col space-y-4' onSubmit={handleRegisterSubmit}>
+                <div>
+                    <input type="Email" id="email" placeholder="Email" required />
+                </div>
 
-            <div>
-                <button>Register</button>
-            </div>
-        </form>
+                <div>
+                    <input type="text" id="username" placeholder="Username" required />
+                </div>
+
+                <div>
+                    <input type="password" id="password" placeholder="Password" required />
+                </div>
+
+                <div>
+                    <button className="w-full py-3 rounded-2xl font-semibold bg-orange-500 hover:bg-orange-600 cursor-pointer">Register</button>
+                </div>
+            </form>
+        </div>
+        <div className='text-white text-base mt-[7px]'>
+            <span>
+                Already have an account?
+                <a className='font-bold ml-[12px] cursor-pointer' onClick={onNavigateToLogin}>Login</a>
+            </span>
+        </div>
     </div>
 }
