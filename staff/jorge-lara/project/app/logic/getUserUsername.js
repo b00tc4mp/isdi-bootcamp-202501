@@ -1,28 +1,27 @@
-import { data } from "../data/index.js"
-import { errors } from 'com'
+import { data } from "../data/index.js";
+import { errors } from "com";
 
 const { SystemError } = errors;
 
-export const loginUser = (email, password) => {
-    //TODO validations
-    return fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
-        method: 'POST',
+export const getUserUsername = () => {
+    const { token } = data;
+
+    return fetch(`${import.meta.env.VITE_API_URL}/users/self/username`, {
+        method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
+            Authorization: `Bearer ${token}`
+        }
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {
+
             if (response.status === 200) {
                 return response.json()
-                    .catch(error => {
-                        throw new SystemError(error.message)
-                    })
+                    .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        const { token } = body;
+                        const { username } = body;
 
-                        data.token = token;
+                        return username;
                     })
             }
 
