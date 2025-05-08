@@ -9,7 +9,7 @@ export type VehicleTraits = {
   doors: string;
   bedCount: string;
   maxTravellers: string;
-  fuelType: string;
+  fuelType: Fuel;
   storage: string;
 };
 
@@ -19,5 +19,13 @@ export type VehicleFeatures = {
   insideKitchen: boolean;
   fridge: boolean;
   toilet: "fixed" | "portable" | "none";
-  shower: "inside" | "outside" | "none";
+  shower: boolean;
+};
+
+type Fuel = "petrol" | "diesel" | "electric" | "hybrid";
+
+export type EditableImage = {
+  id: string;
+  uri: string;
+  isLocal: boolean; // true si prové de l’ImagePicker
 };

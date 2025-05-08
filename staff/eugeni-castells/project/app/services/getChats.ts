@@ -2,12 +2,14 @@ import { validate } from "@/com";
 import errors, { SystemError } from "@/com/errors";
 import { ReturnedChat, ReturnedSanitizedChat } from "@/com/types";
 import { data } from "@/data";
+import { getApiUrl } from "@/getApiUrl";
 
 export const getChats = (): Promise<ReturnedSanitizedChat[]> => {
   return (async () => {
     const token = await data.getToken();
+    const apiUrl = getApiUrl();
 
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/chats`, {
+    return fetch(`${apiUrl}/chats`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

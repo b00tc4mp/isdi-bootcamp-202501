@@ -1,11 +1,13 @@
 import errors, { SystemError } from "@/com/errors";
 import { data } from "@/data";
-import { ReturnedExchanges, ReturnedExchangesObject } from "@/com/types";
+import { ReturnedExchangesObject } from "@/com/types";
+import { getApiUrl } from "@/getApiUrl";
 
 export const getUserExchanges = async (): Promise<ReturnedExchangesObject> => {
   const token = await data.getToken();
 
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/self/trips`, {
+  const apiUrl = getApiUrl();
+  return fetch(`${apiUrl}/users/self/trips`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

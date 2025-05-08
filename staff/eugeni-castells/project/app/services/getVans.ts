@@ -3,6 +3,7 @@ import { data } from "@/data";
 
 import { ReturnedVansType } from "@/com/types";
 import { generateQuery } from "@/app/utils/generateQuery";
+import { getApiUrl } from "@/getApiUrl";
 
 export const getVans = async (
   longitude: string | null,
@@ -13,6 +14,7 @@ export const getVans = async (
 ): Promise<ReturnedVansType[]> => {
   const token = await data.getToken();
 
+  const apiUrl = getApiUrl();
   const url = generateQuery(`/vans`, {
     longitude,
     latitude,
@@ -21,7 +23,7 @@ export const getVans = async (
     travellers,
   });
 
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL}${url}`, {
+  return fetch(`${apiUrl}${url}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

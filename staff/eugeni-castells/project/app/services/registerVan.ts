@@ -2,6 +2,7 @@ import { validate } from "@/com";
 import { RegisterVanParam } from "./types";
 import { errors } from "@/com";
 import { data } from "@/data";
+import { getApiUrl } from "@/getApiUrl";
 
 const { SystemError } = errors;
 
@@ -29,7 +30,8 @@ export const registerVan = (vanInfo: RegisterVanParam) => {
   validate.number(storage, "storage");
   validate.number(windows, "windows");
   validate.number(price, "price");
-  debugger;
+
+  const apiUrl = getApiUrl();
   return (async () => {
     const token = await data.getToken();
 
@@ -48,7 +50,7 @@ export const registerVan = (vanInfo: RegisterVanParam) => {
 
     formData.append("vanInfo", JSON.stringify(jsonVan));
 
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/van`, {
+    return fetch(`${apiUrl}/users/van`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

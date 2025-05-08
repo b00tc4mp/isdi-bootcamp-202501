@@ -75,3 +75,15 @@ export type VehicleTraitsWithNumbers = {
   fuelType: string;
   accessible: boolean;
 };
+
+export type UpdateVanParam = {
+  features: VehicleFeatures;
+  traits: VehicleTraitsWithNumbers;
+  model: string;
+  brand: string;
+  price: number;
+  description: string;
+  imagesToUpload: VanImageType[];
+  imagesToDelete: VanImageType[];
+  id: string;
+};

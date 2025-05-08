@@ -2,14 +2,16 @@ import { validate } from "@/com";
 import errors, { SystemError } from "@/com/errors";
 import { VanDetailInfo, ReturnedJsonVanDetailInfo } from "@/com/types";
 import { data } from "@/data";
+import { getApiUrl } from "@/getApiUrl";
 
 export const getVanById = (id: string): Promise<VanDetailInfo> => {
   validate.id(id, "van id");
 
+  const apiUrl = getApiUrl();
   return (async () => {
     const token = await data.getToken();
 
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/vans/${id}`, {
+    return fetch(`${apiUrl}/vans/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

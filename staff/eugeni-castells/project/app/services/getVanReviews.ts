@@ -2,6 +2,7 @@ import { validate } from "@/com";
 import errors, { SystemError } from "@/com/errors";
 import { ReturnedSanitizedReviews } from "@/com/types";
 import { data } from "@/data";
+import { getApiUrl } from "@/getApiUrl";
 
 export const getVanReviews = (
   id: string
@@ -11,7 +12,9 @@ export const getVanReviews = (
   return (async () => {
     const token = await data.getToken();
 
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/vans/${id}/reviews`, {
+    const url = getApiUrl();
+
+    return fetch(`${url}/vans/${id}/reviews`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

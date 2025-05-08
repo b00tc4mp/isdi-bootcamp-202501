@@ -1,14 +1,17 @@
 import { validate } from "@/com";
 import { data } from "@/data";
 import errors, { SystemError } from "@/com/errors";
+import { getApiUrl } from "@/getApiUrl";
 
 export const rejectTripRequest = (tripId: string): Promise<void> => {
   validate.id(tripId, "van id");
 
   return (async () => {
     const token = await data.getToken();
+
+    const apiUrl = getApiUrl();
     try {
-      await fetch(`${process.env.EXPO_PUBLIC_API_URL}/trips/${tripId}/reject`, {
+      await fetch(`${apiUrl}/trips/${tripId}/reject`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

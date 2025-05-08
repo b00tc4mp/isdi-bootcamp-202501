@@ -1,6 +1,7 @@
 import { validate } from "@/com";
 import errors, { SystemError } from "@/com/errors";
 import { data } from "@/data";
+import { getApiUrl } from "@/getApiUrl";
 
 export const sendMessage = (chatId: string, message: string) => {
   validate.id(chatId, "chat id");
@@ -10,7 +11,10 @@ export const sendMessage = (chatId: string, message: string) => {
 
   return (async () => {
     const token = await data.getToken();
-    fetch(`${process.env.EXPO_PUBLIC_API_URL}/chats/${chatId}`, {
+
+    const apiUrl = getApiUrl();
+
+    fetch(`${apiUrl}/chats/${chatId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

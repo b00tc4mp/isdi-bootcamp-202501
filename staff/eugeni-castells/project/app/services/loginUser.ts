@@ -1,12 +1,17 @@
 import { validate, errors } from "@/com";
 const { SystemError } = errors;
 import { data } from "@/data";
+import { getApiUrl } from "@/getApiUrl";
 
 export const loginUser = (email: string, password: string): Promise<void> => {
   validate.email(email);
   validate.password(password);
 
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/auth`, {
+  const url = getApiUrl();
+
+  console.log("[getApiUrl] API URL seleccionada:", getApiUrl());
+
+  return fetch(`${url}/users/auth`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),

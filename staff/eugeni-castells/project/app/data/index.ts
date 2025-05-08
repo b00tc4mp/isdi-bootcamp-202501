@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { slides } from "./Content/Landing";
-import { NotFoundError } from "@/com/errors";
+import { NotFoundError, SystemError } from "@/com/errors";
 import { getRoleFromToken } from "../services/getRoleFromToken";
 
 export const data = {
@@ -25,6 +25,13 @@ export const data = {
       }
     } catch (error) {
       console.error("Error saving token to storage:", error);
+    }
+  },
+  async removeToken(): Promise<void> {
+    try {
+      await AsyncStorage.removeItem("token");
+    } catch (error) {
+      throw new SystemError((error as Error).message);
     }
   },
 };

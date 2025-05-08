@@ -5,6 +5,7 @@ import {
   ReturnedSanitizedChatMessages,
 } from "@/com/types";
 import { data } from "@/data";
+import { getApiUrl } from "@/getApiUrl";
 
 export const getChatMessages = (
   chatId: string
@@ -13,7 +14,9 @@ export const getChatMessages = (
   return (async () => {
     const token = await data.getToken();
 
-    return fetch(`${process.env.EXPO_PUBLIC_API_URL}/chats/${chatId}`, {
+    const apiUrl = getApiUrl();
+
+    return fetch(`${apiUrl}/chats/${chatId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

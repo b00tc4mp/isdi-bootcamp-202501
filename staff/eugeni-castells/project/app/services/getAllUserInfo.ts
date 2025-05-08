@@ -1,10 +1,14 @@
 import errors, { SystemError } from "@/com/errors";
 import { ReturnedAllUserInfo } from "@/com/types";
 import { data } from "@/data";
+import { getApiUrl } from "@/getApiUrl";
 
 export const getAllUserInfo = async (): Promise<ReturnedAllUserInfo> => {
   const token = await data.getToken();
-  return fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/self`, {
+
+  const apiUrl = getApiUrl();
+
+  return fetch(`${apiUrl}/users/self`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

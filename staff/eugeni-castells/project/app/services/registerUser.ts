@@ -1,6 +1,7 @@
 import { validate } from "@/com";
 import { RegisterUserInputType } from "./types";
 import { errors } from "@/com";
+import { getApiUrl } from "@/getApiUrl";
 
 const { SystemError } = errors;
 
@@ -18,7 +19,9 @@ export const registerUser = (userInfo: RegisterUserInputType) => {
   validate.text(city.name, "city");
   validate.text(country.name, "country");
 
-  return fetch(`${EXPO_PUBLIC_API_URL}/users`, {
+  const apiUrl = getApiUrl();
+
+  return fetch(`${apiUrl}/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userInfo),

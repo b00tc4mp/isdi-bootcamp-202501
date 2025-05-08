@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Alert, Pressable, StyleSheet } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  View as RNView,
+  RefreshControl,
+} from "react-native";
 import { Text, View } from "@/components/Themed";
 import { getChats } from "@/services";
 import { ReturnedSanitizedChat } from "@/com/types";
@@ -11,42 +17,47 @@ export default function MessagesScreen() {
   useAuthRedirect();
 
   const [chats, setChats] = useState<ReturnedSanitizedChat[] | null>(null);
-  const [fetchController, setFetchController] = useState<boolean | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const router = useRouter();
 
-  useEffect(() => {
-    try {
-      getChats().then((chats) => {
-        setChats(chats);
-      });
-    } catch (error) {
-      Alert.alert((error as Error).message);
-    }
-  }, [fetchController]);
+  const fetchChats = () => {
+    setRefreshing(true);
+    getChats()
+      .then((data) => setChats(data))
+      .catch((err) => Alert.alert(err.message))
+      .finally(() => setRefreshing(false));
+  };
 
-  setTimeout(() => {
-    setFetchController(!fetchController);
-  }, 2000);
+  useEffect(() => {
+    fetchChats();
+
+    const interval = setInterval(fetchChats, 5000); // opcional: actualitza cada 5s
+    return () => clearInterval(interval);
+  }, []);
 
   const handleChatBoxClick = (id: string) => {
     router.push(`/(tabs)/messages/${id}`);
-    console.log(id);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Messages</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      {chats?.map((chat, index) => {
-        return (
+      <Text style={styles.title}>Chats</Text>
+      {chats?.length === 0 && (
+        <Text style={{ fontSize: 16, color: "#666", textAlign: "center" }}>
+          No chats yet
+        </Text>
+      )}
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={fetchChats} />
+        }
+      >
+        {chats?.map((chat) => (
           <ChatBox
-            key={index}
-            interlocutor={chat?.interlocutor}
+            key={chat.id}
+            interlocutor={chat.interlocutor}
             lastSent={
               chat.modifiedAt
                 ? chat.modifiedAt.toISOString()
@@ -54,15 +65,13 @@ export default function MessagesScreen() {
             }
             lastMessage={
               chat.history.length > 0
-                ? chat.history[chat?.history?.length - 1].text
+                ? chat.history.at(-1)?.text ?? null
                 : "No messages yet"
             }
-            onItemClick={() => {
-              handleChatBoxClick(chat.id);
-            }}
+            onItemClick={() => handleChatBoxClick(chat.id)}
           />
-        );
-      })}
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -70,16 +79,17 @@ export default function MessagesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#f8f9fa",
+    paddingTop: 20,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 22,
+    fontWeight: "700",
+    paddingHorizontal: 20,
+    paddingBottom: 12,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 40,
   },
 });
