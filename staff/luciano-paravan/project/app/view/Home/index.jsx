@@ -4,7 +4,7 @@ import { Shirt, CircleUserRound } from 'lucide-react'
 
 import { HomeDashboard } from './HomeDashboard'
 import { AddClothingItem } from './AddClothingItem'
-import { RequestLook } from './RequestLook'
+import { LookRequest } from './LookRequest.jsx'
 import { LookSuggestion } from './LookSuggestion'
 import { MyClothingItems } from './MyClothingItems'
 import { Profile } from './Profile.jsx'
@@ -18,6 +18,10 @@ export function Home({ onUserLoggedOut }) {
     const { alert, confirm } = useContext()
 
     const handleHomeClick = () => navigate('/')
+
+    const handleClothingItemAdded = () => navigate('/')
+
+    const handleAddClothingItemCancelled = () => navigate('/')
     
     const handleLogoutClick = () => {
         confirm('Logout?')
@@ -42,8 +46,8 @@ export function Home({ onUserLoggedOut }) {
         </header>
         <Routes>
             <Route path="/" element={<HomeDashboard onUserLoggedOut={onUserLoggedOut} />} />
-            <Route path="/add-clothing-item" element={<AddClothingItem />} />
-            <Route path="/request-look" element={<RequestLook />} />
+            <Route path="/add-clothing-item" element={<AddClothingItem onAddedClothingItem={handleClothingItemAdded} onAddClothingItemCancelled={handleAddClothingItemCancelled}/>} />
+            <Route path="/look-request" element={<LookRequest />} />
             <Route path="/look-suggestion" element={<LookSuggestion />} />
             <Route path="/my-clothing-items" element={<MyClothingItems />} />
             <Route path="/profile" element={<Profile />} />
@@ -51,8 +55,8 @@ export function Home({ onUserLoggedOut }) {
 
         <footer className="flex justify-center items-center fixed bottom-0 left-0 right-0 bg-[var(--bg-color)] py-[var(--padding-y)] px-[var(--padding-x) box-border gap-4">
             <div className="flex gap-4">
-                <Link to="/my-clothing-items" className="flex justify-center items-center gap-3 rounded-md border border-[var(--fourth-color)] text-[var(--first-color)] py-2 px-4">My clothing Items <Shirt /></Link>
-                <Link to="/profile" className="flex justify-center items-center gap-3 rounded-md border border-[var(--fourth-color)] text-[var(--first-color)] py-2 px-4">My Profile <CircleUserRound /></Link>
+                <Link to="/my-clothing-items" className="flex justify-center items-center gap-3 rounded-lg border-2 border-[var(--second-color)] text-[var(--text-color)] py-2 px-4">My clothing Items <Shirt /></Link>
+                <Link to="/profile" className="flex justify-center items-center gap-3 rounded-lg border-2 border-[var(--second-color)] text-[var(--text-color)] py-2 px-4">My Profile <CircleUserRound /></Link>
             </div>
         </footer>
     </div>

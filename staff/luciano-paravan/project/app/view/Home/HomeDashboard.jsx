@@ -1,18 +1,18 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 
-export function HomeDashboard({ onUserLoggedOut }) {
+export function HomeDashboard() {
 
     const navigate = useNavigate()
     const { pathname } = useLocation()
 
     const handleAddClothingItem = () => navigate('/add-clothing-item')
-    const handleLookRequest = () => navigate('/request-look')
+    const handleLookRequest = () => navigate('/look-request')
 
     return <div className='h-screen'>
 
     {pathname === '/' && <div className="flex flex-col justify-center h-full ">
         <a onClick={handleAddClothingItem} className="btn-link">Add Clothing Item</a>
-        <a onClick={handleLookRequest} className="btn-link">Request Look</a>
+        <a onClick={handleLookRequest} className="btn-link">Look Request</a>
     </div>}
 
     </div>

@@ -85,9 +85,9 @@ export function ClothingItem ({ clothingItem, onClothingItemDeleted, onClothingI
 
     return <article className="flex flex-col rounded-lg bg-gray-990 p-4 shadow-md">
     {view === '' && <section>
-        <h3 className="text-xl font-semibold text-[var(--first-color)] mb-2">{clothingItem.itemName}</h3>
+        <h3 className="text-xl font-semibold text-[var(--text-color)] mb-2">{clothingItem.itemName}</h3>
 
-        <div className="mb-2 space-y-1 text-sm text-[var(--first-color)]">
+        <div className="mb-2 space-y-1 text-sm text-[var(--text-color)]">
             <div className="flex flex-start md:block"><span className="font-semibold text-[var(--third-color)] mr-2 md:mr-0 md:mb-1">Category:</span><p>{clothingItem.category}</p></div>
             
             <div className="flex flex-start md:block">

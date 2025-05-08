@@ -8,6 +8,9 @@ import { logic } from '../../logic'
 export function MyClothingItems() {
     const { alert } = useContext()
     const [clothingItems, setClothingItems] = useState([])
+    const [categoryFilter, setCategoryFilter] = useState(null)
+
+    const filteredItems = categoryFilter ? clothingItems.filter(item => item.category === categoryFilter) :clothingItems
 
     useEffect(()=> {
         loadClothingItems()
@@ -34,6 +37,13 @@ export function MyClothingItems() {
     const handleClothingItemEdited = () => loadClothingItems()
 
     return <section className="py-20">
-        {clothingItems.map(clothingItem => <ClothingItem key={clothingItem.id} clothingItem={clothingItem} onClothingItemEdited={handleClothingItemEdited} onClothingItemDeleted={handleClothingItemDeleted}/>)}
+        <div className="flex justify-center-safe gap-2 mb-4">
+            <button className="btn-tertiary" onClick={() => setCategoryFilter(null)}>All</button>
+            <button className="btn-tertiary" onClick={() => setCategoryFilter('top')}>Top</button>
+            <button className="btn-tertiary" onClick={() => setCategoryFilter('bottom')}>Bottom</button>
+            <button className="btn-tertiary" onClick={() => setCategoryFilter('shoes')}>Shoes</button>
+            <button className="btn-tertiary" onClick={() => setCategoryFilter('accessory')}>Accessory</button>
+        </div>
+        {filteredItems.map(clothingItem => <ClothingItem key={clothingItem.id} clothingItem={clothingItem} onClothingItemEdited={handleClothingItemEdited} onClothingItemDeleted={handleClothingItemDeleted}/>)}
     </section>
 }

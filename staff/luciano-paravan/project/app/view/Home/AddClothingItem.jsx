@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import { logic } from '../../logic/index.js'
 import { useState } from 'react'
 import { SystemError, ValidationError } from 'com/errors'
+import { useContext } from '../../context.js'
 
 export function AddClothingItem({ onAddedClothingItem }) {
     const [itemName, setItemName] = useState('')
@@ -11,6 +12,8 @@ export function AddClothingItem({ onAddedClothingItem }) {
     const [color, setColor] = useState('')
     const [season, setSeason] = useState([])
     const [occasion, setOccasion] = useState([])
+
+    const { alert, confirm } = useContext()
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -30,18 +33,12 @@ export function AddClothingItem({ onAddedClothingItem }) {
             .catch(error => {
                 console.error(error)
 
-                if(error instanceof SystemError)
-                    alert('⛔️' + error.message)
-                else
-                    alert('⚠️' + error.message)
+                alert(error.message)
             })
         } catch (error) {
             console.error(error)
 
-            if(error instanceof ValidationError)
-                alert('❗️' + error.message)
-            else
-                alert('⛔️' + error.message)
+            alert(error.message)
         }
     }
 
@@ -55,16 +52,17 @@ export function AddClothingItem({ onAddedClothingItem }) {
         setOccasion(prev => prev.includes(value) ? prev.filter(o => o !== value) : [...prev, value])
     }
 
-    return <div className="flex flex-col py-14">
+    return <div className="flex flex-col py-20">
+        <h2 className="pl-4">Add Clothing Item</h2>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4 p-4">
-            <label>
-                Item name:
-                <input type="text" value={itemName} onChange={event => setItemName(event.target.value)} required/>
+            <label className="text-[var(--first-color)]">
+                Item name
+                <input className="flex items-center w-full gap-2 text-[var(--text-color)]" type="text" value={itemName} onChange={event => setItemName(event.target.value)} required/>
             </label>
 
-            <label>
-                Category:
-                <select type="text" value={category} onChange={event => setCategory(event.target.value)} required >
+            <label className="flex items-center gap-2 text-[var(--first-color)]">
+                Category
+                <select className="text-[var(--text-color)]" type="text" value={category} onChange={event => setCategory(event.target.value)} required >
                     <option value="">Select Category</option>
                     <option value="top">Top</option>
                     <option value="bottom">Bottom</option>
@@ -73,20 +71,20 @@ export function AddClothingItem({ onAddedClothingItem }) {
                 </select>
             </label>            
 
-            <label>
-                Type:
-                <input type="text" value={type} onChange={event => setType(event.target.value)} placeholder="e.g., t-shirt, jeans, sneakers" required />
+            <label className="flex items-center gap-2 text-[var(--first-color)]">
+                Type
+                <input className="w-full text-[var(--text-color)]" type="text" value={type} onChange={event => setType(event.target.value)} placeholder="e.g., t-shirt, jeans, sneakers" required />
             </label>
 
-            <label>
-                Color:
-                <input type="text" value={color} onChange={event => setColor(event.target.value)} required />
+            <label className="flex items-center gap-2 text-[var(--first-color)]">
+                Color
+                <input className="w-full text-[var(--text-color)]" type="text" value={color} onChange={event => setColor(event.target.value)} required />
             </label>
 
-            <fieldset className="flex flex-col">
+            <fieldset className="flex flex-col gap-2 md:gap-3 text-[var(--first-color)]">
                 <legend>Season</legend>
                 {['summer', 'winter', 'spring', 'autumn'].map(seasonOption => (
-                    <label key={seasonOption}>
+                    <label key={seasonOption} className="flex items-center gap-2 text-[var(--text-color)]">
                         <input 
                             type="checkbox"
                             value={seasonOption}
@@ -98,10 +96,10 @@ export function AddClothingItem({ onAddedClothingItem }) {
                 ))}
             </fieldset>
 
-            <fieldset className="flex flex-col">
+            <fieldset className="flex flex-col gap-2 md:gap-3 text-[var(--first-color)]">
                 <legend>Occasion</legend>
                 {['formal', 'casual', 'sport', 'party'].map(occasionOption => (
-                    <label key={occasionOption}>
+                    <label key={occasionOption} className="flex items-center gap-2 text-[var(--text-color)]">
                         <input
                             type="checkbox"
                             value={occasionOption}

@@ -26,9 +26,9 @@ export const getUserUsername = () => {
             return response.json()
                 .catch(error => { throw new SystemError })
                 .then(body => {
-                    const { errorName, message } = body
+                    const { error, message } = body
 
-                    const constructor = errors[errorName]
+                    const constructor = errors[error]
 
                     throw new constructor(message)
                 })

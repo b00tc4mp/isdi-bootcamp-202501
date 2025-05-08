@@ -15,6 +15,7 @@ export const addClothingItem = (userId, itemName, category, type, color, season,
     validate.maxLength(color, 20, 'color')
     validate.season(season)
     validate.occasion(occasion)
+    console.log('debug -> add clothing item back')
 
     return ClothingItem.findOne({ itemName, owner: userId })
         .catch(error => { throw new SystemError(error.message) })

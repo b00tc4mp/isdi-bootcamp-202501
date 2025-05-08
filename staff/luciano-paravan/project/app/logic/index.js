@@ -7,6 +7,7 @@ import { logoutUser } from './logoutUser.js'
 import { getUserClothingItems } from './getUserClothingItems.js'
 import { updateClothingItem } from './updateClothingItem.js'
 import { deleteClothingItem } from './deleteClothingItem.js'
+import { lookRequest } from './lookRequest.js'
 
 export const logic = {
     loginUser,
@@ -17,5 +18,6 @@ export const logic = {
     addClothingItem,
     getUserClothingItems,
     updateClothingItem,
-    deleteClothingItem
+    deleteClothingItem,
+    lookRequest
 }

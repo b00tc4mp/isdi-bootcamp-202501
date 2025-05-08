@@ -5,6 +5,7 @@ import { logic } from '../logic/index.js'
 export const clothingItems = Router()
 
 clothingItems.post('/', jsonBodyParser, authHandler, withErrorHandling((req, res) => {
+    debugger
     const { userId } = req
     const { itemName, category, type, color, season, occasion } = req.body
 

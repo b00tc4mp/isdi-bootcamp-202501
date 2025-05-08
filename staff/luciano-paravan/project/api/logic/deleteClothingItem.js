@@ -16,7 +16,8 @@ export const deleteClothingItem = (userId, clothingItemId) => {
             if (!user) throw new NotFoundError('user not found')
             if (!clothingItem) throw new NotFoundError('clothing item not found')
 
-            if (clothingItem.owner.toString() !== userId) throw new OwnershipError('user is not owner of the clothing item')
+            if (!clothingItem.owner || clothingItem.owner.toString() !== userId)
+                throw new OwnershipError('user is not owner of the clothing item')
 
             return ClothingItem.deleteOne({ _id: clothingItemId })
                 .catch(error => { throw new SystemError(error.message) })

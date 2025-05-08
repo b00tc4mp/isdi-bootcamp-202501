@@ -4,6 +4,7 @@ const { JWT_SECRET } = process.env
 
 export const authHandler = (req, res, next) => {
     try {
+        debugger
         const { authorization } = req.headers
 
         const token = authorization.slice(7)

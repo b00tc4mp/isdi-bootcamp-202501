@@ -8,10 +8,11 @@
         background-color: #1E1E1E;
         color: var(--first-color);
         --bg-color: #1E1E1E;
-        --first-color:#E0EEEC;
-        --second-color:#0261f9;
-        --third-color:#75aaff;
-        --fourth-color:#FD8061;
+        --text-color:#E0EEEC;
+        --first-color:#3295ff;
+        --second-color:#007BFF;
+        --third-color:#ff7a59;
+        --fourth-color:#ff5125;
         --padding-x: 1rem;
         --padding-y: 0.25rem;
         box-sizing: border-box;
@@ -24,7 +25,7 @@
     }
 
     body {
-        @apply m-0 p-4;
+        @apply m-0 p-4 text-[var(--text-color)];
     }
 
     a {
@@ -32,15 +33,31 @@
     }
 
     .btn-primary {
-        @apply bg-[var(--second-color)] text-[var(--first-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+        @apply bg-[var(--second-color)] text-[var(--text-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+    }
+
+    .btn-primary.active {
+        @apply bg-[var(--fourth-color)] scale-95;
     }
 
     .btn-secondary {
-        @apply bg-[var(--third-color)] text-[var(--first-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+        @apply bg-[var(--third-color)] text-[var(--text-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+    }
+
+    .btn-secondary.active {
+        @apply bg-[#6C757D]/20 scale-95; 
+    }
+
+    .btn-tertiary {
+        @apply text-[var(--text-color)] rounded-md border-[1px] border-[var(--third-color)] py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+    }
+
+    .btn-tertiary.active {
+        @apply bg-[var(--second-color)]/20 scale-95;
     }
 
     .btn-link {
-        @apply text-[var(--first-color)] text-center border-[1px] border-[var(--first-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] my-4 font-semibold cursor-pointer;
+        @apply text-[var(--text-color)] text-center border-[1px] border-[var(--third-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] my-4 font-semibold cursor-pointer;
     }
 
     form {
@@ -52,7 +69,7 @@
     }
 
     input {
-        @apply border-2 border-solid border-[var(--color1)] outline-none focus:border-[var(--primary-color-high)];
+        @apply border-2 border-solid rounded-md border-[var(--color1)] outline-none focus:border-[var(--primary-color-high)];
         &::placeholder {
             @apply text-gray-400 font-light;
         }

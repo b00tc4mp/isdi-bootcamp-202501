@@ -53,7 +53,7 @@ const clothingItem = new Schema({
     category: {
         type: String,
         required: true,
-        enum: ['top', 'bottom', 'shoes', 'accesory']
+        enum: ['top', 'bottom', 'shoes', 'accessory']
     },
     type: {
         type: String,

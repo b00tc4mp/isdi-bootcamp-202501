@@ -36,5 +36,5 @@ export const errorHandler = (error, req, res, next) => {
         message = 'invalid JWT'
     }
 
-    res.status(status).json({ errorName, message })
+    res.status(status).json({ error: errorName, message: error.message })
 }

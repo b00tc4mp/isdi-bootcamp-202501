@@ -1,11 +1,11 @@
 import { SystemError } from 'com/errors.js'
 import { data } from '../data/index.js'
-import errors from 'com'
+import { errors } from 'com'
 
 export const addClothingItem = (itemName, category, type, color, season, occasion) => {
     const { token } = data
 
-    return fetch(`${import.meta.env.VITE_API_URL}/clothing-items`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/clothingItems`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -21,9 +21,9 @@ export const addClothingItem = (itemName, category, type, color, season, occasio
             return response.json()
                 .catch(error => { throw new SystemError(error.message) })
                 .then(body => {
-                    const { errorName, message } = body
+                    const { error, message } = body
 
-                    const constructor = errors[errorName]
+                    const constructor = errors[error]
 
                     throw new constructor(message)
                 })

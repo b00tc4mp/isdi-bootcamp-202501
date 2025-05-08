@@ -30,7 +30,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'black',
                         season: ['autumn', 'winter'],
                         occasion: ['casual', 'party'],
-                        createdAt: new Date(2025, 1, 10)
+                        createdAt: new Date(2025, 1, 1)
                     },
                     {
                         owner: diego.id,
@@ -40,7 +40,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'grey',
                         season: ['autumn', 'winter'],
                         occasion: ['casual', 'formal'],
-                        createdAt: new Date(2025, 0, 22)
+                        createdAt: new Date(2025, 0, 1)
                     },
                     {
                         owner: diego.id,
@@ -50,7 +50,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'dark blue',
                         season: ['autumn', 'spring'],
                         occasion: ['formal', 'casual'],
-                        createdAt: new Date(2025, 2, 5)
+                        createdAt: new Date(2025, 2, 1)
                     },
                     {
                         owner: diego.id,
@@ -60,7 +60,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'white',
                         season: ['summer', 'spring', 'autumn'],
                         occasion: ['casual', 'sport'],
-                        createdAt: new Date(2025, 2, 8)
+                        createdAt: new Date(2025, 2, 1)
                     },
                     {
                         owner: diego.id,
@@ -175,7 +175,7 @@ data.connect(MONGO_URL, DB_NAME)
                     {
                         owner: diego.id,
                         itemName: 'white sneakers',
-                        category: 'footwear',
+                        category: 'shoes',
                         type: 'sneakers',
                         color: 'white',
                         season: ['summer', 'spring'],
@@ -185,7 +185,7 @@ data.connect(MONGO_URL, DB_NAME)
                     {
                         owner: diego.id,
                         itemName: 'brown leather shoes',
-                        category: 'footwear',
+                        category: 'shoes',
                         type: 'shoes',
                         color: 'brown',
                         season: ['autumn', 'spring'],
@@ -365,7 +365,7 @@ data.connect(MONGO_URL, DB_NAME)
                     {
                         owner: pajaro.id,
                         itemName: 'white sneakers',
-                        category: 'footwear',
+                        category: 'shoes',
                         type: 'sneakers',
                         color: 'white',
                         season: ['summer', 'spring'],
@@ -375,7 +375,7 @@ data.connect(MONGO_URL, DB_NAME)
                     {
                         owner: pajaro.id,
                         itemName: 'black leather shoes',
-                        category: 'footwear',
+                        category: 'shoes',
                         type: 'shoes',
                         color: 'black',
                         season: ['autumn', 'spring'],
@@ -610,7 +610,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'white',
                         season: ['summer', 'spring'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 5),
+                        createdAt: new Date(2025, 1, 5),
                     },
                     {
                         owner: eugeni.id,
@@ -620,7 +620,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'navy and white',
                         season: ['spring', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 10),
+                        createdAt: new Date(2025, 1, 10),
                     },
                     {
                         owner: eugeni.id,
@@ -630,7 +630,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'navy',
                         season: ['summer', 'spring', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 15),
+                        createdAt: new Date(2025, 1, 15),
                     },
                     {
                         owner: eugeni.id,
@@ -640,7 +640,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'light wash',
                         season: ['spring', 'summer', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 20),
+                        createdAt: new Date(2025, 1, 20),
                     },
                     {
                         owner: eugeni.id,
@@ -650,7 +650,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'sky blue',
                         season: ['summer', 'spring'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 25),
+                        createdAt: new Date(2025, 1, 25),
                     },
                     {
                         owner: eugeni.id,
@@ -680,7 +680,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'white',
                         season: ['summer', 'spring'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 1),
+                        createdAt: new Date(2025, 1, 1),
                     },
                     {
                         owner: eugeni.id,
@@ -690,7 +690,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'navy blue',
                         season: ['summer'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 3),
+                        createdAt: new Date(2025, 1, 3),
                     },
                     {
                         owner: eugeni.id,
@@ -710,7 +710,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'light grey',
                         season: ['summer', 'spring', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 7),
+                        createdAt: new Date(2025, 1, 7),
                     },
                     {
                         owner: eugeni.id,
@@ -720,7 +720,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'light blue',
                         season: ['spring', 'summer', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 9),
+                        createdAt: new Date(2025, 1, 9),
                     },
                     {
                         owner: eugeni.id,
@@ -740,7 +740,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'navy blue',
                         season: ['spring', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 2),
+                        createdAt: new Date(2025, 1, 2),
                     },
                     {
                         owner: eugeni.id,
@@ -750,7 +750,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'khaki',
                         season: ['summer'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 4),
+                        createdAt: new Date(2025, 1, 1),
                     },
                     {
                         owner: eugeni.id,
@@ -770,7 +770,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'pale blue',
                         season: ['summer', 'spring'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 6),
+                        createdAt: new Date(2025, 1, 6),
                     },
                     {
                         owner: eugeni.id,
@@ -790,7 +790,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'beige',
                         season: ['spring', 'summer', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 8),
+                        createdAt: new Date(2025, 1, 8),
                     },
                     {
                         owner: eugeni.id,
@@ -810,7 +810,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'navy',
                         season: ['spring', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 11),
+                        createdAt: new Date(2025, 1, 11),
                     },
                     {
                         owner: eugeni.id,
@@ -830,7 +830,7 @@ data.connect(MONGO_URL, DB_NAME)
                         color: 'cream',
                         season: ['spring', 'autumn'],
                         occasion: ['casual'],
-                        createdAt: new Date(2025, 4, 12),
+                        createdAt: new Date(2025, 1, 12),
                     }
                 ])
             })

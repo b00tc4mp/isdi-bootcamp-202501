@@ -4,7 +4,7 @@ import { addClothingItem } from './addClothingItem.js'
 import { expect } from 'chai'
 import * as chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import { ValidationError } from 'com/errors.js'
+import { ValidationError, DuplicityError } from 'com/errors.js'
 
 const { MONGO_URL, DB_NAME } = process.env
 
@@ -77,6 +77,39 @@ describe('addClothingItem', () => {
                 expect(catchedError.message).to.equal('invalid name minLength')
             })
     })
+
+    it('fails with DuplicityError when item already exists for user', () => {
+        let userId
+
+        return User.create({
+            name: 'Dup',
+            lastname: 'User',
+            email: 'dup@gmail.com',
+            username: 'duptest',
+            password: '12345678'
+        })
+            .then(user => {
+                userId = user.id
+
+                return ClothingItem.create({
+                    owner: userId,
+                    itemName: 'duplicate',
+                    category: 'top',
+                    type: 't-shirt',
+                    color: 'white',
+                    season: ['summer'],
+                    occasion: ['casual']
+                }).then(() => {
+                    return addClothingItem(userId, 'duplicate', 'top', 't-shirt', 'white', ['summer'], ['casual'])
+                })
+            })
+            .then(() => { throw new Error('should not reach this point') })
+            .catch(error => {
+                expect(error).to.be.instanceOf(DuplicityError)
+                expect(error.message).to.equal('item already exists')
+            })
+    })
+
 
     afterEach(() => ClothingItem.deleteMany({}))
 

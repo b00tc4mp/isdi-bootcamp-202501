@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 
-import { users } from './routes/index.js'
+import { lookRequests, users } from './routes/index.js'
 import { clothingItems } from './routes/index.js'
 import { errorHandler } from './handlers/errorHandler.js'
 import { data } from './data/index.js'
@@ -20,6 +20,7 @@ data.connect(MONGO_URL, DB_NAME)
 
         api.use('/users', users)
         api.use('/clothingItems', clothingItems)
+        api.use('/lookRequests', lookRequests)
 
         api.use(errorHandler)
 
