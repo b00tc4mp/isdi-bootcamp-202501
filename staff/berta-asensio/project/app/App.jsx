@@ -6,7 +6,9 @@ import { Register } from './view/Register'
 import { Login }from './view/Login'
 
 import { logic } from './logic/index'
-import { Home } from './view/Home'
+import { Home } from './view/Home/index'
+import { Menus } from './view/Home/Menus'
+import { Orders } from './view/Home/Orders'
 // import { Context } from './context'
 
 function App() {
@@ -65,8 +67,14 @@ function App() {
                 onReturnClick={handleReturnClick} />} />
 
             {/*Ruta a Home*/}
-            <Route path="/home/*" element={<Home
+            <Route path="/home" element={<Home
             onUserLoggedOut={handleLogoutClick} />} />
+
+            {/*Ruta a Menus*/}
+            <Route path="/menus" element={<Menus />} />
+
+            {/*Ruta a orders*/}
+            <Route path="/orders" element={<Orders />} />
                   
         </Routes>
     </div>

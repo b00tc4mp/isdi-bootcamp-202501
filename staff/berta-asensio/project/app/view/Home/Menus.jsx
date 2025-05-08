@@ -6,12 +6,12 @@ import { logic } from '../../logic'
 export function Menus() {
 
     const [menus, setMenus] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState('')
 
+    //cargamos todos los menus al principio
     useEffect(() => {
         loadMenus()
     },[])
-
-    // debugger
 
     const loadMenus = () => {
         try{
@@ -31,12 +31,36 @@ export function Menus() {
         }
     }
 
+    const handleCategorySelect = (event) => {
+        const categories = event.target.value 
+        setSelectedCategory(categories)
+
+        if (categories === '') {
+            loadMenus()
+        } else {
+            logic.getMenusByCategory([categories])
+                .then(setMenus)
+                .catch(error => {
+                    console.error(error)
+                })
+        }
+    }
+
     console.debug('Menus page renderized')
 
     return (
         <div>
             <div className="logo">Logo</div>
             <h1>MENUS 🥪</h1>
+            <div>
+                <label htmlFor="category-select">Filter by category:</label>
+                <select id="category-select" value={selectedCategory} onChange={handleCategorySelect}>
+                    <option value="regular">Regular</option>
+                    <option value="vegetariano">Vegetariano</option>
+                    <option value="vegano">Vegano</option>
+                    <option value="halal">Halal</option>
+                </select>
+            </div>
             <div>
                 { menus.map(menu => (
                     <section key={menu._id} className="menu-item">

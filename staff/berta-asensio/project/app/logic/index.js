@@ -4,6 +4,7 @@ import { getUserName } from './getUserName'
 import { logoutUser } from './logoutUser'
 
 import { getMenus } from './getMenus'
+import { getMenusByCategory } from './getMenusByCategory'
 
 
 export const logic = {
@@ -12,5 +13,6 @@ export const logic = {
     getUserName,
     logoutUser,
 
-    getMenus
+    getMenus,
+    getMenusByCategory
 }

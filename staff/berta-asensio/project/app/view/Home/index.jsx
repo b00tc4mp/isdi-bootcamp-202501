@@ -62,12 +62,6 @@ export function Home({ onUserLoggedOut }) {
 
             <a onClick={handleLogoutClick}>Logout</a>
         </header>
-        <main>
-            <Routes>
-                <Route path="/menus" element={<Menus />} />
-                <Route path="/orders" element={<Orders />} />
-            </Routes>
-        </main>
-        </div>
+    </div>
 }
 

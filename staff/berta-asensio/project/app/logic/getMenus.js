@@ -6,7 +6,7 @@ const { SystemError, NotFoundError } = errors
 export const getMenus = () => {
     const { token } = data
 
-    return fetch (`${import.meta.env.VITE_API_URL}/home/menus`, {
+    return fetch (`${import.meta.env.VITE_API_URL}/menus`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`

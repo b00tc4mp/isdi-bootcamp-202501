@@ -22,7 +22,7 @@ data.connect(MONGO_URL, MONGO_DB)
         api.get('/', (req, res) => res.send('Little breakfast is here!'))
 
         api.use('/users', users)
-        api.use('/home', menus)
+        api.use('/menus', menus)
 
         api.use(errorHandler)
 
