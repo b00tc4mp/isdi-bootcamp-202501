@@ -11,6 +11,8 @@ import { acceptTripRequest } from "./acceptTripRequest.js";
 import { rejectTripRequest } from "./rejectTripRequest.js";
 import { sendMessage } from "./sendMessage.js";
 import { getChats } from "./getChats.js";
+import { deleteVanById } from "./deleteVanById.js";
+
 export {
   registerUser,
   authenticateUser,
@@ -25,4 +27,5 @@ export {
   rejectTripRequest,
   sendMessage,
   getChats,
+  deleteVanById,
 };

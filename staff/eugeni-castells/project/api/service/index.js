@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getChats = exports.sendMessage = exports.rejectTripRequest = exports.acceptTripRequest = exports.getChatMessages = exports.getUserExchanges = exports.getVanById = exports.generateTripRequest = exports.getVans = exports.registerVan = exports.getUserName = exports.authenticateUser = exports.registerUser = void 0;
+exports.deleteVanById = exports.getChats = exports.sendMessage = exports.rejectTripRequest = exports.acceptTripRequest = exports.getChatMessages = exports.getUserExchanges = exports.getVanById = exports.generateTripRequest = exports.getVans = exports.registerVan = exports.getUserName = exports.authenticateUser = exports.registerUser = void 0;
 const registerUser_js_1 = require("./registerUser.js");
 Object.defineProperty(exports, "registerUser", { enumerable: true, get: function () { return registerUser_js_1.registerUser; } });
 const authenticateUser_js_1 = require("./authenticateUser.js");
@@ -27,3 +27,5 @@ const sendMessage_js_1 = require("./sendMessage.js");
 Object.defineProperty(exports, "sendMessage", { enumerable: true, get: function () { return sendMessage_js_1.sendMessage; } });
 const getChats_js_1 = require("./getChats.js");
 Object.defineProperty(exports, "getChats", { enumerable: true, get: function () { return getChats_js_1.getChats; } });
+const deleteVanById_js_1 = require("./deleteVanById.js");
+Object.defineProperty(exports, "deleteVanById", { enumerable: true, get: function () { return deleteVanById_js_1.deleteVanById; } });

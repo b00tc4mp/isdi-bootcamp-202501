@@ -5,6 +5,7 @@ import { getVanByIdHandler } from "../handlers/getVanByIdHandler";
 import { jsonBodyParser } from "../middlewares/jsonBodyParser";
 import { generateTripRequestHandler } from "../handlers/generateTripRequestHandler";
 import { getVanReviewsHandler } from "../handlers/getVanReviewsHandler";
+import { deleteVanByIdHandler } from "../handlers/deleteVanByIdHandler";
 export const vanRouter = Router();
 
 vanRouter.get("/", authHandler, getVansHandler);
@@ -19,3 +20,5 @@ vanRouter.post(
   authHandler,
   generateTripRequestHandler
 );
+
+vanRouter.delete("/:id", authHandler, deleteVanByIdHandler);

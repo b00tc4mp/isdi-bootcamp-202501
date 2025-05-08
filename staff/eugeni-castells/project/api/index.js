@@ -33,7 +33,7 @@ data_1.data
     api.use("/trips", trips_1.tripRouter);
     api.use("/chats", chats_1.chatRouter);
     api.use(errorHandler_1.default);
-    api.listen(PORT, () => {
-        console.log(`listening in port ${PORT}`);
+    api.listen(8080, "0.0.0.0", () => {
+        console.log("Server running on port 8080");
     });
 });
