@@ -19,7 +19,7 @@ User
 - create custom exercises or edit default exercises
 - create/read/delete/update sets from the exercises
 - view history of routines
-- set a rest timer for every exercise
+- set a rest timer for every exercises
 - view body tracker that displays different body measures
 
 ### UIUX Design
