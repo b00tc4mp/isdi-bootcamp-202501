@@ -29,11 +29,20 @@ class CredentialsError extends Error {
     }
 }
 
+class AuthorizationError extends Error {
+    constructor(message) {
+        super(message);
+
+        this.name = this.constructor.name
+    }
+}
+
 const errors = {
     SystemError,
     NotFoundError,
     DuplicityError,
-    CredentialsError
+    CredentialsError,
+    AuthorizationError
 }
 
 export default errors;

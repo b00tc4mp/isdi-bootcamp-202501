@@ -29,6 +29,11 @@ export function App() {
         navigate('/register');
     };
 
+    const handleNavigateToLogin = () => {
+        setShowLanding(false);
+        navigate('/login');
+    }
+
     const handleUserRegistered = () => {
         setShowLanding(false);
         navigate('/login');
@@ -40,13 +45,19 @@ export function App() {
         navigate('/');
     }
 
+    const handleUserLoggedOut = () => {
+        setShowLanding(false);
+        setLoggedIn(false);
+        navigate('/login')
+    }
+
     return <>
         {loggedIn !== null && <Routes>
-            <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onUserRegistered={handleUserRegistered} />} />
+            <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <Register onNavigateToLogin={handleNavigateToLogin} onUserRegistered={handleUserRegistered} />} />
 
-            <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onUserLoggedIn={handleUserLoggedIn} />} />
+            <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login onNavigateToRegister={handleNavigateToRegister} onUserLoggedIn={handleUserLoggedIn} />} />
 
-            <Route path="/*" element={loggedIn ? <Home /> : <Landing onNavigateToRegister={handleNavigateToRegister} />} />
+            <Route path="/*" element={loggedIn ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Landing onNavigateToRegister={handleNavigateToRegister} onNavigateToLogin={handleNavigateToLogin} />} />
         </Routes>}
     </>
 }
