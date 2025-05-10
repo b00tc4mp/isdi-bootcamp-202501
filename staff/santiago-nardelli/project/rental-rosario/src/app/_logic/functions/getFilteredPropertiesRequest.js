@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { errors } from "com";
 
 const { SystemError } = errors;

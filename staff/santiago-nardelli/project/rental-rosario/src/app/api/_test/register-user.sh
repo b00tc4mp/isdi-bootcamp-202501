@@ -1,1 +1,1 @@
-curl -X POST http://localhost:3000/api/admins/register -H 'Content-type: application/json' -d '{"name":"Lio Messi","email":"lio@messi.com", "password":"123123123"}' -v
+curl -X POST http://localhost:3000/api/admins/register -H 'Content-type: application/json' -d '{"name":"Admin","email":"admin@admin.com", "password":"123123123"}' -v

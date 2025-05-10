@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "inspect": "export NODE_OPTIONS='--inspect' && next dev",
-    "populate-db": "node scripts/populate.js"
+    "populate-db": "node scripts/populate.js",
+    "test": "mocha src/app/api/_logic/updateProperties.spec.js",
+    "test-inspect": "mocha --inspect-brk logic/*.spec.js"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.4",
@@ -33,9 +35,12 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "chai": "^5.2.0",
     "com": "file:./src/com",
+    "dotenv": "^16.5.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
+    "mocha": "^11.2.2",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.2.8"
   }

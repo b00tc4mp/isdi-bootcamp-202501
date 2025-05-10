@@ -1,15 +1,16 @@
+import "dotenv/config";
 import { errors } from "com";
 
 const { SystemError } = errors;
 
-//const { NEXT_PUBLIC_API_URL } = process.env;
+const { NEXT_PUBLIC_API_URL } = process.env;
 
 export const getAllPropertiesRequest = async () => {
   let response;
   let body;
 
   try {
-    response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/properties`, {
+    response = await fetch(`${NEXT_PUBLIC_API_URL}/properties`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

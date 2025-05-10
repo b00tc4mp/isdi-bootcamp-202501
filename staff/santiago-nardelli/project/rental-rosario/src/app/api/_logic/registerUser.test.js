@@ -1,7 +1,13 @@
 import { registerUser } from "./registerUser.js";
-import { connectToDatabase, disconnectFromDatabase } from "../../../lib/db/index.js";
+import {
+  connectToDatabase,
+  disconnectFromDatabase,
+} from "../../../lib/db/index.js";
 
 const { DATABASE_URL, DATABASE_NAME } = process.env;
+
+console.info("DATABASE_URL", DATABASE_URL);
+console.info("DATABASE_NAME", DATABASE_NAME);
 
 (async () => {
   console.info("TEST registerUser");
@@ -11,7 +17,11 @@ const { DATABASE_URL, DATABASE_NAME } = process.env;
     await connectToDatabase(DATABASE_URL, DATABASE_NAME);
 
     // Ejecutar la prueba
-    const result = await registerUser("Lio Messi", "lio@messi.com", "123123123");
+    const result = await registerUser(
+      "Lio Messi",
+      "lio@messi.com",
+      "123123123"
+    );
 
     // Verificar resultados
     console.assert(result !== undefined, "Result is undefined");

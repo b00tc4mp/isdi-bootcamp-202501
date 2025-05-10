@@ -1,5 +1,8 @@
 import { Property } from "../../../lib/db/models/index.js";
 import { errors, validate } from "com";
+import mongoose from "mongoose";
+
+const { NotFoundError, SystemError, AuthorizationError } = errors;
 
 export const deleteProperty = (userId, propertyId) => {
   // Validar el ID de la propiedad
@@ -14,10 +17,13 @@ export const deleteProperty = (userId, propertyId) => {
 
       // Si no se encuentra la propiedad, lanzar un error
       if (!deletedProperty) {
-        throw new errors.NotFoundError("Property not found");
+        throw new NotFoundError("Property not found");
       }
     } catch (error) {
-      throw new errors.SystemError(`Error deleting property: ${error.message}`);
+      if (error instanceof mongoose.Error.CastError) {
+        throw new NotFoundError("Property not found");
+      }
+      throw new SystemError(`Error deleting property: ${error.message}`);
     }
   })();
 };

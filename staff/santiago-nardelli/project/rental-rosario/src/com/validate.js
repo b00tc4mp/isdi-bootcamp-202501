@@ -21,7 +21,7 @@ export const validate = {
       throw new ValidateError(`invalid ${explain} ${maxLength}`);
   },
   minLength(value, minLength, explain) {
-    if (value.lenght > minLength)
+    if (value.length < minLength)
       throw new ValidateError(`invalid ${explain} ${minLength}`);
   },
   name(value, explain = "name") {

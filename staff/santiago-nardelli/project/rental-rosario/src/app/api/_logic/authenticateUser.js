@@ -2,7 +2,7 @@ import { User } from "../../../lib/db/models/index.js";
 import { validate, errors } from "com";
 import bcrypt from "bcryptjs";
 
-const { SystemError, AuthorizationError, NotFoundError } = errors;
+const { SystemError, NotFoundError, CredentialsError } = errors;
 
 export const authenticateUser = (email, password) => {
   // Validaciones de entrada
@@ -28,7 +28,7 @@ export const authenticateUser = (email, password) => {
       throw new SystemError(error.message);
     }
 
-    if (!match) throw new AuthorizationError("Contraseña incorrecta");
+    if (!match) throw new CredentialsError("Invalid credentials");
 
     // Retornar usuario y token
     return { id: user._id.toString(), role: user.role };
