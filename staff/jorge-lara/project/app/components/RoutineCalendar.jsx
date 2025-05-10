@@ -4,14 +4,12 @@ import 'react-day-picker/dist/style.css'
 
 
 export function RoutineCalendar({ startDate, endDate }) {
-    let daysInRange = [];
     let from, to;
     const defaultClassNames = getDefaultClassNames();
 
     if (startDate && endDate) {
         from = parseISO(startDate);
         to = parseISO(endDate);
-        //daysInRange = eachDayOfInterval({ start: from, end: to });
     }
 
     return (

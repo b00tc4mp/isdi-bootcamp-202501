@@ -25,9 +25,9 @@ routines.patch('/:routinesId/edit', authHandler, jsonBodyParser, withErrorHandli
 
     const { routinesId } = req.params;
 
-    const { updateField } = req.body;
+    const { updateFields } = req.body;
 
-    return logic.updateRoutine(userId, routinesId, updateField)
+    return logic.updateRoutine(userId, routinesId, updateFields)
         .then(() => res.status(204).send())
 }))
 

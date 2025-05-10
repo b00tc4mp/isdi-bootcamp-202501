@@ -29,9 +29,14 @@ export function Routines() {
 
     const handleRoutineDeleted = () => loadRoutines();
 
+    const handleRoutineUpdated = () => {
+        setShowModal(false);
+        loadRoutines();
+    }
+
     return <section className="flex flex-col items-center mx-auto">
 
-        {routines.map(routine => <Routine key={routine.id} routine={routine} onRoutineDeleted={handleRoutineDeleted} />)}
+        {routines.map(routine => <Routine key={routine.id} routine={routine} onRoutineDeleted={handleRoutineDeleted} onRoutineUpdated={handleRoutineUpdated} />)}
 
         {showModal && (
             <Modal>
