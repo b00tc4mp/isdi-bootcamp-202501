@@ -15,9 +15,13 @@ export function Timer({ timer }) {
     }
 
     const extraTimesTotal = Array.isArray(timer.extraTimes)
-        ? timer.extraTimes.reduce((sum, t) => sum + t, 0)
+        ? timer.extraTimes.reduce((acc, curr) => acc + curr, 0)
         : 0
 
+
+    const initialSetTime = timer.time
+
+    let gems = (extraTimesTotal + initialSetTime)
 
     console.debug('timer -> render')
 
@@ -79,12 +83,24 @@ export function Timer({ timer }) {
                             </div>
                         )}
 
+                        <div className="grid grid-cols-2 gap-x-6">
+                            <span className="font-semibold text-pink-500">Gems: </span>
+                            {timer.status === 'end' && (
+                                <span className='text-green-700' >+ {gems}</span>
+                            )}
+                            {timer.status === 'exit' && (
+                                <span className='text-red-600' >- {gems} </span>
+                            )}
+                        </div>
+
                         {extraTimesTotal !== 0 && (
                             <div className="flex justify-start gap-x-12 col-span-1">
                                 <span className="font-semibold text-pink-500">➕ Total Extra Time:</span>
                                 <span>{extraTimesTotal} min</span>
                             </div>
                         )}
+
+
                     </div>
                 </div>
             )}

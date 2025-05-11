@@ -9,7 +9,7 @@ export const getTimers = userId => {
 
     return Promise.all([
         User.findById(userId).lean(),
-        Timer.find().select('-__v').sort('-createdAt').populate('author', 'username').lean()
+        Timer.find({ author: userId }).select('-__v').sort('-createdAt').lean()
     ])
         .catch(error => { throw new SystemError(error.message) })
         .then(([user, timers]) => {

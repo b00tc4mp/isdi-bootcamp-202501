@@ -113,10 +113,10 @@ export function CreateTimer({ onUserLoggedOut, onCreateTimer, onSessionHistoryCl
 
             </header>
 
-            <main className={`flex flex-col items-center justify-center px-6 py-8 space-y-6 ${isMenuVisible ? 'pointer-events-none opacity-50' : ''}`}>
-                <h2 className="text-2xl font-bold text-fuchsia-900">Create you timer ⏳</h2>
+            <main className={`flex flex-col items-center justify-center px-8 py-8 space-y-8 ${isMenuVisible ? 'pointer-events-none opacity-50' : ''}`}>
+                <h2 className="text-3xl font-extrabold text-fuchsia-900">Create Your Timer ⏳</h2>
 
-                <div className="text-3xl font-bold text-yellow-700">{time} min</div>
+                <div className="text-4xl font-bold text-yellow-600">{time} min</div>
 
                 <input
                     type="range"
@@ -128,8 +128,8 @@ export function CreateTimer({ onUserLoggedOut, onCreateTimer, onSessionHistoryCl
                     onChange={e => setTime(parseInt(e.target.value))}
                 />
 
-                <div className="flex items-center space-x-3">
-                    <label htmlFor="pause" className="text-lg font-medium text-fuchsia-800">Pause:</label>
+                <div className="flex items-center space-x-4">
+                    <label htmlFor="pause" className="text-xl font-medium text-fuchsia-800">Pause Time:</label>
                     <input
                         id="pause"
                         type="number"
@@ -137,31 +137,32 @@ export function CreateTimer({ onUserLoggedOut, onCreateTimer, onSessionHistoryCl
                         max={10}
                         value={pauseTime}
                         onChange={e => setPauseTime(Number(e.target.value))}
-                        className="w-16 text-center border border-fuchsia-300 rounded px-1 py-0.5"
+                        className="w-16 text-center border-2 border-fuchsia-300 rounded px-2 py-1 text-base"
                     />
-                    <span className="text-sm text-gray-600">min</span>
+                    <span className="text-lg text-gray-600">min</span>
                 </div>
-                <p className="text-sm text-gray-500 italic">You have a maxiumum of 8 pauses</p>
+                <p className="text-base text-gray-500 italic max-w-md">You can do a maximum of 8 pauses during the timer.          </p>
 
-                <div className="flex items-center space-x-3">
-                    <label htmlFor="tag" className="text-lg font-semibold text-fuchsia-800">Tag:</label>
+                <div className="flex items-center space-x-4">
+                    <label htmlFor="tag" className="text-xl font-semibold text-fuchsia-800">Tag:</label>
                     <input
                         id="tag"
                         type="text"
                         value={tag}
                         onChange={e => setTag(e.target.value)}
-                        className="border border-fuchsia-300 rounded px-2 py-1"
+                        className="w-30 text-[1rem] px-1 py-2 border-2 text-center border-fuchsia-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500"
                     />
                 </div>
 
                 <button
                     type="button"
                     onClick={handleCreateClick}
-                    className="bg-fuchsia-900 hover:bg-fuchsia-800 text-white font-bold py-2 px-6 rounded-lg shadow transition"
+                    className="w-full max-w-md bg-fuchsia-900 hover:bg-fuchsia-800 text-white font-bold px-8 rounded-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105"
                 >
                     ✨ Create Timer
                 </button>
             </main>
+
         </>
     )
 

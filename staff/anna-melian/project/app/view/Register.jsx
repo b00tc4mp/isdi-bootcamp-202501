@@ -51,32 +51,70 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
 
     console.debug('Register -> render')
 
-    return <div className='flex flex-col items-center justify-center h-screen'>
-        <h1>Register</h1>
-        <form onSubmit={handleRegisterSubmit}>
+    return <div className="flex flex-col items-center justify-center h-screen bg-white text-fuchsia-900">
+        <h1 className="text-3xl font-extrabold mb-8">Register </h1>
 
+        <form
+            onSubmit={handleRegisterSubmit}
+            className="w-[90%] max-w-sm bg-gradient-to-br from-fuchsia-100 via-pink-100 to-amber-50 p-6 rounded-2xl shadow-2xl border border-fuchsia-300"
+        >
             <div className="field">
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" />
+                <label htmlFor="name" className="font-semibold text-fuchsia-900">Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    className="px-3 py-2 rounded-lg border-2 border-fuchsia-400 focus:border-fuchisa-700 bg-fuchsia-50 text-fuchsia-900 placeholder-fuchsia-400 shadow-sm focus:ring-2 focus:ring-pink-300 transition duration-200"
+                />
             </div>
 
             <div className="field">
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" />
+                <label htmlFor="username" className="font-semibold text-fuchsia-900">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    className="px-3 py-2 rounded-lg border-2 border-pink-400 focus:border-pink-600 bg-pink-50 text-pink-900 placeholder-pink-400 shadow-sm focus:ring-2 focus:ring-fuchsia-300 transition duration-200"
+                />
             </div>
 
             <div className="field">
-                <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" />
+                <label htmlFor="email" className="font-semibold text-fuchsia-900">E-mail</label>
+                <input
+                    type="email"
+                    id="email"
+                    className="px-3 py-2 rounded-lg border-2 border-amber-400 focus:border-yellow-600 bg-amber-50 text-yellow-900 placeholder-yellow-500 shadow-sm focus:ring-2 focus:ring-amber-300 transition duration-200"
+                />
             </div>
 
-            <div className="field"><label htmlFor="password">Password</label>
-                <input type="password" id="password" /></div>
+            <div className="field">
+                <label htmlFor="password" className="font-semibold text-fuchsia-900">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    className="px-3 py-2 rounded-lg border-2 border-purple-400 focus:border-purple-600 bg-purple-50 text-purple-900 placeholder-purple-400 shadow-sm focus:ring-2 focus:ring-purple-300 transition duration-200"
+                />
+            </div>
 
 
-            <button type="submit">Register</button>
+            <div className="flex justify-center">
+                <button
+                    type="submit"
+                    className="mt-6 px-6 py-2 bg-fuchsia-900 text-white font-bold rounded-full shadow-md transform transition duration-300 hover:bg-fuchsia-800 "
+                >
+                    Register
+                </button>
+            </div>
         </form>
-        <a onClick={handleLoginClick} >I already have an account, LOGIN</a>
+
+        <div className="mt-4 flex justify-center">
+            <a
+                onClick={handleLoginClick}
+                className="underline hover:transition duration-200 cursor-pointer"
+            >
+                I already have an account, LOGIN
+            </a>
+        </div>
     </div>
+
+
 
 }

@@ -6,6 +6,8 @@
         --color-white: rgb(255, 255, 255);
         --color-blue: rgb(21, 0, 255);
         --color-red: rgb(250, 32, 3);
+
+        @apply font-mono;
     }
 
     body {
@@ -13,11 +15,11 @@
     }
 
     a {
-        @apply cursor-pointer transition-transform duration-300 ease-in-out hover:scale-115 hover:text-yellow-600;
+        @apply cursor-pointer underline transition-transform duration-300 ease-in-out hover:scale-115 hover:text-yellow-600;
     }
 
     .burgerMenu {
-        @apply text-yellow-600 w-auto h-auto bg-transparent hover:scale-100;
+        @apply text-yellow-600 w-auto h-auto bg-transparent hover:scale-90;
     }
 
     button {
@@ -31,7 +33,7 @@
     }
 
     .title {
-        @apply text-3xl font-bold m-2 h-[65px] w-[250px] bg-red-800 text-amber-50 text-center flex items-center justify-center;
+        @apply text-4xl font-extrabold tracking-wide rounded-xl shadow-lg bg-gradient-to-r from-rose-700 via-fuchsia-900 to-yellow-500 text-amber-50 h-[70px] w-[280px] flex items-center justify-center text-center;
     }
 
 

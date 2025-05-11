@@ -20,7 +20,21 @@ export function Timer({ onUserLoggedOut }) {
             logic.checkUserTimers()
                 .then(resultTimerId => {
                     if (resultTimerId) {
-                        navigate(`/${resultTimerId}`)
+                        logic.getTimer(resultTimerId)
+                            .then(timer => {
+                                if (timer.status === 'extraTime') {
+                                    navigate(`/${resultTimerId}/extraTime-on`)
+                                } else if (timer.extraTimes && timer.status === 'pause') {
+                                    navigate(`/${resultTimerId}/extraTime-on`)
+                                } else {
+                                    navigate(`/${resultTimerId}`)
+
+                                }
+                            })
+                            .catch(error => {
+                                console.error(error)
+                                alert(error.message)
+                            })
                     }
                 })
                 .catch(error => {
@@ -70,7 +84,7 @@ export function Timer({ onUserLoggedOut }) {
         <Routes>
             <Route path="/" element={<CreateTimer onUserLoggedOut={handleUserLoggedOut} onCreateTimer={handleTimerCreated} onSessionHistoryClick={handleSessionHistoryClick} />} />
 
-            <Route path="/session-history" element={<SessionHistory onMenuTimerClick={handleTimerClick} />} />
+            <Route path="/session-history" element={<SessionHistory onMenuTimerClick={handleTimerClick} onUserLoggedOut={handleUserLoggedOut} />} />
 
             <Route path="/:timerId" element={<TimerOn onReturnAccepted={handleReturnClicked} onGiveUpClick={handleGiveUpClicked} onFinishClick={handleFinishClicked} onAddExtraTime={handleAddExtraTime} />} />
 

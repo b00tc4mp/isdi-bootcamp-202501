@@ -12,15 +12,15 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
     const [time, setTime] = useState()
     const [extraTime, setExtraTime] = useState(5)
     const [initialTime, setInitialTime] = useState()
-    const [pauseTime, setPauseTime] = useState()
     const [status, setStatus] = useState('')
     const [intervalId, setIntervalId] = useState(null)
-    const [pauseCountdown, setPauseCountdown] = useState(0)
+    const [pauseCountdown, setPauseCountdown] = useState()
 
     const [pauseIntervalId, setPauseIntervalId] = useState(null)
 
     const { timerId } = useParams()
     const localTimeKey = `timer-${timerId}-time`
+    const localPauseTimeKey = `timer-${timerId}-pauseTime`
 
     useEffect(() => {
         console.debug('useEffect TimerOn')
@@ -42,13 +42,16 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
                 .then(timer => {
                     if (savedTime === null) {
                         setTime(timer.time * 60)
-                        setInitialTime(timer.time)
-                    }
 
+                    }
+                    setInitialTime(timer.time)
                     setStatus(timer.status)
 
-                    if (timer.status === 'pause') {
-                        setPauseTime(timer.pauseTime)
+                    const savedPauseCountdown = localStorage.getItem(localPauseTimeKey)
+                    if (savedPauseCountdown) {
+                        setPauseCountdown(parseInt(savedPauseCountdown, 10))
+                    } else {
+                        setPauseCountdown(parseInt(timer.pauseTime, 10) * 60)
                     }
 
                     if (timer.status === 'active') {
@@ -72,10 +75,25 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
 
 
     useEffect(() => {
+        if (status === 'pause' && pauseCountdown > 0 && !pauseIntervalId) {
+            startPauseCountdown()
+        }
+    }, [status, pauseCountdown])
+
+
+    useEffect(() => {
         if (time !== undefined) {
             localStorage.setItem(localTimeKey, time)
         }
     }, [time])
+
+    useEffect(() => {
+        if (pauseCountdown !== undefined) {
+            localStorage.setItem(localPauseTimeKey, pauseCountdown)
+        }
+    }, [pauseCountdown])
+
+
 
     const formatTime = (timeInSeconds) => {
         const minutes = Math.floor(timeInSeconds / 60)
@@ -100,6 +118,37 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
         }, 1000)
         setIntervalId(interval)
     }
+
+    const startPauseCountdown = () => {
+        if (pauseIntervalId) return
+
+        const interval = setInterval(() => {
+            setPauseCountdown(prev => {
+                if (prev > 1) {
+                    return prev - 1
+                } else {
+                    clearInterval(interval)
+                    setPauseIntervalId(null)
+                    localStorage.removeItem(localPauseTimeKey)
+
+                    logic.resumeTimer(timerId)
+                        .then(() => {
+                            setStatus('active')
+                            startInterval()
+                        })
+                        .catch(error => {
+                            console.error(error)
+                            alert(error.message)
+                        })
+
+                    return 0
+                }
+            })
+        }, 1000)
+
+        setPauseIntervalId(interval)
+    }
+
 
     const handleReturnClick = () => {
         confirm('Are you sure to return?')
@@ -148,12 +197,15 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
     }
 
     const handleGiveUpClick = () => {
-        confirm('Are you sure you want to give up? If you do, you will lose some of your gems.')
+        confirm(`Are you sure you want to give up? If you do, you will lose ${initialTime} gems.`)
             .then(accepted => {
                 if (accepted) {
                     try {
                         logic.exitTimer(timerId)
                             .then(() => {
+                                localStorage.removeItem(`timer-${timerId}-time`)
+                                localStorage.removeItem(`timer-${timerId}-pauseTime`)
+                                localStorage.removeItem(`timer-${timerId}-status`)
                                 localStorage.removeItem(localTimeKey)
                                 localStorage.removeItem(`${localTimeKey}-status`)
                                 onGiveUpClick()
@@ -186,37 +238,12 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
                     logic.getTimer(timerId)
                         .then(timer => {
                             setStatus(timer.status)
-                            setPauseTime(timer.pauseTime)
 
                             const pauseSeconds = parseInt(timer.pauseTime, 10) * 60
                             setPauseCountdown(pauseSeconds)
+                            localStorage.setItem(localPauseTimeKey, pauseSeconds)
 
-                            const pauseInterval = setInterval(() => {
-                                setPauseCountdown(prev => {
-                                    if (prev > 1) {
-                                        return prev - 1
-                                    } else {
-                                        clearInterval(pauseInterval)
-                                        setPauseIntervalId(null)
-                                        logic.resumeTimer(timerId)
-                                            .then(() => {
-                                                logic.getTimer(timerId)
-                                                    .then(timer => {
-                                                        setStatus(timer.status)
-                                                        startInterval()
-                                                    })
-                                            })
-                                            .catch(error => {
-                                                console.error(error)
-                                                alert(error.message)
-                                            })
-
-                                        return 0
-                                    }
-                                })
-                            }, 1000)
-
-                            setPauseIntervalId(pauseInterval)
+                            startPauseCountdown()
                         })
                 })
                 .catch(error => {
@@ -228,60 +255,87 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
             console.error(error)
             alert(error.message)
         }
-
     }
+
 
     const handleResumeClick = () => {
         try {
+            if (pauseIntervalId) {
+                clearInterval(pauseIntervalId)
+                setPauseIntervalId(null)
+            }
+
+            localStorage.removeItem(localPauseTimeKey)
+
             logic.resumeTimer(timerId)
                 .then(() => {
                     logic.getTimer(timerId)
                         .then(timer => {
                             setStatus(timer.status)
+                            startInterval()
                         })
                 })
                 .catch(error => {
                     console.error(error)
                     alert(error.message)
                 })
-
-            startInterval()
-
         } catch (error) {
             console.error(error)
             alert(error.message)
         }
-
     }
 
-    const handleEndClick = () => {
-        try {
-            logic.endTimer(timerId)
-                .then(() => {
-                    onFinishClick()
-                    localStorage.removeItem(localTimeKey)
-                    localStorage.removeItem(`${localTimeKey}-status`)
-                })
-                .catch(error => {
-                    console.error(error)
-                    alert(error.message)
-                })
 
-        } catch (error) {
-            console.error(error)
-            alert(error.message)
-        }
+    const handleEndClick = () => {
+        confirm(`If you end now, you are gone a win ${initialTime} gems`)
+            .then(accepted => {
+                if (accepted) {
+                    try {
+                        logic.endTimer(timerId)
+                            .then(() => {
+                                onFinishClick()
+                                localStorage.removeItem(localTimeKey)
+                                localStorage.removeItem(localPauseTimeKey)
+                                localStorage.removeItem(`${localTimeKey}-status`)
+                                localStorage.removeItem(`timer-${timerId}-time`)
+                                localStorage.removeItem(`timer-${timerId}-pauseTime`)
+                                localStorage.removeItem(`timer-${timerId}-status`)
+                            })
+                            .catch(error => {
+                                console.error(error)
+                                alert(error.message)
+                            })
+
+                    } catch (error) {
+                        console.error(error)
+                        alert(error.message)
+                    }
+                }
+            })
+
     }
 
     const handleExtraTimeClick = () => {
-        setStatus('setExtraTime')
+        logic.getTimer(timerId)
+            .then(timer => {
+                setInitialTime(timer.time)
+                setStatus('setExtraTime')
+
+            })
+            .catch(error => {
+                console.error(error)
+                alert(error.message)
+            })
+
     }
 
     const handleExtraTimeStartClick = () => {
         try {
             logic.addExtraTime(timerId, extraTime)
                 .then(() => {
+                    localStorage.removeItem(`timer-${timerId}-status`)
                     onAddExtraTime(timerId)
+
                 })
                 .catch(error => {
                     console.error(error)
@@ -300,81 +354,152 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
 
     console.debug('TimerOn -> render')
 
-    return <div className="flex flex-col items-center  mt-20">
-        {status === 'created' && (<h3>Ready to start!</h3>)}
-        {status === 'active' && (<h3>Painting...</h3>)}
-        {status === 'pause' && (<h3>Resting</h3>)}
-        {status === 'end' && <h3>Time's up! 🎉</h3>}
+    return (
+        <div className="flex flex-col items-center mt-10 space-y-6 text-center">
 
-        {status !== 'setExtraTime' && <h1>{minutes}:{seconds < 10 ? `0${seconds}` : seconds} min</h1>}
+            {status === 'created' && (
+                <h3 className="text-2xl font-bold text-green-800 animate-fade-in">✨ Ready to start!</h3>
+            )}
+            {status === 'active' && (
+                <h3 className="text-2xl font-bold text-fuchsia-900 animate-pulse"> Working...</h3>
+            )}
+            {status === 'pause' && (
+                <h3 className="text-2xl font-bold text-yellow-700 animate-fade-in"> Resting</h3>
+            )}
+            {status === 'end' && (
+                <h3 className="text-2xl font-bold text-fuchsia-700 animate-bounce">⏰ Time's up! 🎉</h3>
+            )}
 
-        {status === 'pause' && (<div className="flex flex-col space-y-4 items-center justify-center w-[250px] h-[350px] bg-amber-200 m-5 p-5">
-            <h1>{formatTime(pauseCountdown)}</h1>
-            <p className="text-8xl p-5">⏸️</p>
-            <button type="button" onClick={handleResumeClick} className="w-[150px] mt-auto mb-4">Resume</button>
-        </div>)}
+            {status !== 'setExtraTime' && (
+                <h1 className="text-5xl font-mono font-bold text-gray-800">
+                    {minutes}:{seconds < 10 ? `0${seconds}` : seconds} min
+                </h1>
+            )}
 
-        {status === 'active' && (<div className="sand-clock"></div>)}
-
-        {status === 'setExtraTime' && (
-            <div className="flex flex-col items-center justify-center w-[400px] h-[550px] bg-yellow-50 rounded-2xl shadow-xl p-6 space-y-8 text-center border-4 border-fuchsia-900">
-
-                <h2 className="text-3xl font-bold text-fuchsia-900">➕ Add Extra Time</h2>
-
-                <label htmlFor="timeExtra" className="text-xl font-semibold text-yellow-600">
-                    Select extra minutes:
-                </label>
-
-                <input
-                    type="number"
-                    id="timeExtra"
-                    min={5}
-                    max={240 - initialTime}
-                    step={5}
-                    value={extraTime}
-                    onChange={e => setExtraTime(Number(e.target.value))}
-                    className="w-[180px] text-2xl px-4 py-2 border-2 border-red-900 rounded-lg text-center text-fuchsia-900 font-bold"
-                />
-
-                <div className="text-xl text-gray-800 space-y-2">
-                    <p><strong className="text-fuchsia-900">Initial Time:</strong> {initialTime} min</p>
-                    <p><strong className="text-red-900">Total Time:</strong> {initialTime + extraTime} min</p>
-                    <p className="text-base text-red-600 italic">(Limit: 240 min)</p>
+            {status === 'pause' && (
+                <div className="flex flex-col space-y-6 items-center justify-center w-[280px] h-[380px] bg-amber-200 rounded-xl shadow-lg p-6 border-2 border-yellow-600">
+                    <h1 className="text-4xl font-bold text-fuchsia-900">{formatTime(pauseCountdown)}</h1>
+                    <p className="text-8xl p-2">⏸️</p>
+                    <button
+                        type="button"
+                        onClick={handleResumeClick}
+                        className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all font-semibold"
+                    >
+                        Resume
+                    </button>
                 </div>
+            )}
 
-                <button
-                    type="button"
-                    onClick={handleExtraTimeStartClick}
-                    className="w-full h-[48px] bg-green-600 text-white text-lg font-semibold rounded-xl shadow hover:bg-green-700 transition-all flex items-center justify-center"
-                >
-                    Start Extra Time
-                </button>
+            {status === 'active' && <div className="sand-clock scale-100 mt-4" />}
 
-            </div>
-        )}
+            {status === 'setExtraTime' && (
+                <div className="flex flex-col items-center justify-center w-[400px] h-[550px] bg-yellow-50 rounded-2xl shadow-xl p-6 space-y-8 text-center border-4 border-fuchsia-900">
+                    <h2 className="text-3xl font-bold text-fuchsia-900">➕ Add Extra Time</h2>
+                    <label htmlFor="timeExtra" className="text-xl font-semibold text-yellow-600">
+                        Select extra minutes:
+                    </label>
+                    <input
+                        type="number"
+                        id="timeExtra"
+                        min={5}
+                        max={240 - initialTime}
+                        step={5}
+                        value={extraTime}
+                        onChange={e => setExtraTime(Number(e.target.value))}
+                        className="w-[180px] text-2xl px-4 py-2 border-2 border-red-900 rounded-lg text-center text-fuchsia-900 font-bold"
+                    />
+                    <div className="text-xl text-gray-800 space-y-2">
+                        <p><strong className="text-fuchsia-900">Run Time:</strong> {initialTime} min</p>
+                        <p><strong className="text-red-900">Total Time:</strong> {initialTime + extraTime} min</p>
+                        <p className="text-base text-red-600 italic">(Limit: 240 min)</p>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleExtraTimeStartClick}
+                        className="w-full h-[48px] bg-fuchsia-900 text-white text-lg font-semibold rounded-xl shadow hover:bg-fuchsia-700 transition-all flex items-center justify-center"
+                    >
+                        Start Extra Time
+                    </button>
 
-        {status === 'created' && (<div>
-            <button type="button" onClick={handleStartClick}>Start</button>
-            <button type="button" onClick={handleReturnClick} className="bg-red-900">Return</button>
-        </div>)}
+                    <button
+                        type="button"
+                        onClick={handleEndClick}
+                        className="px-6 py-2 bg-green-800 text-white rounded-lg shadow hover:bg-green-700 transition-all"
+                    >
+                        Finish
+                    </button>
+                </div>
+            )}
 
-        {(status === 'active' || status === 'extraTime') && (<div>
-            <button type="button" onClick={handlePauseClick} >Pause</button>
-            <button type="button" onClick={handleGiveUpClick} className="bg-red-600">Give up</button>
-        </div>)}
+            {status === 'created' && (
+                <div className="flex space-x-4 mt-6">
+                    <button
+                        type="button"
+                        onClick={handleStartClick}
+                        className="px-6 py-2 bg-blue-700 text-white rounded-lg shadow hover:bg-blue-800 transition-all"
+                    >
+                        Start
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleReturnClick}
+                        className="px-6 py-2 bg-red-800 text-white rounded-lg shadow hover:bg-red-900 transition-all"
+                    >
+                        Return
+                    </button>
+                </div>
+            )}
 
-        {status === 'pause' && (<div>
+            {(status === 'active' || status === 'extraTime') && (
+                <div className="flex space-x-4 mt-5 mb-4">
+                    <button
+                        type="button"
+                        onClick={handlePauseClick}
+                        className="px-6 py-2 bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-600 transition-all"
+                    >
+                        Pause
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleGiveUpClick}
+                        className="px-6 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition-all"
+                    >
+                        Give up
+                    </button>
+                </div>
+            )}
 
-            <button type="button" onClick={handleGiveUpClick} className=" bg-red-600">Give up</button>
-        </div>)}
+            {status === 'pause' && (
+                <div className="mt-4">
+                    <button
+                        type="button"
+                        onClick={handleGiveUpClick}
+                        className="px-6 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition-all"
+                    >
+                        Give up
+                    </button>
+                </div>
+            )}
 
-        {(status === 'end') && (<div>
-            <button type="button" onClick={handleExtraTimeClick}>Add extra time</button>
-            <button type="button" onClick={handleEndClick} className="bg-green-700">Finish</button>
-        </div>)}
-
-
-
-    </div>
+            {status === 'end' && (
+                <div className="flex space-x-4 mt-6">
+                    <button
+                        type="button"
+                        onClick={handleExtraTimeClick}
+                        className="px-6 py-2 bg-yellow-600 text-white rounded-lg shadow hover:bg-yellow-700 transition-all"
+                    >
+                        Add extra time
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleEndClick}
+                        className="px-6 py-2 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition-all"
+                    >
+                        Finish
+                    </button>
+                </div>
+            )}
+        </div>
+    )
 }
 

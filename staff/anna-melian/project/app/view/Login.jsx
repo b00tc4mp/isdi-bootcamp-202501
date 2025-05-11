@@ -39,23 +39,49 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
 
     console.debug('Login -> render')
 
-    return <div className='flex flex-col items-center justify-center h-screen'>
-        <h1>Login</h1>
-        <form onSubmit={handleLoginSubmit} >
-            <div className='field'>
-                <label htmlFor="Username">Username</label>
-                <input type="text" id="username" />
+    return <div className="flex flex-col items-center justify-center h-screen bg-white text-fuchsia-900">
+        <h1 className="text-3xl font-extrabold mb-8">Login</h1>
+
+        <form
+            onSubmit={handleLoginSubmit}
+            className="w-[90%] max-w-sm bg-gradient-to-br from-fuchsia-100 via-pink-100 to-amber-50 p-6 rounded-2xl shadow-2xl border border-fuchsia-300"
+        >
+            <div className="field">
+                <label htmlFor="username" className="font-semibold text-fuchsia-900">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    className="px-3 py-2 rounded-lg border-2 border-pink-400 focus:border-pink-600 bg-pink-50 text-pink-900 placeholder-pink-400 shadow-sm focus:ring-2 focus:ring-fuchsia-300 transition duration-200"
+                />
             </div>
 
-            <div className='field'>
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" />
+            <div className="field">
+                <label htmlFor="password" className="font-semibold text-fuchsia-900">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    className="px-3 py-2 rounded-lg border-2 border-purple-400 focus:border-purple-600 bg-purple-50 text-purple-900 placeholder-purple-400 shadow-sm focus:ring-2 focus:ring-purple-300 transition duration-200"
+                />
             </div>
 
-
-            <button type="submit">Login</button>
+            <div className="flex justify-center">
+                <button
+                    type="submit"
+                    className="mt-6 px-6 py-2 bg-fuchsia-900 text-white font-bold rounded-full shadow-md transform transition duration-300 hover:bg-fuchsia-800"
+                >
+                    Login
+                </button>
+            </div>
         </form>
-        <a onClick={handleRegisterClick}>I don't have an account, REGISTER</a>
 
+        <div className="mt-4 flex justify-center">
+            <a
+                onClick={handleRegisterClick}
+                className="underline hover:transition duration-200 cursor-pointer"
+            >
+                I don't have an account, REGISTER
+            </a>
+        </div>
     </div>
+
 }

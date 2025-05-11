@@ -5,8 +5,8 @@ import { Timer } from './Timer.jsx'
 import { logic } from '../../logic'
 import { useContext } from '../../context'
 
-export function SessionHistory({ onMenuTimerClick }) {
-    const { alert } = useContext()
+export function SessionHistory({ onMenuTimerClick, onUserLoggedOut }) {
+    const { alert, confirm } = useContext()
     const [timers, setTimers] = useState([])
     const [gems, setGems] = useState('')
     const [isMenuVisible, setMenuVisible] = useState(false)
@@ -41,17 +41,23 @@ export function SessionHistory({ onMenuTimerClick }) {
     const handleMenuTimerClick = () => {
         onMenuTimerClick()
     }
+
     const handleLogoutClick = () => {
-        const accepted = confirm('Logout?')
-        if (accepted) {
-            logic.logoutUser()
+        confirm('Logout?')
+            .then(accepted => {
+                if (accepted) {
+                    try {
+                        logic.logoutUser()
+                        onUserLoggedOut()
 
-            onUserLoggedOut()
-        } else {
-            console.error(error)
 
-            alert(error.message)
-        }
+                    } catch (error) {
+                        console.error(error)
+                        alert(error.message)
+                    }
+                }
+            })
+
     }
 
     const loadtimers = () => {
@@ -85,7 +91,7 @@ export function SessionHistory({ onMenuTimerClick }) {
                         <span></span>
                         <span></span>
                         <li className='mt-auto mb-5'>
-                            <button type="button" onClick={handleLogoutClick} className='bg-red-900 w-[130px] h-[30px]'>Logout</button>
+                            <button type="button" onClick={handleLogoutClick} className='bg-red-900 w-[130px] h-[30px] rounded'>Logout</button>
                         </li>
                     </ul>
                 )}
