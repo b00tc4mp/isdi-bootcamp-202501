@@ -17,13 +17,11 @@ export default function SearchScreen() {
   useAuthRedirect();
 
   const [displayCalendar, setDisplayCalendar] = useState(false);
-  const [displayTravellersFilter, setDisplayTravellersFilter] = useState(false);
   const [location, setLocation] = useState<SelectedLocation>(null);
   const [dateRange, setDateRange] = useState<SelectedDate>({
     start: null,
     end: null,
   });
-  const [travellers, setTravellers] = useState<number | null>(null);
 
   const router = useRouter();
 
@@ -42,21 +40,14 @@ export default function SearchScreen() {
       start: null,
       end: null,
     });
-    setTravellers(null);
     setDisplayCalendar(false);
-    setDisplayTravellersFilter(false);
   };
 
   const handleDisplayCalendar = () => {
     setDisplayCalendar(true);
   };
 
-  const handleDisplayTravellers = () => {
-    setDisplayTravellersFilter(true);
-  };
-
   const handleSearchPress = () => {
-    debugger;
     console.log(dateRange.start?.number);
     const startDate = dateRange.start?.date;
     const endDate = dateRange.end?.date;
@@ -67,7 +58,6 @@ export default function SearchScreen() {
         latitude: location?.coordinates[1].toString(),
         startDate: startDate?.toISOString(),
         endDate: endDate?.toISOString(),
-        travellers: travellers?.toString(),
       },
     });
   };
@@ -109,14 +99,6 @@ export default function SearchScreen() {
           <View>
             <CalendarFilter onAcceptDates={handleDatesSet} />
           </View>
-        )}
-        {!displayCalendar && (
-          <SearchBox
-            text="Who"
-            displayText="Add travellers"
-            type="travellers"
-            onPressed={handleDisplayTravellers}
-          />
         )}
       </View>
       <View style={styles.bottomContainer}>

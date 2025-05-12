@@ -10,9 +10,11 @@ import { deleteVanById } from "@/services/deleteVanById";
 import { AntDesign } from "@expo/vector-icons";
 import { logoutUser } from "@/services/logoutUser";
 import { TextInput } from "react-native";
+import { Loading } from "@/components/Loading";
 
 export default function ProfileScreen() {
   useAuthRedirect();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<ReturnedAllUserInfo | null>(null);
   const [isUserEdit, setIsUserEdit] = useState<boolean>(false);
   const router = useRouter();
@@ -21,6 +23,7 @@ export default function ProfileScreen() {
     try {
       const userInfo = await getAllUserInfo();
       setUser(userInfo);
+      setIsLoading(false);
     } catch (error) {
       Alert.alert((error as Error).message);
     }
@@ -64,7 +67,9 @@ export default function ProfileScreen() {
     }
   };
 
-  return (
+  return isLoading ? (
+    <Loading isLoading={isLoading} size="large" />
+  ) : (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <View style={styles.card}>

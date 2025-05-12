@@ -11,12 +11,7 @@ import {
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Text } from "@/components/Themed";
 import * as ImagePicker from "expo-image-picker";
-import {
-  EditableImage,
-  ExpoImagePickerAsset,
-  VehicleFeatures,
-  VehicleTraits,
-} from "../types";
+import { EditableImage, VehicleFeatures, VehicleTraits } from "../types";
 import { generateRandomId } from "@/app/utils";
 import CustomCheckBox from "@/components/CustomCheckBox";
 import { spacing } from "@/constants/Paddings";
@@ -24,8 +19,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { getVanById } from "@/services/getVanById";
 import { Loading } from "@/components/Loading";
+import { updateVanData } from "@/services/updateVanData";
+import { UpdateVanParam } from "@/services/types";
 
-const RegisterVan = () => {
+const EditVan = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [originalVan, setOriginalVan] = useState<{
     model: string;
@@ -59,10 +56,9 @@ const RegisterVan = () => {
           heating: van.features.heating,
           shower: van.features.shower,
           airConditioning: van.features.airConditioning,
-          kitchen: van.features.insideKitchen,
+          insideKitchen: van.features.insideKitchen,
           toilet: van.features.toilet,
           fridge: van.fridge,
-          insideKitchen: van.insideKitchen,
         };
 
         setVehicleFeatures(features);
@@ -77,10 +73,11 @@ const RegisterVan = () => {
         };
         setVehicleTraits(traits);
 
-        const imagesFromServer = van.images.map((url) => ({
+        const imagesFromServer = van.images.map((image) => ({
           id: generateRandomId(),
-          uri: url,
+          uri: image.url,
           isLocal: false,
+          path: image.path,
         }));
         setImages(imagesFromServer);
 
@@ -108,6 +105,7 @@ const RegisterVan = () => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: false, //basic if we want multer to read it
     });
 
     if (!result.canceled && result.assets?.length > 0) {
@@ -124,8 +122,8 @@ const RegisterVan = () => {
     setImages((prev) => prev.filter((img) => img.id !== imageId));
 
     const deletedImage = images.find((img) => img.id === imageId);
-    if (deletedImage && !deletedImage.isLocal) {
-      setDeletedImages((prev) => [...prev, imageId]);
+    if (deletedImage && !deletedImage.isLocal && deletedImage.path) {
+      setDeletedImages((prev) => [...prev, deletedImage.path!]);
     }
   };
 
@@ -143,67 +141,68 @@ const RegisterVan = () => {
 
   const handleUpdateClick = () => {
     try {
+      setIsLoading(true);
       const changedData = getChangedFields();
+      updateVanData(changedData)
+        .then(() => {
+          Alert.alert("Van correctly updated!");
+          setIsLoading(false);
+          router.push("/(tabs)/profile");
+        })
+        .catch((error) => {
+          console.error(error);
+          Alert.alert((error as Error).message);
+        });
     } catch (error) {
+      console.error(error);
+
       Alert.alert((error as Error).message);
     }
   };
 
-  const getChangedFields = () => {
-    const updates: any = {};
+  const getChangedFields = (): UpdateVanParam => {
+    const { doors, bedCount, windows, maxTravellers, storage, ...restTraits } =
+      vehicleTraits!;
 
-    if (originalVan!.model !== model) updates.model = model;
-    if (originalVan!.brand !== brand) updates.brand = brand;
-    if (originalVan!.description !== description)
-      updates.description = description;
-    if (originalVan!.price !== price) updates.price = parseInt(price);
+    const processedTraits = {
+      ...restTraits,
+      doors: parseInt(doors),
+      bedCount: parseInt(bedCount),
+      windows: parseInt(windows),
+      maxTravellers: parseInt(maxTravellers),
+      storage: parseInt(storage),
+    };
 
-    const traitsChanged =
-      originalVan!.traits.accessible !== vehicleTraits!.accessible ||
-      originalVan!.traits.doors !== vehicleTraits!.doors ||
-      originalVan!.traits.bedCount !== vehicleTraits!.bedCount ||
-      originalVan!.traits.storage !== vehicleTraits!.storage ||
-      originalVan!.traits.fuelType !== vehicleTraits!.fuelType ||
-      originalVan!.traits.windows !== vehicleTraits!.windows ||
-      originalVan!.traits.maxTravellers !== vehicleTraits!.maxTravellers;
-
-    if (traitsChanged) {
-      updates.vehicleTraits = {
-        ...vehicleTraits,
-        doors: parseInt(vehicleTraits!.doors),
-        bedCount: parseInt(vehicleTraits!.bedCount),
-        windows: parseInt(vehicleTraits!.windows),
-        maxTravellers: parseInt(vehicleTraits!.maxTravellers),
-        storage: parseInt(vehicleTraits!.storage),
-      };
-    }
-
-    const featuresChanged =
-      originalVan!.features.heating !== vehicleFeatures!.heating ||
-      originalVan!.features.shower !== vehicleFeatures!.shower ||
-      originalVan!.features.airConditioning !==
-        vehicleFeatures!.airConditioning ||
-      originalVan!.features.insideKitchen !== vehicleFeatures!.insideKitchen ||
-      originalVan!.features.toilet !== vehicleFeatures!.toilet ||
-      originalVan!.features.fridge !== vehicleFeatures!.fridge;
-
-    if (featuresChanged) {
-      updates.features = vehicleFeatures;
-    }
+    const processedPrice = parseInt(price);
 
     const newImages = images.filter((img) => img.isLocal);
-    if (newImages.length > 0) updates.newImages = newImages;
 
-    if (deletedImages.length > 0) updates.deletedImages = deletedImages;
+    const imagesToDelete = deletedImages;
+
+    const vanId = Array.isArray(id) ? id[0] : id;
+
+    const updates: UpdateVanParam = {
+      id: vanId,
+      model,
+      brand,
+      description,
+      price: processedPrice,
+      features: vehicleFeatures!,
+      traits: processedTraits,
+      imagesToUpload: newImages,
+      imagesToDelete,
+    };
 
     return updates;
   };
-
   return isLoading ? (
     <Loading size="large" isLoading={isLoading} />
   ) : (
     <ScrollView contentContainerStyle={styles.container}>
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
+      <Pressable
+        style={styles.backButton}
+        onPress={() => router.push("/(tabs)/profile")}
+      >
         <Ionicons name="arrow-back" size={24} color="black" />
       </Pressable>
       <Text style={styles.title}>Edit van</Text>
@@ -281,7 +280,7 @@ const RegisterVan = () => {
         )
       )}
 
-      <Text style={styles.sectionTitle}>Lavabo</Text>
+      <Text style={styles.sectionTitle}>Toilet</Text>
       <View style={styles.optionsRow}>
         {(["fixed", "portable", "none"] as const).map((type) => (
           <Pressable
@@ -337,7 +336,12 @@ const RegisterVan = () => {
         </Pressable>
       </ScrollView>
       <View style={styles.buttonWrapper}>
-        <Pressable style={styles.submitButton}>
+        <Pressable
+          style={styles.submitButton}
+          onPress={() => {
+            handleUpdateClick();
+          }}
+        >
           <Text style={styles.submitText}>Update</Text>
         </Pressable>
         <Pressable
@@ -474,4 +478,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterVan;
+export default EditVan;

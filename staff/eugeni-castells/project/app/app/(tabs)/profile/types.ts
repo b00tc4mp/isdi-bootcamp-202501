@@ -27,5 +27,6 @@ type Fuel = "petrol" | "diesel" | "electric" | "hybrid";
 export type EditableImage = {
   id: string;
   uri: string;
+  path?: string;
   isLocal: boolean; // true si prové de l’ImagePicker
 };

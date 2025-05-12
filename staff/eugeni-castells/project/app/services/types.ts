@@ -4,17 +4,12 @@ import { VehicleFeatures } from "@/app/(tabs)/profile/types";
 import { VanImageType } from "@/com/types";
 export type RegisterUserInputType = {
   name: string;
+  lastName: string;
   email: string;
   password: string;
   address: string;
-  city: {
-    name: string;
-    latitude: number;
-    longitude: number;
-  };
-  country: {
-    name: string;
-  };
+  city?: string;
+  country?: string;
   coordinates: [number, number];
 };
 
@@ -84,6 +79,6 @@ export type UpdateVanParam = {
   price: number;
   description: string;
   imagesToUpload: VanImageType[];
-  imagesToDelete: VanImageType[];
+  imagesToDelete: string[];
   id: string;
 };

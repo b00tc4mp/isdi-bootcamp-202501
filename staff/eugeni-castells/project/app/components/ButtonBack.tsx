@@ -1,10 +1,17 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import { Pressable, StyleSheet } from "react-native";
 
-const ButtonBack = () => {
+type ButtonBackProps = {
+  onPress: () => void;
+};
+const ButtonBack = ({ onPress }: ButtonBackProps) => {
   return (
-    <Pressable style={styles.backButton} onPress={() => router.back()}>
+    <Pressable
+      style={styles.backButton}
+      onPress={() => {
+        onPress();
+      }}
+    >
       <Ionicons name="arrow-back" size={24} color="black" />
     </Pressable>
   );

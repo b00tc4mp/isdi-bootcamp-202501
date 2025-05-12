@@ -32,8 +32,13 @@ export const registerVan = (vanInfo: RegisterVanParam) => {
   validate.number(price, "price");
 
   const apiUrl = getApiUrl();
+  let token;
   return (async () => {
-    const token = await data.getToken();
+    try {
+      token = await data.getToken();
+    } catch (error) {
+      throw new SystemError((error as Error).message);
+    }
 
     const formData = new FormData();
 

@@ -13,9 +13,12 @@ import { useNavigation } from "expo-router";
 import { useAuthRedirect } from "@/custom-hooks/useAuthRedirect";
 import FilterMenu from "@/components/Home/FilterMenu";
 import { FilterStateType } from "@/components/Home/types";
+import { Loading } from "@/components/Loading";
 
 export default function HomeScreen() {
   useAuthRedirect();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const [originalVans, setOriginalVans] = useState<ReturnedVansType[]>([]);
 
   const [vans, setVans] = useState<ReturnedVansType[]>([]);
@@ -88,7 +91,8 @@ export default function HomeScreen() {
           notArrayTravellers!
         );
         setVans(vans);
-        setOriginalVans(vans); // ➕ guarda la llista completa
+        setOriginalVans(vans);
+        setIsLoading(false);
       } catch (error) {
         Alert.alert((error as Error).message);
       }
@@ -153,7 +157,6 @@ export default function HomeScreen() {
                 Dates: {formattedStartDate}-{formattedEndDate}
               </Text>
             )}
-            <Text>Travellers: {travellers} </Text>
           </View>
           <Ionicons
             name="options-sharp"
@@ -165,12 +168,13 @@ export default function HomeScreen() {
           />
         </View>
 
-        {vans.length > 0 && <VanList vans={vans} />}
-        {vans.length === 0 && (
+        {vans.length > 0 && !isLoading && <VanList vans={vans} />}
+        {vans.length === 0 && !isLoading && (
           <View style={styles.noVanContainer}>
             <Text style={styles.noVanText}>No van matched the filters!</Text>
           </View>
         )}
+        {isLoading && <Loading size="large" isLoading={isLoading} />}
       </View>
       {displayFilterMenu && (
         <FilterMenu

@@ -34,6 +34,14 @@ export const data = {
       throw new SystemError((error as Error).message);
     }
   },
+
+  async setSeenLanding(): Promise<void> {
+    try {
+      await AsyncStorage.setItem("hasSeenLanding", "true");
+    } catch (error) {
+      throw new SystemError((error as Error).message);
+    }
+  },
 };
 
 export { slides, getRoleFromToken };

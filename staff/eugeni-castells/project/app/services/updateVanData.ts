@@ -43,16 +43,22 @@ export const updateVanData = (vanInfo: UpdateVanParam) => {
       type: "image/jpeg",
     } as any;
 
+    console.log(file);
     formData.append("images", file as unknown as Blob);
   });
 
   formData.append("vanInfo", JSON.stringify(jsonVan));
+
   return (async () => {
     let token;
     try {
-      token = data.getToken();
+      token = await data.getToken();
     } catch (error) {
       throw new SystemError((error as Error).message);
+    }
+
+    if (!token) {
+      throw new SystemError("token missing");
     }
 
     try {
@@ -62,6 +68,20 @@ export const updateVanData = (vanInfo: UpdateVanParam) => {
           Authorization: `Bearer ${token}`,
         },
         body: formData,
+      }).then((response) => {
+        if (response.status === 201) return;
+
+        return response
+          .json()
+          .then((body) => {
+            const { error, message } = body;
+            const constructor =
+              errors[error as keyof typeof errors] || SystemError;
+            throw new constructor(message);
+          })
+          .catch((error) => {
+            throw new SystemError((error as Error).message);
+          });
       });
     } catch (error) {
       throw new SystemError((error as Error).message);

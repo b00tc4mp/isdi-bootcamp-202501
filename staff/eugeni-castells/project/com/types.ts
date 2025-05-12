@@ -116,3 +116,13 @@ export type PopulatedAuthor = {
   name: string;
   lastName: string;
 };
+
+export type UpdateVanParam = {
+  features: VehicleFeatures;
+  traits: VehicleTraitsWithNumbers;
+  model: string;
+  brand: string;
+  price: number;
+  description: string;
+  imagesToDelete: string[];
+};

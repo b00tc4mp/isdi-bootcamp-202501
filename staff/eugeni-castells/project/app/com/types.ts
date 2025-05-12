@@ -61,7 +61,7 @@ export type ReturnedVansType = {
   accessible: boolean;
   point: PointDocType;
   legal: Types.ObjectId[];
-  images: string[];
+  images: ReturnedImagesFromServer[];
   trips: Types.ObjectId[];
   createdAt: Date;
   modifiedAt: Date | null;
@@ -74,10 +74,11 @@ export type ReturnedVansType = {
     city: string;
     country: string;
   };
+  averageRating: number;
 };
 export type VanDetailInfo = {
   id: string;
-  images: string[];
+  images: ReturnedImagesFromServer[];
   vehicleTraits: {
     accessible: boolean;
     doors: number;
@@ -122,9 +123,14 @@ export type VanDetailInfo = {
   occupiedDates: string[] | [];
 };
 
+export type ReturnedImagesFromServer = {
+  url: string;
+  path: string;
+};
+
 export type ReturnedJsonVanDetailInfo = {
   id: string;
-  images: string[];
+  images: ReturnedImagesFromServer[];
   vehicleTraits: {
     accessible: boolean;
     doors: number;

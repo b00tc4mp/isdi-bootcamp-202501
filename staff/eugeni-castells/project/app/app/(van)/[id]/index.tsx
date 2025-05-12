@@ -72,7 +72,9 @@ export default function VanDetailScreen() {
   const handleBackClick = () => {
     router.back();
   };
-  return (
+  return isLoading ? (
+    <Loading size="large" isLoading={isLoading} />
+  ) : (
     <View style={styles.container}>
       <AntDesign
         name="arrowleft"
@@ -101,7 +103,7 @@ export default function VanDetailScreen() {
               return (
                 <ImageBackground
                   key={index}
-                  source={{ uri: slide }}
+                  source={{ uri: slide.url }}
                   resizeMode="cover"
                   style={{
                     width: "100%",

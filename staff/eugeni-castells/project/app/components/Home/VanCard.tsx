@@ -7,6 +7,7 @@ import { Colors } from "@/constants/Colors";
 import { capitalize } from "@/app/utils";
 import { spacing } from "@/constants/Paddings";
 import { useRouter } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
 
 type VanCardProps = {
   vanInfo: ReturnedVansType;
@@ -24,13 +25,15 @@ export const VanCard = ({ vanInfo }: VanCardProps) => {
       params: { id: vanInfo.id },
     });
   };
+
+  const handleReviewClick = () => {
+    router.push({
+      pathname: "/(van)/[id]/reviews",
+      params: { id: vanInfo.id },
+    });
+  };
   return (
-    <Pressable
-      style={styles.container}
-      onPress={() => {
-        handleVanClick();
-      }}
-    >
+    <View style={styles.container}>
       <View
         style={styles.topWrapper}
         onLayout={(event) => {
@@ -48,7 +51,7 @@ export const VanCard = ({ vanInfo }: VanCardProps) => {
                 <View style={styles.imageWrapper}>
                   <ImageBackground
                     key={index}
-                    source={{ uri: slide }} //Utilitzem uri perquè es tracta d'una imatge que no és local. A més a més, el require(slide) no funcionaria a nivell sintàctic.
+                    source={{ uri: slide.url }} //Utilitzem uri perquè es tracta d'una imatge que no és local. A més a més, el require(slide) no funcionaria a nivell sintàctic.
                     style={{ height: "100%", width: "100%" }}
                     resizeMode="cover"
                   />
@@ -58,7 +61,12 @@ export const VanCard = ({ vanInfo }: VanCardProps) => {
           />
         )}
       </View>
-      <View style={styles.bottomWrapper}>
+      <Pressable
+        style={styles.bottomWrapper}
+        onPress={() => {
+          handleVanClick();
+        }}
+      >
         <View style={styles.bottomWrapperLeft}>
           <View style={styles.bottomWrapperLeftTopWrapper}>
             <Text style={styles.modelStyle}>
@@ -73,9 +81,20 @@ export const VanCard = ({ vanInfo }: VanCardProps) => {
             € {vanInfo.price} Travel Points / Night
           </Text>
         </View>
-        <View></View>
-      </View>
-    </Pressable>
+        <Pressable
+          style={styles.rightWrapper}
+          onPress={() => {
+            handleReviewClick();
+          }}
+        >
+          <Text style={styles.rightWrapperText}>
+            {vanInfo.averageRating}{" "}
+            <AntDesign name="star" size={18} color="black" />(
+            {vanInfo.reviews.length})
+          </Text>
+        </Pressable>
+      </Pressable>
+    </View>
   );
 };
 
@@ -88,10 +107,14 @@ const styles = StyleSheet.create({
   topWrapper: {
     aspectRatio: "5/4",
   },
-  bottomWrapper: {},
+  bottomWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   bottomWrapperLeft: {
     display: "flex",
     gap: spacing.xs,
+    width: "75%",
   },
   bottomWrapperLeftTopWrapper: {
     display: "flex",
@@ -115,5 +138,9 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: 500,
+  },
+  rightWrapper: {},
+  rightWrapperText: {
+    fontSize: 18,
   },
 });

@@ -9,8 +9,6 @@ export const loginUser = (email: string, password: string): Promise<void> => {
 
   const url = getApiUrl();
 
-  console.log("[getApiUrl] API URL seleccionada:", getApiUrl());
-
   return fetch(`${url}/users/auth`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -36,6 +34,8 @@ export const loginUser = (email: string, password: string): Promise<void> => {
           })
           .then((body) => {
             const { token } = body;
+
+            data.setSeenLanding();
 
             return data.setToken(token);
           });

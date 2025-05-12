@@ -29,10 +29,10 @@ import { filterCountries } from "@/services/filterCountries";
 import { filterCitiesInCountry } from "@/services/filterCitiesInCountry";
 
 export const register = () => {
+  const [permissionGranted, setPermissionGranted] = useState<boolean>(true);
   const [name, setName] = useState("");
   const [lastName, setLastname] = useState("");
   const [email, setEmail] = useState("");
-  const [city, setCity] = useState<GeoDBCountry>();
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
 
@@ -88,6 +88,7 @@ export const register = () => {
       Alert.alert((error as Error).message);
     }
   };
+
   const fetchCountries = () => {
     try {
       validate.string(countryQuery, "location search");
@@ -147,36 +148,51 @@ export const register = () => {
       if (permission?.status === "granted") {
         try {
           coordinates = await getRealTimeLocation();
+          setPermissionGranted(true);
         } catch (error) {
           const err = error as Error;
 
           Alert.alert(err.message);
           return;
         }
+      } else {
+        setPermissionGranted(false);
       }
-
-      const newUserInfo = {
-        name,
-        lastName,
-        email,
-        country: {
-          name: selectedCountry!.name,
-        },
-        city: {
-          name: selectedCity!.city,
-          latitude: selectedCity!.latitude,
-          longitude: selectedCity!.longitude,
-        },
-        address,
-        password,
-        coordinates: [coordinates!.longitude, coordinates!.latitude] as [
-          number,
-          number
-        ],
-      };
+      let newUserInfo;
+      if (permissionGranted) {
+        newUserInfo = {
+          name,
+          lastName,
+          email,
+          // country: selectedCountry!.name,
+          // city: selectedCity!.city,
+          address,
+          password,
+          coordinates: [coordinates!.longitude, coordinates!.latitude] as [
+            number,
+            number
+          ],
+        };
+      } else {
+        newUserInfo = {
+          name,
+          lastName,
+          email,
+          country: selectedCountry!.name,
+          city: selectedCity!.city,
+          address,
+          password,
+          coordinates: [coordinates!.longitude, coordinates!.latitude] as [
+            number,
+            number
+          ],
+        };
+      }
 
       try {
         await registerUser(newUserInfo);
+        Alert.alert("User registered!");
+        router.push("/(auth)/login");
       } catch (error) {
         console.error(error);
         const err = error as Error;
@@ -220,43 +236,48 @@ export const register = () => {
           placeholderTextColor={Colors.light.buttonText}
           style={styles.input}
         />
-        <TextInput
-          placeholder="Country"
-          value={countryQuery}
-          onChangeText={setCountryQuery}
-          placeholderTextColor={Colors.light.buttonText}
-          style={styles.input}
-        />
-        {!selectedCountry &&
-          countries?.data.map((c) => (
-            <TouchableOpacity
-              key={c.code}
-              onPress={() => {
-                setSelectedCountry(c);
-                setCountryQuery(c.name); // opcional: tancar suggeriments
-              }}
-            >
-              <Text style={{ color: "white" }}>{c.name}</Text>
-            </TouchableOpacity>
-          ))}
-        <TextInput
-          placeholder="City"
-          value={city?.name}
-          onChangeText={setCityQuery}
-          placeholderTextColor={Colors.light.buttonText}
-          style={styles.input}
-        />
-        {cities?.data.map((c) => (
-          <TouchableOpacity
-            key={c.id}
-            onPress={() => {
-              setSelectedCity(c);
-              setCityQuery(c.city); // fill input
-            }}
-          >
-            <Text style={{ color: "white" }}>{c.city}</Text>
-          </TouchableOpacity>
-        ))}
+        {!permissionGranted && (
+          <>
+            <TextInput
+              placeholder="Country"
+              value={countryQuery}
+              onChangeText={setCountryQuery}
+              placeholderTextColor={Colors.light.buttonText}
+              style={styles.input}
+            />
+            {!selectedCountry &&
+              countries?.data.map((c) => (
+                <TouchableOpacity
+                  key={c.code}
+                  onPress={() => {
+                    setSelectedCountry(c);
+                    setCountryQuery(c.name);
+                  }}
+                >
+                  <Text style={{ color: "white" }}>{c.name}</Text>
+                </TouchableOpacity>
+              ))}
+            <TextInput
+              placeholder="City"
+              value={cityQuery}
+              onChangeText={setCityQuery}
+              placeholderTextColor={Colors.light.buttonText}
+              style={styles.input}
+            />
+            {!selectedCity &&
+              cities?.data.map((c) => (
+                <TouchableOpacity
+                  key={c.id}
+                  onPress={() => {
+                    setSelectedCity(c);
+                    setCityQuery(c.city);
+                  }}
+                >
+                  <Text style={{ color: "white" }}>{c.city}</Text>
+                </TouchableOpacity>
+              ))}
+          </>
+        )}
         <TextInput
           placeholder="Address"
           value={address}

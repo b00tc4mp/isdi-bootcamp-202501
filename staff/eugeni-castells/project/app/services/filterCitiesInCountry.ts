@@ -10,7 +10,6 @@ export const filterCitiesInCountry = (
 ): Promise<GeoDBResponse> => {
   validate.string(location, "location");
   validate.string(countryCode, "country code");
-  debugger;
 
   const url = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=${countryCode}&namePrefix=${location}&limit=${FETCHED_ITEMS_SHOWN}&sort=-population`;
 

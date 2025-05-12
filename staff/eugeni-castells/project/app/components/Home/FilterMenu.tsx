@@ -14,7 +14,7 @@ import { Typography } from "@/constants/Typography";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Entypo from "@expo/vector-icons/Entypo";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import ButtonBack from "../ButtonBack";
 
 const FilterMenu = ({
   onAcceptFilters,
@@ -48,10 +48,7 @@ const FilterMenu = ({
   return (
     <View style={styles.fullScreen}>
       <View style={styles.headerContainer}>
-        <AntDesign
-          name="arrowleft"
-          size={30}
-          color="black"
+        <ButtonBack
           onPress={() => {
             handleBackClick();
           }}
@@ -223,16 +220,17 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: "100%",
-    padding: spacing.lg,
+    padding: spacing.lg * 1.5,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     borderBottomWidth: 1,
     borderBottomColor: Colors.light.secondaryText,
   },
   headerText: {
     fontSize: 30,
     fontWeight: Typography.fontWeight.bold,
+    textAlign: "center",
   },
   scrollContainer: {
     padding: spacing.md,
@@ -243,7 +241,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: spacing.md,
-    fontWeight: Typography.fontWeight.bold,
+    fontWeight: Typography.fontWeight.bolder,
   },
   input: {
     borderWidth: 1,
@@ -279,7 +277,7 @@ const styles = StyleSheet.create({
   },
   selectedOptionText: {
     color: "white",
-    fontWeight: Typography.fontWeight.bold,
+    fontWeight: Typography.fontWeight.bolder,
   },
   switchRow: {
     flexDirection: "row",

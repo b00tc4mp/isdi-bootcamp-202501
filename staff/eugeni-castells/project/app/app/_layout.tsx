@@ -5,27 +5,19 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
-import { getRoleFromToken } from "@/data";
-import { isUserLoggedIn } from "@/services";
-import { useUserStore } from "./stores/userStore";
 import { useColorScheme } from "@/components/useColorScheme";
-import { Alert } from "react-native";
+import { isUserLoggedIn } from "@/services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Loading } from "@/components/Loading";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+export { ErrorBoundary } from "expo-router";
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(auth)",
-};
+export const unstable_settings = {};
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -34,59 +26,65 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  const [appReady, setAppReady] = useState(false);
+  const [initialRoute, setInitialRoute] = useState<string | null>(null);
+  const router = useRouter();
+  const colorScheme = useColorScheme();
+
   useEffect(() => {
     if (error) throw error;
   }, [error]);
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <App />;
-}
-
-function App() {
-  const colorScheme = useColorScheme();
-
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
+    const prepareApp = async () => {
       try {
         const loggedIn = await isUserLoggedIn();
+        const hasSeenLanding = await AsyncStorage.getItem("hasSeenLanding");
 
         if (loggedIn) {
-          const { role } = await getRoleFromToken();
-          useUserStore.getState().setRole(role);
-          setLoggedIn(true);
+          const lastRoute = await AsyncStorage.getItem("lastRoute");
+          if (lastRoute && lastRoute !== "(auth)" && lastRoute !== "modal") {
+            setInitialRoute("/" + lastRoute);
+          } else {
+            setInitialRoute("/(tabs)");
+          }
+        } else {
+          if (hasSeenLanding === "true") {
+            setInitialRoute("/(tabs)");
+          } else {
+            setInitialRoute("/(auth)");
+          }
         }
-      } catch (error) {
-        console.error(error);
-        const err = error as Error;
-        Alert.alert(err.message);
+      } catch (e) {
+        console.warn("Error validant sessió:", e);
+        setInitialRoute("/(auth)");
+      } finally {
+        setAppReady(true);
       }
     };
 
-    checkLoginStatus();
+    prepareApp();
   }, []);
+
+  useEffect(() => {
+    if (loaded && appReady && initialRoute) {
+      SplashScreen.hideAsync();
+      router.replace(initialRoute as any);
+    }
+  }, [loaded, appReady, initialRoute]);
+
+  const showApp = loaded && appReady && initialRoute;
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        {!loggedIn ? (
-          <Stack.Screen name={"(auth)"} options={{ headerShown: false }} />
-        ) : (
-          <Stack.Screen name={"(tabs)"} options={{ headerShown: false }} />
-        )}
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
+      {showApp && (
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        </Stack>
+      )}
+      {!showApp && <Loading isLoading={false} size="large" />}
     </ThemeProvider>
   );
 }

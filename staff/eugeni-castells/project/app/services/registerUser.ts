@@ -5,19 +5,17 @@ import { getApiUrl } from "@/getApiUrl";
 
 const { SystemError } = errors;
 
-const { EXPO_PUBLIC_API_URL } = process.env;
-
 export const registerUser = (userInfo: RegisterUserInputType) => {
-  debugger;
-  const { name, email, password, address, city, country, coordinates } =
-    userInfo;
+  const { name, email, password, address, city, country } = userInfo;
 
   validate.email(email);
   validate.password(password);
   validate.text(name, "name");
   validate.text(address, "address");
-  validate.text(city.name, "city");
-  validate.text(country.name, "country");
+  if (city && country) {
+    validate.text(city, "city");
+    validate.text(country, "country");
+  }
 
   const apiUrl = getApiUrl();
 

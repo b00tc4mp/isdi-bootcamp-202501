@@ -18,6 +18,7 @@ import { registerVan } from "@/services";
 import { spacing } from "@/constants/Paddings";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { Loading } from "@/components/Loading";
 
 const vehicleTraitsDefault: VehicleTraits = {
   accessible: false,
@@ -39,6 +40,8 @@ const vehicleFeaturesDefault: VehicleFeatures = {
 };
 
 const RegisterVan = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [model, setModel] = useState("");
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState("");
@@ -50,7 +53,8 @@ const RegisterVan = () => {
   );
   const [images, setImages] = useState<ExpoImagePickerAsset[]>([]);
 
-  const handleRegisterClick = () => {
+  const handleRegisterClick = async () => {
+    setIsLoading(true);
     try {
       const vanInfo = {
         model,
@@ -68,11 +72,14 @@ const RegisterVan = () => {
         },
         images,
       };
-      registerVan(vanInfo)
-        .then(() => Alert.alert("Van registered!"))
-        .catch((error) => Alert.alert((error as Error).message));
+      await registerVan(vanInfo);
+      Alert.alert("Van registered!");
+      router.push("/(tabs)/profile");
     } catch (error) {
       Alert.alert((error as Error).message);
+    } finally {
+      setIsLoading(false);
+      console.log("finally entered");
     }
   };
 
@@ -97,9 +104,14 @@ const RegisterVan = () => {
     setImages((prev) => prev.filter((image) => image.id !== imageId));
   };
 
-  return (
+  return isLoading ? (
+    <Loading isLoading={isLoading} size="large" />
+  ) : (
     <ScrollView contentContainerStyle={styles.container}>
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
+      <Pressable
+        style={styles.backButton}
+        onPress={() => router.push("/(tabs)/profile")}
+      >
         <Ionicons name="arrow-back" size={24} color="black" />
       </Pressable>
       <Text style={styles.title}>Register a Van</Text>
