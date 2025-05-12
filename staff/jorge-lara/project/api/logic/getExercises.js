@@ -1,9 +1,10 @@
 import { User, Exercise } from "../data/index.js";
-import { errors } from 'com'
+import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError } = errors;
 
 export const getExercises = userId => {
+    validate.id(userId, "userId");
 
     return Promise.all([
         User.findById(userId).lean(),
@@ -24,7 +25,7 @@ export const getExercises = userId => {
                     delete exercise.user._id;
                 }
             })
-            debugger;
+
             return exercises;
         })
 }

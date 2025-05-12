@@ -1,9 +1,10 @@
 import { Routine, User } from '../data/index.js';
-import { errors } from 'com';
+import { errors, validate } from 'com';
 
 const { SystemError, NotFoundError } = errors;
 
 export const getRoutines = userId => {
+    validate.id(userId, "userId");
 
     return Promise.all([
         User.findById(userId).lean(),
@@ -14,9 +15,8 @@ export const getRoutines = userId => {
             if (!user) {
                 throw new NotFoundError('user not found');
             }
-            debugger;
+
             routines.forEach(routine => {
-                debugger;
                 routine.id = routine._id.toString();
                 delete routine._id;
 
@@ -26,7 +26,7 @@ export const getRoutines = userId => {
                 }
 
             })
-            debugger;
+
             return routines;
         })
 }

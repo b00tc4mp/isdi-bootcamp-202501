@@ -4,6 +4,8 @@ import { errors } from 'com';
 const { SystemError, NotFoundError } = errors;
 
 export const deleteRoutine = (userId, routineId) => {
+    validate.id(userId, "userId");
+    validate.id(routineId, "routineId");
 
     return Promise.all([
         User.findById(userId).lean(),

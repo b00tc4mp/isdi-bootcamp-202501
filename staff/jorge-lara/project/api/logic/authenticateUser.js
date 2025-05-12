@@ -1,10 +1,13 @@
 import { User } from "../data/index.js"
 import bcrypt from "bcryptjs";
-import { errors } from "com";
+import { errors, validate } from "com";
 
 const { NotFoundError, CredentialsError } = errors;
 
 export const authenticateUser = (email, password) => {
+    validate.email(email, "email");
+    validate.password(password, "password");
+
     return User.findOne({ email }).lean()
         .catch(error => { throw new SystemError()(error.message) })
         .then(user => {

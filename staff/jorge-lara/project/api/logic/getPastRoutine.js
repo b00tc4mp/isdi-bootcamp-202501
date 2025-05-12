@@ -1,9 +1,11 @@
 import { Routine, User } from '../data/index.js';
-import { errors } from 'com';
+import { errors, validate } from 'com';
 
 const { SystemError, NotFoundError } = errors;
 
 export const getPastRoutine = userId => {
+    validate.id(userId, "userId");
+
     const now = new Date();
 
     return Promise.all([

@@ -12,7 +12,7 @@ describe('updateRoutine', () => {
 
     beforeEach(() => Promise.all([User.deleteMany({}), Exercise.deleteMany({})]))
 
-    it.only('successfully update a routine', () => {
+    it('successfully update a routine', () => {
         let user;
         let exercises;
         return bcrypt.hash('123123123', 10)

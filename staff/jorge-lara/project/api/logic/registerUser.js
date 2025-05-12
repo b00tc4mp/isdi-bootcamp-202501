@@ -1,14 +1,18 @@
 import { User } from '../data/index.js'
-import { errors } from 'com'
+import { errors, validate } from 'com'
 import bcrypt from 'bcryptjs'
 
-const {SystemError, DuplicityError} = errors;
+const { SystemError, DuplicityError } = errors;
 
-export const registerUser = (email, username , password) => {
+export const registerUser = (email, username, password) => {
+    validate.email(email, 'email');
+    validate.username(username, 'username');
+    validate.password(password, 'password');
+
     return bcrypt.hash(password, 10)
-        .catch(error => { throw new SystemError(error.message)})
+        .catch(error => { throw new SystemError(error.message) })
         .then(hash => {
-            
+
             const user = {
                 email,
                 username,
@@ -17,12 +21,12 @@ export const registerUser = (email, username , password) => {
 
             return User.create(user)
                 .catch(error => {
-                    
+
                     if (error.code === 11000) {
                         throw new DuplicityError('user already exists');
                     }
 
-                    //throw new SystemError(error.message)
+                    throw new SystemError(error.message)
                 })
         })
         .then(() => { })
