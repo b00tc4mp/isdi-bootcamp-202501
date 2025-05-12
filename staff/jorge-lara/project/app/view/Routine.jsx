@@ -4,7 +4,7 @@ import { logic } from '../logic/index.js';
 import { EditRoutine } from "./EditRoutine.jsx";
 import { Modal } from '../components/index.js';
 
-export function Routine({ routine, onRoutineDeleted, onRoutineUpdated }) {
+export function Routine({ routine, onRoutineDeleted, onRoutineUpdated, showButtons = true }) {
     const [showModal, setShowModal] = useState(false);
 
     const handleDeleteClick = () => {
@@ -63,7 +63,7 @@ export function Routine({ routine, onRoutineDeleted, onRoutineUpdated }) {
                 </div>
             </div>
         </div>
-        <div className="flex justify-end mt-4 space-x-4">
+        {showButtons && (<div className="flex justify-end mt-4 space-x-4">
             <button
                 onClick={() => setShowModal(true)}
                 className="cursor-pointer px-3 py-1 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
@@ -74,7 +74,7 @@ export function Routine({ routine, onRoutineDeleted, onRoutineUpdated }) {
                 className="cursor-pointer px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
                 Delete
             </button>
-        </div>
+        </div>)}
 
         {showModal && (
             <Modal>

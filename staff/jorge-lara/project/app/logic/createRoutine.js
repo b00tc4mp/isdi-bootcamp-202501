@@ -3,7 +3,7 @@ import { errors } from 'com';
 
 const { SystemError } = errors;
 
-export const createRoutine = (title, description, duration, difficulty, category, type, exercises) => {
+export const createRoutine = (title, description, duration, difficulty, category, type, exercises, startDate, endDate) => {
     const { token } = data
 
     return fetch(`${import.meta.env.VITE_API_URL}/routines`, {
@@ -12,7 +12,7 @@ export const createRoutine = (title, description, duration, difficulty, category
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ title, description, duration, difficulty, category, type, exercises })
+        body: JSON.stringify({ title, description, duration, difficulty, category, type, exercises, startDate, endDate })
     })
         .catch(error => { throw new SystemError(error.message) })
         .then(response => {

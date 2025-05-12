@@ -10,7 +10,10 @@ import { updateExercise } from './updateExercise.js';
 import { getRoutines } from './getRoutines.js';
 import { createRoutine } from "./createRoutine.js";
 import { deleteRoutine } from "./deleteRoutine.js";
-import { updateRoutine} from './updateRoutine.js';
+import { updateRoutine } from './updateRoutine.js';
+import { getCurrentRoutines } from "./getCurrentRoutines.js";
+import { getNextRoutine } from "./getNextRoutine.js";
+import { getPastRoutine } from "./getPastRoutine.js";
 
 export const logic = {
     registerUser,
@@ -27,5 +30,8 @@ export const logic = {
     getRoutines,
     createRoutine,
     deleteRoutine,
-    updateRoutine
+    updateRoutine,
+    getCurrentRoutines,
+    getNextRoutine,
+    getPastRoutine
 }
