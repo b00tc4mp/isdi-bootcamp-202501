@@ -10,7 +10,16 @@ export function CreateExercise({ onExerciseCreate, onExerciseCreateCancelled }) 
         try {
             const { target: form } = event;
 
-            const { name: { value: name }, muscleCategory: { value: muscleCategory }, sets: { value: sets }, reps: { value: reps }, restTime: { value: restTime } } = form
+            const { name: { value: name },
+                muscleCategory: { value: muscleCategory },
+                sets: { value: setsString },
+                reps: { value: repsString },
+                restTime: { value: restTimeString }
+            } = form
+
+            const sets = Number(setsString);
+            const reps = Number(repsString);
+            const restTime = Number(restTimeString);
 
             logic.createExercise(name, muscleCategory, sets, reps, restTime)
                 .then(() => onExerciseCreate())

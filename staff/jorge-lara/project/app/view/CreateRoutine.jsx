@@ -27,14 +27,17 @@ export function CreateRoutine({ onRoutineCreate, onRoutineCreateCancelled }) {
             const {
                 title: { value: title },
                 description: { value: description },
-                duration: { value: duration },
+                duration: { value: durationString },
                 difficulty: { value: difficulty },
                 category: { value: category },
                 type: { value: type },
-                exercises: { value: exercises },
+                exercises: { selectedOptions },
                 startDate: { value: startDate },
                 endDate: { value: endDate }
             } = form;
+
+            const duration = Number(durationString);
+            const exercises = Array.from(selectedOptions).map(opt => opt.value)
 
             logic.createRoutine(title, description, duration, difficulty, category, type, exercises, startDate, endDate)
                 .then(() => onRoutineCreate())
