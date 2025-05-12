@@ -37,12 +37,30 @@ class AuthorizationError extends Error {
     }
 }
 
+class ValidationError extends Error {
+    constructor(message) {
+        super(message);
+
+        this.name = this.constructor.name;
+    }
+}
+
+class RangeError extends Error {
+    constructor(message) {
+        super(message);
+
+        this.name = this.constructor.name;
+    }
+}
+
 const errors = {
     SystemError,
     NotFoundError,
     DuplicityError,
     CredentialsError,
-    AuthorizationError
+    AuthorizationError,
+    ValidationError,
+    RangeError
 }
 
 export default errors;
