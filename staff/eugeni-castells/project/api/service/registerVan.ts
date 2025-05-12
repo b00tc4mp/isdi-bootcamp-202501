@@ -68,11 +68,11 @@ export const registerVan = (
       throw new SystemError((error as Error).message);
     }
 
-    let imageUrls;
+    let uploadedImages;
     try {
-      imageUrls = await uploadImagesToFirebase(images, van._id.toString());
+      uploadedImages = await uploadImagesToFirebase(images, van._id.toString());
 
-      van.images = imageUrls;
+      van.images = uploadedImages;
     } catch (error) {
       if (
         error instanceof UploadFirebaseError ||

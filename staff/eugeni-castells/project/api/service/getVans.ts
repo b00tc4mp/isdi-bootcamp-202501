@@ -143,7 +143,7 @@ export const getVans = (
       return {
         ...sanitizedVan,
         id: _id.toString(),
-        reviews: { ...reviews },
+        reviews: reviews,
         averageRating,
         modifiedAt: modifiedAt !== null ? new Date(modifiedAt) : null,
         createdAt: new Date(createdAt),

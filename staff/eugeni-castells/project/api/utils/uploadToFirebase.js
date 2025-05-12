@@ -16,7 +16,7 @@ const uuid_1 = require("uuid");
 const firebaseErrorChecker_1 = require("./firebaseErrorChecker");
 const getFirebaseErrorMessage_1 = require("./getFirebaseErrorMessage");
 const uploadImagesToFirebase = (files, vanId) => __awaiter(void 0, void 0, void 0, function* () {
-    const urls = [];
+    const uploadedImages = [];
     for (const file of files) {
         const fileName = `${vanId}/${(0, uuid_1.v4)()}_${file.originalname}`;
         const fileUpload = firebase_1.bucket.file(fileName);
@@ -36,7 +36,7 @@ const uploadImagesToFirebase = (files, vanId) => __awaiter(void 0, void 0, void 
             }
         }
         try {
-            yield fileUpload.makePublic(); // this makes the image go public so we can get the URL's
+            yield fileUpload.makePublic();
         }
         catch (error) {
             if ((0, firebaseErrorChecker_1.isFirebaseError)(error)) {
@@ -46,8 +46,11 @@ const uploadImagesToFirebase = (files, vanId) => __awaiter(void 0, void 0, void 
                 throw new errors_1.SystemError(error.message);
             }
         }
-        urls.push(fileUpload.publicUrl());
+        uploadedImages.push({
+            url: fileUpload.publicUrl(),
+            path: fileName, // this is firebase intern path
+        });
     }
-    return urls;
+    return uploadedImages;
 });
 exports.uploadImagesToFirebase = uploadImagesToFirebase;

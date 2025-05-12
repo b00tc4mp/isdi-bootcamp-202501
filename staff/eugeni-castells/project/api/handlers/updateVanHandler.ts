@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import createFunctionalHandler from "../middlewares/createHandler";
-import { registerVan } from "../service/index";
 import { AuthHandlerRequest } from "../middlewares/types";
+import { updateVan } from "../service/updateVan";
 
 export const updateVanHandler = createFunctionalHandler(
   (req: Request, res: Response) => {
     const { userId } = req as AuthHandlerRequest;
-
+    const { id } = req.params;
     const { vanInfo } = req.body;
 
     //the multerHandler will have added the multer files to the request
@@ -14,7 +14,7 @@ export const updateVanHandler = createFunctionalHandler(
 
     const parsedVanInfo = JSON.parse(vanInfo);
 
-    return registerVan(userId, parsedVanInfo, files).then(() => {
+    return updateVan(userId, id, parsedVanInfo, files).then(() => {
       res.status(201).send();
     });
   }

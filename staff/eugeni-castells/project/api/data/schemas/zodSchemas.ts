@@ -18,7 +18,8 @@ export const registerUserSchema = object({
   city: z
     .string()
     .min(2, "city must have at least 2 characters")
-    .max(30, "city cannot surpass 30 characters"),
+    .max(30, "city cannot surpass 30 characters")
+    .optional(),
   address: z
     .string()
     .min(5, "address must have at least 2 characters")
@@ -26,7 +27,8 @@ export const registerUserSchema = object({
   country: z
     .string()
     .min(3, "region must have at least 2 characters")
-    .max(20, "region cannot surpass 20 characters"),
+    .max(20, "region cannot surpass 20 characters")
+    .optional(),
   // point: z.object({
   //   coordinates: z
   //     .array(z.number())

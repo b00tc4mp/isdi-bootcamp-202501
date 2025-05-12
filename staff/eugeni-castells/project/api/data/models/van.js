@@ -20,7 +20,12 @@ const van = new mongoose_1.Schema({
         type: String,
     },
     year: { type: Date },
-    images: [{ type: String, required: true }],
+    images: [
+        {
+            url: { type: String, required: true },
+            path: { type: String, required: true },
+        },
+    ],
     accessible: { type: Boolean, default: false },
     price: { type: Number, min: 0, max: 1000 },
     reviews: {

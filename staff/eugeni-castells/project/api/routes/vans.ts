@@ -6,6 +6,8 @@ import { jsonBodyParser } from "../middlewares/jsonBodyParser";
 import { generateTripRequestHandler } from "../handlers/generateTripRequestHandler";
 import { getVanReviewsHandler } from "../handlers/getVanReviewsHandler";
 import { deleteVanByIdHandler } from "../handlers/deleteVanByIdHandler";
+import { updateVanHandler } from "../handlers/updateVanHandler";
+import { multerHandler } from "../middlewares/multerHandler";
 export const vanRouter = Router();
 
 vanRouter.get("/", authHandler, getVansHandler);
@@ -22,3 +24,5 @@ vanRouter.post(
 );
 
 vanRouter.delete("/:id", authHandler, deleteVanByIdHandler);
+
+vanRouter.patch("/edit/:id", authHandler, multerHandler, updateVanHandler);

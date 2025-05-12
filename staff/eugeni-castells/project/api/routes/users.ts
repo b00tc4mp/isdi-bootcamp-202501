@@ -1,10 +1,6 @@
 import { Router } from "express";
 import { jsonBodyParser } from "../middlewares/jsonBodyParser";
-import {
-  registerUserSchema,
-  userAuthSchema,
-  registerVanSchema,
-} from "../data/schemas/zodSchemas";
+import { registerUserSchema, userAuthSchema } from "../data/schemas/zodSchemas";
 import { registerUserHandler } from "../handlers/registerUserHandler";
 import { validationHandler } from "../middlewares/validationHandler";
 import authHandler from "../middlewares/authHandler";

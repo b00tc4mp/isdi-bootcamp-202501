@@ -134,7 +134,7 @@ const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
                 };
             });
             const averageRating = (0, utils_1.getAverageRating)(reviews);
-            return Object.assign(Object.assign({}, sanitizedVan), { id: _id.toString(), reviews: Object.assign({}, reviews), averageRating, modifiedAt: modifiedAt !== null ? new Date(modifiedAt) : null, createdAt: new Date(createdAt) });
+            return Object.assign(Object.assign({}, sanitizedVan), { id: _id.toString(), reviews: reviews, averageRating, modifiedAt: modifiedAt !== null ? new Date(modifiedAt) : null, createdAt: new Date(createdAt) });
         });
         return finalVans;
     }))();

@@ -33,8 +33,8 @@ export type NewUserInfo = {
   email: string;
   password: string;
   address: string;
-  country: string;
-  city: string;
+  country?: string;
+  city?: string;
   coordinates: [number, number];
 };
 

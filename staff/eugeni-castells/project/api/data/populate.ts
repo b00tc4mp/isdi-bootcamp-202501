@@ -156,8 +156,14 @@ data
         description: "Van ideal per viatges llargs amb aire acondicionat",
         year: new Date(2021, 5),
         images: [
-          "https://weinsberg.com/fileadmin/media/mj2024-2025/camper-van/global/uebersicht/kta-weinsberg-2024-2025-camper-vans-uebersicht-carabus-teaser.jpg",
-          "https://m3caravaning.com/wp-content/uploads/2024/11/furgonetas-camper-nuevas.webp",
+          {
+            url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/weinsberg.webp?alt=media&token=adf9c563-81b0-452e-b689-3e5e74e77a61",
+            path: "gs://camperboat-45a0a.firebasestorage.app/weinsberg.webp",
+          },
+          {
+            url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/weinsberg2.webp?alt=media&token=dd890cd6-3a88-4d93-8aa9-c69e1bb21972",
+            path: "gs://camperboat-45a0a.firebasestorage.app/weinsberg2.webp",
+          },
         ],
         accessible: true,
         price: 150,
@@ -186,8 +192,14 @@ data
         description: "Compacta i còmoda",
         year: new Date(2019, 3),
         images: [
-          "https://cdn.media.kaavan.es/blobs/vehicles/749b98ed-85b6-48f8-a275-77e879a2f857/medias/3788861.jpg",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROJ-rYbmBoFPwtTJ3vUEazTnkm9WRN9pHOrw&s",
+          {
+            url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/kyros.jpg?alt=media&token=047fbc30-c97f-4657-9f3a-a4b401a683cf",
+            path: "gs://camperboat-45a0a.firebasestorage.app/kyros.jpg",
+          },
+          {
+            url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/kyros2.jpeg?alt=media&token=f2ed822b-53bd-4530-9093-e5ecc9b22574",
+            path: "gs://camperboat-45a0a.firebasestorage.app/kyros2.jpeg",
+          },
         ],
         accessible: false,
         price: 120,
@@ -216,7 +228,10 @@ data
         description: "Ecològica i moderna",
         year: new Date(2022, 0),
         images: [
-          "https://cdn.motor1.com/images/mgl/G3ywZV/s3/honda-n-van-compo.jpg",
+          {
+            url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/honda.jpg?alt=media&token=1154d422-30cf-4402-bd18-281b0d2de9fb",
+            path: "gs://camperboat-45a0a.firebasestorage.app/honda.jpg",
+          },
         ],
         accessible: true,
         price: 180,

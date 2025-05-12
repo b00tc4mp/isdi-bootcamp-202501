@@ -59,10 +59,10 @@ const registerVan = (userId, newVanInfo, images) => {
         catch (error) {
             throw new errors_1.SystemError(error.message);
         }
-        let imageUrls;
+        let uploadedImages;
         try {
-            imageUrls = yield (0, uploadToFirebase_1.uploadImagesToFirebase)(images, van._id.toString());
-            van.images = imageUrls;
+            uploadedImages = yield (0, uploadToFirebase_1.uploadImagesToFirebase)(images, van._id.toString());
+            van.images = uploadedImages;
         }
         catch (error) {
             if (error instanceof errors_1.UploadFirebaseError ||

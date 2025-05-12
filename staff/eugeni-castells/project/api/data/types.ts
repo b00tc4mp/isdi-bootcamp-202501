@@ -52,7 +52,10 @@ type VanDocType = {
   accessible: boolean;
   point: PointDocType;
   legal: Types.ObjectId[];
-  images: string[];
+  images: {
+    path: string;
+    url: string;
+  }[];
   trips: Types.ObjectId[];
   createdAt: Date;
   modifiedAt: Date | null;
