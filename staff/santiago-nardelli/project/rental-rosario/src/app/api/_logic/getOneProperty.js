@@ -16,6 +16,9 @@ export const getOneProperty = async (propertyId) => {
 
     return property;
   } catch (error) {
-    throw new SystemError(error.message);
+    if (error instanceof NotFoundError) {
+      throw error; // Re-lanzar errores conocidos
+    }
+    throw new SystemError(error.message); // Transformar errores inesperados
   }
 };

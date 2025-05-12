@@ -11,7 +11,8 @@
     "inspect": "export NODE_OPTIONS='--inspect' && next dev",
     "populate-db": "node scripts/populate.js",
     "test": "mocha src/app/api/_logic/updateProperties.spec.js",
-    "test-inspect": "mocha --inspect-brk logic/*.spec.js"
+    "test-inspect": "mocha --inspect-brk logic/*.spec.js",
+    "test-coverage": "c8 --experimental-monocart --reporter=html --reporter=text mocha src/app/api/_logic/*.spec.js --timeout 2000"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.4",
@@ -35,12 +36,17 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "c8": "^10.1.3",
     "chai": "^5.2.0",
+    "chai-as-promised": "^8.0.1",
     "com": "file:./src/com",
     "dotenv": "^16.5.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "mocha": "^11.2.2",
+    "monocart-coverage-reports": "^2.12.4",
+    "proxyquire": "^2.1.3",
+    "sinon": "^20.0.0",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.2.8"
   }

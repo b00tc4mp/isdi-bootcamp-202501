@@ -9,16 +9,19 @@ import { errors } from "com";
 
 const { SystemError } = errors;
 
-async function getProperties(searchParamsPromise) {
-  const startTime = Date.now();
+export const dynamic = "force-dynamic";
+
+async function getProperties(searchParams) {
   console.log("getProperties: Inicio");
+  const startTime = Date.now();
+
   try {
-    const searchParams = await searchParamsPromise;
-    const hasFilters = Object.keys(searchParams).length > 0;
+    const resolvedSearchParams = await searchParams;
+    const hasFilters = Object.keys(resolvedSearchParams).length > 0;
 
     const filtersObject = hasFilters
       ? Object.fromEntries(
-          Object.entries(searchParams).map(([key, value]) => [
+          Object.entries(resolvedSearchParams).map(([key, value]) => [
             key,
             String(value),
           ])
@@ -30,6 +33,7 @@ async function getProperties(searchParamsPromise) {
       ? await getFilteredPropertiesRequest(filtersObject)
       : await getAllPropertiesRequest();
     const propertiesEndTime = Date.now();
+
     console.log(
       `getProperties: Obtención de propiedades completada en ${
         propertiesEndTime - propertiesStartTime
@@ -38,18 +42,13 @@ async function getProperties(searchParamsPromise) {
 
     return properties;
   } catch (error) {
-    if (error instanceof SystemError) {
-      console.error("Error en el sistema:", error.message);
-    } else {
-      console.error("Error inesperado:", error);
-    }
+    console.error("Error al obtener propiedades:", error);
     return [];
   } finally {
     const endTime = Date.now();
     console.log(`getProperties: Finalizado en ${endTime - startTime}ms`);
   }
 }
-
 export default async function Home({ searchParams }) {
   const homeStartTime = Date.now();
   console.log("Home: Inicio");
@@ -69,7 +68,7 @@ export default async function Home({ searchParams }) {
   const renderStartTime = Date.now();
   const jsx = (
     <div className="relative">
-      <Header className="absolute top-0 left-0 right-0 z-30" />
+      <Header className="absolute top-0 left-0 right-0 z-30 " />
       <HeroSection />
       <Suspense fallback={<p>Cargando filtros...</p>}>
         <PropertyFilterNavbar />

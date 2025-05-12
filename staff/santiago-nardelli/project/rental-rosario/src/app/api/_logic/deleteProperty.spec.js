@@ -10,14 +10,12 @@ import { errors } from "com";
 import { Types } from "mongoose";
 
 const { ObjectId } = Types;
-
 const { NotFoundError } = errors;
 const { DATABASE_URL, DATABASE_NAME } = process.env;
 
-connectToDatabase(DATABASE_URL, DATABASE_NAME);
 describe("TEST deleteProperty", () => {
   before(async () => {
-    await connectToDatabase();
+    await connectToDatabase(DATABASE_URL, DATABASE_NAME);
     console.info("Connected to database for deleteProperty tests");
   });
 
@@ -44,37 +42,6 @@ describe("TEST deleteProperty", () => {
     const propertyIdToDelete = savedProperty._id.toString();
 
     // Llamar a la función deleteProperty con el userId
-    const result = await deleteProperty(
-      ownerId.toHexString(),
-      propertyIdToDelete
-    );
-
-    // Verificar que la función no lance un error
-    expect(result).to.be.undefined;
-
-    // Verificar que la propiedad ya no existe en la base de datos
-    const deletedProperty = await Property.findById(propertyIdToDelete);
-    expect(deletedProperty).to.be.null;
-  });
-
-  it("should successfully delete a property by its ID", async () => {
-    const ownerId = new ObjectId();
-
-    // Crear una propiedad de prueba
-    const newProperty = new Property({
-      userId: ownerId,
-      title: "Test Property",
-      description: "This is a test property.",
-      location: "Test Location",
-      images: ["image1.jpg", "image2.jpg"],
-      bedrooms: 3,
-      airbnbUrl: "https://airbnb.com/test-property",
-      type: "apartment",
-    });
-    const savedProperty = await newProperty.save();
-    const propertyIdToDelete = savedProperty._id.toString();
-
-    // Llamar a la función deleteProperty
     const result = await deleteProperty(
       ownerId.toHexString(),
       propertyIdToDelete

@@ -1,4 +1,3 @@
-// hooks/usePropertyFilter.js
 "use client";
 
 import { useState } from "react";
@@ -14,33 +13,17 @@ const usePropertyFilter = () => {
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
-    switch (name) {
-      case "type":
-        setType(value);
-        break;
-      case "bedrooms":
-        setBedrooms(value);
-        break;
-      default:
-        break;
-    }
+    if (name === "type") setType(value);
+    if (name === "bedrooms") setBedrooms(value);
   };
 
   const applyFilters = () => {
     const params = new URLSearchParams();
 
-    if (type && type !== "all") {
-      // Añadir condición para omitir si es vacío
-      params.set("type", type);
-    }
-    if (bedrooms && bedrooms !== "all") {
-      // Añadir condición para omitir si es vacío
-      params.set("bedrooms", bedrooms);
-    }
+    if (type && type !== "all") params.set("type", type);
+    if (bedrooms && bedrooms !== "all") params.set("bedrooms", bedrooms);
 
-    const newSearchParams = params.toString();
-
-    router.replace(`${pathname}?${newSearchParams}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const resetFilters = () => {
@@ -52,8 +35,6 @@ const usePropertyFilter = () => {
   return {
     type,
     bedrooms,
-    setType,
-    setBedrooms,
     handleFilterChange,
     applyFilters,
     resetFilters,

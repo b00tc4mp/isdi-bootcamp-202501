@@ -12,12 +12,16 @@ const { SystemError, DuplicityError, ValidateError } = errors;
 const { DATABASE_URL, DATABASE_NAME } = process.env;
 
 describe("createProperty", () => {
+  let connection; // Esto puede ayudar a gestionar la conexión manualmente.
+
   before(async () => {
-    await connectToDatabase(DATABASE_URL, DATABASE_NAME);
+    // Asegurándonos de que la conexión se establezca antes de que comiencen las pruebas.
+    connection = await connectToDatabase(DATABASE_URL, DATABASE_NAME);
     console.info("Connected to database");
   });
 
   beforeEach(async () => {
+    // Limpiar la colección antes de cada prueba
     await Property.deleteMany({});
     console.info("Properties collection cleared");
   });
@@ -33,6 +37,7 @@ describe("createProperty", () => {
   };
 
   it("should successfully create a new property", async () => {
+    // Intentamos crear una propiedad.
     const property = await createProperty(validPropertyData);
     expect(property).to.be.an("object");
     expect(property).to.have.property("id").that.is.a("string");
@@ -44,17 +49,20 @@ describe("createProperty", () => {
     expect(property.images).to.deep.equal([validPropertyData.image]);
     expect(property.airbnbUrl).to.equal(validPropertyData.airbnbUrl);
 
+    // Verificamos que la propiedad haya sido guardada en la base de datos.
     const propertyInDb = await Property.findById(property.id).lean();
     expect(propertyInDb).to.exist;
     expect(propertyInDb.title).to.equal(validPropertyData.title);
   });
 
   afterEach(async () => {
+    // Limpiar la colección después de cada prueba
     await Property.deleteMany({});
     console.info("Properties collection cleared after test");
   });
 
   after(async () => {
+    // Cerrar la conexión con la base de datos después de todas las pruebas.
     await disconnectFromDatabase();
     console.info("Disconnected from database");
   });
