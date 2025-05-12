@@ -7,8 +7,11 @@ import { createRoutine } from './createRoutine.js';
 import { getRoutines } from './getRoutines.js';
 import { updateExercise } from './updateExercise.js';
 import { deleteExercise } from './deleteExercise.js';
-import {deleteRoutine} from './deleteRoutine.js';
-import {updateRoutine} from './updateRoutine.js';
+import { deleteRoutine } from './deleteRoutine.js';
+import { updateRoutine } from './updateRoutine.js';
+import { getCurrentRoutines } from './getCurrentRoutines.js';
+import { getPastRoutine } from "./getPastRoutine.js"
+import { getNextRoutine } from "./getNextRoutine.js"
 
 export const logic = {
     registerUser,
@@ -24,5 +27,8 @@ export const logic = {
     getRoutines,
     deleteRoutine,
     updateRoutine,
+    getCurrentRoutines,
+    getPastRoutine,
+    getNextRoutine
 
 }

@@ -39,3 +39,24 @@ routines.delete('/:routineId', authHandler, withErrorHandling((req, res) => {
     return logic.deleteRoutine(userId, routineId)
         .then(() => res.status(204).send())
 }))
+
+routines.get('/current', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req;
+
+    return logic.getCurrentRoutines(userId)
+        .then(routines => res.json(routines))
+}))
+
+routines.get('/past', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req;
+
+    return logic.getPastRoutine(userId)
+        .then(routines => res.json(routines))
+}))
+
+routines.get('/next', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req;
+
+    return logic.getNextRoutine(userId)
+        .then(routines => res.json(routines))
+}))
