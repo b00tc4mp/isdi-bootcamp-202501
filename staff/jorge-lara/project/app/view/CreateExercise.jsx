@@ -1,6 +1,8 @@
+import { useContext } from '../context.js';
 import { logic } from '../logic/index.js';
 
 export function CreateExercise({ onExerciseCreate, onExerciseCreateCancelled }) {
+    const { alert } = useContext();
 
     const handleCancelClick = () => onExerciseCreateCancelled()
 
@@ -25,9 +27,13 @@ export function CreateExercise({ onExerciseCreate, onExerciseCreateCancelled }) 
                 .then(() => onExerciseCreate())
                 .catch(error => {
                     console.error(error)
+
+                    alert(error.message);
                 })
         } catch (error) {
-            console.error(error)
+            console.error(error);
+
+            alert(error.message);
         }
     }
 

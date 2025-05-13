@@ -1,6 +1,11 @@
 import { logic } from "../logic/index";
+import { errors } from "com";
+import { useContext } from "../context";
+
+const { SystemError, ValidationError } = errors
 
 export function Register({ onUserRegistered, onNavigateToLogin }) {
+    const { alert } = useContext()
 
     const handleRegisterSubmit = event => {
         event.preventDefault();
@@ -19,16 +24,18 @@ export function Register({ onUserRegistered, onNavigateToLogin }) {
                     form.reset();
 
                     onUserRegistered();
+
+                    alert('user has been created')
                 })
                 .catch(error => {
                     console.error(error);
 
-                    //TODO alert context
+                    alert(error.message)
                 })
         } catch (error) {
             console.error(error);
 
-            //TODO alert context
+            alert(error.message)
         }
     }
 

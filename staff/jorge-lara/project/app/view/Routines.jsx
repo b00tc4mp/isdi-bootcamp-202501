@@ -3,8 +3,10 @@ import { logic } from '../logic/index.js';
 import { Routine } from "./Routine.jsx";
 import { Modal } from '../components/index.js';
 import { CreateRoutine } from "./CreateRoutine.jsx";
+import { useContext } from "../context.js";
 
 export function Routines() {
+    const { alert } = useContext();
     const [routines, setRoutines] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
@@ -16,9 +18,15 @@ export function Routines() {
         try {
             logic.getRoutines()
                 .then(routines => setRoutines(routines))
-                .catch(error => console.error(error));
+                .catch(error => {
+                    console.error(error);
+
+                    alert(error.message);
+                });
         } catch (error) {
             console.error(error);
+
+            alert(error.message);
         }
     }
 

@@ -3,8 +3,10 @@ import { logic } from '../logic/index.js';
 import { Exercise } from './Exercise.jsx';
 import { Modal } from '../components/index.js';
 import { CreateExercise } from './CreateExercise.jsx';
+import { useContext } from "../context.js";
 
 export function Exercises({ }) {
+    const { alert } = useContext();
     const [exercises, setExercises] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
@@ -16,10 +18,16 @@ export function Exercises({ }) {
         try {
             logic.getExercises()
                 .then(exercises => setExercises(exercises))
-                .catch(error => console.error(error));
+                .catch(error => {
+                    console.error(error);
+
+                    alert(error.message);
+                });
 
         } catch (error) {
             console.error(error);
+
+            alert(error.message);
         }
     }
 

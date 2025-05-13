@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { logic } from '../logic/index.js';
+import { useContext } from "../context.js";
 
 export function CreateRoutine({ onRoutineCreate, onRoutineCreateCancelled }) {
+    const { alert } = useContext();
     const [exercisesList, setExercisesList] = useState([])
 
     useEffect(() => {
@@ -12,9 +14,15 @@ export function CreateRoutine({ onRoutineCreate, onRoutineCreateCancelled }) {
         try {
             logic.getExercises()
                 .then(exercises => setExercisesList(exercises))
-                .catch(error => console.error(error))
+                .catch(error => {
+                    console.error(error);
+
+                    alert(error.message);
+                })
         } catch (error) {
             console.error(error);
+
+            alert(error.message);
         }
     }
 
@@ -41,9 +49,15 @@ export function CreateRoutine({ onRoutineCreate, onRoutineCreateCancelled }) {
 
             logic.createRoutine(title, description, duration, difficulty, category, type, exercises, startDate, endDate)
                 .then(() => onRoutineCreate())
-                .catch(error => console.error(error))
+                .catch(error => {
+                    console.error(error);
+
+                    alert(error.message);
+                })
         } catch (error) {
             console.error(error);
+
+            alert(error.message);
         }
 
     }

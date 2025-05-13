@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { logic } from "../../logic/index.js";
-import { Routes, Route, useNavigate, NavLink } from "react-router";
+import { Routes, Route, NavLink } from "react-router";
 
 import { Exercises } from '../Exercises.jsx';
 import { Dashboard } from './Dashboard.jsx';
 import { Routines } from "../Routines.jsx";
+import { useContext } from "../../context.js";
 
 export function Home({ onUserLoggedOut }) {
+    const { alert, confirm } = useContext();
     const [username, setUsername] = useState('');
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         try {
@@ -18,22 +18,30 @@ export function Home({ onUserLoggedOut }) {
                 .catch(error => {
                     console.error(error);
 
-                    //TODO alerts
+                    alert(error.message);
                 })
         } catch (error) {
             console.error(error);
+
+            alert(error.message);
         }
     }, [])
 
     const handleLogoutClick = () => {
-        //TODO confirm context
-        try {
-            logic.logoutUser();
+        confirm('are you sure to logout?')
+            .then(accepted => {
+                if (accepted) {
+                    try {
+                        logic.logoutUser();
 
-            onUserLoggedOut();
-        } catch (error) {
-            console.error(message);
-        }
+                        onUserLoggedOut();
+                    } catch (error) {
+                        console.error(message);
+
+                        alert(error.message);
+                    }
+                }
+            })
     }
 
     return <div className="min-h-screen flex flex-col">
@@ -48,14 +56,12 @@ export function Home({ onUserLoggedOut }) {
                         Dashboard
                     </NavLink>
 
+                    <NavLink to="/routines" className={({ isActive }) => `text-gray-700 hover:text-orange-500 ${isActive ? 'text-orange-500 font-semibold' : ''}`}>
+                        Routines
+                    </NavLink>
 
                     <NavLink to="/exercises" className={({ isActive }) => `text-gray-700 hover:text-orange-500 ${isActive ? 'text-orange-500 font-semibold' : ''}`}>
                         Exercises
-                    </NavLink>
-
-
-                    <NavLink to="/routines" className={({ isActive }) => `text-gray-700 hover:text-orange-500 ${isActive ? 'text-orange-500 font-semibold' : ''}`}>
-                        Routines
                     </NavLink>
 
                 </nav>

@@ -1,6 +1,8 @@
+import { useContext } from '../context.js';
 import { logic } from '../logic/index.js';
 
 export function EditExercise({ exercise, onExerciseUpdated, onExerciseEditCancelled }) {
+    const { alert } = useContext();
 
     const handleFormSubmit = event => {
         event.preventDefault();
@@ -24,9 +26,13 @@ export function EditExercise({ exercise, onExerciseUpdated, onExerciseEditCancel
                 .then(() => onExerciseUpdated())
                 .catch(error => {
                     console.error(error);
+
+                    alert(error.message);
                 })
         } catch (error) {
             console.error(error);
+
+            alert(error.message);
         }
     }
 

@@ -1,7 +1,8 @@
+import { useContext } from "..//context";
 import { logic } from "../logic";
 
 export function Login({ onUserLoggedIn, onNavigateToRegister }) {
-
+    const { alert } = useContext()
     const handleLoginSubmit = event => {
         event.preventDefault();
 
@@ -21,10 +22,12 @@ export function Login({ onUserLoggedIn, onNavigateToRegister }) {
                 .catch(error => {
                     console.error(error);
 
-                    //TODO alert context
+                    alert(error.message);
                 })
         } catch (error) {
             console.error(error);
+
+            alert(error.message);
         }
     }
 

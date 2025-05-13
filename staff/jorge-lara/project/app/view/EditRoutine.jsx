@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { logic } from '../logic/index.js';
+import { useContext } from "../context.js";
 
 export function EditRoutine({ routine, onRoutineEditCancelled, onRoutineUpdated }) {
+    const { alert } = useContext();
     const [exercisesList, setExercisesList] = useState([])
     const [selectedExercises, setSelectedExercises] = useState(
         (routine.exercises || []).map(ex => (typeof ex === 'string' ? ex : ex._id)));
@@ -14,9 +16,15 @@ export function EditRoutine({ routine, onRoutineEditCancelled, onRoutineUpdated 
         try {
             logic.getExercises()
                 .then(exercises => setExercisesList(exercises))
-                .catch(error => console.error(error))
+                .catch(error => {
+                    console.error(error);
+
+                    alert(error.message);
+                })
         } catch (error) {
             console.error(error);
+
+            alert(error.message);
         }
     }
 
@@ -47,9 +55,13 @@ export function EditRoutine({ routine, onRoutineEditCancelled, onRoutineUpdated 
                 .then(() => onRoutineUpdated())
                 .catch(error => {
                     console.error(error);
+
+                    alert(error.message);
                 })
         } catch (error) {
-            console.error(error)
+            console.error(error);
+
+            alert(error.message);
         }
     }
 

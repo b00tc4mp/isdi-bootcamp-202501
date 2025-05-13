@@ -2,20 +2,31 @@ import { useState } from 'react';
 import { logic } from '../logic/index.js';
 import { Modal } from '../components/index.js';
 import { EditExercise } from './EditExercise.jsx';
+import { useContext } from '../context.js';
 
 export function Exercise({ exercise, onExerciseDeleted, onExerciseUpdated }) {
+    const { alert, confirm } = useContext();
     const [showModal, setShowModal] = useState(false);
 
     const handleDeleteClick = () => {
-        //TODO confirm
-        try {
-            logic.deleteExercise(exercise.id)
-                .then(() => onExerciseDeleted())
-                .catch(error => console.error(error));
-        } catch (error) {
-            console.error(error);
-        }
+        confirm('Delete exercise?')
+            .then(accepted => {
+                if (accepted) {
+                    try {
+                        logic.deleteExercise(exercise.id)
+                            .then(() => onExerciseDeleted())
+                            .catch(error => {
+                                console.error(error);
 
+                                alert(error.message);
+                            });
+                    } catch (error) {
+                        console.error(error);
+
+                        alert(error.message);
+                    }
+                }
+            })
     }
 
     const handleExerciseUpdated = () => {

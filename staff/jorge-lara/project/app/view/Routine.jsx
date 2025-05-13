@@ -3,18 +3,31 @@ import { RoutineCalendar } from "../components/index.js"
 import { logic } from '../logic/index.js';
 import { EditRoutine } from "./EditRoutine.jsx";
 import { Modal } from '../components/index.js';
+import { useContext } from "../context.js";
 
 export function Routine({ routine, onRoutineDeleted, onRoutineUpdated, showButtons = true }) {
+    const { alert, confirm } = useContext();
     const [showModal, setShowModal] = useState(false);
 
     const handleDeleteClick = () => {
-        try {
-            logic.deleteRoutine(routine.id)
-                .then(() => onRoutineDeleted())
-                .catch(error => console.error(error))
-        } catch (error) {
-            console.error(error);
-        }
+        confirm('Delete routine?')
+            .then(accepted => {
+                if (accepted) {
+                    try {
+                        logic.deleteRoutine(routine.id)
+                            .then(() => onRoutineDeleted())
+                            .catch(error => {
+                                console.error(error);
+
+                                alert(error.message);
+                            })
+                    } catch (error) {
+                        console.error(error);
+
+                        alert(error.message);
+                    }
+                }
+            })
     }
 
     const handleRoutineUpdated = () => {
