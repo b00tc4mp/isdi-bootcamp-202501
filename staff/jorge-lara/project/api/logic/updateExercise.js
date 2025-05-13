@@ -13,11 +13,11 @@ export const updateExercise = (userId, exerciseId, updateFields) => {
     validate.reps(updateFields.reps)
     validate.restTime(updateFields.restTime)
 
-    if (updateFields.description !== "") {
+    if (updateFields.description !== undefined) {
         validate.description(updateFields.description);
     }
 
-    if (updateFields.instructions !== "") {
+    if (updateFields.instructions !== undefined) {
         validate.instructions(updateFields.instructions);
     }
 

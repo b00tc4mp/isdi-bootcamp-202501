@@ -16,7 +16,7 @@ export const updateRoutine = (userId, routineId, updateFields) => {
     validate.startDate(updateFields.startDate);
     validate.endDate(updateFields.endDate);
 
-    if (updateFields.description !== "") {
+    if (updateFields.description !== undefined) {
         validate.description(updateFields.description);
     }
 

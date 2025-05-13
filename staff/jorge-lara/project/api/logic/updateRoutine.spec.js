@@ -15,6 +15,10 @@ describe('updateRoutine', () => {
     it('successfully update a routine', () => {
         let user;
         let exercises;
+        const now = new Date();
+        const yesterday = new Date(now);
+        const tomorrow = new Date(now);
+        const nextWeek = new Date(now);
         return bcrypt.hash('123123123', 10)
             .then((passwordCrypted) => {
                 return User.create({
@@ -57,6 +61,11 @@ describe('updateRoutine', () => {
                 exercises = _exercises;
                 const exercisesIds = _exercises.map(ex => ex._id.toString())
 
+                yesterday.setDate(now.getDate() - 1);
+
+                tomorrow.setDate(now.getDate() + 1);
+
+                nextWeek.setDate(now.getDate() + 7);
                 return Routine.create({
                     user: user.id,
                     title: 'test routine',
@@ -66,8 +75,8 @@ describe('updateRoutine', () => {
                     category: 'strength',
                     type: 'circuit',
                     exercises: exercisesIds,
-                    startDate: new Date('2025-05-01'),
-                    endDate: new Date('2025-05-13')
+                    startDate: yesterday,
+                    endDate: tomorrow
                 })
             })
             .then(routine => {
@@ -75,8 +84,11 @@ describe('updateRoutine', () => {
                     title: 'new routine',
                     difficulty: 'easy',
                     duration: 45,
+                    category: routine.category,
+                    type: routine.type,
                     exercises: exercises.slice(0, 2).map(ex => ex._id.toString()),
-                    startDate: new Date('2025-05-05')
+                    startDate: nextWeek,
+                    endDate: routine.endDate,
                 }
                 return updateRoutine(user.id, routine.id.toString(), updateFields)
             })
@@ -88,12 +100,20 @@ describe('updateRoutine', () => {
                 expect(updatedRoutine.difficulty).to.equal('easy');
                 expect(updatedRoutine.category).to.equal('strength');
                 expect(updatedRoutine.type).to.equal('circuit');
-                expect(updatedRoutine.startDate).to.deep.equal(new Date('2025-05-05'));
-                expect(updatedRoutine.endDate).to.deep.equal(new Date('2025-05-13'));
+                expect(updatedRoutine.startDate).to.deep.equal(nextWeek)
+                expect(updatedRoutine.endDate).to.deep.equal(tomorrow)
 
                 const expectedExercises = exercises.slice(0, 2).map(ex => ex._id.toString())
                 expect(updatedRoutine.exercises.map(ex => ex.toString())).to.deep.equal(expectedExercises)
 
             })
     })
+
+    afterEach(() => Promise.all([
+        User.deleteMany({}),
+        Exercise.deleteMany({}),
+        Routine.deleteMany({})
+    ]));
+
+    after(() => data.disconnect());
 })

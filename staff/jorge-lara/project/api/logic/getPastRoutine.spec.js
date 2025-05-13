@@ -19,7 +19,7 @@ describe('getPastRoutines', () => {
         let user;
         let exercise;
         let pastRoutine;
-        let returnedRoutines;
+        let returnedRoutine;
 
         return bcrypt.hash('123123123', 10)
             .then(passwordCrypted => {
@@ -85,21 +85,18 @@ describe('getPastRoutines', () => {
                 pastRoutine = _past;
             })
             .then(() => getPastRoutine(user.id))
-            .then(_routines => returnedRoutines = _routines)
+            .then(_routines => returnedRoutine = _routines)
             .then(() => {
-                expect(returnedRoutines).to.be.instanceOf(Array);
-                expect(returnedRoutines.length).to.equal(1);
+                expect(returnedRoutine).to.exist;
+                expect(returnedRoutine.user.id.toString()).to.equal(user.id);
 
-                const routine = returnedRoutines[0];
-                expect(routine.user.id.toString()).to.equal(user.id);
-
-                expect(routine.title).to.equal(pastRoutine.title);
-                expect(routine.description).to.equal(pastRoutine.description);
-                expect(routine.duration).to.equal(pastRoutine.duration);
-                expect(routine.difficulty).to.equal(pastRoutine.difficulty);
-                expect(routine.category).to.equal(pastRoutine.category);
-                expect(routine.type).to.equal(pastRoutine.type);
-                expect(routine.id).to.equal(pastRoutine.id);
+                expect(returnedRoutine.title).to.equal(pastRoutine.title);
+                expect(returnedRoutine.description).to.equal(pastRoutine.description);
+                expect(returnedRoutine.duration).to.equal(pastRoutine.duration);
+                expect(returnedRoutine.difficulty).to.equal(pastRoutine.difficulty);
+                expect(returnedRoutine.category).to.equal(pastRoutine.category);
+                expect(returnedRoutine.type).to.equal(pastRoutine.type);
+                expect(returnedRoutine.id).to.equal(pastRoutine.id);
 
             });
     });

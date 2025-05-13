@@ -18,6 +18,9 @@ describe('createRoutine', () => {
     it('succed on creating routines', () => {
         let user;
         let exercises;
+        const now = new Date();
+        const yesterday = new Date(now);
+        const tomorrow = new Date(now);
 
         return bcrypt.hash('123123123', 10)
             .then(passwordCrypted => {
@@ -56,6 +59,10 @@ describe('createRoutine', () => {
                 exercises = _exercises;
                 const exerciseIds = _exercises.map(ex => ex._id.toString());
 
+                yesterday.setDate(now.getDate() - 1);
+
+                tomorrow.setDate(now.getDate() + 1);
+
                 return createRoutine(
                     user.id,
                     'test routine',
@@ -65,8 +72,8 @@ describe('createRoutine', () => {
                     'strength',
                     'circuit',
                     exerciseIds,
-                    new Date('2025-05-01'),
-                    new Date('2025-05-31')
+                    yesterday,
+                    tomorrow
                 );
             })
             .then(result => {
@@ -81,8 +88,8 @@ describe('createRoutine', () => {
                 expect(routine.difficulty).to.equal('medium');
                 expect(routine.category).to.equal('strength');
                 expect(routine.type).to.equal('circuit');
-                expect(routine.startDate).to.deep.equal(new Date('2025-05-01'));
-                expect(routine.endDate).to.deep.equal(new Date('2025-05-31'));
+                expect(routine.startDate).to.deep.equal(yesterday);
+                expect(routine.endDate).to.deep.equal(tomorrow);
 
                 const expectedExerciseIds = exercises.map(ex => ex._id.toString());
                 expect(routine.exercises.map(ex => ex.toString())).to.deep.equal(expectedExerciseIds);

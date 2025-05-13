@@ -108,10 +108,12 @@ export const validate = {
     },
 
     description(text, explain = 'description') {
+        this.string(text, explain)
         this.maxLength(text, 200, explain)
     },
 
     instructions(text, explain = 'instructions') {
+        this.string(text, explain)
         this.maxLength(text, 200, explain)
     },
 
@@ -166,19 +168,23 @@ export const validate = {
         arr.forEach((id, i) => this.id(id, `${explain}`))
     },
 
-    startDate(dateStr, explain = 'startDate') {
-        this.string(dateStr, explain)
-        const time = Date.parse(dateStr)
-        if (Number.isNaN(time)) {
-            throw new ValidationError(`invalid ${explain} syntax`)
+    startDate(date, explain = 'startDate') {
+        // const time = Date.parse(dateStr)
+        // if (Number.isNaN(time)) {
+        //     throw new ValidationError(`invalid ${explain} syntax`)
+        // }
+        if (!(date instanceof Date) || isNaN(date.getTime())) {
+            throw new ValidationError(`Invalid ${explain} format`)
         }
     },
 
-    endDate(dateStr, explain = 'endDate') {
-        this.string(dateStr, explain)
-        const time = Date.parse(dateStr)
-        if (Number.isNaN(time)) {
-            throw new ValidationError(`invalid ${explain} syntax`)
+    endDate(date, explain = 'endDate') {
+        // const time = Date.parse(dateStr)
+        // if (Number.isNaN(time)) {
+        //     throw new ValidationError(`invalid ${explain} syntax`)
+        // }
+        if (!(date instanceof Date) || isNaN(date.getTime())) {
+            throw new ValidationError(`Invalid ${explain} format`)
         }
     }
 }

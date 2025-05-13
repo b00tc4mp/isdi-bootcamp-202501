@@ -20,7 +20,7 @@ describe('getNextRoutine', () => {
         let user;
         let exercise;
         let futureRoutine;
-        let returnedRoutines;
+        let returnedRoutine;
 
         return bcrypt.hash('123123123', 10)
             .then(passwordCrypted => {
@@ -86,21 +86,18 @@ describe('getNextRoutine', () => {
                 futureRoutine = _future;
             })
             .then(() => getNextRoutine(user.id))
-            .then(_routines => returnedRoutines = _routines)
+            .then(_routines => returnedRoutine = _routines)
             .then(() => {
-                expect(returnedRoutines).to.be.instanceOf(Array);
-                expect(returnedRoutines.length).to.equal(1);
+                expect(returnedRoutine).to.exist;
+                expect(returnedRoutine.user.id.toString()).to.equal(user.id);
 
-                const routine = returnedRoutines[0];
-                expect(routine.user.id.toString()).to.equal(user.id);
-
-                expect(routine.title).to.equal(futureRoutine.title);
-                expect(routine.description).to.equal(futureRoutine.description);
-                expect(routine.duration).to.equal(futureRoutine.duration);
-                expect(routine.difficulty).to.equal(futureRoutine.difficulty);
-                expect(routine.category).to.equal(futureRoutine.category);
-                expect(routine.type).to.equal(futureRoutine.type);
-                expect(routine.id).to.equal(futureRoutine.id);
+                expect(returnedRoutine.title).to.equal(futureRoutine.title);
+                expect(returnedRoutine.description).to.equal(futureRoutine.description);
+                expect(returnedRoutine.duration).to.equal(futureRoutine.duration);
+                expect(returnedRoutine.difficulty).to.equal(futureRoutine.difficulty);
+                expect(returnedRoutine.category).to.equal(futureRoutine.category);
+                expect(returnedRoutine.type).to.equal(futureRoutine.type);
+                expect(returnedRoutine.id).to.equal(futureRoutine.id);
 
             });
     });
