@@ -1,7 +1,7 @@
-import { Exercise, User } from '../data/index.js';
+import { Exercise, User, Routine } from '../data/index.js';
 import { errors, validate } from 'com';
 
-const { SystemError, NotFoundError } = errors;
+const { SystemError, NotFoundError, RangeError } = errors;
 
 export const deleteExercise = (userId, exerciseId) => {
     validate.id(userId, "userId");
@@ -9,10 +9,11 @@ export const deleteExercise = (userId, exerciseId) => {
 
     return Promise.all([
         User.findById(userId).lean(),
-        Exercise.findById(exerciseId).lean()
+        Exercise.findById(exerciseId).lean(),
+        Routine.countDocuments({ exercises: exerciseId, user: userId })
     ])
         .catch(error => { throw new SystemError(error.message) })
-        .then(([user, exercise]) => {
+        .then(([user, exercise, exerciseUsed]) => {
             if (!user) {
                 throw new NotFoundError('user not found');
             }
@@ -21,7 +22,11 @@ export const deleteExercise = (userId, exerciseId) => {
                 throw new NotFoundError('exercise not found');
             }
 
-            return Exercise.deleteOne({ _id: exercise })
+            if (exerciseUsed > 0) {
+                throw new RangeError('cannot delete exercises because its in an actual routine')
+            }
+
+            return Exercise.deleteOne({ _id: exerciseId })
                 .catch(error => { throw new SystemError(error.message) });
         })
         .then(() => { })

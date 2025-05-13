@@ -52,7 +52,7 @@ export function EditExercise({ exercise, onExerciseUpdated, onExerciseEditCancel
                 <input type="text" id="muscleCategory" defaultValue={exercise.muscleCategory} required />
             </div>
             <div>
-                <label htmlFor="description">Descritpion</label>
+                <label htmlFor="description">Description</label>
                 <textarea id="description" defaultValue={exercise.description} rows={2} />
             </div>
             <div>

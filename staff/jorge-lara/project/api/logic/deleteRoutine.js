@@ -1,5 +1,5 @@
 import { Routine, User } from '../data/index.js';
-import { errors } from 'com';
+import { errors, validate } from 'com';
 
 const { SystemError, NotFoundError } = errors;
 

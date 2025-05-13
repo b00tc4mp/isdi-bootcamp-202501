@@ -35,7 +35,7 @@ export function Routine({ routine, onRoutineDeleted, onRoutineUpdated, showButto
         onRoutineUpdated();
     }
 
-    return <div className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 mb-6">
+    return <div className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 mt-6">
         <h2 className="text-xl text-center font-bold text-gray-800 mb-5">{routine.title}</h2>
         <div className="flex flex-col md:flex-row md:space-x-8">
 

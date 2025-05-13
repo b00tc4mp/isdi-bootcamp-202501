@@ -34,7 +34,7 @@ export function Exercise({ exercise, onExerciseDeleted, onExerciseUpdated }) {
         onExerciseUpdated();
     }
 
-    return <div className="flex flex-col bg-white rounded-2xl shadow-lg p-6 md:flex-row md:w-[70%] md:space-x-8 mx-auto px-4 py-6 space-y-8">
+    return <div className="flex flex-col bg-white rounded-2xl shadow-lg p-6 md:flex-row md:w-[70%] md:space-x-8 mx-auto px-4 py-6 mt-6 space-y-6">
         <div className="md:w-1/3 flex-shrink-0">
             <div className='cursor-pointer overflow-hidden rounded-lg h-48 md:h-auto'>
                 {exercise.images?.length > 0 ? (

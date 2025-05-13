@@ -1,7 +1,7 @@
 import { errors } from 'com'
 import jwt from 'jsonwebtoken'
 
-const { SystemError, CredentialsError, NotFoundError, DuplicityError, AuthorizationError } = errors
+const { SystemError, CredentialsError, NotFoundError, DuplicityError, AuthorizationError, RangeError } = errors
 const { JsonWebTokenError, TokenExpiredError } = jwt;
 
 export const errorHandler = (error, req, res, next) => {
@@ -18,6 +18,9 @@ export const errorHandler = (error, req, res, next) => {
         status = 404;
         errorName = error.constructor.name;
     } else if (error instanceof DuplicityError) {
+        status = 409;
+        errorName = error.constructor.name;
+    } else if (error instanceof RangeError) {
         status = 409;
         errorName = error.constructor.name;
     } else if (error instanceof TokenExpiredError) {
