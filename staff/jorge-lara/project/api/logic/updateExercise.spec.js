@@ -57,7 +57,7 @@ describe('updateExercise', () => {
 
     afterEach(() => Promise.all([
         User.deleteMany({}),
-        //Exercise.deleteMany({})
+        Exercise.deleteMany({})
     ]));
 
     after(() => data.disconnect());
