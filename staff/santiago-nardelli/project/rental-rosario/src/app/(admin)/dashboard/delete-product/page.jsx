@@ -5,7 +5,6 @@ import React, { useEffect } from "react";
 import { useAllProperties } from "../../../hooks/useAllProperties";
 import "sweetalert2/dist/sweetalert2.min.css";
 import { Button } from "../../../_components/ui/button";
-import Link from "next/link";
 import Swal from "sweetalert2";
 import { useDeleteProperty } from "../../../hooks/useDeleteProperty";
 
@@ -20,7 +19,8 @@ const DeletePage = () => {
   const {
     isDeleting: deleteLoading,
     deleteError,
-    propertyDeleted,
+    deleteSuccess: propertyDeleted,
+    clearStates,
     deleteProperty,
   } = useDeleteProperty();
 
@@ -38,6 +38,7 @@ const DeletePage = () => {
         text: "La propiedad ha sido eliminada correctamente.",
         confirmButtonText: "OK",
       }).then(() => {
+        clearStates(); // Limpiar estados después de mostrar la alerta
         fetchProperties(); // Vuelve a cargar la lista de propiedades después de eliminar
       });
     }

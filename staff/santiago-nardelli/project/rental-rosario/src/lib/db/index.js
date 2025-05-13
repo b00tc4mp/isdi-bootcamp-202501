@@ -1,9 +1,16 @@
 import mongoose from "mongoose";
 
-const { MONGODB_URI } = process.env;
+const { MONGODB_URI, DATABASE_URL, DATABASE_NAME } = process.env;
 
-if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI no está definido en las variables de entorno");
+// Decide qué URI usar
+let DATABASE_URI;
+
+if (DATABASE_URL && DATABASE_NAME) {
+  DATABASE_URI = `${DATABASE_URL}/${DATABASE_NAME}`;
+} else if (MONGODB_URI) {
+  DATABASE_URI = MONGODB_URI;
+} else {
+  throw new Error("No se ha definido ninguna URI para la base de datos");
 }
 
 let cached = global.mongoose;
@@ -18,22 +25,24 @@ export async function connectToDatabase() {
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
-      .then((mongoose) => {
-        console.log("Conectado a MongoDB Atlas");
-        return mongoose;
-      });
+    cached.promise = mongoose.connect(DATABASE_URI).then((mongoose) => {
+      console.log(
+        `Conectado a MongoDB: ${
+          DATABASE_URI.includes("localhost") ? "local" : "Atlas"
+        }`
+      );
+      return mongoose;
+    });
   }
 
   try {
     cached.conn = await cached.promise;
     return cached.conn;
   } catch (error) {
-    console.error("Error de conexión a MongoDB Atlas:", error.message);
+    console.error(
+      `Error de conexión a MongoDB (${DATABASE_URI}):`,
+      error.message
+    );
     throw error;
   }
 }
@@ -54,6 +63,7 @@ export async function disconnectFromDatabase() {
   }
 }
 
+// Manejo de señales del sistema
 process.on("SIGINT", async () => {
   await disconnectFromDatabase();
   process.exit(0);

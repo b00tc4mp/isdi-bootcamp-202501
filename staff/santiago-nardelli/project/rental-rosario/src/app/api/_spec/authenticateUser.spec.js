@@ -1,12 +1,9 @@
 import "dotenv/config";
 import { User } from "../../../lib/db/models/index.js";
 import { errors } from "com";
-import { authenticateUser } from "./authenticateUser.js";
+import { authenticateUser } from "../_logic/index.js";
 import bcrypt from "bcryptjs";
-import {
-  connectToDatabase,
-  disconnectFromDatabase,
-} from "../../../lib/db/index.js";
+import mongoose from "mongoose";
 import { expect } from "chai";
 
 const { NotFoundError, CredentialsError } = errors;
@@ -14,8 +11,18 @@ const { DATABASE_URL, DATABASE_NAME } = process.env;
 
 describe("Authorization after successful authentication", () => {
   before(async () => {
-    await connectToDatabase(DATABASE_URL, DATABASE_NAME);
-    console.info("Connected to database");
+    try {
+      await mongoose.connect(DATABASE_URL, {
+        dbName: DATABASE_NAME,
+        autoIndex: true,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      });
+      console.info("Connected to database");
+    } catch (error) {
+      console.error("Error connecting to database:", error);
+      throw error;
+    }
   });
 
   beforeEach(async () => {
@@ -103,9 +110,14 @@ describe("Authorization after successful authentication", () => {
     await User.deleteMany({});
     console.info("Users collection cleared after test");
   });
-
   after(async () => {
-    await disconnectFromDatabase();
-    console.info("Disconnected from database");
+    try {
+      await mongoose.connection.dropDatabase();
+      await mongoose.disconnect();
+      console.info("Disconnected from database");
+    } catch (error) {
+      console.error("Error disconnecting from database:", error);
+      throw error;
+    }
   });
 });

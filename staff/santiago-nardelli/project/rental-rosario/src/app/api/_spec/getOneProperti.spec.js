@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { expect } from "chai";
 import sinon from "sinon";
-import { getOneProperty } from "./getOneProperty.js";
+import { getOneProperty } from "../_logic/index.js";
 import { Property } from "../../../lib/db/models/index.js";
 import { validate, errors } from "com";
 import { Types } from "mongoose";

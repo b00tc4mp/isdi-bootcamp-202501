@@ -7,11 +7,21 @@ export const createProperty = (propertyData) => {
   // Validaciones de entrada
   console.log("propertyData recibido en createProperty:", propertyData);
 
-  validate.text(propertyData.title, { minLength: 3, maxLength: 50 });
-  validate.url(propertyData.image, { minLength: 1 });
-  validate.text(propertyData.description, { minLength: 3, maxLength: 500 });
-  validate.text(propertyData.location, { minLength: 3, maxLength: 50 });
-  validate.text(propertyData.type);
+  validate.text(propertyData.title, { minLength: 3, maxLength: 50 }, "title");
+  validate.url(propertyData.image, "image");
+  validate.text(
+    propertyData.description,
+    { minLength: 3, maxLength: 500 },
+    "description"
+  );
+  validate.text(
+    propertyData.location,
+    { minLength: 3, maxLength: 50 },
+    "location"
+  );
+  validate.string(propertyData.type, "type");
+  validate.number(propertyData.bedrooms, { min: 1 }, "bedrooms");
+  validate.url(propertyData.airbnbUrl, "airbnbUrl");
 
   return (async () => {
     let property;

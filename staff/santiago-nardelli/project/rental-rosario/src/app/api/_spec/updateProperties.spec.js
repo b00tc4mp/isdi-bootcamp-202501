@@ -1,22 +1,20 @@
 import "dotenv/config";
 import { expect } from "chai";
-import { updateProperty } from "./updateProperties.js";
+import { updateProperty } from "../_logic/index.js";
 import {
   connectToDatabase,
   disconnectFromDatabase,
 } from "../../../lib/db/index.js";
 import { Property, User } from "../../../lib/db/models/index.js";
 import { errors } from "com";
-import { Types } from "mongoose";
-
-const { ObjectId } = Types;
-const { NotFoundError, SystemError, ValidateError } = errors;
+const { SystemError, ValidateError } = errors;
 const { DATABASE_URL, DATABASE_NAME } = process.env;
 
 describe("TEST updateProperty (manual updatedAt)", () => {
+  let connection;
   before(async () => {
     try {
-      await connectToDatabase(DATABASE_URL, DATABASE_NAME);
+      connection = await connectToDatabase(DATABASE_URL, DATABASE_NAME);
       console.info("Connected to database for updateProperty tests");
     } catch (error) {
       console.error("Failed to connect to the database:", error);
@@ -264,6 +262,7 @@ describe("TEST updateProperty (manual updatedAt)", () => {
       Property.findOneAndUpdate = originalPropertyFindOneAndUpdate;
     }
   });
+
   afterEach(async () => {
     try {
       await Property.deleteMany({});

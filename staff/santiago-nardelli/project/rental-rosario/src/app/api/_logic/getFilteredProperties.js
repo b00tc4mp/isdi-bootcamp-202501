@@ -1,8 +1,8 @@
 import { Property } from "../../../lib/db/models/index.js";
 
-import { errors } from "com";
+import { errors, validate } from "com";
 
-const { SystemError } = errors;
+const { SystemError, NotFoundError } = errors;
 
 export async function getFilteredProperties(filter) {
   const query = {};
@@ -29,9 +29,19 @@ export async function getFilteredProperties(filter) {
       property.id = property._id.toString();
       delete property._id;
     });
+
+    // Si no se encuentran propiedades, lanza un error
+    if (properties.length === 0) {
+      throw new NotFoundError(
+        "No se encontraron propiedades con los filtros especificados."
+      );
+    }
     return properties;
   } catch (error) {
     // Manejo de errores
+    if (error instanceof NotFoundError) {
+      throw error; // Re-lanza el error si es un NotFoundError
+    }
     throw new SystemError(`Error fetching properties: ${error.message}`);
   }
 }

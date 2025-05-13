@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Property } from "../../../lib/db/models/index.js";
 import { errors } from "com";
-import { getAllProperties } from "./getAllProperties.js";
+import { getAllProperties } from "../_logic/index.js";
 import {
   connectToDatabase,
   disconnectFromDatabase,
@@ -9,13 +9,15 @@ import {
 import { expect } from "chai";
 import sinon from "sinon";
 
-const { SystemError } = errors;
+const { SystemError, NotFoundError } = errors;
 const { DATABASE_URL, DATABASE_NAME } = process.env;
 
 describe("getAllProperties", () => {
+  let connection;
+
   before(async () => {
-    await connectToDatabase(DATABASE_URL, DATABASE_NAME);
-    console.info("Connected to database for getAllProperties tests");
+    connection = await connectToDatabase(DATABASE_URL, DATABASE_NAME);
+    console.info("Connected to database");
   });
 
   beforeEach(async () => {
@@ -23,13 +25,7 @@ describe("getAllProperties", () => {
     console.info("Properties collection cleared for getAllProperties test");
   });
 
-  it("should return an empty array if no properties exist", async () => {
-    const properties = await getAllProperties();
-    expect(properties).to.be.an("array").that.is.empty;
-  });
-
   it("should return an array of properties sorted by title", async () => {
-    // Insertamos algunas propiedades de prueba
     const property1 = new Property({
       title: "Casa Bonita",
       description: "Una casa hermosa",
@@ -74,6 +70,16 @@ describe("getAllProperties", () => {
       expect(property).to.not.have.property("_id");
       expect(property).to.not.have.property("__v");
     });
+  });
+
+  it("should throw NotFoundError if no properties exist", async () => {
+    try {
+      const properties = await getAllProperties();
+      throw new Error("Expected NotFoundError, but got no error");
+    } catch (error) {
+      expect(error).to.be.an.instanceOf(NotFoundError);
+      expect(error.message).to.include("No properties found");
+    }
   });
 
   it("should throw a SystemError if the database query fails", async () => {

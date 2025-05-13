@@ -2,7 +2,7 @@ import { Property } from "../../../lib/db/models/index.js";
 import { errors, validate } from "com";
 import mongoose from "mongoose";
 
-const { NotFoundError, SystemError, AuthorizationError } = errors;
+const { NotFoundError, SystemError } = errors;
 
 export const deleteProperty = (userId, propertyId) => {
   // Validar el ID de la propiedad

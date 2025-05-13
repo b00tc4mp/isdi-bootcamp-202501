@@ -1,7 +1,7 @@
 import { Property } from "../../../lib/db/models/index.js";
 import { errors } from "com";
 
-const { SystemError } = errors;
+const { SystemError, NotFoundError } = errors;
 
 export const getAllProperties = async () => {
   let properties;
@@ -19,9 +19,16 @@ export const getAllProperties = async () => {
       delete property._id;
     });
 
+    // Si no se encuentran propiedades, lanza un error
+    if (properties.length === 0) {
+      throw new NotFoundError("No properties found");
+    }
     return properties;
   } catch (error) {
     // Manejo de errores
+    if (error instanceof NotFoundError) {
+      throw error; // Lanza el error original
+    }
     throw new SystemError(`Error fetching properties: ${error.message}`);
   }
 };

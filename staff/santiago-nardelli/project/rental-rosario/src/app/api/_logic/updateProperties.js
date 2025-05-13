@@ -1,7 +1,8 @@
 import { Property, User } from "../../../lib/db/models/index.js";
 import { validate, errors } from "com";
 
-const { SystemError, NotFoundError, ValidateError } = errors;
+const { SystemError, NotFoundError, ValidateError, AuthorizationError } =
+  errors;
 
 // Función auxiliar para validar y filtrar actualizaciones
 const validateAndFilterUpdates = (updates) => {
@@ -46,40 +47,53 @@ const validateAndFilterUpdates = (updates) => {
   return filteredUpdates;
 };
 
-export const updateProperty = async (userId, propertyId, updates) => {
+export const updateProperty = (userId, propertyId, updates) => {
   validate.id(userId, "userId");
   validate.id(propertyId, "propertyId");
 
   const filteredUpdates = validateAndFilterUpdates(updates);
 
-  try {
-    // Verificación del Usuario
-    const user = await User.findById(userId).lean();
-    if (!user) {
-      throw new NotFoundError("User not found");
+  return (async () => {
+    let user;
+    try {
+      // Verificación del Usuario
+      user = await User.findById(userId).lean();
+      if (!user) {
+        throw new NotFoundError("User not found");
+      }
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error; // Re-lanzar errores esperados
+      }
+      throw new SystemError(error.message); // Otros errores como problemas de conexión
     }
 
-    // Actualización de la Propiedad
-    const updatedProperty = await Property.findOneAndUpdate(
-      { _id: propertyId },
-      {
-        $set: {
-          ...filteredUpdates,
-          updatedAt: new Date(),
+    let updatedProperty;
+
+    try {
+      // Actualización de la Propiedad
+      updatedProperty = await Property.findOneAndUpdate(
+        { _id: propertyId },
+        {
+          $set: {
+            ...filteredUpdates,
+            updatedAt: new Date(),
+          },
         },
-      },
-      { new: true }
-    ).lean();
+        { new: true }
+      ).lean();
 
-    if (!updatedProperty) {
-      throw new NotFoundError("Property not found");
-    }
+      if (!updatedProperty) {
+        throw new NotFoundError("Property not found");
+      }
 
-    return updatedProperty;
-  } catch (error) {
-    if (error instanceof ValidateError || error instanceof NotFoundError) {
-      throw error; // Re-lanzar errores esperados
+      return updatedProperty;
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error; // Re-lanzar errores esperados
+      }
+
+      throw new SystemError(error.message); // Otros errores como problemas de conexión
     }
-    throw new SystemError(error.message); // Otros errores como problemas de conexión
-  }
+  })();
 };

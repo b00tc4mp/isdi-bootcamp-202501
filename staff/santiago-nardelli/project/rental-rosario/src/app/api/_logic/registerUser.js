@@ -6,13 +6,11 @@ const { DuplicityError, SystemError } = errors;
 
 export const registerUser = (name, email, password) => {
   // Validaciones
-  validate.text(name);
-  validate.maxLength(name, 20);
-  validate.email(email);
-  validate.password(password);
+  validate.name(name, { minLength: 3, maxLength: 50 }, "name");
+  validate.email(email, "email");
+  validate.password(password, "password", { minLength: 6, maxLength: 50 });
 
- 
-  return (async () => {  //IIFE ==> inmediatelly invoque function expression??
+  return (async () => {
     let user;
     let hashedPassword;
 

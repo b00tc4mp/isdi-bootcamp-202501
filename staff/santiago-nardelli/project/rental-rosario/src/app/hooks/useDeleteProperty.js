@@ -21,10 +21,17 @@ export const useDeleteProperty = () => {
     }
   };
 
+  // Función para limpiar estados
+  const clearStates = () => {
+    setDeleteError(null);
+    setDeleteSuccess(false);
+  };
+
   return {
     isDeleting,
     deleteError,
     deleteSuccess,
+    clearStates,
     deleteProperty,
   };
 };
