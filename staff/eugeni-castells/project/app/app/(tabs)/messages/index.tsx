@@ -1,39 +1,52 @@
 import { useState, useEffect } from "react";
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  View as RNView,
-  RefreshControl,
-} from "react-native";
+import { Alert, ScrollView, StyleSheet, RefreshControl } from "react-native";
 import { Text, View } from "@/components/Themed";
 import { getChats } from "@/services";
 import { ReturnedSanitizedChat } from "@/com/types";
 import ChatBox from "@/components/Chats/ChatBox";
 import { useRouter } from "expo-router";
 import { useAuthRedirect } from "@/custom-hooks/useAuthRedirect";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MessagesScreen() {
   useAuthRedirect();
 
   const [chats, setChats] = useState<ReturnedSanitizedChat[] | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-
   const router = useRouter();
 
-  const fetchChats = () => {
-    setRefreshing(true);
-    getChats()
-      .then((data) => setChats(data))
-      .catch((err) => Alert.alert(err.message))
-      .finally(() => setRefreshing(false));
+  const fetchChats = async () => {
+    try {
+      setRefreshing(true);
+      const token = await AsyncStorage.getItem("token");
+
+      if (!token) {
+        console.warn("Token no disponible, no es fa fetch de chats");
+        return;
+      }
+
+      const data = await getChats();
+      setChats(data);
+    } catch (err) {
+      Alert.alert((err as Error).message);
+    } finally {
+      setRefreshing(false);
+    }
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     fetchChats();
 
-    const interval = setInterval(fetchChats, 5000); // opcional: actualitza cada 5s
-    return () => clearInterval(interval);
+    const interval = setInterval(() => {
+      if (isMounted) fetchChats();
+    }, 5000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   const handleChatBoxClick = (id: string) => {

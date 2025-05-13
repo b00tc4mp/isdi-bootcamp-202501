@@ -22,7 +22,7 @@ export const registerUserSchema = object({
     .optional(),
   address: z
     .string()
-    .min(5, "address must have at least 2 characters")
+    .min(5, "address must have at least 5 characters")
     .max(30, "address cannot surpasse 30 characters"),
   country: z
     .string()

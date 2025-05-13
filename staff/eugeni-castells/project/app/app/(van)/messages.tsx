@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Alert, Pressable, StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { Text, View } from "@/components/Themed";
 import { getChats } from "@/services";
 import { ReturnedSanitizedChat } from "@/com/types";

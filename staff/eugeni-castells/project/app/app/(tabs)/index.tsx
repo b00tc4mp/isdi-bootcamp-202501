@@ -14,6 +14,7 @@ import { useAuthRedirect } from "@/custom-hooks/useAuthRedirect";
 import FilterMenu from "@/components/Home/FilterMenu";
 import { FilterStateType } from "@/components/Home/types";
 import { Loading } from "@/components/Loading";
+import { data } from "@/data";
 
 export default function HomeScreen() {
   useAuthRedirect();
@@ -71,6 +72,16 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchVans = async () => {
       try {
+        try {
+          const token = await data.getToken();
+          if (!token) {
+            console.warn("Token no disponible, no es fa fetch de vans");
+            return;
+          }
+        } catch (error) {
+          Alert.alert((error as Error).message);
+        }
+
         //we have to do all this formatting because the localParams can return either a string or an array of strings so we have to be sura we are sending strings alone
         let notArrayLongitude;
         if (!Array.isArray(longitude)) notArrayLongitude = longitude;

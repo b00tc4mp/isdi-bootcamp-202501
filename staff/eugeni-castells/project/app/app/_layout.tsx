@@ -5,7 +5,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack, useRouter } from "expo-router";
+import { Stack, usePathname, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
@@ -35,6 +35,8 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
+  const pathname = usePathname();
+
   useEffect(() => {
     const prepareApp = async () => {
       try {
@@ -43,13 +45,15 @@ export default function RootLayout() {
 
         if (loggedIn) {
           const lastRoute = await AsyncStorage.getItem("lastRoute");
-          if (lastRoute && lastRoute !== "(auth)" && lastRoute !== "modal") {
-            setInitialRoute("/" + lastRoute);
-          } else {
-            setInitialRoute("/(tabs)");
-          }
+          setInitialRoute(
+            lastRoute && lastRoute !== "(auth)" && lastRoute !== "modal"
+              ? "/" + lastRoute
+              : "/(tabs)"
+          );
         } else {
-          if (hasSeenLanding === "true") {
+          if (pathname?.startsWith("/(auth)")) {
+            setInitialRoute(pathname);
+          } else if (hasSeenLanding === "true") {
             setInitialRoute("/(tabs)");
           } else {
             setInitialRoute("/(auth)");
@@ -64,6 +68,8 @@ export default function RootLayout() {
     };
 
     prepareApp();
+    console.log("pathname actual:", pathname);
+    console.log("initialRoute a aplicar:", initialRoute);
   }, []);
 
   useEffect(() => {
@@ -79,8 +85,12 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       {showApp && (
         <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="(auth)" />
+          {initialRoute?.startsWith("/(auth)") && (
+            <Stack.Screen name="(auth)" />
+          )}
+          {initialRoute?.startsWith("/(tabs)") && (
+            <Stack.Screen name="(tabs)" />
+          )}
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
       )}
