@@ -44,23 +44,23 @@ export function CreateExercise({ onExerciseCreate, onExerciseCreateCancelled }) 
         <form className='flex flex-col space-y-4' onSubmit={handleFormSubmit}>
             <div>
                 <label htmlFor="name">Name</label>
-                <input type="text" id="name" />
+                <input type="text" id="name" placeholder="e.g., Biceps Curl" />
             </div>
             <div>
                 <label htmlFor="muscleCategory">Muscle Category</label>
-                <input type="text" id="muscleCategory" />
+                <input type="text" id="muscleCategory" placeholder="e.g., Arms" />
             </div>
             <div>
                 <label htmlFor="sets">Sets</label>
-                <input type="text" id="sets" />
+                <input type="text" id="sets" placeholder="e.g., 3" />
             </div>
             <div>
                 <label htmlFor="reps">Reps</label>
-                <input type="text" id="reps" />
+                <input type="text" id="reps" placeholder="e.g., 12" />c
             </div>
             <div>
                 <label htmlFor="restTime"> Rest time (s)</label>
-                <input type="text" id="restTime" />
+                <input type="text" id="restTime" placeholder="e.g., 60" />
             </div>
             <div className='flex justify-between space-x-4 pt-4'>
                 <button onClick={handleCancelClick} className=' cursor-pointer bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 text-white transition-colors'>Cancel</button>

@@ -71,7 +71,7 @@ export function CreateRoutine({ onRoutineCreate, onRoutineCreateCancelled }) {
         <form className='flex flex-col space-y-4' onSubmit={handleFormSubmit}>
             <div>
                 <label htmlFor="title">Title</label>
-                <input type="text" id="title" required />
+                <input type="text" id="title" required placeholder="e.g., Full Body Blast" />
             </div>
             <div>
                 <label htmlFor="description">Description</label>
@@ -79,16 +79,16 @@ export function CreateRoutine({ onRoutineCreate, onRoutineCreateCancelled }) {
             </div>
             <div>
                 <label htmlFor="duration">Duration (mins)</label>
-                <input type="number" id="duration" min={1} required />
+                <input type="number" id="duration" min={1} required placeholder="e.g., 45" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label htmlFor="difficulty">Difficulty</label>
-                    <input type="text" id="difficulty" />
+                    <input type="text" id="difficulty" placeholder="e.g., Intermediate" />
                 </div>
                 <div>
                     <label htmlFor="category">Category</label>
-                    <input type="text" id="category" required />
+                    <input type="text" id="category" required placeholder="e.g., Strength" />
                 </div>
             </div>
             <div>
@@ -108,7 +108,9 @@ export function CreateRoutine({ onRoutineCreate, onRoutineCreateCancelled }) {
             <div>
                 <label htmlFor="exercises">Exercises</label>
                 <select id="exercises" multiple required >{exercisesList.map((ex => (<option key={ex.id} value={ex.id}>{ex.name}</option>)))}</select>
-
+                <p className="text-xs text-gray-500 mt-1">
+                    Hold down Ctrl to select multiple exercises
+                </p>
             </div>
             <div className='flex justify-between space-x-4 pt-4'>
                 <button onClick={handleCancelClick} className='cursor-pointer bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 text-white transition-colors'>Cancel</button>

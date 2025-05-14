@@ -33,7 +33,9 @@ data.connect(MONGO_URL, MONGO_DB)
                                 muscleCategory: 'biceps',
                                 sets: 3,
                                 reps: 8,
-                                restTime: 90
+                                restTime: 90,
+                                images: ['https://training.fit/wp-content/uploads/2018/12/bizepscurls-800x448.png'],
+                                videos: ['https://www.youtube.com/watch?v=HU2lghjU29Y']
                             },
                             {
                                 user: admin.id,
@@ -41,7 +43,8 @@ data.connect(MONGO_URL, MONGO_DB)
                                 muscleCategory: 'triceps',
                                 sets: 4,
                                 reps: 10,
-                                restTime: 60
+                                restTime: 60,
+                                images: ['https://liftmanual.com/wp-content/uploads/2023/04/weighted-tricep-dips.jpg']
                             },
                             {
                                 user: admin2.id,
@@ -54,19 +57,31 @@ data.connect(MONGO_URL, MONGO_DB)
                         ]).then(([bicepsCurl, tricepsDip, legExtension]) => ({ admin, admin2, bicepsCurl, tricepsDip, legExtension }))
                     })
                     .then(({ admin, admin2, bicepsCurl, tricepsDip, legExtension }) => {
-                        debugger;
+                        const now = new Date();
+                        const yesterday = new Date(now);
+                        yesterday.setDate(now.getDate() - 1);
+
+                        const tomorrow = new Date(now);
+                        tomorrow.setDate(now.getDate() + 1);
+
+                        const lastWeek = new Date(now);
+                        lastWeek.setDate(now.getDate() - 7);
+
+                        const nextWeek = new Date(now);
+                        nextWeek.setDate(now.getDate() + 7);
+
                         return Routine.insertMany([
                             {
                                 user: admin.id,
                                 title: 'Arm Strength Builder',
                                 description: 'A test description',
                                 duration: 30,
-                                difficulty: 'intermediate',
+                                difficulty: 'easy',
                                 category: 'strength',
                                 type: 'supersets',
-                                exercises: [bicepsCurl.id, legExtension.id],
-                                startDate: new Date('2025-05-10'),
-                                endDate: new Date('2025-05-22')
+                                exercises: [bicepsCurl.id],
+                                startDate: yesterday,
+                                endDate: tomorrow
                             },
                             {
                                 user: admin.id,
@@ -76,9 +91,9 @@ data.connect(MONGO_URL, MONGO_DB)
                                 difficulty: 'advanced',
                                 category: 'hypertrophy',
                                 type: 'circuit',
-                                exercises: [bicepsCurl.id, legExtension.id, tricepsDip.id],
-                                startDate: new Date('2025-05-10'),
-                                endDate: new Date('2025-06-03')
+                                exercises: [bicepsCurl.id, tricepsDip.id],
+                                startDate: lastWeek,
+                                endDate: yesterday
                             },
                             {
                                 user: admin2.id,
@@ -89,8 +104,8 @@ data.connect(MONGO_URL, MONGO_DB)
                                 category: 'hypertrophy',
                                 type: 'straight',
                                 exercises: [legExtension.id],
-                                startDate: new Date('2025-05-10'),
-                                endDate: new Date('2025-05-29')
+                                startDate: tomorrow,
+                                endDate: nextWeek
                             }
                         ])
                     })

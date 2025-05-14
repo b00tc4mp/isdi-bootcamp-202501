@@ -78,11 +78,11 @@ export function EditExercise({ exercise, onExerciseUpdated, onExerciseEditCancel
             </div>
             <div>
                 <label htmlFor="images">Image Url</label>
-                <input type="text" id="images" defaultValue={exercise.images} />
+                <input type="text" id="images" defaultValue={exercise.images} placeholder='e.g., image url' />
             </div>
             <div>
                 <label htmlFor="videos">Video url</label>
-                <input id="videos" defaultValue={exercise.videos} />
+                <input id="videos" defaultValue={exercise.videos} placeholder='e.g., video url' />
             </div>
             <div className='md:col-span-2 flex justify-between space-x-4 pt-4'>
                 <button type='button' onClick={handleCancelClick} className='cursor-pointer bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 text-white transition-colors'>Cancel</button>
