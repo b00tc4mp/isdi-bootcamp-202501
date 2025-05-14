@@ -22,7 +22,7 @@ describe('getUserusername', () => {
                     password: passwordCrypted
                 })
             })
-            .then(user => { debugger; return getUserUsername(user._id.toString()) })
+            .then(user => getUserUsername(user._id.toString()))
             .then(username => returnedUsername = username)
             .finally(() => {
                 expect(returnedUsername).to.be.a.string;

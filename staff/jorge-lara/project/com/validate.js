@@ -88,6 +88,12 @@ export const validate = {
         this.maxLength(muscleCategory, 30, explain)
     },
 
+    weight(weight, explain = 'weight') {
+        if (typeof weight !== 'number' || Number.isNaN(weight)) {
+            throw new ValidationError(`invalid ${explain} type`)
+        }
+    },
+
     sets(sets, explain = 'sets') {
         this.number(sets, explain)
         if (!Number.isInteger(sets) || sets < 1 || sets > 10) {
@@ -169,20 +175,12 @@ export const validate = {
     },
 
     startDate(date, explain = 'startDate') {
-        // const time = Date.parse(dateStr)
-        // if (Number.isNaN(time)) {
-        //     throw new ValidationError(`invalid ${explain} syntax`)
-        // }
         if (!(date instanceof Date) || isNaN(date.getTime())) {
             throw new ValidationError(`Invalid ${explain} format`)
         }
     },
 
     endDate(date, explain = 'endDate') {
-        // const time = Date.parse(dateStr)
-        // if (Number.isNaN(time)) {
-        //     throw new ValidationError(`invalid ${explain} syntax`)
-        // }
         if (!(date instanceof Date) || isNaN(date.getTime())) {
             throw new ValidationError(`Invalid ${explain} format`)
         }

@@ -64,7 +64,7 @@ export function CreateRoutine({ onRoutineCreate, onRoutineCreateCancelled }) {
 
     const handleCancelClick = () => onRoutineCreateCancelled();
 
-    return <section className='w-full max-w-md bg-white rounded-2xl shadow-lg p-8 mx-auto'>
+    return <section className='w-full max-w-2xl h-[90vh] mx-auto max-h-[100vh] overflow-y-auto bg-white rounded-2xl shadow-lg p-8'>
         <h2 className="text-2xl text-center font-bold text-gray-800 mb-6">
             New Routine
         </h2>

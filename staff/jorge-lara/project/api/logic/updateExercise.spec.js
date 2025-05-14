@@ -3,7 +3,12 @@ import { data, Exercise, Routine, User } from '../data/index.js';
 import bcrypt from 'bcryptjs';
 import { updateExercise } from './updateExercise.js';
 import { expect } from 'chai';
+import { Types } from 'mongoose';
+import { errors } from 'com';
 
+const { NotFoundError } = errors;
+
+const { ObjectId } = Types;
 const { MONGO_URL, MONGO_DB } = process.env;
 
 describe('updateExercise', () => {
@@ -55,6 +60,35 @@ describe('updateExercise', () => {
             })
     })
 
+    it('fail on existing user at update a exercise', () => {
+        let catchedError;
+
+        return Exercise.create({
+            user: new ObjectId('67e3b7de759d2b7079093a7e'),
+            name: 'biceps curl',
+            muscleCategory: 'biceps',
+            sets: 3,
+            reps: 8,
+            restTime: 90
+        })
+            .then(exercise => {
+                const updateFields = {
+                    name: 'pull ups',
+                    muscleCategory: 'back',
+                    sets: 4,
+                    reps: 10,
+                    restTime: 90,
+                    instructions: 'hang on the bar and go up'
+                }
+
+                return updateExercise('67e3b7de759d2b7079093a7e', exercise.id, updateFields)
+            })
+            .catch(error => catchedError = error)
+            .finally(() => {
+                expect(catchedError).to.be.instanceOf(NotFoundError)
+                expect(catchedError.message).to.equal('user not found')
+            })
+    })
     afterEach(() => Promise.all([
         User.deleteMany({}),
         Exercise.deleteMany({})

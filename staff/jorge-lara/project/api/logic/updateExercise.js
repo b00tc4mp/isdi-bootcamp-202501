@@ -21,6 +21,10 @@ export const updateExercise = (userId, exerciseId, updateFields) => {
         validate.instructions(updateFields.instructions);
     }
 
+    if (updateFields.weight !== undefined) {
+        validate.weight(updateFields.weight);
+    }
+
     if (updateFields.images !== undefined) {
         validate.images(updateFields.images);
     }

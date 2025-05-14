@@ -1,4 +1,4 @@
-import { useContext } from "..//context";
+import { useContext } from "../context";
 import { logic } from "../logic";
 
 export function Login({ onUserLoggedIn, onNavigateToRegister }) {

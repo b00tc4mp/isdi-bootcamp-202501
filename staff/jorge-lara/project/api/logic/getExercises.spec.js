@@ -38,10 +38,9 @@ describe('getExercises', () => {
             }))
             .then(_exercise => {
                 exercise = _exercise;
-                debugger;
             })
             .then(() => getExercises(user.id))
-            .then(exercises => { debugger; returnedExercises = exercises })
+            .then(exercises => returnedExercises = exercises)
             .then(() => {
                 expect(returnedExercises).to.be.instanceOf(Array);
                 expect(returnedExercises).to.have.lengthOf(1);

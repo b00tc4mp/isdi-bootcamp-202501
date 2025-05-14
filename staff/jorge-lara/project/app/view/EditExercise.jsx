@@ -15,6 +15,7 @@ export function EditExercise({ exercise, onExerciseUpdated, onExerciseEditCancel
                 muscleCategory: form.muscleCategory.value,
                 description: form.description.value,
                 instructions: form.instructions.value,
+                weight: Number(form.weight.value),
                 sets: Number(form.sets.value),
                 reps: Number(form.reps.value),
                 restTime: Number(form.restTime.value),
@@ -38,7 +39,7 @@ export function EditExercise({ exercise, onExerciseUpdated, onExerciseEditCancel
 
     const handleCancelClick = () => onExerciseEditCancelled()
 
-    return <section className='w-full max-w-md bg-white rounded-2xl shadow-lg p-8 mx-auto'>
+    return <section className='w-full max-w-2xl  mx-auto max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-lg p-8'>
         <h2 className="text-2xl text-center font-bold text-gray-800 mb-6">
             Edit Exercise
         </h2>
@@ -58,6 +59,10 @@ export function EditExercise({ exercise, onExerciseUpdated, onExerciseEditCancel
             <div>
                 <label htmlFor="instructions">Instructions</label>
                 <textarea type="text" id="instructions" defaultValue={exercise.instructions} rows={2} />
+            </div>
+            <div>
+                <label htmlFor="weight">Weight (KG)</label>
+                <input type="text" id="weight" defaultValue={exercise.weight} required />
             </div>
             <div>
                 <label htmlFor="sets">Sets</label>

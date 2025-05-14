@@ -4,7 +4,7 @@ import { errors } from 'com'
 const { SystemError } = errors;
 
 export const loginUser = (email, password) => {
-    //TODO validations
+
     return fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
         method: 'POST',
         headers: {

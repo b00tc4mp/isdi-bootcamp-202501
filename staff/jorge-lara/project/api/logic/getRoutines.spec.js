@@ -21,7 +21,6 @@ describe('getRoutines', () => {
         let routine, routine2;
         let returnedRoutines;
 
-        debugger;
         return bcrypt.hash('123123123', 10)
             .then(passwordCrypted => {
                 return User.create({
@@ -91,7 +90,6 @@ describe('getRoutines', () => {
             .then(() => getRoutines(user.id))
             .then(routines => returnedRoutines = routines)
             .then(() => {
-                debugger;
                 expect(returnedRoutines).to.be.instanceOf(Array);
 
                 let returnedRoutine = returnedRoutines[0];
