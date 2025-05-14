@@ -7,7 +7,6 @@ import {
   PopulatedTrip,
   PopulatedReview,
   GetVansDateFilterPropsType,
-  ReturnedVansType,
   SanitizedReview,
 } from "./types";
 import { getAverageRating, filterTripsByDate } from "../utils";
@@ -74,7 +73,6 @@ export const getVans = (
       //get the vans that have the id in their location array
       vans = await Van.find({
         location: { $in: locationIds },
-        //TODO add new filter depending on trips
       })
         .populate<{
           location: PopulatedLocation;
@@ -113,7 +111,6 @@ export const getVans = (
         filterDates!.end!
       );
     }
-
     //Depending on if we have filterDate or not we will sanitize one group of vans or
     const vansToMap = filterDates ? filteredVansByDate : vans;
 

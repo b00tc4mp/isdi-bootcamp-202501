@@ -235,10 +235,11 @@ _1.data
     ]);
     const [locPatagonia] = yield models_1.Location.insertMany([
         {
-            address: "Ruta Nacional 40",
-            city: "El Chaltén",
+            address: "Ushuaia",
+            city: "Ushuaia",
+            province: "Tierra del Fuego",
             country: "Argentina",
-            point: { type: "Point", coordinates: [-72.8813, -49.3315] },
+            point: { type: "Point", coordinates: [-68.3, -54.8] },
         },
     ]);
     // Crear usuaris nous
@@ -361,11 +362,22 @@ _1.data
     manu.vans.push(van4._id);
     frankie.vans.push(van5._id);
     luciano.vans.push(van6._id);
-    // Força el tipus dels arrays de reviews
-    van4.reviews = [msg1._id, msg2._id];
-    van5.reviews = [msg1._id];
-    van6.reviews = [msg2._id];
-    // Crear un trip entre Bruno i Manu
+    const review1 = yield models_1.Review.create({
+        rating: 5,
+        comment: "Una furgoneta impecable!",
+        author: bruno._id,
+        createdAt: new Date(),
+    });
+    const review2 = yield models_1.Review.create({
+        rating: 4,
+        comment: "Tot molt correcte, només una mica sorollosa.",
+        author: anna._id,
+        createdAt: new Date(),
+    });
+    // Assignar les reviews a les vans correctament
+    van4.reviews.push(review1._id, review2._id);
+    van5.reviews.push(review1._id);
+    van6.reviews.push(review2._id);
     const trip3 = yield models_1.Trip.create({
         startDate: new Date(2025, 7, 1),
         endDate: new Date(2025, 7, 15),

@@ -84,7 +84,6 @@ const getVans = (userId, filterLocation, filterDates) => {
             //get the vans that have the id in their location array
             vans = yield data_1.Van.find({
                 location: { $in: locationIds },
-                //TODO add new filter depending on trips
             })
                 .populate([
                 {

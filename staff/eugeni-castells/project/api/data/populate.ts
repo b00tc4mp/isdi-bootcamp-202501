@@ -1,7 +1,7 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { data } from ".";
-import { User, Van, Trip, Location, Chat, ChatComment } from "./models";
+import { User, Van, Trip, Location, Chat, ChatComment, Review } from "./models";
 import { Types } from "mongoose";
 import { UserDocType } from "./index";
 
@@ -240,13 +240,13 @@ data
 
     const [locPatagonia] = await Location.insertMany([
       {
-        address: "Ruta Nacional 40",
-        city: "El Chaltén",
+        address: "Ushuaia",
+        city: "Ushuaia",
+        province: "Tierra del Fuego",
         country: "Argentina",
-        point: { type: "Point", coordinates: [-72.8813, -49.3315] },
+        point: { type: "Point", coordinates: [-68.3, -54.8] },
       },
     ]);
-
     // Crear usuaris nous
     const [manu, frankie, luciano] = await User.insertMany([
       {
@@ -369,12 +369,25 @@ data
     (manu.vans as Types.ObjectId[]).push(van4._id);
     (frankie.vans as Types.ObjectId[]).push(van5._id);
     (luciano.vans as Types.ObjectId[]).push(van6._id);
+    const review1 = await Review.create({
+      rating: 5,
+      comment: "Una furgoneta impecable!",
+      author: bruno._id,
+      createdAt: new Date(),
+    });
 
-    // Força el tipus dels arrays de reviews
-    (van4.reviews as Types.ObjectId[]) = [msg1._id, msg2._id];
-    (van5.reviews as Types.ObjectId[]) = [msg1._id];
-    (van6.reviews as Types.ObjectId[]) = [msg2._id];
-    // Crear un trip entre Bruno i Manu
+    const review2 = await Review.create({
+      rating: 4,
+      comment: "Tot molt correcte, només una mica sorollosa.",
+      author: anna._id,
+      createdAt: new Date(),
+    });
+
+    // Assignar les reviews a les vans correctament
+    (van4.reviews as Types.ObjectId[]).push(review1._id, review2._id);
+    (van5.reviews as Types.ObjectId[]).push(review1._id);
+    (van6.reviews as Types.ObjectId[]).push(review2._id);
+
     const trip3 = await Trip.create({
       startDate: new Date(2025, 7, 1),
       endDate: new Date(2025, 7, 15),
