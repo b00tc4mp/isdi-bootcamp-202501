@@ -2,7 +2,9 @@
 
 ## Intro
 
-Lorem Ipsum...
+CamperBoat is a peer-to-peer platform that connects van owners with people who want to rent a van for travel adventures. Users can list their vans, search and filter available listings, make trip requests, and manage bookings through a simple and intuitive interface.
+
+Whether you're planning a weekend getaway or a road trip across Patagonia, CamperBoat helps you find the perfect vehicle to explore the open road.
 
 ![](https://media.giphy.com/media/SXCcZUVG44ZvPIziBj/giphy.gif?cid=ecf05e47j1c1f0206qzn8wbr6im8dmop29pl3ubeubebq1of&ep=v1_gifs_search&rid=giphy.gif&ct=g)
 
@@ -12,19 +14,21 @@ Lorem Ipsum...
 
 User
 
-- update user info (Profile)
+- update user info
 - register van
 - update van
 - delete van
-- search for location and dates
+- search for location
+- search for dates
 - filter for features
-- request book trip
+- request trip request
 - accept or decline trip request
 - chat when request is accepted
-- view van profile (Van Profile)
-- view own book history (Profile)
+- view van profile
 - view own chat history
-- view van book history
+- view user trips
+- view user's van trips
+- view user requests
 
 ### UIUX Design
 
@@ -72,7 +76,7 @@ Van
 - insideKitchen (boolean),
 - fridge (boolean),
 - toilet (enum: 'portable','fixed', 'none')
-- shower (string enum 'inside,'outside','none')
+- shower {boolean}
 - fuelType(string enum:'petrol', 'diesel', 'electric', 'hybrid')
 - storage (number)
 - brand (string)
@@ -80,7 +84,7 @@ Van
 - year (number)
 - accessible (boolean)
 - legal ([Doc.id])
-- images ([string])
+- images ([{path:string,url:string}])
 - trips ([Trip.id])
 - createdAt (Date)
 - modifiedAt (Date)
@@ -95,8 +99,8 @@ Trip
 - endDate (Date)
 - van (Van.id)
 - van owner (User.id)
-- user/renter (User.id)
-- price (number,)
+- renter (User.id)
+- price (number)
 - issues [Doc.id]
 - agreements [Doc.id]
   paymentStatus (string enum: 'pending' || 'payed' || 'rejected')
@@ -117,18 +121,40 @@ Doc
 Review
 
 - rating (number, min 0, max 5)
-- comment (string, )
+- comment (string)
 - author (User.id)
+- id (string, uuid)
+- createdAt (Date)
+- modifiedAt (null | Date)
 
 Location
 
-- id (string, uuid)
+- id (ObjectId, uuid)
 - address (string),
 - city (string),
-- region (string),
 - country (string),
-- lat (number),
-- lng (number)
+- [Point.id]
+
+Point
+
+- id (string)
+- type (string enum: ["Point"])
+- coordinates ([number, number])
+
+Chat
+
+- id (string)
+- history (ChatComment.id[])
+- participants [User.id]
+- createdAt (Date)
+- modifiedAt (Date | null)
+
+ChatComment
+
+- text (string)
+- author (User.id)
+- createdAt (Date)
+- modifiedAt (Date | null)
 
 ### Technologies
 
@@ -136,9 +162,13 @@ Location
 - Typescript
 - Node
 - Express
+- Firebase (Storage)
 - MongoDB
-- Mocha/Chai/C8
+- Mocha/Chai/C8/Sinon
 - JWT/bcryptjs
+- Multer
+- Morgan / Winston
+- Zod
 
 ## Planning
 
