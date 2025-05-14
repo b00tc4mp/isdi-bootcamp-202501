@@ -5,12 +5,10 @@ import { getChats } from "@/services";
 import { ReturnedSanitizedChat } from "@/com/types";
 import ChatBox from "@/components/Chats/ChatBox";
 import { useRouter } from "expo-router";
-import { useAuthRedirect } from "@/custom-hooks/useAuthRedirect";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { usePathname } from "expo-router";
 
 export default function MessagesScreen() {
-  useAuthRedirect();
-
   const [chats, setChats] = useState<ReturnedSanitizedChat[] | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
@@ -34,19 +32,41 @@ export default function MessagesScreen() {
     }
   };
 
+  const pathname = usePathname();
+
   useEffect(() => {
     let isMounted = true;
 
-    fetchChats();
+    if (pathname === "/(tabs)/messages") {
+      try {
+        fetchChats().catch((error) => {
+          Alert.alert((error as Error).message);
+        });
+      } catch (error) {
+        Alert.alert((error as Error).message);
+      }
 
-    const interval = setInterval(() => {
-      if (isMounted) fetchChats();
-    }, 5000);
+      const interval = setInterval(() => {
+        if (isMounted && pathname === "/(tabs)/messages") {
+          fetchChats();
+        }
+      }, 5000);
 
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
+      return () => {
+        isMounted = false;
+        clearInterval(interval);
+      };
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    try {
+      fetchChats().catch((error) => {
+        Alert.alert((error as Error).message);
+      });
+    } catch (error) {
+      Alert.alert((error as Error).message);
+    }
   }, []);
 
   const handleChatBoxClick = (id: string) => {

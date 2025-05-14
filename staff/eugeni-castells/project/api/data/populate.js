@@ -16,7 +16,6 @@ require("dotenv/config");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const _1 = require(".");
 const models_1 = require("./models");
-const mongoose_1 = require("mongoose");
 const { MONGO_URI, MONGO_DB_APP } = process.env;
 _1.data
     .connect(MONGO_URI, MONGO_DB_APP)
@@ -25,156 +24,273 @@ _1.data
     models_1.Van.deleteMany({}),
     models_1.Trip.deleteMany({}),
     models_1.Location.deleteMany({}),
+    models_1.Chat.deleteMany({}),
+    models_1.ChatComment.deleteMany({}),
 ]))
     .then(() => bcryptjs_1.default.hash("123123123", 10))
     .then((hashedPassword) => __awaiter(void 0, void 0, void 0, function* () {
-    const locationId = new mongoose_1.Types.ObjectId(); // Assumim una location comuna
-    const docId = new mongoose_1.Types.ObjectId();
-    const [frankieLocation, manuLocation, aaronLocation, luchoLocation] = yield models_1.Location.insertMany([
+    const [loc1, loc2] = yield models_1.Location.insertMany([
         {
-            address: "carrer joanic",
-            city: "barcelona",
+            address: "Carrer Gran",
+            city: "Barcelona",
             country: "Spain",
-            point: { type: "Point", coordinates: [2.1613, 41.4075] },
+            point: { type: "Point", coordinates: [2.17, 41.38] },
         },
         {
-            address: "carrer del carme",
-            city: "barcelona",
+            address: "Carrer Major",
+            city: "Cornellà",
             country: "Spain",
-            point: { type: "Point", coordinates: [2.1703, 41.3829] },
-        },
-        {
-            address: "carrer major de cornellà",
-            city: "cornellà",
-            country: "Spain",
-            point: { type: "Point", coordinates: [2.0753, 41.3596] },
-        },
-        {
-            address: "plaza cataluña",
-            city: "santa fe",
-            country: "argentina",
-            point: { type: "Point", coordinates: [-60.7096, -31.6361] },
+            point: { type: "Point", coordinates: [2.08, 41.36] },
         },
     ]);
-    const [frankie, manu, aaron, lucho] = yield models_1.User.insertMany([
+    const [anna, bruno, clara] = yield models_1.User.insertMany([
         {
-            name: "Frankie",
-            lastName: "friendo",
-            email: "fran@kie.com",
+            name: "Sergi",
+            lastName: "Dealer",
+            email: "ser@gi.com",
             password: hashedPassword,
             role: "regular",
-            createdAt: new Date(),
-            location: frankieLocation._id,
-            roadPoints: 1500,
+            location: loc1._id,
+            roadPoints: 500,
             vans: [],
             trips: [],
+            createdAt: new Date(),
         },
+        {
+            name: "Masha",
+            lastName: "Stepanova",
+            email: "ma@sha.com",
+            password: hashedPassword,
+            role: "regular",
+            location: loc2._id,
+            roadPoints: 300,
+            vans: [],
+            trips: [],
+            createdAt: new Date(),
+        },
+        {
+            name: "Aaron",
+            lastName: "Uwu",
+            email: "aa@ron.com",
+            password: hashedPassword,
+            role: "regular",
+            location: loc1._id,
+            roadPoints: 200,
+            vans: [],
+            trips: [],
+            createdAt: new Date(),
+        },
+    ]);
+    const vans = yield models_1.Van.insertMany([
+        {
+            model: "Camper Elite",
+            brand: "VW",
+            year: new Date(2020, 1),
+            location: loc1._id,
+            owner: anna._id,
+            accessible: true,
+            price: 100,
+            images: [
+                {
+                    url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/weinsberg.webp?alt=media&token=adf9c563-81b0-452e-b689-3e5e74e77a61",
+                    path: "camper-elite/weinsberg.webp",
+                },
+            ],
+            heating: true,
+            airConditioning: true,
+            bedCount: 2,
+            insideKitchen: true,
+            fridge: true,
+            toilet: "fixed",
+            shower: true,
+            fuelType: "diesel",
+            storage: 200,
+            windows: 3,
+            doors: 3,
+            createdAt: new Date(),
+            reviews: [],
+            legal: [],
+            trips: [],
+        },
+        {
+            model: "Eco Compact",
+            brand: "Fiat",
+            year: new Date(2019, 5),
+            location: loc2._id,
+            owner: bruno._id,
+            accessible: false,
+            price: 80,
+            images: [
+                {
+                    url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/honda.jpg?alt=media&token=1154d422-30cf-4402-bd18-281b0d2de9fb",
+                    path: "eco-compact/honda.jpg",
+                },
+            ],
+            heating: false,
+            airConditioning: true,
+            bedCount: 1,
+            insideKitchen: false,
+            fridge: true,
+            toilet: "none",
+            shower: false,
+            fuelType: "petrol",
+            storage: 100,
+            windows: 2,
+            doors: 2,
+            createdAt: new Date(),
+            reviews: [],
+            legal: [],
+            trips: [],
+        },
+        {
+            model: "Luxury Travel",
+            brand: "Mercedes",
+            year: new Date(2022, 0),
+            location: loc1._id,
+            owner: clara._id,
+            accessible: true,
+            price: 150,
+            images: [
+                {
+                    url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/kyros.jpg?alt=media&token=047fbc30-c97f-4657-9f3a-a4b401a683cf",
+                    path: "luxury-travel/kyros.jpg",
+                },
+            ],
+            heating: true,
+            airConditioning: true,
+            bedCount: 3,
+            insideKitchen: true,
+            fridge: true,
+            toilet: "portable",
+            shower: true,
+            fuelType: "diesel",
+            storage: 300,
+            windows: 4,
+            doors: 3,
+            createdAt: new Date(),
+            reviews: [],
+            legal: [],
+            trips: [],
+        },
+    ]);
+    // Assignar vans a usuaris
+    anna.vans = [vans[0]._id];
+    bruno.vans = [vans[1]._id];
+    clara.vans = [vans[2]._id];
+    yield Promise.all([anna.save(), bruno.save(), clara.save()]);
+    // Crear trips
+    const trip1 = yield models_1.Trip.create({
+        startDate: new Date(2025, 6, 1),
+        endDate: new Date(2025, 6, 10),
+        van: vans[0]._id,
+        renter: bruno._id,
+        vanOwner: anna._id,
+        confirmStatus: "accepted",
+        paymentStatus: "payed",
+        paymentMethod: "currency",
+        price: 300,
+        issues: [],
+        agreements: [],
+        createdAt: new Date(),
+    });
+    const trip2 = yield models_1.Trip.create({
+        startDate: new Date(2025, 6, 15),
+        endDate: new Date(2025, 6, 20),
+        van: vans[2]._id,
+        renter: anna._id,
+        vanOwner: clara._id,
+        confirmStatus: "pending",
+        paymentStatus: "pending",
+        paymentMethod: "currency",
+        price: 400,
+        issues: [],
+        agreements: [],
+        createdAt: new Date(),
+    });
+    anna.trips.push(trip2._id);
+    bruno.trips.push(trip1._id);
+    clara.trips.push(trip2._id);
+    // Crear missatges i xat
+    const msg1 = yield models_1.ChatComment.create({
+        text: "Hi, can I get your van?",
+        author: bruno._id,
+    });
+    const msg2 = yield models_1.ChatComment.create({
+        text: "Sure! When do you need it?",
+        author: anna._id,
+    });
+    const chat = yield models_1.Chat.create({
+        participants: [anna._id, bruno._id],
+        history: [msg1._id, msg2._id],
+        createdAt: new Date(),
+    });
+    anna.chats.push(chat._id);
+    bruno.chats.push(chat._id);
+    yield Promise.all([
+        anna.save(),
+        bruno.save(),
+        clara.save(),
+        vans[0].save(),
+        vans[2].save(),
+    ]);
+    const [locPatagonia] = yield models_1.Location.insertMany([
+        {
+            address: "Ruta Nacional 40",
+            city: "El Chaltén",
+            country: "Argentina",
+            point: { type: "Point", coordinates: [-72.8813, -49.3315] },
+        },
+    ]);
+    // Crear usuaris nous
+    const [manu, frankie, luciano] = yield models_1.User.insertMany([
         {
             name: "Manu",
             lastName: "Barzi",
             email: "ma@nu.com",
             password: hashedPassword,
             role: "regular",
-            createdAt: new Date(),
-            location: manuLocation._id,
-            roadPoints: 800,
+            location: locPatagonia._id,
+            roadPoints: 700,
             vans: [],
             trips: [],
+            createdAt: new Date(),
         },
         {
-            name: "Aaron",
-            lastName: "Barrios",
-            email: "aa@ron.com",
+            name: "Frankie",
+            lastName: "Guitarras",
+            email: "fran@kie.com",
             password: hashedPassword,
             role: "regular",
-            createdAt: new Date(),
-            modifiedAt: null,
-            location: aaronLocation._id,
-            roadPoints: 1200,
+            location: locPatagonia._id,
+            roadPoints: 650,
             vans: [],
             trips: [],
+            createdAt: new Date(),
         },
         {
             name: "Luciano",
-            lastName: "Paravan",
+            lastName: "Pavarotti",
             email: "lu@cho.com",
             password: hashedPassword,
-            role: "admin",
-            createdAt: new Date(2023, 8, 17),
-            location: luchoLocation._id,
-            roadPoints: 0,
+            role: "regular",
+            location: locPatagonia._id,
+            roadPoints: 800,
             vans: [],
             trips: [],
+            createdAt: new Date(),
         },
     ]);
-    const reviews = yield models_1.Review.insertMany([
+    // Crear vans per cadascun
+    const [van4, van5, van6] = yield models_1.Van.insertMany([
         {
-            author: manu._id,
-            rating: 5,
-            comment: "An incredible experience! The camper was spotless.",
-            createdAt: new Date(),
-            modifiedAt: null,
-        },
-        {
-            author: frankie._id,
-            rating: 4,
-            comment: "Everything was great, but the bed wasn’t very comfortable.",
-            createdAt: new Date(),
-            modifiedAt: null,
-        },
-        {
-            author: aaron._id,
-            rating: 3,
-            comment: "Okay for a few days, but it was a bit noisy.",
-            createdAt: new Date(),
-            modifiedAt: null,
-        },
-        {
-            author: lucho._id,
-            rating: 5,
-            comment: "Perfect for a road trip. Would definitely do it again!",
-            createdAt: new Date(),
-            modifiedAt: null,
-        },
-        {
-            author: frankie._id,
-            rating: 2,
-            comment: "The van wasn’t clean when we arrived.",
-            createdAt: new Date(),
-            modifiedAt: null,
-        },
-        {
-            author: aaron._id,
-            rating: 4,
-            comment: "Very practical and well equipped. Ideal for short getaways.",
-            createdAt: new Date(),
-            modifiedAt: null,
-        },
-    ]);
-    const [van1, van2, van3] = yield models_1.Van.insertMany([
-        {
-            model: "Sprinter 3000",
-            brand: "Mercedes",
-            description: "Van ideal per viatges llargs amb aire acondicionat",
-            year: new Date(2021, 5),
-            images: [
-                {
-                    url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/weinsberg.webp?alt=media&token=adf9c563-81b0-452e-b689-3e5e74e77a61",
-                    path: "gs://camperboat-45a0a.firebasestorage.app/weinsberg.webp",
-                },
-                {
-                    url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/weinsberg2.webp?alt=media&token=dd890cd6-3a88-4d93-8aa9-c69e1bb21972",
-                    path: "gs://camperboat-45a0a.firebasestorage.app/weinsberg2.webp",
-                },
-            ],
+            model: "Patagonia Explorer",
+            brand: "Ford",
+            year: new Date(2021, 3),
+            location: locPatagonia._id,
+            owner: manu._id,
             accessible: true,
-            price: 150,
-            reviews: [reviews[0]._id, reviews[1]._id],
-            location: manuLocation._id,
-            legal: [docId],
-            trips: [],
-            windows: 4,
-            doors: 3,
+            price: 110,
+            images: vans[0].images,
             heating: true,
             airConditioning: true,
             bedCount: 2,
@@ -183,106 +299,117 @@ _1.data
             toilet: "portable",
             shower: true,
             fuelType: "diesel",
-            storage: 300,
-            createdAt: new Date(),
-            modifiedAt: null,
-            owner: manu._id,
-        },
-        {
-            model: "California Camper",
-            brand: "Volkswagen",
-            description: "Compacta i còmoda",
-            year: new Date(2019, 3),
-            images: [
-                {
-                    url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/kyros.jpg?alt=media&token=047fbc30-c97f-4657-9f3a-a4b401a683cf",
-                    path: "gs://camperboat-45a0a.firebasestorage.app/kyros.jpg",
-                },
-                {
-                    url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/kyros2.jpeg?alt=media&token=f2ed822b-53bd-4530-9093-e5ecc9b22574",
-                    path: "gs://camperboat-45a0a.firebasestorage.app/kyros2.jpeg",
-                },
-            ],
-            accessible: false,
-            price: 120,
-            reviews: [reviews[2]._id, reviews[5]._id],
-            location: frankieLocation._id,
-            legal: [],
-            trips: [],
+            storage: 180,
             windows: 3,
-            doors: 2,
-            heating: false,
-            airConditioning: true,
-            bedCount: 1,
-            insideKitchen: true,
-            fridge: true,
-            toilet: "none",
-            shower: true,
-            fuelType: "petrol",
-            storage: 150,
+            doors: 3,
             createdAt: new Date(),
-            modifiedAt: null,
-            owner: frankie._id,
-        },
-        {
-            model: "EcoVan X",
-            brand: "Renault",
-            description: "Ecològica i moderna",
-            year: new Date(2022, 0),
-            images: [
-                {
-                    url: "https://firebasestorage.googleapis.com/v0/b/camperboat-45a0a.firebasestorage.app/o/honda.jpg?alt=media&token=1154d422-30cf-4402-bd18-281b0d2de9fb",
-                    path: "gs://camperboat-45a0a.firebasestorage.app/honda.jpg",
-                },
-            ],
-            accessible: true,
-            price: 180,
-            reviews: [reviews[3]._id, reviews[4]._id],
-            location: aaronLocation._id,
+            reviews: [],
             legal: [],
             trips: [],
-            windows: 5,
-            doors: 4,
+        },
+        {
+            model: "Condor Camper",
+            brand: "Chevrolet",
+            year: new Date(2020, 8),
+            location: locPatagonia._id,
+            owner: frankie._id,
+            accessible: false,
+            price: 95,
+            images: vans[1].images,
             heating: true,
             airConditioning: true,
-            bedCount: 3,
+            bedCount: 2,
+            insideKitchen: false,
+            fridge: true,
+            toilet: "none",
+            shower: false,
+            fuelType: "petrol",
+            storage: 120,
+            windows: 2,
+            doors: 2,
+            createdAt: new Date(),
+            reviews: [],
+            legal: [],
+            trips: [],
+        },
+        {
+            model: "Southern Luxury",
+            brand: "Mercedes",
+            year: new Date(2022, 5),
+            location: locPatagonia._id,
+            owner: luciano._id,
+            accessible: true,
+            price: 170,
+            images: vans[2].images,
+            heating: true,
+            airConditioning: true,
+            bedCount: 4,
             insideKitchen: true,
             fridge: true,
             toilet: "fixed",
-            shower: false,
-            fuelType: "electric",
-            storage: 400,
+            shower: true,
+            fuelType: "diesel",
+            storage: 350,
+            windows: 4,
+            doors: 3,
             createdAt: new Date(),
-            modifiedAt: null,
-            owner: aaron._id,
+            reviews: [],
+            legal: [],
+            trips: [],
         },
     ]);
-    manu.vans[0] = van1._id;
-    frankie.vans[0] = van2._id;
-    aaron.vans[0] = van3._id;
-    yield Promise.all([manu.save(), frankie.save(), aaron.save()]);
-    const trip = yield models_1.Trip.create({
-        startDate: new Date(2025, 6, 1),
-        endDate: new Date(2025, 6, 15),
-        van: van2._id,
-        vanOwner: frankie._id,
-        renter: manu._id,
-        issues: [],
+    manu.vans.push(van4._id);
+    frankie.vans.push(van5._id);
+    luciano.vans.push(van6._id);
+    // Força el tipus dels arrays de reviews
+    van4.reviews = [msg1._id, msg2._id];
+    van5.reviews = [msg1._id];
+    van6.reviews = [msg2._id];
+    // Crear un trip entre Bruno i Manu
+    const trip3 = yield models_1.Trip.create({
+        startDate: new Date(2025, 7, 1),
+        endDate: new Date(2025, 7, 15),
+        van: van4._id,
+        renter: bruno._id,
+        vanOwner: manu._id,
+        confirmStatus: "accepted",
         paymentStatus: "payed",
         paymentMethod: "currency",
-        confirmStatus: "pending",
+        price: 220,
+        issues: [],
         agreements: [],
-        price: 300,
         createdAt: new Date(),
     });
-    van2.trips[0] = trip._id;
-    manu.trips[0] = trip._id;
-    frankie.trips[0] = trip._id;
-    yield van2.save();
-    yield manu.save();
-    yield frankie.save();
+    bruno.trips.push(trip3._id);
+    manu.trips.push(trip3._id);
+    van4.trips.push(trip3._id);
+    // Crear comentaris en castellà i un xat entre Manu i Bruno
+    const msg3 = yield models_1.ChatComment.create({
+        text: "Hola! ¿Está disponible tu van?",
+        author: bruno._id,
+    });
+    const msg4 = yield models_1.ChatComment.create({
+        text: "Sí, claro. Te la puedo dejar a partir del lunes!",
+        author: manu._id,
+    });
+    const chat2 = yield models_1.Chat.create({
+        participants: [bruno._id, manu._id],
+        history: [msg3._id, msg4._id],
+        createdAt: new Date(),
+    });
+    bruno.chats.push(chat2._id);
+    manu.chats.push(chat2._id);
+    yield Promise.all([
+        manu.save(),
+        frankie.save(),
+        luciano.save(),
+        van4.save(),
+        van5.save(),
+        van6.save(),
+        bruno.save(),
+    ]);
 }))
     .finally(() => {
-    console.log("✔️  Populate completed!");
+    console.log("✔️ Populate completat!");
     _1.data.disconnect();
 });

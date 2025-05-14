@@ -76,6 +76,7 @@ export type ReturnedVansType = {
   };
   averageRating: number;
 };
+
 export type VanDetailInfo = {
   id: string;
   images: ReturnedImagesFromServer[];

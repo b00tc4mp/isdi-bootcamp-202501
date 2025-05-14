@@ -13,6 +13,7 @@ import { useColorScheme } from "@/components/useColorScheme";
 import { isUserLoggedIn } from "@/services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Loading } from "@/components/Loading";
+import { useTrackLastRoute } from "@/custom-hooks/useTrackLastRoute";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -37,17 +38,22 @@ export default function RootLayout() {
 
   const pathname = usePathname();
 
+  useTrackLastRoute();
+
   useEffect(() => {
     const prepareApp = async () => {
       try {
         const loggedIn = await isUserLoggedIn();
         const hasSeenLanding = await AsyncStorage.getItem("hasSeenLanding");
+        const lastRoute = await AsyncStorage.getItem("lastRoute");
 
         if (loggedIn) {
-          const lastRoute = await AsyncStorage.getItem("lastRoute");
+          // ✅ Evita redirigir a auth/modal i usa la darrera ruta vàlida
           setInitialRoute(
-            lastRoute && lastRoute !== "(auth)" && lastRoute !== "modal"
-              ? "/" + lastRoute
+            lastRoute &&
+              !lastRoute.includes("(auth)") &&
+              !lastRoute.includes("modal")
+              ? lastRoute
               : "/(tabs)"
           );
         } else {
@@ -68,10 +74,7 @@ export default function RootLayout() {
     };
 
     prepareApp();
-    console.log("pathname actual:", pathname);
-    console.log("initialRoute a aplicar:", initialRoute);
   }, []);
-
   useEffect(() => {
     if (loaded && appReady && initialRoute) {
       SplashScreen.hideAsync();

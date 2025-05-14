@@ -7,12 +7,13 @@ import { Text, View } from "@/components/Themed";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { sendMessage } from "@/services/sendMessage";
 import { spacing } from "@/constants/Paddings";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import ButtonBack from "@/components/ButtonBack";
 
 const chatDetail = () => {
   const [history, setHistory] = useState<ReturnedSanitizedChatMessages | []>(
     []
   );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [messageToSend, setMessageToSend] = useState<string>("");
 
   const { id } = useLocalSearchParams();
@@ -44,6 +45,17 @@ const chatDetail = () => {
 
   useEffect(() => {
     if (!id || id instanceof Array) return;
+    try {
+      getChatMessages(id)
+        .then(setHistory)
+        .catch((error) => Alert.alert(error.message));
+    } catch (error) {
+      Alert.alert((error as Error).message);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!id || id instanceof Array) return;
 
     const interval = setInterval(() => {
       getChatMessages(id)
@@ -57,12 +69,9 @@ const chatDetail = () => {
 
   return (
     <View style={styles.container}>
-      <AntDesign
-        name="arrowleft"
-        size={24}
-        color="black"
+      <ButtonBack
         onPress={() => {
-          router.back();
+          router.push("/(tabs)/messages");
         }}
       />
       <Text style={styles.title}>
@@ -108,7 +117,7 @@ const chatDetail = () => {
       <View style={styles.sendContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Escriu un missatge..."
+          placeholder="Write a message..."
           onChangeText={(text) => setMessageToSend(text)}
           value={messageToSend}
         />
@@ -127,6 +136,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f9fa",
+    paddingTop: spacing.lg * 1.5,
   },
   title: {
     fontSize: 18,

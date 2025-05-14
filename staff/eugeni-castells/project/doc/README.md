@@ -10,33 +10,21 @@ Lorem Ipsum...
 
 ### Use Cases
 
-Unregistered User
-
-- register
-- search for location and dates (Home)
-- view van profile (Van Profile)
-
-Registered User
+User
 
 - update user info (Profile)
 - register van
 - update van
 - delete van
-- search for location and dates (Home)
-- save van to favorites (Van Profile)
-- filter for features (Home)
-- request book trip (Trip Profile or Van Profile?)
-- accept or decline trip request (Exchange Home)
-- chat when request is sent (Messages Home) Requester can only chat if host answers (everything chatted outside the app chat doesn't get covered for the insurance)
-- view user profile (Profile)
+- search for location and dates
+- filter for features
+- request book trip
+- accept or decline trip request
+- chat when request is accepted
 - view van profile (Van Profile)
-- view van book progress in calendar (Van Profile)
-- view own trip progress (Trip Profile)
 - view own book history (Profile)
 - view own chat history
 - view van book history
-- comment van when completed trip only
-- rate trip/van
 
 ### UIUX Design
 
@@ -55,7 +43,7 @@ Registered User
 - app (...)
 - api (...)
 - doc (documentation)
-- com (validations, errors)
+- com (, errors)
 
 ### Data Model
 
@@ -63,41 +51,40 @@ User
 
 - id (string, uuid)
 - role (string, enum: regular,moderator,admin)
-- name (string, validations)
-- username (string, validations)
-- email (string, validation)
-- password (string, validation)
+- name (string)
+- lastName (string)
+- password (string)
 - vans ([Van.Id])
 - trips ([Trip.Id])
 - createdAt (Date)
 - modifiedAt (Date)
-- roadPoints (number,validations)
+- roadPoints (number,)
 
 Van
 
 - id (string, uuid)
-- name (string, validations)
-- windows (number, validations),
-- doors (number, validations),
+- name (string)
+- windows (number),
+- doors (number),
 - heating (boolean),
 - airConditioning (boolean),
-- bedCount (number, validations)
+- bedCount (number)
 - insideKitchen (boolean),
 - fridge (boolean),
 - toilet (enum: 'portable','fixed', 'none')
 - shower (string enum 'inside,'outside','none')
 - fuelType(string enum:'petrol', 'diesel', 'electric', 'hybrid')
-- storage (number, validations)
-- brand (string, validations)
-- model (string, validations)
-- year (number, validations)
+- storage (number)
+- brand (string)
+- model (string)
+- year (number)
 - accessible (boolean)
 - legal ([Doc.id])
 - images ([string])
 - trips ([Trip.id])
 - createdAt (Date)
 - modifiedAt (Date)
-- price (num, validations)
+- price (number)
 - reviews ([Review.id])
 - location [Location.id]
 
@@ -109,10 +96,8 @@ Trip
 - van (Van.id)
 - van owner (User.id)
 - user/renter (User.id)
-- price (number,validations)
+- price (number,)
 - issues [Doc.id]
-- location (Location.id)
-<!-- location should be the pickup location? -->
 - agreements [Doc.id]
   paymentStatus (string enum: 'pending' || 'payed' || 'rejected')
 - paymentMethod (enum: 'road points','currency')
@@ -132,7 +117,7 @@ Doc
 Review
 
 - rating (number, min 0, max 5)
-- comment (string, validations)
+- comment (string, )
 - author (User.id)
 
 Location
@@ -147,10 +132,10 @@ Location
 
 ### Technologies
 
-- React Native/TamaGUI??
+- React Native
 - Typescript
-- Node/NestJS
-- GraphQL?
+- Node
+- Express
 - MongoDB
 - Mocha/Chai/C8
 - JWT/bcryptjs

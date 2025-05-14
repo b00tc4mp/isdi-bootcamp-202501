@@ -23,9 +23,10 @@ export default function ProfileScreen() {
     try {
       const userInfo = await getAllUserInfo();
       setUser(userInfo);
-      setIsLoading(false);
     } catch (error) {
       Alert.alert((error as Error).message);
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {

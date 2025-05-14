@@ -19,6 +19,7 @@ import { spacing } from "@/constants/Paddings";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Loading } from "@/components/Loading";
+import { getVans } from "@/services/getVans";
 
 const vehicleTraitsDefault: VehicleTraits = {
   accessible: false,
@@ -73,13 +74,13 @@ const RegisterVan = () => {
         images,
       };
       await registerVan(vanInfo);
+      await getVans(null, null, null, null, null);
       Alert.alert("Van registered!");
       router.push("/(tabs)/profile");
     } catch (error) {
       Alert.alert((error as Error).message);
     } finally {
       setIsLoading(false);
-      console.log("finally entered");
     }
   };
 

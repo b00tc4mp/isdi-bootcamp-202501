@@ -13,10 +13,12 @@ exports.deleteVanById = void 0;
 const com_1 = require("com");
 const data_1 = require("../data");
 const errors_1 = require("com/errors");
+const deleteFileFromFirebase_1 = require("../utils/deleteFileFromFirebase");
 const deleteVanById = (userId, vanId) => {
     com_1.validate.id(userId, "user id");
     com_1.validate.id(vanId, "van Id");
     return (() => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b;
         let user;
         try {
             user = yield data_1.User.findById(userId);
@@ -44,6 +46,15 @@ const deleteVanById = (userId, vanId) => {
                 confirmStatus: "pending",
             }).select("_id");
             tripsToDelete = pendingTrips.map((t) => t._id);
+        }
+        catch (error) {
+            throw new errors_1.SystemError(error.message);
+        }
+        const imagePaths = (_b = (_a = van.images) === null || _a === void 0 ? void 0 : _a.map((img) => img.path)) !== null && _b !== void 0 ? _b : [];
+        try {
+            if (imagePaths.length > 0) {
+                yield (0, deleteFileFromFirebase_1.deleteImagesFromFirebase)(imagePaths);
+            }
         }
         catch (error) {
             throw new errors_1.SystemError(error.message);

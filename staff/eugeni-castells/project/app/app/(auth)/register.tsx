@@ -27,8 +27,11 @@ import {
 import { validate } from "@/com";
 import { filterCountries } from "@/services/filterCountries";
 import { filterCitiesInCountry } from "@/services/filterCitiesInCountry";
+import { Loading } from "@/components/Loading";
 
 export const register = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [permissionGranted, setPermissionGranted] = useState<boolean>(true);
   const [name, setName] = useState("");
   const [lastName, setLastname] = useState("");
@@ -72,7 +75,11 @@ export const register = () => {
   }, [countryQuery]);
 
   const fetchCities = () => {
-    if (!selectedCountry || !debouncedQuery) return;
+    if (!selectedCountry) {
+      Alert.alert("You have to select a country first!");
+      return;
+    }
+    if (!debouncedQuery) return;
 
     try {
       validate.string(cityQuery, "location search");
@@ -108,8 +115,6 @@ export const register = () => {
   useEffect(() => {
     if (debouncedQuery && selectedCountry) {
       fetchCities();
-    } else if (!selectedCountry) {
-      Alert.alert("You have to select a country first!");
     }
   }, [debouncedQuery]);
 
@@ -164,8 +169,6 @@ export const register = () => {
           name,
           lastName,
           email,
-          // country: selectedCountry!.name,
-          // city: selectedCity!.city,
           address,
           password,
           coordinates: [coordinates!.longitude, coordinates!.latitude] as [
@@ -190,14 +193,18 @@ export const register = () => {
       }
 
       try {
+        setIsLoading(true);
         await registerUser(newUserInfo);
         Alert.alert("User registered!");
+
         router.push("/(auth)/login");
       } catch (error) {
         console.error(error);
         const err = error as Error;
 
         Alert.alert(err.message);
+      } finally {
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
@@ -207,7 +214,9 @@ export const register = () => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <Loading isLoading={isLoading} size="large" />
+  ) : (
     <ImageBackground
       source={require("../../assets/images/register.jpg")}
       style={styles.container}

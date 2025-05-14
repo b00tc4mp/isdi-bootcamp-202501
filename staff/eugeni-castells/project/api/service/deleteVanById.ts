@@ -2,6 +2,7 @@ import { validate } from "com";
 import { Trip, User, Van } from "../data";
 import { NotFoundError, SystemError } from "com/errors";
 import { Types } from "mongoose";
+import { deleteImagesFromFirebase } from "../utils/deleteFileFromFirebase";
 
 export const deleteVanById = (userId: string, vanId: string) => {
   validate.id(userId, "user id");
@@ -46,6 +47,15 @@ export const deleteVanById = (userId: string, vanId: string) => {
       }).select("_id");
 
       tripsToDelete = pendingTrips.map((t) => t._id);
+    } catch (error) {
+      throw new SystemError((error as Error).message);
+    }
+    const imagePaths = van.images?.map((img) => img.path) ?? [];
+
+    try {
+      if (imagePaths.length > 0) {
+        await deleteImagesFromFirebase(imagePaths);
+      }
     } catch (error) {
       throw new SystemError((error as Error).message);
     }
