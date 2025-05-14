@@ -1,6 +1,11 @@
 import { validate } from "com";
 import { Trip, User, Van } from "../data";
-import { NotFoundError, SystemError, OverlapError } from "com/errors";
+import {
+  NotFoundError,
+  SystemError,
+  OverlapError,
+  ValidationError,
+} from "com/errors";
 import { PopulatedTrip } from "./types";
 import { filterTripsByDate } from "../utils";
 import { RequestTripParams } from "./types";
@@ -20,6 +25,10 @@ export const generateTripRequest = (
 ): Promise<void> => {
   validate.id(userId, "user id");
   validate.id(vanId, "van id");
+
+  if (!tripInfo.selectedDates) {
+    throw new ValidationError("selectedDates is required");
+  }
 
   return (async () => {
     let user;
@@ -69,9 +78,6 @@ export const generateTripRequest = (
     if (!noVanOverlap) {
       throw new OverlapError("requested van is already booked");
     }
-
-    //TODO
-    //validate van travellers vs trip travellers
 
     let trip;
     //Create trip with all the info

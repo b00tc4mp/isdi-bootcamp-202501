@@ -1,16 +1,25 @@
 import { validate } from "com";
 import { Van } from "../data";
-import { SystemError } from "com/errors";
+import { NotFoundError, SystemError } from "com/errors";
 
-export const getVanLocation = (userId: string, vanId: string) => {
+export const getVanLocation = (
+  userId: string,
+  vanId: string
+): Promise<object> => {
   validate.id(userId, "user id");
 
-  return Van.findById({ vanId })
-    .lean()
-    .catch((error) => {
-      throw new SystemError(error.message);
-    })
-    .then((van) => {
-      return van?.location;
-    });
+  return (async () => {
+    let van;
+    try {
+      van = await Van.findById(vanId).lean();
+    } catch (error) {
+      throw new SystemError((error as Error).message);
+    }
+
+    if (!van) {
+      throw new NotFoundError("van not found");
+    }
+
+    return van.location;
+  })();
 };

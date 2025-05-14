@@ -36,7 +36,7 @@ exports.getVansHandler = (0, createHandler_1.default)((req, res) => {
     if (travellers) {
         parsedTravellers = JSON.parse(travellers);
     }
-    return (0, index_1.getVans)(userId, parsedLocation, parsedDateRange, parsedTravellers).then((vans) => {
+    return (0, index_1.getVans)(userId, parsedLocation, parsedDateRange).then((vans) => {
         res.json(vans);
     });
 });

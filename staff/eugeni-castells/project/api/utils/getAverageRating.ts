@@ -1,13 +1,14 @@
-import { PopulatedReview } from "../service/types";
+import { PopulatedReview, SanitizedReview } from "../service/types";
 
-export const getAverageRating = (reviews: PopulatedReview[]): number => {
-  let sum = 0;
+export const getAverageRating = (reviews: SanitizedReview[]): number | null => {
+  const validRatings = reviews
+    .map((r) => r.rating)
+    .filter((r): r is number => typeof r === "number");
 
-  reviews.forEach((review) => {
-    sum += review.rating;
-  });
+  if (!validRatings.length) return null;
 
-  const averageRatingWithDecimals = sum / reviews.length;
+  const sum = validRatings.reduce((acc, val) => acc + val, 0);
+  const average = sum / validRatings.length;
 
-  return Math.floor(averageRatingWithDecimals * 10) / 10;
+  return Math.floor(average * 10) / 10;
 };

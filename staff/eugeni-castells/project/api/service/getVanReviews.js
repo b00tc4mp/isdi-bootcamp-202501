@@ -49,14 +49,16 @@ const getVanReviews = (userId, vanId) => {
             throw new errors_1.NotFoundError("van not found");
         }
         const reviews = van.reviews.map((review) => {
-            var _a;
+            const { _id, comment, rating, author } = review;
+            const { _id: authorId, name, lastName } = author;
             return {
-                id: review._id.toString(),
-                comment: review.comment || "",
-                rating: (_a = review.rating) !== null && _a !== void 0 ? _a : null,
+                id: _id.toString(),
+                comment: comment || "",
+                rating: rating !== null && rating !== void 0 ? rating : null,
                 author: {
-                    name: review.author.name,
-                    lastName: review.author.lastName,
+                    id: authorId.toString(),
+                    name,
+                    lastName,
                 },
             };
         });

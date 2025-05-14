@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Location = exports.pointSchema = exports.Review = exports.Doc = exports.Trip = exports.Van = exports.User = void 0;
+exports.ChatComment = exports.Chat = exports.Location = exports.pointSchema = exports.Review = exports.Doc = exports.Trip = exports.Van = exports.User = void 0;
 const user_js_1 = require("./user.js");
 Object.defineProperty(exports, "User", { enumerable: true, get: function () { return user_js_1.User; } });
 const van_js_1 = require("./van.js");
@@ -15,3 +15,7 @@ const point_js_1 = require("./point.js");
 Object.defineProperty(exports, "pointSchema", { enumerable: true, get: function () { return point_js_1.pointSchema; } });
 const location_js_1 = require("./location.js");
 Object.defineProperty(exports, "Location", { enumerable: true, get: function () { return location_js_1.Location; } });
+const chat_js_1 = require("./chat.js");
+Object.defineProperty(exports, "Chat", { enumerable: true, get: function () { return chat_js_1.Chat; } });
+const chatComment_js_1 = require("./chatComment.js");
+Object.defineProperty(exports, "ChatComment", { enumerable: true, get: function () { return chatComment_js_1.ChatComment; } });

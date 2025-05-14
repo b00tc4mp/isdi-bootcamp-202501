@@ -59,12 +59,6 @@ const acceptTripRequest = (userId, tripId) => {
                     modifiedAt: new Date(),
                 },
             }, { runValidators: true });
-            if (result.matchedCount === 0) {
-                throw new errors_1.NotFoundError("trip not found during update");
-            }
-            if (result.modifiedCount === 0) {
-                throw new errors_1.SystemError("Trip update failed");
-            }
         }
         catch (error) {
             throw new errors_1.SystemError(error.message);

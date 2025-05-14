@@ -7,16 +7,16 @@ import {
   PopulatedTrip,
   PopulatedReview,
   GetVansDateFilterPropsType,
+  ReturnedVansType,
+  SanitizedReview,
 } from "./types";
 import { getAverageRating, filterTripsByDate } from "../utils";
-type VanWithModel = { model: string };
 
 export const getVans = (
   userId: string,
   filterLocation: [number, number] | [null, null],
-  filterDates?: GetVansDateFilterPropsType | null,
-  filterTravellers?: number | null
-): Promise<VanWithModel[]> => {
+  filterDates?: GetVansDateFilterPropsType | null
+): Promise<SanitizedVanWithRating[]> => {
   validate.id(userId, "user id");
 
   return (async () => {
@@ -39,17 +39,14 @@ export const getVans = (
     if (!filterLocation[0] || !filterLocation[1]) {
       try {
         location = await Location.findById(returnedUser.location._id).lean();
-        if (!location?.point?.coordinates)
-          throw new NotFoundError("user location not found or incomplete");
-
-        //we transform the location received in the same type as the paramether
-        location = [
-          location.point.coordinates[0],
-          location.point.coordinates[1],
-        ];
       } catch (error) {
         throw new SystemError((error as Error).message);
       }
+      if (!location) throw new NotFoundError("user location not found");
+      if (!location.point?.coordinates)
+        throw new NotFoundError("user location coordinates missing");
+      //we transform the location received in the same type as the paramether
+      location = [location.point.coordinates[0], location.point.coordinates[1]];
     } else {
       //if the location is sent we set the location to the location sent
       location = filterLocation;
@@ -97,7 +94,7 @@ export const getVans = (
             select: "comment author rating",
             populate: {
               path: "author",
-              select: "name",
+              select: "name lastName",
             },
           },
         ])
@@ -122,26 +119,42 @@ export const getVans = (
 
     //We will use the filteredVansByDate for the final sanitation
     const finalVans: SanitizedVanWithRating[] = vansToMap!.map((van) => {
-      const typedVan = van as unknown as SanitizedVanWithRating;
+      const typedVan = van as unknown as {
+        reviews: PopulatedReview[];
+      };
 
       /*com que no podem fer delete perquè el delete s'ha de fer sobre variables que no tinguin el required,
         haurem de desestructurar i deixar 'lliure' les variables que volguem eliminar*/
 
-      const { _id, createdAt, modifiedAt, ...sanitizedVan } = van;
+      const { _id, createdAt, modifiedAt, location, ...sanitizedVan } = van;
 
-      const reviews: PopulatedReview[] = typedVan.reviews.map((review) => {
+      const { _id: locationId, ...restLocation } = location;
+
+      restLocation.id = _id.toString();
+
+      const transformedReviews = typedVan.reviews.map((review) => {
+        const { _id, author, ...sanitizedReview } = review;
+
+        const { _id: authorObjectId, ...sanitizedAuthor } = author;
+
         return {
+          ...sanitizedReview,
           id: review._id!.toString(),
           comment: review.comment || "",
           rating: review.rating ?? null,
-          author: review.author || "Unknown",
+          author: {
+            ...sanitizedAuthor,
+            id: _id!.toString(),
+          },
         };
       });
 
+      const reviews: SanitizedReview[] = transformedReviews;
       const averageRating = getAverageRating(reviews);
 
       return {
         ...sanitizedVan,
+        location: restLocation,
         id: _id.toString(),
         reviews: reviews,
         averageRating,

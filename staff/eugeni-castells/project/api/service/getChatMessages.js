@@ -55,20 +55,23 @@ const getChatMessages = (userId, chatId) => {
             })
                 .sort()
                 .lean();
-            const populatedChatHistoryWithOwn = (_a = chat === null || chat === void 0 ? void 0 : chat.history.map((comment) => {
-                //First we remove the _id of the item
-                const { _id, author } = comment, rest = __rest(comment, ["_id", "author"]);
-                //Secondly, we remove the _id of the author. We use an alias to differentiate it from the previous _id
-                const { _id: authorId } = author, sanitizedAuthor = __rest(author, ["_id"]);
-                //We use the sanitized author to set the returnedAuthor
-                const sanitizedComment = Object.assign(Object.assign({}, rest), { author: sanitizedAuthor });
-                return Object.assign(Object.assign({}, sanitizedComment), { own: userId === comment.author._id.toString(), createdAt: comment.createdAt.toISOString() });
-            })) !== null && _a !== void 0 ? _a : [];
-            return populatedChatHistoryWithOwn;
         }
         catch (error) {
+            throw new errors_1.SystemError(error.message);
+        }
+        if (!chat) {
             throw new errors_1.NotFoundError("chat not found");
         }
+        const populatedChatHistoryWithOwn = (_a = chat === null || chat === void 0 ? void 0 : chat.history.map((comment) => {
+            //First we remove the _id of the item
+            const { _id, author } = comment, rest = __rest(comment, ["_id", "author"]);
+            //Secondly, we remove the _id of the author. We use an alias to differentiate it from the previous _id
+            const { _id: authorId } = author, sanitizedAuthor = __rest(author, ["_id"]);
+            //We use the sanitized author to set the returnedAuthor
+            const sanitizedComment = Object.assign(Object.assign({}, rest), { author: sanitizedAuthor });
+            return Object.assign(Object.assign({}, sanitizedComment), { own: userId === comment.author._id.toString(), createdAt: comment.createdAt.toISOString() });
+        })) !== null && _a !== void 0 ? _a : [];
+        return populatedChatHistoryWithOwn;
     }))();
 };
 exports.getChatMessages = getChatMessages;

@@ -74,11 +74,8 @@ export const registerVan = (
 
       van.images = uploadedImages;
     } catch (error) {
-      if (
-        error instanceof UploadFirebaseError ||
-        error instanceof SystemError
-      ) {
-        throw error;
+      if (error instanceof UploadFirebaseError) {
+        throw new UploadFirebaseError(error.message);
       } else {
         throw new SystemError((error as Error).message);
       }

@@ -48,12 +48,7 @@ export const getVansHandler = createFunctionalHandler(
       parsedTravellers = JSON.parse(travellers as string);
     }
 
-    return getVans(
-      userId,
-      parsedLocation,
-      parsedDateRange,
-      parsedTravellers
-    ).then((vans) => {
+    return getVans(userId, parsedLocation, parsedDateRange).then((vans) => {
       res.json(vans);
     });
   }

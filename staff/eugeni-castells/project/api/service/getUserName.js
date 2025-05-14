@@ -19,13 +19,13 @@ const getUserName = (userId) => {
         let user;
         try {
             user = yield data_1.User.findById(userId).lean();
-            if (!user)
-                throw new errors_1.NotFoundError("user not found");
         }
         catch (error) {
             console.error(error);
             throw new errors_1.SystemError(error.message);
         }
+        if (!user)
+            throw new errors_1.NotFoundError("user not found");
         return { name: user.name, lastName: user.lastName };
     }))();
 };

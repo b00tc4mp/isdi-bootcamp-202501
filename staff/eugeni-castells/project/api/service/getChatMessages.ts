@@ -54,25 +54,29 @@ export const getChatMessages = (
         })
         .sort()
         .lean();
-
-      const populatedChatHistoryWithOwn =
-        chat?.history.map((comment) => {
-          //First we remove the _id of the item
-          const { _id, author, ...rest } = comment;
-          //Secondly, we remove the _id of the author. We use an alias to differentiate it from the previous _id
-          const { _id: authorId, ...sanitizedAuthor } = author;
-          //We use the sanitized author to set the returnedAuthor
-          const sanitizedComment = { ...rest, author: sanitizedAuthor };
-          return {
-            ...sanitizedComment,
-            own: userId === comment.author._id.toString(),
-            createdAt: comment.createdAt.toISOString(),
-          };
-        }) ?? [];
-
-      return populatedChatHistoryWithOwn;
     } catch (error) {
+      throw new SystemError((error as Error).message);
+    }
+
+    if (!chat) {
       throw new NotFoundError("chat not found");
     }
+
+    const populatedChatHistoryWithOwn =
+      chat?.history.map((comment) => {
+        //First we remove the _id of the item
+        const { _id, author, ...rest } = comment;
+        //Secondly, we remove the _id of the author. We use an alias to differentiate it from the previous _id
+        const { _id: authorId, ...sanitizedAuthor } = author;
+        //We use the sanitized author to set the returnedAuthor
+        const sanitizedComment = { ...rest, author: sanitizedAuthor };
+        return {
+          ...sanitizedComment,
+          own: userId === comment.author._id.toString(),
+          createdAt: comment.createdAt.toISOString(),
+        };
+      }) ?? [];
+
+    return populatedChatHistoryWithOwn;
   })();
 };

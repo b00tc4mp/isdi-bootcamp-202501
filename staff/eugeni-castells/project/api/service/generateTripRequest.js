@@ -35,6 +35,9 @@ const utils_1 = require("../utils");
 const generateTripRequest = (userId, vanId, tripInfo) => {
     com_1.validate.id(userId, "user id");
     com_1.validate.id(vanId, "van id");
+    if (!tripInfo.selectedDates) {
+        throw new errors_1.ValidationError("selectedDates is required");
+    }
     return (() => __awaiter(void 0, void 0, void 0, function* () {
         let user;
         let van;
@@ -75,8 +78,6 @@ const generateTripRequest = (userId, vanId, tripInfo) => {
         if (!noVanOverlap) {
             throw new errors_1.OverlapError("requested van is already booked");
         }
-        //TODO
-        //validate van travellers vs trip travellers
         let trip;
         //Create trip with all the info
         try {

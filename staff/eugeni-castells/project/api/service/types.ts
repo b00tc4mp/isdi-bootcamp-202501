@@ -61,6 +61,7 @@ export type PopulatedTrip = {
 
 export type ReturnedPopulatedVan = {
   _id: Types.ObjectId;
+  id: string;
   windows: number;
   description: string;
   doors: number;
@@ -76,23 +77,24 @@ export type ReturnedPopulatedVan = {
   storage: number;
   brand: string;
   model: string;
-  year: Date;
+  year?: Date;
   accessible: boolean;
   legal: Types.ObjectId[];
   createdAt: Date;
   modifiedAt: Date | null;
   price: number;
-  reviews: PopulatedReview[];
+  reviews: PopulatedReview[] | [];
   location: PopulatedLocation;
-  trips: PopulatedTrip[];
+  trips: PopulatedTrip[] | [];
+  images: ReturnedImagesFromServer[];
 };
 
 export type SanitizedVanWithRating = Omit<
   ReturnedPopulatedVan,
   "reviews" | "_id" | "createdAt" | "modifiedAt"
 > & {
-  reviews: PopulatedReview[];
-  averageRating: number;
+  reviews: SanitizedReview[];
+  averageRating: number | null;
   createdAt: Date;
   modifiedAt: null | Date;
 };
@@ -115,18 +117,33 @@ export type PopulatedReview = {
   _id?: string;
   id: string;
   comment: string;
-  rating: number;
+  rating: number | null;
   author: PopulatedAuthor;
 };
 
 export type ReturnedSanitizedReviews = {
-  reviews: PopulatedReview[];
-  averageRating: number;
+  reviews: SanitizedReview[];
+  averageRating: number | null;
 };
 
 export type PopulatedAuthor = {
+  _id: Types.ObjectId;
+  id: string;
   name: string;
   lastName: string;
+};
+
+export type SanitizedAuthor = {
+  id: string;
+  name: string;
+  lastName: string;
+};
+
+export type SanitizedReview = {
+  id: string;
+  comment: string;
+  rating: number | null;
+  author: SanitizedAuthor;
 };
 
 export type TripRequestLocation = {
@@ -202,7 +219,7 @@ export type VanDetailInfo = {
   owner: { name: string; lastName: string };
 
   price: number;
-  averageRating: number;
+  averageRating: number | null;
   reviewsCount: number;
   location: {
     city: string;
@@ -294,4 +311,49 @@ export type ReturnedAllUserInfo = {
   createdAt: Date;
   modifiedAt: Date | null;
   roadPoints: number;
+};
+
+export type ReturnedVansType = {
+  id: string;
+  windows: number;
+  description: string;
+  doors: number;
+  heating: boolean;
+  airConditioning: boolean;
+  bedCount: number;
+  insideKitchen: boolean;
+  fridge: boolean;
+  toilet: Toilet;
+  shower: boolean;
+  fuelType: Fuel;
+  storage: number;
+  brand: string;
+  model: string;
+  year?: Date; //Should be string, number or date?
+  accessible: boolean;
+  legal: Types.ObjectId[];
+  images: ReturnedImagesFromServer[];
+  trips: PopulatedTrip[] | [];
+  createdAt: Date;
+  modifiedAt: Date | null;
+  price: number;
+  reviews: PopulatedReview[];
+  maxTravellers: number;
+  location: {
+    id: string;
+    address: string;
+    city: string;
+    country: string;
+  };
+  averageRating: number | null;
+};
+
+export type ReturnedImagesFromServer = {
+  url: string;
+  path: string;
+};
+
+type PointDocType = {
+  type: "Point";
+  coordinates: [number, number];
 };

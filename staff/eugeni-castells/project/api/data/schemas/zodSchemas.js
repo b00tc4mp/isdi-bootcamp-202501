@@ -22,7 +22,7 @@ exports.registerUserSchema = (0, zod_1.object)({
         .optional(),
     address: zod_1.z
         .string()
-        .min(5, "address must have at least 2 characters")
+        .min(5, "address must have at least 5 characters")
         .max(30, "address cannot surpasse 30 characters"),
     country: zod_1.z
         .string()

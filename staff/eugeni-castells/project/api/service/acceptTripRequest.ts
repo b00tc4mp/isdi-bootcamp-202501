@@ -71,14 +71,6 @@ export const acceptTripRequest = (
         },
         { runValidators: true }
       );
-
-      if (result.matchedCount === 0) {
-        throw new NotFoundError("trip not found during update");
-      }
-
-      if (result.modifiedCount === 0) {
-        throw new SystemError("Trip update failed");
-      }
     } catch (error) {
       throw new SystemError((error as Error).message);
     }

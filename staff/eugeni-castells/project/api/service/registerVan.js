@@ -65,9 +65,8 @@ const registerVan = (userId, newVanInfo, images) => {
             van.images = uploadedImages;
         }
         catch (error) {
-            if (error instanceof errors_1.UploadFirebaseError ||
-                error instanceof errors_1.SystemError) {
-                throw error;
+            if (error instanceof errors_1.UploadFirebaseError) {
+                throw new errors_1.UploadFirebaseError(error.message);
             }
             else {
                 throw new errors_1.SystemError(error.message);

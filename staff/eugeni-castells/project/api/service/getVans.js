@@ -25,7 +25,7 @@ const com_1 = require("com");
 const data_1 = require("../data");
 const errors_1 = require("com/errors");
 const utils_1 = require("../utils");
-const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
+const getVans = (userId, filterLocation, filterDates) => {
     com_1.validate.id(userId, "user id");
     return (() => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
@@ -47,17 +47,16 @@ const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
         if (!filterLocation[0] || !filterLocation[1]) {
             try {
                 location = yield data_1.Location.findById(returnedUser.location._id).lean();
-                if (!((_a = location === null || location === void 0 ? void 0 : location.point) === null || _a === void 0 ? void 0 : _a.coordinates))
-                    throw new errors_1.NotFoundError("user location not found or incomplete");
-                //we transform the location received in the same type as the paramether
-                location = [
-                    location.point.coordinates[0],
-                    location.point.coordinates[1],
-                ];
             }
             catch (error) {
                 throw new errors_1.SystemError(error.message);
             }
+            if (!location)
+                throw new errors_1.NotFoundError("user location not found");
+            if (!((_a = location.point) === null || _a === void 0 ? void 0 : _a.coordinates))
+                throw new errors_1.NotFoundError("user location coordinates missing");
+            //we transform the location received in the same type as the paramether
+            location = [location.point.coordinates[0], location.point.coordinates[1]];
         }
         else {
             //if the location is sent we set the location to the location sent
@@ -101,7 +100,7 @@ const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
                     select: "comment author rating",
                     populate: {
                         path: "author",
-                        select: "name",
+                        select: "name lastName",
                     },
                 },
             ])
@@ -123,18 +122,18 @@ const getVans = (userId, filterLocation, filterDates, filterTravellers) => {
             const typedVan = van;
             /*com que no podem fer delete perquè el delete s'ha de fer sobre variables que no tinguin el required,
               haurem de desestructurar i deixar 'lliure' les variables que volguem eliminar*/
-            const { _id, createdAt, modifiedAt } = van, sanitizedVan = __rest(van, ["_id", "createdAt", "modifiedAt"]);
-            const reviews = typedVan.reviews.map((review) => {
+            const { _id, createdAt, modifiedAt, location } = van, sanitizedVan = __rest(van, ["_id", "createdAt", "modifiedAt", "location"]);
+            const { _id: locationId } = location, restLocation = __rest(location, ["_id"]);
+            restLocation.id = _id.toString();
+            const transformedReviews = typedVan.reviews.map((review) => {
                 var _a;
-                return {
-                    id: review._id.toString(),
-                    comment: review.comment || "",
-                    rating: (_a = review.rating) !== null && _a !== void 0 ? _a : null,
-                    author: review.author || "Unknown",
-                };
+                const { _id, author } = review, sanitizedReview = __rest(review, ["_id", "author"]);
+                const { _id: authorObjectId } = author, sanitizedAuthor = __rest(author, ["_id"]);
+                return Object.assign(Object.assign({}, sanitizedReview), { id: review._id.toString(), comment: review.comment || "", rating: (_a = review.rating) !== null && _a !== void 0 ? _a : null, author: Object.assign(Object.assign({}, sanitizedAuthor), { id: _id.toString() }) });
             });
+            const reviews = transformedReviews;
             const averageRating = (0, utils_1.getAverageRating)(reviews);
-            return Object.assign(Object.assign({}, sanitizedVan), { id: _id.toString(), reviews: reviews, averageRating, modifiedAt: modifiedAt !== null ? new Date(modifiedAt) : null, createdAt: new Date(createdAt) });
+            return Object.assign(Object.assign({}, sanitizedVan), { location: restLocation, id: _id.toString(), reviews: reviews, averageRating, modifiedAt: modifiedAt !== null ? new Date(modifiedAt) : null, createdAt: new Date(createdAt) });
         });
         return finalVans;
     }))();

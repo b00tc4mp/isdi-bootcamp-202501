@@ -12,6 +12,10 @@ import { rejectTripRequest } from "./rejectTripRequest.js";
 import { sendMessage } from "./sendMessage.js";
 import { getChats } from "./getChats.js";
 import { deleteVanById } from "./deleteVanById.js";
+import { getVanReviews } from "./getVanReviews.js";
+import { getAllUserInfo } from "./getAllUserInfo.js";
+import { getVanLocation } from "./getVanLocation.js";
+import { updateVan } from "./updateVan.js";
 
 export {
   registerUser,
@@ -28,4 +32,8 @@ export {
   sendMessage,
   getChats,
   deleteVanById,
+  getVanReviews,
+  getAllUserInfo,
+  getVanLocation,
+  updateVan,
 };

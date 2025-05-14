@@ -9,13 +9,13 @@ export const getUserName = (userId: string): Promise<ReturnedFullName> => {
     let user;
     try {
       user = await User.findById(userId).lean();
-
-      if (!user) throw new NotFoundError("user not found");
     } catch (error) {
       console.error(error);
 
       throw new SystemError((error as Error).message);
     }
+
+    if (!user) throw new NotFoundError("user not found");
 
     return { name: user.name, lastName: user.lastName };
   })();

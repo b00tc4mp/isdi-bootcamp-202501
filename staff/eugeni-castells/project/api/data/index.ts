@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
-import { User, Trip, Van, Doc, Location, Review } from "./models/index.js";
+import {
+  User,
+  Trip,
+  Van,
+  Doc,
+  Location,
+  Review,
+  Chat,
+  ChatComment,
+} from "./models/index.js";
 import {
   UserDocType,
   DocDocType,
@@ -41,4 +50,7 @@ export {
   ReviewDocType,
   TripDocType,
   VanDocType,
+  Chat,
+  ChatComment,
+  ChatDocType,
 };

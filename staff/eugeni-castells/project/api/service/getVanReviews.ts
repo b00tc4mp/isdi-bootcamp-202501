@@ -1,7 +1,11 @@
 import { validate } from "com";
 import { User, Van } from "../data";
 import { NotFoundError, SystemError } from "com/errors";
-import { PopulatedReview, ReturnedSanitizedReviews } from "./types";
+import {
+  PopulatedReview,
+  ReturnedSanitizedReviews,
+  SanitizedReview,
+} from "./types";
 import { getAverageRating } from "../utils";
 
 export const getVanReviews = (
@@ -44,18 +48,21 @@ export const getVanReviews = (
       throw new NotFoundError("van not found");
     }
 
-    const reviews: PopulatedReview[] = van!.reviews.map((review) => {
+    const reviews: SanitizedReview[] = van.reviews.map((review: any) => {
+      const { _id, comment, rating, author } = review;
+      const { _id: authorId, name, lastName } = author;
+
       return {
-        id: review._id!.toString(),
-        comment: review.comment || "",
-        rating: review.rating ?? null,
+        id: _id.toString(),
+        comment: comment || "",
+        rating: rating ?? null,
         author: {
-          name: review.author.name,
-          lastName: review.author.lastName,
+          id: authorId.toString(),
+          name,
+          lastName,
         },
       };
     });
-
     const averageRating = getAverageRating(reviews);
 
     return {

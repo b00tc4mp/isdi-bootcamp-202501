@@ -9,7 +9,13 @@
     "test-inspect": "mocha --inspect-brk service/*.spec.js",
     "compile-test": "npx tsc && mocha service/*.spec.js",
     "compile": "npx tsc --watch",
-    "start-watch": "npx tsc && node . --watch"
+    "start-watch": "npx tsc && node . --watch",
+    "test-coverage": "c8 --experimental-monocart --reporter=html --reporter=text mocha service/*.spec.js --timeout 2000"
+  },
+  "c8": {
+    "exclude": [
+      "utils/**/*"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -20,8 +26,12 @@
     "@types/express": "^5.0.1",
     "@types/mocha": "^10.0.10",
     "@types/morgan": "^1.9.9",
+    "@types/sinon": "^17.0.4",
+    "c8": "^10.1.3",
     "chai": "^5.2.0",
     "mocha": "^11.1.0",
+    "monocart-coverage-reports": "^2.12.4",
+    "sinon": "^20.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },

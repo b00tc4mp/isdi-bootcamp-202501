@@ -1,6 +1,6 @@
 import { validate } from "com";
 import { Trip, User, Van } from "../data";
-import { NotFoundError, OverlapError, SystemError } from "com/errors";
+import { NotFoundError, SystemError } from "com/errors";
 import { Types } from "mongoose";
 
 export const deleteVanById = (userId: string, vanId: string) => {
