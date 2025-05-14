@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+
+@layer base {
+    html {
+        --color-black: black;
+        --color-white: rgb(255, 255, 255);
+        --color-blue: rgb(21, 0, 255);
+        --color-red: rgb(250, 32, 3);
+
+        @apply font-mono;
+    }
+
+    body {
+        @apply m-0;
+    }
+
+    a {
+        @apply cursor-pointer underline transition-transform duration-300 ease-in-out hover:scale-115 hover:text-yellow-600;
+    }
+
+    .burgerMenu {
+        @apply text-yellow-600 w-auto h-auto bg-transparent hover:scale-90;
+    }
+
+    button {
+        @apply cursor-pointer bg-fuchsia-950 text-amber-300 mx-3 my-2 justify-items-center w-[360px] h-[40px] transition-transform duration-300 ease-in-out hover:scale-105;
+    }
+
+    h1 {
+        @apply text-2xl font-bold m-2 text-red-800 text-center flex;
+
+
+    }
+
+    .title {
+        @apply text-4xl font-extrabold tracking-wide rounded-xl shadow-lg bg-gradient-to-r from-rose-700 via-fuchsia-900 to-yellow-500 text-amber-50 h-[70px] w-[280px] flex items-center justify-center text-center;
+    }
+
+
+    h2 {
+        @apply m-0;
+    }
+
+    main {
+        @apply my-[3rem];
+    }
+
+    form {
+        @apply flex flex-col gap-[.5rem];
+
+        .field {
+            @apply flex flex-col gap-[0.25rem];
+        }
+
+        .input-color {
+            @apply px-3 py-2 rounded-lg border-2;
+        }
+
+        .form-button {
+            @apply mt-6 px-6 py-2 bg-fuchsia-900 text-white font-bold shadow-md transform transition duration-300 hover:bg-fuchsia-800;
+        }
+    }
+
+    input {
+        @apply border-2 border-solid border-[var(--color-black)] outline-none focus:border-red-800;
+    }
+
+
+    .sand-clock {
+        @apply bg-[url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW5kMGQ2MWhkb2Y0bTdmcmgwc2JibnV5cDBwcmc4dGVsMXNkN2xneCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QdVmkR04rz7vbT3cx9/giphy.gif')] bg-cover bg-center w-60 h-110;
+    }
+}

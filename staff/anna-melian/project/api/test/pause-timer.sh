@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/timers/67ff5f56da7dc5463c9d731f/pause -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZmNWYxMDYwNTg3NWQyMWY3ZmIwMTIiLCJpYXQiOjE3NDQ3ODkzMDMsImV4cCI6MTc0NDg3NTcwM30.HZvcHWIQm49KbDTFQ8ii7HRxkNWD6BbmLZ6wt9xvuYQ' -v
