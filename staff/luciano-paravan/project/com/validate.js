@@ -45,13 +45,12 @@ export const validate = {
         this.maxLength(password, 20, explain)
     },
     id(id, explain = 'id') {
-        debugger
         this.text(id, explain)
         if (id.length !== 24) throw new ValidationError(`invalid ${explain} length`)
     },
     category(category, explain = 'category') {
         this.string(category)
-        const allowedCategories = ['top', 'bottom', 'shoes', 'accesory']
+        const allowedCategories = ['top', 'bottom', 'shoes', 'accessory']
         if (!allowedCategories.includes(category)) throw new ValidationError(`invalid ${explain}`)
     },
     season(seasons, explain = 'season') {
@@ -87,5 +86,22 @@ export const validate = {
         this.string(style)
         const allowedStyles = ['classic', 'trendy', 'minimalist', 'colorful']
         if (!allowedStyles.includes(style)) throw new ValidationError(`invalid ${explain}`)
+    },
+    look(look, explain = 'look') {
+        if (!Array.isArray(look)) throw new ValidationError(`${explain} must be an array`)
+        look.forEach((item, index) => {
+            if (typeof item !== 'object' || item === null)
+                throw new ValidationError(`${explain}[${index}] must be an object`)
+
+            this.category(item.category, `${explain}[${index}].category`)
+            this.string(item.itemName, `${explain}[${index}].itemName`)
+            this.source(item.source, `${explain}[${index}].source`)
+        })
+    },
+    source(source, explain = 'source') {
+        this.string(source, explain)
+        const allowedSources = ['user', 'external']
+        if (!allowedSources.includes(source))
+            throw new ValidationError(`invalid ${explain}: ${source}`)
     }
 }

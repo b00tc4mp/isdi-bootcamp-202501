@@ -11,7 +11,6 @@
     "test": "NODE_ENV=test mocha logic/*.spec.js",
     "test-inspect": "NODE_ENV=test mocha --inspect-brk logic/*.spec.js",
     "test-coverage": "NODE_ENV=test c8 --experimental-monocart --reporter=html --reporter=text mocha logic/*.spec.js --timeout 2000",
-    "test-real-api": "NODE_ENV=test TEST_FORCE_FETCH=1 mocha logic/lookRequest.spec.js",
     "populate": "node data/populate.js"
   },
   "keywords": [],

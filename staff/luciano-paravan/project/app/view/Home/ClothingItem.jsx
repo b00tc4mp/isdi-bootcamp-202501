@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
-import { logic } from '../../logic'
+import { logic } from '../../logic/index.js'
 import { CircleX, PenLine } from 'lucide-react'
 
 import { useContext } from '../../context.js'
@@ -15,8 +14,6 @@ export function ClothingItem ({ clothingItem, onClothingItemDeleted, onClothingI
     const [color, setColor] = useState(clothingItem.color)
     const [season, setSeason] = useState(clothingItem.season)
     const [occasion, setOccasion] = useState(clothingItem.occasion)
-    
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (view === 'edit-item') {
@@ -40,13 +37,11 @@ export function ClothingItem ({ clothingItem, onClothingItemDeleted, onClothingI
                 })
                 .catch(error => {
                     console.error(error)
-    
-                    alert('⛔️' + error.message)
+                    alert(error.message)
                 })
         } catch (error) {
             console.error(error)
-
-            alert('⛔️' + error.message)
+            alert(error.message)
         }
     }
 
@@ -61,11 +56,10 @@ export function ClothingItem ({ clothingItem, onClothingItemDeleted, onClothingI
                     .then(() => onClothingItemDeleted())
                     .catch(error => {
                         console.error(error)
-                        alert('⛔️' + error.message)
+                        alert(error.message)
                     })
             } catch (error) {
                 console.error(error)
-
                 alert(error.message)
             }
         })

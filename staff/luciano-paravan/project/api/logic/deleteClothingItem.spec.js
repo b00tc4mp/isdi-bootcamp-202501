@@ -183,26 +183,28 @@ describe('deleteClothingItem', () => {
     })
 
     it('fails when clothing item has invalid owner', () => {
+        let invalidUserId = new ObjectId().toString()
+
         return User.create({
-            name: 'Someone',
-            lastname: 'Unknown',
-            email: 'fake@fake.com',
-            username: 'ghostuser',
+            name: 'Ghost',
+            lastname: 'User',
+            email: 'ghost@user.com',
+            username: 'ghost',
             password: '12345678'
         })
-            .then(user => {
+            .then(() => {
                 return ClothingItem.create({
-                    owner: new Types.ObjectId(), // id que no existe como user
-                    itemName: 'unknown item',
+                    owner: new ObjectId(), // ID que tampoco pertenece a un User
+                    itemName: 'strange item',
                     category: 'accessory',
-                    type: 'weird',
+                    type: 'unknown',
                     color: 'invisible',
                     season: ['winter'],
-                    occasion: ['mystery']
+                    occasion: ['party']
                 })
             })
             .then(item => {
-                return deleteClothingItem(new Types.ObjectId().toString(), item._id.toString())
+                return deleteClothingItem(invalidUserId, item._id.toString())
             })
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
@@ -210,6 +212,7 @@ describe('deleteClothingItem', () => {
                 expect(error.message).to.equal('user not found')
             })
     })
+
 
     afterEach(() => {
         return Promise.all([

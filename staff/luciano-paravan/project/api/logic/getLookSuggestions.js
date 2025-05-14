@@ -1,16 +1,15 @@
 import 'dotenv/config'
-import fetch from 'node-fetch'
-import { SystemError } from 'com/errors.js'
+import { errors } from 'com'
+const { SystemError } = errors
 
 // Esta variable controla si usamos datos simulados (mock) o hacemos una consulta real a la API de OpenAI.
 // Se usa para ahorrar tokens durante pruebas o desarrollo.
 // ▸ Si NODE_ENV === 'test' y NO está definido TEST_FORCE_FETCH → se usarán mocks.
 // ▸ En cualquier otro caso (por ejemplo NODE_ENV !== 'test' o TEST_FORCE_FETCH=1) → se hace fetch real a la API.
 // Podés controlar esto con tu archivo .env o directamente desde los scripts de package.json.
-const IS_TESTING = process.env.NODE_ENV === 'test' && !process.env.TEST_FORCE_FETCH
 
-export default function getLookSuggestions(prompt) {
-    if (IS_TESTING) {
+export default function getLookSuggestions(prompt, fetchFn = fetch) {
+    if (fetchFn !== fetch) {
         const mock = {
             suggestions: [
                 {
@@ -45,7 +44,7 @@ export default function getLookSuggestions(prompt) {
         return Promise.resolve({ suggestions: normalized })
     }
 
-    return fetch('https://api.openai.com/v1/chat/completions', {
+    return fetchFn('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,

@@ -23,7 +23,7 @@ describe('getLookSuggestions basic', () => {
     it('throws SystemError on failed fetch', () => {
         fetchStub = sinon.stub(global, 'fetch').rejects(new Error('mock error'))
 
-        return getLookSuggestions('dummy')
+        return getLookSuggestions('dummy', fetchStub)
             .then(() => { throw new Error('should not reach') })
             .catch(error => {
                 expect(error).to.be.instanceOf(SystemError)
@@ -37,7 +37,7 @@ describe('getLookSuggestions basic', () => {
             json: () => Promise.reject(new Error('invalid json'))
         })
 
-        return getLookSuggestions('dummy')
+        return getLookSuggestions('dummy', fetchStub)
             .then(() => { throw new Error('should not reach') })
             .catch(error => {
                 expect(error).to.be.instanceOf(SystemError)
@@ -53,7 +53,7 @@ describe('getLookSuggestions basic', () => {
             })
         })
 
-        return getLookSuggestions('dummy')
+        return getLookSuggestions('dummy', fetchStub)
             .then(() => { throw new Error('should not reach') })
             .catch(error => {
                 expect(error).to.be.instanceOf(SystemError)
@@ -89,7 +89,7 @@ describe('getLookSuggestions basic', () => {
             })
         })
 
-        return getLookSuggestions('dummy')
+        return getLookSuggestions('dummy', fetchStub)
             .then(result => {
                 expect(result).to.have.property('suggestions')
                 expect(result.suggestions).to.be.an('array').with.lengthOf(2)
@@ -106,7 +106,7 @@ describe('getLookSuggestions basic', () => {
             json: () => Promise.resolve({})
         })
 
-        return getLookSuggestions('dummy')
+        return getLookSuggestions('dummy', fetchStub)
             .then(() => { throw new Error('should not reach') })
             .catch(error => {
                 expect(error).to.be.instanceOf(SystemError)

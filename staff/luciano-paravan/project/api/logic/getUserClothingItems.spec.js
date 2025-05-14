@@ -19,7 +19,6 @@ describe('getUserClothingItems', () => {
     })
 
     it('succeds on existing user', () => {
-        debugger
         let returnedClothingItems
         let user, user2
         let clothingItem, clothingItem2, clothingItem3

@@ -1,4 +1,5 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
+import { useContext } from '../../context'
 import { logic } from '../../logic/index.js'
 import { useNavigate } from 'react-router'
 
@@ -11,7 +12,7 @@ export function LookRequest() {
     const [additionalDetails, setAdditionalDetails] = useState('')
     const [allowExternalItemSuggestions, setAllowExternalItemSuggestions] = useState(false)
 
-    const { alert, confirm } = useContext()
+    const { alert } = useContext()
 
     const navigate = useNavigate()
 
@@ -30,8 +31,8 @@ export function LookRequest() {
         try {
             return logic.lookRequest(contextOccasion, location, temperature, timeOfDay, style, additionalDetails, allowExternalItemSuggestions)
 
-                .then(suggestions => {
-                    navigate('/look-suggestion', { state: { suggestions, formData }})
+                .then(({ suggestions, requestId }) => {
+                    navigate('/look-suggestion', { state: { suggestions, formData, requestId }})
                 })
                 .catch(error => {
                     console.error(error)

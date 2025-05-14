@@ -79,7 +79,6 @@ const clothingItem = new Schema({
 })
 
 const lookRequest = new Schema({
-
     user: {
         type: ObjectId,
         ref: 'User',
@@ -130,11 +129,23 @@ const lookSuggestion = new Schema({
         ref: 'LookRequest',
         required: true
     },
-    selectedItems: [{
-        type: ObjectId,
-        ref: 'ClothingItem'
+    look: [{
+        category: {
+            type: String,
+            enum: ['top', 'bottom', 'shoes', 'accessory'],
+            required: true
+        },
+        itemName: {
+            type: String,
+            required: true
+        },
+        source: {
+            type: String,
+            enum: ['user', 'external'],
+            required: true
+        }
     }],
-    reasoning: {
+    notes: {
         type: String,
         required: true
     },

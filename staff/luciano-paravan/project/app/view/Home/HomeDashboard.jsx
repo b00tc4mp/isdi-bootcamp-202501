@@ -1,4 +1,5 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
+import { Sparkles, Plus } from 'lucide-react'
 
 export function HomeDashboard() {
 
@@ -11,8 +12,8 @@ export function HomeDashboard() {
     return <div className='h-screen'>
 
     {pathname === '/' && <div className="flex flex-col justify-center h-full ">
-        <a onClick={handleAddClothingItem} className="btn-link">Add Clothing Item</a>
-        <a onClick={handleLookRequest} className="btn-link">Look Request</a>
+        <Link to={'/add-clothing-item'} onClick={handleAddClothingItem} className="btn-link flex items-center justify-center gap-4">Add Clothing Item <Plus /></Link>
+        <Link to={'/look-request'} onClick={handleLookRequest} className="btn-link flex items-center justify-center gap-4">Look Request <Sparkles /></Link>
     </div>}
 
     </div>

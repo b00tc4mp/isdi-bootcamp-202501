@@ -1,11 +1,10 @@
-import { User, ClothingItem } from '../data/index.js'
+import { User, ClothingItem, LookRequest } from '../data/index.js'
 import { errors, validate } from 'com'
 import getLookSuggestions from './getLookSuggestions.js'
 
-const IS_TESTING = process.env.NODE_ENV === 'test'
 const { SystemError, NotFoundError } = errors
 
-export const lookRequest = (userId, contextOccasion, location, temperature, timeOfDay, style, additionalDetails, allowExternalSuggestions) => {
+export const lookRequest = (userId, contextOccasion, location, temperature, timeOfDay, style, additionalDetails, allowExternalSuggestions, fetchFn) => {
     validate.id(userId, 'id')
     validate.occasion(contextOccasion, 'occasion')
     validate.string(location, 'location')
@@ -79,6 +78,57 @@ export const lookRequest = (userId, contextOccasion, location, temperature, time
                 `- Item name: ${item.itemName}, category: ${item.category}, type: ${item.type}, color: ${item.color}, season: [${item.season.join(', ')}], occasion: [${item.occasion.join(', ')}]`).join('\n')}
             `.trim()
 
-            return getLookSuggestions(prompt)
+            return getLookSuggestions(prompt, fetchFn || (() => {
+                const mock = {
+                    suggestions: [
+                        {
+                            look: [
+                                { category: 'top', itemName: 'mock top 1', source: 'user' },
+                                { category: 'bottom', itemName: 'mock bottom 1', source: 'user' },
+                                { category: 'shoes', itemName: 'mock shoes 1', source: 'external' }
+                            ],
+                            notes: 'Mock look 1'
+                        },
+                        {
+                            look: [
+                                { category: 'top', itemName: 'mock top 2', source: 'user' },
+                                { category: 'bottom', itemName: 'mock bottom 2', source: 'user' },
+                                { category: 'shoes', itemName: 'mock shoes 2', source: 'user' },
+                                { category: 'accessory', itemName: 'mock watch', source: 'user' }
+                            ],
+                            notes: 'Mock look 2'
+                        }
+                    ]
+                }
+
+                const normalized = mock.suggestions.map(suggestion => ({
+                    ...suggestion,
+                    look: suggestion.look.map(item => ({
+                        category: item.category,
+                        itemName: item.itemName,
+                        source: item.source
+                    }))
+                }))
+
+                return Promise.resolve({ suggestions: normalized })
+            }))
+                .then(result => {
+                    return LookRequest.create({
+                        user: userId,
+                        contextOccasion,
+                        location,
+                        temperature,
+                        timeOfDay,
+                        style,
+                        additionalDetails,
+                        allowExternalSuggestions
+                    })
+                        .then(request => {
+                            return {
+                                requestId: request._id.toString(),
+                                suggestions: result.suggestions
+                            }
+                        })
+                })
         })
 }

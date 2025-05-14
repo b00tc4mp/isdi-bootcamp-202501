@@ -7,6 +7,7 @@ import { AddClothingItem } from './AddClothingItem'
 import { LookRequest } from './LookRequest.jsx'
 import { LookSuggestion } from './LookSuggestion'
 import { MyClothingItems } from './MyClothingItems'
+import { MyLookSuggestions } from './MyLookSuggestions.jsx'
 import { Profile } from './Profile.jsx'
 
 import { logic } from '../../logic'
@@ -51,12 +52,14 @@ export function Home({ onUserLoggedOut }) {
             <Route path="/look-suggestion" element={<LookSuggestion />} />
             <Route path="/my-clothing-items" element={<MyClothingItems />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/my-looks" element={<MyLookSuggestions />} />
         </Routes>
 
         <footer className="flex justify-center items-center fixed bottom-0 left-0 right-0 bg-[var(--bg-color)] py-[var(--padding-y)] px-[var(--padding-x) box-border gap-4">
             <div className="flex gap-4">
                 <Link to="/my-clothing-items" className="flex justify-center items-center gap-3 rounded-lg border-2 border-[var(--second-color)] text-[var(--text-color)] py-2 px-4">My clothing Items <Shirt /></Link>
                 <Link to="/profile" className="flex justify-center items-center gap-3 rounded-lg border-2 border-[var(--second-color)] text-[var(--text-color)] py-2 px-4">My Profile <CircleUserRound /></Link>
+                <Link to="/my-looks" className="flex justify-center items-center gap-3 rounded-lg border-2 border-[var(--second-color)] text-[var(--text-color)] py-2 px-4">My looks <Shirt /></Link>
             </div>
         </footer>
     </div>

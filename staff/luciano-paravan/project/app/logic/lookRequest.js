@@ -27,7 +27,7 @@ export const lookRequest = (contextOccasion, location, temperature, timeOfDay, s
                 return response.json()
                     .catch(error => { throw new SystemError(error.message) })
                     .then(body => {
-                        return body.suggestions
+                        return body
                     })
 
             return response.json()

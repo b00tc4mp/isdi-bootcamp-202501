@@ -1,4 +1,4 @@
-const IS_TESTING = process.env.NODE_ENV === 'test' && !process.env.TEST_FORCE_FETCH
+import sinon from 'sinon'
 
 import 'dotenv/config'
 import { Types } from 'mongoose'
@@ -24,14 +24,51 @@ before(() => {
 })
 
 describe('lookRequest', () => {
+    let fetchStub
+
     before(() => data.connect(MONGO_URL, DB_NAME))
 
-    beforeEach(() => Promise.all([
-        User.deleteMany({}),
-        ClothingItem.deleteMany({})
-    ]))
+    beforeEach(() => {
+        if (fetchStub && fetchStub.restore) fetchStub.restore()
+
+        return Promise.all([
+            User.deleteMany({}),
+            ClothingItem.deleteMany({})
+        ])
+    })
 
     it('succeds and returns mock suggestions', () => {
+        fetchStub = sinon.stub(global, 'fetch').resolves({
+            status: 200,
+            json: () => Promise.resolve({
+                choices: [{
+                    message: {
+                        content: JSON.stringify({
+                            suggestions: [
+                                {
+                                    look: [
+                                        { category: 'top', itemName: 'mock t-shirt', source: 'user' },
+                                        { category: 'bottom', itemName: 'mock jeans', source: 'user' },
+                                        { category: 'shoes', itemName: 'mock sneakers', source: 'external' }
+                                    ],
+                                    notes: 'Mock look 1'
+                                },
+                                {
+                                    look: [
+                                        { category: 'top', itemName: 'mock shirt', source: 'user' },
+                                        { category: 'bottom', itemName: 'mock chinos', source: 'user' },
+                                        { category: 'shoes', itemName: 'mock loafers', source: 'external' },
+                                        { category: 'accessory', itemName: 'mock watch', source: 'user' }
+                                    ],
+                                    notes: 'Mock look 2'
+                                }
+                            ]
+                        })
+                    }
+                }]
+            })
+        })
+
         let userId
 
         return User.create({
@@ -47,7 +84,7 @@ describe('lookRequest', () => {
                 return Promise.all([
                     ClothingItem.create({ owner: user._id, itemName: 'blue t-shirt', category: 'top', type: 'basic', color: 'blue', season: ['summer'], occasion: ['casual'] }),
                     ClothingItem.create({ owner: user._id, itemName: 'black jeans', category: 'bottom', type: 'jeans', color: 'black', season: ['autumn'], occasion: ['casual'] }),
-                    ClothingItem.create({ owner: user._id, itemName: 'silver watch', category: 'accesory', type: 'watch', color: 'silver', season: ['spring', 'summer'], occasion: ['formal', 'casual'] }),
+                    ClothingItem.create({ owner: user._id, itemName: 'silver watch', category: 'accessory', type: 'watch', color: 'silver', season: ['spring', 'summer'], occasion: ['formal', 'casual'] }),
                     ClothingItem.create({ owner: user._id, itemName: 'grey hoodie', category: 'top', type: 'hoodie', color: 'grey', season: ['winter'], occasion: ['sport'] }),
                     ClothingItem.create({ owner: user._id, itemName: 'blue jeans', category: 'bottom', type: 'jeans', color: 'blue', season: ['winter'], occasion: ['sport'] }),
                     ClothingItem.create({ owner: user._id, itemName: 'running shoes', category: 'shoes', type: 'sport', color: 'white', season: ['winter'], occasion: ['sport'] })
@@ -62,10 +99,12 @@ describe('lookRequest', () => {
                     'evening',
                     'classic',
                     'date',
-                    true
+                    true,
+                    fetchStub
                 )
             })
             .then(result => {
+                expect(result).to.have.property('requestId').that.is.a('string')
                 expect(result).to.have.property('suggestions').that.is.an('array').with.lengthOf(2)
 
                 result.suggestions.forEach(suggestion => {
@@ -209,8 +248,6 @@ describe('lookRequest', () => {
     })
 
     it('fails when OpenAI API returns error response', () => {
-        process.env.TEST_FORCE_FETCH = '1' // Fuerza uso del fetch real
-
         return User.create({
             name: 'Eugeni',
             lastname: 'Castells',
@@ -219,6 +256,11 @@ describe('lookRequest', () => {
             password: '12345678'
         })
             .then(user => {
+                fetchStub = sinon.stub(global, 'fetch').resolves({
+                    status: 500,
+                    json: () => Promise.resolve({ error: { message: 'mock error from OpenAI' } })
+                })
+
                 return ClothingItem.create({
                     owner: user._id,
                     itemName: 'mock item',
@@ -230,7 +272,6 @@ describe('lookRequest', () => {
                 }).then(() => user)
             })
             .then(user => {
-                // Usamos un estilo inválido que pasará validación pero puede forzar error del modelo
                 return lookRequest(
                     user._id.toString(),
                     ['casual'],
@@ -238,15 +279,19 @@ describe('lookRequest', () => {
                     'warm',
                     'evening',
                     'classic',
-                    '', // additionalDetails vacío
-                    true
+                    '',
+                    true,
+                    fetchStub
                 )
             })
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
-                // En algunos casos puede lanzar SystemError si el fetch falla
                 expect(error).to.be.instanceOf(SystemError)
+                expect(error.message).to.equal('mock error from OpenAI')
+            })
+            .finally(() => {
+                if (fetchStub && fetchStub.restore)
+                    fetchStub.restore()
             })
     })
-
 })
