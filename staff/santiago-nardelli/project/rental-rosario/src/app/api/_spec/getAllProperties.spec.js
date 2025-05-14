@@ -2,10 +2,7 @@ import "dotenv/config";
 import { Property } from "../../../lib/db/models/index.js";
 import { errors } from "com";
 import { getAllProperties } from "../_logic/index.js";
-import {
-  connectToDatabase,
-  disconnectFromDatabase,
-} from "../../../lib/db/index.js";
+import mongoose from "mongoose";
 import { expect } from "chai";
 import sinon from "sinon";
 
@@ -13,11 +10,19 @@ const { SystemError, NotFoundError } = errors;
 const { DATABASE_URL, DATABASE_NAME } = process.env;
 
 describe("getAllProperties", () => {
-  let connection;
-
   before(async () => {
-    connection = await connectToDatabase(DATABASE_URL, DATABASE_NAME);
-    console.info("Connected to database");
+    try {
+      await mongoose.connect(DATABASE_URL, {
+        dbName: DATABASE_NAME,
+        autoIndex: true,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      });
+      console.info("Connected to database");
+    } catch (error) {
+      console.error("Error connecting to database:", error);
+      throw error;
+    }
   });
 
   beforeEach(async () => {
@@ -107,7 +112,13 @@ describe("getAllProperties", () => {
   });
 
   after(async () => {
-    await disconnectFromDatabase();
-    console.info("Disconnected from database after getAllProperties tests");
+    try {
+      await mongoose.connection.dropDatabase();
+      await mongoose.disconnect();
+      console.info("Disconnected from database");
+    } catch (error) {
+      console.error("Error disconnecting from database:", error);
+      throw error;
+    }
   });
 });

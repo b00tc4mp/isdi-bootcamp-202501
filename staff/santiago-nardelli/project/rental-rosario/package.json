@@ -10,7 +10,7 @@
     "lint": "next lint",
     "inspect": "export NODE_OPTIONS='--inspect' && next dev",
     "populate-db": "node src/lib/db/populate.js",
-    "test": "mocha src/app/api/_spec/deleteProperty.spec.js",
+    "test": "mocha src/app/api/_spec/*.spec.js",
     "test-inspect": "mocha --inspect-brk logic/*.spec.js",
     "test-coverage": "c8 --experimental-monocart --reporter=html --reporter=text mocha src/app/api/_spec/*.spec.js --timeout 2000"
   },

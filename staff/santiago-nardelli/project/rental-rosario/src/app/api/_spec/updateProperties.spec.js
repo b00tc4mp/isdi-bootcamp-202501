@@ -1,24 +1,25 @@
 import "dotenv/config";
 import { expect } from "chai";
 import { updateProperty } from "../_logic/index.js";
-import {
-  connectToDatabase,
-  disconnectFromDatabase,
-} from "../../../lib/db/index.js";
+import mongoose from "mongoose";
 import { Property, User } from "../../../lib/db/models/index.js";
 import { errors } from "com";
 const { SystemError, ValidateError } = errors;
 const { DATABASE_URL, DATABASE_NAME } = process.env;
 
 describe("TEST updateProperty (manual updatedAt)", () => {
-  let connection;
   before(async () => {
     try {
-      connection = await connectToDatabase(DATABASE_URL, DATABASE_NAME);
-      console.info("Connected to database for updateProperty tests");
+      await mongoose.connect(DATABASE_URL, {
+        dbName: DATABASE_NAME,
+        autoIndex: true,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      });
+      console.info("Connected to database");
     } catch (error) {
-      console.error("Failed to connect to the database:", error);
-      throw error; // Detiene las pruebas si no hay conexión
+      console.error("Error connecting to database:", error);
+      throw error;
     }
   });
 
@@ -276,11 +277,12 @@ describe("TEST updateProperty (manual updatedAt)", () => {
 
   after(async () => {
     try {
-      await disconnectFromDatabase();
-      console.info("Disconnected from database after updateProperty tests");
+      await mongoose.connection.dropDatabase();
+      await mongoose.disconnect();
+      console.info("Disconnected from database");
     } catch (error) {
-      console.error("Failed to disconnect from the database:", error);
-      throw error; // Si no podemos desconectar, podría haber problemas graves.
+      console.error("Error disconnecting from database:", error);
+      throw error;
     }
   });
 });

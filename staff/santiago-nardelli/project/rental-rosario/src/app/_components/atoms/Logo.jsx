@@ -3,8 +3,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { HomeIcon, ClockIcon } from "lucide-react";
-
+import Image from "next/image";
 const Logo = () => {
   const router = useRouter();
 
@@ -20,13 +19,13 @@ const Logo = () => {
   return (
     <div onClick={handleNavigation} style={{ cursor: "pointer" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <HomeIcon size={48} color="#007bff" />
-        <ClockIcon size={32} color="#6c757d" style={{ marginLeft: "-10px" }} />
-        <span
-          style={{ marginLeft: "8px", fontWeight: "bold", fontSize: "1.5em" }}
-        >
-          TempStay
-        </span>
+        <Image
+          src="/images/logo-rental-1.png" // Ruta de la imagen
+          alt="Logo"
+          width={150} // Ajusta el ancho del logo
+          height={150} // Ajusta la altura del logo
+          className="object-contain"
+        />
       </div>
     </div>
   );

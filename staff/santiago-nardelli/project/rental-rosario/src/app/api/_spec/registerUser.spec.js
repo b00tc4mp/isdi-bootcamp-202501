@@ -2,10 +2,7 @@ import "dotenv/config";
 import { User } from "../../../lib/db/models/index.js";
 import { errors, validate } from "com";
 import { registerUser } from "../_logic/registerUser.js";
-import {
-  connectToDatabase,
-  disconnectFromDatabase,
-} from "../../../lib/db/index.js";
+import mongoose from "mongoose";
 import { expect } from "chai";
 import sinon from "sinon";
 import bcrypt from "bcryptjs";
@@ -14,11 +11,19 @@ const { DuplicityError, SystemError, ValidateError } = errors;
 const { DATABASE_URL, DATABASE_NAME } = process.env;
 
 describe("registerUser", () => {
-  let connection;
-
   before(async () => {
-    connection = await connectToDatabase(DATABASE_URL, DATABASE_NAME);
-    console.info("Connected to database");
+    try {
+      await mongoose.connect(DATABASE_URL, {
+        dbName: DATABASE_NAME,
+        autoIndex: true,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      });
+      console.info("Connected to database");
+    } catch (error) {
+      console.error("Error connecting to database:", error);
+      throw error;
+    }
   });
 
   beforeEach(async () => {
@@ -228,7 +233,13 @@ describe("registerUser", () => {
   });
 
   after(async () => {
-    await disconnectFromDatabase();
-    console.info("Disconnected from database after registerUser tests");
+    try {
+      await mongoose.connection.dropDatabase();
+      await mongoose.disconnect();
+      console.info("Disconnected from database");
+    } catch (error) {
+      console.error("Error disconnecting from database:", error);
+      throw error;
+    }
   });
 });

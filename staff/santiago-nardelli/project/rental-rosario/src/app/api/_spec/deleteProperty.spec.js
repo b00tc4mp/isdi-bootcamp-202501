@@ -1,13 +1,27 @@
 import "dotenv/config";
 import { expect } from "chai";
-import { deleteProperty } from "../_logic/index.js";
 import mongoose from "mongoose";
+import { deleteProperty } from "../_logic/index.js";
 import { Property } from "../../../lib/db/models/index.js";
 import { errors } from "com";
-const { NotFoundError, AuthorizationError, SystemError } = errors;
-const { DATABASE_URL, DATABASE_NAME } = process.env;
 
-describe("TEST deleteProperty", () => {
+const { NotFoundError, ValidateError, SystemError } = errors;
+const { DATABASE_URL, DATABASE_NAME } = process.env;
+describe("deleteProperty", () => {
+  const validUserId = "userId123"; // Cumple con validate.id
+  const validPropertyId = new mongoose.Types.ObjectId(); // Generar un ObjectId válido
+  const invalidId = ""; // No cumple con validate.id
+  const propertyData = {
+    title: "Sample Property",
+    image: "https://example.com/image.jpg",
+    description: "A beautiful property",
+    location: "Somewhere",
+    type: "house",
+    bedrooms: 3,
+    airbnbUrl: "https://airbnb.com/sample",
+    userId: validUserId,
+  };
+
   before(async () => {
     try {
       await mongoose.connect(DATABASE_URL, {
@@ -25,87 +39,77 @@ describe("TEST deleteProperty", () => {
 
   beforeEach(async () => {
     await Property.deleteMany({});
-    console.info("Properties collection cleared");
+    const property = new Property({ ...propertyData, _id: validPropertyId });
+    await property.save();
   });
 
-  it("should throw SystemError if there is a database error", async () => {
-    const mockError = new Error("Database connection failed");
-    const originalFindByIdAndDelete = Property.findByIdAndDelete;
-    Property.findByIdAndDelete = () => {
-      throw mockError;
-    };
+  it("debería eliminar correctamente una propiedad existente", async () => {
+    const validPropertyId = new mongoose.Types.ObjectId(); // Generamos un ObjectId válido
 
+    // Crear la propiedad con un _id válido
+    const property = new Property({ ...propertyData, _id: validPropertyId });
+    await property.save();
+
+    // Convertir el ID a string para pasarlo a la función de eliminación
+    await deleteProperty(validUserId, validPropertyId.toString());
+
+    // Verificar que la propiedad fue eliminada
+    const foundProperty = await Property.findById(validPropertyId);
+    expect(foundProperty).to.be.null;
+  });
+
+  it("debería lanzar NotFoundError cuando la propiedad no existe", async () => {
+    const nonExistentPropertyId = "nonExistent123"; // Cumple con validate.id pero no existe
     try {
-      await deleteProperty("userId123", "propertyId123");
-      throw new Error("Expected SystemError, but got no error");
+      await deleteProperty(validUserId, nonExistentPropertyId);
+      throw new Error("Debería haber lanzado un NotFoundError");
     } catch (error) {
-      expect(error).to.be.an.instanceOf(SystemError);
-      expect(error.message).to.include("Database connection failed");
+      expect(error).to.be.instanceOf(NotFoundError);
+      expect(error.message).to.equal("Property not found");
     }
-
-    Property.findByIdAndDelete = originalFindByIdAndDelete;
   });
 
-  it("should throw NotFoundError if the property does not exist", async () => {
-    const originalFindByIdAndDelete = Property.findByIdAndDelete;
-    Property.findByIdAndDelete = () => null;
-
+  it("debería lanzar ValidateError cuando el userId es inválido", async () => {
     try {
-      await deleteProperty("userId123", "nonExistingPropertyId");
-      throw new Error("Expected NotFoundError, but got no error");
+      await deleteProperty(invalidId, validPropertyId);
+      throw new Error("Debería haber lanzado un ValidateError");
     } catch (error) {
-      expect(error).to.be.an.instanceOf(NotFoundError);
-      expect(error.message).to.include("Property not found");
+      expect(error).to.be.instanceOf(ValidateError);
+      expect(error.message).to.match(/Invalid userId/);
     }
-
-    Property.findByIdAndDelete = originalFindByIdAndDelete;
   });
 
-  it("should throw AuthorizationError if the user does not have permission", async () => {
-    const propertyData = {
-      title: "Apartamento Nuevo",
-      image: "https://example.com/image.jpg",
-      description: "Bonito apartamento con vistas",
-      location: "Barcelona",
-      type: "apartment",
-      bedrooms: 2,
-      airbnbUrl: "https://airbnb.com/123",
-      userId: "otherUserId123", // Usuario diferente al que intenta eliminar
-    };
-
-    const originalFindByIdAndDelete = Property.findByIdAndDelete;
-    Property.findByIdAndDelete = () => propertyData;
-
+  it("debería lanzar ValidateError cuando el propertyId es inválido", async () => {
     try {
-      await deleteProperty("userId123", "propertyId123");
-      throw new Error("Expected AuthorizationError, but got no error");
+      await deleteProperty(validUserId, invalidId);
+      throw new Error("Debería haber lanzado un ValidateError");
     } catch (error) {
-      expect(error).to.be.an.instanceOf(AuthorizationError);
-      expect(error.message).to.include("User does not have permission");
+      expect(error).to.be.instanceOf(ValidateError);
+      expect(error.message).to.match(/Invalid propertyId/);
     }
-
-    Property.findByIdAndDelete = originalFindByIdAndDelete;
   });
 
-  it("should successfully delete a property if it exists and user has permission", async () => {
-    const propertyData = {
-      title: "Apartamento Nuevo",
-      image: "https://example.com/image.jpg",
-      description: "Bonito apartamento con vistas",
-      location: "Barcelona",
-      type: "apartment",
-      bedrooms: 2,
-      airbnbUrl: "https://airbnb.com/123",
-      userId: "userId123", // El usuario tiene permiso
-    };
+  it("debería lanzar SystemError cuando ocurre un error de base de datos", async () => {
+    try {
+      // Forzar un error de conexión a la base de datos
+      await mongoose.disconnect();
+      await deleteProperty(validUserId, validPropertyId.toString());
+      throw new Error("Debería haber lanzado un SystemError");
+    } catch (error) {
+      expect(error).to.be.instanceOf(SystemError);
+      expect(error.message).to.match(/Error deleting property/);
+    } finally {
+      // Reconectar para las siguientes pruebas
+      await mongoose.connect(process.env.DATABASE_URL, {
+        dbName: process.env.DATABASE_NAME,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+    }
+  });
 
-    const originalFindByIdAndDelete = Property.findByIdAndDelete;
-    Property.findByIdAndDelete = () => propertyData;
-
-    const result = await deleteProperty("userId123", "propertyId123");
-    expect(result).to.be.undefined;
-
-    Property.findByIdAndDelete = originalFindByIdAndDelete;
+  afterEach(async () => {
+    await Property.deleteMany({});
   });
 
   after(async () => {

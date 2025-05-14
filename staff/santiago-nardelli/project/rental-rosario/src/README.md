@@ -255,7 +255,7 @@ npm run dev
 
 El diseño de la interfaz de usuario del proyecto fue desarrollado utilizando **Figma** para asegurar una experiencia visual atractiva y una navegación intuitiva.
 
-- **Link al prototipo en Figma:** [Diseño del Proyecto en Figma](#)
+- **Link al prototipo en Figma:** [https://www.figma.com/proto/uQnuU78nSB4RyxQxH68ORU/Home-Rentals-Agency-website-design--Community-?node-id=0-1&t=nPOdbf8EEcP5P20I-1](#)
 
 En el prototipo puedes encontrar:
 
@@ -270,6 +270,8 @@ Se implementó un análisis de cobertura para evaluar qué partes del código es
 ### Herramientas utilizadas:
 
 - **C8:** Para medir la cobertura de pruebas.
+
+- **Link a test coverage:** [http://127.0.0.1:5500/rental-rosario/coverage/index.html](#)
 
 ### Generar Reporte de Coverage:
 
