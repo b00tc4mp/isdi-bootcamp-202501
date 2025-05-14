@@ -94,11 +94,10 @@ export function Register({ onNavigateToLogin, onUserRegistered }) {
                 />
             </div>
 
-
             <div className="flex justify-center">
                 <button
                     type="submit"
-                    className="mt-6 px-6 py-2 bg-fuchsia-900 text-white font-bold rounded-full shadow-md transform transition duration-300 hover:bg-fuchsia-800 "
+                    className=" form-button rounded-full"
                 >
                     Register
                 </button>

@@ -53,7 +53,7 @@ export const validate = {
         this.text(tag, explain)
         this.minLength(tag, 3, explain)
         this.maxLength(tag, 20, explain)
-        if (!constant.TAG_REGEX.test(tag)) throw new ValidationError(`invalid ${explain} syntax`)
+        if (!constant.TAG_REGEX.test(tag)) throw new ValidationError(`Invalid ${explain} syntax. Use a single word with letters only.`)
     },
     time(time, explain = 'time') {
         this.number(time, explain)

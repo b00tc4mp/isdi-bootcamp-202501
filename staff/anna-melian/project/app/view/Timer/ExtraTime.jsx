@@ -360,7 +360,7 @@ export function ExtraTime({ onGiveUpClick, onFinishClick }) {
 
         {status === 'setExtraTime' && (
             <div className="flex flex-col items-center justify-center w-[400px] h-[550px] bg-yellow-50 rounded-2xl shadow-xl p-6 space-y-8 text-center border-4 border-fuchsia-900">
-                <h2 className="text-3xl font-bold text-fuchsia-900">➕ Add Extra Time</h2>
+                <h2 className="text-3xl font-bold text-fuchsia-900">Add Extra Time</h2>
                 <label htmlFor="timeExtra" className="text-xl font-semibold text-yellow-600">
                     Select extra minutes:
                 </label>

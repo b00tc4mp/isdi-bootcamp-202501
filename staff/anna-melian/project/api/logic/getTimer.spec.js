@@ -183,4 +183,3 @@ describe('getTimer', () => {
 })
 
 
-// TODO fails on not found timer

@@ -5,7 +5,6 @@ import { useContext } from '../context.js'
 export function Login({ onNavigateToRegister, onUserLoggedIn }) {
     const { alert, confirm } = useContext()
 
-
     const handleLoginSubmit = event => {
         event.preventDefault()
 
@@ -51,7 +50,7 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
                 <input
                     type="text"
                     id="username"
-                    className="px-3 py-2 rounded-lg border-2 border-pink-400 focus:border-pink-600 bg-pink-50 text-pink-900 placeholder-pink-400 shadow-sm focus:ring-2 focus:ring-fuchsia-300 transition duration-200"
+                    className="input-color border-pink-400 focus:border-pink-600 bg-pink-50 text-pink-900 placeholder-pink-400 shadow-sm focus:ring-2 focus:ring-fuchsia-300 transition duration-200"
                 />
             </div>
 
@@ -60,14 +59,14 @@ export function Login({ onNavigateToRegister, onUserLoggedIn }) {
                 <input
                     type="password"
                     id="password"
-                    className="px-3 py-2 rounded-lg border-2 border-purple-400 focus:border-purple-600 bg-purple-50 text-purple-900 placeholder-purple-400 shadow-sm focus:ring-2 focus:ring-purple-300 transition duration-200"
+                    className="input-color border-purple-400 focus:border-purple-600 bg-purple-50 text-purple-900 placeholder-purple-400 shadow-sm focus:ring-2 focus:ring-purple-300 transition duration-200"
                 />
             </div>
 
             <div className="flex justify-center">
                 <button
                     type="submit"
-                    className="mt-6 px-6 py-2 bg-fuchsia-900 text-white font-bold rounded-full shadow-md transform transition duration-300 hover:bg-fuchsia-800"
+                    className="form-button rounded-full"
                 >
                     Login
                 </button>

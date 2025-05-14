@@ -363,6 +363,3 @@ describe('addExtraTime', () => {
     after(() => data.disconnect())
 })
 
-
-// TODO fails on non-exsiting timer
-// TODO finish this spec

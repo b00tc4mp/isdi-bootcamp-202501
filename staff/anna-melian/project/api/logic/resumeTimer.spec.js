@@ -325,7 +325,3 @@ describe('resumeTimer', () => {
 
     after(() => data.disconnect())
 })
-
-
-// TODO fails on non-exsiting timer
-// TODO succced in status extratime

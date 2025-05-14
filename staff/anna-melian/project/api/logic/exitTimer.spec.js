@@ -277,4 +277,3 @@ describe('exitTimer', () => {
 })
 
 
-// TODO fails on non-exsiting timer

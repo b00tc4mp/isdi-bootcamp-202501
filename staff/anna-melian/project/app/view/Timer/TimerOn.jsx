@@ -357,18 +357,13 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
     return (
         <div className="flex flex-col items-center mt-10 space-y-6 text-center">
 
-            {status === 'created' && (
-                <h3 className="text-2xl font-bold text-green-800 animate-fade-in">✨ Ready to start!</h3>
-            )}
-            {status === 'active' && (
-                <h3 className="text-2xl font-bold text-fuchsia-900 animate-pulse"> Working...</h3>
-            )}
-            {status === 'pause' && (
-                <h3 className="text-2xl font-bold text-yellow-700 animate-fade-in"> Resting</h3>
-            )}
-            {status === 'end' && (
-                <h3 className="text-2xl font-bold text-fuchsia-700 animate-bounce">⏰ Time's up! 🎉</h3>
-            )}
+            {status === 'created' && (<h3 className="text-2xl font-bold text-green-800 animate-fade-in">✨ Ready to start!</h3>)}
+
+            {status === 'active' && (<h3 className="text-2xl font-bold text-fuchsia-900 animate-pulse"> Working...</h3>)}
+
+            {status === 'pause' && (<h3 className="text-2xl font-bold text-yellow-700 animate-fade-in"> Resting</h3>)}
+
+            {status === 'end' && (<h3 className="text-2xl font-bold text-fuchsia-700 animate-bounce">⏰ Time's up! 🎉</h3>)}
 
             {status !== 'setExtraTime' && (
                 <h1 className="text-5xl font-mono font-bold text-gray-800">
@@ -394,7 +389,7 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
 
             {status === 'setExtraTime' && (
                 <div className="flex flex-col items-center justify-center w-[400px] h-[550px] bg-yellow-50 rounded-2xl shadow-xl p-6 space-y-8 text-center border-4 border-fuchsia-900">
-                    <h2 className="text-3xl font-bold text-fuchsia-900">➕ Add Extra Time</h2>
+                    <h2 className="text-3xl font-bold text-fuchsia-900">Add Extra Time</h2>
                     <label htmlFor="timeExtra" className="text-xl font-semibold text-yellow-600">
                         Select extra minutes:
                     </label>
@@ -406,7 +401,7 @@ export function TimerOn({ onReturnAccepted, onGiveUpClick, onFinishClick, onAddE
                         step={5}
                         value={extraTime}
                         onChange={e => setExtraTime(Number(e.target.value))}
-                        className="w-[180px] text-2xl px-4 py-2 border-2 border-red-900 rounded-lg text-center text-fuchsia-900 font-bold"
+                        className="w-[180px] text-2xl px-4 py-2 border-2 border-red-900 rounded-lg text-center text-fuchsia-900 font-bold bg-white"
                     />
                     <div className="text-xl text-gray-800 space-y-2">
                         <p><strong className="text-fuchsia-900">Run Time:</strong> {initialTime} min</p>

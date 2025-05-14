@@ -332,4 +332,3 @@ describe('pauseTimer', () => {
 })
 
 
-// TODO fails on non-exsiting timer

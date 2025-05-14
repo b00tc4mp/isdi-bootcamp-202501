@@ -106,9 +106,9 @@ export function CreateTimer({ onUserLoggedOut, onCreateTimer, onSessionHistoryCl
 
                 <h3 className='absolute left-1/2 transform -translate-x-1/2 font-bold text-2xl'>Timer</h3>
 
-                <div className='bg-gray-50 flex space-x-2 text-neutral-950 w-[50px] py-0.5 px-1.5 '>
-                    <p>{gems}</p>
-                    <p className=''>💎</p>
+                <div className='bg-gray-50 flex space-x-2 text-neutral-950 w-[80px] py-1 px-2 rounded ml-auto mr-4 justify-center items-center shadow-md'>
+                    <p className='font-semibold text-xl'>{gems}</p>
+                    <p className='text-lg'>💎</p>
                 </div>
 
             </header>

@@ -21,13 +21,14 @@ User:
 - Pause timer with the previously set time up to 10 minutes, allowing a maximum of 8 pasues (Timer page ⏳)
 - Add extra time allowed since the total time (initial set time + extra time) is under 240 minutes (Timer page ⏳)
 - Exit the timer (Timer page ⏳)
-- See your history, which contains information about all past timers (history page 📄)
+- See your session history, which contains information about all past timers (Session history page 📄)
 
 
 **In for future development:**
 
 - Modified user data (Settings page ⚙️)
 - Change the notifications and sound configuration (Settings page ⚙️)
+- Updated session history with search filters (Session history page 📄)
 
 
 ### UIUX Design

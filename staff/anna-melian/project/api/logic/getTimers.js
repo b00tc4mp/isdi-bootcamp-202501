@@ -22,7 +22,6 @@ export const getTimers = userId => {
                 if (timer.author) {
                     timer.author = timer.author.toString()
                 }
-
             })
 
             return timers

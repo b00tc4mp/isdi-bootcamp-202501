@@ -89,8 +89,6 @@ export function Timer({ onUserLoggedOut }) {
             <Route path="/:timerId" element={<TimerOn onReturnAccepted={handleReturnClicked} onGiveUpClick={handleGiveUpClicked} onFinishClick={handleFinishClicked} onAddExtraTime={handleAddExtraTime} />} />
 
             <Route path="/:timerId/extraTime-on" element={<ExtraTime onFinishClick={handleFinishClicked} onGiveUpClick={handleGiveUpClicked} />} />
-
-
         </Routes>
     </div>
 

@@ -111,7 +111,7 @@ describe('createTimer', () => {
                 expect(() => createTimer(user._id.toString(), 90, 10, 123)).to.throw(ValidationError, 'invalid tag type')
                 expect(() => createTimer(user._id.toString(), 110, 7, 'Exerciceeeeeeeeeeeeeeeee')).to.throw(ValidationError, 'invalid tag maxLength')
                 expect(() => createTimer(user._id.toString(), 35, 1, 'Do')).to.throw(ValidationError, 'invalid tag minLength')
-                expect(() => createTimer(user._id.toString(), 70, 10, 'Play tennis')).to.throw(ValidationError, 'invalid tag syntax')
+                expect(() => createTimer(user._id.toString(), 70, 10, 'Play tennis')).to.throw(ValidationError, 'Invalid tag syntax. Use a single word with letters only.')
             })
 
     })
