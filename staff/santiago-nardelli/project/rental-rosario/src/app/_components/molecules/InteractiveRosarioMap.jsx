@@ -1,23 +1,44 @@
 "use client";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
+// Configurar el ícono del marcador
+const defaultIcon = new L.Icon({
+  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+  iconSize: [25, 41], // Tamaño del ícono
+  iconAnchor: [12, 41], // Punto de anclaje del ícono
+  popupAnchor: [1, -34], // Punto de anclaje del popup
+  shadowSize: [41, 41], // Tamaño de la sombra
+});
 const InteractiveRosarioMap = () => {
   return (
     <MapContainer
       center={[-32.9468, -60.6394]}
       zoom={13}
       scrollWheelZoom={false}
-      style={{ width: "100%", height: "100%" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        border: "2px solid #000000",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+        borderRadius: "10px",
+      }}
     >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={[-32.9468, -60.6394]}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <Marker
+        position={[-32.9468, -60.6394]}
+        icon={defaultIcon}
+        riseOnHover={true}
+      >
         {" "}
-        {/* Mismo centro para el marcador de prueba */}
-        <Popup>Estás en el corazón de Rosario!</Popup>
+        <Popup>
+          {" "}
+          <span style={{ animation: "fadeIn 1s ease-in-out" }}>
+            Estás en el corazón de Rosario!
+          </span>
+        </Popup>
       </Marker>
     </MapContainer>
   );

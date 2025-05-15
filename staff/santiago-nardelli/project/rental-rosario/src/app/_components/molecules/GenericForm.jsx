@@ -34,7 +34,7 @@ const GenericForm = ({
               {field.label && <Label htmlFor={field.name}>{field.label}</Label>}
               {field.type === "select" ? (
                 <Select
-                  name={field.name} // Importante para la sumisión del formulario
+                  name={field.name}
                   onValueChange={(value) => {
                     console.log(
                       `Valor seleccionado para ${field.name}: ${value}`
@@ -69,6 +69,9 @@ const GenericForm = ({
                   placeholder={field.placeholder || ""}
                   required={field.required || false}
                   defaultValue={field.defaultValue || ""}
+                  onCopy={(e) => {}}
+                  onPaste={(e) => {}}
+                  onCut={(e) => {}}
                   {...field.rest}
                 />
               )}

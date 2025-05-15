@@ -1,9 +1,11 @@
 "use client";
 
 import React from "react";
-
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import ScrollToProperties from "../atoms/ScrollToProperties";
+import { Playfair_Display } from "next/font/google";
+const playfair = Playfair_Display({ subsets: ["latin"] });
 
 // Carga dinámicamente el componente InteractiveRosarioMap solo en el cliente
 const InteractiveRosarioMap = dynamic(
@@ -15,11 +17,28 @@ const InteractiveRosarioMap = dynamic(
 
 const HeroSection = () => {
   return (
-    <div className="bg-[url('/images/rosario-hero.avif')] bg-cover bg-center text-white py-20 text-center h-screen flex items-center justify-center z-10">
-      <div className="bg-black/30 p-8 flex md:flex-row flex-col items-center justify-around w-full max-w-5xl rounded-lg">
+    <div
+      className="
+    bg-[url('/images/rosario-hero.avif')] bg-cover bg-center
+    text-white py-20 text-center h-screen flex items-center justify-center z-10
+    relative
+    before:absolute before:inset-0 before:bg-black/30 before:block md:before:hidden
+  "
+    >
+      <div
+        className="
+      p-8 flex md:flex-row flex-col items-center justify-around
+      w-full max-w-5xl rounded-lg
+      bg-transparent md:bg-black/30
+      relative z-20
+    "
+      >
         {/* Columna para el texto */}
         <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">
+          <h1
+            className="text-3xl md:text-5xl font-bold mb-4"
+            style={{ fontFamily: playfair.style.fontFamily }}
+          >
             Tu Próxima Aventura en Rosario Comienza Aquí
           </h1>
           {/* Posiblemente un input de búsqueda aquí */}

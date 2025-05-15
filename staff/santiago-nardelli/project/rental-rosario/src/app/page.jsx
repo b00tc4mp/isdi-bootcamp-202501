@@ -1,41 +1,74 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { getAllPropertiesRequest } from "./_logic/functions/getAllPropertiesRequest.js";
+import { getFilteredPropertiesRequest } from "./_logic/functions/getFilteredPropertiesRequest.js";
+import PropertyList from "./_components/organisms/PropertyList.jsx";
+import PropertyFilterNavbar from "./_components/molecules/PropertyFilterNavbar.jsx";
+import HeroSection from "./_components/organisms/HeroSection.jsx";
+import Header from "./_components/molecules/Header.jsx";
+import { errors } from "com";
 
-export const dynamic = "force-dynamic"; // Forzamos SSR dinámico
+const { SystemError, NotFoundError } = errors;
 
-export default async function Home() {
-  let properties = [];
+export const dynamic = "force-dynamic";
+
+async function getProperties(searchParams) {
+  console.log("getProperties: Inicio");
 
   try {
-    // Intentamos obtener las propiedades desde la función
-    properties = await getAllPropertiesRequest();
-    console.log("Propiedades obtenidas en SSR:", properties.length);
-  } catch (error) {
-    console.error("Error al obtener propiedades en SSR:", error);
-    return (
-      <div className="p-4">
-        <p className="text-red-500">
-          Error al cargar las propiedades. Por favor, intenta nuevamente más
-          tarde.
-        </p>
-      </div>
-    );
-  }
+    const resolvedSearchParams = await searchParams;
+    const hasFilters = Object.keys(resolvedSearchParams).length > 0;
 
-  return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Lista de Propiedades</h1>
-      {properties.length === 0 ? (
-        <p>No hay propiedades disponibles.</p>
+    const filtersObject = hasFilters
+      ? Object.fromEntries(
+          Object.entries(resolvedSearchParams).map(([key, value]) => [
+            key,
+            String(value),
+          ])
+        )
+      : {};
+
+    const properties = hasFilters
+      ? await getFilteredPropertiesRequest(filtersObject)
+      : await getAllPropertiesRequest();
+
+    return properties;
+  } catch (error) {
+    if (error instanceof SystemError) {
+      console.error("Error del sistema:", error);
+    } else if (error instanceof NotFoundError) {
+      console.error("No se encontraron propiedades:", error);
+    } else {
+      console.error("Error inesperado:", error);
+    }
+    return [];
+  }
+}
+export default async function Home({ searchParams }) {
+  const homeStartTime = Date.now();
+  console.log("Home: Inicio");
+
+  const initialProperties = await getProperties(searchParams);
+
+  console.log("Home: initialProperties ==>", initialProperties);
+  const hasError = initialProperties.length === 0;
+
+  const jsx = (
+    <div className="relative">
+      <Header className="absolute top-0 left-0 right-0 z-30 " />
+      <HeroSection />
+      <Suspense fallback={<p>Cargando filtros...</p>}>
+        <PropertyFilterNavbar />
+      </Suspense>
+      {hasError ? (
+        <p className="text-red-500">
+          Hubo un error al cargar las propiedades. Por favor, intenta nuevamente
+          más tarde.
+        </p>
       ) : (
-        <ul className="list-disc pl-5">
-          {properties.map((property, index) => (
-            <li key={index}>
-              <p>{property.title}</p>
-            </li>
-          ))}
-        </ul>
+        <PropertyList properties={initialProperties} />
       )}
     </div>
   );
+
+  return jsx;
 }

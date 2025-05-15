@@ -42,6 +42,7 @@ const AddPage = () => {
       airbnbUrl: e.target.elements.airbnbUrl.value,
     };
     await createProperty(formData);
+    e.target.reset();
   };
 
   const formFields = [
@@ -70,7 +71,6 @@ const AddPage = () => {
   ];
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">Create New Property</h1>
       <GenericForm
         title="Property Details"
         fields={formFields}
