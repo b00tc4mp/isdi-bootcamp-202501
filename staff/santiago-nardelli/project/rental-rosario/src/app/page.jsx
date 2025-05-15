@@ -1,95 +1,43 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { getAllPropertiesRequest } from "./_logic/functions/getAllPropertiesRequest.js";
-import { getFilteredPropertiesRequest } from "./_logic/functions/getFilteredPropertiesRequest.js";
+//import { getFilteredPropertiesRequest } from "./_logic/functions/getFilteredPropertiesRequest.js";
 import PropertyList from "./_components/organisms/PropertyList.jsx";
 import PropertyFilterNavbar from "./_components/molecules/PropertyFilterNavbar.jsx";
 import HeroSection from "./_components/organisms/HeroSection.jsx";
 import Header from "./_components/molecules/Header.jsx";
 import { errors } from "com";
 
-const { SystemError } = errors;
+const { SystemError, NotFoundError } = errors;
 
 export const dynamic = "force-dynamic";
 
-async function getProperties(searchParams) {
+export default async function Home() {
   console.log("getProperties: Inicio");
-  const startTime = Date.now();
+  let initialProperties = [];
 
   try {
-    const resolvedSearchParams = await searchParams;
-    const hasFilters = Object.keys(resolvedSearchParams).length > 0;
-
-    const filtersObject = hasFilters
-      ? Object.fromEntries(
-          Object.entries(resolvedSearchParams).map(([key, value]) => [
-            key,
-            String(value),
-          ])
-        )
-      : {};
-
-    const propertiesStartTime = Date.now();
-    const properties = hasFilters
-      ? await getFilteredPropertiesRequest(filtersObject)
-      : await getAllPropertiesRequest();
-    const propertiesEndTime = Date.now();
-
-    console.log(
-      `getProperties: Obtención de propiedades completada en ${
-        propertiesEndTime - propertiesStartTime
-      }ms`
-    );
-
-    return properties;
+    initialProperties = await getAllPropertiesRequest();
+    console.log("Propiedades obtenidas:", initialProperties.length);
   } catch (error) {
     console.error("Error al obtener propiedades:", error);
-    return [];
-  } finally {
-    const endTime = Date.now();
-    console.log(`getProperties: Finalizado en ${endTime - startTime}ms`);
+    if (error instanceof SystemError) {
+      return <p>Error del sistema. Por favor, intenta nuevamente más tarde.</p>;
+    } else if (error instanceof NotFoundError) {
+      return <p>No se encontraron propiedades.</p>;
+    } else {
+      return <p>Error desconocido. Por favor, intenta nuevamente más tarde.</p>;
+    }
   }
-}
-export default async function Home({ searchParams }) {
-  const homeStartTime = Date.now();
-  console.log("Home: Inicio");
 
-  const propertiesStartTime = Date.now();
-  const initialProperties = await getProperties(searchParams);
-  const propertiesEndTime = Date.now();
-  console.log(
-    `Home: getProperties completado en ${
-      propertiesEndTime - propertiesStartTime
-    }ms`
-  );
-
-  console.log("Home: initialProperties ==>", initialProperties);
-  const hasError = initialProperties.length === 0;
-
-  const renderStartTime = Date.now();
   const jsx = (
     <div className="relative">
       <Header className="absolute top-0 left-0 right-0 z-30 " />
       <HeroSection />
-      <Suspense fallback={<p>Cargando filtros...</p>}>
-        <PropertyFilterNavbar />
-      </Suspense>
-      {hasError ? (
-        <p className="text-red-500">
-          Hubo un error al cargar las propiedades. Por favor, intenta nuevamente
-          más tarde.
-        </p>
-      ) : (
-        <PropertyList properties={initialProperties} />
-      )}
+      <PropertyFilterNavbar />
+
+      <PropertyList properties={initialProperties} />
     </div>
   );
-  const renderEndTime = Date.now();
-  console.log(
-    `Home: Render JSX completado en ${renderEndTime - renderStartTime}ms`
-  );
-
-  const homeEndTime = Date.now();
-  console.log(`Home: Finalizado en ${homeEndTime - homeStartTime}ms`);
 
   return jsx;
 }
