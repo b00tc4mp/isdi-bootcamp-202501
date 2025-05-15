@@ -1,43 +1,41 @@
 import React from "react";
 import { getAllPropertiesRequest } from "./_logic/functions/getAllPropertiesRequest.js";
-//import { getFilteredPropertiesRequest } from "./_logic/functions/getFilteredPropertiesRequest.js";
-import PropertyList from "./_components/organisms/PropertyList.jsx";
-import PropertyFilterNavbar from "./_components/molecules/PropertyFilterNavbar.jsx";
-import HeroSection from "./_components/organisms/HeroSection.jsx";
-import Header from "./_components/molecules/Header.jsx";
-import { errors } from "com";
 
-const { SystemError, NotFoundError } = errors;
-
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; // Forzamos SSR dinámico
 
 export default async function Home() {
-  console.log("getProperties: Inicio");
-  let initialProperties = [];
+  let properties = [];
 
   try {
-    initialProperties = await getAllPropertiesRequest();
-    console.log("Propiedades obtenidas:", initialProperties.length);
+    // Intentamos obtener las propiedades desde la función
+    properties = await getAllPropertiesRequest();
+    console.log("Propiedades obtenidas en SSR:", properties.length);
   } catch (error) {
-    console.error("Error al obtener propiedades:", error);
-    if (error instanceof SystemError) {
-      return <p>Error del sistema. Por favor, intenta nuevamente más tarde.</p>;
-    } else if (error instanceof NotFoundError) {
-      return <p>No se encontraron propiedades.</p>;
-    } else {
-      return <p>Error desconocido. Por favor, intenta nuevamente más tarde.</p>;
-    }
+    console.error("Error al obtener propiedades en SSR:", error);
+    return (
+      <div className="p-4">
+        <p className="text-red-500">
+          Error al cargar las propiedades. Por favor, intenta nuevamente más
+          tarde.
+        </p>
+      </div>
+    );
   }
 
-  const jsx = (
-    <div className="relative">
-      <Header className="absolute top-0 left-0 right-0 z-30 " />
-      <HeroSection />
-      <PropertyFilterNavbar />
-
-      <PropertyList properties={initialProperties} />
+  return (
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Lista de Propiedades</h1>
+      {properties.length === 0 ? (
+        <p>No hay propiedades disponibles.</p>
+      ) : (
+        <ul className="list-disc pl-5">
+          {properties.map((property, index) => (
+            <li key={index}>
+              <p>{property.title}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-
-  return jsx;
 }
