@@ -159,3 +159,91 @@ The project follows a layered architecture with a clear separation between the f
           |-- route.js    # User registration
           |-- route.js       # User login
 ```
+
+### **Properties**
+
+- `GET /api/properties` -Get all the properties.
+- `GET /api/properties/:id` - Get details of a property. (In the future)
+- `POST /api/properties` - Create a new property (admin).
+- `PUT /api/properties/:id` - Update a property (admin).
+- `DELETE /api/properties/:id` - Delete a property (admin).
+
+### **ADMINS**
+
+- `POST /api/admins/register` - Register a new admin.
+- `POST /api/admins/auth` - Sign in.
+
+---
+
+## Frontend views
+
+### Home Page
+
+- Interactive map with outstanding properties.
+- Dynamic filters to search for properties.
+
+### Property Details page (to be considered)
+
+- Complete display of a selected property.
+
+### Registration and Start of Session page
+
+- Forms to register users or log in.
+
+### Dashboard Administration
+
+- Property management (create, edit, delete).
+
+---
+
+## Main Functions one.
+
+## Principal Funtions
+
+1. **Interactive Map:**
+
+- Move around Rosario and select properties in different locations.
+
+2. **Filter Search:**
+
+- Type of property and characteristics.
+
+3. **Autenticate:**
+
+- Registration, login and role management (user and administrator).
+
+4. **Dahboard:**
+
+- Exclusive access for administrators.
+
+---
+
+## Figma
+
+The project's user interface design was developed using **Figma** to ensure an engaging visual experience and intuitive navigation.
+
+- **Link prototype Figma:** [https://www.figma.com/proto/uQnuU78nSB4RyxQxH68ORU/Home-Rentals-Agency-website-design--Community-?node-id=0-1&t=nPOdbf8EEcP5P20I-1](#)
+
+In the prototype, you can find:
+
+- **Home page layout.**
+- **Administration panel.**
+- **Properties view.**
+
+## Coverage
+
+A coverage analysis was implemented to assess which parts of the code are being tested by automated tests.
+
+### Tools used:
+
+- **C8:** To measure test coverage.
+
+- **Link to test coverage:** [http://127.0.0.1:5500/rental-rosario/coverage/index.html](#)
+
+### Generate Coverage Report:
+
+Run the following command:
+
+```bash
+npm run test-coverage
+```
