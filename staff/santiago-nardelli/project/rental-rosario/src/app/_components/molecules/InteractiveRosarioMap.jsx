@@ -18,13 +18,7 @@ const InteractiveRosarioMap = () => {
       center={[-32.9468, -60.6394]}
       zoom={13}
       scrollWheelZoom={false}
-      style={{
-        width: "100%",
-        height: "100%",
-        border: "2px solid #000000",
-        boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-        borderRadius: "10px",
-      }}
+      className="w-full h-full border-0 shadow-none rounded-none md:border-2 md:border-black md:shadow-md md:rounded-lg"
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <Marker

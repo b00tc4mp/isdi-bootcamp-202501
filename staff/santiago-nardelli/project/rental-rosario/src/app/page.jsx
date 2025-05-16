@@ -44,7 +44,6 @@ async function getProperties(searchParams) {
   }
 }
 export default async function Home({ searchParams }) {
-  const homeStartTime = Date.now();
   console.log("Home: Inicio");
 
   const initialProperties = await getProperties(searchParams);
@@ -60,10 +59,13 @@ export default async function Home({ searchParams }) {
         <PropertyFilterNavbar />
       </Suspense>
       {hasError ? (
-        <p className="text-red-500">
-          Hubo un error al cargar las propiedades. Por favor, intenta nuevamente
-          más tarde.
-        </p>
+        <div className="text-center mt-8">
+          <p className="text-red-500">
+            {initialProperties.length === 0
+              ? "No se encontraron propiedades con los filtros especificados."
+              : "Hubo un error al cargar las propiedades. Por favor, intenta nuevamente más tarde."}
+          </p>
+        </div>
       ) : (
         <PropertyList properties={initialProperties} />
       )}

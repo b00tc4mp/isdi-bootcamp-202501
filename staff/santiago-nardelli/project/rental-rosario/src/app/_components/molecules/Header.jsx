@@ -8,7 +8,7 @@ import useAuthRedirect from "../../hooks/useAuthRedirect.js";
 const Header = ({ className }) => {
   const handleLogoClick = useAuthRedirect(); // Usa el custom hook para obtener la función de redirección
 
-  const headerClasses = `absolute top-[-50px] left-[-70px] right-0 z-30 bg-transparent  hidden sm:block ${
+  const headerClasses = `absolute top-[-50px] left-[-70px] right-0 z-30 bg-transparent  hidden md:block ${
     className || ""
   }`;
   return (
