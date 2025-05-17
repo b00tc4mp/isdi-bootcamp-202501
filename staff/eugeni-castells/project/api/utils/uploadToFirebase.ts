@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 import { SystemError, UploadFirebaseError } from "com/errors";
 import { bucket } from "../firebase"; // firebase config file
 import { v4 as uuidv4 } from "uuid";

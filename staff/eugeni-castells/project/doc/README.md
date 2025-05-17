@@ -2,7 +2,7 @@
 
 ## Intro
 
-CamperBoat is a peer-to-peer platform that connects van owners with people who want to rent a van for travel adventures. Users can list their vans, search and filter available listings, make trip requests, and manage bookings through a simple and intuitive interface.
+CamperBoat is a platform that connects van owners with people who want to rent a van for travel adventures. Users can list their vans, search and filter available listings, make trip requests, and manage bookings through a simple and intuitive interface.
 
 Whether you're planning a weekend getaway or a road trip across Patagonia, CamperBoat helps you find the perfect vehicle to explore the open road.
 
