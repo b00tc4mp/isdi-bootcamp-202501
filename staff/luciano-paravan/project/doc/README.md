@@ -6,7 +6,7 @@
 
 Each user has a unique profile, a digital wardrobe, and can request suggestions. Soon, users will also be able to upload photos of their clothes so the AI can understand them automatically.
 
-> Final Project - Full Stack Web Development Bootcamp at ISDI Coders 🫠👗
+> Final Project - Full Stack Web Development Bootcamp at ISDI Coders
 
 ---
 

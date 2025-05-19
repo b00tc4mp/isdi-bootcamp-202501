@@ -111,7 +111,7 @@ export const lookRequest = (userId, contextOccasion, location, temperature, time
                 }))
 
                 return Promise.resolve({ suggestions: normalized })
-            }))
+            })) //Borrar hasta aqui para probar uso real de la API OPEN AI
                 .then(result => {
                     return LookRequest.create({
                         user: userId,
