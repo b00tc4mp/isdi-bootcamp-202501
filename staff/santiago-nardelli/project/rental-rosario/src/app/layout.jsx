@@ -4,16 +4,16 @@ import "./_styles/globals.css";
 
 export const metadata = {
   title: {
-    default: "Rental Rosario",
+    default: "Alquileres Temporales en Rosario",
     absolute: "",
-    template: "%s | Rental Rosario",
+    template: "%s | Alquileres Temporales en Rosario",
   },
   description:
     "Encuentra las mejores propiedades y experiencias turísticas en Rosario. Alquila casas, apartamentos y estudios en una ciudad vibrante y llena de cultura. ¡Reserva ahora!",
   icons: {
     icon: [
       {
-        url: "/images/logo-rental-1.png",
+        url: "/images/logo-rental-1.1.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "any maskable",
@@ -51,12 +51,12 @@ export default function RootLayout({ children }) {
         <meta name="ICBM" content="-32.94682, -60.63932" />
 
         {/* Etiqueta para autor */}
-        <meta name="author" content="Rental Rosario Team" />
+        <meta name="author" content="Rental Rosario" />
 
         {/* Palabras clave para motores de búsqueda */}
         <meta
           name="keywords"
-          content="alquiler en Rosario, alquiler temporal, propiedades Rosario, experiencias Rosario, turismo Rosario"
+          content="alquiler en Rosario, alquiler temporal, propiedades Rosario, experiencias Rosario, turismo Rosario, alquileres temporales rosario"
         />
 
         {/* Atributos de robots para indexación y seguimiento */}
