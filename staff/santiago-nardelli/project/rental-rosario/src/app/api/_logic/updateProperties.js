@@ -19,6 +19,7 @@ const validateAndFilterUpdates = (updates) => {
     type: (value) =>
       validate.text(value, { allowedValues: ["house", "apartment", "studio"] }),
     bedrooms: (value) => validate.number(value, { min: 1, max: 50 }),
+    travelers: (value) => validate.number(value, { min: 1, max: 50 }),
     images: (value) => {
       if (!Array.isArray(value)) {
         throw new ValidateError("Images must be an array");

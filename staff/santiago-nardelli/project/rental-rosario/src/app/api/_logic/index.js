@@ -7,6 +7,7 @@ import { getAllProperties } from "./getAllProperties.js";
 import { updateProperty } from "./updateProperties.js";
 import { getFilteredProperties } from "./getFilteredProperties.js";
 import { getOneProperty } from "./getOneProperty.js";
+import { getFilteredForTrippers } from "./getFilteredForTrippers.js";
 
 export {
   authenticateUser,
@@ -17,4 +18,5 @@ export {
   updateProperty,
   getFilteredProperties,
   getOneProperty,
+  getFilteredForTrippers,
 };

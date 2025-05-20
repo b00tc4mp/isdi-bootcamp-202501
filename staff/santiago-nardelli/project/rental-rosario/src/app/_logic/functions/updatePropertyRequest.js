@@ -27,6 +27,9 @@ export const updatePropertyRequest = async (propertyId, updates) => {
   if (updates.bedrooms !== undefined) {
     validate.number(updates.bedrooms);
   }
+  if (updates.travelers !== undefined) {
+    validate.number(updates.travelers);
+  }
   if (updates.airbnbUrl !== undefined) {
     validate.url(updates.airbnbUrl, "property urlArbnb");
   }

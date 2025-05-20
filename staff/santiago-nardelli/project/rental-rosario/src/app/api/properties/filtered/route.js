@@ -1,6 +1,6 @@
 import { connectToDatabase } from "../../../../lib/db/index.js";
 import { withErrorHandling } from "../../../../lib/handlers/withErrorHandling.js";
-import { getFilteredProperties } from "../../_logic/index.js";
+import { getFilteredForTrippers } from "../../_logic/index.js";
 export async function GET(req) {
   const res = Response;
 
@@ -8,11 +8,11 @@ export async function GET(req) {
     await connectToDatabase();
 
     const { searchParams } = req.nextUrl;
-    const type = searchParams.get("type");
-    const bedrooms = searchParams.get("bedrooms");
 
-    const filter = { type, bedrooms };
-    const filteredProperties = await getFilteredProperties(filter);
+    const travelers = searchParams.get("travelers");
+
+    const filter = { travelers };
+    const filteredProperties = await getFilteredForTrippers(filter);
 
     // Responder con éxito con las propiedades filtradas
     return res.json(filteredProperties);

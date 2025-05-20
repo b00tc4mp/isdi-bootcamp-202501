@@ -11,7 +11,7 @@ const useAuthRedirect = () => {
     if (isUserLoggedIn()) {
       router.push("/dashboard");
     } else {
-      router.push("/register");
+      router.push("/login");
     }
   };
 

@@ -14,6 +14,14 @@ if (MONGODB_URI) {
   throw new Error("No se ha definido ninguna URI para la base de datos");
 }
 
+// if (DATABASE_URL && DATABASE_NAME) {
+//   DATABASE_URI = `${DATABASE_URL}/${DATABASE_NAME}`;
+// } else if (MONGODB_URI) {
+//   DATABASE_URI = MONGODB_URI;
+// } else {
+//   throw new Error("No se ha definido ninguna URI para la base de datos");
+// }
+
 let cached = global.mongoose;
 
 if (!cached) {

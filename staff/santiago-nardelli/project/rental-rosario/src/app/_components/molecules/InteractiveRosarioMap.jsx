@@ -34,6 +34,48 @@ const InteractiveRosarioMap = () => {
           </span>
         </Popup>
       </Marker>
+      <Marker
+        position={[-32.9477132, -60.6304658, 17]}
+        icon={defaultIcon}
+        riseOnHover={true}
+      >
+        <Popup>Monumento Histórico Nacional a la Bandera</Popup>
+      </Marker>
+      <Marker
+        position={[-32.9533, -60.6583]}
+        icon={defaultIcon}
+        riseOnHover={true}
+      >
+        <Popup>Parque Independencia</Popup>
+      </Marker>
+      <Marker
+        position={[-32.9431, -60.6502]}
+        icon={defaultIcon}
+        riseOnHover={true}
+      >
+        <Popup>Plaza San Martin</Popup>
+      </Marker>
+      <Marker
+        position={[-32.9349524, -60.6572342, 17]}
+        icon={defaultIcon}
+        riseOnHover={true}
+      >
+        <Popup>Pichincha</Popup>
+      </Marker>
+      <Marker
+        position={[-32.92349, -60.663003]}
+        icon={defaultIcon}
+        riseOnHover={true}
+      >
+        <Popup>Puerto Norte</Popup>
+      </Marker>
+      <Marker
+        position={[-32.88104, -60.687575]}
+        icon={defaultIcon}
+        riseOnHover={true}
+      >
+        <Popup>La Florida</Popup>
+      </Marker>
     </MapContainer>
   );
 };

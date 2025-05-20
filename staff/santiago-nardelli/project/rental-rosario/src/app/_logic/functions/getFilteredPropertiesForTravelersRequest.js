@@ -2,7 +2,7 @@ import { errors } from "com";
 
 const { SystemError, NotFoundError } = errors;
 
-export const getFilteredPropertiesRequest = async (filters) => {
+export const getFilteredPropertiesForTravelersRequest = async (filters) => {
   let response;
   let body;
 

@@ -11,6 +11,7 @@ export const createPropertyRequest = (propertyData) => {
     type: propertyType,
     bedrooms: propertyRooms,
     airbnbUrl: propertyUrlArbnb,
+    travelers: propertyTravelers,
   } = propertyData;
 
   // Validate Name
@@ -29,6 +30,8 @@ export const createPropertyRequest = (propertyData) => {
   validate.text(propertyType);
   // Validate Rooms
   validate.number(propertyRooms);
+  //Validate Travelers
+  validate.number(propertyTravelers);
   // Validate UrlArbnb
   validate.url(propertyUrlArbnb, "property urlArbnb");
 
@@ -52,6 +55,7 @@ export const createPropertyRequest = (propertyData) => {
           location: propertyLocation,
           type: propertyType,
           bedrooms: propertyRooms,
+          travelers: propertyTravelers,
         }),
       });
     } catch (error) {

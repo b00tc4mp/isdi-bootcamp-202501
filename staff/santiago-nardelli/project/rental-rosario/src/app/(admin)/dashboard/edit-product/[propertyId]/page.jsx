@@ -70,6 +70,7 @@ const EditPropertySinglePage = () => {
         location: e.target.elements.location.value,
         type: e.target.elements.type.value,
         bedrooms: parseInt(e.target.elements.bedrooms.value),
+        travelers: parseInt(e.target.elements.travelers.value),
         airbnbUrl: e.target.elements.airbnbUrl.value,
       };
 
@@ -102,7 +103,7 @@ const EditPropertySinglePage = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Editar Propiedad</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+        {/* <div>
           <label
             htmlFor="propertyId"
             className="block text-sm font-medium text-gray-700"
@@ -117,7 +118,7 @@ const EditPropertySinglePage = () => {
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm cursor-not-allowed bg-gray-100 p-2"
             readOnly
           />
-        </div>
+        </div> */}
         <div>
           <label
             htmlFor="title"
@@ -213,6 +214,23 @@ const EditPropertySinglePage = () => {
             id="bedrooms"
             name="bedrooms"
             defaultValue={property.bedrooms}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"
+            required
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="bedrooms"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Viajeros
+          </label>
+          <input
+            type="number"
+            id="travelers"
+            name="travelers"
+            defaultValue={property.travelers}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"
             required
           />

@@ -61,7 +61,7 @@ const HeroSection = () => {
             }}
           >
             <ScrollToProperties className="mt-6 px-6 py-3 border border-white bg-transparent text-white cursor-pointer rounded-md transition-colors duration-300 hover:bg-white hover:text-black">
-              Ver Propiedades
+              Ver Opciones
             </ScrollToProperties>
           </motion.div>
         </div>

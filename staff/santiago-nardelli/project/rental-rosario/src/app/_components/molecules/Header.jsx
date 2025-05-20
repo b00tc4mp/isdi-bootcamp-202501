@@ -21,7 +21,9 @@ const Header = ({ className }) => {
         >
           <Logo />
           <div>
-            <h1 className="text-xl font-semibold text-white">Rental Rosario</h1>
+            <h1 className="text-xl font-semibold text-white">
+              Alquileres Temporales Rosario
+            </h1>
             <p className="text-sm text-gray-300">
               Tu solución para alquileres en Rosario.
             </p>

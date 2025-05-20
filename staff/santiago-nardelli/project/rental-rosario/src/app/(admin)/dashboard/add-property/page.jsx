@@ -39,6 +39,7 @@ const AddPage = () => {
       location: e.target.elements.location.value,
       type: e.target.elements.type.value,
       bedrooms: Number(e.target.elements.bedrooms.value),
+      travelers: Number(e.target.elements.travelers.value),
       airbnbUrl: e.target.elements.airbnbUrl.value,
     };
     await createProperty(formData);
@@ -67,6 +68,7 @@ const AddPage = () => {
       ],
     },
     { label: "Rooms", name: "bedrooms", type: "number", required: true },
+    { label: "Travelers", name: "travelers", type: "number", required: true },
     { label: "Airbnb URL", name: "airbnbUrl", type: "url", required: true },
   ];
   return (

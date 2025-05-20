@@ -20,6 +20,7 @@ async function populateDatabase() {
       ],
       airbnbUrl:
         "https://www.airbnb.com.ar/rooms/1337793640838862941?viralityEntryPoint=1&unique_share_id=9F2076DE-BC86-4B00-A897-754C634F9BEA&slcid=4e9f290667074072b5ee90c29bef3292&s=76&feature=share&adults=1&channel=native&slug=BjKKOYYf&source_impression_id=p3_1747119842_P3acAS0Z4X-y2j8L",
+      travelers: 2,
     },
     {
       title: "Céntrico muy silencioso",
@@ -33,6 +34,7 @@ async function populateDatabase() {
       ],
       airbnbUrl:
         "https://www.airbnb.com.ar/rooms/1342968949934997965?viralityEntryPoint=1&unique_share_id=4D175E42-A55B-4828-A2C8-C17B76CF71B6&slcid=1de2aeae956d41a39dd904adab74e495&s=76&feature=share&adults=1&channel=native&slug=BxPMjjXs&source_impression_id=p3_1747119965_P3Ymji8rV0VC6dMX",
+      travelers: 3,
     },
     {
       title: "La casita de Pichincha. Jardín, parrilla y cochera",
@@ -46,6 +48,7 @@ async function populateDatabase() {
       ],
       airbnbUrl:
         "https://www.airbnb.com.ar/rooms/1394540026623981154?viralityEntryPoint=1&unique_share_id=A0A4BE84-6799-4D7B-B21F-10E4C74FC1C8&slcid=b3a0f1004c4249bc94552b5e1eb889a1&s=76&feature=share&adults=1&channel=native&slug=s1isvE1m&source_impression_id=p3_1747120091_P3jvIsEr-rWrg9Az",
+      travelers: 4,
     },
     {
       title: "Planta baja con 3 patios llenos de plantas y luz",
@@ -59,6 +62,7 @@ async function populateDatabase() {
       ],
       airbnbUrl:
         "https://www.airbnb.com.ar/rooms/1079200456129925546?viralityEntryPoint=1&unique_share_id=98EAEDC6-9F97-493B-A5F5-DBB48DFE357C&slcid=ec212ac83f5b460f8e44a7cc89bc887a&s=76&feature=share&adults=1&channel=native&slug=buyrnTBU&source_impression_id=p3_1747120191_P3xMNBBa_au7yweB",
+      travelers: 3,
     },
     {
       title: "Casa antigua restaurada con encanto",
@@ -72,6 +76,7 @@ async function populateDatabase() {
       ],
       airbnbUrl:
         "https://www.airbnb.com.ar/rooms/1079200456129925546?viralityEntryPoint=1&unique_share_id=98EAEDC6-9F97-493B-A5F5-DBB48DFE357C&slcid=ec212ac83f5b460f8e44a7cc89bc887a&s=76&feature=share&adults=1&channel=native&slug=buyrnTBU&source_impression_id=p3_1747120191_P3xMNBBa_au7yweB",
+      travelers: 3,
     },
     {
       title: "Superluminoso con vista al Río Paraná. A nuevo!",
@@ -85,6 +90,7 @@ async function populateDatabase() {
       ],
       airbnbUrl:
         "https://www.airbnb.com.ar/rooms/1322066881196464817?viralityEntryPoint=1&unique_share_id=A47106FC-B16C-4D9E-9356-31034FAB98AC&slcid=9ee62794663741208d0e32c7a8cdbf2f&s=76&feature=share&adults=1&channel=native&slug=t71Oq6rG&source_impression_id=p3_1747120348_P3mTMCICklUZG2U6",
+      travelers: 6,
     },
   ];
 

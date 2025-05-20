@@ -21,6 +21,7 @@ export const createProperty = (propertyData) => {
   );
   validate.string(propertyData.type, "type");
   validate.number(propertyData.bedrooms, { min: 1 }, "bedrooms");
+  validate.number(propertyData.travelers, { min: 1 }, "travelers");
   validate.url(propertyData.airbnbUrl, "airbnbUrl");
 
   return (async () => {
@@ -47,6 +48,7 @@ export const createProperty = (propertyData) => {
         bedrooms: propertyData.bedrooms,
         images: [propertyData.image],
         airbnbUrl: propertyData.airbnbUrl,
+        travelers: propertyData.travelers,
       });
       return property; // Importante para obtener el resultado
     } catch (error) {

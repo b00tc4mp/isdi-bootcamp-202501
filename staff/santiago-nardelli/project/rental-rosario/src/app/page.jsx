@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { getAllPropertiesRequest } from "./_logic/functions/getAllPropertiesRequest.js";
 import { getFilteredPropertiesRequest } from "./_logic/functions/getFilteredPropertiesRequest.js";
+import { getFilteredPropertiesForTravelersRequest } from "./_logic/functions/getFilteredPropertiesForTravelersRequest.js";
 import PropertyList from "./_components/organisms/PropertyList.jsx";
 import PropertyFilterNavbar from "./_components/molecules/PropertyFilterNavbar.jsx";
 import HeroSection from "./_components/organisms/HeroSection.jsx";
@@ -28,7 +29,7 @@ async function getProperties(searchParams) {
       : {};
 
     const properties = hasFilters
-      ? await getFilteredPropertiesRequest(filtersObject)
+      ? await getFilteredPropertiesForTravelersRequest(filtersObject)
       : await getAllPropertiesRequest();
 
     return properties;

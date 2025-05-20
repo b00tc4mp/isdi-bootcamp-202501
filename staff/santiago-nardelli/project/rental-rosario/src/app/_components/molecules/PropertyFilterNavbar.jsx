@@ -14,13 +14,13 @@ import {
 import { Button } from "../ui/button.jsx";
 
 const PropertyFilterNavbar = () => {
-  const { type, bedrooms, handleFilterChange, applyFilters, resetFilters } =
+  const { travelers, handleFilterChange, applyFilters, resetFilters } =
     usePropertyFilter();
 
   return (
     <Card className="w-full bg-secondary/10 rounded-md shadow-sm">
       <div className="p-4 flex flex-wrap items-center gap-4">
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <Label htmlFor="type" className="text-sm font-medium">
             Tipo:
           </Label>
@@ -38,20 +38,19 @@ const PropertyFilterNavbar = () => {
               <SelectItem value="all">Todos</SelectItem>
               <SelectItem value="apartment">Apartamento</SelectItem>
               <SelectItem value="house">Casa</SelectItem>
-              <SelectItem value="studio">Estudio</SelectItem>
-              {/* Agrega más opciones de tipo según tus datos */}
+              <SelectItem value="studio">Estudio</SelectItem> 
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
 
         <div className="flex items-center space-x-2">
           <Label htmlFor="bedrooms" className="text-sm font-medium">
-            Habitaciones:
+            Viajeros:
           </Label>
           <Select
-            value={bedrooms}
+            value={travelers}
             onValueChange={(value) =>
-              handleFilterChange({ target: { name: "bedrooms", value } })
+              handleFilterChange({ target: { name: "travelers", value } })
             }
             className="w-full sm:w-[120px]"
           >
@@ -59,12 +58,13 @@ const PropertyFilterNavbar = () => {
               <SelectValue placeholder="Todas" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todas</SelectItem>
-              <SelectItem value="0">Estudio</SelectItem>
+              <SelectItem value="all">Todos</SelectItem>
               <SelectItem value="1">1</SelectItem>
               <SelectItem value="2">2</SelectItem>
               <SelectItem value="3">3</SelectItem>
-              <SelectItem value="4">4+</SelectItem>
+              <SelectItem value="4">4</SelectItem>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="6">6</SelectItem>
             </SelectContent>
           </Select>
         </div>
