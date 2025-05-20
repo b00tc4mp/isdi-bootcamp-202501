@@ -217,7 +217,7 @@ export default function RoutineDetail() {
 
 
             {/* Customize Button (only if accepted) */}
-            {routine.status === "accepted" && userId && (
+            {routine.status === "accepted" && userId && role === "regular" && (
                 alreadyCustomized ? (
                     <Pressable
                         style={[styles.customizeButton, { backgroundColor: "#ef4444" }]}
