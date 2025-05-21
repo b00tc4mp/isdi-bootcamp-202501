@@ -45,7 +45,21 @@ export function Exercises({ }) {
 
     return <section className="flex flex-col items-center mx-auto ">
 
-        {exercises.map(exercise => <Exercise key={exercise.id} exercise={exercise} onExerciseDeleted={handleExerciseDeleted} onExerciseUpdated={handleExerciseUpdated} />)}
+        {exercises.length === 0 ? (
+            <div className="text-center  mt-12">
+                <p className="text-lg">No exercises found</p>
+                <p className="text-sm mt-2">Click the <span className="font-semibold text-orange-500">+</span> button to create your first exercise!</p>
+            </div>
+        ) : (
+            exercises.map(exercise => (
+                <Exercise
+                    key={exercise.id}
+                    exercise={exercise}
+                    onExerciseDeleted={handleExerciseDeleted}
+                    onExerciseUpdated={handleExerciseUpdated}
+                />
+            ))
+        )}
         {showModal && (
             <Modal>
                 <CreateExercise onExerciseCreate={handleExerciseCreated} onExerciseCreateCancelled={() => setShowModal(false)}></CreateExercise>

@@ -44,7 +44,23 @@ export function Routines() {
 
     return <section className="flex flex-col items-center mx-auto">
 
-        {routines.map(routine => <Routine key={routine.id} routine={routine} onRoutineDeleted={handleRoutineDeleted} onRoutineUpdated={handleRoutineUpdated} />)}
+        {routines.length === 0 ? (
+            <div className="text-center mt-12">
+                <p className="text-lg">No routines created yet</p>
+                <p className="text-sm mt-2">
+                    Tap the <span className="font-semibold text-orange-500">+</span> to create your first routine!
+                </p>
+            </div>
+        ) : (
+            routines.map(routine => (
+                <Routine
+                    key={routine.id}
+                    routine={routine}
+                    onRoutineDeleted={handleRoutineDeleted}
+                    onRoutineUpdated={handleRoutineUpdated}
+                />
+            ))
+        )}
 
         {showModal && (
             <Modal>

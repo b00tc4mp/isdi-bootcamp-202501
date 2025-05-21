@@ -74,7 +74,7 @@ export function Dashboard() {
                         <Routine key={routine.id} routine={routine} showButtons={false} />
                     ))
                 ) : (
-                    <p className="text-center text-gray-600">No current routines.</p>
+                    <p className="text-center text-gray-800">No current routines.</p>
                 )}
             </div>
 
@@ -85,7 +85,7 @@ export function Dashboard() {
                 {nextRoutine ? (
                     <Routine routine={nextRoutine} showButtons={false} />
                 ) : (
-                    <p className="text-center text-gray-600">No upcoming routines.</p>
+                    <p className="text-center text-gray-800">No upcoming routines.</p>
                 )}
             </div>
 
@@ -96,7 +96,7 @@ export function Dashboard() {
                 {pastRoutine ? (
                     <Routine routine={pastRoutine} showButtons={false} />
                 ) : (
-                    <p className="text-center text-gray-600">No completed routines.</p>
+                    <p className="text-center text-gray-800">No completed routines.</p>
                 )}
             </div>
         </div>

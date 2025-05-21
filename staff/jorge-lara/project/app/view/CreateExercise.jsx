@@ -56,7 +56,7 @@ export function CreateExercise({ onExerciseCreate, onExerciseCreateCancelled }) 
             </div>
             <div>
                 <label htmlFor="reps">Reps</label>
-                <input type="text" id="reps" placeholder="e.g., 12" />c
+                <input type="text" id="reps" placeholder="e.g., 12" />
             </div>
             <div>
                 <label htmlFor="restTime"> Rest time (s)</label>

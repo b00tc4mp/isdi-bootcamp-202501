@@ -175,14 +175,16 @@ export const validate = {
     },
 
     startDate(date, explain = 'startDate') {
-        if (!(date instanceof Date) || isNaN(date.getTime())) {
-            throw new ValidationError(`Invalid ${explain} format`)
+        this.string(date, explain);
+        if (!constant.ISO_DATE_REGEX.test(date)) {
+            throw new ValidationError(`invalid ${explain} date`);
         }
     },
 
     endDate(date, explain = 'endDate') {
-        if (!(date instanceof Date) || isNaN(date.getTime())) {
-            throw new ValidationError(`Invalid ${explain} format`)
+        this.string(date, explain);
+        if (!constant.ISO_DATE_REGEX.test(date)) {
+            throw new ValidationError(`invalid ${explain} date`);
         }
     }
 }
