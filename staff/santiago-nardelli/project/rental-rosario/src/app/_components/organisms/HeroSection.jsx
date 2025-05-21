@@ -22,19 +22,35 @@ const HeroSection = () => {
   return (
     <div
       className="
-    bg-[url('/images/rosario-hero.avif')] bg-cover bg-center
-    text-white py-20 text-center h-screen flex items-center justify-center z-10
-    relative
-    before:absolute before:inset-0 before:bg-black/30 before:block md:before:hidden
-  "
+        relative h-screen flex items-center justify-center z-10
+        text-white py-20 text-center
+        overflow-hidden /* Importante para asegurar que la imagen no genere scroll */
+      "
     >
+      {/* 1. Imagen de fondo (como etiqueta <img>) */}
+      <img
+        src="/images/rosario-hero.avif"
+        alt="Monumento a la Bandera de Rosario"
+        className="
+          absolute inset-0 w-full h-full
+          object-cover /* Escala la imagen para cubrir el contenedor sin distorsión, recortando si es necesario */
+          object-center /* Centra la imagen dentro del contenedor */
+          z-0 /* Asegura que la imagen esté en el fondo */
+        "
+      />
+
+      {/* 2. Capa de superposición grisácea (overlay) */}
+      {/* Esta capa aparecerá en móvil y desaparecerá en md y superiores, oscureciendo solo la imagen de fondo */}
+      <div className="absolute inset-0 bg-black/30 md:hidden z-0"></div>
+
+      {/* 3. Contenido principal (el recuadro con el texto y el mapa) */}
       <div
         className="
-      p-8 flex md:flex-row flex-col items-center justify-around
-      w-full max-w-5xl rounded-lg
-      bg-transparent md:bg-black/30
-      relative z-20 mt-20
-    "
+          p-8 flex md:flex-row flex-col items-center justify-around
+          w-full max-w-5xl rounded-lg
+          bg-transparent md:bg-black/30 /* Fondo del recuadro: transparente en móvil, grisáceo en desktop */
+          relative z-20 mt-20 /* Asegura que este div esté por encima del overlay y la imagen */
+        "
       >
         {/* Columna para el texto */}
         <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
@@ -43,12 +59,10 @@ const HeroSection = () => {
           >
             Tu Próxima Aventura en Rosario Comienza Aquí
           </h1>
-          {/* Posiblemente un input de búsqueda aquí */}
           <p className="mt-4 text-lg">
             Descubre los mejores alquileres y experiencias en la vibrante ciudad
             de Rosario.
           </p>
-          {/* Botón "Ver Propiedades" */}
           <motion.div
             animate={{
               y: [0, -10, 0],
@@ -68,11 +82,6 @@ const HeroSection = () => {
 
         {/* Columna para el mapa */}
         <div className="md:w-1/2 h-[300px] md:h-[400px] rounded-lg bg-gray-200">
-          {/* 
-          <p className="text-black text-center leading-[300px] md:leading-[400px]">
-            Mapa de Rosario (Aquí)
-          </p>
-           */}
           <InteractiveRosarioMap />
         </div>
       </div>

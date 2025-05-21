@@ -44,7 +44,7 @@ const PropertyCard = ({
           {bedrooms !== undefined && (
             <div className="flex items-center text-gray-600 text-sm mb-3">
               <Bed className="w-4 h-4 mr-2" />
-              {bedrooms} Habitaciones
+              {bedrooms === 1 ? "1 Dormitorio" : `${bedrooms} Dormitorios`}
             </div>
           )}
         </CardContent>
