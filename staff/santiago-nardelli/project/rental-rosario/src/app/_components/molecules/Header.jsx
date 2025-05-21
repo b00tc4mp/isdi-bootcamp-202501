@@ -16,7 +16,7 @@ const Header = ({ className }) => {
       <div className="container mx-auto py-4 px-6 flex items-center justify-between">
         {/* Logo y Títulos */}
         <div
-          className="flex items-center space-x-4 cursor-pointer"
+          className="flex items-center space-x-4 cursor-pointer "
           onClick={handleLogoClick}
         >
           <Logo />

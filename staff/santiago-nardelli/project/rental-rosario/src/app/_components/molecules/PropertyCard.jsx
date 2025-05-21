@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { MapPin, Bed } from "lucide-react";
 import { MotionDiv, MotionButton } from "../atoms/MotionWrapper.jsx";
 const PropertyCard = ({
-  property: { title, description, location, bedrooms, images, airbnbUrl, id },
+  property: { title, description, location, bedrooms, images, airbnbUrl, type },
 }) => {
   return (
     <MotionDiv
@@ -44,7 +44,11 @@ const PropertyCard = ({
           {bedrooms !== undefined && (
             <div className="flex items-center text-gray-600 text-sm mb-3">
               <Bed className="w-4 h-4 mr-2" />
-              {bedrooms === 1 ? "1 Dormitorio" : `${bedrooms} Dormitorios`}
+              {type === "studio"
+                ? "Ambiente Único"
+                : bedrooms === 1
+                ? "1 Dormitorio"
+                : `${bedrooms} Dormitorios`}
             </div>
           )}
         </CardContent>

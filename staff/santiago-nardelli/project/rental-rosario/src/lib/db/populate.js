@@ -13,7 +13,7 @@ async function populateDatabase() {
       description:
         "Disfrutá de la sencillez de este alojamiento ubicado muy cerca de bv. Oroño, los parques del río y la zona de Pichincha. El departamento es un mono ambiente equipado con cama queen, heladera, horno eléctrico, hornalla, TV, aire acondicionado, mesa para 2, sillón de 2 cuerpos con su mesita ratona y un sillón con mesita en balcón. Muy iluminado porque está en esquina con ventanas de ambos frentes. Puerta blindada se seguridad. Esta en un edificio con solo dos departamentos por piso.",
       location: "Rosario, Argentina",
-      type: "apartment",
+      type: "studio",
       bedrooms: 1,
       images: [
         "https://a0.muscache.com/im/pictures/hosting/Hosting-1337793640838862941/original/509db246-c9ac-479c-8dcf-c7ab63a79070.jpeg?im_w=960",
