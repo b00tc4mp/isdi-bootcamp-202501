@@ -29,7 +29,7 @@ const HeroSection = () => {
     >
       {/* 1. Imagen de fondo (como etiqueta <img>) */}
       <img
-        src="/images/rosario1.2.jpg"
+        src="/images/cilos.jpg"
         alt="Monumento a la Bandera de Rosario"
         className="
           absolute inset-0 w-full h-full
@@ -41,7 +41,7 @@ const HeroSection = () => {
 
       {/* 2. Capa de superposición grisácea (overlay) */}
       {/* Esta capa aparecerá en móvil y desaparecerá en md y superiores, oscureciendo solo la imagen de fondo */}
-      <div className="absolute inset-0 bg-black/30  z-0"></div>
+      <div className="absolute inset-0 bg-black/30 md:hidden  z-0"></div>
 
       {/* 3. Contenido principal (el recuadro con el texto y el mapa) */}
       <div
