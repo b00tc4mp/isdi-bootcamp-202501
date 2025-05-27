@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import 'tailwindcss';
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+@layer base {
+    :root {
+        --bg-color: #ffcc80;
+        --color: #4e342e;
+        --color-high: #ffffff;
+        --color-low: #d84315;
+        --accent: #ff7043;
+    }
+
+    html {
+        @apply bg-[var(--bg-color)] text-[var(--color)] font-sans box-border flex justify-center items-center m-0;
+    }
+
+    body {
+        @apply flex flex-col items-center justify-center gap-2 m-0;
+    }
+
+    h1,
+    h2 {
+        @apply text-[var(--color)] font-[Major_Mono_Display] m-0;
+    }
+
+    img {
+        @apply w-full rounded-md;
+    }
+
+    button {
+        @apply bg-[var(--color-low)] text-white border-none text-lg px-4 py-2 rounded-md cursor-pointer transition duration-300;
+    }
+
+    button:hover {
+        @apply bg-[var(--accent)];
+    }
+}
+
+@layer components {
+    .container-box {
+        @apply bg-white/30 p-4 rounded-lg;
+    }
+
+    .header {
+        @apply fixed top-0 w-full flex flex-row justify-around items-center bg-[var(--bg-color)] p-2 shadow-md;
+    }
+
+    footer {
+        @apply fixed bottom-0 w-full flex flex-row justify-around items-center bg-[var(--bg-color)] shadow-md;
+    }
+
+    form {
+        @apply flex flex-col gap-3 bg-white/50 shadow-md p-6 rounded-lg w-full;
+    }
+
+    input {
+        @apply border-2
+    }
+
+    .posts {
+        @apply flex flex-col items-center mt-6;
+    }
+
+    article {
+        @apply bg-white/50 p-6 rounded-lg max-w-2xl w-full shadow-md;
+    }
+
+    .post-underline {
+        @apply flex flex-row justify-between items-center p-0;
+    }
+
+    .like {
+        @apply bg-transparent text-black hover:text-orange-500 cursor-pointer;
+    }
+
+    .landing-page,
+    .form,
+    .register-login {
+        @apply flex flex-col items-center text-center p-6;
+    }
+
+    section {
+        @apply flex flex-col justify-center items-center p-4 gap-1;
+    }
+
+    .profile-logout {
+        @apply inline;
+    }
+
+    a {
+        @apply underline cursor-pointer transition duration-300;
+    }
+
+    a:hover {
+        @apply text-red-700;
+    }
+}
