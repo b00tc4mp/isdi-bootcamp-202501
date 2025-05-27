@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8080/users -H 'Content-type: application/json' -d '{"email":"admin@admin.com","username":"admin","password":"123123123"}' -v
