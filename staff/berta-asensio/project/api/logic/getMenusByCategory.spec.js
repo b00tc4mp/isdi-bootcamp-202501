@@ -38,7 +38,7 @@ describe('getMenusByCategory', () => {
                 name: 'Vegetal con aguacate',
                 description: 'Bocadillo de aguacate, tomate y limón',
                 allergens: [],
-                categories: ['regular', 'vegetariano', 'halal'],
+                categories: ['regular', 'vegetariano', 'vegano', 'halal'],
                 breadOptions: ['gluten', 'sin gluten', 'integral'],
                 price: 2.5
             })
