@@ -1,0 +1,2 @@
+curl -X DELETE http://localhost:8080/couples/lists/6805059dad9aa907ddf8f762 \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODA1MDMyNDZkMGZlN2ZkNDkwNmFiZjUiLCJpYXQiOjE3NDUxNTkzNzMsImV4cCI6MTc2MTQwMjU3M30.My-jTCHRvw1j0Gjdkw8wFn-MeKHvxuM1uSgF12RQud4' -v

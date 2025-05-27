@@ -1,0 +1,2 @@
+curl -X GET 'http://localhost:8080/couples/diary/6807a1627660d21018312771' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODA3OWNhOWRhMDk3ZTg0NzgwOTBkMzIiLCJpYXQiOjE3NDUzMjkzMzEsImV4cCI6MTc2MTU3MjUzMX0.7PnJU3C7hnT2Q2ejZngKAlHb2o4rzwOx0ffqZjXPJlg' -v

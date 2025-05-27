@@ -1,0 +1,2 @@
+curl -X GET http://localhost:8080/couples/invite \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODAxMzc5MTQ1MDNkMmU0NGJkMjM0YWQiLCJpYXQiOjE3NDQ5ODI0MjIsImV4cCI6MTc2MTIyNTYyMn0.Xe_9hjXvf3e1Z0tAi_po9IOYXdg72O4h739Ev9o__Q8' -v
