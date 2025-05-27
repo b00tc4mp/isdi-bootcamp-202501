@@ -1,0 +1,31 @@
+.post {
+    display: flex;
+    flex-direction: column;  
+    padding: var(--padding-y) var(--padding-x);
+}
+
+.post h3,
+.post p {
+    margin: 0; 
+}
+
+img {
+    width: 100%;
+}
+
+.post-footer {
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between;  
+    align-items: center; 
+    margin-top: -5px;
+    padding-top: 0; 
+}
+
+.post-time {
+    margin-right: 10px;  
+}
+
+.post-like {
+    margin-top: 0;
+}
