@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import 'tailwindcss';
+
+
+@layer base {
+    html {
+        --bg-color: rgb(244, 236, 236);
+        --color: white;
+        --color-high: white;
+        --color-low: rgb(181, 0, 0);
+        --padding-x: 1rem;
+        --padding-y: .25rem;
+
+        font-family: 'Jersey_15', sans-serif;
+
+        background-image: url("../view/images/fondo.jpg");
+        /* Imagen de fondo */
+        color: var(--color);
+        @apply bg-[var(--bg-color)] bg-cover bg-center bg-no-repeat text-white;
+        /* Clases de Tailwind */
+    }
+
+    body {
+        @apply m-0;
+    }
+
+    h1 {
+        @apply font-['Jersey_15'] text-yellow-500 text-5xl drop-shadow-[3px_3px_0_black];
+    }
+
+    form {
+        @apply bg-white/10 border-[3px] border-black p-6 rounded-xl mx-auto shadow-[5px_5px_0_black] shadow-[10px_10px_0_red] max-w-md;
+    }
+
+    .field {
+        @apply flex flex-col gap-[var(--padding-y)];
+    }
+
+    a {
+        @apply cursor-pointer transition-[font-size] duration-200;
+    }
+
+    @media (min-width: 1024px) {
+        a:hover {
+            @apply text-[var(--color-high)] text-[3rem];
+        }
+    }
+
+    input {
+        @apply text-black bg-yellow-400 border-[3px] border-black p-[10px] w-full rounded-[8px] outline-none shadow-[3px_3px_0_black];
+    }
+
+    input:focus {
+        @apply bg-yellow-400 border-red-600;
+    }
+
+    input:-webkit-autofill {
+        -webkit-text-fill-color: black;
+        -webkit-box-shadow: 0 0 0px 1000px yellow inset;
+    }
+
+    h1,
+    h2 {
+        @apply m-0;
+    }
+
+    main {
+        @apply my-[3rem] bg-transparent;
+        background-color: transparent !important;
+    }
+
+    button {
+        @apply font-sans text-[1.2rem] bg-red-500 text-yellow-500 p-[12px_20px] border-3 border-black rounded-[10px] cursor-pointer uppercase shadow-[5px_5px_0_black] shadow-[10px_10px_0_yellow] transition-all duration-200 inline-block w-auto m-0 mr-[10px];
+    }
+
+    button:hover {
+        @apply bg-yellow-500 text-red-500 shadow-[3px_3px_0_black];
+    }
+
+    button:active {
+        @apply transform scale-[0.95];
+    }
+
+    .post-footer {
+        @apply flex justify-start items-center gap-1 mb-0 pb-0;
+    }
+
+    .logo2 {
+        @apply w-32 h-32 mx-auto;
+    }
+
+    .div1 {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        top: -50px;
+        font-size: 1.8rem;
+    }
+}
