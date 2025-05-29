@@ -1,0 +1,1 @@
+type PercentageString = number | `${number}%`;

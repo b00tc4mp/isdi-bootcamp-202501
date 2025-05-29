@@ -1,0 +1,8 @@
+# Ignorar qualsevol fitxer de servei de Firebase
+firebase-service-account.json
+
+# O si està en una subcarpeta específica
+**/firebase-service-account.json
+
+# També pots afegir explícitament la ruta si està dins d’un directori concret
+./firebase-service-account.json
