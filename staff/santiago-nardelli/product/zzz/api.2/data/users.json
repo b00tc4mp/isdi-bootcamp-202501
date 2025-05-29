@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Admin",
+        "email": "admin@admin.com",
+        "password": "admin",
+        "createdAt": "2025-03-07T15:43:57.443Z",
+        "status": "active",
+        "role": "user",
+        "modifiedAt": null,
+        "id": "m7yy45qb-rv1cg9xnbg"
+    },
+    {
+        "name": "test",
+        "email": "test@test.com",
+        "password": "test",
+        "createdAt": "2025-03-10T13:54:19.674Z",
+        "status": "active",
+        "role": "user",
+        "modifiedAt": null,
+        "id": "m834iqai-q9g8acf965p"
+    },
+    {
+        "id": "m834iqai-q9g8acf555p",
+        "name": "Lionel Messi",
+        "email": "lio@messi.com",
+        "password": "123456",
+        "created_at": "2025-03-12T18:53:11.677Z",
+        "modified_at": null,
+        "status": "active",
+        "role": "user"
+    },
+    {
+        "name": "Angel Di Maria",
+        "email": "angel@dimaria.com",
+        "password": "123456",
+        "created_at": "2025-03-12T18:58:59.726Z",
+        "modified_at": null,
+        "status": "active",
+        "role": "user",
+        "id": "m86aa8ls-0xfy3apt0dc"
+    },
+    {
+        "name": "Lautaro",
+        "email": "toro@martinez.com",
+        "password": "123456",
+        "createdAt": "2025-03-12T20:35:47.940Z",
+        "status": "active",
+        "role": "user",
+        "modifiedAt": null,
+        "id": "m86dreer-16hxgfuyla2"
+    },
+    {
+        "name": "Diego",
+        "email": "diego@maradona.com",
+        "password": "123456",
+        "createdAt": "2025-03-14T18:20:26.868Z",
+        "status": "active",
+        "role": "user",
+        "modifiedAt": null,
+        "id": "m893sdbo-k4w7454bn"
+    }
+]
