@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "Chrome: Launch with sourcemaps",
+        "url": "http://localhost:3000", // Asegúrate de que este puerto coincida con el de tu `npm run dev`
+        "webRoot": "${workspaceFolder}",
+        "sourceMapPathOverrides": {
+          "webpack://_N_E/*": "${webRoot}/.next/static/chunks/*",
+          "/_next/static/chunks/*": "${webRoot}/.next/static/chunks/*",
+          "webpack-internal:///./*": "${webRoot}/*"
+        }
+      }
+    ]
+  }

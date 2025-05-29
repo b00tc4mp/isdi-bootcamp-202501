@@ -1,0 +1,13 @@
+{
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "githubPullRequests.remotes": [
+        "origin",
+        "upstream",
+        "https://github.com/b00tc4mp/isdi-bootcamp-202501"
+    ]
+}
