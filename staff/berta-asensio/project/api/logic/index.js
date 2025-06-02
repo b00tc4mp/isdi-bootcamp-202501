@@ -5,11 +5,15 @@ import { getUserName } from './getUserName.js'
 import { getMenus } from './getMenus.js'
 import { getMenusByCategory } from './getMenusByCategory.js'
 
+import { createOrder } from './createOrder.js'
+
 export const logic = {
     registerUser,
     authenticateUser,
     getUserName,
 
     getMenus,
-    getMenusByCategory
+    getMenusByCategory,
+
+    createOrder
 }

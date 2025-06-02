@@ -1,7 +1,7 @@
 //CONEXIÓN A MONGODB
 import mongoose from 'mongoose'
 import { errors } from 'com'
-import { User, Menu } from './models.js'
+import { User, Menu, Order } from './models.js'
 
 const { SystemError } = errors
 
@@ -20,5 +20,6 @@ const data = {
 export {
     data,
     User,
-    Menu
+    Menu,
+    Order
 }

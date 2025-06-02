@@ -11,7 +11,7 @@ data.connect(MONGO_URL, MONGO_DB)
         try {
             let userId
 
-            return authenticateUser('foca@fucsia.com', '123123aa')
+            return authenticateUser('elefante@esmeralda.com', '123123aa')
                 .then(id => userId = id)
                 .finally(() => console.assert(typeof userId === 'string', 'userId is a string'))
         } catch (error) {

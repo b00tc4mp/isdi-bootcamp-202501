@@ -1,6 +1,8 @@
 import { constant } from 'com'
 import { Schema, model, Types } from 'mongoose'
 
+const { ObjectId } = Types
+
 const user = new Schema({
     role: {
         type: String,
@@ -75,10 +77,51 @@ const menu = new Schema({
     }
 })
 
+const order = new Schema({
+    user: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    menu: {
+        type: ObjectId,
+        ref: 'Menu',
+        required: true
+    },
+    bread: {
+        type: String,
+        enum: ['gluten', 'sin gluten', 'integral'],
+        required: true
+    },
+    note: {
+        type: String,
+        required: false
+    },
+    status: {
+        type: String,
+        enum: ['pendiente', 'en camino', 'entregado', 'cancelado'],
+        default: 'pendiente'
+    },
+    deliveryDate: {
+        type: Date,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        default: Date.now
+    }
+})
+
 const User = model('User', user)
 const Menu = model('Menu', menu)
+const Order = model('Order', order)
 
 export {
     User,
-    Menu
+    Menu,
+    Order
 }

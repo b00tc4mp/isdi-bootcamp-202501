@@ -6,6 +6,8 @@ import { logoutUser } from './logoutUser'
 import { getMenus } from './getMenus'
 import { getMenusByCategory } from './getMenusByCategory'
 
+import { createOrder } from './createOrder'
+
 
 export const logic = {
     registerUser,
@@ -14,5 +16,7 @@ export const logic = {
     logoutUser,
 
     getMenus,
-    getMenusByCategory
+    getMenusByCategory,
+
+    createOrder
 }

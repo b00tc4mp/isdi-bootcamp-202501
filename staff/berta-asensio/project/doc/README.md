@@ -80,13 +80,16 @@ Menu
 - name (string)
 - description (string)
 - allergens (array of strings)
-- categories (array of strings: vegetarian | vegan | halal )
+- categories (array of strings: regular | veggie | vegan | halal )
+- breadOptions (array of strings: gluten | gluten free | whole wheat)
 - price (number)
 
 Order
 
 - id(string, uuid, identificador único para el pedido)
+- user (User.id)
 - menu (Menu.id)
+- bread (string)
 - note (String, name of child and school)
 - status (string, estado del pedido: pendiente|en camino|entregado|cancelado)
 - deliveryDate(Date, fecha de entrega)
@@ -95,7 +98,7 @@ Order
 
 ### Technologies
 
-- Frontend: HTML/ CSS/ JS / React
+- Frontend: Vite, HTML, CSS, JavaScript, React, Tailwind CSS
 - Backend: Node.js, Express, MongoDB
 - Authentication: JSON Web Tokens
 

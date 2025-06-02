@@ -4,7 +4,7 @@ import cors from 'cors' //permite que el frontend pueda acceder a las peticiones
 
 import { users } from './routes/users.js'
 import { menus } from './routes/menus.js'
-// import { orders } from './routes/orders'
+import { orders } from './routes/orders.js'
 
 import { errorHandler } from './handlers/errorHandler.js'
 import { data } from './data/index.js'
@@ -23,6 +23,7 @@ data.connect(MONGO_URL, MONGO_DB)
 
         api.use('/users', users)
         api.use('/menus', menus)
+        api.use('/orders', orders)
 
         api.use(errorHandler)
 

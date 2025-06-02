@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-
+import { useNavigate } from 'react-router'
 import { logic } from '../../logic'
 
 
@@ -7,6 +7,7 @@ export function Menus() {
 
     const [menus, setMenus] = useState([])
     const [selectedCategory, setSelectedCategory] = useState('')
+    const navigate = useNavigate()
 
     //cargamos todos los menus al principio
     useEffect(() => {
@@ -46,6 +47,33 @@ export function Menus() {
         }
     }
 
+    const handleOrderClick = (menu) => {
+        const bread = prompt(`Elige el tipo de pan:\n${menu.breadOptions.join(', ')}`)
+
+        if(!bread) return
+
+        if(!menu.breadOptions.includes(bread)) {
+            alert('Tipo de pan no válido')
+
+            return
+        }
+
+        try {
+            logic.createOrder(menu._id, bread)
+                .then(() => {
+                    alert('Orden creada con éxito ✅')
+                    navigate('/orders')
+                })
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+            alert(error.message)
+        }
+    }
+
     console.debug('Menus page renderized')
 
     return (
@@ -67,6 +95,7 @@ export function Menus() {
                         <h3>{menu.name}</h3>
                         <p>{menu.description}</p>
                         <p>{`Precio: ${menu.price}`}</p>
+                        <button onClick={() => handleOrderClick(menu)}>Comprar</button>
                     </section>
                 )) }
             </div>
