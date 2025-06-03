@@ -104,7 +104,7 @@ const order = new Schema({
     },
     deliveryDate: {
         type: Date,
-        required: true
+        required: false
     },
     createdAt: {
         type: Date,

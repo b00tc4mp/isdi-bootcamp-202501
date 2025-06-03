@@ -1,18 +1,18 @@
 import 'dotenv/config'
 import { data } from '../data/index.js'
-import { getMenus } from './getMenus.js'
+import { getOrdersByUser } from './getOrdersByUser.js'
 
 const { MONGO_URL, MONGO_DB } = process.env
 
-console.info('TEST getMenus')
+console.info('TEST getOrdersByUser')
 
 data.connect(MONGO_URL, MONGO_DB)
     .then(() => {
         try {
-            let menus
-            return getMenus()
-                .then(menu => menus = menu)
-                .finally(() => console.assert(menus instanceof Array, 'menus is an array'))
+            let orders2
+            return getOrdersByUser('67f8c7b1d4be984ace115f9f')
+                .then(orders => orders2 = orders)
+                .finally(() => console.assert(orders2 instanceof Array, 'orders2 is an array'))
         } catch (error) {
             console.error(error)
         }

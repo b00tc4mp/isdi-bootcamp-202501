@@ -3,10 +3,12 @@ import { errors, validate } from 'com'
 
 const { SystemError } = errors
 
-export const createOrder = (menuId, bread) => {
+export const createOrder = (menuId, bread /*note*/) => {
     validate.id(menuId, 'menuId')
     validate.string(bread, 'bread')
     validate.maxLength(bread, 25, 'bread')
+    /*validate.string(note, 'note')
+    validate.maxLength(note, 200, 'note')*/
 
     const { token } = data
 
@@ -16,7 +18,7 @@ export const createOrder = (menuId, bread) => {
             Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ menuId, bread })
+        body: JSON.stringify({ menuId, bread /* note*/ })
     })
 
     .catch(error => { throw new SystemError(error.message) })

@@ -13,3 +13,10 @@ orders.post('/', jsonBodyParser, authHandler, withErrorHandling((req, res) => {
     return logic.createOrder(userId, menuId, bread)
         .then(() => res.status(201).send())
 }))
+
+orders.get('/:userId', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req.params
+
+    return logic.getOrdersByUser(userId)
+        .then(orders => res.json(orders))
+}))

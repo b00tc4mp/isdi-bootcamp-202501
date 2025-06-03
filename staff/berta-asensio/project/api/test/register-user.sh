@@ -1,8 +1,8 @@
 curl -X POST http://localhost:8080/users \
     -H 'Content-type: application/json' \
     -d '{
-        "name":"Foca Fucsia",
-        "email":"foca@fucsia.com",
+        "name":"Elefante Esmeralda",
+        "email":"elefante@esmeralda.com",
         "password":"123123aa"}' \
     -v
 
