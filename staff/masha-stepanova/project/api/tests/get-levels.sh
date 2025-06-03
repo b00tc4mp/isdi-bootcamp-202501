@@ -1,0 +1,1 @@
+CURL -X GET 'http://localhost:8080/levels' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODAyNTUyMGRlODZkNzIyOTcyMTQ1ZWUiLCJpYXQiOjE3NDQ5ODQ1ODN9.T7iB7HcuP0rmL0dlmsnqz3MLyy51aQtmUP3rg3O9uuE' -v

@@ -1,0 +1,2 @@
+curl -X GET http://localhost:8080/users/self/data \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZkMWM5MzVhZDQ1MGU3NTg2MjNiZTkiLCJyb2xlIjoicmVndWxhciIsImlhdCI6MTc0NDY0MTE4MH0.V7VouOZSiHZvmW0fEBFv-kAT1fE9ibld_7qFgE8ZBw0' -v 

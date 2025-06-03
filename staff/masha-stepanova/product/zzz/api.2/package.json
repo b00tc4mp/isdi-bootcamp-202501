@@ -1,0 +1,20 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "inspect": "node --inspect-brk ."
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "com": "file:../com",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-busboy": "^10.1.0",
+    "mongodb": "^6.15.0"
+  }
+}

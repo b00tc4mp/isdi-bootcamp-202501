@@ -1,0 +1,2 @@
+curl -X GET http://localhost:8080/vans \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2ZlNWYwZDA1MGRjYjg0YTAyMzhiZWIiLCJpYXQiOjE1MTYyMzkwMjJ9.U8Gn5bZka3p6FBXH8WGxw37xbFr3sQo5pVh4rM4jQKs' -v 

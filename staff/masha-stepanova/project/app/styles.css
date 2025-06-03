@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+@theme {
+    --color-periwinkle: '#CCCCFF';
+    --color-mauve: '#E0B0FF';
+}
