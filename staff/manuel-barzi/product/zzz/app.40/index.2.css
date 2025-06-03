@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+15&family=Qahiri&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+    html {
+        --primary-color: red;
+        --primary-color-high: magenta;
+        --primary-color-low: firebrick;
+        --secondary-color: black;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
+
+        /* font-family: 'Jersey 15'; */
+        @apply font-['Jersey_15'];
+        /* background-color: var(--secondary-color); */
+        @apply bg-[var(--secondary-color)];
+        /* color: var(--primary-color); */
+        @apply text-[var(--primary-color)];
+    }
+
+    body {
+        /* margin: 0; */
+        @apply m-0;
+    }
+
+    a {
+        /* cursor: pointer; */
+        @apply cursor-pointer;
+        /* transition: font-size .2s; */
+        @apply transition-[font-size] duration-300;
+    }
+
+    /* @media (min-width: 1024px) {
+        a:hover {
+            color: var(--primary-color-high);
+            font-size: 2rem;
+        }
+    } */
+
+    a {
+        @apply min-w-[1024px] hover:text-[var(--primary-color-high)] hover:text-[2rem];
+    }
+
+    button {
+        /* background-color: var(--primary-color); */
+        @apply bg-[var(--primary-color)];
+        /* color: var(--secondary-color); */
+        @apply text-[var(--secondary-color)];
+        /* border: 2px solid var(--primary-color); */
+        @apply border-2 border-solid border-[var(--primary-color)];
+        /* font-family: inherit; */
+        /* font-size: 1rem; */
+        /* @apply text-base; */
+
+    }
+
+    button.secondary {
+        /* background-color: var(--primary-color-low); */
+        @apply bg-[var(--primary-color-low)];
+        @apply border-[var(--primary-color-low)];
+        @apply w-full;
+    }
+
+    form {
+        /* display: flex; */
+        @apply flex;
+        /* flex-direction: column; */
+        @apply flex-col;
+        /* gap: .5rem; */
+        @apply gap-[.5rem];
+
+        .field {
+            /* display: flex; */
+            @apply flex;
+            /* flex-direction: column; */
+            @apply flex-col;
+            /* gap: var(--padding-y); */
+            @apply gap-[var(--padding-y)];
+        }
+    }
+
+    input {
+        /* background-color: var(--secondary-color); */
+        /* color: var(--primary-color); */
+        /* border-width: 2px;
+        border-style: solid;
+        border-color: var(--primary-color); */
+        /* border: 2px solid var(--primary-color); */
+        @apply border-2 border-solid border-[var(--primary-color)];
+        /* outline: none; */
+        @apply outline-none;
+        /* font-family: inherit; */
+        /* font-size: 1rem; */
+    }
+
+    /* input:focus {
+        background-color: var(--secondary-color);
+        border-color: var(--primary-color-high);
+    } */
+
+    input {
+        /* @apply focus:bg-[var(--secondary-color)]; */
+        @apply focus:border-[var(--primary-color-high)];
+    }
+
+    input::placeholder {
+        color: var(--primary-color-low);
+    }
+
+    /* input {
+        @apply placeholder::text-[ var(--primary-color-low)];
+    } */
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        background-color: var(--secondary-color);
+        -webkit-text-fill-color: var(--primary-color);
+        -webkit-box-shadow: 0 0 0px 1000px var(--secondary-color) inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* input {
+        @apply autofill:focus:bg-[var(--secondary-color)];
+    } */
+
+    h1,
+    h2 {
+        /* margin: 0; */
+        @apply m-0;
+    }
+
+    main {
+        /* margin: 3rem 0; */
+        @apply my-[3rem];
+    }
+}
