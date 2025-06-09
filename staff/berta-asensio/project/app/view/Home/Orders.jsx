@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { logic } from '../../logic'
+import { useContext } from '../../context'
 
 export function Orders() {
     const [orders, setOrders] = useState([])
     const navigate = useNavigate()
+    const { alert, confirm } = useContext()
 
     useEffect(() => {
         loadOrders()
@@ -26,6 +28,27 @@ export function Orders() {
 
             alert(error.message)
         }
+    }
+
+    const handleDeleteClick = (orderId) => {
+        confirm('¿Eliminar pedido?')
+            .then(accepted => {
+                if(accepted)
+                    try {
+                        logic.deleteOrder(orderId)
+                            .then(() => loadOrders())
+                            .catch(error => {
+                                console.error(error)
+
+                                alert(error.message)
+                            })
+                    } catch (error) {
+                        console.error(error)
+
+                        alert(error.message)
+                    }
+            })
+
     }
 
     const handleReturnClick = () => {
@@ -54,6 +77,8 @@ export function Orders() {
                         <br />
                         Fecha: {new Date(order.createdAt).toLocaleString()}
                         {order.status && <><br />Estado: {order.status}</>}
+                        <br />
+                        <button onClick={() => handleDeleteClick(order._id)}>Eliminar</button>
                     </li>
                 ))}
             </ul>

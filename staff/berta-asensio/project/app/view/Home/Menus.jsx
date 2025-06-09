@@ -62,7 +62,6 @@ export function Menus() {
             logic.createOrder(menu._id, bread)
                 .then(() => {
                     alert('Orden creada con éxito ✅')
-                    navigate('/orders')
                 })
                 .catch(error => {
                     console.error(error)

@@ -7,6 +7,7 @@ import { getMenusByCategory } from './getMenusByCategory.js'
 
 import { createOrder } from './createOrder.js'
 import { getOrdersByUser } from './getOrdersByUser.js'
+import { deleteOrder } from './deleteOrder.js'
 
 export const logic = {
     registerUser,
@@ -17,5 +18,6 @@ export const logic = {
     getMenusByCategory,
 
     createOrder,
-    getOrdersByUser
+    getOrdersByUser,
+    deleteOrder
 }

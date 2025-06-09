@@ -20,3 +20,11 @@ orders.get('/:userId', authHandler, withErrorHandling((req, res) => {
     return logic.getOrdersByUser(userId)
         .then(orders => res.json(orders))
 }))
+
+orders.delete('/:orderId', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { orderId } = req.params
+
+    return logic.deleteOrder(userId, orderId)
+        .then(() => res.status(204).send())
+}))
