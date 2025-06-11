@@ -28,6 +28,16 @@ export const validate = {
     id(id, explain = 'id') {
         this.string(id, explain)
         if(id.length !== 24) throw new ValidationError(`invalid ${explain} length`)
+    },
+    number(value, explain = 'number') {
+        if(typeof value !== 'number' || Number.isNaN(value)) {
+            throw new ValidationError(`invalid ${explain} type`)
+        }
+    },
+    minValue(value, min, explain = 'number') {
+        if(value < min) {
+            throw new ValidationError(`invalid ${explain} minValue: minimum is ${min}`)
+        }
     }
 }
 

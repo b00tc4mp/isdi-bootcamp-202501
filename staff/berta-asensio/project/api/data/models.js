@@ -27,6 +27,11 @@ const user = new Schema({
         minLength: 8,
         maxLength: 200
     },
+    credit: {
+    type: Number,
+    required: true,
+    default: 0
+    },
     createdAt: {
         type: Date,
         required: true,

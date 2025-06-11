@@ -17,27 +17,32 @@ data.connect(MONGO_URL, MONGO_DB)
                     {
                         name: 'Abeja Amarilla',
                         email: 'abeja@amarilla.com',
-                        password: hash
+                        password: hash,
+                        credit: 0
                     },
                     {
                         name: 'Burro Blanco',
                         email: 'burro@blanco.com',
-                        password: hash
+                        password: hash,
+                        credit: 0
                     },
                     {
                         name: 'Caballo Caoba',
                         email: 'caballo@caoba.com',
-                        password: hash
+                        password: hash,
+                        credit: 0
                     },
                     {
                         name: 'Delfín Dorado',
                         email: 'delfin@dorado.com',
-                        password: hash
+                        password: hash,
+                        credit: 0
                     },
                     {
                         name: 'Elefante Esmeralda',
                         email: 'elefante@esmeralda.com',
-                        password: hash
+                        password: hash,
+                        credit: 0
                     }
                 ])
             })

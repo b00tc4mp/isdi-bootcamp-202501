@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate, useLocation } from 'react-router'
+import { useNavigate } from 'react-router'
 
-import { Menus } from './Menus'
-import { Orders } from './Orders'
 import { logic } from '../../logic/index'
+import { useContext } from '../../context'
 
 export function Home({ onUserLoggedOut }) {
+    const { alert, confirm } = useContext()
     const[userName, setUserName] = useState('')
-
+    const [credit, setCredit] = useState(null)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -19,6 +19,15 @@ export function Home({ onUserLoggedOut }) {
 
                     alert(error.message)
                 })
+
+            logic.getUserCredit()
+                .then(setCredit)
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+            
         } catch (error) {
             console.error(error)
 
@@ -27,41 +36,49 @@ export function Home({ onUserLoggedOut }) {
     }, [])
 
     const handleLogoutClick = () => {
-        //aqui falta CONFIRM
-        try {
-            logic.logoutUser()
+        confirm('¿Estás seguro que quieres cerrar sesión?')
+            .then(accepted => {
+                if(accepted)
+                    try {
+                        logic.logoutUser()
 
-            onUserLoggedOut()
-        } catch(error) {
-            console.error(error)
+                        onUserLoggedOut()
+                    } catch(error) {
+                        console.error(error)
 
-            alert(error.message)
-        }
+                        alert(error.message)
+                    }
+            })
     }
 
-    const handleNavigateToMenu = () => {
-        navigate('/menus')
-    }
-
-    const handleNavigateToOrders = () => {
-        navigate('/orders')
-    }
+    const handleNavigateTo = (path) => navigate(path)
     
 
     console.debug('Home page renderized')
 
-    return <div className="home-container">
-        <header>
-            <div className="logo">Logo</div>
+    return (
+        <div className="home-container">
+            <header>
+                <div className="logo">Logo</div>
 
-            <h1>Welcome {userName}! 👋🏽</h1>
+                <h1>¡Hola {userName}! 👋🏽</h1>
 
-            <button onClick={handleNavigateToMenu}>See Menu</button>
+                {credit !== null && (
+                    <p>Crédito disponible: {credit.toFixed(2)} €</p>
+                )}
+            </header>
 
-            <button onClick={handleNavigateToOrders}>My Orders</button>
+            <main>
+                <button onClick={() => handleNavigateTo('/menus')}>Ver menús</button>
+                <button onClick={() => handleNavigateTo('/make-order')}>Hacer pedido semanal</button>
+                <button onClick={() => handleNavigateTo('/orders')}>Historial de pedidos</button>
+                <button onClick={() => handleNavigateTo('/add-credit')}>Añadir crédito ➕</button>
+            </main>
 
-            <a onClick={handleLogoutClick}>Logout</a>
-        </header>
-    </div>
+            <footer>
+                <a onClick={handleLogoutClick}>Cerrar sesión</a>
+            </footer>
+        </div>
+    )
 }
 

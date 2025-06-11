@@ -35,3 +35,20 @@ users.get('/self/name', authHandler, withErrorHandling((req, res) => {
     return logic.getUserName(userId)
         .then(userName => res.json({ name: userName }))
 }))
+
+//Ruta para traer crédito del usuario
+users.get('/self/credit', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+
+    return logic.getUserCredit(userId)
+        .then(credit => res.json({ credit }))
+}))
+
+//Ruta para añadir que usuario añada dinero
+users.post('/self/credit', authHandler, withErrorHandling((req, res) => {
+    const { userId } = req
+    const { amount } = req.body
+
+    return logic.addUserCredit(userId, amount)
+        .then(credit => res.json({ credit }))
+}))

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate, Navigate } from 'react-router'
+import { useState } from 'react'
+import { Routes, Route, useNavigate } from 'react-router'
 
 import { Landing } from './view/Landing'
 import { Register } from './view/Register'
@@ -10,11 +10,13 @@ import { Confirm } from './view/Confirm'
 import { Home } from './view/Home/index'
 import { Menus } from './view/Home/Menus'
 import { Orders } from './view/Home/Orders'
+import { AddCredit } from './view/Home/addCredit'
+
 import { Context } from './context'
+import { RequireLogin } from './view/requireLogin'
 
 function App() {
 
-    // const [loggedIn, setLoggedIn] = useState(null)
     const [showLanding, setShowLanding] = useState(true)
     const [alertMessage, setAlertMessage] = useState('')
     const [confirmMessage, setConfirmMessage] = useState('')
@@ -22,35 +24,35 @@ function App() {
 
     const navigate = useNavigate()
 
-   const handleNavigateToRegister = () => {
-    navigate('/register')
-   }
+    const handleNavigateToRegister = () => {
+        navigate('/register')
+    }
 
-   const handleNavigateToLogin = () => {
-    navigate('/login')
-   }
+    const handleNavigateToLogin = () => {
+        navigate('/login')
+    }
 
-   const handleReturnClick = () => {
-    setShowLanding(true)
-    navigate('/')
-   }
+    const handleReturnClick = () => {
+        setShowLanding(true)
+        navigate('/')
+    }
 
-   const handleUserRegistered = () => {
-    setShowLanding(false)
-    navigate('/login')
-   }
+    const handleUserRegistered = () => {
+        setShowLanding(false)
+        navigate('/login')
+    }
 
-   const handleUserLoggedIn = () => {
-    setShowLanding(false)
-    navigate('/home')
-   }
+    const handleUserLoggedIn = () => {
+        setShowLanding(false)
+        navigate('/home')
+    }
 
-   const handleLogoutClick = () => {
-    setShowLanding(true)
-    navigate('/')
-   }
+    const handleLogoutClick = () => {
+        setShowLanding(true)
+        navigate('/')
+    }
 
-   const handleShowAlert = message => setAlertMessage(message)
+    const handleShowAlert = message => setAlertMessage(message)
 
     const handleAlertAccepted = () => setAlertMessage('')
 
@@ -74,7 +76,7 @@ function App() {
     }
 
 
-   console.debug('App renderized')
+    console.debug('App renderized')
 
     return <Context value={{
         alert: handleShowAlert,
@@ -85,11 +87,11 @@ function App() {
             <Route path="/" element={<Landing
                 onNavigateToRegister={handleNavigateToRegister}
                 onNavigateToLogin={handleNavigateToLogin} />} />
-            
+
             {/*Ruta a Register*/}
             <Route path="/register" element={<Register
-            onUserRegistered={handleUserRegistered}
-            onReturnClick={handleReturnClick} />} />
+                onUserRegistered={handleUserRegistered}
+                onReturnClick={handleReturnClick} />} />
 
             {/*Ruta a Login*/}
             <Route path="/login" element={<Login
@@ -97,15 +99,33 @@ function App() {
                 onReturnClick={handleReturnClick} />} />
 
             {/*Ruta a Home*/}
-            <Route path="/home" element={<Home
-            onUserLoggedOut={handleLogoutClick} />} />
+            <Route path="/home" element={
+                <RequireLogin>
+                    <Home onUserLoggedOut={handleLogoutClick} />
+                </RequireLogin>
+            } />
 
             {/*Ruta a Menus*/}
-            <Route path="/menus" element={<Menus />} />
+            <Route path="/menus" element={
+                <RequireLogin>
+                    <Menus />
+                </RequireLogin>
+            } />
 
             {/*Ruta a orders*/}
-            <Route path="/orders" element={<Orders />} />
-                  
+            <Route path="/orders" element={
+                <RequireLogin>
+                    <Orders />
+                </RequireLogin>
+            } />
+
+            {/*Ruta a add-credit*/}
+            <Route path="/add-credit" element={
+                <RequireLogin>
+                    <AddCredit />
+                </RequireLogin>
+            } />
+
         </Routes>
 
         {alertMessage && <Alert title="⚠️" message={alertMessage} onAccepted={handleAlertAccepted} />}
