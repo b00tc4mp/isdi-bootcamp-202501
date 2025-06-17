@@ -18,7 +18,8 @@ export const addUserCredit = (userId, amount) => {
     if (!user) throw new NotFoundError('user not found')
     return user.credit
   })
-  .catch(error => {
-    throw new SystemError(error.message)
-  })
+    .catch(error => {
+      if (error instanceof NotFoundError) throw error
+      throw new SystemError(error.message)
+    })
 }

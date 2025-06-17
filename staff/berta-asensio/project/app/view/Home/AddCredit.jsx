@@ -31,6 +31,10 @@ export function AddCredit() {
         }
     }
 
+    const handleReturnClick = () => {
+        navigate('/home')
+    }
+
     return (
         <div className="add-credit">
             <h2>Añadir crédito</h2>
@@ -42,6 +46,8 @@ export function AddCredit() {
                 </label>
                 <button type="submit">Añadir</button>
             </form>
+
+            <button onClick={handleReturnClick}>Atrás</button>
         </div>
     )
 }

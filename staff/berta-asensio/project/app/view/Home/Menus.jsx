@@ -73,6 +73,10 @@ export function Menus() {
         }
     }
 
+    const handleReturnClick = () => {
+        navigate('/home')
+    }
+
     console.debug('Menus page renderized')
 
     return (
@@ -98,6 +102,8 @@ export function Menus() {
                     </section>
                 )) }
             </div>
+
+            <button onClick={handleReturnClick}>Volver a la página principal</button>
         </div>
     )
 }
