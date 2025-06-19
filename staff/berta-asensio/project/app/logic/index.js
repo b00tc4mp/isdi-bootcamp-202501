@@ -7,6 +7,7 @@ import { isUserLoggedIn } from './isUserLoggedIn'
 
 import { getMenus } from './getMenus'
 import { getMenusByCategory } from './getMenusByCategory'
+import { getMenuById } from './getMenuById'
 
 import { createOrder } from './createOrder'
 import { getOrdersByUser } from './getOrdersByUser'
@@ -27,6 +28,7 @@ export const logic = {
 
     getMenus,
     getMenusByCategory,
+    getMenuById,
 
     createOrder,
     getOrdersByUser,

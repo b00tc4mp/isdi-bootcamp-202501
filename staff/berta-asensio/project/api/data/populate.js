@@ -128,26 +128,37 @@ data.connect(MONGO_URL, MONGO_DB)
                 Menu.find().lean()
             ]))
             .then(([users, menus]) => {
+                const tomorrow = new Date()
+                tomorrow.setDate(tomorrow.getDate() + 1)
+                
                 return Order.insertMany([
                     {
                         user: users[0]._id,
                         menu: menus[0]._id,
-                        bread: 'gluten'
+                        bread: 'gluten',
+                        note: 'Abeja - CEIP AA',
+                        deliveryDate: tomorrow
                     },
                     {
                         user: users[1]._id,
                         menu: menus[1]._id,
-                        bread: 'sin gluten'
+                        bread: 'sin gluten',
+                        note: 'Burro - CEIP BB',
+                        deliveryDate: tomorrow
                     },
                     {
                         user: users[2]._id,
                         menu: menus[2]._id,
-                        bread: 'integral'
+                        bread: 'integral',
+                        note: 'Caballo - CEIP CC',
+                        deliveryDate: tomorrow
                     },
                     {
                         user: users[3]._id,
                         menu: menus[3]._id,
-                        bread: 'gluten'
+                        bread: 'gluten',
+                        note: 'Delfin - CEIP DD',
+                        deliveryDate: tomorrow
                     }
                 ])
             })

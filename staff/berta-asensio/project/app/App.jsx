@@ -6,14 +6,16 @@ import { Register } from './view/Register'
 import { Login }from './view/Login'
 import { Alert } from './view/Alert'
 import { Confirm } from './view/Confirm'
+import { RequireLogin } from './view/requireLogin'
 
 import { Home } from './view/Home/index'
 import { Menus } from './view/Home/Menus'
 import { Orders } from './view/Home/Orders'
-import { AddCredit } from './view/Home/addCredit'
+import { OrderForm } from './view/Home/OrderForm'
+import { AddCredit } from './view/Home/AddCredit'
 
 import { Context } from './context'
-import { RequireLogin } from './view/requireLogin'
+
 
 function App() {
 
@@ -116,6 +118,13 @@ function App() {
             <Route path="/orders" element={
                 <RequireLogin>
                     <Orders />
+                </RequireLogin>
+            } />
+
+            {/*Ruta a make-orders*/}
+            <Route path="/make-order/:menuId" element={
+                <RequireLogin>
+                    <OrderForm />
                 </RequireLogin>
             } />
 

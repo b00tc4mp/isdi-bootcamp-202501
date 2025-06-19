@@ -32,27 +32,24 @@ export function Orders() {
 
     const handleDeleteClick = (orderId) => {
         confirm('¿Eliminar pedido?')
-            .then(accepted => {
-                if(accepted)
-                    try {
-                        logic.deleteOrder(orderId)
-                            .then(() => loadOrders())
-                            .catch(error => {
-                                console.error(error)
+        .then(accepted => {
+            if (!accepted) return
 
-                                alert(error.message)
-                            })
-                    } catch (error) {
-                        console.error(error)
-
-                        alert(error.message)
-                    }
-            })
-
-    }
+            return logic.deleteOrder(orderId)
+                .then(() => loadOrders())
+        })
+        .catch(error => {
+            console.error(error)
+            alert(error.message)
+        })
+}
 
     const handleReturnClick = () => {
         navigate('/menus')
+    }
+
+    const handleReturnClick2 = () => {
+        navigate('/home')
     }
 
         console.debug('Orders page renderized')
@@ -76,7 +73,28 @@ export function Orders() {
                         <strong>{order.menu.name}</strong> - Pan: {order.bread}
                         <br />
                         Fecha: {new Date(order.createdAt).toLocaleString()}
-                        {order.status && <><br />Estado: {order.status}</>}
+                        {order.note && (
+                            <>
+                                <br />
+                                Nota: {order.note}
+                            </>
+                        )}
+                        <br />
+
+                        {order.status && (
+                            <>
+                                <br />
+                                Estado: {order.status}
+                            </>
+                        )}
+                        <br />
+
+                        {order.deliveryDate && (
+                            <>
+                                <br />
+                                Fecha de entrega: {new Date(order.deliveryDate).toLocaleDateString()}
+                            </>
+                        )}
                         <br />
                         <button onClick={() => handleDeleteClick(order._id)}>Eliminar</button>
                     </li>
@@ -84,6 +102,7 @@ export function Orders() {
             </ul>
 
             <button onClick={handleReturnClick}>Volver a Menús</button>
+            <button onClick={handleReturnClick2}>Página principal</button>
         </section>
     )
 }

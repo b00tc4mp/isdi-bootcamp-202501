@@ -1,4 +1,4 @@
-import { User, Order } from '../data/index.js'
+import { User, Order, Menu } from '../data/index.js'
 import { errors, validate } from 'com'
 
 const { SystemError, NotFoundError, OwnershipError } = errors
@@ -17,9 +17,23 @@ export const deleteOrder = (userId, orderId) => {
             if(!order) throw new NotFoundError('order not found')
 
             if(order.user.toString() !== userId) throw new OwnershipError('user is not owner of order')
-            
-            return Order.deleteOne({ _id: orderId })
+
+            return Menu.findById(order.menu).lean()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(menu => {
+                    if(!menu) throw new NotFoundError('menu not found')
+                    
+                    return User.findByIdAndUpdate(
+                        userId,
+                        { $inc: { credit: menu.price } },
+                        { new: true }
+                    )
+                    .catch(error => { throw new SystemError(error.message) })
+                    .then(() => {
+                        return Order.deleteOne({ _id: orderId })
+                        .catch(error => { throw new SystemError(error.message) })
+                    })
+                })
         })
         .then(() => { })
 }

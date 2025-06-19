@@ -69,8 +69,7 @@ export function Home({ onUserLoggedOut }) {
             </header>
 
             <main>
-                <button onClick={() => handleNavigateTo('/menus')}>Ver menús</button>
-                <button onClick={() => handleNavigateTo('/make-order')}>Hacer pedido semanal</button>
+                <button onClick={() => handleNavigateTo('/menus')}>Hacer pedido para mañana</button>
                 <button onClick={() => handleNavigateTo('/orders')}>Historial de pedidos</button>
                 <button onClick={() => handleNavigateTo('/add-credit')}>Añadir crédito ➕</button>
             </main>

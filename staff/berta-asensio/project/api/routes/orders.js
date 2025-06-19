@@ -8,9 +8,9 @@ export const orders = Router()
 
 orders.post('/', jsonBodyParser, authHandler, withErrorHandling((req, res) => {
     const { userId } = req
-    const { menuId, bread } = req.body
+    const { menuId, bread, note } = req.body
 
-    return logic.createOrder(userId, menuId, bread)
+    return logic.createOrder(userId, menuId, bread, note)
         .then(() => res.status(201).send())
 }))
 

@@ -100,7 +100,7 @@ const order = new Schema({
     },
     note: {
         type: String,
-        required: false
+        required: true
     },
     status: {
         type: String,
@@ -109,7 +109,7 @@ const order = new Schema({
     },
     deliveryDate: {
         type: Date,
-        required: false
+        required: true
     },
     createdAt: {
         type: Date,

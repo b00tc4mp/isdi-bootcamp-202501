@@ -9,7 +9,6 @@ export function Menus() {
     const [selectedCategory, setSelectedCategory] = useState('')
     const navigate = useNavigate()
 
-    //cargamos todos los menus al principio
     useEffect(() => {
         loadMenus()
     },[])
@@ -48,29 +47,7 @@ export function Menus() {
     }
 
     const handleOrderClick = (menu) => {
-        const bread = prompt(`Elige el tipo de pan:\n${menu.breadOptions.join(', ')}`)
-
-        if(!bread) return
-
-        if(!menu.breadOptions.includes(bread)) {
-            alert('Tipo de pan no válido')
-
-            return
-        }
-
-        try {
-            logic.createOrder(menu._id, bread)
-                .then(() => {
-                    alert('Orden creada con éxito ✅')
-                })
-                .catch(error => {
-                    console.error(error)
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-            alert(error.message)
-        }
+        navigate(`/make-order/${menu._id}`)
     }
 
     const handleReturnClick = () => {
@@ -86,7 +63,7 @@ export function Menus() {
             <div>
                 <label htmlFor="category-select">Filter by category:</label>
                 <select id="category-select" value={selectedCategory} onChange={handleCategorySelect}>
-                    <option value="regular">Regular</option>
+                    <option value="todas">Todas</option>
                     <option value="vegetariano">Vegetariano</option>
                     <option value="vegano">Vegano</option>
                     <option value="halal">Halal</option>

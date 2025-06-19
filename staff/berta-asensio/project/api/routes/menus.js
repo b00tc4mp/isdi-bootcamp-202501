@@ -20,3 +20,11 @@ menus.get('/:categories', authHandler, withErrorHandling((req, res) => {
     return logic.getMenusByCategory(categories)
         .then(menus => res.json(menus))
 }))
+
+//Ruta para traer menú por su id
+menus.get('/menu/:menuId', authHandler, withErrorHandling((req, res) => {
+    const { menuId } = req.params
+
+    return logic.getMenuById(menuId)
+        .then(menu => res.json(menu))
+}))
