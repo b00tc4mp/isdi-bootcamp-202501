@@ -93,12 +93,12 @@ function App() {
             {/*Ruta a Register*/}
             <Route path="/register" element={<Register
                 onUserRegistered={handleUserRegistered}
-                onReturnClick={handleReturnClick} />} />
+                onNavigateToLogin={handleNavigateToLogin} />} />
 
             {/*Ruta a Login*/}
             <Route path="/login" element={<Login
                 onUserLoggedIn={handleUserLoggedIn}
-                onReturnClick={handleReturnClick} />} />
+                onNavigateToRegister={handleNavigateToRegister} />} />
 
             {/*Ruta a Home*/}
             <Route path="/home" element={

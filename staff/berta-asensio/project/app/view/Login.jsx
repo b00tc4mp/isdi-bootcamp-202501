@@ -1,6 +1,6 @@
 import { logic } from '../logic/index'
 
-export function Login({ onReturnClick, onUserLoggedIn }) {
+export function Login({ onUserLoggedIn, onNavigateToRegister }) {
 
     const handleLoginSubmit = event => {
         event.preventDefault()
@@ -31,36 +31,45 @@ export function Login({ onReturnClick, onUserLoggedIn }) {
         }
     }
 
-    const handleReturnClick = () => onReturnClick()
-
     console.debug('Login page renderized')
 
-    return <div>
-        <h1>Logo</h1>
+    return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-green-100 p-6">
+        <div className="bg-green-100/80 p-6 rounded-xl shadow-lg backdrop-blur-sm w-full max-w-sm">
+            <h1 className="text-3xl font-semibold mb-8 text-green-900 text-center">Inicia Sesión</h1>
 
-        <form onSubmit={handleLoginSubmit}>
-            <div className="field">
-                <label htmlFor="email">Email</label>
-                <input 
-                    type="text" 
-                    id="email"
-                    className="input"
-                    placeholder="Your email" 
-                />
-            </div>
+            <form onSubmit={handleLoginSubmit} className="form">
+                <div className="field">
+                    <label htmlFor="email">Correo electrónico</label>
+                    <input 
+                        type="text" 
+                        id="email"
+                        className="input placeholder:text-green-600/40"
+                        placeholder="Introduce tu correo electrónico" 
+                        />
+                </div>
 
-            <div className="field">
-                <label htmlFor="password">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    placeholder="Your password" 
-                />
-            </div>
+                <div className="field">
+                    <label htmlFor="password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        className="input placeholder:text-green-600/40"
+                        placeholder="Introduce tu contraseña" 
+                    />
+                </div>
 
-            <button type="submit">Login</button>
-        </form>
+                <button 
+                    type="submit" 
+                    className="w-48 mx-auto bg-green-300 hover:bg-green-400  text-green-900 font-semibold rounded-md transition"
+                    >Iniciar sesión
+                </button>
+            </form>
 
-        <a onClick={handleReturnClick}>Return</a>
+            <p className="mt-4 text-sm text-green-900 text-center">¿Todavía no estás registrado?{' '}
+                <a onClick={onNavigateToRegister} className="text-sm underline text-green-900 cursor-pointer block transition-transform duration-400 hover:scale-125">Regístrate</a>
+            </p>
+        </div>
     </div>
+)
 }

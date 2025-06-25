@@ -1,4 +1,46 @@
-/*
+
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
 @import 'tailwindcss';
-*/
+
+@layer base {
+    html {
+        --primary-color: #4CAF50;
+        --primary-color-high: #66BB6A;
+        --primary-color-low: #388E3C;
+        --secondary-color: #ecfdf5;
+        --padding-x: 1rem;
+        --padding-y: 0.5rem;
+        
+        @apply font-['Quicksand'] bg-[var(--secondary-color)] text-[var(--primary-color)];
+    }
+
+    body {
+        @apply m-0;
+    }
+
+    a {
+        @apply cursor-pointer transition-colors duration-300 hover:text-[var(--primary-color-high)];
+    }
+
+    button {
+        @apply bg-[var(--primary-color)] text-white border border-[var(--primary-color)] rounded-md px-4 py-1 font-semibold transition hover:bg-[var(--primary-color-high)];
+    }
+
+    button.secondary {
+        @apply bg-[var(--primary-color-low)] border-[var(--primary-color-low)] text-white w-full;
+    }
+
+    form {
+        @apply flex flex-col gap-4;
+
+        .field {
+            @apply flex flex-col gap-[var(--padding-y)];
+        }
+    }
+
+      input {
+    @apply border-2 border-solid border-[var(--primary-color)] rounded-md p-2 outline-none focus:border-[var(--primary-color-high)] placeholder:text-[var(--primary-color-low)];
+    
+    }
+}
+

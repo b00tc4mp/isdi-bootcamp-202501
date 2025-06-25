@@ -46,7 +46,10 @@ export function OrderForm() {
                         .catch(error => {
                             console.error(error)
                             if(error.message === 'Insufficient credit')
-                            alert('Crédito insuficiente. Por favor, añade crédito.')
+                            confirm('Crédito insuficiente. ¿Quieres añadir crédito ahora?')
+                                .then(accepted => {
+                                    if (accepted) navigate('/add-credit')
+                                })
                         })
                 } catch (error) {
                     console.error(error)

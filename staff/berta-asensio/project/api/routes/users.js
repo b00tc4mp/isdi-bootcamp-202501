@@ -44,7 +44,7 @@ users.get('/self/credit', authHandler, withErrorHandling((req, res) => {
         .then(credit => res.json({ credit }))
 }))
 
-//Ruta para añadir que usuario añada dinero
+//Ruta para añadir dinero
 users.post('/self/credit', authHandler, withErrorHandling((req, res) => {
     const { userId } = req
     const { amount } = req.body
