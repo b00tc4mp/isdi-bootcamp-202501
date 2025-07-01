@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- Incluir Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- Incluir Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>APP</title>
+  </head>
+  <body>
+    <!--ID APP-->
+    <div id="root"></div>
+    <!-- Load React. NUCLEO -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <!-- Load React. DOM -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <!-- Load Babel to transpile JSX and ES6. -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!--Archivos de Lógica y Datos -->
+    <script
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+      src="./data/data.js"
+    ></script>
+    <script
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+      src="./logic/logic.js"
+    ></script>
+    <script
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+      src="./errors/errors.js"
+    ></script>
+
+    <!--Archivos de Vistas y Componentes-->
+    <script
+      src="./view/components/CreatePost.jsx"
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+    ></script>
+    <script
+      src="./view/components/Posts.jsx"
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+    ></script>
+    <script
+      src="./view/components/Post.jsx"
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+    ></script>
+    <script
+      src="./view/Landing.jsx"
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+    ></script>
+    <script
+      src="./view/Login.jsx"
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+    ></script>
+    <script
+      src="./view/Register.jsx"
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+    ></script>
+    <script
+      src="./view/Home.jsx"
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+    ></script>
+
+    <!--Archivos principales de Render-->
+    <script
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+      src="./App.jsx"
+    ></script>
+    <script
+      data-plugins="transform-modules-umd"
+      type="text/babel"
+      data-presets="react"
+      data-type="module"
+      src="./main.jsx"
+    ></script>
+  </body>
+</html>
