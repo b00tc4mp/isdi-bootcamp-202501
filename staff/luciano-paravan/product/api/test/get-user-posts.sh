@@ -1,0 +1,3 @@
+curl -X GET http://localhost:8080/users/67ec1f032e0b6ef4fed01b38/posts -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2VjMWYwMzJlMGI2ZWY0ZmVkMDFiMzgiLCJpYXQiOjE3NDM5NTU3NjQsImV4cCI6MTc0Mzk1OTM2NH0.7RgLwnA1Q4PRf2z_2ViUMCIBeI-3BUaFFHW3wKuNfkk' -v
+
+# En las api cuando se construyen rutas semanticas siempre se agrupa por conjuntos, del mas importante al menos importante, lo mas importante es que exista el usuario sino no puede haber posts. En la ruta en api se suele hacer por grupos y en plural. De los usuarios, elegir usuario del que quiero ver los posts, posts.
