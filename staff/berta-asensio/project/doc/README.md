@@ -59,8 +59,7 @@ Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijo
 
 ### Behaviors
 
--navigation from Landing to Register
-(diagrama comportamiento landing)
+![Diagrama de comportamiento](../app/public/diagrama-de-comportamiento.jpg)
 
 ### Data Model
 
