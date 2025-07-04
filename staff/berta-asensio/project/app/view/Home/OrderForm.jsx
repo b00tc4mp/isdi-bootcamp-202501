@@ -48,7 +48,7 @@ export function OrderForm() {
                             if(error.message === 'Insufficient credit')
                             confirm('Crédito insuficiente. ¿Quieres añadir crédito ahora?')
                                 .then(accepted => {
-                                    if (accepted) navigate('/add-credit')
+                                    if (accepted) navigate('/add-credit', { state: { returnTo: `/make-order/${menuId}` } })
                                 })
                         })
                 } catch (error) {

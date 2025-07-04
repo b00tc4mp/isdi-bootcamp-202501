@@ -34,7 +34,7 @@ Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijo
 
 ### UIUX Design
 
-[Figma](https://www.figma.com/design/mG4Nqh9ENq55vFwEB9LV4t/bee-Project?node-id=0-1&p=f&t=Xn8Xhg2kL8RoZMXp-0)
+[Figma](https://www.figma.com/design/F7M3yyebkzAE9AtGNZjbet/Untitled?node-id=0-1&p=f&t=5AmLdpNJArPguNHN-0)
 
 ## Technical
 

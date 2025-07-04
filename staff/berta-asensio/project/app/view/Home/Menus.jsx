@@ -18,7 +18,7 @@ export function Menus() {
             logic.getMenus()
                 .then(menus => {
                     const transformedMenus = menus.map(menu => {
-                        menu.id = menu._id.toString()
+                        menu.id = menu.id.toString()
                         delete menu._id
                         return menu
                     })
@@ -63,31 +63,72 @@ export function Menus() {
     console.debug('Menus page renderized')
 
     return (
-        <div>
-            <div className="logo">Logo</div>
-            <h1>MENUS 🥪</h1>
-            <div>
-                <label htmlFor="category-select">Filter by category:</label>
-                <select id="category-select" value={selectedCategory} onChange={handleCategorySelect}>
+        <div className="min-h-screen flex flex-col items-center bg-green-200 p-6">
+            <header className="w-full flex justify-between items-center mb-6 px-4">
+                <h1 
+                    className="text-4xl font-bold text-green-900 whitespace-nowrap">
+                    MENÚS
+                </h1>
+                <img
+                    src="/logo.png"
+                    alt="Little Breakfast logo"
+                    className="w-30"
+                />
+            </header>
+
+            <div className="mb-6 w-full max-w-md">
+                <label 
+                    htmlFor="category-select"
+                    className="block mb-2 font-semibold text-green-900"
+                >
+                    Filtrar por categoría:
+                </label>
+                <select 
+                    id="category-select" 
+                    value={selectedCategory} 
+                    onChange={handleCategorySelect}
+                    className="w-full rounded-md border border-green-600 px-3 py-2 text-green-900"
+                >
                     <option value="todas">Todas</option>
                     <option value="vegetariano">Vegetariano</option>
                     <option value="vegano">Vegano</option>
                     <option value="halal">Halal</option>
                 </select>
             </div>
-            <div>
+
+            <div className="w-full max-w-3xl space-y-6 mb-10">
                 { menus.map(menu => (
-                    <section key={menu.id} className="menu-item">
-                        <h3>{menu.name}</h3>
-                        <p>{menu.description}</p>
-                        <p>{`Precio: ${menu.price}`}</p>
-                        <button onClick={() => handleOrderClick(menu)}>Comprar</button>
+                    <section 
+                        key={menu.id} 
+                        className="bg-green-100 rounded-xl p-5 shadow-lg border border-green-300"
+                    >
+                        <h3 className="text-2xl font-semibold text-green-900 mb-2">
+                            {menu.name}
+                        </h3>
+                        <p className="text-green-800 mb-3">
+                            {menu.description}
+                        </p>
+                        <p className="font-semibold text-green-900 mb-4">
+                            {`Precio: ${menu.price}`}
+                        </p>
+                        <button 
+                            onClick={() => handleOrderClick(menu)}
+                            className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold px-5 py-2 rounded-md transition"
+                        >
+                            Comprar
+                        </button>
                     </section>
                     )
                 )}
             </div>
 
-            <button onClick={handleReturnClick}>Volver a la página principal</button>
+            <button 
+                onClick={handleReturnClick}
+                className="bg-green-200 hover:bg-green-300 text-green-900 px-6 py-2 rounded-md transition"
+            >
+                Volver a la página principal
+                
+            </button>
         </div>
     )
 }

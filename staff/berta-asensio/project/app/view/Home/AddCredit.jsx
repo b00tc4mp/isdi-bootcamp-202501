@@ -1,12 +1,15 @@
 import { logic } from '../../logic'
 import { useContext } from '../../context'
-import { useNavigate } from 'react-router'
+import { useNavigate, useLocation } from 'react-router'
 import { useState } from 'react'
 
 export function AddCredit() {
     const { alert } = useContext()
     const [amount, setAmount] = useState('')
     const navigate = useNavigate()
+    const location = useLocation()
+
+    const returnTo = location.state?.returnTo || '/home'
 
     const handleFormSubmit = event => {
         event.preventDefault()
@@ -17,7 +20,7 @@ export function AddCredit() {
             logic.addUserCredit(parsedAmount)
                 .then(() => {
                     alert(`Crédito añadido: ${parsedAmount} €`)
-                    navigate('/home')
+                    navigate(returnTo)
                 })
                 .catch(error => {
                     console.error(error)
