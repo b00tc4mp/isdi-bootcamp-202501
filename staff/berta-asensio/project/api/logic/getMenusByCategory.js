@@ -16,6 +16,10 @@ export const getMenusByCategory = (categories) => {
             if (!menus || menus.length === 0)
                 throw new NotFoundError('No menus found in this category')
 
-            return menus
+            return menus.map(menu => {
+                menu.id = menu._id.toString()
+                delete menu._id
+                return menu
+            })
         })
 }

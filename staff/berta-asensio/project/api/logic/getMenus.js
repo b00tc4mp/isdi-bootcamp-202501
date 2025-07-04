@@ -10,6 +10,10 @@ export const getMenus = () => {
         .then(menus => {
             if(!menus || menus.length === 0) { throw new NotFoundError('menus not found') }
 
-            return menus
+            return menus.map(menu => {
+                menu.id = menu._id.toString()
+                delete menu._id
+                return menu
+            })
         })
 }

@@ -41,13 +41,16 @@ export function Register ({ onNavigateToLogin, onUserRegistered }) {
         }
     }
 
-    const handleReturnClick = () => onReturnClick()
-
     console.debug('Register page renderized')
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-green-100 p-6">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-green-200 p-6">
             <div className="bg-green-100/80 p-6 rounded-xl shadow-lg backdrop-blur-sm w-full max-w-sm">
+                <img 
+                    src="/logo.png" 
+                    alt="Little Breakfast logo" 
+                    className="w-24 h-auto mx-auto mb-4"
+                />
                 <h1 className="text-3xl font-semibold mb-8 text-green-900 text-center">¡Regístrate!</h1>
 
                 <form onSubmit={handleRegisterSubmit} className="form">

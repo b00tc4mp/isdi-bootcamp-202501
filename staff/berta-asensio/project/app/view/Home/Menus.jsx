@@ -11,13 +11,19 @@ export function Menus() {
 
     useEffect(() => {
         loadMenus()
-    },[])
+    }, [])
 
     const loadMenus = () => {
-        try{
+        try {
             logic.getMenus()
                 .then(menus => {
-                    setMenus(menus)
+                    const transformedMenus = menus.map(menu => {
+                        menu.id = menu._id.toString()
+                        delete menu._id
+                        return menu
+                    })
+
+                    setMenus(transformedMenus)
                 })
                 .catch(error => {
                     console.error(error)
@@ -47,7 +53,7 @@ export function Menus() {
     }
 
     const handleOrderClick = (menu) => {
-        navigate(`/make-order/${menu._id}`)
+        navigate(`/make-order/${menu.id}`)
     }
 
     const handleReturnClick = () => {
@@ -71,13 +77,14 @@ export function Menus() {
             </div>
             <div>
                 { menus.map(menu => (
-                    <section key={menu._id} className="menu-item">
+                    <section key={menu.id} className="menu-item">
                         <h3>{menu.name}</h3>
                         <p>{menu.description}</p>
                         <p>{`Precio: ${menu.price}`}</p>
                         <button onClick={() => handleOrderClick(menu)}>Comprar</button>
                     </section>
-                )) }
+                    )
+                )}
             </div>
 
             <button onClick={handleReturnClick}>Volver a la página principal</button>

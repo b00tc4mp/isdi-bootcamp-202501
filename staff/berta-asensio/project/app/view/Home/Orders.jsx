@@ -69,7 +69,7 @@ export function Orders() {
 
             <ul>
                 {orders.map(order => (
-                    <li key={order._id}>
+                    <li key={order.id}>
                         <strong>{order.menu.name}</strong> - Pan: {order.bread}
                         <br />
                         Fecha: {new Date(order.createdAt).toLocaleString()}
@@ -96,7 +96,7 @@ export function Orders() {
                             </>
                         )}
                         <br />
-                        <button onClick={() => handleDeleteClick(order._id)}>Eliminar</button>
+                        <button onClick={() => handleDeleteClick(order.id)}>Eliminar</button>
                     </li>
                 ))}
             </ul>

@@ -57,27 +57,55 @@ export function Home({ onUserLoggedOut }) {
     console.debug('Home page renderized')
 
     return (
-        <div className="home-container">
-            <header>
-                <div className="logo">Logo</div>
-
-                <h1>¡Hola {userName}! 👋🏽</h1>
+        <div className="min-h-screen flex flex-col items-center bg-green-200 p-6">
+            <header className="w-full flex justify-between items-center mb-6 px-4">
+                <img
+                    src="/logo.png"
+                    alt="Little Breakfast logo"
+                    className="w-30"
+                />
 
                 {credit !== null && (
-                    <p>Crédito disponible: {credit.toFixed(2)} €</p>
+                    <p className="text-green-900 font-semibold">
+                        Crédito disponible: {credit.toFixed(2)} €
+                    </p>
                 )}
             </header>
+            <div className="text-3xl font-semibold text-green-900 mb-2">
 
-            <main>
-                <button onClick={() => handleNavigateTo('/menus')}>Hacer pedido para mañana</button>
-                <button onClick={() => handleNavigateTo('/orders')}>Historial de pedidos</button>
-                <button onClick={() => handleNavigateTo('/add-credit')}>Añadir crédito ➕</button>
+                <h1>¡Hola {userName}!</h1>
+
+            </div>
+
+            <main className="w-full max-w-md flex flex-col gap-4">
+                <button 
+                    onClick={() => handleNavigateTo('/menus')}
+                    className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold rounded-md py-3 transition"
+                >
+                    Hacer pedido para mañana
+                </button>
+                <button 
+                    onClick={() => handleNavigateTo('/orders')}
+                    className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold rounded-md py-3 transition"
+                >
+                    Historial de pedidos
+                </button>
+                <button 
+                    onClick={() => handleNavigateTo('/add-credit')}
+                    className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold rounded-md py-3 transition"
+                >
+                    Añadir crédito ➕
+                </button>
             </main>
 
-            <footer>
-                <a onClick={handleLogoutClick}>Cerrar sesión</a>
+            <footer className="mt-auto pt-6 w-full max-w-md text-center">
+                <a 
+                    onClick={handleLogoutClick}
+                    className="cursor-pointer text-green-700 underline hover:text-green-900 transition"
+                >
+                    Cerrar sesión
+                </a>
             </footer>
         </div>
     )
 }
-

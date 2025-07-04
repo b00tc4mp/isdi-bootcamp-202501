@@ -36,18 +36,38 @@ export function AddCredit() {
     }
 
     return (
-        <div className="add-credit">
-            <h2>Añadir crédito</h2>
-            <form onSubmit={handleFormSubmit}>
-                <label>
-                    Importe:
-                    <input type="number" value={amount} onChange={e => setAmount(e.target.value)} min="0.50" step="0.5"
+        <div className="min-h-screen flex flex-col items-center p-15  bg-green-200">
+            <h2 className="text-3xl font-semibold mb-7 text-green-900">Añadir crédito</h2>
+            <form onSubmit={handleFormSubmit} className="w-full max-w-md">
+                <div className="field">
+                    <label htmlFor="amount" className="font-semibold">Importe:</label>
+                    <input
+                        id="amount"
+                        type="number"
+                        value={amount}
+                        onChange={e => setAmount(e.target.value)}
+                        min="1"
+                        step="1"
+                        placeholder="1 €"
+                        required
                     />
-                </label>
-                <button type="submit">Añadir</button>
-            </form>
+                </div>
+                <div className="flex flex-col items-center gap-4 mt-6">
+                    <button
+                        type="submit"
+                        className="w-48 py-2 bg-green-400 hover:bg-green-500 text-green-900 font-semibold rounded-md transition"
+                    >
+                        Añadir
+                    </button>
 
-            <button onClick={handleReturnClick}>Atrás</button>
+                    <button
+                        onClick={handleReturnClick}
+                        className="w-48 py-2 bg-green-200 hover:bg-green-300 text-green-900 font-semibold rounded-md transition mt-4"
+                    >
+                        Volver
+                    </button>
+                </div>
+            </form>
         </div>
     )
 }

@@ -34,15 +34,20 @@ export function Login({ onUserLoggedIn, onNavigateToRegister }) {
     console.debug('Login page renderized')
 
     return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-green-100 p-6">
-        <div className="bg-green-100/80 p-6 rounded-xl shadow-lg backdrop-blur-sm w-full max-w-sm">
-            <h1 className="text-3xl font-semibold mb-8 text-green-900 text-center">Inicia Sesión</h1>
+        <div className="min-h-screen flex flex-col items-center justify-center bg-green-200 p-6">
+            <div className="bg-green-100/80 p-6 rounded-xl shadow-lg backdrop-blur-sm w-full max-w-sm">
+                <img 
+                    src="/logo.png" 
+                    alt="Little Breakfast logo" 
+                    className="w-24 h-auto mx-auto mb-4"
+                />
+                <h1 className="text-3xl font-semibold mb-8 text-green-900 text-center">Inicia Sesión</h1>
 
-            <form onSubmit={handleLoginSubmit} className="form">
-                <div className="field">
-                    <label htmlFor="email">Correo electrónico</label>
-                    <input 
-                        type="text" 
+                <form onSubmit={handleLoginSubmit} className="form">
+                    <div className="field">
+                        <label htmlFor="email">Correo electrónico</label>
+                        <input
+                            type="text" 
                         id="email"
                         className="input placeholder:text-green-600/40"
                         placeholder="Introduce tu correo electrónico" 
