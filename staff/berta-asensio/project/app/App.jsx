@@ -114,7 +114,7 @@ function App() {
                 </RequireLogin>
             } />
 
-            {/*Ruta a orders*/}
+            {/*Ruta a Orders*/}
             <Route path="/orders" element={
                 <RequireLogin>
                     <Orders />
@@ -137,8 +137,8 @@ function App() {
 
         </Routes>
 
-        {alertMessage && <Alert title="⚠️" message={alertMessage} onAccepted={handleAlertAccepted} />}
-        {confirmMessage && <Confirm title="❔" message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
+        {alertMessage && <Alert title="¡Hecho!" message={alertMessage} onAccepted={handleAlertAccepted} />}
+        {confirmMessage && <Confirm title="¿Lo tienes claro?" message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
     </Context>
 }
 

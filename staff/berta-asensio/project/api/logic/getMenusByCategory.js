@@ -10,7 +10,7 @@ export const getMenusByCategory = (categories) => {
         categories: { $in: categories }
     }
 
-    return Menu.find(filter).lean()
+    return Menu.find(filter).sort({ ordinal: 1 }).lean()
         .catch(error => { throw new SystemError(error.message) })
         .then(menus => {
             if (!menus || menus.length === 0)

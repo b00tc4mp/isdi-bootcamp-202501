@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { data, Menu } from '../data/index.js'
 import { getMenuById } from './getMenuById.js'
 import { expect } from 'chai'
-import { NotFoundError } from 'com/errors.js'
+import { NotFoundError, SystemError } from 'com/errors.js'
 import { Types } from 'mongoose'
 
 const { MONGO_URL, MONGO_DB } = process.env
@@ -27,9 +27,8 @@ describe('getMenuById', () => {
             breadOptions: ['gluten', 'sin gluten', 'integral'],
             price: 2.50
         })
-        .then(menu => getMenuById(menu._id))
-        .then(menu => returnedMenu = menu)
-        .finally(() => {
+        .then(menu => getMenuById(menu._id.toString()))
+        .then(menu => { returnedMenu = menu
             expect(returnedMenu).to.be.instanceOf(Object)
             expect(returnedMenu.name).to.be.equal('Jamón dulce')
             expect(returnedMenu.description).to.be.equal('Bocadillo de jamón dulce')

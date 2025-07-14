@@ -1,4 +1,3 @@
-//CONEXIÓN A MONGODB
 import mongoose from 'mongoose'
 import { errors } from 'com'
 import { User, Menu, Order } from './models.js'

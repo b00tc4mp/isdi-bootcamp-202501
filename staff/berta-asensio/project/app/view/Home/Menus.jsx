@@ -76,24 +76,27 @@ export function Menus() {
                 />
             </header>
 
-            <div className="mb-6 w-full max-w-md">
-                <label 
-                    htmlFor="category-select"
-                    className="block mb-2 font-semibold text-green-900"
-                >
-                    Filtrar por categoría:
-                </label>
-                <select 
-                    id="category-select" 
-                    value={selectedCategory} 
-                    onChange={handleCategorySelect}
-                    className="w-full rounded-md border border-green-600 px-3 py-2 text-green-900"
-                >
-                    <option value="todas">Todas</option>
-                    <option value="vegetariano">Vegetariano</option>
-                    <option value="vegano">Vegano</option>
-                    <option value="halal">Halal</option>
-                </select>
+            <div className="w-full max-w-3xl flex justify-between items-center mb-4">
+                <div></div>
+                <div className="w-48">
+                    <label 
+                        htmlFor="category-select"
+                        className="block mb-2 font-semibold text-green-900"
+                    >
+                        Filtrar por categoría:
+                    </label>
+                    <select 
+                        id="category-select" 
+                        value={selectedCategory} 
+                        onChange={handleCategorySelect}
+                        className="w-full rounded-md border border-green-600 px-3 py-2 text-green-900"
+                    >
+                        <option value="todas">Todas</option>
+                        <option value="vegetariano">Vegetariano</option>
+                        <option value="vegano">Vegano</option>
+                        <option value="halal">Halal</option>
+                    </select>
+                </div>
             </div>
 
             <div className="w-full max-w-3xl space-y-6 mb-10">

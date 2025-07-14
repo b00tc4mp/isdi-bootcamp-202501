@@ -165,5 +165,3 @@ data.connect(MONGO_URL, MONGO_DB)
     })
 
     .finally(() => data.disconnect())
-
-// node data/populate.js

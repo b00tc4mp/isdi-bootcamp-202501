@@ -12,6 +12,6 @@ export const getUserCredit = (userId) => {
         .then(user => {
             if(!user) throw new NotFoundError('user not found')
             
-            return user.credit || 0
+            return user.credit
         })
 }

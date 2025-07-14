@@ -5,13 +5,12 @@ import jwt from 'jsonwebtoken'
 const { CredentialsError, DuplicityError, NotFoundError, OwnershipError, SystemError, ValidationError, AuthorizationError } = errors
 const { JsonWebTokenError, TokenExpiredError } = jwt
 
-//middleware para manejar los errores de los servers
 export const errorHandler = (error, req, res, next) => {
     console.error(error)
 
     let status = 500
     let errorName = SystemError.name
-    let { message } = error //destructuramos aqui missage para poder especificar el mensaje en los JWT errors
+    let { message } = error
 
     if (error instanceof DuplicityError) {
         status = 409

@@ -65,27 +65,63 @@ export function OrderForm() {
     if (!menu) return <p>Cargando menú...</p>
 
     return (
-        <section>
-            <h1>Pedido: {menu.name}</h1>
+        <div className="min-h-screen flex flex-col items-center bg-green-200 p-6">
+            <header className="w-full flex justify-between items-center mb-6 px-4">
+                <img 
+                    src="/logo.png" 
+                    alt="Little Breakfast logo" 
+                    className="w-30" 
+                />
+            </header>
+            <section className="w-full max-w-md bg-green-100 p-6 rounded-xl shadow-lg border border-green-300">
+                <h1 className="text-2xl font-bold text-green-900 mb-4">
+                    Pedido: {menu.name}
+                </h1>
 
-            <label>Tipo de pan:</label>
-            <select value={bread} onChange={event => setBread(event.target.value)}>
-                <option value="">Selecciona pan</option>
-                {menu.breadOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                ))}
-            </select>
+                <div className="mb-4">
+                    <label className="block mb-2 font-semibold text-green-900">
+                        Tipo de pan:
+                    </label>
+                    <select 
+                        value={bread} 
+                        onChange={event => setBread(event.target.value)}
+                        className="w-full rounded-md border border-green-600 px-3 py-2 text-green-900"
+                    >
+                        <option value="">Selecciona pan</option>
+                        {menu.breadOptions.map(option => (
+                        <option key={option} value={option}>{option}</option>
+                        ))}
+                    </select>
+                </div>
 
-            <label>Nombre del niño y colegio:</label>
-            <textarea
-                value={note}
-                onChange={event => setNote(event.target.value)}
-                rows="3"
-                placeholder="Ej. Berta - CEIP Vaixell Burriac"
-            />
+                <div className="mb-6">
+                    <label className="block mb-2 font-semibold text-green-900">
+                        Nombre del niño y Colegio:
+                    </label>
+                    <textarea
+                        value={note}
+                        onChange={event => setNote(event.target.value)}
+                        rows="3"
+                        placeholder='Ej. Rana Roja - Colegio RRR'
+                        className="w-full rounded-md border border-green-600 px-3 py-2 text-green-900"
+                    />
+                </div>
 
-            <button onClick={handleSubmit}>Tramitar pedido</button>
-            <button onClick={handleCancelClick}>Cancelar</button>
-        </section>
+                <div className="flex justify-between gap-4">
+                    <button
+                        onClick={handleSubmit}
+                        className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold px-5 py-2 rounded-md transition w-full"
+                    >
+                        Tramitar pedido
+                    </button>
+                    <button
+                        onClick={handleCancelClick}
+                        className="bg-green-200 hover:bg-green-300 text-green-900 font-semibold px-5 py-2 rounded-md transition w-full"
+                    >
+                        Cancelar
+                    </button>
+                </div>
+            </section>
+        </div>
     )
 }

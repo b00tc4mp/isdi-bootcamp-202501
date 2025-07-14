@@ -5,8 +5,6 @@ import bcrypt from 'bcryptjs'
 const { SystemError, NotFoundError, CredentialsError } = errors
 
 export const authenticateUser = (email, password) => {
-    console.log('Email: ', email, 'password: ', password)
-
     validate.email(email)
     validate.password(password)
 

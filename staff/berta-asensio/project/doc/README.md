@@ -2,11 +2,11 @@
 
 ## Intro
 
-Little breakfast es una aplicación móvil dirigida a familias que desean un servicio de desayuno diario para sus hijos de primaria en el colegio.
-En muchas familias, las mañanas son ajetreadas y puede ser un reto diario preparar el desayuno para sus hijos. Little breakfast pretende solucionar este problema ofreciendo una forma sencilla y fiable de garantizar un desayuno nutritivo y elaborado diariamiente para los niños.
-Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijos y realizar los pedidos desde la app de manera fácil, rápida y económica.
+Little Breakfast is a mobile app aimed at families who want a daily breakfast service for their elementary school children.
+For many families, mornings are busy, and preparing breakfast for their children can be a daily challenge. Little Breakfast aims to solve this problem by offering a simple and reliable way to ensure a nutritious and prepared breakfast for children every day.
+Families can manage and control the type of breakfast their children receive and place orders from the app easily, quickly, and affordably.
 
-![](https://media.giphy.com/media/jhzar9OuWE6fq2wHL3/giphy.gif?cid=790b76117idtvpv2k9ng2aoxpxzz0n0rsw3i0zxdmp878j1m&ep=v1_gifs_search&rid=giphy.gif&ct=g)
+![](../app/public/logoRM.png)
 
 ## Functional
 
@@ -26,11 +26,7 @@ Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijo
 
 - Manage menus
 - View and manage orders
-- View and manage invoices (planned)
-
-
-*Diagrama de flujo del proceso de pedidos, desde que el padre realiza el pedido hasta que el niño recibe el desayuno.
-
+- View and manage invoices
 
 ### UIUX Design
 
@@ -40,8 +36,8 @@ Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijo
 
 ### Blocks
 
-- App (frontend)
-- Api (backend)
+- APP (frontend)
+- API (backend)
 - DB (data bases)
 
 ### Packages
@@ -52,12 +48,7 @@ Las familias pueden gestionar y controlar qué tipo de desayuno reciben sus hijo
 - doc (documentation)
 
 
-### UI Components (arquitectura de componentes)
-
-(diagrama de componentes por ejemplo)
- (no obligatorio)
-
-### Behaviors
+### UI Components 
 
 ![Diagrama de comportamiento](../app/public/diagrama-de-comportamiento.jpg)
 
@@ -78,7 +69,7 @@ Menu
 - ordinal (number)
 - name (string)
 - description (string)
-- allergens (array of strings)
+- allergens (array of strings) (planned)
 - categories (array of strings: regular | veggie | vegan | halal )
 - breadOptions (array of strings: gluten | gluten free | whole wheat)
 - price (number)
@@ -89,11 +80,11 @@ Order
 - user (User.id)
 - menu (Menu.id)
 - bread (string)
-- note (String, name of child and school)
-- status (string, estado del pedido: pendiente|en camino|entregado|cancelado)
-- deliveryDate(Date, fecha de entrega)
-- createdAt (Date, fecha realización pedido)
-- modifiedAt(Date, fecha ultima modificación)
+- note (string, name of child and school)
+- status (string, order status: pending | on way | delivered | canceled)
+- deliveryDate(Date)
+- createdAt (Date)
+- modifiedAt(Date)
 
 ### Technologies
 
@@ -103,12 +94,11 @@ Order
 
 
 ## Planning 
-(planing del proyecto, que esta en la issue, copiamos el link)
 
 [Issue Tracking] https://github.com/b00tc4mp/isdi-bootcamp-202501/issues/76
 
 ### Code Coverage
-Testings
+[test coverage][C:\Users\PC\workspace\isdi-bootcamp-202501\staff\berta-asensio\project\api\coverage\index.html](http://127.0.0.1:5500/staff/berta-asensio/project/api/coverage/index.html)
 
 
 
