@@ -137,7 +137,7 @@ function App() {
 
         </Routes>
 
-        {alertMessage && <Alert title="¡Hecho!" message={alertMessage} onAccepted={handleAlertAccepted} />}
+        {alertMessage && <Alert title="" message={alertMessage} onAccepted={handleAlertAccepted} />}
         {confirmMessage && <Confirm title="¿Lo tienes claro?" message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
     </Context>
 }

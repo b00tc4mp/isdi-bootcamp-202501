@@ -17,11 +17,13 @@ export function Orders() {
             const userId = logic.getUserId()
 
             logic.getOrdersByUser(userId)
-                .then(setOrders)
+                .then(orders => {
+                    setOrders(orders || [])
+                })
                 .catch(error => {
                     console.error(error)
                     
-                    alert(error.message)
+                    setOrders([])
                 })  
         } catch (error) {
             console.error(error)
@@ -67,7 +69,7 @@ export function Orders() {
             </header>
 
             {orders.length === 0 ? (
-                <div className="text-center bg-green-100 rounded-xl shadow-lg p-6 max-w-md w-full">
+                <div className="text-center bg-green-100 rounded-xl shadow-lg p-6 max-w-md w-full mb-10">
                     <p className="text-green-800 mb-2">No tienes pedidos todavía.</p>
                     <p className="text-green-900 font-semibold mb-4">¡Empieza ahora con tu primer pedido!</p>
                     <button
@@ -112,12 +114,14 @@ export function Orders() {
             )}
 
             <div className="flex gap-4">
-                <button
-                    onClick={handleReturnClick}
-                    className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold px-5 py-2 rounded-md transition"
-                >
-                    Volver a Menús
-                </button>
+                {orders.length > 0 && (
+                    <button
+                        onClick={handleReturnClick}
+                        className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold px-5 py-2 rounded-md transition"
+                    >
+                        Volver a Menús
+                    </button>
+                )}
                 <button
                     onClick={handleReturnClick2}
                     className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold px-5 py-2 rounded-md transition"

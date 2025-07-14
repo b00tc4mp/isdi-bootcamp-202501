@@ -1,10 +1,12 @@
 import { logic } from '../logic/index'
 import { errors } from 'com'
+import { useContext } from '../context'
 
 const { SystemError, ValidationError } = errors
 
 
 export function Register ({ onNavigateToLogin, onUserRegistered }) {
+    const { alert } = useContext()
     
     const handleRegisterSubmit = event => {
         event.preventDefault()
@@ -37,7 +39,7 @@ export function Register ({ onNavigateToLogin, onUserRegistered }) {
             if(error instanceof ValidationError)
                 alert('📢' + error.message)
             else
-                alert('Warning: ' + error.message)
+                alert('¡Ojo! ' + error.message)
         }
     }
 

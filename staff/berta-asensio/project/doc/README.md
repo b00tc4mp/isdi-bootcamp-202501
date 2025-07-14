@@ -98,7 +98,8 @@ Order
 [Issue Tracking] https://github.com/b00tc4mp/isdi-bootcamp-202501/issues/76
 
 ### Code Coverage
-[test coverage][C:\Users\PC\workspace\isdi-bootcamp-202501\staff\berta-asensio\project\api\coverage\index.html](http://127.0.0.1:5500/staff/berta-asensio/project/api/coverage/index.html)
+![test coverage](../app/public/test-coverage.jpg)
+
 
 
 

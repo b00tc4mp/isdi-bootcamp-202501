@@ -23,7 +23,7 @@ export const Confirm = ({ title, message, onAccepted, onCancelled }) => {
                             onClick={handleAcceptClick}
                             className="bg-green-300 hover:bg-green-400 text-green-900 font-semibold px-4 py-2 rounded-md transition"
                         >
-                            Accept
+                            Aceptar
                         </button>
                     </div>
                 </div>
