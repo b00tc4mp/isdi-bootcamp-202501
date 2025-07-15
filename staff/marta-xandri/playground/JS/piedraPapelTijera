@@ -1,0 +1,48 @@
+// función principal del juego
+function piedraPapelTijera(jugador1, jugador2) {
+    
+//imprimir lo que ha elegido el jugador con los emoticonos 
+//formatear es = a darle forma 
+//elección es = la elección del jugador
+    console.log(`Jugador 1 ha elegido: ${formatearElección(jugador1)}`)
+    console.log(`Jugador 2 ha elegido: ${formatearElección(jugador2)}`)
+
+//determinar el ganador de la jugada
+    //en caso de empate:
+    if (jugador1 === jugador2) {
+        console.log(" ¡Es un empate! 😐")
+        
+    //jugador1 ganador
+    } else if (
+        (jugador1 === "piedra" && jugador2 === "tijera") ||
+        (jugador1 === "tijera" && jugador2 === "papel") ||
+        (jugador1 === "papel" && jugador2 === "piedra")
+    ) {
+        console.log("¡Jugador 1 gana! 🎉")
+    
+    //jugador2 ganador
+    } else if (
+        (jugador2 === "piedra" && jugador1 === "tijera") ||
+        (jugador2 === "tijera" && jugador1 === "papel") ||
+        (jugador2 === "papel" && jugador1 === "piedra")
+    ) {
+        console.log("¡Jugador 2 gana! 🎉")
+        
+    //entrada inválida o error ortográfico
+    } else {
+        console.log("Entrada inválida. Asegúrate de escribir correctamente 'piedra', 'papel', o 'tijera' ⚠️")
+    }
+    return; //el return se pone para evitar que se escriba undefined
+}    
+
+//función para añadir los emoticonos a las elecciones
+function formatearElección(elección) {
+    if (elección === "piedra") return "🪨 Piedra"
+    if (elección === "papel") return "📄 Papel"
+    if (elección === "tijera") return "✂️ Tijera"
+}
+
+// ejmplo de uso, el orden marca el jugador 1 y 2 
+// introducir en la consola piedraPapelTijera("piedra", "tijera"); 
+// el jugador 1 elige piedra 
+// el jugador 2 elige tijera    
