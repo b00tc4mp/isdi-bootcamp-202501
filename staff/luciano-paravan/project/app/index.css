@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+    html {
+        font-family: 'Poppins' ;
+        background-color: #1E1E1E;
+        color: var(--first-color);
+        --bg-color: #1E1E1E;
+        --text-color:#E0EEEC;
+        --first-color:#3295ff;
+        --second-color:#007BFF;
+        --third-color:#ff7a59;
+        --fourth-color:#ff5125;
+        --padding-x: 1rem;
+        --padding-y: 0.25rem;
+        box-sizing: border-box;
+
+        @apply bg-[var(--bg-color)];
+    }
+
+    *, *::before, *::after {
+        box-sizing: inherit;
+    }
+
+    body {
+        @apply m-0 p-4 text-[var(--text-color)];
+    }
+
+    a {
+        @apply cursor-pointer transition-[font-size] duration-200 min-[1024px]:hover:text-[var(--third-color)] min-[1024px]:hover:text-[1.1rem];
+    }
+
+    .btn-primary {
+        @apply bg-[var(--second-color)] text-[var(--text-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+    }
+
+    .btn-primary.active {
+        @apply bg-[var(--fourth-color)] scale-95;
+    }
+
+    .btn-secondary {
+        @apply bg-[var(--third-color)] text-[var(--text-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+    }
+
+    .btn-secondary.active {
+        @apply bg-[#6C757D]/20 scale-95; 
+    }
+
+    .btn-tertiary {
+        @apply text-[var(--text-color)] rounded-md border-[1px] border-[var(--third-color)] py-[var(--padding-y)] px-[var(--padding-x)] font-semibold cursor-pointer shadow-md;
+    }
+
+    .btn-tertiary.active {
+        @apply bg-[var(--second-color)]/20 scale-95;
+    }
+
+    .btn-link {
+        @apply text-[var(--text-color)] text-center border-[1px] border-[var(--third-color)] rounded-md py-[var(--padding-y)] px-[var(--padding-x)] my-4 font-semibold cursor-pointer;
+    }
+
+    form {
+        @apply flex flex-col gap-[1rem];
+
+        .field {
+            @apply flex flex-col gap-[.5rem]
+        }
+    }
+
+    input {
+        @apply border-2 border-solid rounded-md border-[var(--color1)] outline-none focus:border-[var(--primary-color-high)];
+        &::placeholder {
+            @apply text-gray-400 font-light;
+        }
+    }
+
+    h1, h2 {
+        @apply m-0 py-4;
+    }
+
+    main {
+        @apply my-[3rem];
+    }
+}
