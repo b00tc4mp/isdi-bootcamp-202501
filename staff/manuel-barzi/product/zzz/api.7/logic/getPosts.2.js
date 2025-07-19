@@ -1,0 +1,37 @@
+import { SystemError } from 'com/errors.js'
+import { User, Post } from '../data/index.js'
+import { errors, validate } from 'com'
+
+const { NotFoundError } = errors
+
+export const getPosts = userId => {
+    validate.id(userId, 'userId')
+
+    return User.findById(userId).lean()
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (!user) throw new NotFoundError('user not found')
+
+            return Post.find().select('-__v').sort('-createdAt').populate('author', 'username').lean()
+                .catch(error => { throw new SystemError(error.message) })
+        })
+        .then(posts => {
+            posts.forEach(post => {
+                post.id = post._id.toString()
+                delete post._id
+
+                if (post.author._id) {
+                    post.author.id = post.author._id.toString()
+                    delete post.author._id
+                }
+
+                post.liked = post.likes.some(userObjectId => userObjectId.toString() === userId)
+                post.likesCount = post.likes.length
+                delete post.likes
+
+                post.own = post.author.id === userId
+            })
+
+            return posts
+        })
+}

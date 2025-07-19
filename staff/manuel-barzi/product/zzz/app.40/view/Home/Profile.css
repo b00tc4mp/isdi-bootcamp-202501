@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+.username {
+    @apply px-[var(--padding-x)] text-xl;
+}
