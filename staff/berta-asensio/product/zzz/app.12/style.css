@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Signika+Negative:wght@300..700&display=swap');
+
+html {
+    font-family: 'Nunito';
+    background-color: hsl(46, 100%, 50%);
+    color: black;
+    --padding-x: 1rem;
+    --padding-y: .25rem;
+
+}
+
+body {
+    margin: 0;
+}
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 25rem;
+    text-align: center;
+}
+
+.landing-buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bee-logo {
+    width: 100px;
+    height: auto;
+    display: block;
+}
+
+button {
+    cursor: pointer;
+    border: 0;
+    padding: 2px 5px;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: font-size 0.2s;
+    font-family: inherit;
+}
+
+@media (min-width: 200px) {
+    button:hover {
+        background-color: #000000;
+        color: #ffffff;
+        font-size: 1.5rem;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--padding-y)
+    }
+}
+
+input {
+    font-family: inherit;
+    font-size: 1rem;
+    transition: font-size 0.5s;
+}
+
+input::placeholder {
+    visibility: hidden;
+}
+
+@media (min-width: 200px) {
+    input:hover {
+        background-color: #ededed;
+        border: 0px;
+        font-size: 1.2rem;
+    }
+    input:hover::placeholder {
+        visibility: visible;
+    }
+}
+
+a {
+    cursor: pointer;
+}
+
+a:hover {
+    font-weight: bold;
+}
+
+.post {
+    h3,
+    p,
+    .post-footer {
+        padding: var(--padding-y) var(--padding-x);
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+}
+
+header {
+    background-color: rgb(220, 75, 2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    margin: 0;
+}
+
+main {
+    margin: 3.5rem 0;
+}
+
+footer {
+    background-color:  rgb(220, 75, 2);
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
+
