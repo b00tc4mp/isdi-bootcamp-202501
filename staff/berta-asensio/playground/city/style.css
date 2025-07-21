@@ -1,0 +1,55 @@
+.building {
+    width: 100px;
+    height: 260px;
+    background-color: dodgerblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+
+    .floors {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        .floor {
+            display: flex;
+            justify-content: space-between; 
+    
+            .window {
+                width: 10px;
+                height: 10px;
+                background-color: skyblue;
+            }
+        }
+    }
+
+    .ground {
+        display: flex;
+        justify-content: center;
+
+        .gate {
+            width: 10px;
+            height: 20px;
+            background-color: greenyellow;
+        }
+    }
+
+}
+
+.asphalt {
+    display: flex;
+    align-items: center;
+    
+    width: 800px;
+    height: 150px;
+    background-color: gray;
+
+    .line {
+        width: 800px;
+        height: 2px;
+        background-color: beige;
+    }
+}
