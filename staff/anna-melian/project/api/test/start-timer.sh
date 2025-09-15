@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/timers/68064a867c9abd3309c6319d/start -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODA2NGEyNzM2OWYwNmEyM2I3NTczZWUiLCJpYXQiOjE3NDUyNDI3MjYsImV4cCI6MTc0NTMyOTEyNn0.OO6JbDlFlIeSnsp9EGcEVlM3tZnef-drXLvIAwPguo8' -v
