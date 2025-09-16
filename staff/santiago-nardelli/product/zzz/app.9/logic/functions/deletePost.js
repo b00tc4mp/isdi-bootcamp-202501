@@ -1,0 +1,17 @@
+import { data } from "../../data/data.js";
+import { NotFoundError, OwnershipError } from '../../errors/errors.js';
+export const deletePost = (postId) => {
+  // this.validate.id(postId, "postId");
+
+  const { userId } = data;
+
+  const foundPost = data.posts.findOne((post) => post.id === postId);
+
+  if (!foundPost) throw new NotFoundError("post not found");
+
+  if (foundPost.author !== userId)
+    throw new OwnershipError("user is not author of post");
+
+
+  data.posts.deleteOne((post) => post.id === postId);
+};

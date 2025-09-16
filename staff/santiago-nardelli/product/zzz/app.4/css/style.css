@@ -1,0 +1,148 @@
+:root {
+    --primary-color: #00d4ff;
+    --secondary-color: #1a1a1a;
+    --font-family: 'Orbitron', sans-serif;
+    --font-size-large: 50px;
+    --margin-bottom-large: 20px;
+    --header-height: 60px;
+    --footer-height: 60px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--secondary-color);
+}
+
+/*
+
+=========LANDING PAGE INIT=========
+*/
+.landing-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--secondary-color);
+}
+
+.landing-page__icon {
+    font-size: var(--font-size-large);
+    color: var(--primary-color);
+    margin-bottom: var(--margin-bottom-large);
+}
+.landing-page__content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    font-family: var(--font-family);
+}
+
+.landing-page__button{
+    
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.landing-page__button:hover{
+    background-color:var(--primary-color);
+    color: var(--secondary-color);
+}
+
+/*
+
+=========LANDING PAGE END=========
+*/
+
+
+/*
+
+=========LOGIN PAGE INIT=========
+*/
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+}
+
+.form-container button {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #007bff;
+}
+
+/*
+
+=========HOME PAGE INIT=========
+*/
+
+.home-header{
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.home-main{
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.home-footer{
+    height: var(--footer-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.home-footer a{
+    font-size: 24px;
+    color: var(--primary-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.home-footer a:hover{
+    color: #007bff;
+}
