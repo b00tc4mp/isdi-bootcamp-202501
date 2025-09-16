@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guess Number</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Enlace a la biblioteca de desarrollo de React -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+
+    <!-- Enlace a la biblioteca de desarrollo de React DOM -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+
+    <!-- Enlace a Babel para poder usar JSX en el navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!--Vistas-->
+
+    <script src="./view/Start.jsx" type="text/babel"></script>
+    <script src="./view/SelectDifficulty.jsx" type="text/babel"></script>
+    <script src="./view/GuessNumber.jsx" type="text/babel"></script>
+    <script src="./view/Result.jsx" type="text/babel"></script>
+    <script src="./view/Status.jsx" type="text/babel"></script>
+
+    <!--DATA-->
+    <script src="./data/data.js"></script>
+    <!--LOGIC-->
+    <script src="./logic/logic.js"></script>
+
+
+    <!-- Enlace al archivo principal de la aplicación escrito en JSX -->
+    <script src="App.jsx" type="text/babel"></script>
+    <script src="main.jsx" type="text/babel"></script>
+  </body>
+</html>
