@@ -1,0 +1,67 @@
+console.clear()
+    
+//var word = propmpt(word?)
+var word = 'bootcamp'
+var matches = []
+    
+//esto sirve para inicializar los guiones bajos
+for (var i = 0; i < word.length; i++) 
+     matches[i] = '_'
+
+var attemps = 0 //intentos fallidos que llevamos
+var maxAttemps = 6 //máximos intentos permitidos
+var guessCharacter = '' //letra introducida por el jugador
+
+//función para imprimir convirtiendo los guiones en letras adivinadas
+function printMatches() {
+     var matchesString = ''
+     for (var i = 0; i < matches.length; i++) {
+         matchesString += matches[i] + ' ' }
+             
+     console.log(matchesString)
+ }
+
+//función para preguntar una letra al usuario
+function askCharacter() {
+     do {
+         guessCharacter = prompt('Introduce una letra:').toLowerCase();
+         if (!guessCharacter || guessCharacter.length !== 1) {
+             console.log('Por favor, introduce una sola letra válida');
+         }
+     } while (!guessCharacter || guessCharacter.length !== 1);
+}
+
+//función que comprueba si la letra está en la palabra
+function checkGuessCharacterMatches() {
+     var found = false;
+
+     for (var i = 0; i < word.length; i++) {
+         if (word[i] === guessCharacter) {
+             matches[i] = guessCharacter; //si la letra está, actualiza el tablero
+             found = true
+         }
+     }
+
+     if (!found) {
+         attemps++; //si no está la letra, aumentan los intentos fallidos
+         console.log(`Has fallado. Intentos restantes: ${maxAttemps - attemps}`)
+     } else {
+         console.log('¡Bien hecho!')
+     }
+ }
+
+//bucle del juego
+ while (attemps < maxAttemps && matches.includes('_')) {
+    
+     printMatches() //muestra el estado del tablero
+     askCharacter() //pide una letra
+     checkGuessCharacterMatches() //comprueba si la letra es correcta
+}
+
+
+//resultado final
+ if (!matches.includes('_')) {
+     console.log('¡Felicidades has acertado! ' + word)
+ } else {
+     console.log('Lo siento, has perdido, la palabra era: ' + word)
+ }
