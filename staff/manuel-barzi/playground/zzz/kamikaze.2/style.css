@@ -1,0 +1,10 @@
+.kamikaze {
+    position: absolute;
+    width: 100px;
+    transform: rotateZ(55deg);
+}
+
+.warship {
+    position: absolute;
+    width: 200px;
+}

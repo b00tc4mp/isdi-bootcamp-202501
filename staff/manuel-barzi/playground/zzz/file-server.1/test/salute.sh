@@ -1,0 +1,1 @@
+curl -X GET http://localhost:8080/salute?how=Hola\&to=Wendy -v
