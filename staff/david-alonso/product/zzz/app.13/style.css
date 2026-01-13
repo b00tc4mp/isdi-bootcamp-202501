@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+html {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 600;
+    background-color: rgb(37, 35, 35);
+    color: white;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 90px;
+
+    .input {
+        height: 35px;
+        font-size: large;
+    }
+
+    .input:is(:focus, :valid) {
+        outline-color: #eb0e0e;
+
+    }
+
+}
+
+article {
+    width: 100%;
+    margin: 0;
+    padding-bottom: 0px;
+}
+
+img {
+    width: 100%;
+}
+
+h1 {
+    font-size: 35px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    color: rgb(239, 48, 64);
+    text-shadow: 2px 2px 2px white;
+    top: 60px;
+
+}
+
+/* LANDING */
+.logo {
+    width: 100%;
+    height: 700px;
+
+}
+
+.anchor {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: x-large;
+    position: relative;
+    top: -60px;
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+/* LOGIN */
+.fondo {
+    width: 100%;
+    height: 950px;
+    position: fixed;
+    top: -20px;
+}
+
+.ddd {
+    width: 300px;
+    position: relative;
+    left: 65px;
+}
+
+.anchorRegister {
+    color: white;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: 30px;
+}
+
+.anchorLogin {
+    color: white;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: 30px;
+}
+
+.anchorCancel {
+    color: white;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: 30px;
+}
+
+/* BUTONS */
+button {
+    background: #ffffff34;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    position: relative;
+    height: 30px;
+    font-family: 'Permanent Marker';
+    font-size: 1rem;
+    margin-top: 5px;
+    padding: 0 2em;
+    cursor: pointer;
+    transition: 300ms ease all;
+    outline: none;
+}
+
+button:hover {
+    background: #ffffff00;
+    color: #eb0e0e;
+}
+
+button:before,
+button:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #dd3f0f;
+    transition: 300ms ease all;
+}
+
+button:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+button:hover:before,
+button:hover:after {
+    width: 100%;
+    transition: 300ms ease all;
+}
+
+.homeButons {
+    position: fixed;
+    width: 100%;
+    background-color: rgb(37, 35, 35);
+    padding: 10px;
+    bottom: 0px;
+    right: 0;
+    z-index: 1000;
+
+    .new {
+        margin-left: 70px;
+        border-radius: 6px;
+    }
+}
+
+
+
+.like {
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0);
+    margin-left: 25px;
+    top: -20px;
+
+}
+
+.like:before,
+.like:after {
+    content: none !important;
+    display: none !important;
+}
+
+.data {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.userName {
+    margin: 0;
+    margin-left: 20px;
+    color: #eb0e0e;
+    position: relative;
+    top: 10px;
+    text-shadow:
+        -1px -1px 0 white,
+        1px -1px 0 white,
+        -1px 1px 0 white,
+        1px 1px 0 white;
+}
+
+.postText {
+    margin-top: -9px;
+
+}
+
+.time {
+    position: relative;
+    top: -15px;
+    margin-left: 20px;
+    text-decoration: overline;
+    font-size: 0.7rem;
+}
+
+/* ****** CREAR UN CONTENEDOR DONDE CENTRALIZAR EL FOOTER ***** */
+
+header {
+    position: relative;
+    display: flex;
+
+    .home {
+        /* position: relative; */
+        height: 100px;
+        width: 200px;
+    }
+
+    .hello {
+
+        color: white;
+        position: relative;
+        top: 40px;
+        left: -0px;
+    }
+
+    .logout {
+
+        border-radius: 6px;
+    }
+}
+
+
+/* **************** */
+
+.end {
+    height: 60px;
+}

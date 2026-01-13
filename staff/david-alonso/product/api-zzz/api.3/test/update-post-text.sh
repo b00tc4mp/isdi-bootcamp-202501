@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/posts/m8et10xywoq/text -H 'Authorization: Basic m86hbjvqpre' -H 'Content-Type: application/json' -d '{"text": "A volar 2.0"}' -v
