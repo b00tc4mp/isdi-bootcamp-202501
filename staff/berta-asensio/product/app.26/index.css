@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Signika+Negative:wght@300..700&display=swap');
+@import 'tailwindcss';
+
+@layer components {
+    html {
+        --primary-color: hsl(46, 100%, 50%);
+        --secondary-color:  black;
+        --secondary-color-light: white;
+        --padding-x: 1rem;
+        --padding-y: .25rem;
+
+        @apply font-['Nunito'];
+        @apply bg-[var(--primary-color)];
+        @apply text-[(var--secondary-color)];
+    }
+    
+    body {
+        @apply m-0; /*margen*/
+    }
+    
+    .landing-container {
+        @apply flex;
+        @apply flex-col;
+        @apply justify-center;
+        @apply items-center;
+        @apply h-100;
+        @apply: text-center;
+    }
+    /*LOGO LANDING*/
+    .logo-container {
+        @apply flex;
+        @apply flex-col;
+        @apply justify-center;
+        @apply w-50 h-auto;
+    }
+    
+    .landing-buttons {
+        @apply m-10;
+        @apply flex;
+        @apply flex-col;
+    }
+    
+    button {
+        @apply bg-[var(--secondary-color)];
+        @apply text-[var(--secondary-color-light)];
+        @apply cursor-pointer;
+        @apply border-[0px];
+        @apply rounded-[12px];
+        @apply transition-all duration-200 text-xl;
+        @apply font-[inherit];
+        @apply text-base;
+    }
+
+    @media (min-width: 768px) {
+        button {
+            @apply min-w-[768px];
+        }
+
+        button:hover {
+            @apply bg-[var(--secondary-color-light)];
+            @apply text-[var(--secondary-color)];
+            @apply text-[2rem];
+        }
+    }
+    
+    .register-login-header {
+        @apply flex;
+        @apply justify-between;
+        @apply items-center;
+        @apply w-full;
+        @apply py-[var(--padding-y)] px-[var(--padding-x)];
+        @apply box-border;
+    }
+    
+    .bee-logo-register-login {
+
+        @apply max-w-[150px];
+        @apply h-auto;
+    }
+    
+    .register-header h2 {
+        /* @apply flex-grow;  Esto hace que el texto ocupe todo el espacio disponible */
+        @apply text-right; /* Alinea el texto a la derecha */
+        @apply text-xl;  /* Ajusta el tamaño del texto */
+        @apply break-words;
+        @apply pr-6;
+    }
+    
+    .paragraph {
+        @apply mt-24; /* Separación superior */
+        @apply mb-6; /* Separación inferior */
+        @apply text-xl; /* Tamaño de fuente */
+        @apply bg-gray-300; /* Fondo blanco */
+        @apply text-black; /* Texto negro */
+        @apply p-1.5; /* Espaciado dentro del párrafo */
+        @apply rounded-lg; /* Bordes redondeados */
+        @apply text-center; /* Centrar el texto */
+        @apply w-auto; /* Ajusta el tamaño del párrafo según el contenido */
+        @apply mx-auto; /* Centra el párrafo en la pantalla */
+        @apply shadow-md; /* Sombra sutil para el párrafo */
+        @apply block;
+    }
+    
+    form {
+        @apply flex;
+        @apply flex-col;
+        @apply gap-[1rem];
+        /* @apply m-5; */
+    
+        .field {
+            @apply flex;
+            @apply flex-col;
+            @apply gap-[var(--padding-y)]
+        }
+    }
+    /* Estilos base para el input*/
+    input {
+        @apply font-[inherit];
+        @apply bg-gray-200;
+        @apply text-base;
+        @apply outline-none;
+        @apply transition-all duration-1000;
+    }
+    /* Estilos para el placeholder */
+    input::placeholder {
+        @apply invisible;
+    }
+    /* Estilos hover para el input */
+    input:hover {
+        @apply bg-white;
+        @apply border-0;
+        @apply text-base;
+    }
+    /*Estilos hover para el placeholder*/
+    input:hover::placeholder {
+        @apply visible;
+    }
+
+    a {
+        @apply cursor-pointer;
+        @apply bg-amber-700;
+    }
+}
+
+
+
+
+
+
+
