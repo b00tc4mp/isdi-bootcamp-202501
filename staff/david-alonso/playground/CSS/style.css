@@ -1,0 +1,586 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+
+.body {
+    background-color: green;
+    font-family: "Pixelify Sans";
+    height: 600px;
+    overflow: hidden;
+}
+
+.background {
+    background-color: black;
+    width: 100%;
+    height: 620px;
+    padding-top: 10px;
+}
+
+.text {
+    display: flex;
+    justify-content: space-around;
+    font-size: 40px;
+    font-family: inherit;
+
+    .score {
+        color: white;
+    }
+
+    .score2 {
+        color: green;
+        margin-left: -300px;
+    }
+
+    .score3 {
+        color: white;
+    }
+
+    .score4 {
+        color: green;
+        margin-left: -300px;
+    }
+}
+
+.martians {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.martians:hover {
+    gap: 30px;
+    position: relative;
+    top: 30px;
+}
+
+.alien1 {
+
+    .antennas {
+        display: flex;
+        justify-content: space-between;
+        width: 139px;
+        margin-left: 41px;
+
+        .antennas2 {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .antennas1 {
+        display: flex;
+        justify-content: space-between;
+        width: 105px;
+        margin-left: 58px;
+
+        .antennas3 {
+            width: 25px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .face {
+        width: 140px;
+        height: 80px;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-items: center;
+        margin-left: 40px;
+
+        .eyes {
+            display: flex;
+            justify-content: space-between;
+            width: 100px;
+            margin: 20px;
+            margin-top: 0px;
+
+            .eyes2 {
+                width: 20px;
+                height: 20px;
+                background-color: black;
+            }
+        }
+    }
+
+    .mouth {
+        display: flex;
+        justify-content: space-between;
+        width: 140px;
+        margin-left: 40px;
+
+        .mouth2 {
+            width: 22px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .arms {
+        display: flex;
+        justify-content: space-between;
+        width: 220px;
+        position: relative;
+        top: -105px;
+
+        .arms2 {
+            width: 20px;
+            height: 60px;
+            background-color: white;
+        }
+    }
+
+    .side {
+        display: flex;
+        justify-content: space-between;
+        width: 180px;
+        position: relative;
+        top: -82px;
+        margin-left: 20px;
+
+        .side2 {
+            width: 20px;
+            height: 45px;
+            background-color: white;
+        }
+    }
+
+    .below {
+        display: flex;
+        justify-content: space-around;
+        width: 135px;
+        margin-left: 43px;
+        position: relative;
+        top: -105px;
+
+        .below2 {
+            width: 30px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+}
+
+.alien2 {
+
+    .antennas {
+        display: flex;
+        justify-content: space-between;
+        width: 139px;
+        margin-left: 41px;
+
+        .antennas2 {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .antennas1 {
+        display: flex;
+        justify-content: space-between;
+        width: 105px;
+        margin-left: 58px;
+
+        .antennas3 {
+            width: 25px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .face {
+        width: 140px;
+        height: 80px;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-items: center;
+        margin-left: 40px;
+
+        .eyes {
+            display: flex;
+            justify-content: space-between;
+            width: 100px;
+            margin: 20px;
+            margin-top: 0px;
+
+            .eyes2 {
+                width: 20px;
+                height: 20px;
+                background-color: black;
+            }
+        }
+    }
+
+    .mouth {
+        display: flex;
+        justify-content: space-between;
+        width: 140px;
+        margin-left: 40px;
+
+        .mouth2 {
+            width: 22px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .arms {
+        display: flex;
+        justify-content: space-between;
+        width: 220px;
+        position: relative;
+        top: -105px;
+
+        .arms2 {
+            width: 20px;
+            height: 60px;
+            background-color: white;
+        }
+    }
+
+    .side {
+        display: flex;
+        justify-content: space-between;
+        width: 180px;
+        position: relative;
+        top: -82px;
+        margin-left: 20px;
+
+        .side2 {
+            width: 20px;
+            height: 45px;
+            background-color: white;
+        }
+    }
+
+    .below {
+        display: flex;
+        justify-content: space-around;
+        width: 135px;
+        margin-left: 43px;
+        position: relative;
+        top: -105px;
+
+        .below2 {
+            width: 30px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+}
+
+.alien3 {
+
+    .antennas {
+        display: flex;
+        justify-content: space-between;
+        width: 139px;
+        margin-left: 41px;
+
+        .antennas2 {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .antennas1 {
+        display: flex;
+        justify-content: space-between;
+        width: 105px;
+        margin-left: 58px;
+
+        .antennas3 {
+            width: 25px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .face {
+        width: 140px;
+        height: 80px;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-items: center;
+        margin-left: 40px;
+
+        .eyes {
+            display: flex;
+            justify-content: space-between;
+            width: 100px;
+            margin: 20px;
+            margin-top: 0px;
+
+            .eyes2 {
+                width: 20px;
+                height: 20px;
+                background-color: black;
+            }
+        }
+    }
+
+    .mouth {
+        display: flex;
+        justify-content: space-between;
+        width: 140px;
+        margin-left: 40px;
+
+        .mouth2 {
+            width: 22px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .arms {
+        display: flex;
+        justify-content: space-between;
+        width: 220px;
+        position: relative;
+        top: -105px;
+        left: 200px;
+
+        .arms2 {
+            width: 20px;
+            height: 60px;
+            background-color: white;
+        }
+    }
+
+    .side {
+        display: flex;
+        justify-content: space-between;
+        width: 180px;
+        position: relative;
+        top: -82px;
+        margin-left: 20px;
+
+        .side2 {
+            width: 20px;
+            height: 45px;
+            background-color: white;
+        }
+    }
+
+    .below {
+        display: flex;
+        justify-content: space-around;
+        width: 135px;
+        margin-left: 43px;
+        position: relative;
+        top: -105px;
+
+        .below2 {
+            width: 30px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+}
+
+.alien4 {
+
+    .antennas {
+        display: flex;
+        justify-content: space-between;
+        width: 139px;
+        margin-left: 41px;
+
+        .antennas2 {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .antennas1 {
+        display: flex;
+        justify-content: space-between;
+        width: 105px;
+        margin-left: 58px;
+
+        .antennas3 {
+            width: 25px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .face {
+        width: 140px;
+        height: 80px;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-items: center;
+        margin-left: 40px;
+
+        .eyes {
+            display: flex;
+            justify-content: space-between;
+            width: 100px;
+            margin: 20px;
+            margin-top: 0px;
+
+            .eyes2 {
+                width: 20px;
+                height: 20px;
+                background-color: black;
+            }
+        }
+    }
+
+    .mouth {
+        display: flex;
+        justify-content: space-between;
+        width: 140px;
+        margin-left: 40px;
+
+        .mouth2 {
+            width: 22px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+
+    .arms {
+        display: flex;
+        justify-content: space-between;
+        width: 220px;
+        position: relative;
+        top: -105px;
+
+        .arms2 {
+            width: 20px;
+            height: 60px;
+            background-color: white;
+        }
+    }
+
+    .side {
+        display: flex;
+        justify-content: space-between;
+        width: 180px;
+        position: relative;
+        top: -82px;
+        margin-left: 20px;
+
+        .side2 {
+            width: 20px;
+            height: 45px;
+            background-color: white;
+        }
+    }
+
+    .below {
+        display: flex;
+        justify-content: space-around;
+        width: 135px;
+        margin-left: 43px;
+        position: relative;
+        top: -105px;
+
+        .below2 {
+            width: 30px;
+            height: 20px;
+            background-color: white;
+        }
+    }
+}
+
+.shots {
+
+
+    .spaceship {
+        width: 40px;
+        height: 40px;
+        background-color: green;
+        position: relative;
+        top: 0px;
+        left: 660px;
+    }
+
+    .spaceship3 {
+        width: 160px;
+        height: 40px;
+        background-color: green;
+        position: relative;
+        top: -20px;
+        left: 600px;
+    }
+
+    .spaceship2 {
+        width: 120px;
+        height: 40px;
+        background-color: green;
+        position: relative;
+        top: 0px;
+        left: 620px;
+    }
+
+    .shot {
+        width: 15px;
+        height: 40px;
+        background-color: white;
+        position: relative;
+        top: -160px;
+        left: 570px;
+    }
+
+    .shot2 {
+        width: 15px;
+        height: 40px;
+        background-color: white;
+        transition: background-color 1s;
+        position: relative;
+        top: -50px;
+        left: 660px;
+    }
+}
+
+.shot:hover {
+    position: relative;
+    top: -250px;
+    background-color: orangered;
+    box-shadow: -5px -5px 15px 15px orangered;
+}
+
+.fenders {
+    display: flex;
+    justify-content: space-around;
+
+    .shield {
+        width: 200px;
+        height: 80px;
+        background-color: green;
+        position: relative;
+        top: 30px;
+
+        .shield2 {
+            width: 120px;
+            height: 150px;
+            background-color: black;
+            position: relative;
+            top: -10px;
+            left: 40px;
+        }
+
+        .shield3 {
+            width: 150px;
+            height: 50px;
+            background-color: green;
+            position: relative;
+            top: -25px;
+            left: 25px;
+        }
+    }
+}

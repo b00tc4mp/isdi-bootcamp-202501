@@ -1,0 +1,42 @@
+.game {
+    overflow: hidden;
+}
+
+.start {
+    width: 1000px;
+    height: 500px;
+}
+
+.pizza {
+    position: absolute;
+    width: 90px;
+    height: 50px;
+    /* background-color: red; */
+}
+
+.boy {
+    position: absolute;
+    width: 187px;
+    height: 150px;
+    /* background-color: blue; */
+}
+
+
+.screen {
+    width: 100%;
+    height: 495px;
+    background-image: url('images/pizzeria-28698.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.lose-message {
+    font-size: 40px;
+    color: red;
+    font-weight: 900;
+    background: none;
+    position: absolute;
+    left: 50px;
+}

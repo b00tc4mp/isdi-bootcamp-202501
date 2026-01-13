@@ -1,0 +1,17 @@
+[
+    {
+        "uuid": "c33fe65d-4dec-4cbb-9b3b-7dd25eca91c3",
+        "path": "files\\c33fe65d-4dec-4cbb-9b3b-7dd25eca91c3\\8c7dd922ad47494fc02c388e12c00eac\\98f22c2dca8bf5ef2fe42552a9f95ec7",
+        "filename": "hello-world.txt"
+    },
+    {
+        "uuid": "b6eb618a-a3f9-4b7d-a323-0b724537ad50",
+        "path": "files\\b6eb618a-a3f9-4b7d-a323-0b724537ad50\\8c7dd922ad47494fc02c388e12c00eac\\0246e2424cdbe1dd52a809a202a4fc6b",
+        "filename": "spider.jpg"
+    },
+    {
+        "uuid": "66ca7671-ab29-41a2-b3f6-3daef3a2bd6c",
+        "path": "files\\66ca7671-ab29-41a2-b3f6-3daef3a2bd6c\\8c7dd922ad47494fc02c388e12c00eac\\0246e2424cdbe1dd52a809a202a4fc6b",
+        "filename": "spider.jpg"
+    }
+]
