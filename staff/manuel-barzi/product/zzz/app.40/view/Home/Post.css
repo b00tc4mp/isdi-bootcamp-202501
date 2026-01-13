@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+@layer components {
+    .Post {
+
+        h3,
+        p,
+        .post-footer {
+            @apply px-[var(--padding-x)];
+        }
+
+        img {
+            @apply w-full;
+        }
+
+        .post-footer {
+            @apply flex justify-between;
+        }
+    }
+}

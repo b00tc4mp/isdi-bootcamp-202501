@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+@layer components {
+    .Home {
+        header {
+            @apply flex justify-between items-center fixed top-0 w-full bg-[var(--secondary-color)] py-[var(--padding-y)] px-[var(--padding-x)] box-border;
+        }
+
+        footer {
+            @apply flex justify-center items-center fixed bottom-0 w-full bg-[var(--secondary-color)] py-[var(--padding-y)] px-[var(--padding-x)] box-border;
+        }
+    }
+}

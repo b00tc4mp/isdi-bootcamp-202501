@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+.username {
+    /* padding: 0 var(--padding-x); */
+    @apply px-[var(--padding-x)];
+}
