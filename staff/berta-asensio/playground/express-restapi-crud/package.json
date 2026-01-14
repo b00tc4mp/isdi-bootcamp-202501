@@ -1,0 +1,27 @@
+{
+  "name": "isdi-bootcamp-202501",
+  "version": "1.0.0",
+  "description": "isdi-bootcamp-202501",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BertaAsensio/isdi-bootcamp-202501.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BertaAsensio/isdi-bootcamp-202501/issues"
+  },
+  "homepage": "https://github.com/BertaAsensio/isdi-bootcamp-202501#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
