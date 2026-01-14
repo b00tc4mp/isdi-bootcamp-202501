@@ -1,0 +1,37 @@
+import { errors, validate } from '../../../com'
+
+const { SystemError } = errors
+
+// Funcion para Registrar al usuario
+export const registerUser = (name, email, password) => {
+    validate.text(name, 'name')
+    validate.maxLength(name, 30, 'name')
+    validate.email(email, 'email')
+    validate.password(password, 'password')
+
+    return fetch(`${import.meta.env.VITE_API_URL}/users`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, password })
+    })
+
+        .catch(error => { throw new SystemError(error.message) })
+        .then(response => {
+            console.log(response.status)
+
+            if (response.status === 201)
+                return
+
+            return response.json()
+                .catch(error => { throw new SystemError(error.message) })
+                .then(body => {
+                    const { error, message } = body
+
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
+                })
+        })
+}

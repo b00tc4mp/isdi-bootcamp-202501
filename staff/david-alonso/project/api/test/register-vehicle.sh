@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8080/vehicles -H 'Content-type: application/json' -d '{"marca":"Yamaha","modelo":"R1","año":2023,"color":"azul","matricula":"1452FVG","km":2510,"itv":new Date()}' -v

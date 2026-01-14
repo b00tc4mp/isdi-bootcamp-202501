@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+
+    html {
+        @apply text-white
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        font-weight: 300;
+        width: 100%;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    .fondo {
+        width: 130vw;
+        max-width: 130vw;
+        height: 130vh;
+        top: -10vh;
+        left: -10vh;
+        object-fit: cover;
+        position: fixed;
+        z-index: 0;
+        filter: blur(15px);
+    }
+
+    form {
+        @apply text-black w-full space-y-4
+    }
+
+    input {
+        @apply w-full bg-gray-300 rounded-lg p-2
+    }
+
+    label {
+        @apply text-white text-sm
+    }
+
+    button {
+        @apply w-full bg-white text-black p-2 rounded-md hover:bg-gray-400
+    }
+
+    .image {
+        @apply w-full max-h-1/2
+    }
+}

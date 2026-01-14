@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8080/manteinances -H 'Content-type: application/json' -d '{"fecha":"2024-05-02T00:00:00.000Z","descripcion":"bujias","texto":"cambio de bujias"}' -v
