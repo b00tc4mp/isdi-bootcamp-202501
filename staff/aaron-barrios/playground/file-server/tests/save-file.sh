@@ -1,0 +1,1 @@
+curl -X POST -F "file=@C:\Users\aaron\Downloads\uwu.png" http://localhost:9090/files -v
