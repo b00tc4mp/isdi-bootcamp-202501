@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import 'tailwindcss';
+
+html {
+    font-family: 'Merriweather';
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+
+    --primary-color: rgb(26, 26, 26);
+    --secondary-color: rgb(30, 124, 33);
+    --primary-color-high: white;
+    --primary-color-low: rgba(0, 128, 0, 0.35);
+    --padding-x: .5rem;
+    --padding-y: .25rem;
+}
+
+
+
+body {
+    margin: 0;
+}
+
+.landing {
+    margin: 0 1rem;
+}
+
+.login {
+    margin: 0 1rem;
+}
+
+.register {
+    margin: 0 1rem;
+}
+
+.create-post {
+    margin: 0 1rem;
+}
+
+.profile {
+    margin: 0 1rem;
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+
+    border: 0;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+button.secondary {
+    background-color: var(--primary-color-low);
+}
+
+span {
+    display: flex;
+    justify-content: left;
+    gap: 5px;
+}
+
+a {
+    cursor: pointer;
+    transition: font-size .2s;
+    text-decoration: underline;
+}
+
+@media (min-width: 1024px) {
+    a:hover {
+        color: var(--primary-color-high);
+        font-size: 2rem;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--padding-y);
+    }
+}
+
+input {
+    background-color: var(--primary-color);
+    color: var(--color);
+    border: 2px solid var(--secondary-color);
+    outline: none;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+input:focus {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color-high);
+}
+
+input::placeholder {
+    color: var(--primary-color-low);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    background-color: var(--primary-color);
+    -webkit-text-fill-color: var(--secondary-color);
+    -webkit-box-shadow: 0 0 0px 1000px var(--primary-color) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+article {
+
+    h3,
+    p,
+    .post-footer,
+    .post-header {
+        padding: var(--padding-y) var(--padding-x);
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        gap: .5rem;
+    }
+}
+
+
+.profPic {
+    border-radius: 50%;
+    width: 35%;
+    margin-left: 35%;
+}
+
+.comPic {
+    border-radius: 50%;
+    width: 10%;
+}
+
+h1,
+h2 {
+    margin: 0;
+}
+
+main {
+    margin: 3rem 0rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
