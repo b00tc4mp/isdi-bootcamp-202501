@@ -1,0 +1,118 @@
+body {
+    background-color: black;
+    display: block;
+    height: 100vh;
+    width: 100vw;
+
+}
+
+
+.title {
+    background-color: blueviolet;
+    height: 10%;
+    width: 100vw;
+    margin: 0;
+    padding: o;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.sky {
+    height: 20%;
+    width: 100vw;
+    margin-top: 10px;
+
+
+    .moon {
+        background-color: white;
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+        display: block;
+        margin-left: 10px;
+
+    }
+}
+
+
+.buildings {
+    display: flex;
+    align-self: flex-end;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    height: 70%;
+    width: 830px;
+}
+
+
+.very-tall-building {
+    width: 100px;
+    height: 420px;
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.tall-building {
+    width: 100px;
+    height: 380px;
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.medium-building {
+    width: 100px;
+    height: 290px;
+    background-color: darkblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.short-building {
+    width: 100px;
+    height: 200px;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.floors {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 10px;
+
+    gap: 10px;
+
+    .floor {
+        display: flex;
+        justify-content: space-around;
+
+        .window {
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+        }
+    }
+}
+
+.ground {
+    display: flex;
+    justify-content: center;
+
+    .gate {
+        width: 10px;
+        height: 20px;
+        background-color: brown;
+    }
+}

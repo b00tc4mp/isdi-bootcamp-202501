@@ -1,0 +1,30 @@
+.logo {
+    height: 70px;
+    width: 200px;
+    background-color: yellow;
+    color: black;
+    font-size: xx-large;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.landing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .landing-button {
+        font-size: x-large;
+        font-family: 'Franklin Gothic Medium', sans-serif;
+        margin: 5px;
+    }
+
+}
+
+.welcome {
+    border: 3px solid yellow;
+    font-size: xx-large;
+}
