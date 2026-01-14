@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+html {
+    font-family: 'Poppins' ;
+    background-color: #1E1E1E;
+    color: var(--color);
+
+    --bg-color: #1E1E1E;
+    --color:#E0EEEC;
+    --color2:#78f9e5;
+    --color-high:#428A82;
+    --padding-x: 1rem;
+    --padding-y: 0.25rem;
+}
+
+body {
+    margin: 0;
+}
+
+a {
+    cursor: pointer;
+    transition: font-size .8s;
+}
+
+.landingAnchors {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.anchorRegister {
+    display: inline-block;
+    padding: 0.2rem 1rem;
+    text-decoration: none;
+    border-radius: 0.2rem;
+    background-color: var(--color-high);
+    color: var(--color);
+}
+
+.anchorLogin {
+    display: inline-block;
+    padding: 0.2rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: var(--color);
+    color: var(--color-high);
+}
+
+@media (min-width: 1024px) {
+    a:hover {
+        color: var(--bg-color);
+        font-size: 1.2rem;
+    }
+}
+
+button {
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        
+    }
+}
+
+input {
+    background-color: transparent;
+    color: var(--color2);
+    font-size: 1.1rem;
+    font-family: inherit;
+    outline: none;
+    border: none;
+    border-bottom: 0.1rem solid var(--color-high);
+}
+
+.registerSubmitButton {
+    background-color: var(--color-high);
+    color: var(--color);
+    border: none;
+    border-radius: 0.2rem;
+}
+
+.anchorLoginOfRegister {
+    display: block;
+    text-align: center;
+    background-color: transparent;
+    color: var(--color);
+    border: 0.1rem solid var(--color);
+    border-radius: 0.2rem;
+    text-align: center;
+    padding: 0.2rem 1rem;
+    margin: 1rem;
+}
+
+.loginSubmitButton {
+    background-color: var(--color-high);
+    color: var(--color);
+    border: none;
+    border-radius: 0.2rem;
+    font-size: 1.1rem;
+}
+
+.anchorRegisterOfLogin {
+    display: block;
+    background-color: transparent;
+    color: var(--color);
+    border: 0.1rem solid var(--color);
+    border-radius: 0.2rem;
+    text-align: center;
+    padding: 0.2rem 1rem;
+    margin: 1rem;
+}
+
+article {
+    h3, p, .post-footer {
+        padding: var(--padding-y) var(--padding-x);
+    }
+    img {
+        width: 100%;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: var(--bg-color);
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    margin: 0;
+}
+
+main {
+    margin-top: 3rem 0;
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+    padding: var(--padding-y) var(--padding-x);
+    box-sizing: border-box;
+}
+
+.createPostForm {
+    margin-top: 2rem;
+}

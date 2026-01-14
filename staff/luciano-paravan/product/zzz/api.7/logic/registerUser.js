@@ -1,0 +1,38 @@
+import { User } from '../data/index.js'
+import { errors, validate } from 'com'
+import bcrypt from 'bcryptjs'
+
+const { SystemError, DuplicityError } = errors
+
+export const registerUser = (name, email, username, password) => {
+    validate.name(name)
+    validate.minLength(name, 1, 'name')
+    validate.maxLength(name, 20, 'name')
+    validate.email(email)
+    validate.username(username)
+    validate.password(password)
+
+    return bcrypt.hash(password, 10)
+        .catch(error => { throw new SystemError(error.message) })
+        .then(hash => {
+            const user = {
+                name: name,
+                email: email,
+                username: username,
+                password: hash,
+                createdAt: new Date(),
+                modiedAt: null
+            }
+
+            return User.create(user)
+                .catch(error => {
+                    if (error.code === 11000) throw new DuplicityError('user already exists') //Este chatch con el error lo ponemos aca por si se intentan agregar usuarios en simultaneo.
+
+                    throw new SystemError(error.message) //Si es otro error lanzamos un SystemError
+                })
+        })
+        .then(() => { }) //La idea es que en el result que tenemos en el test, no se devuelva nada por eso se devuelve un objeto vacio
+    //Porque al trabajar con promesas si pones un return, vas pasando datos de una promesa a otra. Entonces cuando hacemos el test, luego de llamar a la funcion registerUser.js no se puede escapar ningun dato de la logica.
+
+    //Nadie tiene que saber que usa la db de mongo por dentro, la logica tiene que abstraer al sistema de arriba.
+}

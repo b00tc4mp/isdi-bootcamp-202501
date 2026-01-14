@@ -1,0 +1,1 @@
+curl -X PATCH http://localhost:8080/posts/67e48601cd5132104b8dbbdd/text -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RhZjg0MjBhOTE0YzdjMmJhNzI5YTYiLCJpYXQiOjE3NDMwMjE2Mjd9.MgP0vwY1fsaiWtVHch-cH4KO_-r-5xSG711kBO6dMno' -H 'Content-type: application/json' -d '{"text": "Hola post"}' -v

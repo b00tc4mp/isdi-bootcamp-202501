@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+    html {
+        font-family: 'Poppins' ;
+        background-color: #1E1E1E;
+        color: var(--first-color);
+        --bg-color: #1E1E1E;
+        --first-color:#E0EEEC;
+        --second-color:#428A82;
+        --third-color:#307DFB;
+        --fourth-color:#FD8061;
+        --padding-x: 1rem;
+        --padding-y: 0.25rem;
+
+        @apply bg-[var(--bg-color)];
+    }
+
+    body {
+        @apply m-0;
+    }
+
+    a {
+        @apply cursor-pointer transition-[font-size] duration-200 min-[1024px]:hover:text-[var(--third-color)] min-[1024px]:hover:text-[2rem];
+    }
+/*
+    button {
+        @apply font-base
+    }
+*/
+    form {
+        @apply flex flex-col gap-[.5rem];
+
+        .field {
+            @apply flex flex-col gap-[.5rem]
+        }
+    }
+
+    input {
+        @apply border-2 border-solid border-[var(--color1)] outline-none focus:border-[var(--primary-color-high)] placeholder:text-[var(--color3)];
+    }
+
+    h1, h2 {
+        @apply m-0;
+    }
+
+    main {
+        @apply my-[3rem];
+    }
+}

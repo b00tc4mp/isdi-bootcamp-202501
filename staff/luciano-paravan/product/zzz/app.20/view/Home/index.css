@@ -1,0 +1,27 @@
+.Home {
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        height: 3rem;
+        width: 100%;
+        top: 0;
+        background-color: var(--bg-color);
+        padding: var(--padding-y) var(--padding-x);
+        box-sizing: border-box;
+    }
+    
+    footer {
+        position: fixed;
+        height: 3rem;
+        width: 100%;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        background-color: var(--bg-color);
+        padding: var(--padding-y) var(--padding-x);
+        box-sizing: border-box;
+        border-radius: 2rem;
+    }
+}
