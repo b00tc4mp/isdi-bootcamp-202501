@@ -1,0 +1,58 @@
+import { logic } from '../logic/index.js'
+import { useContext } from '../context'
+
+export function Login({ onNavigateToRegister, onUserLoggedIn }) {
+    const { alert } = useContext()
+
+    const handleLoginSubmit = event => {
+        event.preventDefault()
+
+        try {
+            const { target: form } = event
+
+            const {
+                username: { value: username },
+                password: { value: password }
+            } = form
+
+            logic.loginUser(username, password)
+                .then(() => {
+                    form.reset()
+
+                    onUserLoggedIn()
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handleRegisterClick = () => onNavigateToRegister()
+
+    console.debug('Login -> render')
+
+    return <div>
+        <h1 className="logo-hogwarts"></h1>
+
+        <div className='login'>
+            <h2>Login</h2>
+            <form onSubmit={handleLoginSubmit}>
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" />
+
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" />
+
+                <button type="submit">Login</button>
+            </form>
+
+            <a onClick={handleRegisterClick}>Register</a>
+        </div>
+    </div>
+}
